@@ -1,0 +1,440 @@
+page{
+  background: #F2F2F2;
+  width: 100%;
+  line-height: 100%;
+  box-sizing: border-box;
+}
+html,body{
+  background: #F2F2F2;
+  width: 100%;
+  line-height: 100%;
+  box-sizing: border-box;
+}
+.bannerList{
+  border-radius:20px 20px 0px 0px;
+}
+@font-face {
+  font-family: YouSheBiaoTiHei;
+  src: url('https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/font/DINAlternate-bold.otf')
+}
+.merchantBox{
+  width: 100%;
+  min-height: 100%;
+  .merchant_title{
+    padding: 0 30px;
+    background: #07C0C2;
+    .merchant_title_icon{
+      padding-top: 67px;
+      .merchant_back{
+        width: 17px;
+        height: 29px;
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/back.png") no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .merchant_banner{
+      height: 424px;
+      border-radius: 20px 20px 0px 0px;
+      view{
+        border-radius: 20px 20px 0px 0px;
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+      }
+      view{
+        border-radius: 20px 20px 0px 0px;
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+      }
+    }
+  }
+  .merchant_Details{
+    padding: 30px 30px 20px 30px;
+    background: #F2F2F2;
+    border-radius: 20px 20px 0px 0px;
+    position: relative;
+    z-index: 10;
+    margin-top: -24px;
+    .merchant_shop{
+      position: relative;
+      background: #FFFFFF;
+      border-radius: 20px;
+      .merchant_shop_nav{
+        height: 131px;
+        margin: 0 20px;
+        border-bottom:1px solid #E6E6E6;
+        .merchant_shop_yuding{
+          position: absolute;
+          right: 0;
+          width: 114px;
+          height: 78px;
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/yudingsss.png") no-repeat;
+          background-size: 100% 100%;
+          margin-top: 30px;
+          margin-right: 21px;
+        }
+        .merchant_shop_Title{
+          color: #333333;
+          font-size: 30px;
+          padding-top: 29px;
+          line-height: 38px;
+          height: 29px;
+          font-weight: bold;
+          min-width: 312px;
+          text{
+            color: #777777;
+            line-height: 22px;
+            height: 23px;
+            font-weight: normal;
+          }
+          text:nth-child(1){
+            font-size: 20px;
+            margin-left: 21px;
+          }
+          text:nth-child(2){
+            font-size: 24px;
+          }
+        }
+        .merchant_shop_accress{
+          font-size: 22px;
+          height: 73px;
+          line-height:73px;
+          min-width: 86px;
+          view{
+            display: inline-block;
+            width:6px;
+            height:6px;
+            background:rgba(51,51,51,1);
+            border-radius:50%;
+            font-size: 0;
+            vertical-align: middle;
+            margin-right: 6px;
+          }
+        }
+        .merchant_shop_status{
+          padding-top: 27px;
+          .merchant_shop_statusTime{
+            font-size: 26px;
+            color: #343434;
+            height: 30px;
+            vertical-align: top;
+            display: inline;
+            view{
+              width:2px;
+              height:20px;
+              background:rgba(52,52,52,1);
+              border-radius:1px;
+              display: inline-block;
+              font-size: 0;
+              margin-right: 16px;
+              margin-top: -16px;
+              vertical-align: middle;
+            }
+          }
+          .merchant_shop_statusTime:before{
+            content: '';
+            width: 32px;
+            height: 30px;
+            display: inline-block;
+            background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/shangjia.png") no-repeat;
+            background-size: 100% 100%;
+            margin-right: 18px;
+          }
+        }
+        .merchant_shop_tag{
+          margin-left: 51px;
+          height: 77px;
+          line-height:47px;
+          view{
+            height: 32px;
+            line-height: 32px;
+            padding: 0 10px;
+            font-size: 20px;
+            background: #F2F2F2;
+            margin-right: 8px;
+            display: inline-block;
+          }
+        }
+        .merchant_shop_yingyeGo{
+          position: absolute;
+          right: 0;
+          width: 10px;
+          height: 18px;
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/yudinggooggo.png") no-repeat;
+          background-size: 100% 100%;
+          margin-right: 20px;
+          margin-top: 53px;
+        }
+        .merchant_shop_dianhua{
+          position: absolute;
+          right: 0;
+          width: 37px;
+          height: 43px;
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/dianhua.png") no-repeat;
+          background-size: 100% 100%;
+          margin-top:35px;
+          margin-right:20px;
+        }
+        .merchant_shop_bear{
+          padding-top: 26px;
+          view{
+            height: 24px;
+            font-size: 26px;
+            display: inline;
+            vertical-align: top;
+            line-height: 36px;
+            color: #343434;
+          }
+          view:before{
+            content: '';
+            width: 30px;
+            height: 32px;
+            display: inline-block;
+            background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/dizhi.png") no-repeat;
+            background-size: 100% 100%;
+            margin-right:21px;
+          }
+        }
+        .merchant_shop_space{
+          height: 46px;
+          line-height: 46px;
+          color: #787878;
+          font-size:22px;
+          padding-left: 51px;
+        }
+      }
+      .merchant_shop_nav:last-child{
+        border-bottom: none;
+      }
+      .merchant_bean_flag{
+        margin: 0 20px;
+        padding:25px 0 22px 0;
+        //border-top:1px solid #E6E6E6;
+        .merchant_takeCard1{
+          width:650px;
+          height: 154px;
+          border-radius: 20px;
+          display: flex;
+          align-items: center;
+          .merchant_lookbean{
+            padding: 0 0 0 51px;
+            font-size:30px;
+            font-family:PingFang SC;
+            font-weight:600;
+            color:rgba(51,51,51,1);
+            height:29px;
+          }
+          .merchant_lookbtn{
+            height:40px;
+            line-height: 40px;
+            background:rgba(255,164,35,1);
+            border-radius:10px;
+            font-size: 22px;
+            color: #FFFFFF;
+            display: flex;
+            padding: 0 9px;
+          }
+          .merchantFont_bold{
+            font-size:40px;
+            font-family:DINAlternate-Bold;
+            font-weight:bold;
+            height: 40px;
+            line-height: 40px;
+
+          }
+          .merchantFont_bfont{
+            height: 40px;
+            line-height: 42px;
+            font-weight:bold;
+          }
+        }
+        .merchant_bg1{
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/goshop.png") no-repeat;
+          background-size:100% 100% ;
+        }
+        .merchant_btnColor1{
+           background: #FF74A6;
+           margin-left: 14px;
+        }
+        .merchant_btnColor2{
+          background: #FFA423;
+          margin-left: 14px;
+        }
+        .merchant_bg2{
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/shareShop.png") no-repeat;
+          background-size:100% 100% ;
+        }
+
+        .merchant_takeCard2{
+          display: flex;
+          justify-content:space-between;
+          .merchant_takeCardAllbox{
+            width: 316px;
+            height: 154px;
+            border-radius: 20px;
+          }
+          .merchant_bg3{
+            background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/shop333.png") no-repeat;
+            background-size:100% 100% ;
+          }
+          .merchant_bg4{
+            background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/shop444.png") no-repeat;
+            background-size:100% 100% ;
+          }
+          .merchant_bg_title{
+            padding-top: 35px;
+            font-size: 24px;
+            height: 54px;
+            padding-left: 20px;
+            font-size:26px;
+            font-family:PingFang SC;
+            font-weight:600;
+            color:rgba(51,51,51,1);
+            line-height: 1;
+            text{
+              font-weight: bold;
+            }
+          }
+          .merchant_btnColor1{
+            margin-left: 40px;
+          }
+          .merchant_btnColor2{
+            margin-left: 40px;
+          }
+        }
+      }
+    }
+    .merchant_order{
+      background: #FFFFFF;
+      height: 98px;
+      padding:0 20px;
+      border-radius: 20px;
+      display: flex;
+      margin-top: 20px;
+      justify-content:space-between;
+      .merchant_orderTitle{
+        line-height: 98px;
+        color: #343434;
+        font-size: 30px;
+        font-weight: bold;
+      }
+      .merchant_orderTitle:before{
+        content: '';
+        display: inline-block;
+        margin-right: 17px;
+        vertical-align: middle;
+        margin-top: -7px;
+        width: 38px;
+        height: 28px;
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/diancan.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      .merchant_orderBtn{
+        width: 140px;
+        height: 64px;
+        line-height: 64px;
+        text-align: center;
+        background: #08C0C2;
+        margin-top: 18px;
+        border-radius: 32px;
+        color: #FFFFFF;
+        font-size: 30px;
+        font-weight: bold;
+      }
+    }
+    .merchant_shop_titleTab{
+      min-width: 86px;
+    }
+    .merchant_cook{
+      height: 330px;
+      background: #FD96A9;
+      margin-top: 20px;
+      border-radius: 20px;
+      color: #FFFFFF;
+      .merchant_cook_title{
+        height: 90px;
+        line-height: 90px;
+        font-weight: bold;
+        font-size:26px ;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        view:nth-child(1):before{
+          width: 38px;
+          height: 40px;
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/tuijian.png ") no-repeat;
+          background-size: 100% 100%;
+          content: '';
+          display: inline-block;
+          vertical-align: middle;
+          margin-top: -15px;
+          margin-right: 16px;
+          font-size: 0;
+        }
+        view:nth-child(2){
+           font-size: 20px;
+           font-weight:normal;
+        }
+        view:nth-child(2):after{
+          width: 11px;
+          height: 18px;
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_shop/tuijiango.png") no-repeat;
+          background-size: 100% 100%;
+          content: '';
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 0;
+          margin-top: -4px;
+          margin-left: 8px;
+        }
+      }
+      .merchant_cook_Details{
+        width: 678px;
+        height: 234px;
+        background: #FFFFFF;
+        margin: 0 auto;
+        border-radius:0px 0px 16px 16px;
+        overflow-X:auto ;
+        .merchant_cook_Img{
+          padding: 20px 14px;
+          display: flex;
+          flex-wrap: nowrap;
+          .merchant_cook_ImgBox{
+            width: 186px;
+            height: 193px;
+            margin-right: 20px;
+            view:nth-child(1){
+              width:186px;
+              height: 150px;
+              border-radius: 10px;
+              image{
+                width: 100%;
+                height: 100%;
+                vertical-align: middle;
+                border-radius: 10px;
+              }
+              img{
+                width: 100%;
+                height: 100%;
+                vertical-align: middle;
+                border-radius: 10px;
+              }
+            }
+            view:nth-child(2){
+              font-size: 24px;
+              color:#343434;
+              margin-top: 20px;
+              font-weight: 500;
+              max-width: 186px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

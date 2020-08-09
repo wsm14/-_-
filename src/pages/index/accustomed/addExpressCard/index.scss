@@ -1,0 +1,171 @@
+.page_add_express{
+  height: 100%;
+  position: relative;
+  color: rgba(52, 52, 52, 1);
+  font-size: 24px;
+  .add_expressName{
+    padding: 19px 30px 0px 30px;
+    line-height: 1;
+  }
+  .add_expressInput{
+    margin-top: 20px;
+    width: 100%;
+    height: 70px;
+    display: block;
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding-left: 20px;
+    font-size: 20px;
+    letter-spacing: 1px;
+
+  }
+  .placeholders{
+    color: rgba(165, 165, 165, 1);
+    font-size: 20px;
+  }
+  .add_expressDate{
+    box-sizing: border-box;
+    padding: 32px 32px 0px 27px;
+    .add_express_select{
+      margin-top: 22px;
+      justify-content: space-between;
+      .add_express_check{
+        width:81px;
+        height:81px;
+        border-radius:50%;
+        text-align: center;
+        line-height: 81px;
+      }
+      .add_express_onCheck{
+        background:rgba(255,233,237,1);
+        color: rgba(254, 156, 174, 1);
+        border:1px solid rgba(255,233,237,1);
+      }
+      .add_express_noCheck{
+        border:1px solid rgba(230,230,230,1);
+      }
+    }
+
+  }
+  .add_expressTime{
+    padding: 29px 30px 0px 27px;
+    .add_expressTimeBox{
+      padding: 20px;
+      background: #FFFFFF;
+      border-radius:10px;
+      margin: 20px 10px 0px 3px;
+      .add_expressTime_tags{
+        overflow: auto;
+        display: flex;
+        flex-wrap: wrap;
+        .add_expressTime_Btn{
+          width: 139px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 50px;
+          border-right:1px solid rgba(230,230,230,1);
+          .add_expressTime_BtnIcon{
+            width: 30px;
+            height: 30px;
+            background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon40.png") no-repeat;
+            background-size: 100% 100%;
+          }
+        }
+        .add_express_tag{
+          width: 141px;
+          height: 50px;
+          background: rgba(242, 242, 242, 1);
+          margin-left: 21px;
+          border-radius:10px;
+          line-height: 50px;
+          text-indent: 28px;
+          position: relative;
+          .close_express_tag{
+            position: absolute;
+            right: 11px;
+            top: 19px;
+            background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon39.png") no-repeat;
+            background-size: 100% 100%;
+            width: 17px;
+            height: 17px;
+          }
+        }
+        .add_express_left{
+          margin-left: 0;
+        }
+        .add_express_top{
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+  .add_express_submit{
+    position: absolute;
+    width: 416px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    font-size:28px;
+    font-family:PingFang SC;
+    font-weight:600;
+    color:rgba(255,255,255,1);
+    background: rgba(8, 192, 194, 1);
+    border-radius:35px;
+    bottom: 30px;
+    left: 167px;
+  }
+  .express_selected{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+    display: flex;
+    flex-direction: column-reverse;
+    .express_selectedBox{
+      height: 612px;
+      background: #FFFFFF;
+      border-radius:20px 20px 0px 0px;
+      .express_selectedBtn{
+        height: 94px;
+        line-height: 94px;
+        text-align: center;
+        font-size: 26px;
+        padding: 0 30px;
+        color: rgba(52, 52, 52, 1);
+        border-bottom: 1px solid rgba(230,230,230,1);
+        justify-content: space-between;
+      }
+      .express_closeBtn{
+        font-size:26px;
+        font-weight:400;
+        color:rgba(165,165,165,1);
+      }
+     .express_onBtn{
+       font-size:26px;
+       font-weight:600;
+       color:rgba(254,150,170,1);
+     }
+    }
+    .express_Picker{
+      height: 336px;
+      margin-top: 68px;
+      width: 100%;
+      .express_PickerViewColumn{
+        width: 375px;
+        line-height: 70px;
+        color: rgba(52, 52, 52, 1);
+        font-size: 30px;
+        .column1{
+          padding-left: 268px;
+        }
+        .column2{
+          padding-left: 112px;
+        }
+      }
+    }
+  }
+}

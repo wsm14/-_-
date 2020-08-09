@@ -1,0 +1,108 @@
+.Feedback_box{
+  display: flex;
+  flex-direction: column;
+  .Feedback_Problem{
+    padding: 30px 0 21px 30px;
+    font-size: 24px;
+    color: #A5A5A5;
+    background: #F2F2F2;
+  }
+  .Feedback_select{
+    background:#FFFFFF;
+    padding: 0 30px;
+    font-size: 24px;
+    .Feedback_option{
+      padding: 30px 0px 30px 0 ;
+      color:#333333;
+      border-bottom: 1px solid #E6E6E6;
+    }
+    .Feedback_option:before{
+      content:'';
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon/feekback_noselect.png") no-repeat;
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      background-size: 100% 100%;
+      margin-right: 20px;
+      vertical-align: sub;
+    }
+    .Feedback_optionTrue:before{
+      content:'';
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon/feek_select.png") no-repeat;
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      background-size: 100% 100%;
+      margin-right: 20px;
+      vertical-align: sub;
+    }
+    .Feedback_option:last-child{
+      border: 0px;
+    }
+  }
+  .Feedback_Textarea{
+    padding: 0 30px;
+  }
+  .Feedback_TextareaStyle{
+    border-radius: 20px;
+    font-size: 24px;
+    padding: 22px;
+    caret-color:#20C1C7;
+    color: #20C1C7;
+  }
+  .at-textarea__textarea{
+    color:#333333;
+    font-size:24px;
+    height: 199px;
+  }
+  .Feedback_save{
+    flex: 1;
+    flex-grow: 1;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 40px;
+     .Feedback_btn{
+       height: 70px;
+       width: 416px;
+       line-height: 70px;
+       text-align: center;
+       font-weight: bold;
+       color: #FFFFFF;
+       font-size: 28px;
+       margin: 0 auto;
+       background: #07C0C2;
+       border-radius: 35px;
+     }
+  }
+  .Feedback_float{
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .Feedback_float_Toast{
+      width: 550px;
+      height: 220px;
+      background: #FFFFFF;
+      text-align: center;
+      font-size: 26px;
+      color: rgba(51, 51, 51, 1);
+      border-radius: 20px;
+      .Feedback_float_title{
+        padding-top: 58px;
+      }
+      .Feedback_float_btn{
+        color: rgba(253, 150, 169, 1);
+        font-size: 28px;
+        padding-top: 47px;
+        font-weight: bold;
+      }
+    }
+  }
+}

@@ -1,0 +1,197 @@
+View{
+  line-height: 1;
+}
+clearfix{
+  display: flex;
+}
+.motion_frequency{
+  margin: 20px 30px;
+  justify-content: space-between;
+  .motion_all{
+    width: 336px;
+    height: 180px;
+    text-align: center;
+    position: relative;
+    line-height: 1;
+    .motion_partake_num{
+      padding-top:61px;
+      font-size: 71px;
+      height: 50px;
+      font-weight: bold;
+      color: rgba(255, 255, 255, 1);
+      color: #FFFFFF;
+    }
+    .motion_partake_name{
+      padding-top:26px;
+      font-size: 20px;
+      color: #FFFFFF;
+    }
+    .motion_partake{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width:160px;
+      height:46px;
+      background:rgba(101,205,250,1);
+      border-radius:20px 0px 20px 0px;
+      line-height: 46px;
+      font-size: 20px;
+      color: #FFFFFF;
+    }
+    .motion_partakeCard{
+      background: rgba(101,205,250,1);
+    }
+    .motion_partakeDays{
+      background: rgba(255, 156, 158, 1);
+    }
+  }
+  .motion_order{
+    background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon29.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .motion_day{
+    background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon28.png") no-repeat;
+    background-size: 100% 100%;
+  }
+}
+
+//参与打卡头部样式
+.motion_Chars{
+  margin: 0 30px 20px 30px;
+  height: 370px;
+  background: #FFFFFF;
+  border-radius:20px;
+  color: rgba(51, 51, 51, 1);
+  .motion_CharsTitle{
+    padding: 30px;
+
+    .motion_CharsTitleFont{
+      font-size: 28px;
+      font-weight: bold;
+      display: inline;
+    }
+    .motion_CharsTitleFont:before{
+      background:url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon30.png") no-repeat;
+      background-size:100% 100%;
+      width: 28px;
+      height: 28px;
+      content: '';
+      display: inline-block;
+      margin-right: 9px;
+      vertical-align: middle;
+      margin-top: -8px;
+    }
+  }
+}
+
+//图标样式
+
+.motion_tag{
+  margin: 0 30px 20px 30px;
+  background: #FFFFFF;
+  padding: 30px 30px 20px 30px;
+  border-radius:20px;
+  color: rgba(153, 153, 153, 1);
+  font-size: 24px;
+  .motion_Details{
+    margin:20px 0px 0px 0px;
+    height: 90px;
+    position: relative;
+    .motion_icon{
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      left: 18px;
+      top: 23px;
+    }
+    .motion_bg1{
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon23.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .motion_bg2{
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon20.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .motion_bg3{
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon22.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .motion_bg4{
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon26.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .motion_bg5{
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon24.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .motion_bg6{
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon31.png") no-repeat;
+        background-size: 100% 100%;
+      }
+    .motion_bg7{
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon25.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .motion_bg8{
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon27.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .motion_detailsBox{
+      padding-top: 19px;
+      padding-left: 83px;
+      font-weight: bold;
+      color: rgba(51, 51, 51, 1);
+      font-size: 26px;
+      height: 25px;
+      line-height: 22px;
+    }
+    .motion_detailsTime{
+      padding-top: 8px;
+      color: rgba(153, 153, 153, 1);
+      font-size: 20px;
+      font-weight: normal;
+      line-height: 22px;
+    }
+    .motion_checked{
+      width: 22px;
+      height: 18px;
+      position: absolute;
+      top: 36px;
+      right: 20px;
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon21.png");
+      background-size: 100% 100%;
+    }
+  }
+  .motion_color1{
+    background: rgba(213, 252, 255, 1);
+    border-radius: 10px;
+  }
+  .motion_color2{
+    background: rgba(255, 228, 225, 1);
+    border-radius: 10px;
+  }
+  .motion_color3{
+    background: rgba(230, 227, 255, 1);
+    border-radius: 10px;
+  }
+  .motion_color4{
+      background: rgba(219, 234, 255, 1);
+      border-radius: 10px;
+    }
+  .motion_color5{
+    background: rgba(255, 244, 218, 1);
+    border-radius: 10px;
+  }
+  .motion_color6{
+    background: rgba(217, 244, 202, 1);
+    border-radius: 10px;
+  }
+  .motion_color7{
+    background: rgba(255, 222, 239, 1);
+    border-radius: 10px;
+  }
+  .motion_color8{
+    background: rgba(214, 246, 255, 1);
+    border-radius: 10px;
+  }
+}

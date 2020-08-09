@@ -1,0 +1,130 @@
+@font-face {
+  font-family: DINAlternate-bold;
+  src: url('https://dakale-website.oss-cn-hangzhou.aliyuncs.com/common/font/DINAlternate-bold.otf')
+}
+.hibitCard_box{
+  height: 100%;
+  line-height: 1;
+  position: relative;
+  .hibitCard_dates{
+    position: absolute;
+    top: 142px;
+    right: 20px;
+    width: 99px;
+    text-align: center;
+    .hibitCard_mounth{
+      font-size:64px;
+      font-family:DINAlternate-bold;
+      font-weight:bold;
+      color:rgba(255,255,255,1);
+    }
+    .hibitCard_years{
+      margin-top: 11px;
+      font-size:26px;
+      font-weight:600;
+      color:rgba(255,255,255,1);
+    }
+  }
+  .hibitCard_title{
+    height: 110px;
+    .hibitCard_titleTop{
+      padding-top: 59px;
+      position: relative;
+      .hibitCard_titleIcon{
+        height:33px;
+        font-size:34px;
+        font-family:PingFang SC;
+        font-weight:600;
+        color:rgba(255,255,255,1);
+        padding-top: 6px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .hibitCard_titleBack{
+        position: absolute;
+        left: 30px;
+        top: 59px;
+        width: 50px;
+        height: 50px;
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon47.png") no-repeat;
+        background-size: 100% 100%;
+        z-index: 10;
+      }
+    }
+  }
+  .hibitCard_user{
+    margin-left: 31px;
+    margin-top: 28px;
+    font-size:26px;
+    color: #FFFFFF;
+    .hibitCard_eatFood{
+      padding-top: 16px;
+    }
+  }
+  .hibitCard_details{
+    margin-top: 282px;
+    margin-left: 29px;
+    .hibitCard_dateTitle{
+      font-size:20px;
+      font-family:PingFang SC;
+      font-weight:600;
+      color:rgba(255,255,255,1);
+    }
+    .hibitCard_date{
+      margin-top: 10px;
+      font-weight:600;
+      color:rgba(255,255,255,1);
+      .hibitCard_datenum{
+        font-size: 44px;
+      }
+    }
+    .hibitCard_nowDate{
+      margin-top: 39px;
+      font-size:20px;
+      font-weight:600;
+      color:rgba(255,255,255,1);
+    }
+    .hibitCard_nowTime{
+      margin-top: 10px;
+      font-size:44px;
+      font-weight:600;
+      color:rgba(255,255,255,1);
+    }
+    .hibitCard_people{
+      margin-top: 59px;
+      font-size:20px;
+      font-family:PingFang SC;
+      font-weight:600;
+      color:rgba(255,255,255,1);
+      .hibitCard_onPartake{
+        color: rgba(230, 230, 230, 1);
+      }
+    }
+  }
+  .hibitCard_btn{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100px;
+    bottom: 75px;
+    text-align: center;
+    .hibitCard_submit{
+      width: 416px;
+      height: 70px;
+      line-height: 70px;
+      background:rgba(255,255,255,1);
+      border-radius:35px;
+      font-size:28px;
+      font-weight:600;
+      color:rgba(34,197,199,1);
+      text-align: center;
+      margin: 0 auto;
+    }
+    .hibitCard_Toast{
+      margin-top: 9px;
+      font-size:20px;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+    }
+  }
+}

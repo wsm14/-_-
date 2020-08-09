@@ -1,0 +1,601 @@
+page{
+  background: #FAFAFA;
+  min-height: 100%;
+}
+.index_box{
+  position: relative;
+  min-height: 100%;
+  .index_title{
+    width: 100%;
+    height: 710px;
+    background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/tpopic@2x.png") no-repeat;
+    background-size:100% 100%;
+
+    .index_title_information{
+      padding:70px 30px 0 30px;
+      height: 70px;
+      image{
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+        border-radius: 60px;
+      }
+      .index_title_informationImg{
+        width: 70px;
+        height: 70px;
+      }
+      .index_user_details{
+        margin-left: 15px;
+        color: #FFFFFF;
+        .index_user_name{
+          height: 34px;
+          line-height: 34px;
+          font-size: 28px;
+          font-weight:bold;
+        }
+        .index_user_record{
+          height: 38px;
+          line-height: 38px;
+          font-size: 22px;
+        }
+      }
+    }
+  }
+  .index_body{
+    padding: 42px 30px 34px 30px;
+    position: relative;
+    margin-top: -30px;
+    z-index: 10;
+    border-radius: 20px 20px 0px 0px;
+    background:#FAFAFA ;
+    .index_exercise{
+      .index_exerciseTab{
+        width: 217px;
+        height: 160px;
+        position: relative;
+      }
+      .index_exercise_title{
+        line-height: 1;
+        padding-top: 28px;
+        padding-left: 19px;
+        height:32px;
+        font-size:34px;
+        font-family:PingFang SC;
+        font-weight:600;
+        color:rgba(51,51,51,1);
+      }
+      .index_exercise_golink{
+         margin-left: 19px;
+         line-height: 1;
+         margin-top: 17px;
+         width: 78px;
+         height: 36px;
+      }
+      .index_exercise_coBg{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 117px;
+        height: 92px;
+      }
+      .index_exerciseTab_bg1{
+        background: url("https://web-new.dakale.net/public/image/daodian.png") no-repeat;
+        background-size: 100% 100%;
+        .index_exercice_bg1{
+          background: url("https://web-new.dakale.net/public/image/business1x.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        .index_golink_icon{
+          background: url("https://web-new.dakale.net/public/image/goLink1.png") no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+      .index_exerciseTab_bg2{
+        background: url("https://web-new.dakale.net/public/image/jiankang.png") no-repeat;
+        background-size: 100% 100%;
+        .index_exercice_bg2{
+          background: url("https://web-new.dakale.net/public/image/healthy1x.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        .index_golink_icon{
+          background: url("https://web-new.dakale.net/public/image/golink2.png") no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+      .index_exerciseTab_bg3{
+        background: url("https://web-new.dakale.net/public/image/xiguan.png") no-repeat;
+        background-size: 100% 100%;
+        .index_exercice_bg3{
+          background: url("https://web-new.dakale.net/public/image/habit1.png") no-repeat;
+          background-size: 100% 100%;
+        }
+        .index_golink_icon{
+          background: url("https://web-new.dakale.net/public/image/golink3.png") no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+
+      .index_exercise_Activity{
+        padding:27px 0  0 19px;
+       .index_exercise_title{
+         height: 31px;
+         line-height: 37px;
+         font-size: 32px;
+         font-weight: bold;
+         color: #333333;
+       }
+       .index_exercise_data{
+           height: 23px;
+           font-size: 24px;
+           line-height: 37px;
+           margin-top: 9px;
+       }
+       .index_exercise_link{
+         margin-top: 20px;
+         height: 26px;
+         line-height: 26px;
+         font-size: 20px;
+         color: #FFFFFF;
+         width: 50px;
+         border-radius: 12.5px;
+         padding: 0 7px;
+         .link_font:after{
+           display: inline-block;
+           content: '';
+           width: 12px;
+           height: 18px;
+           margin-left: 7px;
+           background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/index_icon5.png");
+           background-size: 100% 100%;
+           margin-top: -3px;
+           vertical-align: middle;
+         }
+       }
+      }
+      .index_exercise_box{
+        width: 335px;
+        height: 156px;
+        border-radius: 20px;
+      }
+      .index_exercise_iconbox{
+        display: flex;
+        align-items: flex-end;
+      }
+      .index_exercise_icon{
+        width: 140px;
+        height: 110px;
+        align-items: flex-end;
+      }
+      .index_exercise_one{
+        background: #CCEFEF;
+        .index_exercise_iconImg{
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/index_icon1.png");
+          background-size: 100% 100%;
+        }
+        .index_exercise_color{
+          background: #069C9E
+        }
+      }
+      .index_exercise_two{
+        background: #F5E8CB;
+        .index_exercise_iconImg{
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/index_icon2.png");
+          background-size: 100% 100%;
+        }
+        .index_exercise_color{
+          background: #FFA21E;
+        }
+      }
+      .index_exercise_three{
+        background: #F9E3ED;
+        .index_exercise_iconImg{
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/index_icon3.png");
+          background-size: 100% 100%;
+        }
+        .index_exercise_color{
+          background: #FD96A9;
+        }
+      }
+      .index_exercise_four{
+        background: #CFEEDD;
+        .index_exercise_iconImg{
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/index_icon4.png");
+          background-size: 100% 100%;
+        }
+        .index_exercise_color{
+          background: #2CC571;
+        }
+      }
+      .index_exercise_margin{
+        margin-top: 30px;
+      }
+    }
+    //打卡列
+    .index_notice{
+      width: 690px;
+      height: 127px;
+      background: #FFFFFF;
+      border-radius: 20px;
+      margin: 0 auto;
+      margin-top:31px;
+      .index_notice_box{
+        padding: 14px 20px 13px 20px;
+        .index_notice_left{
+           height: 100px;
+          .index_notice_img{
+            width: 100px;
+            height: 100px;
+            background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/index_icon7.png") no-repeat;
+            background-size: 100% 100%;
+          }
+          .index_notice_font{
+            margin-left: 20px;
+            .index_notice_fontContext{
+              font-size:24px;
+              color:#333333;
+              margin-top: 19px;
+              height: 24px;
+              line-height: 22px;
+              text{
+                display: inline-block;
+                margin-left: 19px;
+                color: #A5A5A5;
+              }
+            }
+            .index_notice_fontContext:before{
+              width: 5px;
+              height: 5px;
+              content: '';
+              background:url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/index_icon8.png");
+              background-size: 100% 100%;
+              display: inline-block;
+              vertical-align: middle;
+              margin-top: -3px;
+              margin-right: 10px;
+            }
+          }
+        }
+        .index_notice_right{
+          width: 12.5px;
+          height: 24px;
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/index_icon6.png") no-repeat;
+          background-size: 100% 100%;
+          vertical-align: middle;
+          margin-top: 38px;
+        }
+      }
+    }
+    //通知列
+    .index_banner{
+      width: 690px;
+      height: 161px;
+      background: #FFFFFF;
+      border-radius: 80px;
+      margin:30px 0;
+      image{
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+      }
+    }
+    .page_goLink{
+      margin: 40px 0px 20px;
+      display: flex;
+      justify-content:space-between;
+      .page_goLink_left{
+        font-size:26px;
+        font-family:PingFang SC;
+        font-weight:600;
+        color:rgba(51,51,51,1);
+        line-height:42px;
+      }
+      .page_goLink_right{
+        font-size:24px;
+        font-family:PingFang SC;
+        font-weight:400;
+        color:rgba(165,165,165,1);
+        line-height:42px
+      }
+      .page_goLink_right:after{
+        width: 12px;
+        height: 23px;
+        display: inline-block;
+        content: '';
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/golink.png");
+        background-size: 100% 100%;
+        vertical-align: middle;
+        margin-left: 12px;
+      }
+    }
+    .page_golink_box{
+    }
+  }
+}
+
+  .MerchantDetails_style{
+    position: relative;
+    width: 690px;
+    height: 200px;
+    line-height: 1;
+    margin: 0 auto;
+    margin-top: 20px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    .MerchantDetails_toastBean{
+      position: absolute;
+      right: 0;
+      padding:15px 8px;
+      font-size: 20px;
+      color: #FFFFFF;
+      text{
+        font-size: 28px;
+        font-weight: bold;
+      }
+      text:after{
+        width: 20px;
+        height: 18px;
+        content: '';
+        display: inline-block;
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/bean.png") no-repeat;
+        background-size: 100% 100%;
+        margin-left: 6px;
+      }
+    }
+    .MerchantDetails_takecard{
+      position: absolute;
+      padding: 15px 19px;
+      background: #FFFFFF;
+      font-size: 22px;
+      border-radius: 25px;
+      font-weight: bold;
+      right: 0;
+      top: 101px;
+      right: 20px;
+    }
+    .MerchantDetails_takeCardStyle1{
+      color: rgba(254, 150, 170, 1);
+      border:1px solid rgba(253,150,169,1);
+
+    }
+    .MerchantDetails_toastBeanStyle1{
+      background:rgba(253,150,170,1);
+      opacity:0.8;
+      border-radius:0px 0px 0px 20px;
+    }
+    .MerchantDetails_toastBeanStyle2{
+      background:rgba(8, 192, 194, 1);
+      opacity:0.8;
+      border-radius:0px 0px 0px 20px;
+    }
+    .MerchantDetails_takeCardStyle2{
+      color: rgba(8, 192, 194, 1);
+      border:1px solid rgba(8, 192, 194, 1);
+
+    }
+
+    .MerchantDetails_Img{
+      width:160px;
+      height: 160px;
+      margin: 20px;
+      border-radius: 20px;
+      image{
+        text-align: center;
+        border-radius: 20px;
+        vertical-align: middle;
+      }
+    }
+    .MerchantDetails_information{
+      padding-top: 19px;
+      .MerchantDetails_name{
+        font-size: 26px;
+        color: rgba(51, 51, 51, 1);
+        font-weight: bold;
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .MerchantDetails_tag{
+        margin-top: 16px;
+      }
+      .MerchantDetails_tagStyle{
+        padding: 9px 16px;
+        border-radius: 18px;
+        display: inline-block;
+        font-size: 0;
+        margin-right: 12px;
+      }
+      .MerchantDetails_tagStyle:last-child{
+        margin-right: 0px;
+      }
+      .MerchantDetails_tagStyleColor1{
+        font-size: 20px;
+        color: rgba(253, 150, 169, 1);
+        background: rgba(255, 229, 230, 1);
+      }
+      .MerchantDetails_takeCardnum{
+        margin-top: 22px;
+        font-size: 20px;
+        color: rgba(119, 119, 119, 1);
+        .MerchantDetails_numStyleColor1{
+          color: rgba(253, 150, 169, 1);
+        }
+        .MerchantDetails_numStyleColor2{
+          color: rgba(7, 192, 194, 1);
+        }
+      }
+      .MerchantDetails_tagStyleColor2{
+        font-size: 20px;
+        color: rgba(7, 192, 194, 1);
+        background: rgba(225, 255, 255, 1);
+      }
+      .MerchantDetails_takeLimit{
+        margin-top: 17px;
+        font-size: 20px;
+        color: rgba(119, 119, 119, 1);
+      }
+    }
+  }
+.lookshare_bodyBox{
+  -moz-column-count:2;
+  /* Firefox */
+  -webkit-column-count:2;
+  /* Safari 和 Chrome */
+  column-count:2;
+  -moz-column-gap:20px;
+  -webkit-column-gap:20px;
+  column-gap:20px;
+  padding-bottom: 20px;
+  .lookshare_VideoAll{
+    margin-top: 20px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    display: inline-block;
+    width: 335px;
+    .lookshare_Img{
+      width: 335px;
+      height: 335px;
+      border-radius: 20px 20px 0 0;
+      position: relative;
+      .lookshare_tagType{
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius:20px 0px 20px 0px;
+        background: #07C0C2;
+        padding: 5px 15px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #FFFFFF;
+      }
+      .lookshare_VideoIcon{
+        position: absolute;
+        right: 11px;
+        top: 10px;
+        width: 50px;
+        height: 50px;
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon3.png") no-repeat;
+        background-size:100% 100% ;
+      }
+      .lookshare_beanNum{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        color: #FFFFFF;
+        font-size: 20px;
+        background: #FD96A9;
+        border-radius: 20px 0px 0px 0px;
+        padding: 16px 15px;
+        .lookshare_num{
+          color: #FFFFFF;
+          font-weight: bold;
+          font-size: 26px;
+        }
+        .lookshare_num:after{
+          content: '';
+          width: 20px;
+          height: 18px;
+          margin-left: 10px;
+          display: inline-block;
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon4.png") no-repeat;
+          background-size:100% 100% ;
+        }
+      }
+    }
+    .lookshare_ImgTitle{
+      padding: 0 30px 0 20px;
+      margin-top: 20px;
+      line-height: 39px;
+      font-size: 26px;
+      max-height: 78px;
+      color: #333333;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      word-break: break-all;
+      -webkit-line-clamp: 2;
+      /* autoprefixer: ignore next */
+      -webkit-box-orient: vertical;
+    }
+    .lookshare_accress{
+      margin: 16px 20px 0 20px;
+      width: 295px;
+      height: 42px;
+      background: #07C0C2;
+      line-height: 42px;
+      font-size: 20px;
+      color: #FFFFFF;
+      font-weight: bold;
+      border-radius: 21px;
+      .lookshare_accressBox{
+        padding:0 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .lookshare_accressBox:before{
+        content:'';
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon5.png") no-repeat;
+        vertical-align: middle;
+        background-size: 100% 100%;
+        margin-right: 8px;
+      }
+    }
+    .lookshare_tag{
+      margin:21px 30px 5px 20px;
+      line-height: 1;
+      overflow-x: scroll;
+      white-space: nowrap;
+      .tag_Details{
+        background: #FFFFFF;
+        color: #FD96A9;
+        border-radius: 10px;
+        border: 1px solid #FD96A9;
+        font-size: 20px;
+        padding: 6px 13px;
+        line-height: 1;
+        display: inline-block;
+        margin-right: 9px;
+      }
+      .tag_Details:last-child{
+        margin-right: 0px;
+      }
+    }
+    .lookshare_user{
+      height: 90px;
+      align-items: center;
+      padding: 0 20px;
+      position: relative;
+      .lookshare_userImg{
+        width:50px;
+        height: 50px;
+        background: #777777;
+        border-radius: 50px;
+      }
+      .lookshare_username{
+        font-size: 24px;
+        color: #333333;
+        font-weight: bold;
+        margin-left: 11px;
+      }
+      .lookshare_imageText{
+        position: absolute;
+        right: 0;
+        top: 34px;
+      }
+    }
+    .lookshare_data{
+      line-height: 1;
+      padding:0px 20px 20px 20px;
+      font-size: 20px;
+      justify-content: space-between;
+      color: #A5A5A5;
+      .lookshare_blue{
+        color: #07C0C2;
+      }
+    }
+  }
+}

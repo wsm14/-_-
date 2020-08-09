@@ -1,0 +1,363 @@
+@font-face {
+  font-family: ZhenyanGB-Regular;
+  src: url('https://dakale-website.oss-cn-hangzhou.aliyuncs.com/common/font/ZhenyanGB-Regular.ttf')
+}
+.Accustomed_box{
+  height: 100%;
+  line-height: 1;
+  .Accustomed_title{
+    position: relative;
+    text-align: center;
+    height: 674px;
+    background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon45.png") no-repeat;
+    background-size: 100% 100%;
+    .Accustomed_titleTop{
+      padding-top: 59px;
+      position: relative;
+      .Accustomed_titleIcon{
+        width: 253px;
+        height: 49px;
+        margin: 0 auto;
+        margin-top: 1px;
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon46.png") center/cover;
+      }
+      .Accustomed_titleBack{
+        position: absolute;
+        left: 30px;
+        top: 59px;
+        width: 50px;
+        height: 50px;
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon47.png") no-repeat;
+        background-size: 100% 100%;
+        z-index: 10;
+      }
+    }
+    .Accustomed_titleBean{
+      height: 25px;
+      text-align: center;
+      color: rgba(255, 255, 255, 1);
+      font-size: 26px;
+      margin: 94px auto 0 auto;
+    }
+    .Accustomed_titleBeanNum{
+      color: rgba(255, 239, 60, 1);
+      font-size: 66px;
+      margin-top: 21px;
+      text-align: center;
+      font-family: ZhenyanGB-Regular;
+    }
+    .Accustomed_titleCard_times{
+      padding-right: 30px;
+      display: inline-block;
+      margin: 0 auto;
+      margin-top: 41px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 25px;
+      height: 50px;
+      line-height: 50px;
+      color: #FFFFFF;
+      font-size: 20px;
+      .Accustomed_titleCard_date{
+        display: inline-block;
+        width: 107px;
+        height: 50px;
+        line-height: 50px;
+        background: #FFFFFF;
+        color: rgba(51, 51, 51, 1);
+        text-align: center;
+        border-radius: 25px;
+      }
+      .Accustomed_titleCard_dateTime{
+        display: inline-block;
+        text-indent: 33px;
+        font-weight: bold;
+      }
+
+    }
+    .Accustomed_titleCard_record{
+      width: 354px;
+      height: 50px;
+      line-height: 50px;
+      background: rgba(0, 0, 0, 0.2);
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 25px;
+      margin: 166px auto 0 auto;
+      .Accustomed_titleCard_aguments{
+        color: rgba(253, 150, 169, 1);
+      }
+    }
+  }
+  .Accustomed_body{
+    padding: 0 30px 20px 30px;
+    margin-top: -30px;
+    position: relative;
+    z-index: 20;
+    .Accustomed_itemize{
+      display: flex;
+      justify-content:space-between;
+      flex-wrap: wrap;
+      .Accustomed_habit{
+        width: 335px;
+        height: 140px;
+        color: rgba(51, 51, 51, 1);
+        font-size: 32px;
+        font-weight: bold;
+        .Accustomed_habit_title{
+          padding-top: 28px;
+          padding-left: 57px;
+        }
+        .Accustomed_habit_btn{
+          width: 109px;
+          height: 32px;
+          line-height: 32px;
+          font-size: 20px;
+          color: rgba(255, 255, 255, 1);
+          border-radius: 16px;
+          margin-left: 34px;
+          margin-top: 20px;
+          text-align: center;
+          font-weight:normal;
+        }
+        .Accustomed_habit_btnIcon:before{
+          width: 19px;
+          height: 19px;
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon54.png") no-repeat;
+          background-size: 100% 100%;
+          display: inline-block;
+          content: '';
+          vertical-align: middle;
+          margin: -4px 7px 0px -8px;
+        }
+        .Accustomed_census{
+          width: 108px;
+          height: 108px;
+          margin: 0 auto;
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon55.png") no-repeat;
+          background-size: 100% 100%;
+          color: rgba(7, 192, 194, 1);
+          .Accustomed_censusNow{
+             font-size: 18px;
+             text-align: center;
+             padding-top: 31px;
+             font-weight: normal;
+          }
+          .Accustomed_term{
+            font-size: 20px;
+            padding-top: 10px;
+            font-weight: bold;
+            text-align: center;
+          }
+        }
+      }
+      .Accustomed_habitbg1{
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon48.png") no-repeat;
+        background-size: 100% 100%;
+        .btncolor{
+          background: rgba(30, 214, 214, 1);
+        }
+      }
+      .Accustomed_habitbg2{
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon49.png") no-repeat;
+        background-size: 100% 100%;
+        .btncolor{
+          background:rgba(255, 176, 92, 1);
+        }
+      }
+      .Accustomed_habitbg3{
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon50.png") no-repeat;
+        background-size: 100% 100%;
+        margin-top: 20px;
+        .btncolor{
+          background: rgba(255, 140, 140, 1);
+        }
+      }
+      .Accustomed_habitbg4{
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon51.png") no-repeat;
+        background-size: 100% 100%;
+        margin-top: 20px;
+        .btncolor{
+          background: rgba(188, 154, 254, 1);
+        }
+      }
+      .Accustomed_habitbg5{
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon52.png") no-repeat;
+        background-size: 100% 100%;
+        margin-top: 20px;
+        .btncolor{
+          background: rgba(149, 215, 99, 1);
+        }
+       }
+      .Accustomed_habitbg6{
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon53.png") no-repeat;
+        background-size: 100% 100%;
+        margin-top: 20px;
+       }
+    }
+    //早起挑战赛报名前面部分
+    .Accustomed_enlist{
+      height: 257px;
+      margin-top: 31px;
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon56.png") no-repeat center/cover;
+    }
+    //早起挑战赛报名
+    .Accustomed_express{
+      margin-top: 32px;
+      .Accustomed_expressTitle{
+        font-size:28px;
+        font-weight:600;
+        color:rgba(51,51,51,1);
+      }
+      .Accustomed_expressTitle:before{
+        width: 38px;
+        height: 32px;
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon57.png") no-repeat;
+        background-size: 100% 100%;
+        display: inline-block;
+        content:'';
+        vertical-align: middle;
+        margin-right: 9px;
+        margin-top: -7px;
+      }
+      .Accustomed_expressDetails{
+        color: rgba(165, 165, 165, 1);
+        font-size: 20px;
+        margin-top: 10px;
+        text-indent: 2px;
+      }
+      .Accustomed_expresstakeCard{
+        background: #FFFFFF;
+        border-radius: 20px;
+        margin-top: 20px;
+
+      }
+    }
+    .Accustomed_insertTakeCard{
+      height: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .Accustomed_insertBtn{
+        width:568px;
+        height:60px;
+        border-radius:10px;
+        line-height: 60px;
+        text-align: center;
+        font-size:20px;
+        font-weight:600;
+        color:rgba(255,255,255,1);
+        .Accustomed_insertBtnIcon:before{
+          width: 28px;
+          height: 28px;
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon58.png") no-repeat;
+          background-size: 100% 100%;
+          display: inline-block;
+          content:'';
+          vertical-align: middle;
+          margin-right: 9px;
+          margin-top: -4px;
+        }
+      }
+      .color1{
+        background: rgba(253,150,169,1);
+      }
+      .color2{
+        background: rgba(7, 192, 194, 1);
+      }
+    }
+    .Accustomed_listTakeCard{
+      height: 110px;
+      margin:0 20px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: rgba(230,230,230,1) 1px solid;
+      .Accustomed_listTakeleft{
+        .listTakeleft_icon{
+          width: 70px;
+          height: 70px;
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon36.png") no-repeat;
+          background-size: 100% 100%;
+          margin-top: 20px;
+        }
+        .listTakeleft_details{
+          margin-left: 10px;
+          .details_title{
+            padding-top: 28px;
+            font-size: 26px;
+            color: rgba(51, 51, 51, 1);
+            font-weight: bold;
+          }
+          .details_Date{
+            padding-top: 9px;
+            color: rgba(165, 165, 165, 1);
+            font-size: 20px;
+            .dateTime{
+              color: rgba(7, 192, 194, 1);
+              font-weight: bold;
+            }
+          }
+        }
+      }
+      .Accustomed_listTakerignt{
+        width: 91px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 20px;
+        font-size: 20px;
+        margin-top: 35px;
+      }
+      .Accustomed_listRightColor1{
+        border: 1px solid rgba(7, 192, 194, 1);
+        color: rgba(7, 192, 194, 1);
+      }
+      .Accustomed_listRightColor2{
+        border: 1px solid rgba(165, 165, 165, 1);
+        color: rgba(165, 165, 165, 1);
+      }
+    }
+    //关爱打卡
+    .Accustomed_customize{
+       margin-top: 29px;
+      .Accustomed_customizeTitle{
+        font-size:28px;
+        font-weight:600;
+        color:rgba(51,51,51,1);
+      }
+      .Accustomed_customizeTitle:before{
+        width: 34px;
+        height: 34px;
+        background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon59.png") no-repeat;
+        background-size: 100% 100%;
+        display: inline-block;
+        content:'';
+        vertical-align: middle;
+        margin-right: 9px;
+        margin-top: -7px;
+      }
+      .Accustomed_customizeTakeCard{
+        background: #FFFFFF;
+        border-radius: 20px;
+        margin-top: 20px;
+      }
+    }
+    //自定义习惯
+  }
+  .Accustomed_tabbar{
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   width: 100%;
+   height: 98px;
+   background: #FFFFFF;
+   .Accustomed_tabbarBox{
+    margin: 15px 241px 13px 221px;
+    font-size: 20px;
+    font-weight: bold;
+    justify-content: space-between;
+   }
+ }
+}

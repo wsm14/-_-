@@ -1,0 +1,34 @@
+.Toast_box{
+  background: #F2F2F2;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 24px;
+  color:#A5A5A5;
+  position: relative;
+  z-index: 10;
+  image{
+    width: 24px;
+    height:24px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-left: 10px;
+  }
+}
+@keyframes mymove {
+  from {
+    /* left: 0px; */
+    /* transform: rotate(7deg) skew(50deg) translate(30rpx,30rpx); */
+    transform: rotateZ(0deg);
+  }
+  to {
+    /* left: 200px; */
+    /* transform: rotate(7deg) skew(5deg) translate(100rpx,100rpx); */
+    transform:  rotateZ(360deg);
+  }
+}
+.aniamtion {
+  animation: mymove 1s infinite linear;
+  /* //infinite属性是表示无限循环的意思，没有这个属性的话动画只执行一次。 */
+}

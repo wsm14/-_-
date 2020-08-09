@@ -1,0 +1,523 @@
+view{
+  line-height: 1;
+}
+text{
+  line-height: 1;
+}
+f{
+  display: flex;
+
+}
+
+.perimeter_box{
+  height: 100%;
+  box-sizing: border-box;
+  .perimeter_banner{
+    width: 100%;
+    height: 450px;
+    background: #FD96A9;
+  }
+  //轮播图样式
+  .perimeter_search{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding:0 30px;
+    height: 114px;
+    padding-bottom: 20px;
+    z-index: 100;
+    .perimeter_goBack{
+      content: '';
+      display: inline-block;
+      width: 17px;
+      height: 29px;
+      vertical-align: middle;
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/icon5.png") no-repeat;
+      background-size: 100% 100%;
+      margin-top: 72px;
+      margin-right: 29px;
+    }
+    .perimeter_city{
+      padding-top: 72px;
+      font-size: 26px;
+      color: #FFFFFF;
+      font-weight: bold;
+    }
+    //.perimeter_city:after{
+    //  content: '';
+    //  display: inline-block;
+    //  width: 23px;
+    //  height: 15px;
+    //  vertical-align: middle;
+    //  background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/xiala2.png") no-repeat;
+    //  background-size: 100% 100%;
+    //  margin: -2px 0 0 10px;
+    //}
+    .perimeter_searchInput{
+      //background:url(https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/search.png) center left no-repeat;
+      width: 380px;
+      height: 60px;
+      margin-left: 31px;
+      margin-top: 54px;
+      display: flex;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.3);
+      color: #FFFFFF;
+      font-size: 22px;
+      line-height: 60px;
+    }
+    .perimeter_searchIcon{
+      width: 25px;
+      height: 27px;
+      background:url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/search.png") no-repeat;
+      background-size: 100% 100%;
+      margin-top: 18px;
+      margin-left: 20px;
+      margin-right: 8px;
+    }
+    .placeholderClass{
+      color: rgba(255, 255, 255, 1);
+    }
+    .perimeter_Inputseach{
+      height: 60px;
+    }
+
+  }
+  //搜索框样式
+  .perimeter_scolly{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 134px;
+    height: 87px;
+    line-height: 87px;
+    background: #FFFFFF;
+    z-index: 100;
+    .page_select_top{
+      padding: 0;
+      margin:30px;
+    }
+  }
+
+  //选择样式
+  .perimeter_select{
+     vertical-align: middle;
+     position: relative;
+     padding: 30px 30px 10px 30px;
+    .perimeter_space{
+      color: rgba(51, 51, 51, 1);
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .perimeter_space:after{
+      content: '';
+      background: url('https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/space.png') no-repeat;
+      background-size: 100% 100%;
+      width: 18px;
+      height: 10px;
+      display: inline-block;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .perimeter_spaceChecked{
+      color: rgba(51, 51, 51, 1);
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .perimeter_spaceChecked:after{
+      content: '';
+      background: url('https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon103.png') no-repeat;
+      background-size: 100% 100%;
+      width: 18px;
+      height: 10px;
+      display: inline-block;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .perimeter_checkSelect{
+      color: rgba(51, 51, 51, 1);
+      font-size: 28px;
+      font-weight: bold;
+      margin-left: 50px;
+    }
+    .perimeter_checkSelect:after{
+      content: '';
+      background: url('https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/select.png') no-repeat;
+      background-size: 100% 100%;
+      width: 105px;
+      height: 8px;
+      display:block;
+      margin-left:5px;
+      margin-top: -8px;
+      vertical-align: middle;
+    }
+    .perimeter_noCheckSelect{
+      color: rgba(85, 85, 85, 1);
+      font-size: 24px;
+      margin-left: 34px;
+      padding-top: 2px;
+      vertical-align: middle;
+    }
+    .perimeter_select_right{
+      padding-top: 2px;
+      color: rgba(85, 85, 85, 1);
+      font-size: 24px;
+
+    }
+    .perimeter_select_right:before{
+      content: '';
+      background: rgba(204, 204, 204, 1);
+      width:2px;
+      height:28px;
+      display:inline-block;
+      margin-right: 29px;
+      border-radius:1px;
+      vertical-align: middle;
+    }
+    .perimeter_select_right:after{
+      content: '';
+      background: url('https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/shaixuan.png') no-repeat;
+      background-size: 100% 100%;
+      width: 22px;
+      height: 21px;
+      display:inline-block;
+      margin-left: 9px;
+    }
+  }
+  .perimeter_Merchant{
+    border-radius: 20px 20px 0px 0px;
+    position: relative;
+    margin-top: -20px;
+    z-index: 10;
+    background: rgba(242, 242, 242, 1);
+    .fixTab{
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+    }
+
+    //筛选条件样式
+    .perimeter_MerchantDetails{
+      .MerchantDetails_style{
+        position: relative;
+        width: 690px;
+        height: 200px;
+        margin: 0 auto;
+        margin-top: 20px;
+        margin-bottom:20px;
+        background: #FFFFFF;
+        border-radius: 20px;
+        .MerchantDetails_toastBean{
+          position: absolute;
+          right: 0;
+          padding:15px 8px;
+          font-size: 20px;
+          color: #FFFFFF;
+          text{
+            font-size: 28px;
+            font-weight: bold;
+          }
+          text:after{
+            width: 20px;
+            height: 18px;
+            content: '';
+            display: inline-block;
+            background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/bean.png") no-repeat;
+            background-size: 100% 100%;
+            margin-left: 6px;
+          }
+        }
+        .MerchantDetails_takecard{
+          position: absolute;
+          padding: 15px 19px;
+          background: #FFFFFF;
+          font-size: 22px;
+          border-radius: 25px;
+          font-weight: bold;
+          right: 0;
+          top: 101px;
+          right: 20px;
+        }
+        .MerchantDetails_takeCardStyle1{
+          color: rgba(254, 150, 170, 1);
+          border:1px solid rgba(253,150,169,1);
+
+        }
+        .MerchantDetails_toastBeanStyle1{
+          background:rgba(253,150,170,1);
+          opacity:0.8;
+          border-radius:0px 0px 0px 20px;
+        }
+        .MerchantDetails_toastBeanStyle2{
+          background:rgba(8, 192, 194, 1);
+          opacity:0.8;
+          border-radius:0px 0px 0px 20px;
+        }
+        .MerchantDetails_takeCardStyle2{
+          color: rgba(8, 192, 194, 1);
+          border:1px solid rgba(8, 192, 194, 1);
+
+        }
+
+        .MerchantDetails_Img{
+          width:160px;
+          height: 160px;
+          margin: 20px;
+          border-radius: 20px;
+          image{
+            text-align: center;
+            border-radius: 20px;
+            vertical-align: middle;
+          }
+        }
+        .MerchantDetails_information{
+           padding-top: 19px;
+          .MerchantDetails_name{
+            font-size: 26px;
+            color: rgba(51, 51, 51, 1);
+            font-weight: bold;
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .MerchantDetails_tag{
+            margin-top: 16px;
+          }
+          .MerchantDetails_tagStyle{
+            padding: 9px 16px;
+            border-radius: 18px;
+            display: inline-block;
+            font-size: 0;
+            margin-right: 12px;
+          }
+          .MerchantDetails_tagStyle:last-child{
+            margin-right: 0px;
+          }
+          .MerchantDetails_tagStyleColor1{
+            font-size: 20px;
+            color: rgba(253, 150, 169, 1);
+            background: rgba(255, 229, 230, 1);
+          }
+          .MerchantDetails_takeCardnum{
+            margin-top: 22px;
+            font-size: 20px;
+            color: rgba(119, 119, 119, 1);
+            .MerchantDetails_numStyleColor1{
+              color: rgba(253, 150, 169, 1);
+            }
+            .MerchantDetails_numStyleColor2{
+              color: rgba(7, 192, 194, 1);
+            }
+          }
+          .MerchantDetails_tagStyleColor2{
+            font-size: 20px;
+            color: rgba(7, 192, 194, 1);
+            background: rgba(225, 255, 255, 1);
+          }
+          .MerchantDetails_takeLimit{
+            margin-top: 17px;
+            font-size: 20px;
+            color: rgba(119, 119, 119, 1);
+          }
+        }
+      }
+    }
+    //商品样式
+  }
+}
+
+image{
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+}
+.imageBorder{
+  border-radius: 20px;
+}
+.perimeter_layer{
+  .perimeter_layer_space{
+    height: 384px;
+    background: #FFFFFF;
+    border-top: 1px solid rgba(230, 230, 230, 1);
+    padding: 35px 30px;
+    overflow-y: hidden;
+  }
+  .perimeter_layer_spaceLimit{
+    color: rgba(51, 51, 51, 1);
+    font-size: 24px;
+    padding: 20px 0px;
+  }
+}
+.perimeter_layer_categoryById{
+  position: fixed;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: hidden;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.6);
+  .perimeter_layer_category{
+    position: relative;
+    width: 600px;
+    overflow: hidden;
+    height: 100%;
+    left: 150px;
+    line-height: 1;
+    background: #FFFFFF;
+    .perimeter_layer_categoryBottom{
+      position: relative;
+      height: 7.35%;
+      line-height: 7.35%;
+      background: #FFFFFF;
+      border-top: 1px solid #e6e6e6;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      .perimeter_layer_categoryBtn{
+        width: 88%;
+        justify-content: space-between;
+        .perimeter_layer_categoryButton{
+          width: 250px;
+          height: 70px;
+          line-height: 70px;
+          text-align: center;
+          font-size: 28px;
+          border-radius: 35px;
+        }
+        .perimeter_layer_categoryReload{
+          color: rgba(254, 60, 90, 1);
+          border: 1px solid rgba(254, 60, 90, 1);
+        }
+        .perimeter_layer_categorySubmit{
+          color: rgba(255, 255, 255, 1);
+          background: rgba(7, 192, 194, 1) ;
+        }
+      }
+    }
+  }
+}
+.perimeter_layer_category_data{
+  height: 92.8%;
+  overflow-y: auto;
+  .perimeter_layer_category_title{
+    height: 40px;
+  }
+  .perimeter_layer_categoryDetails{
+    padding: 30px 56px 30px 40px;
+    border-bottom: 1px solid rgba(229, 229, 229, 1);
+  }
+  .perimeter_layer_detailsTitle{
+    font-size:28px;
+    font-family:PingFang SC;
+    font-weight:600;
+    color:rgba(33,33,33,1);
+  }
+  .perimeter_layer_detailsContext{
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    .perimeter_layer_detailsBtn{
+      width: 148px;
+      height: 56px;
+      margin-right: 30px;
+      background:rgba(245,245,245,1);
+      border-radius:28px;
+      margin-top: 30px;
+      font-size:24px;
+      font-family:PingFang SC;
+      font-weight:400;
+      box-sizing: border-box;
+      color:rgba(85,85,85,1);
+      line-height: 56px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .perimeter_layer_detailsCheckBtn{
+      box-sizing: border-box;
+      width:148px;
+      margin-right: 30px;
+      margin-top: 30px;
+      height:56px;
+      background:rgba(239,255,255,1);
+      border:1px solid rgba(7,192,194,1);
+      border-radius:28px;
+      font-size:24px;
+      font-family:PingFang SC;
+      font-weight:400;
+      color:rgba(7,192,194,1);
+      line-height: 56px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .perimeter_layer_noMargin{
+      margin-right:0 ;
+    }
+  }
+}
+.perimeter_mapBox{
+  width: 690px;
+  padding-top: 30px;
+  margin: 0 auto;
+}
+.perimeter_map{
+  height:390px;
+  background:rgba(255,198,209,1);
+  border-radius:20px;
+}
+.perimeter_title{
+  height: 90px;
+  line-height: 90px;
+  padding: 0 20px;
+  display: flex;
+  justify-content:space-between;
+  .perimeter_titleName{
+    font-size:26px;
+    font-family:PingFang SC;
+    line-height: 90px;
+    font-weight:600;
+    color:rgba(51,51,51,1);
+  }
+  .perimeter_titleName:before{
+    width: 30px;
+    height: 32px;
+    background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/icon1.png") no-repeat;
+    background-size: 100% 100%;
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -8px;
+    margin-right: 14px;
+  }
+  .perimeter_titleLink{
+    line-height: 90px;
+    font-size:20px;
+    font-family:PingFang SC;
+    font-weight:400;
+    color:rgba(119,119,119,1);
+  }
+  .perimeter_titleLink:after{
+    width: 10px;
+    height: 18px;
+    background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/icon2.png") no-repeat;
+    background-size: 100% 100%;
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -2px;
+    margin-left: 10px;
+  }
+}
+.perimeter_initMap{
+  width: 666px;
+  height: 288px;
+  margin: 0 auto;
+  border-radius:0px 0px 16px 16px;
+}

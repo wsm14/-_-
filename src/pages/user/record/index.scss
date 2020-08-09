@@ -1,0 +1,202 @@
+.record_timeSelect{
+  height: 83px;
+  line-height: 83px;
+  padding:0 30px;
+  font-size: 24px;
+  background: #FFFFFF;
+  justify-content: space-between;
+  view:nth-child(1){
+   color: rgba(51, 51, 51, 1);
+  }
+  view:nth-child(2){
+   color: rgba(253, 150, 169, 1);
+  }
+  view:nth-child(1):after{
+    background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/user/recordxiala.png") no-repeat;
+    background-size: 100% 100%;
+    display: inline-block;
+    content: '';
+    width: 16px;
+    height: 8px;
+    vertical-align: middle;
+    margin-top: -3px;
+    margin-left: 8px;
+  }
+  view:nth-child(2):after{
+    background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/user/readBean.png") no-repeat;
+    background-size: 100% 100%;
+    display: inline-block;
+    content: '';
+    width: 20px;
+    height: 18px;
+    vertical-align: middle;
+    margin-top: -3px;
+    margin-left: 5px;
+  }
+}
+.record_cardDetails{
+  padding: 0 30px;
+}
+.record_cardList{
+  height: 261px;
+  background: #FFFFFF;
+  margin-top: 20px;
+  border-radius: 20px;
+  .record_listTitle{
+    height: 88px;
+    line-height: 88px;
+    justify-content: space-between;
+    padding: 0 30px;
+    view:nth-child(1){
+      font-size: 30px;
+      color: rgba(0, 0, 0, 1);
+      font-weight: bold;
+    }
+    view:nth-child(1):after{
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/user/recordGo.png") no-repeat;
+      background-size: 100% 100%;
+      display: inline-block;
+      content: '';
+      width: 10px;
+      height: 18px;
+      vertical-align: middle;
+      margin-top: 2px;
+      margin-left:20px;
+    }
+    view:nth-child(2){
+      font-size: 24px;
+      color: rgba(7, 192, 194, 1);
+    }
+  }
+  .record_listline{
+    width:616px;
+    height:1px;
+    background:rgba(230,230,230,1);
+    margin: 0 auto;
+  }
+  .record_listDefnite{
+    padding: 20px 30px;
+    .record_listImg{
+      width: 134px;
+      height: 134px;
+      border-radius: 10px;
+      background: #e6e6e6;
+      image{
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+        border-radius: 10px;
+      }
+    }
+    .record_listCondition{
+     margin-left: 20px;
+      view:nth-child(1){
+        height: 64px;
+        line-height: 76px;
+        color: rgba(119, 119, 119, 1);
+        font-size: 20px;
+      }
+      view:nth-child(2){
+        padding: 12px 12px 9px 12px;
+        background: rgba(253, 150, 169, 1);
+        font-size: 20px;
+        border-radius: 10px;
+        display: inline-block;
+        color: #FFFFFF;
+        line-height: 1;
+        text{
+          font-weight: bold;
+          font-size: 26px;
+        }
+        text:after{
+          background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/user/whiteBean.png") no-repeat;
+          background-size: 100% 100%;
+          display: inline-block;
+          content: '';
+          width: 20px;
+          height: 18px;
+          vertical-align: middle;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
+.record_selectedBox{
+  background: #FFFFFF;
+}
+.record_selected{
+  position: absolute;
+  top: 128px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  .record_selectTitle{
+    height: 83px;
+    line-height: 83px;
+    padding:0 30px;
+    color: rgba(34, 197, 199, 1);
+    background: #FFFFFF;
+    font-size: 24px;
+    position: relative;
+    .record_selectTitleIcon:after{
+      width: 16px;
+      height: 8px;
+      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon6.png");
+      background-size: 100% 100%;
+      content: '';
+      display: inline-block;
+      left: 85px;
+      top: 38px;
+      position: absolute;
+    }
+  }
+  .record_date{
+    height: 94px;
+    margin:0 30px;
+    border-bottom: 1px solid rgba(7, 192, 194, 1);
+    background: #FFFFFF;
+    color: rgba(34, 197, 199, 1);
+    font-size: 24px;
+    line-height: 118px;
+    text-align: center;
+  }
+  .record_Picker{
+    text-align: center  ;
+    background: #FFFFFF;
+    height: 400px;
+    color: rgba(51, 51, 51, 1);
+    justify-content: space-between;
+    .record_PickerViewColumn{
+      line-height: 70px;
+      border-top: 1px solid rgba(230,230,230,1);
+      border-bottom: 1px solid rgba(255,255,255,1);
+    }
+  }
+  .record_buttonBox{
+    height: 110px;
+    margin-top: 70px;
+    padding:0 101px;
+    justify-content: space-between;
+    .record_button{
+      width: 243px;
+      height: 70px;
+      line-height: 70px;
+      text-align: center;
+      font-size: 28px;
+    }
+    .record_buttonReload{
+      border:1px solid rgba(253,150,169,1);
+      border-radius:35px;
+      color: rgba(253, 150, 169, 1);
+    }
+    .record_buttonSubmit{
+      border:1px solid rgba(7, 192, 194, 1);
+      border-radius:35px;
+      color: rgba(7, 192, 194, 1);
+    }
+  }
+}
+

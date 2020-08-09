@@ -1,0 +1,77 @@
+page{
+  background: rgba(255, 255, 255, 1);
+  width: 100%;
+  line-height: 100%;
+  box-sizing: border-box;
+  background: #07C0C2;
+}
+html,body{
+  background: #F2F2F2;
+  width: 100%;
+  line-height: 100%;
+  box-sizing: border-box;
+  background: #07C0C2;
+}
+.clearfix{
+  display: flex;
+}
+.download_box{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background:url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/share/down1.png") no-repeat;
+  background-size:100%;
+  padding-top: 134px;
+  .download_Toast{
+    width: 288px;
+    height: 77px;
+    margin: 0 auto;
+    font-size: 26px;
+    color: #FFFFFF;
+    .download_icon{
+      display: inline-block;
+      padding-top: 4px;
+    }
+    .download_xuanze{
+      padding-top: 15px;
+      line-height: 1;
+    }
+    .download_icon:after{
+      background:url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/share/down2.png") no-repeat;
+      background-size:100% 100%;
+      content: '';
+      width: 66px;
+      height: 34px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+      margin-top: -10px;
+    }
+    .download_open{
+      font-size: 31px;
+      font-weight: bold;
+    }
+  }
+  .download_btn{
+    height: 101px;
+    width: 320px;
+    margin: 0 auto;
+    background: #07C0C2;
+    border-radius: 21px;
+    margin-top: 476px;
+    text-align: center;
+    color: #FFFFFF;
+    line-height: 1;
+    .download_btn_title{
+      font-size: 26px;
+      font-weight: bold;
+      padding-top: 22px;
+    }
+    .download_btn_details{
+      font-size: 20px;
+      padding-top: 10px;
+    }
+  }
+}
