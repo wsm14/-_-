@@ -1,0 +1,58 @@
+.bean_toast{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+  padding-top: 251px;
+  .bean_toastIcon{
+    width: 589px;
+    height: 400px;
+    margin: 0 auto;
+    background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon95.png") no-repeat top/cover;
+  }
+  .bean_box{
+    line-height: 1;
+    top: 229px;
+    width:400px;
+    height:450px;
+    background:rgba(255,255,255,1);
+    border-radius:40px;
+    text-align: center;
+    .bean_title{
+      font-size:28px;
+      font-family:PingFang SC;
+      font-weight:400;
+      color:rgba(51,51,51,1);
+      padding-top: 131px;
+    }
+    .bean_num{
+      padding-top:24px;
+      font-size:40px;
+      font-family:PingFang SC;
+      font-weight:400;
+      color:rgba(255,78,111,1);
+      .bean_getNum{
+        font-size:60px;
+      }
+    }
+    .bean_btn{
+      width:240px;
+      height:80px;
+      background:rgba(255,91,117,1);
+      border-radius:40px;
+      margin: 0 auto;
+      margin-top: 90px;
+      font-size:32px;
+      font-family:PingFang SC;
+      font-weight:600;
+      color:rgba(255,255,255,1);
+      line-height: 80px;
+      position: relative;
+    }
+  }
+
+}

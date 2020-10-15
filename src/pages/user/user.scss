@@ -18,6 +18,8 @@ page{
     .user_title_Details{
       height: 112px;
       line-height: 112px;
+      position: relative;
+      z-index: 1000;
       .user_title_DetailsImg{
         width: 112px;
         height: 112px;

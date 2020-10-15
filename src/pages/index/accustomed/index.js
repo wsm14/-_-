@@ -1,16 +1,11 @@
+import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
-import { View,Text, Swiper,Image, SwiperItem} from '@tarojs/components'
-import {AtToast,AtTabBar} from "taro-ui"
+import { View,Text} from '@tarojs/components'
 import Utils from './../../../utils/utils'
 import './index.scss'
 import {wxapiGet, wxapiPost} from "./../../../api/api";
 import Ajax from "./../../../api/request";
-import classNames from  'classnames'
-class Accustomed extends Taro.Component{
-  defaultProps = {}
-  config = {
-    navigationBarTitleText: '习惯打卡' ,
-  }
+class Accustomed extends Component{
   constructor () {
     super(...arguments)
     this.state = {
@@ -45,28 +40,6 @@ class Accustomed extends Taro.Component{
       url: wxapiGet.wechatGetSimpleInfo
       },
     'get')
-    //   .then(
-    //   res=>{
-    //     const {errMsg} = res
-    //     if(errMsg === 'request:ok'){
-    //       const {success,resultDesc} = res.data
-    //       if(success){
-    //         const { content: {userHabitList,markCount,unmarkCount,insistDayNum}} =res.data
-    //         this.setState({
-    //           userHabitList: userHabitList||[],
-    //           markCount: markCount,
-    //           unmarkCount: unmarkCount,
-    //           insistDayNum: insistDayNum
-    //         })
-    //       }
-    //       else {
-    //         Utils.Toast(resultDesc)
-    //       }
-    //     }
-    //   }
-
-
-    // )
   }
   setFilterArray(Array,filterArray,type){
     let list = []
@@ -82,6 +55,7 @@ class Accustomed extends Taro.Component{
   getRequestAll(){
     Promise.all([this.getUserHabit(),this.getSimpleInfo()]).then(
       res=>{
+
         let errMsg1  = res[0].errMsg
         let errMsg2  = res[1].errMsg
         if(errMsg1 === 'request:ok' && errMsg2 === 'request:ok'){

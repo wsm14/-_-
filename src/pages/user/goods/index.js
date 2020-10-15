@@ -1,4 +1,5 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro from '@tarojs/taro'
 import {View, Text, Image} from '@tarojs/components'
 import './index.scss'
 import classNames from 'classnames'
@@ -7,10 +8,6 @@ import Ajax from '../../../api/request'
 import Utils from './../../../utils/utils'
 import Nav from '../../../layout/layoutNav/index'
 class Goods extends Component {
-  defaultProps = {}
-  config = {
-    navigationBarTitleText: '我的订单',
-  }
   constructor() {
     super(...arguments);
     this.state = {

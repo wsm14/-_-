@@ -1,18 +1,18 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro from '@tarojs/taro'
 import { View,Text, Swiper, SwiperItem,Image,Input,Map} from '@tarojs/components'
 import './perimeter.scss'
 import {wxapiGet,wxapiPost} from './../../../api/api'
 import Ajax from './../../../api/request'
 import Utils from './../../../utils/utils'
 import classNames from 'classnames'
-import Freshen from "./../../../layout/Toast";
-import {inject, observer} from "@tarojs/mobx";
+import {inject, observer} from "mobx-react";
 const setTag = (string) =>{
   if(typeof string ==='string'){
     return string.split(',').slice(0,2)
   }
 }
-@inject('beanStore')
+@inject('store')
 @observer
 class Index extends Component {
   defaultProps = {}
@@ -220,7 +220,7 @@ class Index extends Component {
     })
   }//上拉加载
   saveMark (res){
-    this.props.beanStore.setInit()
+    this.props.store.beanStore.setInit()
     let {result} = res
     result = result.split('?')[1]
     result = result.split('&')
@@ -240,7 +240,7 @@ class Index extends Component {
           const {success,resultCode, resultDesc} = res.data
           if (success) {
             let {content} = res.data
-            this.props.beanStore.setMarkInfo(content)
+            this.props.store.beanStore.setMarkInfo(content)
             if(content.resultCode == '3018'){
               this.props.beanStore.setMerchantId({merchantId:merchantId})
               Utils.Toast('无法打卡，不在打卡范围内')
@@ -248,8 +248,8 @@ class Index extends Component {
             Utils.navigateTo('/pages/perimeter/beanMark/index')
           }
           else {
-            this.props.beanStore.setCode(resultCode)
-            this.props.beanStore.setMerchantId({merchantId:merchantId})
+            this.props.store.beanStore.setCode(resultCode)
+            this.props.store.beanStore.setMerchantId({merchantId:merchantId})
             Utils.Toast(resultDesc)
           }
         }

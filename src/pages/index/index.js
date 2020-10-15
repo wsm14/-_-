@@ -1,19 +1,14 @@
-import Taro, { Component } from '@tarojs/taro'
-import { View,Text, Swiper,Image, SwiperItem} from '@tarojs/components'
-import {AtToast} from "taro-ui"
-import './index.scss'
+import React, { Component } from 'react'
+import Taro from '@tarojs/taro'
+import { View, Button,Image, Text,Swiper, SwiperItem} from '@tarojs/components'
+import { observer, inject } from 'mobx-react'
+import Ajax from '@/api/request'
+import {wxapiGet,wxapiPost} from '@/api/api'
 import Utils from '../../utils/utils'
-import {wxapiGet, wxapiPost} from '../../api/api'
-import Ajax from '../../api/request'
-import {inject, observer} from "@tarojs/mobx";
-@inject('authStore')
+import './index.scss'
+@inject('store')
 @observer
 class Index extends Component {
-  defaultProps = {}
-  config = {
-    navigationBarTitleText: '首页',
-    onReachBottomDistance:30,
-  }
   constructor () {
     super(...arguments)
     this.state = {
@@ -49,6 +44,10 @@ class Index extends Component {
       },//请求看分享参数
     }
   }
+  componentWillMount () { }
+  componentDidMount () { }
+  componentWillUnmount () { }
+  componentDidHide () { }
   componentDidShow() {
     this.getRequest();
     this.getLocation();
@@ -57,26 +56,26 @@ class Index extends Component {
   }
   getRequest() {
     Ajax({
-        url: wxapiGet.wechatBanner,
-        data: this.state.banner
-      },'get').then(res=>{
-          const { errMsg } = res
-          if(errMsg && errMsg != 'request:ok'){
-             this.errorToast('服务器异常')
-          }
-          else {
-             const {success,resultDesc} = res.data
-             if(success){
-               const {content: {bannerList}} =res.data
-               this.setState({
-                 bannerList: bannerList,
-               })
-             }
-             else {
-               this.errorToast(resultDesc)
-             }
-          }
-     })
+      url: wxapiGet.wechatBanner,
+      data: this.state.banner
+    },'get').then(res=>{
+      const { errMsg } = res
+      if(errMsg && errMsg != 'request:ok'){
+        this.errorToast('服务器异常')
+      }
+      else {
+        const {success,resultDesc} = res.data
+        if(success){
+          const {content: {bannerList}} =res.data
+          this.setState({
+            bannerList: bannerList,
+          })
+        }
+        else {
+          this.errorToast(resultDesc)
+        }
+      }
+    })
   }
   saveMark (res){
     this.props.beanStore.setInit()
@@ -204,7 +203,7 @@ class Index extends Component {
   }
   render () {
     const {userMerchantList,userMomentsList} = this.state
-    const { userInfo } = this.props.authStore
+    const { userInfo } = this.props.store.authStore
     const {status , isOpened , text ,duration} = this.state.Toast
     const setTag = (string) =>{
       if(typeof string ==='string'){
@@ -215,38 +214,38 @@ class Index extends Component {
       <View className='index_box'>
         <View className='index_title'>
           {Object.keys(userInfo).length===0?
-           <View className='index_title_information f'  onClick={()=>Utils.navigateTo('./../auth/index')}>
-            <View className='index_title_informationImg'  >
-              <Image src='https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/iconindex.png'></Image>
+            <View className='index_title_information f'  onClick={()=>Utils.navigateTo('./../auth/index')}>
+              <View className='index_title_informationImg'  >
+                <Image src='https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/iconindex.png'></Image>
+              </View>
+              <View className='index_user_details'>
+                <View className='index_user_name'>欢迎登录</View>
+                <View className='index_user_record'>让生活更有价值</View>
+              </View>
             </View>
-            <View className='index_user_details'>
-              <View className='index_user_name'>欢迎登录</View>
-              <View className='index_user_record'>让生活更有价值</View>
-            </View>
-           </View>
             :null}
           {Object.keys(userInfo).length>5 && userInfo.mobile.length ===11 ?
             <View className='index_title_information f' >
-            <View className='index_title_informationImg'>
-              <Image src={userInfo.profile}></Image>
-            </View>
-            <View className='index_user_details'>
-              <View className='index_user_name'>{userInfo.username}</View>
-              <View className='index_user_record'>让生活更有价值</View>
-            </View>
-          </View>:null}
+              <View className='index_title_informationImg'>
+                <Image src={userInfo.profile}></Image>
+              </View>
+              <View className='index_user_details'>
+                <View className='index_user_name'>{userInfo.username}</View>
+                <View className='index_user_record'>让生活更有价值</View>
+              </View>
+            </View>:null}
           {Object.keys(userInfo).length>5 && userInfo.mobile.length !==11 ?
-           <View className='index_title_information f'  onClick={()=>Utils.navigateTo('./../auth/index')}>
-             <View className='index_title_informationImg'  >
-              <Image src='https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/iconindex.png'></Image>
-            </View>
-             <View className='index_user_details'>
-              <View className='index_user_name'>绑定手机号码</View>
-              <View className='index_user_record'>让生活更有价值</View>
-            </View>
-          </View>:null}
+            <View className='index_title_information f'  onClick={()=>Utils.navigateTo('./../auth/index')}>
+              <View className='index_title_informationImg'>
+                <Image src='https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/iconindex.png'></Image>
+              </View>
+              <View className='index_user_details'>
+                <View className='index_user_name'>绑定手机号码</View>
+                <View className='index_user_record'>让生活更有价值</View>
+              </View>
+            </View>:null}
         </View>
-          {/*首页头部*/}
+        {/*首页头部*/}
         <View className='index_body'>
           <View className='index_exercise f page_between'>
             <View className='index_exerciseTab index_exerciseTab_bg1' onClick={ () => Utils.navigateTo('/pages/index/perimeter/index')}>
@@ -375,8 +374,8 @@ class Index extends Component {
                   autoplay>
             {this.state.bannerList.length>0 ? this.state.bannerList.map((item,index) =>{
               return (
-                <SwiperItem key={item.id}>
-                  <Image src={item.coverImg}> </Image>
+                <SwiperItem key={item.id} className='banner_border'>
+                  <Image src={item.coverImg}></Image>
                 </SwiperItem>
               )
             }):null}
@@ -384,10 +383,10 @@ class Index extends Component {
           {/*轮播图部分*/}
           <View className='page_goLink'>
             <View className="page_goLink_left" >
-               附近打卡门店捡豆数量排行
+              附近打卡门店捡豆数量排行
             </View>
             <View className='page_goLink_right' onClick={() =>Utils.navigateTo('/pages/index/perimeter/index')}>
-                 查看全部
+              查看全部
             </View>
           </View>
           <View className='page_golink_box'>
@@ -534,12 +533,7 @@ class Index extends Component {
           {/*  </View>*/}
           {/*</View>*/}
         </View>
-        <AtToast
-          status={status}
-          isOpened={isOpened}
-          text={text}
-          duration={duration}></AtToast>
-          {/*首页内容*/}
+        {/*首页内容*/}
       </View>
     )
   }

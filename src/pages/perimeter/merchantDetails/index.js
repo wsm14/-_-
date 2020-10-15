@@ -1,39 +1,36 @@
-import Taro from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro ,{getCurrentInstance} from '@tarojs/taro'
 import {View, Text, Swiper, Image, SwiperItem, Button} from '@tarojs/components'
 import Utils from './../../../utils/utils'
-import {AtToast} from "taro-ui"
 import {wxapiGet} from './../../../api/api'
 import Ajax from './../../../api/request'
 import './merchantDetails.scss'
 import './../../index/lookShare/shareVideo/index.scss'
-class MerchantDetails extends Taro.Component{
-  defaultProps = {}
-  config = {
-    navigationBarTitleText: '商家详情' ,
-    navigationStyle:'default',
-  }
+class MerchantDetails extends Component{
   constructor () {
     super(...arguments)
     this.state ={
-      merchantId: this.$router.params,
+      merchantId: getCurrentInstance().router.params,
       banner:{
         bannerType: 'merchant',
-        merchantId: this.$router.params.merchantId||'2441',
+        merchantId: getCurrentInstance().router.params.merchantId||'2441',
       },
       userMerchant: {},
       bannerList:[],
       goodsList:[],
       userInfo: {
-        userId: this.$router.params.shareUserId||''
+        userId: getCurrentInstance().router.params.shareUserId||''
       },
-      type: this.$router.params.type || '',
+      type: getCurrentInstance().router.params.type || '',
       shareUserProfile: '',
       shareUserName: ''
     }
   }
+  componentWillMount(){
+    this.getUserLocation();
+  }
   componentDidShow() {
     Taro.hideHomeButton();
-    this.getRequestAll()
     this.getUserInfos()
   }
   getRequestAll(){
@@ -133,8 +130,112 @@ class MerchantDetails extends Taro.Component{
     }
     return s||'暂无';
   }
+  onShareAppMessage(options) {
+    // 设置转发内容 -- 适用于: 页面右上角 ... 和 页面按钮
+    const { userMerchant,bannerList }  = this.state
+    var shareObj = {
+      title: `${userMerchant.merchantName}`,
+      imageUrl: `${bannerList[0]||''}`,
+      success: function(res) {
+        // 转发成功之后的回调
+        if (res.errMsg == 'shareAppMessage:ok') {
+          Utils.Toast('转发成功')
+        }
+      },
+      fail: function(res) {
+        // 转发失败之后的回调
+        if (res.errMsg == 'shareAppMessage:fail cancel') {
+          // 用户取消转发
+          Utils.Toast('取消转发')
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+          // 转发失败，其中 detail message 为详细失败信息
+          Utils.Toast('转发失败')
+        }
+      },
+      complete: function() {
+        // 转发结束之后的回调（转发成不成功都会执行）
+        console.log('---转发完成---');
+      }
+    };
+    return shareObj;
+  }
+  onShareTimeline(){
+    const {  userMerchant,bannerList }  =this.state
+    return {
+      title: `${userMerchant.merchantName}`,
+      imageUrl: `${bannerList[0]||''}`,
+    }
+  }
+  getUserLocation = () => {
+    let that = this;
+    Taro.getSetting({
+      success: (res) => {
+        if (res.authSetting['scope.userLocation'] != undefined && res.authSetting['scope.userLocation'] != true) {
+          Taro.showModal({
+            title: '请求授权当前位置',
+            content: '需要获取您的地理位置，请确认授权',
+            success: function (res) {
+              if (res.cancel) {
+                Taro.showToast({
+                  title: '拒绝授权',
+                  icon: 'none',
+                  duration: 1000
+                })
+              } else if (res.confirm) {
+                Taro.openSetting({
+                  success: function (dataAu) {
+                    if (dataAu.authSetting["scope.userLocation"] == true) {
+                      wx.showToast({
+                        title: '授权成功',
+                        icon: 'success',
+                        duration: 1000
+                      })
+                      //再次授权，调用wx.getLocation的API
+                      that.getLocation();
+                    } else {
+                      Taro.showToast({
+                        title: '授权失败',
+                        icon: 'none',
+                        duration: 1000
+                      })
+                    }
+                  }
+                })
+              }
+            }
+          })
+        } else if (res.authSetting['scope.userLocation'] == undefined) {
+          //调用wx.getLocation的API
+          that.getLocation();
+        } else {
+          //调用wx.getLocation的API
+          that.getLocation();
+        }
+      },
+      complete: (res) =>{
+         that.getLocation();
+      }
+    })
+  }
+  // 获取定位当前位置的经纬度
+  getLocation = () => {
+    let that = this;
+    Taro.getLocation({
+      type: 'wgs84',
+      success: res =>{
+        Taro.setStorageSync('lnt',res.longitude)
+        Taro.setStorageSync('lat',res.latitude)
+      },
+      fail: function (res) {
+      },
+      complete: res => {
+        that.getRequestAll();
+      }
+    })
+  }
+  // 获取当前地理位置
   render() {
-    const { userMerchant ,bannerList, goodsList ,type ,shareUserProfile,shareUserName} =this.state
+    const {merchantId, userMerchant ,bannerList, goodsList ,type ,shareUserProfile,shareUserName} =this.state
     return(
       <View className='merchantBox'>
         {type == 'share' && <View className = 'page_share_download'>
@@ -147,12 +248,18 @@ class MerchantDetails extends Taro.Component{
               </View>
             </View>
             <View  className='page_share_btn'>
-              <Button openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle'>打开APP</Button>
+              <Button
+                appParameter={JSON.stringify({jumpUrl: 'shopDetailPage',id: merchantId.merchantId,type : 'jumpToPage',
+                  jumpType : "native" ,path:'DKLShopDetailViewController',params:{shopId: merchantId.merchantId}})}
+                openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle'>打开APP</Button>
             </View>
           </View>
         </View>}
         {type == 'share' && <View className='page_share_openApp'>
-          <Button openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle1'>App内打开</Button>
+          <Button   appParameter={JSON.stringify({jumpUrl: 'shopDetailPage',id: merchantId.merchantId,type : 'jumpToPage',
+                    jumpType : "native" ,path:'DKLShopDetailViewController',params:{shopId: merchantId.merchantId}})}
+                   openType='launchApp'
+                   onError={(e) =>this.goAppError(e)} className='page_share_btnStyle1'>App内打开</Button>
         </View>}
         <View className='merchant_title'>
           <Swiper
@@ -161,7 +268,8 @@ class MerchantDetails extends Taro.Component{
             className='merchant_banner'>
              {bannerList.map((item,index) =>{
                return (
-                 <SwiperItem style={{height:'100%',background:`url(${item.coverImg}) no-repeat center/cover`}} className='bannerList' key={item.id}>
+                 <SwiperItem className='bannerList' key={item.id}>
+                   <Image style={{height:'100%',width:'100%',background:`url(${item.coverImg}) no-repeat center/cover`}}></Image>
                  </SwiperItem>
                )
              })}
@@ -283,3 +391,4 @@ class MerchantDetails extends Taro.Component{
     )
   }
 }
+export default MerchantDetails

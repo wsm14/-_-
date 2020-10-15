@@ -1,19 +1,12 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro from '@tarojs/taro'
 import { View,Text} from '@tarojs/components'
 import classNames from 'classnames'
-import {inject, observer} from "@tarojs/mobx";
 import {wxapiGet} from '../../../api/api'
+import Ajax from '@/api/request'
 import Utils from '../../../utils/utils'
 import './index.scss'
-import Freshen  from '../../../layout/Toast'
-import {login} from "@tarojs/taro-quickapp/src/api/unsupportedApi";
-class lookShare extends Component {
-  defaultProps = {}
-  config = {
-    navigationBarTitleText: '看分享',
-    // "enablePullDownRefresh": true,
-    onReachBottomDistance:30,
-  }
+class lookShare extends Component{
   constructor () {
     super(...arguments)
     this.state = {
@@ -41,13 +34,6 @@ class lookShare extends Component {
       categoryList:[],
       categoryCheckedList:[]
     }
-
-    if(process.env.TARO_ENV === 'weapp') {
-      this.Axios = require('./lookShareWx')
-    }
-    else if(process.env.TARO_ENV === 'h5'){
-
-    }//初始化请求
   }
   componentDidShow() {
     this.getShare()
@@ -75,7 +61,7 @@ class lookShare extends Component {
     })
   }//上拉加载
   getShare() {
-    this.Axios.httpGet({data:this.state.listMoment,url:wxapiGet.wechatShare},'get')
+    Ajax({data:this.state.listMoment,url:wxapiGet.wechatShare},'get')
       .then(res => {
         if(res.errMsg !== 'request:ok'||res.statusCode != '200'){
           Utils.Toast(res.data.error||res.errMsg)
@@ -95,7 +81,7 @@ class lookShare extends Component {
       })
   }//http
   getKeyValueList() {
-    this.Axios.httpGet({data:{root:this.state.root},url:wxapiGet.wechatByRoot},'get')
+    Ajax({data:{root:this.state.root},url:wxapiGet.wechatByRoot},'get')
       .then(res => {
         if(res.errMsg !== 'request:ok'){
           Utils.Toast(res.errMsg)
@@ -114,7 +100,7 @@ class lookShare extends Component {
       })
   }//看分析的http
   getCategoryList() {
-    this.Axios.httpGet({data:{parentId:this.state.parentId},url:wxapiGet.wechatListCategory},'get')
+    Ajax({data:{parentId:this.state.parentId},url:wxapiGet.wechatListCategory},'get')
       .then(res => {
         if(res.errMsg !== 'request:ok'){
           Utils.Toast(res.errMsg)

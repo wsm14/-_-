@@ -1,13 +1,10 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro from '@tarojs/taro'
 import { View,Text,WebView} from '@tarojs/components'
 import './index.scss'
 import Utils from './../../../utils/utils'
 class Index extends Component {
   defaultProps = {}
-  config = {
-    navigationBarTitleText: '哒卡乐',
-    navigationStyle:'default'
-  }
   constructor() {
     super(...arguments);
   }
@@ -19,8 +16,8 @@ class Index extends Component {
     }
     else{
        if(this.isAndroid()){
-         // window.location.href='https://bundle.dakale.net/android/product/dakale-android-lastest.apk'
-         window.location.href='https://bundle.dakale.net/android/dev/dakale-android-lastest.apk'
+         window.location.href='https://bundle.dakale.net/android/product/dakale-android-lastest.apk'
+         // window.location.href='https://bundle.dakale.net/android/dev/dakale-android-lastest.apk'
        }
        else if(this.isIos()){
          window.location.href='http://itunes.apple.com/cn/app/id1521276175?mt=8'

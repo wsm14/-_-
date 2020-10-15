@@ -1,4 +1,5 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro from '@tarojs/taro'
 import {View, Text,Input,PickerView} from '@tarojs/components'
 import './index.scss'
 import classNames from 'classnames'

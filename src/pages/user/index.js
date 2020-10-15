@@ -1,22 +1,14 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro from '@tarojs/taro'
 import {View, Image, Button} from '@tarojs/components'
 import './user.scss'
 import {wxapiGet, wxapiPost} from '../../api/api'
 import Ajax from '../../api/request'
 import Utils from  './../../utils/utils'
-import Toast from '../../layout/Toast'
-import {inject, observer} from "@tarojs/mobx";
-@inject('authStore')
+import {inject, observer} from "mobx-react";
+@inject('store')
 @observer
 class Index extends Component {
-  defaultProps = {}
-  config = {
-    navigationBarTitleText: '个人登录',
-    // "enablePullDownRefresh": true,
-    // onReachBottomDistance:10,
-    backgroundTextStyle:'dark',
-  }
-
   constructor () {
     super(...arguments)
     this.state = {
@@ -50,7 +42,7 @@ class Index extends Component {
     this.getuserData()
   }
   saveMark (res){
-    this.props.beanStore.setInit()
+    this.props.store.beanStore.setInit()
     let {result} = res
     result = result.split('?')[1]
     result = result.split('&')
@@ -70,7 +62,7 @@ class Index extends Component {
           const {success,resultCode, resultDesc} = res.data
           if (success) {
             let {content} = res.data
-            this.props.beanStore.setMarkInfo(content)
+            this.props.store.beanStore.setMarkInfo(content)
             if(content.resultCode == '3018'){
               this.props.beanStore.setMerchantId({merchantId:merchantId})
               Utils.Toast('无法打卡，不在打卡范围内')
@@ -78,8 +70,8 @@ class Index extends Component {
             Utils.navigateTo('/pages/perimeter/beanMark/index')
           }
           else {
-            this.props.beanStore.setCode(resultCode)
-            this.props.beanStore.setMerchantId({merchantId:merchantId})
+            this.props.store.beanStore.setCode(resultCode)
+            this.props.store.beanStore.setMerchantId({merchantId:merchantId})
             Utils.Toast(resultDesc)
           }
         }
@@ -154,9 +146,8 @@ class Index extends Component {
     })
   }//关闭提示框
   render () {
-    const { userInfo } = this.props.authStore
+    const { userInfo } = this.props.store.authStore
     const { tabbar ,user } = this.state
-    console.log(user)
     return (
       <View className='user_box'>
         <View className='user_Title'>
@@ -177,7 +168,8 @@ class Index extends Component {
               请绑定手机
             </View>
           </View>:null}
-          {Object.keys(userInfo).length >5 && userInfo.mobile.length ===11 ? <View className='user_title_Details'>
+          {Object.keys(userInfo).length >5 && userInfo.mobile.length ===11 ?
+            <View className='user_title_Details' onClick={() =>Utils.navigateTo('/pages/user/userDetails/index')}>
             <View className='user_title_DetailsImg'>
               <Image src={userInfo.profile} ></Image>
             </View>

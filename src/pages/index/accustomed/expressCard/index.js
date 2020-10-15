@@ -1,4 +1,5 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro,{getCurrentInstance} from '@tarojs/taro'
 import {View, Text, Image} from '@tarojs/components'
 import './index.scss'
 import classNames from 'classnames'
@@ -8,9 +9,6 @@ import Utils from './../../../../utils/utils'
 import Nav from '../../../../layout/layoutNav/index'
 class Express extends Component {
   defaultProps = {}
-  config = {
-    navigationBarTitleText: '关爱打卡',
-  }
   constructor() {
     super(...arguments);
     this.state = {

@@ -1,4 +1,5 @@
-import Taro from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro ,{getCurrentInstance} from '@tarojs/taro'
 import { View,Text, Swiper,Image, SwiperItem} from '@tarojs/components'
 import {AtToast,AtTabBar} from "taro-ui"
 import Utils from './../../../../utils/utils'
@@ -6,7 +7,7 @@ import './index.scss'
 import {wxapiGet ,wxapiPost} from "./../../../../api/api";
 import Ajax from "./../../../../api/request";
 import classNames from  'classnames'
-class HibitCard extends Taro.Component{
+class HibitCard extends Component{
   defaultProps = {}
   config = {
     navigationBarTitleText: '好习惯打卡' ,
@@ -36,7 +37,7 @@ class HibitCard extends Taro.Component{
         //自定义
         ]
     let list =  habit.filter(item =>{
-      if(item.name.includes(this.$router.params.subIdentify)){
+      if(item.name.includes(getCurrentInstance().router.params.subIdentify)){
         return item
       }
    })
@@ -48,12 +49,12 @@ class HibitCard extends Taro.Component{
     }
   }
  componentDidMount() {
-   if(Object.keys(this.$router.params).length===0){
+   if(Object.keys(getCurrentInstance().router.params).length===0){
      Utils.Toast('参数错误，回到习惯打卡页面')
      Utils.navigateTo('pages/index/accustomed/index')
    }
    else {
-    this.getMarkDetail(this.$router.params)
+    this.getMarkDetail(getCurrentInstance().router.params)
    }
  }
  getMarkDetail(data) {
@@ -104,7 +105,7 @@ class HibitCard extends Taro.Component{
  }//打卡成功改变按钮状态为看分享
  setCard(status) {
    switch (status) {
-     case '0' : this.setMarkDetail(this.$router.params);break;
+     case '0' : this.setMarkDetail(getCurrentInstance().router.params);break;
      case '1' : Utils.navigateTo('/pages/index/lookShare/index');break;
      case '2' : return;break;
      case '3' : Utils.Toast('打卡已错过');break;
@@ -142,7 +143,6 @@ class HibitCard extends Taro.Component{
           <View className='hibitCard_dateTitle'>{userHabitMarkInfo.serialDayDesc}</View>
           <View className='hibitCard_date'><Text className='hibitCard_datenum'>{parseInt(userHabitMarkInfo.serialDayNum)}</Text>天</View>
           <View className='hibitCard_nowDate'>{userHabitMarkInfo.todayDesc}</View>
-          <View className='hibitCard_nowTime'>{userHabitMarkInfo.todayTime}</View>
           <View className='hibitCard_people'>{parseInt(userHabitMarkInfo.signAmount)}人<Text className='hibitCard_onPartake'>正在参与</Text></View>
         </View>
         <View className='hibitCard_btn'>

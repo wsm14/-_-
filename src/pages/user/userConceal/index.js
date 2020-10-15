@@ -1,4 +1,5 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro from '@tarojs/taro'
 import { View,Text,PickerView,WebView} from '@tarojs/components'
 import { AtList, AtListItem } from 'taro-ui'
 import Nav from '../../../layout/layoutNav/index'

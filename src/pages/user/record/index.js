@@ -1,4 +1,5 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro from '@tarojs/taro'
 import { View,Text,PickerView} from '@tarojs/components'
 import { AtList, AtListItem } from 'taro-ui'
 import {wxapiGet} from '../../../api/api'
@@ -7,10 +8,6 @@ import Utils from './../../../utils/utils'
 import './index.scss'
 import Nav from '../../../layout/layoutNav/index'
 class Record extends Component {
-  defaultProps = {}
-  config = {
-    navigationBarTitleText: '打卡记录',
-  }
   constructor() {
     super(...arguments);
     const date = new Date()
@@ -19,7 +16,6 @@ class Record extends Component {
     for (let i = 1; i <= 12; i++) {
       months.push(i)
     }
-
     this.state = {
       years: years,
       year: date.getFullYear(),

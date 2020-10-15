@@ -1,25 +1,26 @@
-import Taro from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {View, Text, Swiper, SwiperItem, Button} from '@tarojs/components'
 import {wxapiGet,wxapiPost} from './../../../../api/api'
 import Ajax from './../../../../api/request'
 import Utils from "./../../../../utils/utils";
 import './index.scss'
 import './../shareVideo/index.scss'
-export default class ShareImage extends Taro.Component{
+export default class ShareImage extends Component{
   defaultProps = {}
   constructor() {
     super(...arguments);
     this.state = {
       getUserMomentDetail : {
-        momentId: this.$router.params.momentId || '2443' //路由参数
+        momentId: getCurrentInstance().router.params.momentId || '2443' //路由参数
        },//req 请求参数
       userMomentsInfo:{
       }, //req 数据
       getBean:false, //弹框
       userInfo: {
-        userId: this.$router.params.shareUserId||''
+        userId: getCurrentInstance().router.params.shareUserId||''
       },
-      type: this.$router.params.type || '',
+      type: getCurrentInstance().router.params.type || '',
       shareUserProfile: '',
       shareUserName: ''
     }
@@ -35,7 +36,7 @@ export default class ShareImage extends Taro.Component{
   }
   saveBean(){
     Ajax({
-      data: { momentId: this.$router.params.momentId},
+      data: { momentId: getCurrentInstance().router.params.momentId},
       url: wxapiPost.wechatBeanDetail
     },'post').then(res =>{
       if(res.errMsg !== 'request:ok'){
@@ -90,7 +91,7 @@ export default class ShareImage extends Taro.Component{
          length: time
        }
      },res =>{
-       if(time == 0 ){
+       if(time == 0){
          this.saveBean()
        }
      })
@@ -123,8 +124,44 @@ export default class ShareImage extends Taro.Component{
   goAppError(e){
     Utils.goDown();
   }
+  onShareAppMessage(options) {
+    // 设置转发内容 -- 适用于: 页面右上角 ... 和 页面按钮
+    const { userMomentsInfo }  =this.state
+    var shareObj = {
+      title: `${userMomentsInfo.title||'视频分享'}`,
+      imageUrl: `${userMomentsInfo.frontImage}`,
+      success: function(res) {
+        // 转发成功之后的回调
+        if (res.errMsg == 'shareAppMessage:ok') {
+          Utils.Toast('转发成功')
+        }
+      },
+      fail: function(res) {
+        // 转发失败之后的回调
+        if (res.errMsg == 'shareAppMessage:fail cancel') {
+          // 用户取消转发
+          Utils.Toast('取消转发')
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+          // 转发失败，其中 detail message 为详细失败信息
+          Utils.Toast('转发失败')
+        }
+      },
+      complete: function() {
+        // 转发结束之后的回调（转发成不成功都会执行）
+        console.log('---转发完成---');
+      }
+    };
+    return shareObj;
+  }
+  onShareTimeline(){
+    const { userMomentsInfo }  =this.state
+    return {
+      title: `${userMomentsInfo.title||'视频分享'}`,
+      imageUrl: `${userMomentsInfo.frontImage}`,
+    }
+  }
   render() {
-    const { userMomentsInfo ,time ,getBean,type,shareUserProfile,shareUserName} = this.state
+    const {getUserMomentDetail, userMomentsInfo ,time ,getBean,type,shareUserProfile,shareUserName} = this.state
     if( typeof userMomentsInfo.imageContent == 'string'){
       userMomentsInfo.imageContent = JSON.parse(userMomentsInfo.imageContent)
     }
@@ -140,12 +177,19 @@ export default class ShareImage extends Taro.Component{
                  </View>
                </View>
                <View  className='page_share_btn'>
-                 <Button openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle'>打开APP</Button>
+                 <Button
+                   appParameter={JSON.stringify({jumpUrl: 'imageMomentDetailPage',id: getUserMomentDetail.momentId,
+                     type : 'jumpToPage',
+                     jumpType : "native" ,path:'imageMomentDetailPage',params:{id: getUserMomentDetail.momentId}})}
+                   openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle'>打开APP</Button>
                </View>
              </View>
            </View>}
            {type == 'share' && <View className='page_share_openApp'>
-             <Button openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle1'>App内打开</Button>
+             <Button
+               appParameter={JSON.stringify({jumpUrl: 'imageMomentDetailPage',id: getUserMomentDetail.momentId
+               , type : 'jumpToPage', jumpType : "native" ,path:'imageMomentDetailPage',params:{id: getUserMomentDetail.momentId}})}
+               openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle1'>App内打开</Button>
            </View>}
           {/* <View className='NavBar_title'>*/}
           {/*  <View className='NavBar_userbox clearfix'>*/}
@@ -158,14 +202,14 @@ export default class ShareImage extends Taro.Component{
            <Swiper className='banner_box'
                    circular
                    autoplay>
-             {userMomentsInfo.imageContent ? userMomentsInfo.imageContent.map((item,index) =>{
-               return (
-                 <SwiperItem key={index} style={{backgroundAttachment:'fixed',background:`url(${userMomentsInfo.imageHost+item.key}) no-repeat 0 center/cover`}}>
+             {/*{userMomentsInfo.imageContent ? userMomentsInfo.imageContent.map((item,index) =>{*/}
+             {/*  return (*/}
+             {/*    <SwiperItem key={index} style={{backgroundAttachment:'fixed',background:`url(${userMomentsInfo.imageHost+item.key}) no-repeat 0 center/cover`}}>*/}
 
-                 </SwiperItem>
-               )
-             }) : null}
-             <View className='banner_index'>1/{userMomentsInfo.imageContent.length}</View>
+             {/*    </SwiperItem>*/}
+             {/*  )*/}
+             {/*}) : null}*/}
+             {/*<View className='banner_index'>1/{userMomentsInfo&&userMomentsInfo.imageContent.length}</View>*/}
              {userMomentsInfo.categoryName.length>0 && <View className='banner_tag'>{userMomentsInfo.categoryName}</View>}
            </Swiper>
           <View className='Details_box'>
@@ -176,7 +220,7 @@ export default class ShareImage extends Taro.Component{
                {userMomentsInfo.message}
              </View>
              <View className='Details_time'>
-               {userMomentsInfo.interactionTime}
+               {'编辑于'+userMomentsInfo.interactionTime}
              </View>
            </View>
           {userMomentsInfo.userType && userMomentsInfo.userType ==='merchant'?

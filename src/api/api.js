@@ -40,3 +40,27 @@ export const wxapiPost = {
   wechatPayDelayOrder: '/user/pay/adapay/payDelayOrder'// 点餐下单
 }
 
+export const user = {
+  userDetails : {
+     getDetails: '/user/userInfo/getOtherDetail',//获取主页信息  userId必填  token非必填
+     getListOtherMomentByType: '/user/userMoment/listOtherMomentByType',//获取分享  userId用户Id page页数 limit每页数量 contentType类型视频或图文
+     saveUserFollow: '/user/userFollow/saveUserFollow', //添加关注
+     deleteUserFollow: '/user/userFollow/deleteUserFollow',//取消关注
+     saveCollection: '/user/userCollection/saveUserCollection',//添加收藏
+     deleteCollection: '/user/userCollection/deleteUserCollection',//取消收藏
+     updateKol: '/user/kolMoments/updateKolMomentsLikeAmount',
+     deleteKolMoments:'/user/kolMoments/deleteKolMomentsLikeAmount',//取消点赞
+  },
+}
+export const  kol = {
+  fans : {
+
+  },
+  follow : {
+
+  },
+  shareDetails : {
+    getMomentDetail: '/user/kolMoments/getKolMomentDetailById', //查看kol动态详情
+    saveWatchBeanDetail: '/user/beanDetail/saveWatchBeanDetailByUserId',//看视频获取卡豆
+  },
+}
