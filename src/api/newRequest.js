@@ -26,7 +26,8 @@ switch (env) {
     baseUrl = 'https://devgateway.dakale.net'
     break
   case 'production':
-    baseUrl = 'https://gateway1.dakale.net'
+    baseUrl = 'https://devgateway.dakale.net'
+    // baseUrl = 'https://gateway1.dakale.net'
     break
 }
 

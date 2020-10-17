@@ -19,7 +19,7 @@ page{
       width: 80px;
       height: 80px;
       border-radius: 40px;
-      background: #FD96A9;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/useProfile.png") no-repeat center/cover;
     }
     .follow_userDetails{
       margin-left: 12px;
@@ -105,5 +105,8 @@ page{
     font-weight: 400;
     color: #CCCCCC;
     text-align: center;
+  }
+  .follow_Sollor{
+    height: 1206px;
   }
 }

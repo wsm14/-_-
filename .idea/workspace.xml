@@ -10,7 +10,27 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c250933-678c-4f5c-9059-9683dc632f42" name="Default Changelist" comment="" />
+    <list default="true" id="9c250933-678c-4f5c-9059-9683dc632f42" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/shareApp/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/shareApp/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/keys.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/keys.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/newRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/newRequest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/video/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/video/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/fans/index.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/fans/index.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/fans/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/fans/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/fans/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/fans/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/follow/index.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/follow/index.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/follow/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/follow/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/follow/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/follow/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/shareImage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/shareImage/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/user/userDetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/user/userDetails/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/user/userDetails/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/user/userDetails/index.scss" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,7 +59,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../dakale-web-app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/shareApp" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -58,19 +78,19 @@
     <property name="ts.external.directory.path" value="D:\IntelliJ IDEA 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\components\shareApp" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\components\beanToast" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\components\video" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\components\banner" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\index\lookShare\shareImage" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\components\video" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\kol\principal\components" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\kol" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\ephtalites\follow" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-webNew-miniprogram\src\layout\overLoad" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\components\beanToast" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\components\video" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\components\banner" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\index\lookShare\shareImage" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\kol\shareVideo" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -99,6 +119,9 @@
       <workItem from="1602639561121" duration="19214000" />
       <workItem from="1602668313846" duration="7538000" />
       <workItem from="1602725813578" duration="33439000" />
+      <workItem from="1602766169603" duration="319000" />
+      <workItem from="1602812029267" duration="28767000" />
+      <workItem from="1602900690703" duration="24472000" />
     </task>
     <servers />
   </component>
@@ -134,10 +157,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602294520450" />
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1602748498521">
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1602831799683">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1602748498521" />
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1602831799683" />
     <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1602316084205">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -158,10 +181,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1602316333278" />
-    <state x="661" y="254" width="598" height="532" key="find.popup" timestamp="1602469311124">
+    <state x="661" y="254" width="598" height="532" key="find.popup" timestamp="1602905163505">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="661" y="254" width="598" height="532" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602469311124" />
+    <state x="661" y="254" width="598" height="532" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602905163505" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1602754007130">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -176,7 +199,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/api/newRequest.js</url>
-          <line>43</line>
+          <line>44</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -229,47 +252,85 @@
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/pages/kol/follow/index.js</url>
-          <line>13</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareImage/index.js</url>
-          <line>314</line>
+          <line>349</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareVideo/index.js</url>
-          <line>226</line>
+          <line>266</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/user/userDetails/index.js</url>
-          <line>150</line>
+          <line>480</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/common/utils.js</url>
-          <line>34</line>
+          <line>40</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/common/utils.js</url>
-          <line>62</line>
-          <properties lambdaOrdinal="-1" />
+          <line>77</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/common/utils.js</url>
-          <line>91</line>
-          <properties lambdaOrdinal="-1" />
+          <line>130</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/components/beanToast/index.js</url>
           <line>9</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/user/userDetails/index.js</url>
+          <line>405</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/common/utils.js</url>
+          <line>60</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/common/utils.js</url>
+          <line>120</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/common/utils.js</url>
+          <line>165</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/user/userDetails/index.js</url>
+          <line>6</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/kol/follow/index.js</url>
+          <line>23</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/index/lookShare/shareImage/index.js</url>
+          <line>173</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/kol/shareImage/index.js</url>
+          <line>307</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="36" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

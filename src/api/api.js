@@ -50,17 +50,26 @@ export const user = {
      deleteCollection: '/user/userCollection/deleteUserCollection',//取消收藏
      updateKol: '/user/kolMoments/updateKolMomentsLikeAmount',
      deleteKolMoments:'/user/kolMoments/deleteKolMomentsLikeAmount',//取消点赞
+     getOtherUser:'/user/userInfo/getOtherUserDetail',//获取他人详情
+     getUserDetailInfo: '/user/userInfo/getUserDetailInfo',
+     getOtherShare: '/user/userMoment/listOtherMomentByType',//获取他人分享
+     getUserShare: '/user/userMoment/listMomentByUserId',//获取自己分享
+     getUserCollection:'/user/userCollection/listOtherCollectionMomentByUserId',//获取收藏
+     getFollowByUserId: '/user/userFollow/listUserFollowByUserId', //关注
+     listUserMark:  '/user/userMark/listUserMarkTrackMerchantInfo' // 获取足迹
   },
 }
 export const  kol = {
   fans : {
-
+    getFans: '/user/userFollow/listUserFollowByFollowUserId'
   },
   follow : {
-
+    getListUserFollow: '/user/userFollow/listUserFollowByFollowUserId',//查询用户关注列表
+    listOtherUserFollowByUserId: '/user/userFollow/listOtherUserFollowByUserId'//获取其他用户关注列表
   },
   shareDetails : {
     getMomentDetail: '/user/kolMoments/getKolMomentDetailById', //查看kol动态详情
     saveWatchBeanDetail: '/user/beanDetail/saveWatchBeanDetailByUserId',//看视频获取卡豆
+
   },
 }

@@ -8,6 +8,7 @@ import GetBean from '@/components/getBean'
 import Toast from '@/components/beanToast'
 import {kol} from '@/api/api'
 import {httpGet,httpPost} from '@/api/newRequest'
+import APPShare from '@/components/shareApp'
 import classNames from 'classnames'
 import {
   imgList,
@@ -28,7 +29,7 @@ class Index extends Component {
     super(...arguments);
     this.state = {
       httpData : {
-        kolMomentId: getCurrentInstance().router.params.kolMomentId || '1316287923159785473'
+        kolMomentId: getCurrentInstance().router.params.kolMomentId || '1317005527285485569'
       },
       kolMomentsInfo:{},
       visible: false,
@@ -43,7 +44,8 @@ class Index extends Component {
         height: 'height'
       },
       toast: false,
-      time: null
+      time: null,
+      beanSet: false,
     }
   }
   componentDidMount () {
@@ -52,19 +54,16 @@ class Index extends Component {
   componentDidShow() {}
   followStatus(e) {
     e.stopPropagation()
-    const {kolMomentsInfo:{userFollowStatus,merchantIdString,merchantId,userIdString}} = this.state
+    const {kolMomentsInfo:{userFollowStatus,merchantIdString,merchantId,userIdString,userType}} = this.state
     if(userFollowStatus === '1'){
        this.setState({
          visible: true
        })
     }
     else {
-      let type = 'user'
-      if(merchantId&&merchantIdString){
-        type = 'merchant'
-      }
+
       saveFollow({
-        followType: type,
+        followType: userType,
         followUserId: userIdString,
       },this.shareDetailsById.bind(this))
     }
@@ -76,12 +75,13 @@ class Index extends Component {
     }} = this.state
     if(momentCollectionStatus === '1'){
       deleteCollection({
+        collectionType: 'kolMoments',
         collectionId: kolMomentId,
       },this.shareDetailsById.bind(this))
     }
     else {
       saveCollection({
-        collectionType: 'moments',
+        collectionType: 'kolMoments',
         collectionId: kolMomentId,
       },this.shareDetailsById.bind(this))
     }
@@ -92,10 +92,20 @@ class Index extends Component {
     const {shareDetails:{getMomentDetail}} = kol
     const { httpData, bannerSetting} = this.state
     httpGet({url: getMomentDetail,data: httpData},res =>{
-      const { kolMomentsInfo, kolMomentsInfo:{imageContent,imageHost}} = res
+      const { kolMomentsInfo, kolMomentsInfo:{  merchantIdString ,//商家id'
+        userLevel,imageContent,imageHost}} = res
+      if(!merchantIdString||userLevel==='0'){
+        this.setState({
+          kolMomentsInfo,
+          visible: false,
+          bannerSetting: {...bannerSetting,data:imgList(imageContent,imageHost,'key')}
+        })
+         return
+      }
       this.setState({
         kolMomentsInfo,
         visible: false,
+        beanSet: true,
         bannerSetting: {...bannerSetting,data:imgList(imageContent,imageHost,'key')}
       },res=>{
         if(this.state.kolMomentsInfo.watchStatus == 0 &&!this.state.interval&&!this.state.time){
@@ -125,6 +135,13 @@ class Index extends Component {
       },this.shareDetailsById.bind(this))
     }
   }
+  kolStatus(){
+    const {kolMomentsInfo:{merchantIdString,userLevel}} = this.state
+    if(merchantIdString ||userLevel > 1){
+      return true
+    }
+    return false
+  }
   //用户点赞信息
   getBean(time){
     this.setState({
@@ -150,7 +167,8 @@ class Index extends Component {
   render () {
     const { kolMomentsInfo,
       kolMomentsInfo: {
-        merchantIdString ,//商家id
+        merchantIdString ,//商家id'
+        userLevel,
         merchantId,//商家id
         merchantCover,//商家組圖
         merchantName, //商家名稱
@@ -158,7 +176,7 @@ class Index extends Component {
         merchantAddress, //商家地址
         title,//標題
         message,//内容
-        momentCollectionNum,//收藏數量
+        collectionAmount,//收藏數量
         distanceRange,//距離
         userProfile,//頭像
         userFollowStatus,//關注狀態
@@ -168,15 +186,18 @@ class Index extends Component {
         momentCollectionStatus,//收藏狀態,
         userIdString,
         watchStatus,
-        topicIdString,
+        topicId,
         topicName,
         beanAmount,
-        interactionTime
+        interactionTime,
+        merchantCityName,
+        cityName
       },
       time,
       visible,
       bannerSetting,
-      toast
+      toast,
+      beanSet
     } = this.state
     const navSetting = {
       style:{
@@ -193,7 +214,7 @@ class Index extends Component {
             <View
               className='shareImage_userProfile'
               style={backgroundObj(userProfile)}
-              onClick={() =>navigateTo(`/pages/user/userDetails/index?userStingId=${userIdString}`)}>
+              onClick={() =>navigateTo(`/pages/user/userDetails/index?userStingId=${userIdString}&type=share`)}>
               <View
                 className = {classNames('shareImage_followStatus',userFollowStatus==='1'?'shareImage_delete':'shareImage_install')}
                 onClick={(e) =>this.followStatus(e)}
@@ -213,15 +234,18 @@ class Index extends Component {
               <View className='shareImage_likeNum'>
                 {setPeople(likeAmount)}
               </View>
-              <View
-                className={classNames('shareImage_Collection',momentCollectionStatus==='1'?'shareImage_Collection_icon1':'shareImage_Collection_icon')}
-                onClick={() =>this.collectionStatus()}
-              >
-
+              {this.kolStatus() &&
+              <View className='public_center'>
+                <View
+                  className={classNames('shareImage_Collection',momentCollectionStatus==='1'?'shareImage_Collection_icon1':'shareImage_Collection_icon')}
+                  onClick={() =>this.collectionStatus()}
+                >
+                </View>
+                <View className='shareImage_CollectionNum'>
+                  {setPeople(collectionAmount)}
+                </View>
               </View>
-              <View className='shareImage_CollectionNum'>
-                {setPeople(momentCollectionNum)}
-              </View>
+              }
             </View>
             {/*{點贊加收藏}*/}
           </View>
@@ -238,16 +262,15 @@ class Index extends Component {
             {interactionTime}
           </View>
           {/*//文章时间*/}
-          {topicIdString&&<View className='shareImage_conversation'>
+          {this.kolStatus() && topicId &&
+          <View className='shareImage_conversation'>
             <View className='shareImage_conversationBox'>
               <Text className='shareImage_conversation_icon'></Text>
               <Text className='shareImage_conversation_font'>{topicName}</Text>
             </View>
-
           </View>}
           {/*//文章话题*/}
           {merchantIdString &&
-           merchantId &&
            <View className='shareImage_shop'>
             <View className='shareImage_shopDetails'>
               <View className='shareImage_shopProfile' style={backgroundObj(merchantCover)}>
@@ -255,7 +278,7 @@ class Index extends Component {
               </View>
               <View className='shareImage_shopFont'>
                 <View className='shareImage_shopName'>{merchantName}</View>
-                <View className='shareImage_shopTag'>{merchantCategoryName+' ｜ '+distanceRange}</View>
+                <View className='shareImage_shopTag'>{merchantCityName?(merchantCityName+'·'):''+merchantCategoryName+' ｜ '+distanceRange}</View>
               </View>
             </View>
             <View className='shareImage_shopAccress'>
@@ -297,12 +320,14 @@ class Index extends Component {
           visible={visible}
         >
         </Modal>
+        {beanSet &&
         <GetBean
           beanStatus={watchStatus}
           beanNum={beanAmount}
           interval={time}
         >
-        </GetBean>
+        </GetBean>}
+
         {toast &&
         <Toast
           data={kolMomentsInfo}
@@ -311,7 +336,17 @@ class Index extends Component {
           })}}
         >
         </Toast>}
-
+        {getCurrentInstance().router.params.type&&getCurrentInstance().router.params.type == 'share' &&
+        <APPShare
+          {...{
+            content: '我在哒卡乐发了一篇有趣的图文',
+            userId:getCurrentInstance().router.params.shareUserId||'',
+            jumpObj:{jumpUrl: 'imageMomentDetailPage',id:getCurrentInstance().router.params.kolMomentId || '1317005527285485569',
+              type : 'jumpToPage',
+              jumpType : "native" ,path:'imageMomentDetailPage',params:{id: getCurrentInstance().router.params.kolMomentId || '1317005527285485569'}}
+          }
+        }>
+        </APPShare>}
       </View>
     )
   }

@@ -30,32 +30,57 @@ class Index extends Component {
     this.state = {
        kolMomentsInfo: {},
        httpData : {
-        kolMomentId: getCurrentInstance().router.params.kolMomentId || '1316358857233154049'
+        kolMomentId: getCurrentInstance().router.params.kolMomentId || '1316734109205364737'
       },
        visible: false,
-       decStatus: false,
+       decStatus: true,
        toast: false,
+       beanSet: false,
+       initDec: true,
     }
   }
   componentDidShow() {
    this.shareDetailsById();
   }
+  componentWillUpdate(nextProps, nextState){
+    let that = this
+    if(nextProps.decStatus !== nextState.decStatus&&nextState ==true){
+      Taro.createSelectorQuery().selectAll('.shareVideo_dec_box').boundingClientRect(function (res){
+        if(res && res[0].height>parseInt(Taro.pxTransform(42))){
+          that.setState({
+            decStatus: false,
+            initDec: false
+          })
+        }
+      }).exec()
+    }
+  }
+
   shareDetailsById(){
     // 阻止事件冒泡
     const {httpData} = this.state
     const {shareDetails:{getMomentDetail}} = kol
     httpGet({url: getMomentDetail,data: httpData},res => {
-      const {kolMomentsInfo} = res
+      const {kolMomentsInfo,kolMomentsInfo:{merchantIdString,userLevel}} = res
+      if(!merchantIdString||userLevel==='0'){
+        this.setState({
+          kolMomentsInfo,
+          visible: false,
+        })
+        return
+      }
       this.setState({
         kolMomentsInfo,
         visible: false,
+        beanSet: true
       },res => {
         if(this.state.kolMomentsInfo.watchStatus == 0 &&!this.state.interval&&!this.state.time){
           this.setState({
-            interval:'1',
             time: this.state.kolMomentsInfo.length
           },res =>{
-            setIntive(this.state.time,this.getBean.bind(this))
+            this.setState({
+              interval:setIntive(this.state.time,this.getBean.bind(this)),
+            })
           })
         }
       })
@@ -82,7 +107,7 @@ class Index extends Component {
   } //领取卡豆
   followStatus(e) {
     e.stopPropagation()
-    const {kolMomentsInfo:{userFollowStatus,merchantIdString,merchantId,userIdString}} = this.state
+    const {kolMomentsInfo:{userFollowStatus,merchantIdString,merchantId,userIdString,userType}} = this.state
     if(userFollowStatus === '1'){
       this.setState({
         visible: true
@@ -106,15 +131,23 @@ class Index extends Component {
     }} = this.state
     if(momentCollectionStatus === '1'){
       deleteCollection({
+        collectionType: 'kolMoments',
         collectionId: kolMomentId,
       },this.shareDetailsById.bind(this))
     }
     else {
       saveCollection({
-        collectionType: 'moments',
+        collectionType: 'kolMoments',
         collectionId: kolMomentId,
       },this.shareDetailsById.bind(this))
     }
+  }
+  kolStatus(){
+    const {kolMomentsInfo:{merchantIdString,userLevel}} = this.state
+    if(merchantIdString ||userLevel > 1){
+      return true
+    }
+    return false
   }
   //用户收藏信息
   fallStatus(){
@@ -133,15 +166,18 @@ class Index extends Component {
     }
   }
   //用户点赞信息
-  onReady() {
-    let that  = this
-    wx.createSelectorQuery().selectAll('.shareVideo_dec_box').boundingClientRect(function (res){
-      if(res && res[0].height>parseInt(Taro.pxTransform(42))){
-            that.setState({
-              decStatus: true
-            })
-      }
-    }).exec()
+  stopInterval(obj) {
+      clearInterval(obj)
+      this.setState({
+        interval: null
+      })
+  }
+  initInterval(){
+    if(!this.state.interval){
+      this.setState({
+        interval:setIntive(this.state.time,this.getBean.bind(this))
+      })
+    }
   }
   errorToast(e) {
     this.setState({
@@ -159,14 +195,13 @@ class Index extends Component {
       } ,
       type:'white'
     }
-
     const {
       decStatus,
-      data,
       toast,
       kolMomentsInfo,
       videoSetting,
       visible,
+      beanSet,
       kolMomentsInfo: {
         watchStatus,
         beanAmount,
@@ -174,7 +209,7 @@ class Index extends Component {
         topicIdString,
         topicName,
         interactionTime,
-        momentCollectionNum,//收藏數量
+        collectionAmount,//收藏數量
         distanceRange,//距離
         userProfile,//頭像
         userFollowStatus,//關注狀態
@@ -187,16 +222,21 @@ class Index extends Component {
         merchantName,
         merchantCategoryName,
         merchantAddress,
-        userLevel
+        userLevel,
+        merchantCityName
       },
       time
     } = this.state
-    console.log( userLevel)
     return (
       <View className='shareVideo_box'>
         <Nav {...navSetting}></Nav>
-        <View className='shareVideo_setting'>
-          <Video kolMomentsInfo={kolMomentsInfo} {...videoSetting}></Video>
+        <View  className='shareVideo_setting'>
+          <Video
+            kolMomentsInfo={kolMomentsInfo}
+            {...videoSetting}
+            onPause = {() =>this.stopInterval(this.state.interval)}
+            onPlay ={() => this.initInterval()}
+          ></Video>
         </View>
         <View className='shareVideo_details_box'>
           <View className='shareVideo_userProfile' style={backgroundObj(userProfile)}  onClick={(e) =>this.followStatus(e)}>
@@ -210,7 +250,7 @@ class Index extends Component {
             <View className='shareVideo_icon_num'>
                {setPeople(likeAmount)}
             </View>
-            {userLevel !=='0' || merchantIdString&&
+            {this.kolStatus()&&
             <View>
             <View
               className={classNames('shareVideo_icon_size',momentCollectionStatus==='1'?'shareVideo_shoucang_icon2':'shareVideo_shoucang_icon1')}
@@ -218,19 +258,19 @@ class Index extends Component {
             >
             </View>
               <View className='shareVideo_icon_num'>
-              {setPeople(momentCollectionNum)}
+              {setPeople(collectionAmount)}
               </View>
             </View>
             }
           </View>
         </View>
-        {userLevel !=='0' || merchantIdString && <View className='shareVideo_shop'>
+        {this.kolStatus()&& <View className='shareVideo_shop'>
           <View className='shareVideo_shopDetails'>
             <View className='shareVideo_shopProfile' style={backgroundObj(merchantCover)}>
             </View>
             <View className='shareVideo_shopFont'>
               <View className='shareVideo_shopName'>{merchantName}</View>
-              <View className='shareVideo_shopTag'>{merchantCategoryName+' ｜ '+distanceRange}</View>
+              <View className='shareVideo_shopTag'>{merchantCityName||'杭州'+'·'+merchantCategoryName+' ｜ '+distanceRange}</View>
             </View>
           </View>
           <View className='shareVideo_active_box'>
@@ -247,7 +287,7 @@ class Index extends Component {
 
               </View>
               <View className='shareVideo_shopAccress_details'>
-                临安千岛湖湖心路25号
+                {merchantAddress}
               </View>
             </View>
           </View>
@@ -255,7 +295,7 @@ class Index extends Component {
             {message}
             <View className='shareVideo_dec_details'>
               <View className='shareVideo_dec_time'>
-                {merchantAddress}
+                {interactionTime}
               </View>
               {!decStatus&&<View className='shareVideo_dec_hide' onClick={() =>{this.setState({decStatus: true})}}>
                 <View>收起</View>
@@ -313,12 +353,14 @@ class Index extends Component {
           visible={visible}
         >
         </Modal>
+        {beanSet&&
         <GetBean
           beanStatus={watchStatus}
           beanNum={beanAmount}
           interval={time}
         >
         </GetBean>
+        }
         {toast &&
         <Toast
           data={kolMomentsInfo}

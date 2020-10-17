@@ -1,11 +1,14 @@
 export default {
   pages: [
     "pages/kol/shareImage/index",//kol图片详情页,
-    "pages/kol/shareVideo/index",///kol视频详情页,
-
-    "pages/kol/follow/index",//粉丝列表,
-    "pages/user/userDetails/index",//个人主页,
     "pages/index/index", //首页主页
+
+    "pages/user/userDetails/index",//个人主页,
+
+
+    "pages/kol/shareVideo/index",///kol视频详情页,
+    "pages/kol/follow/index",//关注列表,
+    "pages/kol/fans/index",//粉丝列表,
     "pages/index/lookShare/index", //看视频图文
     "pages/index/perimeter/index", //周边打卡
     // "pages/perimeter/map/index", //地图

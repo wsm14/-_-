@@ -32,6 +32,12 @@ export const toast = (value) =>{
     icon: 'none',
   })
 }
+export const filterStrList =  (str) => {
+  if(!str ||str.length =='0'){
+    return []
+  }
+  return  str.split(',')
+}
 export const filterHttpStatus = (value) =>{
   if(value.includes('timeout')){
     return '响应超时'
@@ -53,17 +59,50 @@ export const goBack = function(fn){
   })
 }
 export const imgList = function (listStr,url,key) {
-    if(listStr.length > 0 && JSON.parse(listStr)){
+    if(listStr&&listStr.length > 0 && JSON.parse(listStr)){
       return JSON.parse(listStr).map(item =>{
         item[key] = url+item[key]
         return item
       })
     }
+    return  []
+}
+export const computedHeight = function (width,height,newWidth) {
+    let scale = 0
+  if(typeof width =="number"&&typeof height == "number"){
+    scale = width/height
+  }
+    scale = parseInt(width)/parseInt(height)
+    return parseInt(newWidth/scale)
 }
 export const backgroundObj = function (url) {
   return {
     background:`url(${url}) no-repeat center/cover`
   }
+}
+export const backgroundover = function (url) {
+  return {
+    background:`url(${url}) no-repeat`,
+    backgroundSize:'100% 100%'
+  }
+}
+export const filterTime = function (time) {
+     if(time<10){
+       return  `00:0${time}`
+     }
+     else if(time>=10 &&(time/60)<1){
+       return `00:${time}`
+     }
+     else {
+       let times = time%60
+       if((time-times*60)<10){
+         return `0+${times}:0${time-times*60}`
+       }
+       else if((time-times*60)>=10){
+         return `0+${times}:${time-times*60}`
+       }
+
+     }
 }
 export const setPeople = function (num) {
   if(typeof num  =="string"){
@@ -135,7 +174,8 @@ export const deleteFall = function (obj,fn) {
 }
 export const setIntive = function(time , fn) {
   let times;
-  if(time<0){
+  if(time <= 0){
+    fn(time)
     return
   }
   return  times = setInterval(()=>{
