@@ -25,10 +25,6 @@ export default class ShareImage extends Component{
       shareUserName: ''
     }
   }
-  config = {
-    navigationStyle:'default',
-    navigationBarTitleText: '图文详情'
-  }
   componentDidMount() {
     Taro.hideHomeButton();
     this.getUserInfos()
@@ -202,15 +198,17 @@ export default class ShareImage extends Component{
            <Swiper className='banner_box'
                    circular
                    autoplay>
-             {/*{userMomentsInfo.imageContent ? userMomentsInfo.imageContent.map((item,index) =>{*/}
-             {/*  return (*/}
-             {/*    <SwiperItem key={index} style={{backgroundAttachment:'fixed',background:`url(${userMomentsInfo.imageHost+item.key}) no-repeat 0 center/cover`}}>*/}
+             {userMomentsInfo.imageContent ? userMomentsInfo.imageContent.map((item,index) =>{
+               return (
 
-             {/*    </SwiperItem>*/}
-             {/*  )*/}
-             {/*}) : null}*/}
-             {/*<View className='banner_index'>1/{userMomentsInfo&&userMomentsInfo.imageContent.length}</View>*/}
-             {userMomentsInfo.categoryName.length>0 && <View className='banner_tag'>{userMomentsInfo.categoryName}</View>}
+                 <SwiperItem key={index} style={{width:'100%',height:'100%'}}>
+                   <View style={{width:'100%', height:'100%',backgroundAttachment:'fixed',background:`url(${userMomentsInfo.imageHost+item.key}) no-repeat 0 center/cover`}}>
+                   </View>
+                 </SwiperItem>
+               )
+             }) : null}
+             {/*<View className='banner_index'>1/{userMomentsInfo&&userMomentsInfo.imageContent&&userMomentsInfo.imageContent.length}</View>*/}
+             {userMomentsInfo.categoryName && <View className='banner_tag'>{userMomentsInfo.categoryName}</View>}
            </Swiper>
           <View className='Details_box'>
              <View className='Details_title'>

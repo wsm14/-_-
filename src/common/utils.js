@@ -30,6 +30,7 @@ export const toast = (value) =>{
   return Taro.showToast({
     title: value,
     icon: 'none',
+    duration: 800
   })
 }
 export const filterStrList =  (str) => {
@@ -107,13 +108,13 @@ export const filterTime = function (time) {
 export const setPeople = function (num) {
   if(typeof num  =="string"){
     if(num.length>4){
-      return parseInt(num)/10000+'万'
+      return (parseInt(num)/10000).toString().slice(0,3)+'万'
     }
     return num
   }
   else {
     if(num>=10000){
-      return num/10000+'万'
+      return (num/10000).toString().slice(0,3)+'万'
     }
     return num
   }
@@ -187,4 +188,3 @@ export const setIntive = function(time , fn) {
   },1000)
 
 }
-

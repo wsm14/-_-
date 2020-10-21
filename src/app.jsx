@@ -5,6 +5,7 @@ import beanStore from "./store/beanMark";
 import shareStore from "./store/shareImage";
 import 'taro-ui/dist/style/index.scss'
 import './app.scss'
+import './animate.min.css'
 
 const store = {
   authStore,

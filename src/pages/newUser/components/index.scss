@@ -1,0 +1,313 @@
+.card_box{
+  line-height: 1;
+  width: 726px;
+  height: 332px;
+  margin: 0 auto;
+  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon15.png") no-repeat;
+  background-size: 100% 100%;
+  border-radius: 20px;
+  color: white;
+  .card_details{
+     padding: 80px 0px 0px;
+    .card_title{
+      display: flex;
+      height: 28px;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 400;
+      color: #FFFFFF;
+      font-size: 28px;
+      padding:0px 152px;
+    }
+    .card_bean{
+      margin-top: 40px;
+      height: 48px;
+      font-size: 20px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #FFFFFF;
+      display: flex;
+      .card_number{
+        font-size: 48px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 600;
+        color: #FFFFFF;
+        display: inline-block;
+        margin-right: 8px;
+      }
+      .card_beanBox{
+         width: 280px;
+      }
+      .card_beanLeft{
+         margin-left: 152px;
+      }
+      .card_beanRight{
+        margin-left: 30px;
+      }
+    }
+  }
+}
+
+.list_box{
+  margin: 32px 32px 0px;
+  .list_tags{
+    width: 686px;
+    height: 168px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    .list_details{
+      height: 88px;
+      display: flex;
+      width: 614px;
+      margin: 0 auto;
+      justify-content: space-between;
+      align-items: center;
+      .list_left{
+        display: flex;
+        .list_profile{
+          width: 88px;
+          height: 88px;
+          background: #e6e6e6;
+          border-radius: 50%;
+        }
+        .list_dec{
+          margin-top: 1px;
+          margin-left: 16px;
+          .list_username{
+            display: flex;
+            margin-top: 6px;
+            height: 36px;
+            align-items: center;
+            .list_user{
+              height: 36px;
+              max-width: 240px;
+              font-family: PingFangSC-Medium, PingFang SC;
+              font-weight: 600;
+              color: #333333;
+              line-height: 36px;
+              font-size: 28px;
+            }
+            .list_sex_bg{
+              width: 36px;
+              height: 36px;
+              margin-left: 4px;
+            }
+            .list_sex_boy{
+              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon16.png") no-repeat;
+              background-size: 100% 100%;
+            }
+            .list_sex_girl{
+              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon17.png") no-repeat;
+              background-size: 100% 100%;
+            }
+            .list_city{
+              height: 28px;
+              background: rgba(7, 192, 194, 0.1);
+              border-radius: 4px;
+              font-size: 20px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              font-weight: 400;
+              color: #07C0C2;
+              line-height: 28px;
+              padding: 0px 8px;
+              margin-left: 8px;
+            }
+          }
+        }
+        .list_userDec{
+          margin-top: 12px;
+          width: 360px;
+          height: 24px;
+          line-height: 24px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #999999;
+          font-size: 24px;
+        }
+      }
+      .list_right{
+
+        .list_bean{
+          height: 48px;
+          font-size: 48px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 600;
+          color: #EF476F;
+          line-height: 48px;
+        }
+        .list_beanDec{
+          margin-top: 5px;
+          height: 20px;
+          font-size: 20px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #999999;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+}
+
+.shop_box{
+  line-height: 1;
+  margin-top: 28px;
+  padding: 0 32px;
+  .shop_list_box{
+    width: 686px;
+    height: 292px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    .shop_title{
+      height: 95px;
+      display: flex;
+      padding:0px 24px 0 32px;
+      border-bottom: 1px solid #E5E5E5;
+      justify-content: space-between;
+      align-items: center;
+      .shop_name{
+        max-width: 394px;
+        height: 28px;
+        font-size: 28px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 600;
+        color: #333333;
+        line-height: 28px;
+      }
+      .shop_btn{
+        width: 144px;
+        height: 48px;
+        background: #07C0C2;
+        border-radius: 40px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #FFFFFF;
+        line-height: 48px;
+        text-align: center;
+      }
+    }
+    .shop_details{
+      position: relative;
+      height: 140px;
+      margin: 24px 33px 32px 32px;
+      display: flex;
+      .shop_shopImg{
+        width: 140px;
+        height: 140px;
+        border-radius: 10px;
+        background: #e6e6e6;
+      }
+      .shop_dec{
+        margin-left: 16px;
+        .shop_card{
+          margin-top: 8px;
+          font-size: 24px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          height: 24px;
+          font-weight: 400;
+          color: #333333;
+        }
+        .shop_city{
+          height: 28px;
+          background: rgba(7, 192, 194, 0.1);
+          border-radius: 4px;
+          line-height: 28px;
+          padding: 0 8px;
+          font-size: 20px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #07C0C2;
+          display: inline-block;
+          text-align: center;
+          margin-top: 28px;
+          align-items: center;
+          .city_icon{
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: #07C0C2;
+            vertical-align: middle;
+            margin: 0 6px;
+          }
+        }
+      }
+      .shop_limit{
+        height: 24px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+        margin-top: 16px;
+        display: flex;
+        align-items: center;
+        .limit_icon{
+          width: 2px;
+          height: 16px;
+          background: #CCCCCC;
+          border-radius: 2px;
+          margin: 0 16px;
+        }
+      }
+      .shop_beanBox{
+        position: absolute;
+        right: 0;
+        top: 53px;
+        text-align: right;
+        .shop_bean{
+          height: 48px;
+          font-size: 48px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 600;
+          color: #EF476F;
+          line-height: 48px;
+        }
+        .shop_bean_text{
+          margin-top: 5px;
+          height: 20px;
+          font-size: 20px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #999999;
+          line-height: 20px;
+        }
+      }
+    }
+
+  }
+}
+.consent_box{
+  width: 686px;
+  height: 585px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  margin: 32px auto;
+  .consent_bg{
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+  }
+  .consent_toast{
+    height: 36px;
+    font-size: 36px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #333333;
+    line-height: 36px;
+    text-align: center;
+    margin-top: 48px;
+  }
+  .consent_getfamily{
+    text-align: center;
+    height: 37px;
+    font-size: 26px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #999999;
+    line-height: 26px;
+    margin-top: 24px;
+  }
+}

@@ -10,7 +10,7 @@ import Taro from '@tarojs/taro'
 
 import encrypt from './keys'
 
-import {toast,filterHttpStatus,navigateTo} from '@/common/utils'
+import {toast,filterHttpStatus,navigateTo,redirectTo} from '@/common/utils'
 
 const resultOperate = {
   "2001" : {type: '用户身份不存在',link:'/pages/auth/index',},
@@ -67,9 +67,9 @@ export const httpGet = (obj,fn) =>{
          else if(!data.success){
            const {resultDesc,resultCode} = data
            if(resultOperate[resultCode]){
-              toast(resultDesc);
-              navigateTo(resultOperate[resultCode][link])
-             return
+             toast(resultDesc);
+             resultOperate[resultCode].fn();
+             return navigateTo(resultOperate[resultCode].link)
            }
            return  toast(resultDesc);
          }
@@ -86,9 +86,6 @@ export const httpGet = (obj,fn) =>{
 }
 
 export const httpPost = (obj,fn) =>{
-  Taro.showLoading({
-    title: '加载中',
-  })
   if(Taro.getStorageSync('userInfo') && Taro.getStorageSync('userInfo').mobile.length===11 && Taro.getStorageSync('userInfo').token){
     obj.data.token = Taro.getStorageSync('userInfo').token
   }
@@ -127,7 +124,6 @@ export const httpPost = (obj,fn) =>{
         toast(filterHttpStatus(errMsg))
       },
       complete:() =>{
-        Taro.hideLoading()
       }
     })
 }

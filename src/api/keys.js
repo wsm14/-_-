@@ -66,7 +66,6 @@ function filterObj(obj) {
 }
 function encrypt(data) {
   let setMd5 = {...sort(data)}
-  console.log(setMd5)
   setMd5 = filterObj(setMd5)
   setMd5.auth_time_stamp = new Date().getTime().toString();
   setMd5.auth_nonce = setString(true, 10, 28);

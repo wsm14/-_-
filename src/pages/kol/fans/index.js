@@ -23,7 +23,7 @@ class Index extends Component {
      this.getFall()
   }
   getFall(){
-    const {httpData} = this.state
+    const {httpData } = this.state
     const {fans: {getFans}} = kol
     httpGet({
       url:getFans,
@@ -85,15 +85,15 @@ class Index extends Component {
             userRemark,
             level,
             userProfile,
-            userIdString,
-            followType
+            followType,
+            userIdString
           } = item
           return (
             <View key={index} className='follow_tab' style={index!=list.length-1&&{borderBottom:'1px solid #E5E5E5'}}>
               <View className='follow_userProFile' style={{...backgroundObj(userProfile)}}></View>
               <View className='follow_userDetails'>
                 <View className='follow_userName'>
-                  <View>{userName}</View>
+                  <View className='follow_userTop'>{userName}</View>
                   {level > 0 && <View className='follow_tag'>
                     <View className='follow_icon'></View>
                     <View className='follow_tagFont'>哒人</View>
@@ -104,24 +104,44 @@ class Index extends Component {
               {ownerFollowStatus !=='1'?
                 <View
                   className='follow_userInterest_box follow_userInterest_true'
-                  onClick={() =>saveFollow({
-                    followType: followType,
-                    followUserId: userIdString,
-                  },res =>{
-                    toast({content:'关注成功'})
-                    this.getFollowList()
-                  })}
+                  onClick={() => {
+                    let that = this
+                    saveFollow({
+                      followType: followType,
+                      followUserId: userIdString,
+                    }, res => {
+                      let list = that.state.userFollowList.map(items =>{
+                        if(items.userIdString === userIdString){
+                          items.ownerFollowStatus = '1'
+                        }
+                        return items
+                      })
+                      that.setState({
+                        userFollowList: list
+                      })
+                    })
+                  }}
                 >
                   关注
                 </View>
                 :
                 <View className='follow_userInterest_box follow_userInterest_false'
-                      onClick={() =>deleteFollow({
-                        followUserId: userIdString,
-                      },res =>{
-                        toast({content:'取消成功'})
-                        this.getFollowList()
-                      })}
+                      onClick={() => {
+                        let that = this
+                        deleteFollow({
+                          followUserId: userIdString,
+                        },res =>{
+                          let list = that.state.userFollowList.map(items =>{
+                            if(items.userIdString === userIdString){
+                              items.ownerFollowStatus = '0'
+                            }
+                            return items
+                          })
+                          that.setState({
+                            userFollowList: list
+                          })
+                        })
+                      }}
                 >
                   取消关注
                 </View>

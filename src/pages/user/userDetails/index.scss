@@ -22,7 +22,8 @@ page{
     margin-right: 4px;
   }
   .follow_tagFont{
-    height: 20px;
+    height: 30px;
+    line-height: 30px;
     font-size: 20px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
@@ -61,11 +62,14 @@ page{
         .userDetails_userName{
           height: 35px;
           font-size: 36px;
+          width: 280px;
           font-family: PingFang SC;
           font-weight: 600;
           color: #FFFFFF;
           line-height: 37px;
-          display: flex;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         .userDetails_userAccress{
           height: 20px;
@@ -430,7 +434,11 @@ page{
               margin-right: 4px;
             }
             .userDetails_share_limit{
+              width: 270px;
               height: 20px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
               font-size: 20px;
               font-family: PingFangSC-Regular, PingFang SC;
               font-weight: 400;
@@ -517,10 +525,13 @@ page{
                 background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon12.png") no-repeat;
                 background-size: 100% 100%;
               }
-              .userDetails_share_icon1{
+              .userDetails_share_icon2{
                 background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon11.png") no-repeat;
                 background-size: 100% 100%;
               }
+            }
+            .userDetails_share_nums{
+                margin-top: 6px;
             }
           }
         }

@@ -39,11 +39,14 @@
     "@tarojs/react": "3.0.14",
     "@tarojs/runtime": "3.0.14",
     "@tarojs/taro": "3.0.14",
+    "@tarojs/mobx": "^2.2.10",
     "mobx": "^4.8.0",
     "mobx-react": "^6.1.4",
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
-    "taro-ui": "3.0.0-alpha.3"
+    "taro-ui": "3.0.0-alpha.3",
+    "classnames": "^2.2.6",
+    "md5": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",

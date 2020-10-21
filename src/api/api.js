@@ -52,11 +52,19 @@ export const user = {
      deleteKolMoments:'/user/kolMoments/deleteKolMomentsLikeAmount',//取消点赞
      getOtherUser:'/user/userInfo/getOtherUserDetail',//获取他人详情
      getUserDetailInfo: '/user/userInfo/getUserDetailInfo',
-     getOtherShare: '/user/userMoment/listOtherMomentByType',//获取他人分享
+     getOtherShare: '/user/kolMoments/listKolMomentByUserId',//获取他人分享
      getUserShare: '/user/userMoment/listMomentByUserId',//获取自己分享
      getUserCollection:'/user/userCollection/listOtherCollectionMomentByUserId',//获取收藏
-     getFollowByUserId: '/user/userFollow/listUserFollowByUserId', //关注
+     getFollowByUserId: '/user/userFollow/listOtherUserFollowByUserId', //关注
      listUserMark:  '/user/userMark/listUserMarkTrackMerchantInfo' // 获取足迹
+  },
+  shopFamily: {
+    getMyMerchant: '/user/userInfo/getMyMerchantSum',//获取家店数据
+    getMyMerchantList: '/user/userInfo/getMyMerchant',//获取家店列表
+  },
+  userFamily: {
+    getFamilyUser: '/user/userInfo/getFamilyUserSimple',//获取家人数据
+    getListUser: '/user/userInfo/listFamilyUser',//获取家人列表
   },
 }
 export const  kol = {
@@ -64,8 +72,8 @@ export const  kol = {
     getFans: '/user/userFollow/listUserFollowByFollowUserId'
   },
   follow : {
-    getListUserFollow: '/user/userFollow/listUserFollowByFollowUserId',//查询用户关注列表
-    listOtherUserFollowByUserId: '/user/userFollow/listOtherUserFollowByUserId'//获取其他用户关注列表
+    getListUserFollow: '/user/userFollow/listUserFollowByUserId',//查询用户关注列表
+    listOtherUserFollowByUserId: '/user/userFollow/listUserFollowByUserId'//获取其他用户关注列表
   },
   shareDetails : {
     getMomentDetail: '/user/kolMoments/getKolMomentDetailById', //查看kol动态详情

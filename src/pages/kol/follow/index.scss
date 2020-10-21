@@ -33,7 +33,13 @@ page{
         color: #333333;
         display: flex;
         align-items: center;
-
+       .follow_userTop{
+         max-width: 250px;
+         overflow: hidden;
+         height: 30px;
+         white-space: nowrap;
+         text-overflow: ellipsis;
+       }
         .follow_tag{
           width: 88px;
           height: 30px;
@@ -51,7 +57,8 @@ page{
             margin-right: 4px;
           }
           .follow_tagFont{
-            height: 20px;
+            height: 30px;
+            line-height: 30px;
             width: 40px;
             font-size: 20px;
             font-family: PingFangSC-Regular, PingFang SC;

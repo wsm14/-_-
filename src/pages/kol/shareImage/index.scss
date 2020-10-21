@@ -10,7 +10,6 @@ page {
   width: 100%;
   height: 100%;
   .shareImage_details {
-    padding-top: 24px;
     color: #333333;
     padding-bottom: 51px;
     .shareImage_statistics {
@@ -28,7 +27,7 @@ page {
         border: 1px solid #FFFFFF;
         box-sizing: border-box;
         left: 32px;
-        top: -50px;
+        top: -26px;
         background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/useProfile.png") no-repeat center/cover;
         border-radius: 50%;
         .shareImage_install{
@@ -50,9 +49,13 @@ page {
 
       .shareImage_userName {
         font-size: 28px;
-        height: 28px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
+        width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-top: 33px;
       }
 
       .shareImage_right {
@@ -63,6 +66,7 @@ page {
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
         color: #333333;
+        margin-top: 24px;
 
         .shareImage_like {
           width: 48px;
