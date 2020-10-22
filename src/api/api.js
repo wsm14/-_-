@@ -66,6 +66,10 @@ export const user = {
     getFamilyUser: '/user/userInfo/getFamilyUserSimple',//获取家人数据
     getListUser: '/user/userInfo/listFamilyUser',//获取家人列表
   },
+  merchantDetails:{
+    getOtherMerchant: '/user/userMerchant/getOtherMerchantDetail'
+    
+  }
 }
 export const  kol = {
   fans : {
@@ -77,7 +81,6 @@ export const  kol = {
   },
   shareDetails : {
     getMomentDetail: '/user/kolMoments/getKolMomentDetailById', //查看kol动态详情
-    saveWatchBeanDetail: '/user/beanDetail/saveWatchBeanDetailByUserId',//看视频获取卡豆
-
+    saveWatch:'/user/beanDetail/saveWatchKolMomentsByUserId',//看视频获取卡豆
   },
 }

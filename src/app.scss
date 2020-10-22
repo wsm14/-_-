@@ -153,3 +153,12 @@ image{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.font_noHide{
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow:clip !important;
+  word-wrap: break-word;
+  white-space: normal !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

@@ -1,12 +1,15 @@
 export default {
   pages: [
-    "pages/newUser/shopFamily/index",
+    "pages/newUser/merchantDetails/index",//商家主页,
+    "pages/newUser/userDetails/index",//个人主页,
+    "pages/kol/shareVideo/index",///kol视频详情页,
+    // "pages/newUser/shopFamily/index",
     // "pages/newUser/userFamily/index",
     "pages/index/index", //首页主页
     // "pages/kol/shareImage/index",//kol图片详情页,
-    // "pages/kol/shareVideo/index",///kol视频详情页,
+
     "pages/index/lookShare/shareImage/index", //圖文详情
-    "pages/user/userDetails/index",//个人主页,
+
     // "pages/kol/follow/index",//关注列表,
     // "pages/kol/fans/index",//粉丝列表,
     "pages/index/lookShare/index", //看视频图文
@@ -83,14 +86,14 @@ export default {
     },
   },
 subPackages:[
-    {
-      "root": "pages/kol/",
-      "pages": [
-        "shareVideo/index",///kol视频详情页,
-        "shareImage/index",//kol图片详情页,
-        "follow/index",//关注列表,
-        "fans/index",//粉丝列表,
-      ]
-    },
+    // {
+    //   "root": "pages/kol/",
+    //   "pages": [
+    //     "shareVideo/index",///kol视频详情页,
+    //     "shareImage/index",//kol图片详情页,
+    //     "follow/index",//关注列表,
+    //     "fans/index",//粉丝列表,
+    //   ]
+    // },
   ]
 }

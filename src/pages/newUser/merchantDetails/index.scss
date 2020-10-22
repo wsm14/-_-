@@ -32,7 +32,6 @@ page{
 }
 .userDetails_box{
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   .userDetails_top{
@@ -62,7 +61,7 @@ page{
         .userDetails_userName{
           height: 35px;
           font-size: 36px;
-          width: 280px;
+          max-width: 280px;
           font-family: PingFang SC;
           font-weight: 600;
           color: #FFFFFF;
@@ -82,7 +81,7 @@ page{
         .userDetails_sex_tags{
           .userDetails_sex_box{
             display: flex;
-            width: 500px;
+            width: 420px;
             flex-wrap: wrap;
             .userDetails_sex_style{
               margin-top: 12px;
@@ -141,12 +140,12 @@ page{
       font-family: PingFang SC;
       font-weight: 400;
       color: #FFFFFF;
-      line-height: 36px;
+      line-height: 29px;
       margin: 35px 60px 0 60px;
       font-family: PingFang SC;
       font-weight: 400;
       color: #FFFFFF;
-      min-height: 24px;
+      height: 59px;
     }
     .userDetails_code{
       margin: 18px 61px 0px 60px;
@@ -156,7 +155,7 @@ page{
 
       }
       .userDetails_fans{
-        margin-left: 60px;
+        margin-left: 80px;
       }
       .userDetails_num{
         height: 28px;
@@ -190,6 +189,13 @@ page{
       position: absolute;
       top: 3px;
       right: 0px;
+      .userDetails_edit_icon{
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/add.png") no-repeat;
+        background-size: 100% 100%;
+        width: 22px;
+        height: 22px;
+        margin-right: 5px;
+      }
     }
   }
   .userDetails_content{

@@ -32,7 +32,7 @@ class Index extends Component {
     this.state = {
       kolMomentsInfo: {},
       httpData: {
-        kolMomentId: getCurrentInstance().router.params.kolMomentId || '1317369803569319938'
+        kolMomentId: getCurrentInstance().router.params.kolMomentId || '1317009859036827649'
       },
       visible: false,
       decStatus: true,
@@ -59,14 +59,15 @@ class Index extends Component {
       }).exec()
     }
   }
-  componentDidHide(){
-    if(this.state.interval){
-      clearInterval(this.state.interval)
-      this.setState({
-        interval: null
-      })
-    }
-  }
+  // componentDidHide(){
+  //   try {
+  //     clearInterval(this.state.interval)
+  //   }catch(e)
+  //   {}
+  //   this.setState({
+  //     interval: null
+  //   })
+  // }
   shareDetailsById() {
     // 阻止事件冒泡
     const {httpData} = this.state
@@ -95,6 +96,7 @@ class Index extends Component {
           })
         }
         else if(this.state.kolMomentsInfo.watchStatus == 0 && this.state.time){
+          toast('222')
           this.initInterval()
         }
       })
@@ -111,13 +113,13 @@ class Index extends Component {
     })
   }//设置定时器领取卡豆
   saveBean() {
-    const {kolMomentsInfo: {kolMomentId}, kolMomentsInfo} = this.state
-    const {shareDetails: {saveWatchBeanDetail}} = kol
+    const {kolMomentsInfo:{kolMomentId},kolMomentsInfo} = this.state
+    const {shareDetails:{saveWatch}} = kol
     httpPost({
-      data: {momentId: kolMomentId},
-      url: saveWatchBeanDetail
-    }, res => {
-      this.setState({toast: true, kolMomentsInfo: {...kolMomentsInfo}, watchStatus: '1'})
+      data:{momentId: kolMomentId},
+      url:saveWatch
+    },res => {
+      this.setState({toast: true,kolMomentsInfo:{...kolMomentsInfo,watchStatus:'1'}})
     })
   } //领取卡豆
   followStatus(e) {
@@ -275,7 +277,6 @@ class Index extends Component {
       toast,
       kolMomentsInfo,
       videoSetting,
-      visible,
       beanSet,
       kolMomentsInfo: {
         watchStatus,
@@ -338,7 +339,7 @@ class Index extends Component {
         <View>
           <View className={('animated fadeInUp shareVideo_details_box')}>
             <View className='shareVideo_userProfile' style={backgroundObj(userProfile)}
-                  onClick={() =>navigateTo(`/pages/user/userDetails/index?userStingId=${userIdString}&type=share`)}>
+                  onClick={() =>navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`)}>
               <View
                 onClick={(e) => this.followStatus(e)}
                 className={classNames(userFollowStatus === '1' ? 'shareVideo_installNow' : 'shareVideo_install')}>
@@ -466,7 +467,8 @@ class Index extends Component {
               })
             }}
           >
-          </Toast>}
+          </Toast>
+          }
         </View>}
       </View>
     )

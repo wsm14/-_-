@@ -4,7 +4,17 @@ import {Image, View} from '@tarojs/components'
 import Nav from '@/components/nav'
 import {user} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
-import {navigateTo,setPeople, filterStrList, computedHeight, backgroundObj, imgList, filterTime, toast} from '@/common/utils'
+import {
+  navigateTo,
+  setPeople,
+  filterStrList,
+  computedHeight,
+  backgroundObj,
+  filterTime,
+  toast,
+  saveFollow,
+  deleteFollow,
+} from '@/common/utils'
 import classNames from 'classnames'
 import './index.scss'
 
@@ -24,6 +34,41 @@ class Index extends Component {
       adminId: Taro.getStorageSync('userInfo').userIdString || '',
       countStatus: true
     }
+  }
+  getFollow()  {
+    let that = this
+    const {userInfo,userInfo: {userIdString,userType}} = this.state
+    console.log(userInfo)
+    saveFollow({
+      followType: userType,
+      followUserId: userIdString,
+    },res => {
+      that.setState({
+        userInfo:{
+          ...userInfo,
+          userFollowStatus: '1'
+        }
+      },res =>{
+        toast('关注成功')
+      })
+    })
+
+  }
+  deleteFollow() {
+    let that = this
+    const {userInfo,userInfo: {userIdString}} = this.state
+    deleteFollow({
+      followUserId: userIdString,
+    }, () =>{
+      that.setState({
+        userInfo:{
+          ...userInfo,
+          userFollowStatus: '0'
+        }
+      },res =>{
+        toast('取消成功')
+      })
+    })
   }
 
   getIsMe() {
@@ -87,7 +132,8 @@ class Index extends Component {
       }
     }, res => {
       const {userMomentsList} = res
-      if (userMomentsList &&  userMomentsList.length > 0) {
+      console.log(userMomentsList)
+      if (userMomentsList && userMomentsList.length > 0) {
         this.setState({
           publicList: [...publicList, ...userMomentsList]
         })
@@ -113,7 +159,7 @@ class Index extends Component {
       }
     }, res => {
       const {userMomentsList} = res
-      if (userMomentsList&&userMomentsList.length > 0) {
+      if (userMomentsList && userMomentsList.length > 0) {
         this.setState({
           publicList: [...publicList, ...userMomentsList]
         })
@@ -149,7 +195,7 @@ class Index extends Component {
       }
     }, res => {
       const {userCollectionList} = res
-      if (userCollectionList  && userCollectionList.length > 0) {
+      if (userCollectionList && userCollectionList.length > 0) {
         this.setState({
           publicList: [...publicList, ...userCollectionList]
         })
@@ -172,8 +218,7 @@ class Index extends Component {
         merchantName,
         contentType,
         length,
-        level,
-        tipName,
+        topicName,
         title,
         watchStatus,
         beanAmount,
@@ -183,8 +228,10 @@ class Index extends Component {
         imageNum,
         merchantAddress,
         distanceRange,
-        userLikeStatus
+        userLikeStatus,
+        beanFlag,
       } = item
+      console.log(item)
       return (
         <View className='userDetails_falls_details'>
           <View className='userDetails_falls_makebg'
@@ -203,20 +250,24 @@ class Index extends Component {
             }
             <View className='userDetails_share_accress'>
               <View className='userDetails_share_limitIcon'></View>
-              <View className='userDetails_share_limit'>{distanceRange+ ' '} {merchantAddress || ''}  </View>
+              <View className='userDetails_share_limit'>{distanceRange + ' '} {merchantAddress || ''}  </View>
             </View>
           </View>
           <View className='userDetails_share_about'>
-            {level > 0 && tipName && <View className='userDetails_share_tip'>{tipName}</View>}
+            {topicName && <View className='userDetails_share_tip'>{'#'+topicName}</View>}
             <View className='userDetails_share_title'>{title}</View>
-            {watchStatus == '0' ?
-              <View className='userDetails_share_getBean getbeanColor1'>
-                观看可捡{beanAmount}豆
-              </View> :
-              <View className='userDetails_share_getBean getbeanColor2'>
-                已捡{beanAmount}豆
-              </View>
+            {beanFlag == '1' ?
+              watchStatus == '1' ?
+                <View className='userDetails_share_getBean getbeanColor2'>
+                  已捡{beanAmount}豆
+                </View>
+                :
+                <View className='userDetails_share_getBean getbeanColor1'>
+                  观看可捡{beanAmount}豆
+                </View>
+              : null
             }
+
             <View className='userDetails_share_aboutUser'>
               <View className='userDetails_share_userbox'>
                 <View style={{...backgroundObj(userProfile)}} className='userDetails_share_userProfile'>
@@ -227,7 +278,8 @@ class Index extends Component {
                 </View>
               </View>
               <View className='userDetails_share_status'>
-                <View className={classNames(userLikeStatus == '1' ? 'status_box userDetails_share_icon1' : 'status_box userDetails_share_icon2')}>
+                <View
+                  className={classNames(userLikeStatus == '1' ? 'status_box userDetails_share_icon1' : 'status_box userDetails_share_icon2')}>
                 </View>
                 <View className='userDetails_share_nums'>{setPeople(likeAmount)}</View>
               </View>
@@ -255,7 +307,7 @@ class Index extends Component {
         } = item
         return (
           <View key={index} className='userDetails_falls_details'>
-            <View className='userDetails_falls_bg' style={{...backgroundObj(coverImg||coverImage)}}>
+            <View className='userDetails_falls_bg' style={{...backgroundObj(coverImg || coverImage)}}>
 
               {brandName && <View className='userDetails_make'>{brandName}</View>}
             </View>
@@ -282,7 +334,7 @@ class Index extends Component {
                     {address}
                   </View>
                 </View>
-                <View className='userDetails_falls_limit'>距你{distanceRange}m</View>
+                <View className='userDetails_falls_limit'>距你{distanceRange}</View>
               </View>
             </View>
           </View>
@@ -304,7 +356,7 @@ class Index extends Component {
       }
     }, res => {
       const {userFollowList} = res
-      if (userFollowList  && userFollowList.length > 0) {
+      if (userFollowList && userFollowList.length > 0) {
         this.setState({
           publicList: [...publicList, ...userFollowList]
         })
@@ -352,18 +404,15 @@ class Index extends Component {
       this.setState({
         page: page + 1
       }, res => {
-           if(current == '0'){
-             this.getShare()
-           }
-           else if(current == '1'){
-             this.getUserCollection()
-           }
-           else if(current == '2'){
-            this.getFollowByUserId()
-           }
-           else {
-             this.getUserMark()
-           }
+        if (current == '0') {
+          this.getShare()
+        } else if (current == '1') {
+          this.getUserCollection()
+        } else if (current == '2') {
+          this.getFollowByUserId()
+        } else {
+          this.getUserMark()
+        }
       })
     }
   }
@@ -438,7 +487,8 @@ class Index extends Component {
         userFollowNum,
         likeCollectionNum,
         level,
-        username
+        username,
+        userFollowStatus
       }
     } = this.state
     return (
@@ -489,7 +539,8 @@ class Index extends Component {
                   }) : <View className='userDetails_sex_style userDetails_tag_style'>
                     暂无标签
                   </View>}
-                  {!status && tag &&filterStrList(tag).length>3 && <View className='userDetails_sex_style userDetails_showStyle' onClick={() => {
+                  {!status && tag && filterStrList(tag).length > 3 &&
+                  <View className='userDetails_sex_style userDetails_showStyle' onClick={() => {
                     this.setState({status: true})
                   }}>
                     <View className='userDetails_show'></View>
@@ -504,26 +555,35 @@ class Index extends Component {
               </View>
             </View>
           </View>
-          <View className='userDetails_decs'>
+          <View className='font_noHide userDetails_decs'>
             {introduction}
           </View>
           <View className='userDetails_code'>
             <View className='userDetails_follow'
                   onClick={() => navigateTo(`/pages/kol/fans/index?userId=${routerId || Taro.getStorageSync('userInfo').userIdString}`)}>
-              <View className='userDetails_num'>{userFansNum || 0}</View>
+              <View className='userDetails_num'>{setPeople(userFansNum) || 0}</View>
               <View className='userDetails_title'>粉丝</View>
             </View>
             <View className='userDetails_fans'
                   onClick={() => navigateTo(`/pages/kol/follow/index?userId=${routerId || Taro.getStorageSync('userInfo').userIdString}`)}>
-              <View className='userDetails_num'>{userFollowNum || 0}</View>
+              <View className='userDetails_num'>{setPeople(userFollowNum) || 0}</View>
               <View className='userDetails_title'>关注</View>
             </View>
             <View className='userDetails_fans'>
-              <View className='userDetails_num'>{likeCollectionNum}</View>
+              <View className='userDetails_num'>{setPeople(likeCollectionNum)||0}</View>
               <View className='userDetails_title'>获赞与被收藏</View>
             </View>
-            {(type == 'share' && routerId !== adminId) || (type != 'share') &&
-            <View className='userDetails_editBtn'>编辑资料</View>}
+            {(type == 'share' && routerId !== adminId) ?
+              (userFollowStatus == '1' ?
+                <View className='userDetails_editBtn' onClick={() =>this.deleteFollow()}>已关注</View> :
+                <View className='userDetails_editBtn'  onClick={() =>this.getFollow()}>
+                  <View className='userDetails_edit_icon'>
+
+                  </View>
+                  关注
+                </View>)
+              : <View className='userDetails_editBtn' onClick={() =>navigateTo('/pages/share/download/index')}>编辑资料</View>
+            }
           </View>
         </View>
         <View className="userDetails_content">
