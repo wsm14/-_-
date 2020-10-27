@@ -27,3 +27,26 @@
   overflow: auto;
   height: auto;
 }
+.show_near{
+  position: absolute;
+  height: 6px;
+  top: 460px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  .show_near_linerTrue{
+    width: 30px;
+    height: 6px;
+    background: #FFFFFF;
+    border-radius: 3px;
+    margin-right: 8px;
+  }
+  .show_near_false{
+    width: 20px;
+    height: 6px;
+    background: #FFFFFF;
+    border-radius: 3px;
+    margin-right: 8px;
+  }
+}

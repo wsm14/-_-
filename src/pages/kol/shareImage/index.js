@@ -22,7 +22,9 @@ import {
   setIntive,
   deleteFall,
   saveFall,
-  toast
+  toast,
+  onShareFriend,
+  onTimeline
 } from '@/common/utils'
 import './index.scss'
 
@@ -131,20 +133,26 @@ class Index extends Component {
       })
     }
   }
-
-  // componentDidHide() {
-  //   if (this.state.interval) {
-  //     try {
-  //       clearInterval(this.state.interval)
-  //     } catch (e) {
-  //
-  //     }
-  //     this.setState({
-  //       interval: null
-  //     })
-  //   }
-  // }
-
+  onShareAppMessage() {
+    const {kolMomentsInfo:{
+      title,
+      frontImage
+    }}  = this.state
+    return  onShareFriend({
+      title:  title,
+      img: frontImage
+    })
+  }
+  onShareTimeline() {
+    const {kolMomentsInfo:{
+      title,
+      frontImage
+    }}  = this.state
+    onTimeline({
+      title:  title,
+      img: frontImage
+    })
+  }
   //用户收藏信息
   shareDetailsById() {
     // 阻止事件冒泡
@@ -385,7 +393,7 @@ class Index extends Component {
           {merchantIdString &&
           <View className='shareImage_shop'>
             <View className='shareImage_shopDetails'>
-              <View className='shareImage_shopProfile' style={backgroundObj(merchantCover)}>
+              <View className='shareImage_shopProfile' style={backgroundObj(merchantCover)}  onClick={() =>navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`)}>
 
               </View>
               <View className='shareImage_shopFont'>

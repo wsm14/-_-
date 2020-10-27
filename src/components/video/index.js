@@ -13,7 +13,7 @@ export default (props) =>{
   return (
       <Video
         src={videoSetting.videoContent&&JSON.parse(videoSetting.videoContent).url}
-        poster={'https://video.dakale.net/image/cover/0B8BCDD332B140B8A5680AD1381A344E-6-2.png'}
+        poster={videoSetting.frontImage}
         style={{height:Taro.pxTransform(videoSetting.frontImageHeight),width:'100%'}}
         controls={false}
         enableProgressGesture={true}

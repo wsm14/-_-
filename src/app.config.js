@@ -1,19 +1,9 @@
 export default {
   pages: [
-    "pages/newUser/merchantDetails/index",//商家主页,
-    "pages/newUser/userDetails/index",//个人主页,
-    "pages/kol/shareVideo/index",///kol视频详情页,
-    // "pages/newUser/shopFamily/index",
-    // "pages/newUser/userFamily/index",
-    "pages/index/index", //首页主页
-    // "pages/kol/shareImage/index",//kol图片详情页,
-
+    "pages/index/perimeter/index", //周边打卡
     "pages/index/lookShare/shareImage/index", //圖文详情
-
-    // "pages/kol/follow/index",//关注列表,
-    // "pages/kol/fans/index",//粉丝列表,
+    "pages/index/lookShare/shareVideo/index", //视频详情
     "pages/index/lookShare/index", //看视频图文
-    // "pages/index/perimeter/index", //周边打卡
     // "pages/perimeter/map/index", //地图
     // "pages/perimeter/beanMark/index", //周边
     // "pages/index/lookShare/shareVideo/index", //视频详情
@@ -29,15 +19,11 @@ export default {
     // "pages/index/healthTakeCard/index", //健康打卡主页
     // "pages/index/healthTakeCard/healthEnlist", //健康打卡报名
     // "pages/index/healthTakeCard/ranking", //健康打卡排行榜
-    // "pages/perimeter/merchantDetails/index", //周边详情
+    "pages/perimeter/merchantDetails/index", //周边详情
     "pages/perimeter/index", //周边
     "pages/user/index", //首页个人
-    // "pages/user/goods/index", //我的订单
-    // "pages/user/record/index", //打卡记录
-    // "pages/user/beanRule/index", //卡豆权益
-    // "pages/user/userConceal/index", //协议规则
-    "pages/share/step/index", //分享步数
-    "pages/share/download/index", //下载
+    // "pages/share/step/index", //分享步数
+    // "pages/share/download/index", //下载
     "pages/auth/index", //登录
     "pages/payPrice/index", //小程序支付
   ],
@@ -55,7 +41,7 @@ export default {
     borderStyle: "black",
     list: [
       {
-        pagePath: "pages/index/index",
+        pagePath: "pages/index/perimeter/index",
         iconPath: "./assets/image/tab-bar/tab-bar-1.png",
         selectedIconPath: "./assets/image/tab-bar/tab-bar-1Checked.png",
         text: "首页",
@@ -86,14 +72,38 @@ export default {
     },
   },
 subPackages:[
-    // {
-    //   "root": "pages/kol/",
-    //   "pages": [
-    //     "shareVideo/index",///kol视频详情页,
-    //     "shareImage/index",//kol图片详情页,
-    //     "follow/index",//关注列表,
-    //     "fans/index",//粉丝列表,
-    //   ]
-    // },
+    {
+      "root": "pages/kol/",
+      "pages": [
+        "shareVideo/index",///kol视频详情页,
+        "shareImage/index",//kol图片详情页,
+        "follow/index",//关注列表,
+        "fans/index",//粉丝列表,
+      ]
+    },
+  {
+    "root": "pages/newUser/",
+    "pages": [
+      "merchantDetails/index",///商家主页,
+      "shopFamily/index",//,我的家店
+      "userDetails/index",//个人主页,
+      "userFamily/index",//我的家人,
+      "goods/index", //我的订单
+      "record/index", //打卡记录
+      "beanRule/index", //卡豆权益
+      "userConceal/index", //协议规则
+      "accustomed/expressCard/index", //关爱打卡
+      'accustomed/addExpressCard/index'//配置关爱打卡
+    ]
+  },
+  {
+    "root": "pages/share/",
+    "pages": [
+      "download/index",///下载,
+      "step/index",//,同步步数
+      "shareFriend/index",//分享好友,
+      'shareShop/index',
+    ]
+  },
   ]
 }

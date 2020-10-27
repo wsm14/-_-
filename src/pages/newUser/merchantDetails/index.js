@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
-import {Image, View} from '@tarojs/components'
+import {Image, View,ScrollView} from '@tarojs/components'
 import Nav from '@/components/nav'
+import NullStatus from '@/components/nullStatus'
 import {user} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
+import Toast from './../components/modal'
 import {
   navigateTo,
   setPeople,
@@ -14,6 +16,7 @@ import {
   toast,
   saveFollow,
   deleteFollow,
+  goBack
 } from '@/common/utils'
 import classNames from 'classnames'
 import './index.scss'
@@ -22,89 +25,217 @@ class Index extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      status: false,
-      current: '0',
-      ViewTabs: ['分享', '收藏', '关注的店', '打卡足迹'],
-      routerId: getCurrentInstance().router.params.userStingId || '',
-      type: getCurrentInstance().router.params.type || '',
-      userInfo: {},//用户详情
-      publicList: [],//分享详情
-      page: 1,
-      limit: 10,
-      adminId: Taro.getStorageSync('userInfo').userIdString || '',
-      countStatus: true
+      userInfo: {},
+      httpData: {
+        page: 1,
+        limit: 10,
+        userId: getCurrentInstance().router.params.userId||'1',
+      },
+      userMomentsList: [],
+      imageHost: '',
+      countStatus: true,
+      styleStatus: false,
+      visible: false
     }
   }
 
+  getFollow()  {
+    let that = this
+    const {userInfo,userInfo: {merchantId,userType}} = this.state
 
 
+    saveFollow({
+      followType: userType,
+      followUserId: merchantId,
+    },res => {
+      that.setState({
+        userInfo:{
+          ...userInfo,
+          merchantFollowStatus: '1'
+        }
+      },res =>{
+        toast('关注成功')
+      })
+    })
 
-  createdShopMerchant = (data) => {
-    return (
-      data.map((item, index) => {
-        const {
-          brandName,
-          merchantName,
-          businessHub,
-          categoryName,
-          markFlag,
-          markBean,
-          couponTitlesJson,
-          distanceRange,
-          address,
-          coverImg,
-          coverImage
-        } = item
-        return (
-          <View key={index} className='userDetails_falls_details'>
-            <View className='userDetails_falls_bg' style={{...backgroundObj(coverImg || coverImage)}}>
-
-              {brandName && <View className='userDetails_make'>{brandName}</View>}
+  }
+  deleteFollow() {
+    let that = this
+    const {userInfo,userInfo: {merchantId}} = this.state
+    that.setState({
+      visible: false
+    }, res =>{
+      deleteFollow({
+        followUserId: merchantId,
+      }, () =>{
+        that.setState({
+          userInfo:{
+            ...userInfo,
+            merchantFollowStatus: '0'
+          }
+        },res =>{
+          toast('取消成功')
+        })
+      })
+    })
+  }
+  getDetails() {
+    const {merchantDetails: {getOtherMerchant}} = user
+    const {httpData:{userId}} = this.state
+    httpGet(
+      {data:{
+        userId: userId
+      },
+      url:getOtherMerchant
+    },res =>{
+        const {userInfo } = res
+      this.setState({
+        userInfo
+      })
+    })
+  }
+  getListOther() {
+    const {merchantDetails: {getOtherMoment}} = user
+    const {httpData} = this.state
+    httpGet(
+      {data:{
+          ...httpData
+        },
+        url:getOtherMoment
+      },res =>{
+        const {userMomentsList,imageHost} = res
+        if(userMomentsList && userMomentsList.length>0){
+          this.setState({
+            userMomentsList:[this.state.userMomentsList,...userMomentsList],
+            imageHost
+          })
+        }
+        else {
+          this.setState({
+            countStatus: false
+          },res =>{
+            toast('暂无更多数据')
+          })
+        }
+      })
+  }
+  componentDidShow(){
+    this.getDetails()
+    this.getListOther()
+  }
+  createdShareMerchant = (data) => {
+    return (data.map((item, index) => {
+      const {
+        frontImage,
+        frontImageHeight,
+        frontImageWidth,
+        contentType,
+        length,
+        imageLength,
+        merchantAddress,
+        distanceRange,
+        categoryName,
+        title,
+        beanFlag,
+        watchStatus,
+        beanAmount
+      } = item
+      return (
+        <View className='merchant_falls_details'>
+          <View className='merchant_falls_makebg'
+                style={frontImage?{
+                  ...backgroundObj(frontImage),
+                  height: Taro.pxTransform(computedHeight(frontImageWidth, frontImageHeight, 335))
+                }:{}}>
+            {contentType == 'video' ?
+              <View className='merchant_share_imgTag'>
+                {filterTime(length)}
+              </View> :
+              <View className='merchant_share_videoTag'>
+                <View className='merchant_share_imgIcon'></View>
+                <View className='merchant_share_imgfont'>{imageLength || 0 + '张'}</View>
+              </View>
+            }
+          </View>
+          <View className='mechant_share_content'>
+            <View className='merchant_share_title font_noHide'>
+              {categoryName&&<View className='merchant_share_tags'>{categoryName}</View>}
+              {title}
             </View>
-            <View className='userDetails_falls_desc'>
-              <View className='userDetails_falls_title'>{merchantName || ''}</View>
-              <View className='userDetails_falls_shopType'>
-                {businessHub + '·' || ''}{categoryName || ''}
+            <View className='merchant_coupon'>
+              <View className='merchant_coupon_box merchant_coupon_color1'>
+                满20元减5元
               </View>
-              {markFlag == '1' &&
-              <View className='userDetails_falls_getBean'>到店打卡可捡{markBean}</View>
+              <View className='merchant_coupon_box merchant_coupon_color2'>
+                5元抵扣券
+              </View>
+            </View>
+            {beanFlag == '1' &&
+            <View className='merchant_getBean'>
+              {watchStatus == '0'?
+                <View className='merchantBean_style1 merchant_bean_icon'>
+                  观看可捡{beanAmount}
+                </View>:
+                <View className='merchantBean_style2 merchant_bean_icon'>
+                 已捡{beanAmount}
+                </View>
               }
-              <View className='userDetails_falls_coupon'>
-                {couponTitlesJson && couponTitlesJson.map((item, index) => {
-                  return (
-                    <View className='userDetails_coupon_mj userDetails_coupon_box'>{item.couponTitle}</View>
-                  )
-                })}
+            </View>}
 
-              </View>
-              <View className='userDetails_falls_accress'>
-                <View className='userDetails_falls_city'>
-                  <View className='userDetails_falls_cityIcon'></View>
-                  <View className='userDetails_falls_cityName'>
-                    {address}
+
+            {merchantAddress &&
+            <View>
+              <View className='merchant_liner'></View>
+              <View className='merchant_falls_accress'>
+                <View className='merchant_falls_city'>
+                  <View className='merchant_falls_cityIcon'></View>
+                  <View className='merchant_falls_cityName'>
+                    {merchantAddress}
                   </View>
                 </View>
-                <View className='userDetails_falls_limit'>距你{distanceRange}</View>
+                <View className='merchant_falls_limit'>距你{distanceRange||'-'}</View>
               </View>
             </View>
+            }
           </View>
-        )
-      })
-    )
+        </View>
+      )
+    }))
   }
 
 
   //获取个人足迹
-  onReachBottom() {
+  onSollorBottom() {
+    const { httpData,httpData:{page},countStatus} = this.state
+    if(countStatus){
+      this.setState({
+        httpData:{
+          ...httpData,
+          page: page+1
+        }
+      },res =>{
+        this.getListOther()
+      })
+    }
+    else toast('暂无更多数据')
 
   }
 
   //上拉加载
-  componentDidMount() {
-
-  }
-
-
+  // onPageScroll(Object){
+  //   const {scrollTop} = Object
+  //   console.log(scrollTop)
+  //   if(scrollTop >=160){
+  //     this.setState({
+  //       styleStatus: true
+  //     })
+  //   }
+  //   else {
+  //     this.setState({
+  //       styleStatus: false
+  //     })
+  //   }
+  // }
 
   errorToast(e) {
     this.setState({
@@ -117,127 +248,101 @@ class Index extends Component {
   }
 
   render() {
-    const navSetting = {
-      style: {
-        background: 'rgba(255,255,255,0)',
-      },
-      type: 'white'
-    }
+
     const {
       userInfo: {
-        gender,
-        age,
+        backgroundImg,
+        profile,
+        username,
         residentAddress,
+        districtName,
+        categoryName,
+        brandName,
         tag,
         introduction,
+        pushMomentNum,
         userFansNum,
-        userFollowNum,
-        likeCollectionNum,
-        level,
-        username,
-        userFollowStatus
-      }
+        merchantFollowStatus
+      },
+      userMomentsList,
+      styleStatus,
+      visible
     } = this.state
+
     return (
-      <View className="userDetails_box">
-        <View className="userDetails_top">
-          <Nav {...navSetting}></Nav>
-          <View className='userDetails_user'>
-            <View className='userDetails_profile'>
+      <View  className="merchant_box">
+        <View style={backgroundImg?{...backgroundObj(backgroundImg)}:{}} className='merchant_topBg'>
+          <View  className= "merchant_top">
+            <View className='merchant_topBg'> </View>
+            {/*<View className="merchant_nav">*/}
+            {/*  <View className='merchant_profile_box'>*/}
+            {/*    {styleStatus&&*/}
+            {/*    <View style={profile?{...backgroundObj(profile)}:{}} className='merchant_profile'></View>*/}
+            {/*    }*/}
 
-            </View>
-            <View className='userDetails_decBox'>
-              <View className='userDetails_follow_box'>
-                <View className='userDetails_userName'>
-                  {username}
-                </View>
-                {level > 0 && <View className='user_follow_tag'>
-                  <View className='follow_icon'></View>
-                  <View className='follow_tagFont'>哒人</View>
-                </View>}
-              </View>
-              <View className='userDetails_userAccress'>
-                {residentAddress ? residentAddress : ''}
-                {age && residentAddress && ' | '}
-                {age ? age + '岁' : ''}
-              </View>
-              <View className='userDetails_sex_tags'>
-                <View className='userDetails_sex_box'>
-                  <View className='userDetails_sex_style userDetails_sex_tagStyle'>
-                    <View
-                      className={classNames(gender === 'M' ? 'userDetails_sex_girl' : 'userDetails_sex_boy')}></View>
+            {/*    {styleStatus&&<View className='merchant_tag'>商家</View>  }*/}
+            {/*    <View className='merchant_goBack' onClick={() =>goBack()}></View>*/}
+            {/*  </View>*/}
+            {/*</View>*/}
+
+            {/*顶部导航*/}
+
+            <View style={styleStatus &&{visibility: 'hidden'}}>
+              <View className='merchant_bigPro'>
+                <View style={profile?{...backgroundObj(profile)}:{}} className='merchant_bigfile'></View>
+                <View className='merchant_bigdec'>
+                  <View  className='merchant_title_box'>
+                    <View className='merchant_name font_hide'>{username}</View>
+                    <View className='merchant_tag'>商家</View>
                   </View>
-                  {filterStrList(tag).length > 0 ? filterStrList(tag).map((item, index) => {
-                    if (status) {
+                  <View  className='merchant_details'>{residentAddress}｜{districtName}·{categoryName}</View>
+                  <View className='merchant_make'>
+                    {brandName &&
+                    <View className='make_tags_box make_color_yellow'>{brandName}</View>}
+                    {filterStrList(tag).map((item,index) => {
                       return (
-                        <View className='userDetails_sex_style userDetails_tag_style' key={index}>
-                          {item}
-                        </View>
+                        <View key={index} className='make_tags_box make_color_white'>{item}</View>
                       )
-                    } else {
-                      if (index < 3) {
-                        return (
-                          <View className='userDetails_sex_style userDetails_tag_style' key={index}>
-                            {item}
-                          </View>
-                        )
-                      }
-                    }
-                  }) : <View className='userDetails_sex_style userDetails_tag_style'>
-                    暂无标签
-                  </View>}
-                  {!status && tag && filterStrList(tag).length > 3 &&
-                  <View className='userDetails_sex_style userDetails_showStyle' onClick={() => {
-                    this.setState({status: true})
-                  }}>
-                    <View className='userDetails_show'></View>
-                  </View>}
-                  {status && tag.length > 0 &&
-                  <View className='userDetails_sex_style userDetails_hideStyle' onClick={() => {
-                    this.setState({status: false})
-                  }}>
-                    <View className='userDetails_hide'></View>
-                  </View>}
+                    })}
+                  </View>
                 </View>
+              </View>
+
+              <View className='merchant_dec'>
+                {introduction}
+              </View>
+
+              <View className='merchant_code'>
+                <View className='merchant_follow'>
+                  <View className='merchant_num'>{setPeople(userFansNum) || 0}</View>
+                  <View className='merchant_title'>粉丝</View>
+                </View>
+                <View className='merchant_fans'>
+                  <View className='merchant_num'>{setPeople(pushMomentNum)||0}</View>
+                  <View className='merchant_title'>分享</View>
+                </View>
+                {merchantFollowStatus == '0'?
+                  <View className='merchant_edit_box merchant_edit_green' onClick={() =>this.getFollow()}>关注</View>:
+                  <View className='merchant_edit_box merchant_edit_borderWhite' onClick={() =>this.setState({visible: true})}>已关注</View>
+                }
               </View>
             </View>
           </View>
-          <View className='font_noHide userDetails_decs'>
-            {introduction}
-          </View>
-          <View className='userDetails_code'>
-            <View className='userDetails_follow'
-                  onClick={() => navigateTo(`/pages/kol/fans/index?userId=${routerId || Taro.getStorageSync('userInfo').userIdString}`)}>
-              <View className='userDetails_num'>{setPeople(userFansNum) || 0}</View>
-              <View className='userDetails_title'>粉丝</View>
-            </View>
-            <View className='userDetails_fans'
-                  onClick={() => navigateTo(`/pages/kol/follow/index?userId=${routerId || Taro.getStorageSync('userInfo').userIdString}`)}>
-              <View className='userDetails_num'>{setPeople(userFollowNum) || 0}</View>
-              <View className='userDetails_title'>关注</View>
-            </View>
-            <View className='userDetails_fans'>
-              <View className='userDetails_num'>{setPeople(likeCollectionNum)||0}</View>
-              <View className='userDetails_title'>获赞与被收藏</View>
-            </View>
-            {(type == 'share' && routerId !== adminId) ?
-              (userFollowStatus == '1' ?
-                <View className='userDetails_editBtn' onClick={() =>this.deleteFollow()}>已关注</View> :
-                <View className='userDetails_editBtn'  onClick={() =>this.getFollow()}>
-                  <View className='userDetails_edit_icon'>
-
-                  </View>
-                  关注
-                </View>)
-              : <View className='userDetails_editBtn' onClick={() =>navigateTo('/pages/share/download/index')}>编辑资料</View>
-            }
-          </View>
         </View>
-        <View className="userDetails_content">
-          <View className='userDetails_falls'>
-
-          </View>
-        </View>
+            <ScrollView
+              scrollY
+              onScrollToLower={
+                () =>this.onSollorBottom()
+              }
+              className="merchant_content">
+              {userMomentsList.length ==0 &&<NullStatus></NullStatus>}
+              <View
+                className='merchant_falls'>
+                {this.createdShareMerchant(userMomentsList)}
+              </View>
+            </ScrollView>
+        {visible &&
+        <Toast visible={visible} onCancel={this.deleteFollow.bind(this)} onClose={() =>{this.setState({visible: false})}}></Toast>}
       </View>
     )
   }

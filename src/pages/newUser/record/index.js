@@ -4,7 +4,7 @@ import { View,Text,PickerView} from '@tarojs/components'
 import { AtList, AtListItem } from 'taro-ui'
 import {wxapiGet} from '../../../api/api'
 import Ajax from '../../../api/request'
-import Utils from './../../../utils/utils'
+import Utils from '../../../utils/utils'
 import './index.scss'
 import Nav from '../../../layout/layoutNav/index'
 class Record extends Component {

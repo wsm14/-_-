@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
 import Nav from '@/components/nav'
+import NullStatus from '@/components/nullStatus'
 import {user} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import {
@@ -38,7 +39,6 @@ class Index extends Component {
   getFollow()  {
     let that = this
     const {userInfo,userInfo: {userIdString,userType}} = this.state
-    console.log(userInfo)
     saveFollow({
       followType: userType,
       followUserId: userIdString,
@@ -105,11 +105,17 @@ class Index extends Component {
 
   //获取他人详情
   getUsers() {
-    const {userDetails: {getUserDetailInfo}} = user
-    const {routerId} = this.state
+    const {userDetails: {getOtherUser}} = user
+    if(Object.keys(Taro.getStorageSync('userInfo')).length<5){
+      navigateTo('/pages/auth/index')
+      return
+    }
+
     httpGet({
-      url: getUserDetailInfo,
-      data: {}
+      url: getOtherUser,
+      data: {
+        userId: Taro.getStorageSync('userInfo').userIdString||''
+      }
     }, res => {
       const {userInfo} = res
       this.setState({
@@ -132,7 +138,6 @@ class Index extends Component {
       }
     }, res => {
       const {userMomentsList} = res
-      console.log(userMomentsList)
       if (userMomentsList && userMomentsList.length > 0) {
         this.setState({
           publicList: [...publicList, ...userMomentsList]
@@ -231,7 +236,6 @@ class Index extends Component {
         userLikeStatus,
         beanFlag,
       } = item
-      console.log(item)
       return (
         <View className='userDetails_falls_details'>
           <View className='userDetails_falls_makebg'
@@ -319,14 +323,16 @@ class Index extends Component {
               {markFlag == '1' &&
               <View className='userDetails_falls_getBean'>到店打卡可捡{markBean}</View>
               }
+              {couponTitlesJson&&
               <View className='userDetails_falls_coupon'>
-                {couponTitlesJson && couponTitlesJson.map((item, index) => {
+                {couponTitlesJson.map((item, index) => {
                   return (
                     <View className='userDetails_coupon_mj userDetails_coupon_box'>{item.couponTitle}</View>
                   )
                 })}
-
               </View>
+              }
+
               <View className='userDetails_falls_accress'>
                 <View className='userDetails_falls_city'>
                   <View className='userDetails_falls_cityIcon'></View>
@@ -418,7 +424,7 @@ class Index extends Component {
   }
 
   //上拉加载
-  componentDidMount() {
+  componentDidShow() {
     this.getUserDetails()
     this.getShare()
   }
@@ -488,102 +494,107 @@ class Index extends Component {
         likeCollectionNum,
         level,
         username,
-        userFollowStatus
+        userFollowStatus,
+        backgroundImg
       }
     } = this.state
     return (
       <View className="userDetails_box">
-        <View className="userDetails_top">
-          <Nav {...navSetting}></Nav>
-          <View className='userDetails_user'>
-            <View className='userDetails_profile'>
+        <View style={backgroundImg?{...backgroundObj(backgroundImg)}:{
+          background: 'url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/wechatBg.png") no-repeat center/cover'
+        }} className='userDetails_bgTop'>
+          <View className="userDetails_top">
+            {/*<Nav {...navSetting}></Nav>*/}
+            <View className='userDetails_user'>
+              <View className='userDetails_profile'>
 
-            </View>
-            <View className='userDetails_decBox'>
-              <View className='userDetails_follow_box'>
-                <View className='userDetails_userName'>
-                  {username}
-                </View>
-                {level > 0 && <View className='user_follow_tag'>
-                  <View className='follow_icon'></View>
-                  <View className='follow_tagFont'>哒人</View>
-                </View>}
               </View>
-              <View className='userDetails_userAccress'>
-                {residentAddress ? residentAddress : ''}
-                {age && residentAddress && ' | '}
-                {age ? age + '岁' : ''}
-              </View>
-              <View className='userDetails_sex_tags'>
-                <View className='userDetails_sex_box'>
-                  <View className='userDetails_sex_style userDetails_sex_tagStyle'>
-                    <View
-                      className={classNames(gender === 'M' ? 'userDetails_sex_girl' : 'userDetails_sex_boy')}></View>
+              <View className='userDetails_decBox'>
+                <View className='userDetails_follow_box'>
+                  <View className='userDetails_userName'>
+                    {username}
                   </View>
-                  {filterStrList(tag).length > 0 ? filterStrList(tag).map((item, index) => {
-                    if (status) {
-                      return (
-                        <View className='userDetails_sex_style userDetails_tag_style' key={index}>
-                          {item}
-                        </View>
-                      )
-                    } else {
-                      if (index < 3) {
+                  {level > 0 && <View className='user_follow_tag'>
+                    <View className='follow_icon'></View>
+                    <View className='follow_tagFont'>哒人</View>
+                  </View>}
+                </View>
+                <View className='userDetails_userAccress'>
+                  {residentAddress ? residentAddress : ''}
+                  {age && residentAddress && ' | '}
+                  {age ? age + '岁' : ''}
+                </View>
+                <View className='userDetails_sex_tags'>
+                  <View className='userDetails_sex_box'>
+                    <View className='userDetails_sex_style userDetails_sex_tagStyle'>
+                      <View
+                        className={classNames(gender === 'M' ? 'userDetails_sex_girl' : 'userDetails_sex_boy')}></View>
+                    </View>
+                    {filterStrList(tag).length > 0 ? filterStrList(tag).map((item, index) => {
+                      if (status) {
                         return (
                           <View className='userDetails_sex_style userDetails_tag_style' key={index}>
                             {item}
                           </View>
                         )
+                      } else {
+                        if (index < 3) {
+                          return (
+                            <View className='userDetails_sex_style userDetails_tag_style' key={index}>
+                              {item}
+                            </View>
+                          )
+                        }
                       }
-                    }
-                  }) : <View className='userDetails_sex_style userDetails_tag_style'>
-                    暂无标签
-                  </View>}
-                  {!status && tag && filterStrList(tag).length > 3 &&
-                  <View className='userDetails_sex_style userDetails_showStyle' onClick={() => {
-                    this.setState({status: true})
-                  }}>
-                    <View className='userDetails_show'></View>
-                  </View>}
-                  {status && tag.length > 0 &&
-                  <View className='userDetails_sex_style userDetails_hideStyle' onClick={() => {
-                    this.setState({status: false})
-                  }}>
-                    <View className='userDetails_hide'></View>
-                  </View>}
+                    }) : <View className='userDetails_sex_style userDetails_tag_style'>
+                      暂无标签
+                    </View>}
+                    {!status && tag && filterStrList(tag).length > 3 &&
+                    <View className='userDetails_sex_style userDetails_showStyle' onClick={() => {
+                      this.setState({status: true})
+                    }}>
+                      <View className='userDetails_show'></View>
+                    </View>}
+                    {status && tag.length > 0 &&
+                    <View className='userDetails_sex_style userDetails_hideStyle' onClick={() => {
+                      this.setState({status: false})
+                    }}>
+                      <View className='userDetails_hide'></View>
+                    </View>}
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
-          <View className='font_noHide userDetails_decs'>
-            {introduction}
-          </View>
-          <View className='userDetails_code'>
-            <View className='userDetails_follow'
-                  onClick={() => navigateTo(`/pages/kol/fans/index?userId=${routerId || Taro.getStorageSync('userInfo').userIdString}`)}>
-              <View className='userDetails_num'>{setPeople(userFansNum) || 0}</View>
-              <View className='userDetails_title'>粉丝</View>
+            <View className='font_noHide userDetails_decs'>
+              {introduction}
             </View>
-            <View className='userDetails_fans'
-                  onClick={() => navigateTo(`/pages/kol/follow/index?userId=${routerId || Taro.getStorageSync('userInfo').userIdString}`)}>
-              <View className='userDetails_num'>{setPeople(userFollowNum) || 0}</View>
-              <View className='userDetails_title'>关注</View>
-            </View>
-            <View className='userDetails_fans'>
-              <View className='userDetails_num'>{setPeople(likeCollectionNum)||0}</View>
-              <View className='userDetails_title'>获赞与被收藏</View>
-            </View>
-            {(type == 'share' && routerId !== adminId) ?
-              (userFollowStatus == '1' ?
-                <View className='userDetails_editBtn' onClick={() =>this.deleteFollow()}>已关注</View> :
-                <View className='userDetails_editBtn'  onClick={() =>this.getFollow()}>
-                  <View className='userDetails_edit_icon'>
+            <View className='userDetails_code'>
+              <View className='userDetails_follow'
+                    onClick={() => navigateTo(`/pages/kol/fans/index?userId=${routerId || Taro.getStorageSync('userInfo').userIdString}`)}>
+                <View className='userDetails_num'>{setPeople(userFansNum) || 0}</View>
+                <View className='userDetails_title'>粉丝</View>
+              </View>
+              <View className='userDetails_fans'
+                    onClick={() => navigateTo(`/pages/kol/follow/index?userId=${routerId || Taro.getStorageSync('userInfo').userIdString}`)}>
+                <View className='userDetails_num'>{setPeople(userFollowNum) || 0}</View>
+                <View className='userDetails_title'>关注</View>
+              </View>
+              <View className='userDetails_fans'>
+                <View className='userDetails_num'>{setPeople(likeCollectionNum)||0}</View>
+                <View className='userDetails_title'>获赞与被收藏</View>
+              </View>
+              {(type == 'share' && routerId !== adminId) ?
+                (userFollowStatus == '1' ?
+                  <View className='userDetails_editBtn' onClick={() =>this.deleteFollow()}>已关注</View> :
+                  <View className='userDetails_editBtn'  onClick={() =>this.getFollow()}>
+                    <View className='userDetails_edit_icon'>
 
-                  </View>
-                  关注
-                </View>)
-              : <View className='userDetails_editBtn' onClick={() =>navigateTo('/pages/share/download/index')}>编辑资料</View>
-            }
+                    </View>
+                    关注
+                  </View>)
+                : <View className='userDetails_editBtn' onClick={() =>navigateTo('/pages/share/download/index')}>编辑资料</View>
+              }
+            </View>
           </View>
         </View>
         <View className="userDetails_content">
@@ -599,6 +610,7 @@ class Index extends Component {
               )
             })}
           </View>
+          {publicList.length ==0 &&<NullStatus></NullStatus>}
           <View className='userDetails_falls'>
             {current == '0' && this.createdShareMerchant(publicList)}
             {current == '1' && this.createdShareMerchant(publicList)}

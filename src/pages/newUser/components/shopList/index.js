@@ -9,7 +9,6 @@ export default (props) => {
   useEffect(() =>{
     setList(list)
   },[list])
-  console.log(userList)
   return (
     <View className='shop_box'>
       {userList.map(item =>{

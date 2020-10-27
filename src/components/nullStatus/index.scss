@@ -1,0 +1,29 @@
+.null_box{
+  text-align: center;
+  .null_img{
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/null.png") no-repeat;
+    background-size: 100%  100%;
+  }
+  .null_font1{
+    margin-top: 48px;
+    height: 36px;
+    font-size: 36px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 600;
+    color: #333333;
+    line-height: 36px;
+  }
+  .null_font2{
+    margin-top: 16px;
+    height: 37px;
+    font-size: 26px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #999999;
+    line-height: 26px;
+  }
+}
+

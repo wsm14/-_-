@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
-import {View, Text,Input,PickerView} from '@tarojs/components'
+import {View,Input,PickerView,PickerViewColumn} from '@tarojs/components'
 import './index.scss'
 import classNames from 'classnames'
 import {wxapiGet,wxapiPost} from './../../../../api/api'
@@ -10,9 +10,6 @@ import Nav from '../../../../layout/layoutNav/index'
 import {AtTextarea} from "taro-ui";
 class AddExpress extends Component {
   defaultProps = {}
-  config = {
-    navigationBarTitleText: '习惯打卡',
-  }
   constructor() {
     super(...arguments);
     const date = new Date()
@@ -155,12 +152,14 @@ class AddExpress extends Component {
         {/*导航栏*/}
         <View className='add_expressName'>
           目标名称
-          <Input className='add_expressInput' onChange={(e) => this.setState({
-            saveUserHabit:{
-              ...saveUserHabit,
-              subIdentifyValue:e.target.value
-             }
-            })}
+          <Input className='add_expressInput' onInput={(e) => {
+            this.setState({
+              saveUserHabit:{
+                ...saveUserHabit,
+                subIdentifyValue:e.target.value
+              }
+            })
+          }}
             value={saveUserHabit.subIdentifyValue}
             placeholderClass='placeholders'
             placeholder='点击输入目标名称'>
@@ -215,7 +214,7 @@ class AddExpress extends Component {
                  <View>提醒时间</View>
                 <View className='express_onBtn' onClick={() => this.onTime()}>确定 </View>
               </View>
-              <PickerView className='express_Picker cleanfix' value={this.state.value} onChange={this.onChange}>
+              <PickerView className='express_Picker cleanfix' value={this.state.value} onChange={(e) =>this.onChange(e)}>
                 <PickerViewColumn className='express_PickerViewColumn '>
                   {this.state.hours.map((item,index) => {
                     return (

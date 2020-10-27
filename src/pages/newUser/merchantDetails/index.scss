@@ -1,240 +1,168 @@
 page{
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 1);
   overflow: auto;
+  background: #F2F2F2;
   line-height: 1;
 }
-.user_follow_tag{
-  width: 88px;
-  height: 30px;
-  background: #EF476F;
-  border-radius: 15px;
-  display: flex;
-  margin-left: 20px;
-  justify-content: center;
-  align-items: center;
-  .follow_icon{
-    width: 24px;
-    height: 24px;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/follow_win.png") no-repeat;
-    background-size: 100% 100%;
-    margin-right: 4px;
-  }
-  .follow_tagFont{
-    height: 30px;
-    line-height: 30px;
-    font-size: 20px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: #FFFFFF;
-  }
-}
-.userDetails_box{
+.merchant_box {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  .userDetails_top{
+  flex-direction:column ;
+  .merchant_top {
     border-radius: 3px;
     position: relative;
     overflow: auto;
-    padding-bottom: 80px;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/wechatBg.png") no-repeat center/cover;
-    .userDetails_user{
-      padding: 153px 10px 0px 60px;
+    padding-bottom: 30px;
+    border-radius: 3px;
+    position: relative;
+    padding-top: 132px;
+    background: linear-gradient(-44deg, rgba(197, 162, 255, 0.4) 0%, rgba(76, 181, 197, 0.4) 99%);
+    .merchant_nav{
+      width: 100%;
+      height: 132px;
       display: flex;
-      .userDetails_profile{
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/useProfile.png") no-repeat center/cover;
-      }
-      .userDetails_decBox{
-        margin-left: 32px;
-        padding-top: 18px;
-        line-height: 1;
-        .userDetails_follow_box{
-          height: 35px;
-          display: flex;
-          align-items: center;
-        }
-        .userDetails_userName{
-          height: 35px;
-          font-size: 36px;
-          max-width: 280px;
+      position: fixed;
+      top: 0;
+      .merchant_profile_box{
+        padding-top: 58px;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        .merchant_tag{
+          width: 55px;
+          height: 30px;
+          border: 1px solid #FFD777;
+          border-radius: 5px;
+          box-sizing: border-box;
+          font-size: 20px;
           font-family: PingFang SC;
           font-weight: 600;
-          color: #FFFFFF;
-          line-height: 37px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          color: #FFD777;
+          text-align: center;
+          line-height: 30px;
+          margin-left: 11px;
+          display: inline-block;
+          margin-top: 20px;
         }
-        .userDetails_userAccress{
+
+        .merchant_profile{
+          width: 60px;
+          height: 60px;
+          background: #e6e6e6;
+          border-radius: 50%;
+        }
+        .merchant_goBack{
+          position: absolute;
+          top: 66px;
+          left: 33px;
+          width: 22px;
+          height: 44px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/gobakcs.png") no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+    }
+    .merchant_bigPro{
+      margin: 20px 57px 0px 61px;
+      display: flex;
+      .merchant_bigfile{
+        width: 150px;
+        height: 150px;
+        background: #e6e6e6;
+        border-radius: 50%;
+      }
+      .merchant_bigdec{
+        height: 150px;
+        margin-left: 32px;
+        max-width: 420px;
+        .merchant_title_box{
+          display: flex;
+          padding-top: 23px;
+          align-items: center;
+          .merchant_name{
+            height: 35px;
+            font-size: 36px;
+            font-family: PingFang SC;
+            font-weight: 600;
+            color: #FFFFFF;
+            max-width: 360px;
+          }
+          .merchant_tag{
+            width: 55px;
+            height: 30px;
+            border: 1px solid #FFD777;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 20px;
+            font-family: PingFang SC;
+            font-weight: 600;
+            color: #FFD777;
+            text-align: center;
+            line-height: 30px;
+            margin-left: 11px;
+          }
+        }
+        .merchant_details{
+          margin-top: 12px;
           height: 20px;
           font-size: 20px;
           font-family: PingFang SC;
           font-weight: 400;
           color: #E6E6E6;
+        }
+        .merchant_make{
           margin-top: 12px;
+          height: 35px;
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+          flex-wrap: wrap;
         }
-        .userDetails_sex_tags{
-          .userDetails_sex_box{
-            display: flex;
-            width: 420px;
-            flex-wrap: wrap;
-            .userDetails_sex_style{
-              margin-top: 12px;
-              border-radius: 18px;
-              background: rgba(255, 255, 255, 0.2);
-            }
-            .userDetails_tag_style{
-              padding: 7px 16px;
-              font-size: 20px;
-              font-family: PingFang SC;
-              font-weight: 500;
-              color: #FFFFFF;
-              margin-right: 10px;
-            }
-            .userDetails_sex_tagStyle{
-              padding: 8px 10px;
-              margin-right: 10px;
-            }
-            .userDetails_showStyle{
-              padding: 8px 10px;
-            }
-            .userDetails_hideStyle{
-              padding: 8px 10px;
-            }
-            .userDetails_sex_boy{
-              width: 20px;
-              height: 20px;
-              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon2.png") no-repeat;
-              background-size: 100% 100%;
-            }
-            .userDetails_sex_girl{
-              width: 20px;
-              height: 20px;
-              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon1.png") no-repeat;
-
-              background-size: 100% 100%;
-            }
-            .userDetails_show{
-              width: 20px;
-              height: 20px;
-              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/Icon3.png") no-repeat;
-              background-size: 100% 100%;
-            }
-            .userDetails_hide{
-              width: 20px;
-              height: 20px;
-              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon4.png") no-repeat;
-              background-size: 100% 100%;
-            }
-          }
+        .make_tags_box{
+          font-size: 20px;
+          font-family: PingFang SC;
+          font-weight: 600;
+          height: 35px;
+          line-height: 35px;
+          padding: 0 13px;
+          margin-right: 10px;
+          border-radius: 18px;
+        }
+        .make_color_yellow{
+           background: rgba(255, 215, 126, 0.2);
+           color: #FFD777;
+        }
+        .make_color_white{
+          background: rgba(255, 255, 255, 0.2);
+          color: #FFFFFF;
         }
       }
+
     }
-    .userDetails_decs{
+    .merchant_dec{
+      margin: 35px 60px 0px 60px;
       font-size: 24px;
       font-family: PingFang SC;
       font-weight: 400;
+      min-height: 3px;
       color: #FFFFFF;
-      line-height: 29px;
-      margin: 35px 60px 0 60px;
-      font-family: PingFang SC;
-      font-weight: 400;
-      color: #FFFFFF;
-      height: 59px;
-    }
-    .userDetails_code{
-      margin: 18px 61px 0px 60px;
-      display: flex;
-      position: relative;
-      .userDetails_follow{
-
-      }
-      .userDetails_fans{
-        margin-left: 80px;
-      }
-      .userDetails_num{
-        height: 28px;
-        font-size: 28px;
-        font-family: PingFang SC;
-        font-weight: 600;
-        color: #FFFFFF;
-        text-align: center;
-      }
-      .userDetails_title{
-        font-size: 22px;
-        font-family: PingFang SC;
-        font-weight: 400;
-        color: #E6E6E6;
-        margin-top: 10px;
-      }
-    }
-    .userDetails_editBtn{
-      width: 152px;
-      height: 50px;
-      border: 1px solid #FFFFFF;
-      border-radius: 25px;
-      box-sizing: border-box;
-      font-size: 24px;
-      font-family: PingFang SC;
-      font-weight: 600;
-      color: #FFFFFF;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      top: 3px;
-      right: 0px;
-      .userDetails_edit_icon{
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/add.png") no-repeat;
-        background-size: 100% 100%;
-        width: 22px;
-        height: 22px;
-        margin-right: 5px;
-      }
     }
   }
-  .userDetails_content{
-    height: 838px;
-    margin-top: -30px;
-    background: #ffffff;
+  .merchant_topBg{
+    background: rgba(0, 0, 0,0.4);
+  }
+  .merchant_content{
+    margin-top: -35px;
+    background: #F2F2F2;
     border-radius: 20px;
     position: relative;
-    .userDetails_tabs{
-      padding: 30px 110px 0px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .userDetails_tabs_child{
-      font-size: 24px;
-      font-family: PingFang SC;
-      font-weight: 400;
-      color: #666666;
-    }
-    .userDetails_tabs_check{
-      font-size: 28px;
-      font-family: PingFang SC;
-      font-weight: 600;
-      color: #343434;
-    }
-    .userDetails_tabs_line{
-      width: 50%;
-      height: 8px;
-      background: #08C0C2;
-      border-radius: 4px;
-      margin: 11px auto 0;
-    }
-    .userDetails_tabs_lineStyle{
-      visibility: hidden;
-    }
-    .userDetails_falls{
+    height: 732px;
+    padding:30px 0;
+    flex: 1;
+    overflow: hidden;
+    .merchant_falls{
       margin: 0 32px;
-      margin-top: 20px;
       -moz-column-count:2;
       /* Firefox */
       -webkit-column-count:2;
@@ -243,304 +171,359 @@ page{
       -moz-column-gap:20px;
       -webkit-column-gap:20px;
       column-gap:20px;
-      padding-bottom: 20px;
-      .userDetails_falls_details{
-        -moz-page-break-inside: avoid;
-         -webkit-column-break-inside: avoid;
-         break-inside: avoid;
-        margin-bottom: 20px;
-        background: #FFFFFF;
-        border-radius: 20px;
-        width: 335px;
-        .userDetails_falls_bg{
-          width: 100%;
-          height: 335px;
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/img_moren.png") no-repeat center/contain;
-          border-radius: 20px 20px 0px 0px;
-          box-sizing: border-box;
-          position: relative;
-          .userDetails_make{
-            height: 40px;
-            background: #07C0C2;
-            border-radius: 20px 0px 20px 0px;
-            line-height: 40px;
-            text-align: center;
-            font-size: 20px;
-            font-family: PingFang SC;
-            font-weight: 600;
-            color: #FFFFFF;
-            left: 0;
-            top: 0;
-            position: absolute;
-            padding: 0 16px;
-          }
-        }
-        .userDetails_falls_desc{
-          background: #FFFFFF;
-          border: 1px solid #E5E5E5;
-          border-radius: 0px 0px 20px 20px;
-          box-sizing: border-box;
-          padding:23px 19px 31px 19px;
-          .userDetails_falls_title{
-            min-height: 25px;
-            font-size: 26px;
-            font-family: PingFang SC;
-            font-weight: bold;
-            color: #343434;
-          }
-          .userDetails_falls_shopType{
-            font-size: 24px;
-            font-family: PingFang SC;
-            font-weight: bold;
-            color: #9A9A9A;
-            margin-top: 11px;
-          }
-          .userDetails_falls_getBean{
-            font-size: 24px;
-            font-family: PingFang SC;
-            font-weight: 600;
-            color: #FF6A86;
-            margin-top: 18px;
-          }
-          .userDetails_falls_getBean:after{
-            width: 20px;
-            height: 21px;
-            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/Fill%201%402x.png") no-repeat;
-            background-size: 100% 100%;
-            display: inline-block;
-            margin-left: 5px;
-            content: '';
-            vertical-align: middle;
-          }
-          .userDetails_falls_coupon{
-            margin-top: 21px;
-            display: flex;
-            line-height: 1;
-            .userDetails_coupon_box{
-              padding:5px 10px;
-              font-size: 20px;
-              font-family: PingFang SC;
-              font-weight: 400;
-              box-sizing: border-box;
-              margin-right: 10px;
-            }
-            .userDetails_coupon_mj{
-              border: 1px solid #FF627E;
-              border-radius: 6px;
-              color:  #FF627E;
-            }
-            .userDetails_coupon_dk{
-              border: 1px solid #FF9464;
-              border-radius: 6px;
-              color: #FF9464;
-            }
-          }
-          .userDetails_falls_accress{
-            height: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            .userDetails_falls_cityIcon{
-              width: 20px;
-              height: 20px;
-              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon5.png") no-repeat;
-              background-size: 100% 100%;
-              vertical-align: middle;
-              margin-right: 5px;
-            }
-            .userDetails_falls_city{
-              height: 20px;
-              font-size: 20px;
-              font-family: PingFang SC;
-              font-weight: 400;
-              color: #777777;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            }
-            .userDetails_falls_cityName{
-              width: 134px;
-              font-size: 20px;
-              font-family: PingFang SC;
-              font-weight: 400;
-              color: #777777;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-            .userDetails_falls_limit{
-              height: 19px;
-              font-size: 20px;
-              font-family: PingFang SC;
-              font-weight: 400;
-              color: #A5A5A5;
-            }
-          }
-        }
-        .userDetails_falls_makebg{
-          width: 100%;
-          height: 280px;
-          border-radius: 20px;
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/img_moren.png") no-repeat center/cover;
-          position: relative;
-          .userDetails_share_imgTag{
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 24px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            padding: 6px 4px;
-            color: #FFFFFF;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
-          }
-          .userDetails_share_videoTag{
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            height: 36px;
-            padding: 0 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
-            .userDetails_share_imgIcon{
-              width: 24px;
-              height: 24px;
-              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/imageIcon.png") no-repeat;
-              background-size: 100% 100%;
-              margin-right: 6px;
-            }
-            .userDetails_share_imgfont{
-              height: 24px;
-              font-size: 24px;
-              font-family: PingFangSC-Regular, PingFang SC;
-              font-weight: 400;
-              color: #FFFFFF;
-              line-height: 24px;
-            }
-          }
-          .userDetails_share_accress{
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(25, 109, 138, 0.6);
-            border-radius: 0px 0px 20px 20px;
-            display: flex;
-            align-items: center;
-            padding: 11px 14px;
-            .userDetails_share_limitIcon{
-              width: 28px;
-              height: 28px;
-              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon10.png") no-repeat;
-              background-size: 100% 100%;
-              margin-right: 4px;
-            }
-            .userDetails_share_limit{
-              width: 270px;
-              height: 20px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              font-size: 20px;
-              font-family: PingFangSC-Regular, PingFang SC;
-              font-weight: 400;
-              color: #FFFFFF;
-              line-height: 20px;
-            }
-          }
-        }
-        .userDetails_share_about{
-          margin-top: 20px;
-          .userDetails_share_tip{
-            height: 24px;
-            font-size: 24px;
-            font-family: PingFangSC-Semibold, PingFang SC;
-            font-weight: 600;
-            color: #25636B;
-            margin-left: 4px;
-            margin-bottom: 16px;
-          }
-          .userDetails_share_title{
-            min-height: 42px;
-            font-size: 28px;
-            font-family: PingFangSC-Semibold, PingFang SC;
-            font-weight: 600;
-            color: #333333;
-            line-height: 42px;
-          }
-          .userDetails_share_getBean{
-            margin-top: 8px;
-            height: 24px;
-            font-size: 24px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            margin-left: 4px;
-          }
-          .getbeanColor1{
-            color: #D72B64;
-          }
-          .getbeanColor2{
-            color: #999999;
-          }
-          .userDetails_share_aboutUser{
-            height: 40px;
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 24px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            color: #999999;
-            .userDetails_share_userbox{
-              display: flex;
-              height: 40px;
-              align-items: center;
-              .userDetails_share_userProfile{
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/useProfile.png") no-repeat center/cover;
-              }
-              .userDetails_share_userName{
-                margin-left: 16px;
-                max-width: 150px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-              }
-            }
-            .userDetails_share_status{
-              display: flex;
-              height: 36px;
-              align-items: center;
-              .status_box{
-                width: 36px;
-                height: 36px;
-                margin-right: 4px;
-              }
-              .userDetails_share_statusNum{
-                height: 36px;
-                line-height: 36px;
-              }
-              .userDetails_share_icon1{
-                background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon12.png") no-repeat;
-                background-size: 100% 100%;
-              }
-              .userDetails_share_icon2{
-                background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon11.png") no-repeat;
-                background-size: 100% 100%;
-              }
-            }
-            .userDetails_share_nums{
-                margin-top: 6px;
-            }
-          }
-        }
+    }
+  }
+}
+.merchant_code{
+  margin: 18px 61px 0px 60px;
+  display: flex;
+  position: relative;
+  padding-bottom: 50px;
+  .merchant_follow{
+
+  }
+  .merchant_fans{
+    margin-left: 60px;
+  }
+  .merchant_num{
+    height: 28px;
+    font-size: 28px;
+    font-family: PingFang SC;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-align: center;
+  }
+  .merchant_title{
+    font-size: 22px;
+    font-family: PingFang SC;
+    font-weight: 400;
+    color: #E6E6E6;
+    margin-top: 10px;
+  }
+}
+.merchant_edit_box{
+   position: absolute;
+   right: 0;
+   width: 143px;
+   height: 50px;
+   border-radius: 25px;
+   line-height: 50px;
+   text-align: center;
+   font-size: 24px;
+   font-family: PingFang SC;
+   font-weight: bold;
+}
+.merchant_edit_borderWhite{
+  color: #999999;
+  border: 1px solid #999999;
+}
+.merchant_edit_green{
+  color: #FFFFFF;
+  background: #07C0C2;
+}
+.merchant_falls_details{
+  -moz-page-break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  break-inside: avoid;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  width: 335px;
+  background: #FFFFFF;
+  .merchant_falls_bg{
+    width: 100%;
+    height: 335px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/img_moren.png") no-repeat center/contain;
+    border-radius: 20px 20px 0px 0px;
+    box-sizing: border-box;
+    position: relative;
+    .merchant_make{
+      height: 40px;
+      background: #07C0C2;
+      border-radius: 20px 0px 20px 0px;
+      line-height: 40px;
+      text-align: center;
+      font-size: 20px;
+      font-family: PingFang SC;
+      font-weight: 600;
+      color: #FFFFFF;
+      left: 0;
+      top: 0;
+      position: absolute;
+      padding: 0 16px;
+    }
+  }
+  .merchant_falls_desc{
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 0px 0px 20px 20px;
+    box-sizing: border-box;
+    padding:23px 19px 31px 19px;
+    .merchant_falls_title{
+      min-height: 25px;
+      font-size: 26px;
+      font-family: PingFang SC;
+      font-weight: bold;
+      color: #343434;
+    }
+    .merchant_falls_shopType{
+      font-size: 24px;
+      font-family: PingFang SC;
+      font-weight: bold;
+      color: #9A9A9A;
+      margin-top: 11px;
+    }
+    .merchant_falls_getBean{
+      font-size: 24px;
+      font-family: PingFang SC;
+      font-weight: 600;
+      color: #FF6A86;
+      margin-top: 18px;
+    }
+    .merchant_falls_getBean:after{
+      width: 20px;
+      height: 21px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/Fill%201%402x.png") no-repeat;
+      background-size: 100% 100%;
+      display: inline-block;
+      margin-left: 5px;
+      content: '';
+      vertical-align: middle;
+    }
+    .merchant_falls_coupon{
+      margin-top: 21px;
+      display: flex;
+      line-height: 1;
+      .merchant_coupon_box{
+        padding:5px 10px;
+        font-size: 20px;
+        font-family: PingFang SC;
+        font-weight: 400;
+        box-sizing: border-box;
+        margin-right: 10px;
+      }
+      .merchant_coupon_mj{
+        border: 1px solid #FF627E;
+        border-radius: 6px;
+        color:  #FF627E;
+      }
+      .merchant_coupon_dk{
+        border: 1px solid #FF9464;
+        border-radius: 6px;
+        color: #FF9464;
+      }
+    }
+
+  }
+  .merchant_falls_makebg{
+    width: 100%;
+    height: 280px;
+    border-radius: 20px 20px 0px 0px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/img_moren.png") no-repeat center/cover;
+    position: relative;
+    .merchant_share_imgTag{
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      padding: 6px 4px;
+      color: #FFFFFF;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+    }
+    .merchant_share_videoTag{
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      height: 36px;
+      padding: 0 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+      .merchant_share_imgIcon{
+        width: 24px;
+        height: 24px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/imageIcon.png") no-repeat;
+        background-size: 100% 100%;
+        margin-right: 6px;
+      }
+      .merchant_share_imgfont{
+        height: 24px;
+        font-size: 24px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FFFFFF;
+        line-height: 24px;
+      }
+    }
+    .merchant_share_accress{
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(25, 109, 138, 0.6);
+      border-radius: 0px 0px 20px 20px;
+      display: flex;
+      align-items: center;
+      padding: 11px 14px;
+      .merchant_share_limitIcon{
+        width: 28px;
+        height: 28px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon10.png") no-repeat;
+        background-size: 100% 100%;
+        margin-right: 4px;
+      }
+      .merchant_share_limit{
+        width: 270px;
+        height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 20px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FFFFFF;
+        line-height: 20px;
+      }
+    }
+  }
+  .mechant_share_content{
+    padding:20px 20px 30px 20px;
+    border-radius: 0px 0px 20px 20px;
+    .merchant_share_title{
+      max-height: 78px;
+      font-size: 26px;
+      font-family: PingFang SC;
+      font-weight: bold;
+      line-height: 39px;
+      color: #333333;
+      .merchant_share_tags{
+        display: inline-block;
+        background: rgba(7, 192, 194, 1);
+        height: 28px;
+        line-height: 28px;
+        text-align: center;
+        padding: 0 9px;
+        color: white;
+        font-size: 20px;
+        border-radius: 4px;
+        margin-right: 10px;
+      }
+    }
+    .merchant_coupon{
+      margin-top: 11px;
+      height: 30px;
+      .merchant_coupon_box{
+        height: 30px;
+        border-radius: 6px;
+        line-height: 30px;
+        padding: 0 10px;
+        font-size: 20px;
+        font-family: PingFang SC;
+        font-weight: 400;
+        color: #F94D6D;
+        display: inline-block;
+        margin-right: 10px;
+      }
+      .merchant_coupon_color1{
+        border: 1px solid #FF617E;
+        color: rgba(249, 77, 109, 0.8);
+      }
+      .merchant_coupon_color2{
+        color: rgba(255, 147, 100, 0.8);
+        border: 1px solid #FF9364;
+      }
+    }
+    .merchant_getBean{
+      margin-top: 20px;
+      height: 23px;
+      display: flex;
+      align-items: center;
+      .merchantBean_style1{
+        height: 23px;
+        font-size: 24px;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: #F94D6D;
+      }
+      .merchantBean_style2{
+        height: 23px;
+        font-size: 24px;
+        font-family: PingFang SC;
+        font-weight: 400;
+        color: #A5A5A5;
+      }
+      .merchantBean_style1:after{
+        display: inline-block;
+        content: '';
+        width: 22px;
+        height: 22px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/beanTrue.png")no-repeat;
+        background-size: 100% 100%;
+        vertical-align: middle;
+        margin-top: -2px;
+        margin-left: 4px;
+      }
+      .merchantBean_style2:after{
+        display: inline-block;
+        content: '';
+        width: 22px;
+        height: 22px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/beanNo.png")no-repeat;
+        background-size: 100% 100%;
+        vertical-align: middle;
+        margin-top: -4px;
+        margin-left: 4px;
+      }
+    }
+    .merchant_liner{
+      height: 2px;
+      background: #E6E6E6;
+      margin-top: 21px;
+    }
+    .merchant_falls_accress{
+      height: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 21px;
+      .merchant_falls_cityIcon{
+        width: 20px;
+        height: 20px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon5.png") no-repeat;
+        background-size: 100% 100%;
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+      .merchant_falls_city{
+        height: 20px;
+        font-size: 20px;
+        font-family: PingFang SC;
+        font-weight: 400;
+        color: #777777;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .merchant_falls_cityName{
+        width: 134px;
+        font-size: 20px;
+        font-family: PingFang SC;
+        font-weight: 400;
+        color: #777777;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .merchant_falls_limit{
+        height: 19px;
+        font-size: 20px;
+        font-family: PingFang SC;
+        font-weight: 400;
+        color: #A5A5A5;
       }
     }
   }

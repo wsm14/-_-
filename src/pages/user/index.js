@@ -30,11 +30,11 @@ class Index extends Component {
       toastType:0,
       user:{},
       tabbar: [
-        {id :1,title:'打卡记录',router:'/pages/user/record/index',classNames:'user_tabTitle user_bgtab2'},
-        {id :2,title:'我的订单',router:'/pages/user/goods/index',classNames:'user_tabTitle user_bgtab3'},
-        {id :3,title:'关爱打卡',router:'/pages/index/accustomed/expressCard/index',classNames:'user_tabTitle user_bgtab4'},
-        {id :4,title:'卡豆权益',router:'/pages/user/beanRule/index',classNames:'user_tabTitle user_bgtab5'},
-        {id :5,title:'协议规则',router:'/pages/user/userConceal/index',classNames:'user_tabTitle user_bgtab6'},
+        {id :1,title:'打卡记录',router:'/pages/newUser/record/index',classNames:'user_tabTitle user_bgtab2'},
+        {id :2,title:'我的订单',router:'/pages/newUser/goods/index',classNames:'user_tabTitle user_bgtab3'},
+        {id :3,title:'关爱打卡',router:'/pages/newUser/accustomed/expressCard/index',classNames:'user_tabTitle user_bgtab4'},
+        {id :4,title:'卡豆权益',router:'/pages/newUser/beanRule/index',classNames:'user_tabTitle user_bgtab5'},
+        {id :5,title:'协议规则',router:'/pages/newUser/userConceal/index',classNames:'user_tabTitle user_bgtab6'},
       ]
     }
   }
@@ -169,7 +169,7 @@ class Index extends Component {
             </View>
           </View>:null}
           {Object.keys(userInfo).length >5 && userInfo.mobile.length ===11 ?
-            <View className='user_title_Details' onClick={() =>Utils.navigateTo('/pages/user/userDetails/index')}>
+            <View className='user_title_Details' onClick={() =>Utils.navigateTo('/pages/newUser/userDetails/index')}>
             <View className='user_title_DetailsImg'>
               <Image src={userInfo.profile} ></Image>
             </View>

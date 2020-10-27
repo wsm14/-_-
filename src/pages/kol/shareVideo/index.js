@@ -21,7 +21,9 @@ import {
   setIntive,
   saveFall,
   deleteFall,
-  toast
+  toast,
+  onShareFriend,
+  onTimeline
 } from '@/common/utils'
 import touch from '@/common/touch'
 import classNames from 'classnames'
@@ -59,15 +61,6 @@ class Index extends Component {
       }).exec()
     }
   }
-  // componentDidHide(){
-  //   try {
-  //     clearInterval(this.state.interval)
-  //   }catch(e)
-  //   {}
-  //   this.setState({
-  //     interval: null
-  //   })
-  // }
   shareDetailsById() {
     // 阻止事件冒泡
     const {httpData} = this.state
@@ -107,7 +100,6 @@ class Index extends Component {
       time: time
     }, res => {
       if (time == 0) {
-        console.log(time)
         this.saveBean()
       }
     })
@@ -264,7 +256,26 @@ class Index extends Component {
       }
     })
   }
-
+  onShareAppMessage() {
+    const {kolMomentsInfo:{
+      title,
+      frontImage
+    }}  = this.state
+    return  onShareFriend({
+      title:  title,
+      img: frontImage
+    })
+  }
+  onShareTimeline() {
+    const {kolMomentsInfo:{
+      title,
+      frontImage
+    }}  = this.state
+  return onTimeline({
+      title:  title,
+      img: frontImage
+    })
+  }
   render() {
     const navSetting = {
       style: {
@@ -368,7 +379,7 @@ class Index extends Component {
             </View>
           </View>
           {this.kolStatus() && <View className='bounceInUp animated shareVideo_shop'>
-            <View className='shareVideo_shopDetails'>
+            <View className='shareVideo_shopDetails' onClick={() =>navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`)}>
               <View className='shareVideo_shopProfile' style={backgroundObj(merchantCover)}>
               </View>
               <View className='shareVideo_shopFont'>

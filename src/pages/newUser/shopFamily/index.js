@@ -21,7 +21,6 @@ class Index extends Component {
     }
   }
   getMerchantDetails() {
-    console.log(user)
     const {shopFamily:{getMyMerchant}} = user
     httpGet({
       data:{},
@@ -42,13 +41,11 @@ class Index extends Component {
       const {userMerchantList} = res
       if(userMerchantList && userMerchantList.length > 0){
         if(userMerchantList && userMerchantList.length === 10){
-          console.log(111)
           this.setState({
             userMerchantList: [...this.state.userMerchantList,...userMerchantList]
           })
         }
         else {
-          console.log(222)
           this.setState({
             countStatus: false,
             userMerchantList: [...this.state.userMerchantList,...userMerchantList]
@@ -69,7 +66,6 @@ class Index extends Component {
   onReachBottom() {
     const {countStatus,httpData} = this.state
     if (countStatus) {
-      console.log(111)
       this.setState({
         httpData:{
           ...httpData,

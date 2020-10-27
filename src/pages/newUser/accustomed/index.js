@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { View,Text} from '@tarojs/components'
-import Utils from './../../../utils/utils'
+import Utils from '../../../utils/utils'
 import './index.scss'
 import {wxapiGet, wxapiPost} from "./../../../api/api";
 import Ajax from "./../../../api/request";

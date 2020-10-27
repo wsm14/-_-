@@ -132,7 +132,7 @@ class Express extends Component {
           </View>
         </View>
         {/*关爱打卡选项*/}
-        <View className='express_add' onClick={() => Utils.navigateTo('/pages/index/accustomed/addExpressCard/index')}></View>
+        <View className='express_add' onClick={() => Utils.navigateTo('/pages/newUser/accustomed/addExpressCard/index')}></View>
         {/*添加按钮*/}
       </View>
     )

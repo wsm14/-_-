@@ -39,7 +39,7 @@ page{
     position: relative;
     overflow: auto;
     padding-bottom: 80px;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/wechatBg.png") no-repeat center/cover;
+    background: linear-gradient(-44deg, rgba(197, 162, 255, 0.4) 0%, rgba(76, 181, 197, 0.4) 99%);
     .userDetails_user{
       padding: 153px 10px 0px 60px;
       display: flex;
@@ -76,7 +76,7 @@ page{
           font-family: PingFang SC;
           font-weight: 400;
           color: #E6E6E6;
-          margin-top: 12px;
+          margin-top: 20px;
         }
         .userDetails_sex_tags{
           .userDetails_sex_box{
@@ -313,9 +313,9 @@ page{
             vertical-align: middle;
           }
           .userDetails_falls_coupon{
-            margin-top: 21px;
             display: flex;
             line-height: 1;
+            margin-top: 20px;
             .userDetails_coupon_box{
               padding:5px 10px;
               font-size: 20px;
@@ -340,6 +340,7 @@ page{
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-top: 12px;
             .userDetails_falls_cityIcon{
               width: 20px;
               height: 20px;

@@ -67,8 +67,8 @@ export const user = {
     getListUser: '/user/userInfo/listFamilyUser',//获取家人列表
   },
   merchantDetails:{
-    getOtherMerchant: '/user/userMerchant/getOtherMerchantDetail'
-    
+    getOtherMerchant: '/user/userMerchant/getOtherMerchantDetail',//获取其他商家详情
+    getOtherMoment: '/user/userMoment/listOtherMomentByType',//获取他人分享
   }
 }
 export const  kol = {
@@ -83,4 +83,16 @@ export const  kol = {
     getMomentDetail: '/user/kolMoments/getKolMomentDetailById', //查看kol动态详情
     saveWatch:'/user/beanDetail/saveWatchKolMomentsByUserId',//看视频获取卡豆
   },
+}
+export const index = {
+  perimeter: {
+    getUserSimpleInfo: '/user/userInfo/getUserSimpleInfo',//获取我的简单信息
+    getDomain: '/common/domain/listDomainAndTopic',//获取 所有领域和对应话题
+    getListKol: '/user/kolMoments/listKolMoments',//获取所有kol列表
+  }
+}
+export const share = {
+  shareFriend: {
+    getShareInfo: '/common/share/getShareInfo',//获取用户分享信息
+  }
 }
