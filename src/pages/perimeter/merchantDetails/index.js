@@ -281,7 +281,7 @@ class MerchantDetails extends Component{
           <View className='merchant_shop'>
             <View className='merchant_shop_nav'>
               {userMerchant.bespeakStatus&&<View className='merchant_shop_yuding' onClick={() =>Utils.goDown()}></View>}
-              <View className='merchant_shop_Title'>{userMerchant.merchantName}<Text>¥</Text><Text>{userMerchant.perCapitaConsumption}/人</Text></View>
+              <View className='merchant_shop_Title font_hide'>{userMerchant.merchantName}<Text>¥</Text><Text>{userMerchant.perCapitaConsumption}/人</Text></View>
               <View className='merchant_shop_accress'>
                 <Text className='merchant_shop_titleTab'>{userMerchant.cuisine}</Text>
                 {userMerchant.cuisine&&userMerchant.businessHub &&<View></View>}
@@ -292,7 +292,7 @@ class MerchantDetails extends Component{
               <View className='merchant_shop_yingyeGo'>
               </View>
               <View className='merchant_shop_status'>
-                <View className='merchant_shop_statusTime'>{userMerchant.businessStatus?'营业中':'休息中'}<View></View>{userMerchant.businessTime}</View>
+                <View className='merchant_shop_statusTime'>{userMerchant.businessStatus?'营业中':'休息中'}{' | '}{userMerchant.businessTime}</View>
               </View>
               <View className='merchant_shop_tag'>
                 {userMerchant.services&&userMerchant.services.map((item,index) =>{
@@ -304,7 +304,7 @@ class MerchantDetails extends Component{
             </View>
             <View className='merchant_shop_nav'>
               <View className='merchant_shop_dianhua'></View>
-              <View className='merchant_shop_bear'>
+              <View className='merchant_shop_bear font_hide'>
                    <View>{userMerchant.address}</View>
               </View>
               <View className='merchant_shop_space'>

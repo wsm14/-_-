@@ -211,7 +211,7 @@ export default class ShareImage extends Component{
              {userMomentsInfo.categoryName && <View className='banner_tag'>{userMomentsInfo.categoryName}</View>}
            </Swiper>
           <View className='Details_box'>
-             <View className='Details_title'>
+             <View className='Details_title font_hide'>
                {userMomentsInfo.title}
              </View>
              <View className='Details_body'>

@@ -382,7 +382,7 @@ class Index extends Component {
             <View className='shareVideo_shopDetails' onClick={() =>navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`)}>
               <View className='shareVideo_shopProfile' style={backgroundObj(merchantCover)}>
               </View>
-              <View className='shareVideo_shopFont'>
+              <View className='shareVideo_shopFont font_hide'>
                 <View className='shareVideo_shopName'>{merchantName}</View>
                 <View
                   className='shareVideo_shopTag'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange}</View>

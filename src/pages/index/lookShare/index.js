@@ -410,7 +410,7 @@ class lookShare extends Component{
                   </View> : null }
                   <View className='lookshare_user cleanfix'>
                     <View className='lookshare_userImg' style={{background:`url(${item.userProfile}) no-repeat 0 center/cover`}}></View>
-                    <View className='lookshare_username' style={item.contentType !== 'video'?{  maxWidth: Taro.pxTransform(120),overflowX: 'hidden',whiteSpace: 'nowrap',textOverflow:'ellipsis'}:{}}>{item.username}</View>
+                    <View className='lookshare_username font_hide' style={item.contentType !== 'video'?{  maxWidth: Taro.pxTransform(120),overflowX: 'hidden',whiteSpace: 'nowrap',textOverflow:'ellipsis'}:{}}>{item.username}</View>
                       {item.contentType !== 'video'?
                         <View className='lookshare_imageText lookshare_data'>
                         <View>距你<Text className='lookshare_blue'>{item.distanceRange}</Text></View>
@@ -497,7 +497,7 @@ class lookShare extends Component{
                     <View className='lookshare_compose_userImg' style={{background:`url(${item.userProfile}) no-repeat 0 center/cover`}}>
                     </View>
                     <View className='lookshare_compose_usercontent'>
-                      <View className='lookshare_compose_userName'>
+                      <View className='lookshare_compose_userName font_hide'>
                         {item.username}
                       </View>
                       <View className='lookshare_compose_userSpace'>

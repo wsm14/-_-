@@ -203,7 +203,9 @@ class Index extends Component {
     }))
   }
 
-
+  onReachBottom() {
+    this.onSollorBottom()
+  }
   //获取个人足迹
   onSollorBottom() {
     const { httpData,httpData:{page},countStatus} = this.state
@@ -329,18 +331,14 @@ class Index extends Component {
             </View>
           </View>
         </View>
-            <ScrollView
-              scrollY
-              onScrollToLower={
-                () =>this.onSollorBottom()
-              }
+            <View
               className="merchant_content">
               {userMomentsList.length ==0 &&<NullStatus></NullStatus>}
               <View
                 className='merchant_falls'>
                 {this.createdShareMerchant(userMomentsList)}
               </View>
-            </ScrollView>
+            </View>
         {visible &&
         <Toast visible={visible} onCancel={this.deleteFollow.bind(this)} onClose={() =>{this.setState({visible: false})}}></Toast>}
       </View>

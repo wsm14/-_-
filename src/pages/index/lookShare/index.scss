@@ -462,6 +462,7 @@ html,body{
           color: #333333;
           font-weight: bold;
           margin-left: 11px;
+          max-width: 210px;
         }
         .lookshare_imageText{
           position: absolute;
@@ -501,7 +502,10 @@ html,body{
           font-weight: bold;
           color: #333333;
           font-size: 24px;
-          padding-top: 4px;
+          margin-top: 4px;
+          height: 24px;
+          max-width: 210px;
+
         }
         .lookshare_compose_userSpace{
           padding-top: 8px;

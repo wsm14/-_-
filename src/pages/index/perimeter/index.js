@@ -121,6 +121,7 @@ class Index extends Component {
     this.setState({
       topicList: topicList||[],
       selectIndex: index,
+      countStatus: true,
       checkedList: [],
       kolMomentsList: [],
       kolHttp:{
