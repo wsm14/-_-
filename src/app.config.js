@@ -1,5 +1,7 @@
 export default {
   pages: [
+    "pages/perimeter/merchantDetails/index", //周边详情
+    'pages/kol/shareVideo/index',
     "pages/index/perimeter/index", //周边打卡
     "pages/index/lookShare/shareImage/index", //圖文详情
     "pages/index/lookShare/shareVideo/index", //视频详情
@@ -19,7 +21,7 @@ export default {
     // "pages/index/healthTakeCard/index", //健康打卡主页
     // "pages/index/healthTakeCard/healthEnlist", //健康打卡报名
     // "pages/index/healthTakeCard/ranking", //健康打卡排行榜
-    "pages/perimeter/merchantDetails/index", //周边详情
+
     "pages/perimeter/index", //周边
     "pages/user/index", //首页个人
     // "pages/share/step/index", //分享步数
@@ -72,15 +74,15 @@ export default {
     },
   },
 subPackages:[
-    {
-      "root": "pages/kol/",
-      "pages": [
-        "shareVideo/index",///kol视频详情页,
-        "shareImage/index",//kol图片详情页,
-        "follow/index",//关注列表,
-        "fans/index",//粉丝列表,
-      ]
-    },
+    // {
+    //   "root": "pages/kol/",
+    //   "pages": [
+    //     "shareVideo/index",///kol视频详情页,
+    //     "shareImage/index",//kol图片详情页,
+    //     "follow/index",//关注列表,
+    //     "fans/index",//粉丝列表,
+    //   ]
+    // },
   {
     "root": "pages/newUser/",
     "pages": [

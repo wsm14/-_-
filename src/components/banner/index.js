@@ -26,6 +26,7 @@ export default (props) => {
       {list.length > 1 ?
         <Swiper
           style={style}
+          circular
           onChange={(e) => {
             setCurrent(e.detail.current + 1)
           }}
@@ -71,6 +72,5 @@ export default (props) => {
         {showToast &&
         <View className='banner_toast'><View className='banner_tags'>{current + '/' + data.length}</View></View>}
       </View>
-
         )
       }

@@ -1,0 +1,52 @@
+.canvas_box{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  .canvas_img{
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    position: absolute;
+    top: 54px;
+    left: 34px;
+    background: #FFFFFF;
+    .animateCanvas{
+      width: 84px;
+      height: 84px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: transparent;
+    }
+  }
+  .canvas_tag{
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #000000;
+    padding: 0 16px;
+    background: white;
+    display:inline-block;
+    top: 32px;
+    left: 120px;
+    position: absolute;
+    border-radius: 4px;
+    z-index: 1;
+    .canvas_chart{
+      position: absolute;
+      bottom: -5px;
+      left:12px;
+      width:0px;
+      height:0px;
+      border:12px solid transparent;
+      border-left:20px solid white;
+      transform: translateY(7px);
+    }
+  }
+}

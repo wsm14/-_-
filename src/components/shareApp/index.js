@@ -3,6 +3,7 @@ import {Button, View} from '@tarojs/components'
 import './index.scss'
 import {httpGet} from "../../api/newRequest";
 import {wxapiGet} from "../../api/api";
+import { goDown } from '@/common/utils'
 export default (props) =>{
   const {userId,content,jumpObj} = props
   const [data,setData] = useState({})
@@ -28,7 +29,7 @@ export default (props) =>{
           <View  className='page_share_btn'>
             <Button
               appParameter={JSON.stringify({...jumpObj})}
-              openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle'>打开APP</Button>
+              openType='launchApp' onError={(e) => goDown()} className='page_share_btnStyle'>打开APP</Button>
           </View>
         </View>
       </View>

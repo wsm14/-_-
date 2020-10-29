@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {View, Text} from '@tarojs/components'
-import Nav from '@/components/nav'
-import Banner from '@/components/banner'
+import GetBeanCanvas from '@/components/getBeanCanvas'
+import StopBean from '@/components/stopBean'
 import Modal from '@/components/modal'
 import GetBean from '@/components/getBean'
 import Toast from '@/components/beanToast'
@@ -28,6 +28,7 @@ import {
 import touch from '@/common/touch'
 import classNames from 'classnames'
 import './index.scss'
+
 class Index extends Component {
   constructor() {
     super(...arguments)
@@ -37,17 +38,19 @@ class Index extends Component {
         kolMomentId: getCurrentInstance().router.params.kolMomentId || '1317009859036827649'
       },
       visible: false,
-      decStatus: true,
       toast: false,
       beanSet: false,
       initDec: true,
-      shareStatus: getCurrentInstance().router.params.type ||'',
-      viewFlag : true
+      shareStatus: getCurrentInstance().router.params.type || '',
+      viewFlag: true,
+      stopStatus: false,
     }
   }
+
   componentDidShow() {
     this.shareDetailsById();
   }
+
   componentWillUpdate(nextProps, nextState) {
     let that = this
     if (nextProps.decStatus !== nextState.decStatus && nextState == true) {
@@ -61,12 +64,13 @@ class Index extends Component {
       }).exec()
     }
   }
+
   shareDetailsById() {
     // 阻止事件冒泡
     const {httpData} = this.state
     const {shareDetails: {getMomentDetail}} = kol
     httpGet({url: getMomentDetail, data: httpData}, res => {
-      const {kolMomentsInfo, kolMomentsInfo: {merchantIdString,beanFlag, userLevel}} = res
+      const {kolMomentsInfo, kolMomentsInfo: {beanFlag, userLevel}} = res
       if (userLevel === '0' || beanFlag != '1') {
         this.setState({
           kolMomentsInfo,
@@ -87,14 +91,14 @@ class Index extends Component {
               interval: setIntive(this.state.time, this.getBean.bind(this)),
             })
           })
-        }
-        else if(this.state.kolMomentsInfo.watchStatus == 0 && this.state.time){
+        } else if (this.state.kolMomentsInfo.watchStatus == 0 && this.state.time) {
           toast('222')
           this.initInterval()
         }
       })
     })
   }
+
   getBean(time) {
     this.setState({
       time: time
@@ -105,31 +109,31 @@ class Index extends Component {
     })
   }//设置定时器领取卡豆
   saveBean() {
-    const {kolMomentsInfo:{kolMomentId},kolMomentsInfo} = this.state
-    const {shareDetails:{saveWatch}} = kol
+    const {kolMomentsInfo: {kolMomentId}, kolMomentsInfo} = this.state
+    const {shareDetails: {saveWatch}} = kol
     httpPost({
-      data:{momentId: kolMomentId},
-      url:saveWatch
-    },res => {
-      this.setState({toast: true,kolMomentsInfo:{...kolMomentsInfo,watchStatus:'1'}})
+      data: {momentId: kolMomentId},
+      url: saveWatch
+    }, res => {
+      this.setState({toast: true, kolMomentsInfo: {...kolMomentsInfo, watchStatus: '1'}})
     })
   } //领取卡豆
   followStatus(e) {
     e.stopPropagation()
     let that = this
-    const {kolMomentsInfo,kolMomentsInfo: {userFollowStatus, merchantIdString, merchantId, userIdString, userType}} = this.state
+    const {kolMomentsInfo, kolMomentsInfo: {userFollowStatus, merchantIdString, merchantId, userIdString, userType}} = this.state
     if (userFollowStatus === '1') {
       let that = this
       const {kolMomentsInfo: {userIdString}} = this.state
       deleteFollow({
         followUserId: userIdString,
-      }, () =>{
+      }, () => {
         that.setState({
-          kolMomentsInfo:{
+          kolMomentsInfo: {
             ...kolMomentsInfo,
-            userFollowStatus : '0'
+            userFollowStatus: '0'
           }
-        },res =>{
+        }, res => {
           toast('取消成功')
         })
       })
@@ -142,12 +146,12 @@ class Index extends Component {
         followType: type,
         followUserId: userIdString,
       }, () => that.setState({
-        kolMomentsInfo:{
+        kolMomentsInfo: {
           ...kolMomentsInfo,
-          userFollowStatus : '1'
+          userFollowStatus: '1'
         }
-      },res =>{
-       toast('关注成功')
+      }, res => {
+        toast('关注成功')
       }))
     }
   }
@@ -165,12 +169,12 @@ class Index extends Component {
       deleteCollection({
         collectionType: 'kolMoments',
         collectionId: kolMomentId,
-      },  () =>{
+      }, () => {
         that.setState({
-          kolMomentsInfo:{
+          kolMomentsInfo: {
             ...kolMomentsInfo,
-            momentCollectionStatus : '0',
-            collectionAmount:kolMomentsInfo.collectionAmount-1
+            momentCollectionStatus: '0',
+            collectionAmount: kolMomentsInfo.collectionAmount - 1
           }
         })
       })
@@ -178,12 +182,12 @@ class Index extends Component {
       saveCollection({
         collectionType: 'kolMoments',
         collectionId: kolMomentId,
-      }, () =>{
+      }, () => {
         that.setState({
-          kolMomentsInfo:{
+          kolMomentsInfo: {
             ...kolMomentsInfo,
-            momentCollectionStatus : '1',
-            collectionAmount:kolMomentsInfo.collectionAmount+1
+            momentCollectionStatus: '1',
+            collectionAmount: kolMomentsInfo.collectionAmount + 1
           }
         })
       })
@@ -202,36 +206,38 @@ class Index extends Component {
     if (userLikeStatus === '1') {
       deleteFall({
         kolMomentsId: kolMomentId,
-      },  () =>{
+      }, () => {
         that.setState({
-          kolMomentsInfo:{
+          kolMomentsInfo: {
             ...kolMomentsInfo,
             userLikeStatus: '0',
-            likeAmount: kolMomentsInfo.likeAmount-1
+            likeAmount: kolMomentsInfo.likeAmount - 1
           }
         })
       })
     } else {
       saveFall({
         kolMomentsId: kolMomentId,
-      }, () =>{
+      }, () => {
         that.setState({
-          kolMomentsInfo:{
+          kolMomentsInfo: {
             ...kolMomentsInfo,
-            userLikeStatus : '1',
-            likeAmount: kolMomentsInfo.likeAmount+1
+            userLikeStatus: '1',
+            likeAmount: kolMomentsInfo.likeAmount + 1
           }
         })
       })
     }
   }
-  kolStatus(){
-    const {kolMomentsInfo:{merchantIdString,userLevel}} = this.state
-    if(merchantIdString ||userLevel > 1){
+
+  kolStatus() {
+    const {kolMomentsInfo: {merchantIdString, userLevel}} = this.state
+    if (merchantIdString || userLevel > 1) {
       return true
     }
     return false
   }
+
   //用户收藏信息
   //用户点赞信息
   stopInterval(obj) {
@@ -240,13 +246,15 @@ class Index extends Component {
       interval: null
     })
   }
-  initInterval(){
-    if(!this.state.interval && this.state.time){
+
+  initInterval() {
+    if (!this.state.interval && this.state.time) {
       this.setState({
-        interval:setIntive(this.state.time,this.getBean.bind(this))
+        interval: setIntive(this.state.time, this.getBean.bind(this))
       })
     }
-   }
+  }
+
   errorToast(e) {
     this.setState({
       Toast: {
@@ -256,26 +264,64 @@ class Index extends Component {
       }
     })
   }
+
   onShareAppMessage() {
-    const {kolMomentsInfo:{
-      title,
-      frontImage
-    }}  = this.state
-    return  onShareFriend({
-      title:  title,
+    const {
+      kolMomentsInfo: {
+        title,
+        frontImage
+      }
+    } = this.state
+    return onShareFriend({
+      title: title,
       img: frontImage
     })
   }
+
   onShareTimeline() {
-    const {kolMomentsInfo:{
-      title,
-      frontImage
-    }}  = this.state
-  return onTimeline({
-      title:  title,
+    const {
+      kolMomentsInfo: {
+        title,
+        frontImage
+      }
+    } = this.state
+    return onTimeline({
+      title: title,
       img: frontImage
     })
   }
+
+  link_stop(fn) {
+    const {time, kolMomentsInfo: {userIdString}} = this.state
+    if (time) {
+      this.setState({
+        stopStatus: true,
+        linkFn: fn
+      }, res => {
+        this.stopInterval(this.state.interval)
+        Taro.createVideoContext('video', this).pause()
+      })
+    } else {
+      fn && fn()
+    }
+  }
+
+  canfirm() {
+    this.setState({
+      stopStatus: false,
+    }, res => {
+      Taro.createVideoContext('video', this).play()
+    })
+  }
+
+  cancel() {
+    this.setState({
+      stopStatus: false,
+    }, res => {
+      this.state.linkFn && this.state.linkFn()
+    })
+  }
+
   render() {
     const navSetting = {
       style: {
@@ -311,52 +357,73 @@ class Index extends Component {
         merchantAddress,
         userLevel,
         merchantCityName,
-        userIdString
+        userIdString,
+        length
       },
       time,
       shareStatus,
-      viewFlag
+      viewFlag,
+      stopStatus
     } = this.state
     return (
       <View className='shareVideo_box'>
-        {shareStatus=='share'&&
+        {stopStatus &&
+        <StopBean
+          canfirm={() => this.canfirm()}
+          cancel={() => this.cancel()}
+        >
+        </StopBean>
+        }
+        {shareStatus == 'share' &&
         <APPShare
           {...{
             content: '我在哒卡乐发了一篇有趣的视频',
-            userId:getCurrentInstance().router.params.shareUserId,
-            jumpObj:{
+            userId: getCurrentInstance().router.params.shareUserId,
+            jumpObj: {
               jumpUrl: 'MomentVideoKol',
               momentId: getCurrentInstance().router.params.kolMomentId,
-              type : 'jumpToPage',
-              jumpType : "native" ,
-              path:'DKLShareKOLVideoPlayerViewController',params:{momentId: getCurrentInstance().router.params.kolMomentId}}
+              type: 'jumpToPage',
+              jumpType: "native",
+              path: 'DKLShareKOLVideoPlayerViewController',
+              params: {momentId: getCurrentInstance().router.params.kolMomentId}
+            }
           }
           }>
         </APPShare>}
         <View
-          onTouchStart={(e) => {touch.touchStart(e)}}
+          onTouchStart={(e) => {
+            touch.touchStart(e)
+          }}
           onClick={
-            (e) =>touch.multipleTap(e,() =>this.setState({viewFlag: !this.state.viewFlag}))}
+            (e) => touch.multipleTap(e, () => this.setState({viewFlag: !this.state.viewFlag}))}
           className='shareVideo_setting'>
           <Video
             kolMomentsInfo={kolMomentsInfo}
-            onPlay={() =>this.initInterval()}
+            onPlay={() => this.initInterval()}
             {...videoSetting}
             onPause={() => this.stopInterval(this.state.interval)}
           ></Video>
         </View>
-
-        {viewFlag&&
-        <View>
+        <View style={!viewFlag ? {visibility: 'hidden'} : {}}>
           <View className={('animated fadeInUp shareVideo_details_box')}>
-            <View className='shareVideo_userProfile' style={backgroundObj(userProfile)}
-                  onClick={() =>navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`)}>
+            <View style={{display:'flex',alignItems:'center'}}>
+              <View className='shareVideo_userProfile' style={backgroundObj(userProfile)}
+                    onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`))}
+              >
+              </View>
+              {userLevel && userLevel !== '0' && <View className='shareVideo_tipIcon'>
+
+              </View>}
+              <View className='shareVideo_userName font_hide'>
+                {username}
+              </View>
               <View
                 onClick={(e) => this.followStatus(e)}
-                className={classNames(userFollowStatus === '1' ? 'shareVideo_installNow' : 'shareVideo_install')}>
+                className={classNames(userFollowStatus === '0' ? 'shareVideo_installNow' : 'shareVideo_install')}>
+                {userFollowStatus === '0' ? '关注' : '已关注'}
               </View>
             </View>
-            <View className='shareVideo_zd_box'>
+            <View style={{display:'flex',alignItems:'center',minWidth:Taro.pxTransform(220)}}>
               <View onClick={() => this.fallStatus()}
                     className={classNames('shareVideo_icon_size', userLikeStatus === '1' ? 'shareVideo_zd_icon2' : 'shareVideo_zd_icon1')}>
 
@@ -365,7 +432,7 @@ class Index extends Component {
                 {setPeople(likeAmount)}
               </View>
               {this.kolStatus() &&
-              <View>
+              <View style={{display: 'flex', alignItems: 'center'}}>
                 <View
                   className={classNames('shareVideo_icon_size', momentCollectionStatus === '1' ? 'shareVideo_shoucang_icon2' : 'shareVideo_shoucang_icon1')}
                   onClick={() => this.collectionStatus()}
@@ -377,97 +444,73 @@ class Index extends Component {
               </View>
               }
             </View>
+
           </View>
           {this.kolStatus() && <View className='bounceInUp animated shareVideo_shop'>
-            <View className='shareVideo_shopDetails' onClick={() =>navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`)}>
-              <View className='shareVideo_shopProfile' style={backgroundObj(merchantCover)}>
+            <View className='shareVideo_shop_couponBox'>
+              <View className='public_center coupon_box'>
+                <View className='coupon_icon'></View>
+                <View className='coupon_font'>看完领券</View>
               </View>
-              <View className='shareVideo_shopFont font_hide'>
-                <View className='shareVideo_shopName'>{merchantName}</View>
-                <View
-                  className='shareVideo_shopTag'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange}</View>
+              <View className='goshop public_center'>
+                <View className='shop_icon'></View>
+                <View className='shop_font'>
+                  一斤橘子
+                  <Text  style={{fontSize:Taro.pxTransform(20)}}>{' ¥ '}</Text>
+                  <Text style={{fontSize:Taro.pxTransform(28)}}>45</Text>
+                </View>
               </View>
             </View>
-            <View className='shareVideo_active_box'>
-              {/*<View className='shareVideo_coupon'>*/}
-              {/*  <View className='shareVideo_couponBox'>*/}
-              {/*    <View className='shareVideo_coupon_icon'></View>*/}
-              {/*    <View className='shareVideo_coupon_font'>*/}
-              {/*      已领优惠券*/}
-              {/*    </View>*/}
-              {/*  </View>*/}
-              {/*</View>*/}
-              <View className='shareVideo_shopAccress'>
-                <View className='shareVideo_shopAccress_icon'>
 
+            <View className='sharekol_merchant'>
+              <View className='shareVideo_shopDetails'
+              >
+                <View
+                  className='shareVideo_shopProfile'
+                  style={backgroundObj(merchantCover)}
+                  onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`))}
+                >
                 </View>
-                <View className='shareVideo_shopAccress_details'>
-                  {merchantAddress}
+                <View className='shareVideo_shopFont'>
+                  <View className='shareVideo_shopName font_hide'>{merchantName}</View>
+                  <View
+                    className='shareVideo_shopTag font_hide'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange+' | '+merchantAddress}</View>
                 </View>
+              </View>
+              <View className='shareVideo_merchant'
+                    onClick={() => this.link_stop(() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`))}
+              >
+
               </View>
             </View>
             <View className={classNames('shareVideo_dec_box', decStatus && "shareVideo_dec_expand")}>
+              {topicIdString && userLevel && userLevel !== '0' && <View className='shareVideo_conversation'>
+                <Text className='shareVideo_conversationBox'>
+                  {'#' + topicName}
+                </Text>
+              </View>}
               {message}
-              <View className='shareVideo_dec_details'>
-                <View className='shareVideo_dec_time'>
-                  {interactionTime}
-                </View>
-                {!decStatus && <View className='shareVideo_dec_hide' onClick={() => {
-                  this.setState({decStatus: true})
-                }}>
-                  <View>收起</View>
-                  <View className='shareVideo_dec_hideIcon'></View>
-                </View>}
-              </View>
               {decStatus && <View className='shareVideo_dec_show' onClick={() => {
                 this.setState({decStatus: false})
               }}></View>}
             </View>
-            {topicIdString && <View className='shareVideo_conversation_style shareVideo_conversation'>
-              <View className='shareVideo_conversationBox'>
-                <Text className='shareVideo_conversation_icon'></Text>
-                <Text className='shareVideo_conversation_font'>{topicName}</Text>
-              </View>
-            </View>}
-            <View className='shareVideo_shopBtn'>
-              进店
+            <View className='shareVideo_dec_details'>
+              {!decStatus && typeof decStatus !=='undefined' &&<View className='shareVideo_dec_hide' onClick={() => {
+                this.setState({decStatus: true})
+              }}>
+                <View>收起</View>
+                {/*<View className='shareVideo_dec_hideIcon'></View>*/}
+              </View>}
             </View>
-          </View>}
-          {!merchantIdString && userLevel === '0' && <View className='shareVideo_user'>
-            <View className='shareVideo_userName'>
-              {username}
-            </View>
-            <View className={classNames('shareVideo_dec_box', decStatus && "shareVideo_dec_expand")}>
-              {message}
-              <View className='shareVideo_dec_details'>
-                <View className='shareVideo_dec_time'>
-                  {interactionTime}
-                </View>
-                {!decStatus && <View className='shareVideo_dec_hide' onClick={() => {
-                  this.setState({decStatus: true})
-                }}>
-                  <View>收起</View>
-                  <View className='shareVideo_dec_hideIcon'></View>
-                </View>}
-              </View>
-              {decStatus && <View className='shareVideo_dec_show' onClick={() => {
-                this.setState({decStatus: false})
-              }}></View>}
-            </View>
-            {topicIdString && <View className='shareVideo_conversation_style shareVideo_conversation'>
-              <View className='shareVideo_conversationBox'>
-                <Text className='shareVideo_conversation_icon'></Text>
-                <Text className='shareVideo_conversation_font'>{topicName}</Text>
-              </View>
-            </View>}
           </View>}
           {beanSet &&
-          <GetBean
+          <GetBeanCanvas
             beanStatus={watchStatus}
             beanNum={beanAmount}
             interval={time}
+            length={length}
           >
-          </GetBean>
+          </GetBeanCanvas>
           }
           {toast &&
           <Toast
@@ -480,7 +523,7 @@ class Index extends Component {
           >
           </Toast>
           }
-        </View>}
+        </View>
       </View>
     )
   }

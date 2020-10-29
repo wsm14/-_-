@@ -1,10 +1,11 @@
 import React, {Component, useState} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {View, Text} from '@tarojs/components'
+import GetBeanCanvas from '@/components/getBeanCanvas'
+import StopBean from '@/components/stopBean'
 import Nav from '@/components/nav'
 import Banner from '@/components/banner'
 import Modal from '@/components/modal'
-import GetBean from '@/components/getBean'
 import Toast from '@/components/beanToast'
 import {kol} from '@/api/api'
 import {httpGet, httpPost} from '@/api/newRequest'
@@ -50,7 +51,8 @@ class Index extends Component {
       toast: false,
       time: null,
       beanSet: false,
-      shareStatus: getCurrentInstance().router.params.type || ''
+      shareStatus: getCurrentInstance().router.params.type || '',
+      stopStatus:  false,
     }
   }
 
@@ -269,6 +271,40 @@ class Index extends Component {
   } //领取卡豆
   errorToast(e) {
   }
+  stopInterval(obj) {
+    clearInterval(obj)
+    this.setState({
+      interval: null
+    })
+  }
+  link_stop(fn) {
+    const { time } = this.state
+    if(time){
+      this.setState({
+        stopStatus:  true,
+        linkFn:  fn
+      },res =>{
+        this.stopInterval(this.state.interval)
+      })
+    }
+    else {
+      fn&&fn()
+    }
+  }
+  canfirm() {
+    this.setState({
+      stopStatus:  false,
+    },res =>{
+      this.initInterval()
+    })
+  }
+  cancel() {
+    this.setState({
+      stopStatus:  false,
+    },res  =>{
+      this.state.linkFn&&this.state.linkFn()
+    })
+  }
 
   render() {
     const {
@@ -296,20 +332,16 @@ class Index extends Component {
         beanAmount,
         interactionTime,
         merchantCityName,
+        length
       },
       time,
       visible,
       bannerSetting,
       toast,
       beanSet,
-      shareStatus
+      shareStatus,
+      stopStatus
     } = this.state
-    const navSetting = {
-      style: {
-        background: 'rgba(255,255,255,0)',
-      },
-      type: 'white'
-    }
     return (
       <View className='shareImage_box'>
         {shareStatus == 'share' &&
@@ -328,13 +360,20 @@ class Index extends Component {
           }
           }>
         </APPShare>}
+        {stopStatus &&
+        <StopBean
+          canfirm={() =>this.canfirm()}
+          cancel = {() =>  this.cancel()}
+        >
+        </StopBean>
+        }
         <Banner {...bannerSetting}></Banner>
         <View className='shareImage_details'>
           <View className='shareImage_statistics'>
             <View
               className='shareImage_userProfile'
               style={backgroundObj(userProfile)}
-              onClick={() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`)}>
+              onClick={() =>this.link_stop(() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`))}>
               <View
                 className={classNames('shareImage_followStatus', userFollowStatus === '1' ? 'shareImage_delete' : 'shareImage_install')}
                 onClick={(e) => this.followStatus(e)}
@@ -393,8 +432,9 @@ class Index extends Component {
           {merchantIdString &&
           <View className='shareImage_shop'>
             <View className='shareImage_shopDetails'>
-              <View className='shareImage_shopProfile' style={backgroundObj(merchantCover)}  onClick={() =>navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`)}>
-
+              <View className='shareImage_shopProfile' style={backgroundObj(merchantCover)}
+                    onClick={() =>this.link_stop(() =>navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`))}
+              >
               </View>
               <View className='shareImage_shopFont'>
                 <View className='shareImage_shopName'>{merchantName}</View>
@@ -410,14 +450,6 @@ class Index extends Component {
                 {merchantAddress}
               </View>
             </View>
-            {/*<View className='shareImage_coupon_none shareImage_coupon'>*/}
-            {/*  <View className='shareImage_couponBox'>*/}
-            {/*    <View className='shareImage_coupon_icon'></View>*/}
-            {/*    <View className='shareImage_coupon_font'>*/}
-            {/*      已领优惠券*/}
-            {/*    </View>*/}
-            {/*  </View>*/}
-            {/*</View>*/}
             <View className='shareImage_shopBtn'>
               进店
             </View>
@@ -427,13 +459,14 @@ class Index extends Component {
           {/*//商家详情*/}
         </View>
         {beanSet &&
-        <GetBean
+        <GetBeanCanvas
           beanStatus={watchStatus}
           beanNum={beanAmount}
           interval={time}
+          length={length}
         >
-        </GetBean>}
-
+        </GetBeanCanvas>
+        }
         {toast &&
         <Toast
           data={kolMomentsInfo}

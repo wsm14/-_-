@@ -1,0 +1,281 @@
+.coupon_box{
+  width: 686px;
+  height: 260px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 32px;
+  .coupon_content{
+    width: 624px;
+    height: 196px;
+    display: flex;
+    justify-content: space-between;
+    .coupon_userPro{
+      width: 196px;
+      height: 196px;
+      background: #f2f2f2;
+      border-radius: 4px;
+    }
+    .coupon_details{
+      width:404px;
+      .coupon_one{
+        height: 52px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .coupon_left{
+          height: 32px;
+          font-size: 32px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #333333;
+          line-height: 32px;
+        }
+        .coupon_right{
+          height: 52px;
+          font-size: 52px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #EF476F;
+          line-height: 52px;
+        }
+      }
+      .coupon_two{
+        height: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        .coupon_two_left{
+          width: 156px;
+          height: 30px;
+          border-radius: 4px;
+          border: 1px solid #108588;
+          font-size: 20px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #108588;
+          line-height: 30px;
+          text-align: center;
+        }
+        .coupon_two_right{
+          height: 24px;
+          font-size: 24px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #EF476F;
+          line-height: 24px;
+        }
+      }
+      .coupon_three{
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 54px;
+        .coupon_three_left{
+          height: 28px;
+          font-size: 24px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #999999;
+          line-height: 28px;
+        }
+        .coupon_three_right{
+          width: 160px;
+          height: 50px;
+          background: #07C0C2;
+          border-radius: 8px;
+          text-align: center;
+          line-height: 50px;
+          font-size: 28px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #FFFFFF;
+        }
+      }
+
+    }
+  }
+}
+.coupon_box:last-child{
+  margin-bottom: 0;
+}
+.shopDetails_box{
+  width: 331px;
+  height: 468px;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  display: inline-block;
+  margin-right: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  .shopDetails_Img{
+    height: 186px;
+    width: 331px;
+    background: #D8D8D8;
+    box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.05);
+    position: relative;
+    .shopDetails_city{
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      .shopDetails_city_icon{
+        width: 28px;
+        height: 28px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon90.png") no-repeat;
+        background-size: 100% 100%;
+        margin-right: 8px;
+      }
+      .shopDetails_city_font{
+        text-shadow: 0px 2px 24px rgba(0, 0, 0, 0.05);
+        height: 20px;
+        font-size: 20px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FFFFFF;
+        line-height: 20px;
+      }
+    }
+    .shopDetails_user{
+      position: absolute;
+      bottom: 0;
+      height: 54px;
+      left: 0;
+      right: 0px;
+      padding:0 22px;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+      box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.05);
+      .user_profile{
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #07C0C2;
+        margin-right: 20px;
+      }
+      .user_name{
+        max-width: 280px;
+        height: 24px;
+        font-size: 24px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FFFFFF;
+        line-height: 24px;
+      }
+    }
+  }
+  .shopDetails_shopName{
+    margin-top: 24px;
+    width: 284px;
+    height: 24px;
+    font-size: 24px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 600;
+    color: #333333;
+    line-height: 24px;
+    text-shadow: 0px 2px 24px rgba(0, 0, 0, 0.05);
+  }
+  .shopDetails_dec{
+    padding: 0 24px;
+    position: relative;
+    .shopDetails_biaoti{
+      margin-top: 16px;
+      height: 20px;
+      font-size: 20px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #333333;
+    }
+    .shopDetails_price{
+      height: 32px;
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      .shopDetails_left{
+        height: 32px;
+        font-size: 32px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 600;
+        color: #EF476F;
+        line-height: 32px;
+      }
+      .shopDetails_right{
+        height: 24px;
+        font-size: 24px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #CCCCCC;
+        position: relative;
+        line-height: 32px;
+        text-decoration: line-through;
+      }
+    }
+    .shopDetails_bean{
+      color: rgba(239, 71, 111, 1);
+      height: 20px;
+      font-size: 20px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #EF476F;
+      margin-top: 2px;
+    }
+  }
+  .shopDetails_btnBox{
+    width: 160px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 28px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #FFFFFF;
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    border-radius: 8px;
+  }
+  .shopDetails_btnColor2{
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    width: 180px;
+    height: 62px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon82.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .shopDetails_btnColor1{
+    background: rgba(7, 192, 194, 1);
+  }
+  .shopDetails_tag{
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    height: 28px;
+    .shopDetails_tag_box{
+      height: 28px;
+      line-height: 28px;
+      padding: 0 4px;
+      margin-right: 8px;
+      background: #F5F5F5;
+      box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #999999;
+      text-shadow: 0px 2px 24px rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+.shopDetails_box:last-child{
+  margin-right: 0;
+}

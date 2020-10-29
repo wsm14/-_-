@@ -55,6 +55,7 @@ export const httpGet = (obj,fn) =>{
      data: encrypt(obj.data)||{},
      method: 'get',
      success: (res)=>{
+       Taro.hideLoading()
        const {data,statusCode} = res
        if(statusCode === 200 && res.data.success){
          const {content} = data
@@ -76,11 +77,11 @@ export const httpGet = (obj,fn) =>{
        }
      },
      fail:(res) =>{
+       Taro.hideLoading()
        const {errMsg} = res
        toast(filterHttpStatus(errMsg))
      },
      complete:() =>{
-       Taro.hideLoading()
      }
    })
 }
@@ -99,6 +100,7 @@ export const httpPost = (obj,fn) =>{
       data: encrypt(obj.data)||{},
       method: 'post',
       success: (res)=>{
+        Taro.hideLoading()
         const {data,statusCode} = res
         if(statusCode === 200 && res.data.success){
           fn && fn(res)
@@ -120,6 +122,7 @@ export const httpPost = (obj,fn) =>{
         }
       },
       fail:(res) =>{
+        Taro.hideLoading()
         const {errMsg} = res
         toast(filterHttpStatus(errMsg))
       },

@@ -1,9 +1,5 @@
 import React ,{useEffect,useState} from 'react'
 import {View} from "@tarojs/components";
-import {httpPost} from '@/api/newRequest'
-import {
-  setIntive
-} from '@/common/utils'
 import './index.scss'
 export default (props) => {
   const {beanStatus,beanNum,interval} = props

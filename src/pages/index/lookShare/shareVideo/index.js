@@ -25,7 +25,6 @@ export default class ShareVideo extends Component{
     }
   }
   componentDidShow() {
-    Taro.hideHomeButton();
     this.getUserMomentDetails()
     this.getUserInfos()
   }
@@ -266,12 +265,13 @@ export default class ShareVideo extends Component{
               className='video_box'
               src={JSON.parse(userMomentsInfo.videoContent).url}
               style={{height:Taro.pxTransform(height)}}
-              controls={true}
-              enableProgressGesture={true}
+              controls={false}
+              enableProgressGesture={false}
               autoplay={true}
               showFullscreenBtn={false}
               enablePlayGesture={true}
               loop={true}
+              showPlayBtn={false}
               objectFit='cover'
               poster={userMomentsInfo.frontImage}
               initialTime='0'

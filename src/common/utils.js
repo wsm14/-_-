@@ -295,9 +295,9 @@ export const  setLocation = (fn) => {
 }
 export const  filterLimit  = number => {
   if(number<1){
-    return (number*1000)+'米'
+    return (number*1000)+'m'
   }
-  else return number+'公里'
+  else return number+'km'
 }
 export const  upLoadFile =  (arr)  => {
    let list = arr.map(item => {
@@ -333,4 +333,15 @@ export const  addPhotosAlbum = (path) => {
 }
 export const  goDown  =  () => {
   navigateTo('/pages/share/download/index')
+}
+export const filterSetting =  (str) =>{
+    if(str.includes('km') && parseInt(str)>5){
+      return `驾车约${parseInt(str)}分钟`
+    }
+    else if(str.includes('km') && parseInt(str)>=1 &&  parseInt(str)<=5){
+      return `骑车约${parseInt(str)*4}分钟`
+    }
+    else {
+      return `骑车约${parseInt(str)/100}分钟`
+    }
 }
