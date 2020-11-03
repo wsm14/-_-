@@ -89,6 +89,7 @@ export const authPhotosAlbum = (path) => {
         })
       }
       else {
+        console.log(1111)
         addPhotosAlbum(path)
       }
     },

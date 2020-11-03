@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
-import { View,Text,PickerView} from '@tarojs/components'
+import { View,Text,PickerView,PickerViewColumn} from '@tarojs/components'
 import { AtList, AtListItem } from 'taro-ui'
 import {wxapiGet} from '../../../api/api'
 import Ajax from '../../../api/request'
@@ -13,7 +13,7 @@ class Record extends Component {
     const date = new Date()
     const years = [date.getFullYear()]
     const months = []
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 1; i <= date.getMonth()+1; i++) {
       months.push(i)
     }
     this.state = {
@@ -48,10 +48,14 @@ class Record extends Component {
     this.setState({
       getHttpServer: {
         ...getHttpServer,
-        markMonth: year + '-' + month
-      }
+        page:1,
+        limit:10,
+        markMonth: year + '-' + month,
+
+      },
+      visible:false
     }, res => {
-         this.getList()
+      this.getList()
     })
   }
   getList() {
@@ -101,25 +105,32 @@ class Record extends Component {
               <View className='record_date'>
                 {year}-{month >= 10?parseInt(month) : '0'+parseInt(month) }
               </View>
-              <PickerView className='record_Picker clearfix' value={this.state.value} onChange={this.onChange}>
+              <PickerView
+                indicatorClass='record_PickerViewColumn'
+                style={{width: '100%',height: Taro.pxTransform(400),textAlign: 'center',}}
+                value={this.state.value} onChange={this.onChange}>
                 <PickerViewColumn className='record_PickerViewColumn'>
                   {this.state.years.map((item,index) => {
                     return (
-                      <View key={index}>{item}年</View>
+                      <View style={{
+                        lineHeight: '34px',
+                      }} key={index}>{item}年</View>
                     );
                   })}
                 </PickerViewColumn>
                 <PickerViewColumn className='record_PickerViewColumn'>
                   {this.state.months.map((item,index) => {
                     return (
-                      <View key={index}>{item}月</View>
+                      <View  style={{
+                        lineHeight: '34px',
+                      }}  key={index}>{item}月</View>
                     )
                   })}
                 </PickerViewColumn>
               </PickerView>
               <View className='record_buttonBox cleanfix'>
                 <View className='record_button record_buttonReload' onClick={() => this.setState({visible: false})}>取消</View>
-                <View className='record_button record_buttonSubmit'>完成</View>
+                <View className='record_button record_buttonSubmit' onClick={() => this.getlistCard()}>完成</View>
               </View>
             </View>
           </View> :

@@ -44,6 +44,7 @@ class Index extends Component {
       shareStatus: getCurrentInstance().router.params.type || '',
       viewFlag: true,
       stopStatus: false,
+      decStatus: true,
     }
   }
 
@@ -358,7 +359,10 @@ class Index extends Component {
         userLevel,
         merchantCityName,
         userIdString,
-        length
+        length,
+        goodsName,
+        goodsPrice,
+        goodsIdString
       },
       time,
       shareStatus,
@@ -444,24 +448,24 @@ class Index extends Component {
               </View>
               }
             </View>
-
           </View>
           {this.kolStatus() && <View className='bounceInUp animated shareVideo_shop'>
+            {goodsIdString &&
             <View className='shareVideo_shop_couponBox'>
-              <View className='public_center coupon_box'>
-                <View className='coupon_icon'></View>
-                <View className='coupon_font'>看完领券</View>
-              </View>
+              {/*<View className='public_center coupon_box'>*/}
+              {/*  <View className='coupon_icon'></View>*/}
+              {/*  <View className='coupon_font'>看完领券</View>*/}
+              {/*</View>*/}
               <View className='goshop public_center'>
                 <View className='shop_icon'></View>
                 <View className='shop_font'>
-                  一斤橘子
+                  {goodsName}
                   <Text  style={{fontSize:Taro.pxTransform(20)}}>{' ¥ '}</Text>
-                  <Text style={{fontSize:Taro.pxTransform(28)}}>45</Text>
+                  <Text style={{fontSize:Taro.pxTransform(28)}}>{goodsPrice}</Text>
                 </View>
               </View>
             </View>
-
+            }
             <View className='sharekol_merchant'>
               <View className='shareVideo_shopDetails'
               >
@@ -495,7 +499,7 @@ class Index extends Component {
               }}></View>}
             </View>
             <View className='shareVideo_dec_details'>
-              {!decStatus && typeof decStatus !=='undefined' &&<View className='shareVideo_dec_hide' onClick={() => {
+              {!decStatus && <View className='shareVideo_dec_hide' onClick={() => {
                 this.setState({decStatus: true})
               }}>
                 <View>收起</View>

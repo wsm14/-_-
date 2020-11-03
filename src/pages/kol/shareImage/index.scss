@@ -11,109 +11,118 @@ page {
   height: 100%;
   .shareImage_details {
     color: #333333;
-    padding-bottom: 51px;
-    .shareImage_statistics {
-      padding: 0 0px 0 124px;
-      height: 48px;
+    padding-top: 32px;
+    padding-bottom: 155px;
+    .sharekol_Image{
+      height: 80px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
       position: relative;
-
-      .shareImage_userProfile {
+      .shareImage_merchant{
         position: absolute;
+        width: 36px;
+        height: 36px;
+        top: 22px;
+        right: 24px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon108.png")  no-repeat;
+        background-size: 100%  100%;
+      }
+    }
+    .shareImage_shopDetails {
+      height: 80px;
+      display: flex;
+      padding: 0 32px;
+
+      .shareImage_shopProfile {
         width: 80px;
         height: 80px;
-        border: 1px solid #FFFFFF;
-        box-sizing: border-box;
-        left: 32px;
-        top: -26px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/useProfile.png") no-repeat center/cover;
         border-radius: 50%;
-        .shareImage_install{
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/follow_install.png") no-repeat;
-          background-size: 100% 100%;
-        }
-        .shareImage_delete {
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/true.png") no-repeat;
-          background-size: 100% 100%;
-        }
-        .shareImage_followStatus{
-          position: absolute;
-          width: 36px;
-          height: 36px;
-          left: 24px;
-          top: 61px;
-        }
+        background: #FD96A9;
       }
 
-      .shareImage_userName {
-        font-size: 28px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        width:240px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        margin-top: 33px;
-      }
+      .shareImage_shopFont {
+        margin-left: 20px;
+        line-height: 1;
 
-      .shareImage_right {
-        height: 48px;
-        display: flex;
-        align-items: center;
-        font-size: 24px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #333333;
-        margin-top: 24px;
-
-        .shareImage_like {
-          width: 48px;
-          height: 48px;
-          margin-right: 12px;
+        .shareImage_shopName {
+          margin-top: 6px;
+          height: 32px;
+          font-size: 32px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: rgba(51, 51, 51, 1);
+          line-height: 32px;
+          font-weight: bold;
+          width: 448px;
         }
-        .shareImage_likeNum {
-          width: 76px;
+
+        .shareImage_shopTag {
           height: 24px;
-        }
-
-        .shareImage_Collection {
-          width: 48px;
-          height: 48px;
-          margin-right: 12px;
-        }
-        .shareImage_like_icon {
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/like_none.png") no-repeat;
-          background-size: 100% 100%;
-        }
-
-        .shareImage_Collection_icon {
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/Collection_num.png") no-repeat;
-          background-size: 100% 100%;
-        }
-        .shareVideo_like_icon1{
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/dianzanTrue.png") no-repeat;
-          background-size: 100% 100%;
-        }
-        .shareImage_Collection_icon1 {
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/shoucangTrue.png") no-repeat;
-          background-size: 100% 100%;
-        }
-        .shareImage_CollectionNum {
-          width: 76px;
-          height: 24px;
+          font-size: 24px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(102, 102, 102, 1);
+          line-height: 24px;
+          margin-top: 12px;
+          width: 489px;
         }
       }
     }
-
+    .shareImage_shop_couponBox{
+      display: flex;
+      margin: 24px 32px 0;
+      .image_coupon_box{
+        width: 172px;
+        height: 48px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+      }
+      .image_coupon_icon{
+        width: 36px;
+        height: 36px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon67.png") no-repeat;
+        background-size: 100% 100%;
+        margin-right: 8px;
+      }
+      .image_coupon_font{
+        height: 24px;
+        font-size: 24px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FFFFFF;
+        line-height: 24px;
+      }
+      .image_goshop{
+        height: 48px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding: 0 16px;
+        margin-left: 24px;
+        .image_shop_icon{
+          width: 36px;
+          height: 36px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon68.png") no-repeat;
+          background-size: 100% 100%;
+          margin-right: 8px;
+        }
+        .image_shop_font{
+          font-size: 24px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #FFFFFF;
+          line-height: 24px;
+        }
+      }
+    }
     //头像和名称以及收藏点赞
     .shareImage_title {
+      border-top: 1px solid #E5E5E5;
       font-size: 32px;
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 600;
       color: #333333;
-      margin-left: 32px;
+      margin:31px 32px 0;
       padding-top: 32px;
       line-height: 32px;
     }
@@ -125,12 +134,12 @@ page {
       font-weight: 400;
       color: #333333;
       line-height: 42px;
-      padding: 28px 46px 0 32px;
+      padding: 28px 32px 0 ;
     }
 
     //文章详情
     .shareImage_time {
-      margin-top: 20px;
+      margin-top: 56px;
       height: 24px;
       font-size: 24px;
       font-family: PingFangSC-Regular, PingFang SC;
@@ -141,17 +150,14 @@ page {
     }
     //文章时间
     .shareImage_conversation {
-      display: inline-block;
-      height: 50px;
-      margin-left: 32px;
-      background: #EF476F;
+      height: 24px;
       font-size: 24px;
       font-family: PingFangSC-Medium, PingFang SC;
-      font-weight: 500;
-      color: #FFFFFF;
-      padding: 0 12px;
-      margin-top: 32px;
-      border-radius: 10px;
+      font-weight: 600;
+      color: #EF476F;
+      line-height: 24px;
+      max-width: 520px;
+      margin: 24px 32px 0;
     }
     .shareImage_conversationBox{
       display: flex;
@@ -278,5 +284,113 @@ page {
       }
     }
     //文章店铺
+  }
+  .shareImages_details_box {
+    position: fixed;
+    bottom: 0;
+    left: 0px;
+    right: 0px;
+    padding:0 32px;
+    display: flex;
+    height: 112px;
+    align-items: center;
+    background: rgba(255, 255, 255, 1);
+    justify-content: space-between;
+    border-top: 1px solid rgba(229, 229, 229, 1);
+    .shareImages_userProfile {
+      background: #FFFFFF;
+      width: 64px;
+      height: 64px;
+      border: 1px solid #FFFFFF;
+      box-sizing: border-box;
+      border-radius: 50%;
+      margin-right: 16px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/useProfile.png") no-repeat center/cover;
+    }
+
+    .shareImages_tipIcon {
+      width: 33px;
+      height: 27px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon66.png") no-repeat;
+      background-size: 100% 100%;
+      margin-right: 8px;
+    }
+
+    .shareImages_userName {
+      width: 196px;
+      height: 28px;
+      font-size: 28px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: rgba(51, 51, 51, 1);
+      margin-right: 10px;
+    }
+
+    .shareImages_installNow {
+      padding: 0 12px;
+      height: 40px;
+      border-radius: 5px;
+      border: 1px solid #EF476F;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #EF476F;
+      text-align: center;
+      font-size: 24px;
+      line-height: 40px;
+    }
+
+    .shareImages_install {
+      padding: 0 12px;
+      height: 40px;
+      border-radius: 5px;
+      border: 1px solid rgba(239, 71, 111, 0.5);
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(239, 71, 111, 0.5);
+      text-align: center;
+      font-size: 24px;
+      line-height: 40px;
+    }
+
+    .shareImages_zd_box {
+      text-align: center;
+    }
+
+    .shareImages_icon_size {
+      width: 48px;
+      height: 48px;
+    }
+
+    .shareImages_zd_icon1 {
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/106.png") no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .shareImages_zd_icon2 {
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/dianzanTrue.png") no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .shareImages_shoucang_icon1 {
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/107.png") no-repeat;
+      background-size: 100% 100%;
+      margin-left: 20px;
+    }
+
+    .shareImages_shoucang_icon2 {
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/shoucangTrue.png") no-repeat;
+      background-size: 100% 100%;
+      margin-left: 20px;
+    }
+
+    .shareImages_icon_num {
+      margin-left: 12px;
+      font-size: 24px;
+      min-width: 44px;
+      text-align: center;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color:rgba(51, 51, 51, 1);
+    }
   }
 }

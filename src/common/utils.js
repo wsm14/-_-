@@ -44,7 +44,7 @@ export const toast = (value) =>{
 }
 //彈窗
 export const filterStrList =  (str) => {
-  if(!str ||str.length =='0'){
+  if(!str ||str.length ==0){
     return []
   }
   return  str.split(',')
@@ -105,7 +105,7 @@ export const backgroundover = function (url) {
 }
 //设置自适应背景图片
 export const filterTime = function (time) {
-     if(time ==0){
+     if(time == 0){
        return '00:00'
      }
      if(time<10){
@@ -117,10 +117,10 @@ export const filterTime = function (time) {
      else {
        let times = time%60
        if((time-times*60)<10){
-         return `0+${times}:0${time-times*60}`
+         return `0${times}:0${time-times*60}`
        }
        else if((time-times*60)>=10){
-         return `0+${times}:${time-times*60}`
+         return `0${times}:${time-times*60}`
        }
 
      }
@@ -321,13 +321,15 @@ export const  addPhotosAlbum = (path) => {
   Taro.saveImageToPhotosAlbum({
     filePath: path,//canvasToTempFilePath返回的tempFilePath
     success: (res) => {
+      Taro.hideLoading()
       toast('成功保存相册')
     },
     fail: (err) => {
+      Taro.hideLoading()
       toast('保存失败')
     },
     complete: ()=>{
-      Taro.hideLoading()
+
     }
   })
 }

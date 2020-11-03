@@ -242,8 +242,8 @@ class Index extends Component {
   }
 
   kolStatus() {
-    const {kolMomentsInfo: {merchantIdString, userLevel}} = this.state
-    if (merchantIdString || userLevel > 1) {
+    const {kolMomentsInfo: {userLevel}} = this.state
+    if (userLevel !== '0') {
       return true
     }
     return false
@@ -332,7 +332,11 @@ class Index extends Component {
         beanAmount,
         interactionTime,
         merchantCityName,
-        length
+        length,
+        goodsIdString,
+        goodsName,
+        goodsPrice,
+        userLevel
       },
       time,
       visible,
@@ -354,7 +358,7 @@ class Index extends Component {
               momentId: getCurrentInstance().router.params.kolMomentId,
               type: 'jumpToPage',
               jumpType: "native",
-              path: 'DKLShareKOLVideoPlayerViewController',
+              path: 'DKLShareKOLImagePlayerViewController',
               params: {momentId: getCurrentInstance().router.params.kolMomentId}
             }
           }
@@ -369,94 +373,101 @@ class Index extends Component {
         }
         <Banner {...bannerSetting}></Banner>
         <View className='shareImage_details'>
-          <View className='shareImage_statistics'>
-            <View
-              className='shareImage_userProfile'
-              style={backgroundObj(userProfile)}
-              onClick={() =>this.link_stop(() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`))}>
+          <View className='sharekol_Image'>
+            <View className='shareImage_shopDetails'
+            >
               <View
-                className={classNames('shareImage_followStatus', userFollowStatus === '1' ? 'shareImage_delete' : 'shareImage_install')}
-                onClick={(e) => this.followStatus(e)}
+                className='shareImage_shopProfile'
+                style={backgroundObj(merchantCover)}
+                onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`))}
               >
               </View>
-            </View>
-            {/*{昵稱}*/}
-            <View className='shareImage_userName'>{username}</View>
-            {/*{昵稱}*/}
-            {/*{點贊加收藏}*/}
-            <View className='shareImage_right'>
-              <View
-                className={classNames('shareImage_like', userLikeStatus === '1' ? 'shareVideo_like_icon1' : 'shareImage_like_icon')}
-                onClick={() => this.fallStatus()}
-              >
-              </View>
-              <View className='shareImage_likeNum'>
-                {setPeople(likeAmount)}
-              </View>
-              {this.kolStatus() &&
-              <View className='public_center'>
+              <View className='shareImage_shopFont'>
+                <View className='shareImage_shopName font_hide'>{merchantName}</View>
                 <View
-                  className={classNames('shareImage_Collection', momentCollectionStatus === '1' ? 'shareImage_Collection_icon1' : 'shareImage_Collection_icon')}
-                  onClick={() => this.collectionStatus()}
-                >
-                </View>
-                <View className='shareImage_CollectionNum'>
-                  {setPeople(collectionAmount)}
-                </View>
+                  className='shareImage_shopTag font_hide'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange+' | '+merchantAddress}</View>
               </View>
-              }
             </View>
-            {/*{點贊加收藏}*/}
+            <View className='shareImage_merchant'
+                  onClick={() => this.link_stop(() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`))}
+            >
+
+            </View>
           </View>
-          {/*//头像和名称以及收藏点赞*/}
+          {/*//商家详情*/}
+          {goodsIdString &&
+          <View className='shareImage_shop_couponBox'>
+            <View className='public_center image_coupon_box'>
+              <View className='image_coupon_icon'></View>
+              <View className='image_coupon_font'>看完领券</View>
+            </View>
+            <View className='image_goshop public_center'>
+              <View className='image_shop_icon'></View>
+              <View className='image_shop_font'>
+                {goodsName||'--'}
+                <Text  style={{fontSize:Taro.pxTransform(20)}}>{' ¥ '}</Text>
+                <Text style={{fontSize:Taro.pxTransform(28)}}>{goodsPrice||'0'}</Text>
+              </View>
+            </View>
+          </View>
+          }
           <View className='shareImage_title'>
             {title}
           </View>
           {/*//文章名称*/}
+          {!this.kolStatus() && !topicId && topicName &&
+          <View className='shareImage_conversation font_hide'>
+            {topicName}
+          </View>}
+          {/*//文章话题*/}
           <View className='shareImage_dec'>
             {message}
           </View>
           {/*//文章详情*/}
           <View className='shareImage_time'>
-            {interactionTime}
+            {'发布于' + interactionTime}
           </View>
           {/*//文章时间*/}
-          {this.kolStatus() && topicId &&
-          <View className='shareImage_conversation'>
-            <View className='shareImage_conversationBox'>
-              <Text className='shareImage_conversation_icon'></Text>
-              <Text className='shareImage_conversation_font'>{topicName}</Text>
+        </View>
+        <View className={('animated fadeInUp shareImages_details_box')}>
+          <View style={{display:'flex',alignItems:'center'}}>
+            <View className='shareImages_userProfile' style={backgroundObj(userProfile)}
+                  onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`))}
+            >
             </View>
-          </View>}
-          {/*//文章话题*/}
-          {merchantIdString &&
-          <View className='shareImage_shop'>
-            <View className='shareImage_shopDetails'>
-              <View className='shareImage_shopProfile' style={backgroundObj(merchantCover)}
-                    onClick={() =>this.link_stop(() =>navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`))}
+            {userLevel && userLevel !== '0' && <View className='shareImages_tipIcon'>
+
+            </View>}
+            <View className='shareImages_userName font_hide'>
+              {username}
+            </View>
+            <View
+              onClick={(e) => this.followStatus(e)}
+              className={classNames(userFollowStatus === '0' ? 'shareImages_installNow' : 'shareImages_install')}>
+              {userFollowStatus === '0' ? '关注' : '已关注'}
+            </View>
+          </View>
+          <View style={{display:'flex',alignItems:'center',minWidth:Taro.pxTransform(220)}}>
+            <View onClick={() => this.fallStatus()}
+                  className={classNames('shareImages_icon_size', userLikeStatus === '1' ? 'shareImages_zd_icon2' : 'shareImages_zd_icon1')}>
+
+            </View>
+            <View className='shareImages_icon_num'>
+              {setPeople(likeAmount)}
+            </View>
+            {this.kolStatus() &&
+            <View style={{display: 'flex', alignItems: 'center'}}>
+              <View
+                className={classNames('shareImages_icon_size', momentCollectionStatus === '1' ? 'shareImages_shoucang_icon2' : 'shareImages_shoucang_icon1')}
+                onClick={() => this.collectionStatus()}
               >
               </View>
-              <View className='shareImage_shopFont'>
-                <View className='shareImage_shopName'>{merchantName}</View>
-                <View
-                  className='shareImage_shopTag'>{merchantCityName ? (merchantCityName + '·') : '' + merchantCategoryName + ' ｜ ' + distanceRange}</View>
+              <View className='shareImages_icon_num'>
+                {setPeople(collectionAmount)}
               </View>
             </View>
-            <View className='shareImage_shopAccress'>
-              <View className='shareImage_shopAccress_icon'>
-
-              </View>
-              <View className='shareImage_shopAccress_details'>
-                {merchantAddress}
-              </View>
-            </View>
-            <View className='shareImage_shopBtn'>
-              进店
-            </View>
-            {/*//优惠券状态*/}
-          </View>}
-
-          {/*//商家详情*/}
+            }
+          </View>
         </View>
         {beanSet &&
         <GetBeanCanvas

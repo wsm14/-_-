@@ -35,10 +35,10 @@ export default (props) => {
             return (
               <SwiperItem style={{width: '100%', height: '100%'}}>
                 <View style={imgStyle ? {
-                  background: `url(${item[imgName]}) no-repeat`,
+                  background: `url(${item[imgName]?item[imgName]:item}) no-repeat`,
                   backgroundSize: '100% 100%'
-                } : {background: `url(${item[imgName]}) no-repeat top center/contain`}} key={index}
-                      className='banner_box'>
+                } : {background: `url(${item[imgName]?item[imgName]:item}) no-repeat top center/contain`}} key={index}
+                      className='banner_box dakale_nullImage'>
                 </View>
               </SwiperItem>
             )
@@ -49,7 +49,7 @@ export default (props) => {
             return (
               <View style={{width: '100%', height: '100%'}}>
                 <View
-                  style={imgStyle ? {background: `url(${item[imgName]}) no-repeat center/cover`,} : {background: `url(${item[imgName]}) no-repeat top center/contain`}}
+                  style={imgStyle ? {background: `url(${item[imgName]||item}) no-repeat center/cover`,} : {background: `url(${item[imgName]}) no-repeat top center/contain`}}
                   key={index}
                   className='banner_box'>
                 </View>

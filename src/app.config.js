@@ -1,31 +1,14 @@
 export default {
   pages: [
-    "pages/perimeter/merchantDetails/index", //周边详情
-    'pages/kol/shareVideo/index',
+    "pages/index/goods/index",
     "pages/index/perimeter/index", //周边打卡
+
+    "pages/user/index", //首页个人
     "pages/index/lookShare/shareImage/index", //圖文详情
     "pages/index/lookShare/shareVideo/index", //视频详情
     "pages/index/lookShare/index", //看视频图文
     // "pages/perimeter/map/index", //地图
     // "pages/perimeter/beanMark/index", //周边
-    // "pages/index/lookShare/shareVideo/index", //视频详情
-    // "pages/index/accustomed/drinking/index", //好习惯喝水
-    // "pages/index/accustomed/customizeHabit/index", //自定义打卡
-    // "pages/index/accustomed/userExploits/index", //我的战绩
-    // "pages/index/accustomed/sportsPoster/index", //习惯打卡-比赛详情
-    // "pages/index/accustomed/index", //习惯打卡
-    // "pages/index/accustomed/habitCard/index", //好习惯打卡详情
-    // "pages/index/accustomed/addExpressCard/index", //添加关爱打卡
-    // "pages/index/accustomed/expressCard/index", //关爱打卡
-    // "pages/index/healthTakeCard/motionRecord/index", //健康打卡-运动记录
-    // "pages/index/healthTakeCard/index", //健康打卡主页
-    // "pages/index/healthTakeCard/healthEnlist", //健康打卡报名
-    // "pages/index/healthTakeCard/ranking", //健康打卡排行榜
-
-    "pages/perimeter/index", //周边
-    "pages/user/index", //首页个人
-    // "pages/share/step/index", //分享步数
-    // "pages/share/download/index", //下载
     "pages/auth/index", //登录
     "pages/payPrice/index", //小程序支付
   ],
@@ -44,27 +27,27 @@ export default {
     list: [
       {
         pagePath: "pages/index/perimeter/index",
-        iconPath: "./assets/image/tab-bar/tab-bar-1.png",
-        selectedIconPath: "./assets/image/tab-bar/tab-bar-1Checked.png",
-        text: "首页",
+        iconPath: "./assets/image/tab-bar/perimeter.png",
+        selectedIconPath: "./assets/image/tab-bar/perimeterTrue.png",
+        text: "周边",
       },
       {
         pagePath: "pages/perimeter/index",
-        iconPath: "./assets/image/tab-bar/tab-bar-2.png",
-        selectedIconPath: "./assets/image/tab-bar/tab-bar-2Checked.png",
-        text: "周边",
+        iconPath: "./assets/image/tab-bar/card.png",
+        selectedIconPath: "./assets/image/tab-bar/cardTrue.png",
+        text: "打卡",
       },
-      // {
-      //   pagePath: "pages/home/index",
-      //   iconPath: "./assets/image/tab-bar/tab-bar-3.png",
-      //   selectedIconPath: "./assets/image/tab-bar/tab-bar-3Checked.png",
-      //   text: "攻略"
-      // },
+      {
+        pagePath: "pages/index/goods/index",
+        iconPath: "./assets/image/tab-bar/goods.png",
+        selectedIconPath: "./assets/image/tab-bar/goodsTrue.png",
+        text: "订单"
+      },
       {
         pagePath: "pages/user/index",
-        iconPath: "./assets/image/tab-bar/tab-bar-4.png",
-        selectedIconPath: "./assets/image/tab-bar/tab-bar-4Checked.png",
-        text: "个人",
+        iconPath: "./assets/image/tab-bar/me.png",
+        selectedIconPath: "./assets/image/tab-bar/meTrue.png",
+        text: "我的",
       },
     ],
   },
@@ -74,16 +57,16 @@ export default {
     },
   },
 subPackages:[
-    // {
-    //   "root": "pages/kol/",
-    //   "pages": [
-    //     "shareVideo/index",///kol视频详情页,
-    //     "shareImage/index",//kol图片详情页,
-    //     "follow/index",//关注列表,
-    //     "fans/index",//粉丝列表,
-    //   ]
-    // },
-  {
+    {
+      "root": "pages/kol/",
+      "pages": [
+        "shareVideo/index",///kol视频详情页,
+        "shareImage/index",//kol图片详情页,
+        "follow/index",//关注列表,
+        "fans/index",//粉丝列表,
+      ]
+    },
+    {
     "root": "pages/newUser/",
     "pages": [
       "merchantDetails/index",///商家主页,
@@ -98,13 +81,21 @@ subPackages:[
       'accustomed/addExpressCard/index'//配置关爱打卡
     ]
   },
-  {
+    {
     "root": "pages/share/",
     "pages": [
       "download/index",///下载,
       "step/index",//,同步步数
       "shareFriend/index",//分享好友,
       'shareShop/index',
+    ]
+  },
+    {
+    "root": "pages/perimeter/",
+    "pages": [
+      "shopDetails/index", //商品详情
+      "merchantDetails/index", //周边详情
+      "index", //周边首页
     ]
   },
   ]

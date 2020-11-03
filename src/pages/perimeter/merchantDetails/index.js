@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Taro ,{getCurrentInstance} from '@tarojs/taro'
 import {ScrollView, Text, View} from '@tarojs/components'
 import Banner from '@/components/banner'
-import {coupons,shopDetails} from '@/components/publicShopStyle'
+import {coupons,shopDetails,billboard,exploreShop} from '@/components/publicShopStyle'
 import {wxapiGet} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import APPShare from '@/components/shareApp'
@@ -30,10 +30,10 @@ class MerchantDetails extends Component{
   constructor () {
     super(...arguments)
     this.state ={
-      merchantHttpData: {...getCurrentInstance().router.params,merchantId:'1298622441292181505'},
+      merchantHttpData: {merchantId: getCurrentInstance().router.params.merchantId},
       banner:{
         bannerType: 'merchant',
-        merchantId: getCurrentInstance().router.params.merchantId||'1298622441292181505',
+        merchantId:getCurrentInstance().router.params.merchantId
       },
       userMerchant: {},
       bannerList:[],
@@ -47,6 +47,9 @@ class MerchantDetails extends Component{
     }
   }
   componentWillMount(){
+  }
+  onReady() {
+    // 生命周期函数--监听页面初次渲染完成
   }
   componentDidShow() {
     this.getBannerList()
@@ -91,7 +94,6 @@ class MerchantDetails extends Component{
       })
     })
   }
-
   goAppError(e){
     Utils.goDown();
   }
@@ -275,12 +277,20 @@ class MerchantDetails extends Component{
             <View className='merchant_active_biaoti'>
               商品橱窗
             </View>
-
           </View>
           <View className='merchant_active_dec'>
             本店商品展示
           </View>
         </View>
+        <ScrollView
+          scrollX
+          className = 'merchant_billboard'
+        >
+          {billboard()}
+          {billboard()}
+          {billboard()}
+          {billboard()}
+        </ScrollView>
         <View className='merchant_active'>
           <View className='merchant_active_title'>
             <View className='merchant_active_iconBox active_icon4'>
@@ -294,6 +304,26 @@ class MerchantDetails extends Component{
           <View className='merchant_active_dec'>
             哒人分享 精彩推荐
           </View>
+        </View>
+        {exploreShop()}
+        <View className='merchant_layer'>
+          <View className='merchant_layer_btn'>
+            <View className='merchant_layer_btn1'>
+              <View className='merchant_layer_btnBox merchant_layer_btnIcon1'></View>
+              <View>买单</View>
+            </View>
+            <View className='merchant_layer_limit'></View>
+            <View className='merchant_layer_btn2'>
+              <View className='merchant_layer_btnBox merchant_layer_btnIcon2'></View>
+              <View>到店打卡</View>
+            </View>
+            <View className='merchant_layer_limit'></View>
+            <View className='merchant_layer_btn2'>
+              <View className='merchant_layer_btnBox merchant_layer_btnIcon3'></View>
+              <View>关注</View>
+            </View>
+          </View>
+          <View className='merchant_shop'>立即预约</View>
         </View>
       </View>
     )

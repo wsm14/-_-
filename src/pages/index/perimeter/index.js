@@ -30,7 +30,7 @@ class Index extends Component {
     super(...arguments)
     this.state = {
       bannerHttp: {
-        bannerType: 'near'
+        bannerType: 'main'
       },
       bannerList: [],
       userDetails: {},
@@ -395,7 +395,7 @@ class Index extends Component {
             boxStyle={{width:'100%' , height:'100%'}}
           ></Banner>
         </View>
-        {login(userInfo) !=='0'&& Object.keys(userDetails).length<5?
+        {login(userInfo) !=='0' || Object.keys(userDetails).length<5?
           <View className='perimerter_noUser' onClick={() =>navigateTo('/pages/auth/index')}>
             <View className='perimerter_userProfile'></View>
             <View className='perimerter_userBox'>

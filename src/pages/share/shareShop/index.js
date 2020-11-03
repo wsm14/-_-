@@ -107,6 +107,9 @@ class Record extends Component {
         this.createImg()
       })
     }
+    else {
+      this.createImg()
+    }
   }
   componentDidShow() {
     const { userInfo : {username,profile}} = this.props.store.authStore

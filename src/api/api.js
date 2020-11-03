@@ -96,3 +96,9 @@ export const share = {
     getShareInfo: '/common/share/getShareInfo',//获取用户分享信息
   }
 }
+export const perimeter = {
+  shopDetails: {
+    getGoodsById: '/user/kolMoments/listKolMomentByGoodsId',//获取kol达人带货商品动态
+    getGoodsDetail: '/user/kolGoods/getKolGoodsDetail',//kol商品详情
+  }
+}
