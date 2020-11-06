@@ -59,54 +59,60 @@ export const coupons = (_this, data, obj) => {
 }
 
 //商品标签
-export const shopDetails = (_this, data, obj) => {
-  return (
-    <View className='shopDetails_box'>
-      <View className='shopDetails_Img'>
-        <View className='shopDetails_city'>
-          <View className='shopDetails_city_icon'></View>
-          <View className='shopDetails_city_font'>200m</View>
-        </View>
-        <View className='shopDetails_user'>
-          <View className='user_profile'>
+export const shopDetails = (data, obj) => {
 
+  if (data) {
+    const {goodsName, goodsImg, oriPrice, realPrice, merchantName, merchantLogo, lat, lnt} = data
+    return (
+      <View className='shopDetails_box'>
+        <View className='shopDetails_Img dakale_nullImage' style={backgroundObj(goodsImg)}>
+          <View className='shopDetails_city'>
+            <View className='shopDetails_city_icon'></View>
+            <View className='shopDetails_city_font'>200m</View>
           </View>
-          <View className='user_name font_hide'>
-            鲜丰水果
-          </View>
-        </View>
-      </View>
-      <View className='shopDetails_dec'>
-        <View className='shopDetails_shopName font_hide'>
-          特价橘子特价橘子特价橘...
-        </View>
-        <View className='shopDetails_tag'>
-          <View className='shopDetails_tag_box'>新鲜爆品</View>
-          <View className='shopDetails_tag_box'>新鲜爆品</View>
-          <View className='shopDetails_tag_box'>新鲜爆品</View>
-        </View>
-        <View className='shopDetails_biaoti'>哒卡乐专享价</View>
-        <View className='shopDetails_price'>
-          <View className='shopDetails_left'><Text style={{fontSize: Taro.pxTransform(20)}}>¥</Text> 9.9</View>
-          <View className='shopDetails_right'>
-            ¥ 22
-          </View>
-        </View>
-        <View className='shopDetails_bean'>
-          (990卡豆)
-        </View>
+          <View className='shopDetails_user'>
+            <View className='user_profile dakale_profile' style={backgroundObj(merchantLogo)}>
 
+            </View>
+            <View className='user_name font_hide'>
+              {merchantName}
+            </View>
+          </View>
+        </View>
+        <View className='shopDetails_dec'>
+          <View className='shopDetails_shopName font_hide'>
+            {goodsName}
+          </View>
+          <View className='shopDetails_tag'>
+            <View className='shopDetails_tag_box'>新鲜爆品</View>
+            <View className='shopDetails_tag_box'>新鲜爆品</View>
+            <View className='shopDetails_tag_box'>新鲜爆品</View>
+          </View>
+          <View className='shopDetails_biaoti'>哒卡乐专享价</View>
+          <View className='shopDetails_price'>
+            <View className='shopDetails_left'><Text
+              style={{fontSize: Taro.pxTransform(20)}}>¥</Text>{' ' + realPrice || ''}</View>
+            <View className='shopDetails_right'>
+              ¥ {' ' + oriPrice || ''}
+            </View>
+          </View>
+          <View className='shopDetails_bean'>
+            ({realPrice * 100 || ''}卡豆)
+          </View>
+
+        </View>
+        {/*<View className='shopDetails_btnBox shopDetails_btnColor1'>*/}
+        {/*  立即抢购*/}
+        {/*</View>*/}
+        <View className='shopDetails_btnColor2'>
+        </View>
       </View>
-      {/*<View className='shopDetails_btnBox shopDetails_btnColor1'>*/}
-      {/*  立即抢购*/}
-      {/*</View>*/}
-      <View className='shopDetails_btnColor2'>
-      </View>
-    </View>
-  )
+    )
+  }
+  else return null
+
+
 }
-
-
 //商品标签
 export const billboard = (_this, data, obj) => {
   return (
@@ -118,30 +124,30 @@ export const billboard = (_this, data, obj) => {
 }
 //达人视频图文
 export const exploreShop = (_this, data, obj) => {
-  if(data){
-  const {
-    kolMomentsId,
-    contentType,
-    userId,
-    userIdString,
-    likeAmount,
-    topicName,
-    frontImage,
-    beanAmount,
-    length,
-    title,
-    username,
-    userProfile,
-    imageNum,
-    frontImageWidth,
-    frontImageHeight,
-    watchStatus,
-    merchantLnt,
-    merchantLat,
-    merchantAddress,
-    userLikeStatus,
-    beanFlag
-  } = data
+  if (data) {
+    const {
+      kolMomentsId,
+      contentType,
+      userId,
+      userIdString,
+      likeAmount,
+      topicName,
+      frontImage,
+      beanAmount,
+      length,
+      title,
+      username,
+      userProfile,
+      imageNum,
+      frontImageWidth,
+      frontImageHeight,
+      watchStatus,
+      merchantLnt,
+      merchantLat,
+      merchantAddress,
+      userLikeStatus,
+      beanFlag
+    } = data
     return (
       <View className='explore_box'>
         <View className='explore_img dakale_nullImage' style={{...backgroundObj(frontImage)}}
@@ -255,7 +261,8 @@ export const shopCard = (_this, data, obj) => {
             <View className='shopCard_userName font_hide'>
               {merchantName || '--'}
             </View>
-            <View className='shopCard_go' onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`)}>
+            <View className='shopCard_go'
+                  onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`)}>
             </View>
           </View>
           <View className='shopCard_right2 font_hide'>
@@ -287,21 +294,31 @@ export const shopGoodsDetails = (_this, data, obj) => {
     <View className='goods_boxs'>
       <View className='goods_box_details'>
         <View className='goods_box_title'>套餐详情</View>
-         {list.map(item => {
-           const {
-             goodsName,
-             goodsNum,
-             goodsPrice
-           } = item
-           return (
-             <View className='goods_box_center'>
-               <View className='goods_box_font1'>{goodsName} <Text className='goods_box_font3'>({goodsNum}份)</Text></View>
-               <View className='goods_box_font2'>¥{goodsPrice}</View>
-             </View>
-           )
-         })}
+        {list.map(item => {
+          const {
+            goodsName,
+            goodsNum,
+            goodsPrice
+          } = item
+          return (
+            <View className='goods_box_center'>
+              <View className='goods_box_font1'>{goodsName} <Text
+                className='goods_box_font3'>({goodsNum}份)</Text></View>
+              <View className='goods_box_font2'>¥{goodsPrice}</View>
+            </View>
+          )
+        })}
 
       </View>
+    </View>
+  )
+}
+
+export const goodsNullStatus = (_this, data, obj) => {
+  return (
+    <View className='goodsNullStatus'>
+      <View className='goodsNullStatus_image'></View>
+      <View className='goodsNullStatus_goods'>您还没有相关的订单哦</View>
     </View>
   )
 }

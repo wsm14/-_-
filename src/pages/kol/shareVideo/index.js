@@ -456,11 +456,14 @@ class Index extends Component {
               {/*  <View className='coupon_icon'></View>*/}
               {/*  <View className='coupon_font'>看完领券</View>*/}
               {/*</View>*/}
-              <View className='goshop public_center'>
+              <View className='goshop public_center'
+              onClick={() =>
+                this.link_stop(() => navigateTo(`/pages/perimeter/shopDetails/index?merchantId=${merchantIdString}&kolGoodsId=${goodsIdString}&kolMomentsId=${getCurrentInstance().router.params.kolMomentId}`))}
+              >
                 <View className='shop_icon'></View>
-                <View className='shop_font'>
+                <View className='shop_font font_hide'>
                   {goodsName}
-                  <Text  style={{fontSize:Taro.pxTransform(20)}}>{' ¥ '}</Text>
+                  <Text style={{fontSize:Taro.pxTransform(20)}}>{' ¥ '}</Text>
                   <Text style={{fontSize:Taro.pxTransform(28)}}>{goodsPrice}</Text>
                 </View>
               </View>

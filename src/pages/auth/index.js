@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro'
+import Taro,{getCurrentPages} from '@tarojs/taro'
 import React ,{ Component }  from 'react'
 import { View,Text} from '@tarojs/components'
 import {AtButton} from 'taro-ui'

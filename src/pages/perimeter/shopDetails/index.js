@@ -14,22 +14,25 @@ import {
 import {exploreShop,shopCard,shopGoodsDetails} from '@/components/publicShopStyle'
 import MakePhone from '@/components/payTelephone'
 import './index.scss'
+import {navigateTo} from "../../../common/utils";
 class MerchantDetails extends Component{
   constructor () {
     super(...arguments)
     this.state ={
       httpData: {
-        kolGoodsId: getCurrentInstance().router.params.kolGoodsId||'1321749283406594049',
-        merchantId: getCurrentInstance().router.params.merchantId||'4'
+        kolGoodsId: getCurrentInstance().router.params.kolGoodsId||'',
+        merchantId: getCurrentInstance().router.params.merchantId||''
       },
       httpDataById: {
-        goodsId: getCurrentInstance().router.params.kolGoodsId||'1321749283406594049',
+        goodsId: getCurrentInstance().router.params.kolGoodsId||'',
+        merchantId: getCurrentInstance().router.params.merchantId||'',
       },
       lnt: Taro.getStorageSync('lnt'),
       lat: Taro.getStorageSync('lat'),
       kolGoodsInfo: {},//商品详情
       visible: false,
-      kolMomentsInfo: {}
+      kolMomentsInfo: {},
+      kolMomentsId: getCurrentInstance().router.params.kolMomentsId
     }
   }
   componentDidMount() {
@@ -83,11 +86,14 @@ class MerchantDetails extends Component{
       goodsDesc,
       telephone,
       likeAmount,
-      packageGoods
+      packageGoods,
+      goodsIdString,
+      merchantIdString
     },
       kolGoodsInfo,
       kolMomentsInfo,
-      visible
+      visible,
+      kolMomentsId
     } =this.state
     return(
       <View className='page_shopBox'>
@@ -217,7 +223,11 @@ class MerchantDetails extends Component{
             <View className='shopdetails_telephone'></View>
             <View className='shopdetails_telephone_text'>客服</View>
           </View>
-          <View className='shopdetails_shop_goshop'>立即购买</View>
+          <View
+            className='shopdetails_shop_goshop'
+            onClick={() => navigateTo(`/pages/goods/configOrder/index?kolGoodsId=${goodsIdString}&merchantId=${merchantIdString}&kolMomentsId=${kolMomentsId}`)}>
+            立即购买
+          </View>
         </View>
         {visible &&
         <MakePhone

@@ -341,7 +341,6 @@ class Index extends Component {
     })
   }
   render() {
-
     const {
       bannerList,
       userDetails: {

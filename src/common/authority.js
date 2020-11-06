@@ -98,3 +98,31 @@ export const authPhotosAlbum = (path) => {
     }
   })
 }
+export const authWxLogin = (fn) => {
+  Taro.login({
+    success: function (res) {
+      if (res.code) {
+         fn  &&  fn(res.code)
+      } else {
+        console.log('获取用户登录态失败！' + res.errMsg)
+      }
+    }
+  })
+}
+export const internet = (obj,fn) => {
+  Taro.onNetworkStatusChange(function (res){
+    const {isConnected,networkType} = res
+    if(isConnected == false && networkType =='none'){
+      Taro.showToast({
+        title: '网络错误',
+        icon: 'none',
+        duration: 2000
+      })
+    }
+    else {
+      if(Object.keys(obj).length<5){
+        fn && fn();
+      }
+    }
+  })
+}

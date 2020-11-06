@@ -12,8 +12,6 @@ import Taro from '@tarojs/taro'
 import {Swiper, SwiperItem, View, Image} from '@tarojs/components'
 import classNames from 'classnames'
 import './index.scss'
-import Card from "../../layout/index/healthTakeCard";
-
 export default (props) => {
   const {style, data, showToast, imgName, auto, height, boxStyle, imgStyle, showNear} = props
   const [list, setList] = useState([]);

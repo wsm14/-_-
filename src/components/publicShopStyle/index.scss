@@ -118,7 +118,6 @@
   .shopDetails_Img{
     height: 186px;
     width: 331px;
-    background: #D8D8D8;
     box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.05);
     position: relative;
     .shopDetails_city{
@@ -160,7 +159,6 @@
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        background: #07C0C2;
         margin-right: 20px;
       }
       .user_name{
@@ -636,4 +634,24 @@
       }
     }
   }
+}
+.goodsNullStatus{
+  padding-top: 64px;
+  .goodsNullStatus_image{
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon252.png") no-repeat;
+    background-size: 100% 100%;
+  }
+ .goodsNullStatus_goods{
+   height: 28px;
+   font-size: 28px;
+   font-family: PingFangSC-Regular, PingFang SC;
+   font-weight: 400;
+   color: #999999;
+   line-height: 28px;
+   margin: 32px auto 0;
+   text-align: center;
+ }
 }

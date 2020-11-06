@@ -1,8 +1,10 @@
 export default {
   pages: [
-    "pages/index/goods/index",
+    // 'pages/goods/paySuccess/index',
+    // 'pages/goods/kolShopGoods/index',
+    // 'pages/goods/getShopGoods/index',
     "pages/index/perimeter/index", //周边打卡
-
+    "pages/index/goods/index",
     "pages/user/index", //首页个人
     "pages/index/lookShare/shareImage/index", //圖文详情
     "pages/index/lookShare/shareVideo/index", //视频详情
@@ -31,12 +33,12 @@ export default {
         selectedIconPath: "./assets/image/tab-bar/perimeterTrue.png",
         text: "周边",
       },
-      {
-        pagePath: "pages/perimeter/index",
-        iconPath: "./assets/image/tab-bar/card.png",
-        selectedIconPath: "./assets/image/tab-bar/cardTrue.png",
-        text: "打卡",
-      },
+      // {
+      //   pagePath: "pages/perimeter/index",
+      //   iconPath: "./assets/image/tab-bar/card.png",
+      //   selectedIconPath: "./assets/image/tab-bar/cardTrue.png",
+      //   text: "打卡",
+      // },
       {
         pagePath: "pages/index/goods/index",
         iconPath: "./assets/image/tab-bar/goods.png",
@@ -96,6 +98,16 @@ subPackages:[
       "shopDetails/index", //商品详情
       "merchantDetails/index", //周边详情
       "index", //周边首页
+    ]
+  },
+  {
+    "root": "pages/goods/",
+    "pages": [
+      "payWeex/index", //kol支付
+      "configOrder/index", //kol下单
+      'kolShopGoods/index',
+      'getShopGoods/index',
+      'paySuccess/index',
     ]
   },
   ]

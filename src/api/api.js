@@ -37,7 +37,7 @@ export const wxapiPost = {
   wechatBeanDetail: '/user/beanDetail/saveWatchBeanDetailByUserId',//看视频获取卡豆
   wechatBeanMark: '/user/beanDetail/saveMarkBeanDetailByUserId',//打卡获取卡豆
   wechatPayOrder: '/user/pay/adapay/payOrder',// 扫码支付
-  wechatPayDelayOrder: '/user/pay/adapay/payDelayOrder'// 点餐下单
+  wechatPayDelayOrder: '/user/pay/adapay/payDelayOrder'// kol下单
 }
 
 export const user = {
@@ -71,7 +71,7 @@ export const user = {
     getOtherMoment: '/user/userMoment/listOtherMomentByType',//获取他人分享
   }
 }
-export const  kol = {
+export const kol = {
   fans : {
     getFans: '/user/userFollow/listUserFollowByFollowUserId'
   },
@@ -89,6 +89,9 @@ export const index = {
     getUserSimpleInfo: '/user/userInfo/getUserSimpleInfo',//获取我的简单信息
     getDomain: '/common/domain/listDomainAndTopic',//获取 所有领域和对应话题
     getListKol: '/user/kolMoments/listKolMoments',//获取所有kol列表
+  },
+  goods: {
+    'orderDetails': '/user/order/listOrderOrderStatus'//获取我的订单
   }
 }
 export const share = {
@@ -101,4 +104,21 @@ export const perimeter = {
     getGoodsById: '/user/kolMoments/listKolMomentByGoodsId',//获取kol达人带货商品动态
     getGoodsDetail: '/user/kolGoods/getKolGoodsDetail',//kol商品详情
   }
+}
+export const goods = {
+   configOrder: {
+     getKolGoodsOrderPrice: '/user/kolGoods/getKolGoodsOrderPrice',
+     saveKolGoodsOrder: '/user/order/saveKolGoodsOrder',//确认达人订单
+     /*
+     * params
+     * kolGoodsId 商品ID
+     * merchantId 商家ID
+     * */
+   },
+   payWeex: {
+     getKolOrderPrepayment: '/user/order/getKolOrderPrepaymentResult',//获取支付详情
+   },
+   getKolOrderDetail: '/user/order/getKolOrderDetail',//获取带货订单详情
+   listSpecialGoods: '/user/specialGoods/listSpecialGoods',//获取猜你喜欢
+   getOrderResult: '/user/order/getOrderResult',//支付成功时跳转页面
 }

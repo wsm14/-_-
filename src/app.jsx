@@ -4,9 +4,10 @@ import authStore from "./store/auth";
 import beanStore from "./store/beanMark";
 import shareStore from "./store/shareImage";
 import 'taro-ui/dist/style/index.scss'
-import './app.scss'
-import './animate.min.css'
-
+import './assets/css/app.scss'
+import './assets/css/color.scss'
+import './assets/css/font.scss'
+import './assets/css/background.scss'
 const store = {
   authStore,
   beanStore,

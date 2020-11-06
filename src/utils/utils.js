@@ -150,12 +150,13 @@ utils.prototype.initialize = function (fn){
             })}
     })
 }
-utils.prototype.goBack = function(fn){
+utils.prototype.goBack = function(fn,utils){
   Taro.navigateBack({
     success:() => {
       if(fn){
         this.Toast(fn)
       }
+      utils && utils();
     }
   })
 }

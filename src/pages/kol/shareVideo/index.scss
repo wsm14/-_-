@@ -168,8 +168,6 @@ page {
         background: rgba(0, 0, 0, 0.2);
         border-radius: 8px;
         padding: 0 16px;
-        margin-left: 24px;
-
         .shop_icon {
           width: 36px;
           height: 36px;
@@ -179,6 +177,7 @@ page {
         }
 
         .shop_font {
+          max-width: 420px;
           font-size: 24px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;

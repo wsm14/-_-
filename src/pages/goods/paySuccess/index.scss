@@ -1,0 +1,235 @@
+page{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: #F5F5F5;
+  line-height: 1;
+}
+.pay_details_payDetails{
+  width: 100%;
+  color: #FFFFFF;
+  padding-bottom: 39px;
+  .payTitle_top{
+    padding:0 32px;
+    height: 232px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon258.png") center/cover;
+    .payTitle_status{
+       height: 60px;
+       display: flex;
+       align-items: center;
+       padding-top: 52px;
+      .payTitle_iconBox{
+        width: 60px;
+        height:60px;
+      }
+      .payTitle_icon1{
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon259.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      .payTitle_font{
+        height: 60px;
+        line-height: 60px;
+        font-size: 48px;
+        margin-left: 16px;
+        font-weight: 600;
+      }
+    }
+    .payTitle_dec{
+      margin-top: 16px;
+      height: 24px;
+      font-size: 24px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      line-height: 24px;
+      margin-left: 76px;
+   }
+  }
+  .descriptionCard_title{
+    width: 686px;
+    margin: -74px auto 0;
+    background: #FFFFFF;
+    border-radius: 12px;
+    .descriptionCard_box{
+      padding: 24px 32px 8px;
+      font-size: 24px;
+      .descriptionCard_merchant{
+        height: 64px;
+        display: flex;
+        align-items: center;
+        .descriptionCard_profile{
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+        }
+        .descriptionCard_merchantTitle{
+          max-width: 280px;
+          height: 42px;
+          font-size: 28px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 600;
+          color: #333333;
+          line-height: 42px;
+          margin-left: 29px;
+        }
+        .descriptionCard_goIcon{
+          width: 36px;
+          height: 36px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon260.png") no-repeat;
+          background-size: 100% 100%;
+          margin-left: 16px;
+        }
+      }
+      .descriptionCard_merchantShop{
+        height: 120px;
+        margin-top: 32px;
+        display: flex;
+        .descriptionCard_merchantLogo{
+          width: 120px;
+          height: 120px;
+          border-radius: 8px;
+        }
+        .descriptionCard_shop_details{
+          margin-left: 24px;
+          .descriptionCard_goods_name{
+            width: 280px;
+            max-height: 84px;
+            line-height: 42px;
+          }
+          .descriptionCard_goods_num{
+            height: 24px;
+            padding-top: 8px;
+          }
+        }
+      }
+      .descriptionCard_shop_price{
+        height: 32px;
+        margin-top: 5px;
+        margin-left: auto;
+      }
+      .descriptionCard_goods_liner{
+        width: 622px;
+        height: 1px;
+        background: #E5E5E5;
+        margin: 31px auto 0 ;
+      }
+      .descriptionCard_goods_tags{
+        height: 84px;
+        .kolTagBox{
+          height: 36px;
+          .kolTagIcons{
+            width: 36px;
+            height: 36px;
+          }
+          .kolTag_font{
+            height: 36px;
+            line-height: 36px;
+            margin-left: 4px;
+            margin-right: 16px;
+          }
+        }
+      }
+      .codeBox{
+        position: relative;
+        height: 304px;
+        margin-top: -32px;
+        .code_swiper{
+          width: 304px;
+          height: 304px;
+          position: relative;
+          .code_onloader{
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            .code_onloader_btn{
+              width: 184px;
+              height: 50px;
+              border-radius: 8px;
+              border: 2px solid #333333;
+              line-height: 50px;
+              text-align: center;
+              z-index: 1000000;
+            }
+          }
+        }
+        .code_left{
+          position: absolute;
+          top: 137px;
+          left: 0;
+        }
+        .code_right{
+          position: absolute;
+        }
+        .codePosition{
+          width: 36px;
+          height: 36px;
+          top: 137px;
+          right: 0;
+        }
+      }
+    }
+  }
+  .pay_goGoods{
+    margin: 24px 32px 0;
+    padding: 0 32px;
+    height: 124px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    .pay_goGoods_box{
+      height: 60px;
+      width: 622px;
+    }
+    .pay_goods_btn{
+      width: 192px;
+      height: 60px;
+      background: #07C0C2;
+      border-radius: 8px;
+      text-align: center;
+      line-height: 60px;
+    }
+  }
+}
+.tests{
+  width: 304px;
+  height: 304px;
+}
+.code_count{
+   margin-top: 16px;
+   height: 24px;
+   text-align: center;
+}
+.code_num{
+  height: 24px;
+  position: relative;
+  text-align: center;
+}
+.code_onRead{
+  height: 36px;
+  margin-top: 32px;
+
+  .onReadly_iconBox{
+    width: 36px;
+    height: 36px;
+    margin-right: 8px;
+  }
+}
+.pay_dec{
+  margin-top: 80px;
+  padding-bottom: 32px;
+}
+.pay_dec_margin{
+  margin-top: 20px;
+}
+.lovely_box{
+  margin-top: 64px;
+  .love_shop{
+    margin: 40px 32px auto;
+    width: 688px;
+    height: 468px;
+    white-space: nowrap;
+  }
+  .lovely_title{
+    text-align: center;
+  }
+}

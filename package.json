@@ -67,9 +67,10 @@
     "eslint-plugin-react-hooks": "^1.6.1",
     "md5": "^2.3.0",
     "mina-painter": "^1.0.0",
+    "moment": "^2.29.1",
     "stylelint": "9.3.0",
     "taro-ui": "3.0.0-alpha.3",
-      "weapp-qrcode": "^1.0.0",
+    "weapp-qrcode": "^1.0.0",
     "wxmp-qrcode": "^2.0.3"
   }
 }

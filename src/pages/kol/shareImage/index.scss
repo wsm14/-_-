@@ -98,7 +98,6 @@ page {
         background: rgba(0, 0, 0, 0.2);
         border-radius: 8px;
         padding: 0 16px;
-        margin-left: 24px;
         .image_shop_icon{
           width: 36px;
           height: 36px;
@@ -112,6 +111,7 @@ page {
           font-weight: 400;
           color: #FFFFFF;
           line-height: 24px;
+          max-width: 420px;
         }
       }
     }

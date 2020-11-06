@@ -34,7 +34,7 @@ class Index extends Component {
     super(...arguments);
     this.state = {
       httpData: {
-        kolMomentId: getCurrentInstance().router.params.kolMomentId || '1317005527285485569'
+        kolMomentId: getCurrentInstance().router.params.kolMomentId
       },
       kolMomentsInfo: {},
       visible: false,
@@ -52,7 +52,7 @@ class Index extends Component {
       time: null,
       beanSet: false,
       shareStatus: getCurrentInstance().router.params.type || '',
-      stopStatus:  false,
+      stopStatus: false,
     }
   }
 
@@ -135,26 +135,33 @@ class Index extends Component {
       })
     }
   }
+
   onShareAppMessage() {
-    const {kolMomentsInfo:{
-      title,
-      frontImage
-    }}  = this.state
-    return  onShareFriend({
-      title:  title,
+    const {
+      kolMomentsInfo: {
+        title,
+        frontImage
+      }
+    } = this.state
+    return onShareFriend({
+      title: title,
       img: frontImage
     })
   }
+
   onShareTimeline() {
-    const {kolMomentsInfo:{
-      title,
-      frontImage
-    }}  = this.state
+    const {
+      kolMomentsInfo: {
+        title,
+        frontImage
+      }
+    } = this.state
     onTimeline({
-      title:  title,
+      title: title,
       img: frontImage
     })
   }
+
   //用户收藏信息
   shareDetailsById() {
     // 阻止事件冒泡
@@ -271,38 +278,41 @@ class Index extends Component {
   } //领取卡豆
   errorToast(e) {
   }
+
   stopInterval(obj) {
     clearInterval(obj)
     this.setState({
       interval: null
     })
   }
+
   link_stop(fn) {
-    const { time } = this.state
-    if(time){
+    const {time} = this.state
+    if (time) {
       this.setState({
-        stopStatus:  true,
-        linkFn:  fn
-      },res =>{
+        stopStatus: true,
+        linkFn: fn
+      }, res => {
         this.stopInterval(this.state.interval)
       })
-    }
-    else {
-      fn&&fn()
+    } else {
+      fn && fn()
     }
   }
+
   canfirm() {
     this.setState({
-      stopStatus:  false,
-    },res =>{
+      stopStatus: false,
+    }, res => {
       this.initInterval()
     })
   }
+
   cancel() {
     this.setState({
-      stopStatus:  false,
-    },res  =>{
-      this.state.linkFn&&this.state.linkFn()
+      stopStatus: false,
+    }, res => {
+      this.state.linkFn && this.state.linkFn()
     })
   }
 
@@ -366,8 +376,8 @@ class Index extends Component {
         </APPShare>}
         {stopStatus &&
         <StopBean
-          canfirm={() =>this.canfirm()}
-          cancel = {() =>  this.cancel()}
+          canfirm={() => this.canfirm()}
+          cancel={() => this.cancel()}
         >
         </StopBean>
         }
@@ -385,7 +395,7 @@ class Index extends Component {
               <View className='shareImage_shopFont'>
                 <View className='shareImage_shopName font_hide'>{merchantName}</View>
                 <View
-                  className='shareImage_shopTag font_hide'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange+' | '+merchantAddress}</View>
+                  className='shareImage_shopTag font_hide'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange + ' | ' + merchantAddress}</View>
               </View>
             </View>
             <View className='shareImage_merchant'
@@ -397,16 +407,19 @@ class Index extends Component {
           {/*//商家详情*/}
           {goodsIdString &&
           <View className='shareImage_shop_couponBox'>
-            <View className='public_center image_coupon_box'>
-              <View className='image_coupon_icon'></View>
-              <View className='image_coupon_font'>看完领券</View>
-            </View>
-            <View className='image_goshop public_center'>
+            {/*<View className='public_center image_coupon_box'>*/}
+            {/*  <View className='image_coupon_icon'></View>*/}
+            {/*  <View className='image_coupon_font'>看完领券</View>*/}
+            {/*</View>*/}
+            <View className='image_goshop public_center'
+                  onClick={() =>
+                    this.link_stop(() => navigateTo(`/pages/perimeter/shopDetails/index?merchantId=${merchantIdString}&kolGoodsId=${goodsIdString}&kolMomentsId=${getCurrentInstance().router.params.kolMomentId}`))}
+            >
               <View className='image_shop_icon'></View>
-              <View className='image_shop_font'>
-                {goodsName||'--'}
-                <Text  style={{fontSize:Taro.pxTransform(20)}}>{' ¥ '}</Text>
-                <Text style={{fontSize:Taro.pxTransform(28)}}>{goodsPrice||'0'}</Text>
+              <View className='image_shop_font font_hide'>
+                {goodsName || '--'}
+                <Text style={{fontSize: Taro.pxTransform(20)}}>{' ¥ '}</Text>
+                <Text style={{fontSize: Taro.pxTransform(28)}}>{goodsPrice || '0'}</Text>
               </View>
             </View>
           </View>
@@ -430,7 +443,7 @@ class Index extends Component {
           {/*//文章时间*/}
         </View>
         <View className={('animated fadeInUp shareImages_details_box')}>
-          <View style={{display:'flex',alignItems:'center'}}>
+          <View style={{display: 'flex', alignItems: 'center'}}>
             <View className='shareImages_userProfile' style={backgroundObj(userProfile)}
                   onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`))}
             >
@@ -447,7 +460,7 @@ class Index extends Component {
               {userFollowStatus === '0' ? '关注' : '已关注'}
             </View>
           </View>
-          <View style={{display:'flex',alignItems:'center',minWidth:Taro.pxTransform(220)}}>
+          <View style={{display: 'flex', alignItems: 'center', minWidth: Taro.pxTransform(220)}}>
             <View onClick={() => this.fallStatus()}
                   className={classNames('shareImages_icon_size', userLikeStatus === '1' ? 'shareImages_zd_icon2' : 'shareImages_zd_icon1')}>
 

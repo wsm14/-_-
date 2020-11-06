@@ -6,7 +6,7 @@
 * httpPost post请求 url-请求路径 data-请求数据 fn-请求成功的执行函数
 * encrypt 对数据进行加密处理
 */
-import Taro from '@tarojs/taro'
+import Taro,{getCurrentPages} from '@tarojs/taro'
 
 import encrypt from './keys'
 
@@ -88,6 +88,10 @@ export const httpGet = (obj,fn) =>{
 }
 
 export const httpPost = (obj,fn) =>{
+  Taro.showLoading({
+    title: '加载中',
+    mask: true
+  })
   if(Taro.getStorageSync('userInfo') && Taro.getStorageSync('userInfo').mobile.length===11 && Taro.getStorageSync('userInfo').token){
     obj.data.token = Taro.getStorageSync('userInfo').token
   }
@@ -104,7 +108,8 @@ export const httpPost = (obj,fn) =>{
         Taro.hideLoading()
         const {data,statusCode} = res
         if(statusCode === 200 && res.data.success){
-          fn && fn(res)
+          const {content} = data
+          fn && fn(content,data)
         }
         else {
           if(statusCode !== 200){
