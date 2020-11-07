@@ -91,7 +91,7 @@ export const index = {
     getListKol: '/user/kolMoments/listKolMoments',//获取所有kol列表
   },
   goods: {
-    'orderDetails': '/user/order/listOrderOrderStatus'//获取我的订单
+    'orderDetails': '/user/order/listOrderOrderStatus',//获取我的订单
   }
 }
 export const share = {
@@ -118,7 +118,8 @@ export const goods = {
    payWeex: {
      getKolOrderPrepayment: '/user/order/getKolOrderPrepaymentResult',//获取支付详情
    },
-   getKolOrderDetail: '/user/order/getKolOrderDetail',//获取带货订单详情
    listSpecialGoods: '/user/specialGoods/listSpecialGoods',//获取猜你喜欢
    getOrderResult: '/user/order/getOrderResult',//支付成功时跳转页面
+   getKolOrderDetail: '/user/order/getOrderDetail',//获取带货订单详情
+   updateKol: '/user/order/updateKolOrderStatus',
 }

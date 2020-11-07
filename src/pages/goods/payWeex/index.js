@@ -65,7 +65,7 @@ class Index extends Component {
       totalFee,
       beanFee,
       payFee,
-      payTime
+      expiredTime
     }} = this.state
     return (
       <View className='pay_week'>
@@ -73,7 +73,7 @@ class Index extends Component {
           <View className='pay_title'>实付款</View>
           <View className='pay_price'><Text style={{display:'inline-block',fontSize:Taro.pxTransform(36)}}>¥</Text>{payFee}</View>
           <View className='pay_time'>支付剩余时间
-            {payTime&& <InterTime times={payTime} fn={()=> {goBack()}}></InterTime>}
+            {expiredTime&& <InterTime times={expiredTime} fn={()=> {goBack()}}></InterTime>}
             {/**/}
           </View>
         </View>

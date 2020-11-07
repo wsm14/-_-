@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from "react";
+import {View} from '@tarojs/components'
 import {AtActionSheet ,AtActionSheetItem} from 'taro-ui'
 import Taro from '@tarojs/taro'
 import {toast} from "@/common/utils";
@@ -11,23 +12,26 @@ export default (props) =>{
     }
   },[data])
   return (
-    <AtActionSheet onClose = {onClose} onCancel={onCancel} isOpened cancelText='取消' title=''>
-      {list.map((item) => {
-        return (
-          <AtActionSheetItem onClick={() => Taro.makePhoneCall({
-            phoneNumber: item,
-            fail: res => {
-              toast('拨打失败')
-            },
-            complete: res => {
-              onClose();
-            }
-          })}>
-            {item}
-          </AtActionSheetItem>
-        )
-      })}
+    <View style={{color: '#333333'}}>
+      <AtActionSheet style={{color: 'black'}} onClose = {onClose} onCancel={onCancel} isOpened cancelText='取消' title=''>
+        {list.map((item) => {
+          return (
+            <AtActionSheetItem onClick={() => Taro.makePhoneCall({
+              phoneNumber: item,
+              fail: res => {
+                toast('拨打失败')
+              },
+              complete: res => {
+                onClose();
+              }
+            })}>
+              {item}
+            </AtActionSheetItem>
+          )
+        })}
 
-    </AtActionSheet>
+      </AtActionSheet>
+    </View>
+
   )
 }

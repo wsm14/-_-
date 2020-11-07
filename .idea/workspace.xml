@@ -11,68 +11,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c250933-678c-4f5c-9059-9683dc632f42" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/css/background.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/css/color.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/css/font.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/InterTime/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/configOrder/index.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/configOrder/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/configOrder/index.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/getShopGoods/components/bottonBtn.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/getShopGoods/components/descriptionCard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/getShopGoods/components/goodsCard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/getShopGoods/components/goodsTitle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/getShopGoods/index.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/getShopGoods/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/getShopGoods/index.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/bottonBtn.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/descriptionCard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/goodsCard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/goodsTitle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/index.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/index.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/paySuccess/components/descriptionCard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/paySuccess/components/goodsTitle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/paySuccess/components/lovely.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/paySuccess/index.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/paySuccess/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/paySuccess/index.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/payWeex/index.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/payWeex/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/goods/payWeex/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/drawback.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/animate.min.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/newRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/newRequest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/css/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/authority.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/authority.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/utils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/banner/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/banner/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/css/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/background.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/css/background.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/color.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/css/color.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/goods/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/goods/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/goods/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/goods/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/publicShopStyle/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/publicShopStyle/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/publicShopStyle/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/publicShopStyle/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/stopBean/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/stopBean/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layout/Toast/Toast.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layout/Toast/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layout/Toast/loading.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layout/index/healthTakeCard/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/layout/index/healthTakeCard/index.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index/goods/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/goods/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index/goods/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/goods/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index/perimeter/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/perimeter/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/kol/shareImage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/shareImage/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/kol/shareImage/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/shareImage/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/payTelephone/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/payTelephone/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/descriptionCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/descriptionCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/goodsCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/goodsCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/goodsTitle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/goodsTitle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/goods/kolShopGoods/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/goods/payWeex/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/goods/payWeex/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/perimeter/shopDetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/perimeter/shopDetails/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/perimeter/shopDetails/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/perimeter/shopDetails/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/utils.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,6 +160,7 @@
       <workItem from="1604498424854" duration="78000" />
       <workItem from="1604540173922" duration="33432000" />
       <workItem from="1604626637163" duration="29698000" />
+      <workItem from="1604715854017" duration="16340000" />
     </task>
     <servers />
   </component>
@@ -277,10 +232,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="661" y="254" width="598" height="584" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604568267109" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1604412478715">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1604718641532">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604412478715" />
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604718641532" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1603963560999">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -615,53 +570,51 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/descriptionCard.js</url>
-          <line>61</line>
+          <line>105</line>
           <option name="timeStamp" value="119" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/goodsCard.js</url>
-          <line>24</line>
+          <line>148</line>
           <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/descriptionCard.js</url>
-          <line>72</line>
-          <option name="timeStamp" value="121" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/descriptionCard.js</url>
-          <line>53</line>
+          <line>101</line>
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/common/utils.js</url>
           <line>221</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="126" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/common/utils.js</url>
           <line>320</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="127" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/goods/kolShopGoods/index.js</url>
-          <line>29</line>
-          <properties lambdaOrdinal="-1" />
+          <line>32</line>
           <option name="timeStamp" value="128" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/pages/goods/kolShopGoods/index.js</url>
-          <line>88</line>
+          <url>file://$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/descriptionCard.js</url>
+          <line>37</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="129" />
+          <option name="timeStamp" value="132" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/pages/goods/kolShopGoods/index.js</url>
-          <line>99</line>
+          <url>file://$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/descriptionCard.js</url>
+          <line>63</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="130" />
+          <option name="timeStamp" value="133" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/goods/kolShopGoods/components/descriptionCard.js</url>
+          <line>106</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="134" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

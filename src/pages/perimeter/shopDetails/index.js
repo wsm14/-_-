@@ -230,6 +230,7 @@ class MerchantDetails extends Component{
           </View>
         </View>
         {visible &&
+
         <MakePhone
           onClose={() =>this.setState({visible: false})}
           onCancel={() =>this.setState({visible: false})}

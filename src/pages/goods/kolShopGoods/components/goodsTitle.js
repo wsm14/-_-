@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import './../index.scss'
 import {filterPayStatus} from '@/common/utils'
 export default (props) => {
-  const {data} = props
+  const {data,onOpen} = props
   const [kolData, setKolData] = useState({})
   useEffect(() => {
     if(data){
@@ -25,16 +25,37 @@ export default (props) => {
     }
      return null
   }
-  console.log(filterImage())
+
+  const filterDetails = () => {
+    if(kolData){
+      switch (kolData.status) {
+        case '0': return '请在5分钟内进行付款，超时订单将自动关闭';
+        case '1': return '到店请出示核销码';
+        case '2': return  kolData.closeReason
+        case '3': return '商家已核销，订单已完成';
+      }
+    }
+    return null
+  }
+
+
   return (
     <View className='kolGoodsTitle_top'>
-      <View className='kolGoodsTitle_status'>
-        <View className={classNames(filterImage())}></View>
-        <View className='kolGoodsTitle_font'>{filterPayStatus(kolData.status)}</View>
+      <View className='kolGoodsTitle_pad'>
+        <View className='kolGoodsTitle_status'>
+          <View className={classNames(filterImage())}></View>
+          <View className='kolGoodsTitle_font'>{filterPayStatus(kolData.status)}</View>
+        </View>
+        <View className='kolGoodsTitle_dec'>
+          {filterDetails()}
+        </View>
+        {kolData.status==='1' &&
+        <View onClick={() =>onOpen()} className='kol_noPrice color6 font20'>
+          申请退款
+        </View>
+        }
       </View>
-      <View className='kolGoodsTitle_dec'>
-        {kolData.closeReason}
-      </View>
+
     </View>
   )
 }

@@ -134,6 +134,7 @@ export default (props) => {
       payTime,
       orderSn
     } = item
+    console.log(item)
     switch (status) {
       case '0':
         return (
@@ -210,9 +211,7 @@ export default (props) => {
           const {
             status,
             payTime
-          } = item
-
-          // return(<>  <CreateTime times={payTime}></CreateTime> <br/></>);
+          } = item;
           return createShopGoods(item)
         } else if (orderType === 'scan') {
           return createCodeGoods(item)
