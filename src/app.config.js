@@ -9,7 +9,7 @@ export default {
     "pages/index/lookShare/shareImage/index", //圖文详情
     "pages/index/lookShare/shareVideo/index", //视频详情
     "pages/index/lookShare/index", //看视频图文
-    // "pages/perimeter/map/index", //地图
+
     // "pages/perimeter/beanMark/index", //周边
     "pages/auth/index", //登录
     "pages/payPrice/index", //小程序支付
@@ -89,7 +89,8 @@ subPackages:[
       "download/index",///下载,
       "step/index",//,同步步数
       "shareFriend/index",//分享好友,
-      'shareShop/index',
+      'shareShop/index',//分享家店
+      'pay_wx_lite/index',//微信支付
     ]
   },
     {
@@ -97,6 +98,7 @@ subPackages:[
     "pages": [
       "shopDetails/index", //商品详情
       "merchantDetails/index", //周边详情
+      "special/index",//特价商品
       "index", //周边首页
     ]
   },

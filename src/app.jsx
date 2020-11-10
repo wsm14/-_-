@@ -20,7 +20,6 @@ class App extends Component {
   componentDidShow () {}
 
   componentDidHide () {}
-
   componentDidCatchError () {}
   fetchCheckUpdate() {
     // 判断目前微信版本是否支持自动更新

@@ -35,7 +35,7 @@ export default (props) => {
                 <View style={imgStyle ? {
                   background: `url(${item[imgName]?item[imgName]:item}) no-repeat`,
                   backgroundSize: '100% 100%'
-                } : {background: `url(${item[imgName]?item[imgName]:item}) no-repeat top center/contain`}} key={index}
+                } : {background: `url(${item[imgName]?item[imgName]:item}) no-repeat center center/contain`}} key={index}
                       className='banner_box dakale_nullImage'>
                 </View>
               </SwiperItem>
@@ -43,17 +43,12 @@ export default (props) => {
           })}
         </Swiper> :
         <View style={style}>
-          {list.map((item, index) => {
-            return (
-              <View style={{width: '100%', height: '100%'}}>
-                <View
-                  style={imgStyle ? {background: `url(${item[imgName]||item}) no-repeat center/cover`,} : {background: `url(${item[imgName]}) no-repeat top center/contain`}}
-                  key={index}
-                  className='banner_box'>
-                </View>
-              </View>
-            )
-          })}
+          <View style={{width: '100%', height: '100%'}}>
+            <View
+              style={list.length > 0 ?(imgStyle ? {background: `url(${list[0][imgName]||list[0]}) no-repeat center/cover`,} : {background: `url(${list[0][imgName]}) no-repeat center center/contain`}):({})}
+              className='banner_box dakale_nullImage'>
+            </View>
+          </View>
         </View>
 
       }
@@ -67,7 +62,7 @@ export default (props) => {
            })}
          </View>
         }
-        {showToast &&
+        {showToast && list.length>1  &&
         <View className='banner_toast'><View className='banner_tags'>{current + '/' + data.length}</View></View>}
       </View>
         )

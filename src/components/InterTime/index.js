@@ -36,14 +36,14 @@ function getSeconds(s) {
   return result;
 }
 export default  (props) => {
-  const {times,fn} = props
+  const {times,fn,mint} = props
   let time = parseInt(new Date().getTime()/1000)-parseInt(new Date(times.replace(/-/g, '/')).getTime()/1000)
   const [interVal, setIntervals] = useState(0)
   let i = 0
   useEffect(() =>{
     let setTime = setInterval(() => {
       i++
-      setIntervals((300-time) - i)
+      setIntervals(((mint?parseInt(mint)*60:300)-time) - i)
       if((300-time) === i){
         clearInterval(setTime)
         fn && fn();
@@ -51,6 +51,6 @@ export default  (props) => {
     },1000)
   },[])
   return (<>{
-    getSeconds(interVal||0)
+     getSeconds(interVal||0)
   }</>)
 }

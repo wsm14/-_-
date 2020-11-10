@@ -14,7 +14,7 @@ import {toast,filterHttpStatus,navigateTo,redirectTo} from '@/common/utils'
 
 const resultOperate = {
   "2001" : {type: '用户身份不存在',link:'/pages/auth/index',},
-  "5005" : {type: '用户身份不存在',link:'/pages/auth/index',fn:() =>  Taro.clearStorageSync()},
+  "5005" : {type: '用户身份不存在',link:'/pages/auth/index',fn:() => {}},
 }
 
 let baseUrl = '';

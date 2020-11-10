@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import {backgroundObj,filterWeek,filterStrList} from "@/common/utils";
 
 export default (props) => {
-  const {data, fn,telephone} = props
+  const {data, fn,telephone,style} = props
   const [orderResult, setOrderResult] = useState({})
   const [current, setCurrent] = useState(0)
   const [list, setList] = useState([])
@@ -20,9 +20,7 @@ export default (props) => {
       setOrderDescs(JSON.parse(orderDesc))
     }
     if (orderDesc) {
-
       setKolGoods(JSON.parse(orderDesc).kolGoods)
-      console.log(JSON.parse(orderDesc).kolGoods)
     }
     if (orderGoodsVerifications && Array.isArray(orderGoodsVerifications)) {
       setList(orderGoodsVerifications)
@@ -46,11 +44,11 @@ export default (props) => {
             list.map((item, index) => {
               return (
                 <SwiperItem>
-                  {item.status !=='1' && <View className='code_onloader public_center'>
+                  {item.status ==='1' && <View className='code_onloader public_center'>
                     <View className='code_onloader_btn color1 font24'>券码已使用</View>
                   </View>}
 
-                  <Canvas id={'canvas' + index} className='tests' style={item.status !=='1'?{opacity:'0.1'}:{}} canvasId={'canvas' + index}></Canvas>
+                  <Canvas id={'canvas' + index} className='tests' style={item.status ==='1'?{opacity:'0.1'}:{}} canvasId={'canvas' + index}></Canvas>
                 </SwiperItem>
               )
             })}
@@ -104,7 +102,7 @@ export default (props) => {
     return false
   }
   return (
-    <View className='descriptionCard_title'>
+    <View className='descriptionCard_title' style={style?style:{}}>
       <View className='descriptionCard_box'>
         <View className='descriptionCard_merchant'>
           <View className='descriptionCard_profile dakale_nullImage'
@@ -135,7 +133,7 @@ export default (props) => {
         {filterCode() &&
         <>
           {setCode()}
-          {list.length > 0 && <View style={list[current]['status'] !== '1'?{color:'#CCCCCC',textDecoration:'line-through'}:{}} className={classNames('color1 font24 code_num')}>券码:  {list[current]['verificationCode']}</View>}
+          {list.length > 0 && <View style={list[current]['status'] === '1'?{color:'#CCCCCC',textDecoration:'line-through'}:{}} className={classNames('color1 font24 code_num')}>券码:  {list[current]['verificationCode']}</View>}
           <View className='public_center color1 font24 code_count'>{current + 1 + '/' + list.length} </View>
           <View onClick={() => fn&&fn()} className='public_center font24 color2 code_onRead'>
             <View className='onReadly_icon onReadly_iconBox'></View>

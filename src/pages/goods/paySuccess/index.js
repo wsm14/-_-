@@ -7,7 +7,7 @@ import './index.scss'
 import {toast, backgroundObj, filterActive,goBack,switchTab} from "@/common/utils";
 import Title from './components/goodsTitle'
 import ShopCard from './components/descriptionCard'
-import Lovely from './components/lovely'
+import Lovely from '@/components/lovely'
 class Index extends Component {
   constructor() {
     super(...arguments)

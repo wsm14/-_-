@@ -58,7 +58,7 @@ export default (props) => {
           </View>
         </View>
       )
-    } else if (status === '1' || status === '3') {
+    } else if (status === '1' || status === '3'|| status === '6') {
       return (
         <View className='kolGoods_card'>
           <View className='kolGoods_cardBox'>
@@ -127,10 +127,12 @@ export default (props) => {
                  <View className='color2'>创建时间</View>
                  <View className='color1'> {createTime}</View>
                </View>
+               {payTime &&
                <View className='font24 public_auto kolGoods_cardHeight'>
                  <View className='color2'>支付时间</View>
                  <View className='color1'> {payTime}</View>
                </View>
+               }
                <View className='font24 public_auto kolGoods_cardHeight'>
                  <View className='color2'>关闭时间</View>
                  <View className='color1'> {closeTime}</View>
@@ -143,7 +145,6 @@ export default (props) => {
            </View>
       )
     }
-
   }
   return null
 }

@@ -16,7 +16,9 @@ import {
   deleteFollow,
   saveFollow,
   saveFall,
-  deleteFall
+  deleteFall,
+  getLat,
+  getLnt
 } from '@/common/utils'
 import classNames from 'classnames'
 import './index.scss'
@@ -60,7 +62,6 @@ export const coupons = (_this, data, obj) => {
 
 //商品标签
 export const shopDetails = (data, obj) => {
-
   if (data) {
     const {goodsName, goodsImg, oriPrice, realPrice, merchantName, merchantLogo, lat, lnt} = data
     return (
@@ -68,7 +69,7 @@ export const shopDetails = (data, obj) => {
         <View className='shopDetails_Img dakale_nullImage' style={backgroundObj(goodsImg)}>
           <View className='shopDetails_city'>
             <View className='shopDetails_city_icon'></View>
-            <View className='shopDetails_city_font'>200m</View>
+            <View className='shopDetails_city_font'>{GetDistance(getLat, getLnt,lat,lnt,)}</View>
           </View>
           <View className='shopDetails_user'>
             <View className='user_profile dakale_profile' style={backgroundObj(merchantLogo)}>
@@ -115,15 +116,23 @@ export const shopDetails = (data, obj) => {
 }
 //商品标签
 export const billboard = (_this, data, obj) => {
-  return (
-    <View className='billboard_box'>
-      <View className='billboard_img'></View>
-      <View className='billboard_title font_hide'>抹茶法式烤面包...</View>
-    </View>
-  )
+ if(data){
+   const {
+     goodsImg,
+     goodsName
+
+   } = data
+   return (
+     <View className='billboard_box'>
+       <View style={goodsImg?{...backgroundObj(goodsImg)}:{}} className='billboard_img dakale_nullImage'></View>
+       <View className='billboard_title font_hide'>{goodsName}</View>
+     </View>
+   )
+ }
+  return  null
 }
 //达人视频图文
-export const exploreShop = (_this, data, obj) => {
+export const exploreShop = (_this, data, fn) => {
   if (data) {
     const {
       kolMomentsId,
@@ -180,7 +189,7 @@ export const exploreShop = (_this, data, obj) => {
           </View>}
           {title}
         </View>
-        {beanFlag &&
+        {beanFlag ==='1' &&
         <View className={classNames('explore_bean', watchStatus === '1' && 'getbeanColor2')}>
           <View className={classNames('explore_lookGet', watchStatus === '0' ? 'explore_beanBg1' : 'explore_beanBg2')}>
 
@@ -202,6 +211,9 @@ export const exploreShop = (_this, data, obj) => {
               onClick={(e) => {
                 e.stopPropagation();
                 let that = _this
+                if(fn){
+                  return fn()
+                }
                 const {
                   kolMomentsInfo: {userLikeStatus}, kolMomentsInfo
                 } = that.state
@@ -241,50 +253,53 @@ export const exploreShop = (_this, data, obj) => {
 }
 //店铺卡片
 export const shopCard = (_this, data, obj) => {
-  const {
-    merchantName,
-    merchantId,
-    merchantIdString,
-    merchantLogo,
-    perCapitaConsumption,
-    businessTime,
-    tag,
-    merchantAddress
-  } = data
-  return (
-    <View className='shopCard_box'>
-      <View className='shop_card_details'>
-        <View className='dakale_nullImage shop_card_left'
-              style={merchantLogo ? {...backgroundObj(merchantLogo)} : {}}></View>
-        <View className='shop_card_right'>
-          <View className='shopCard_right1'>
-            <View className='shopCard_userName font_hide'>
-              {merchantName || '--'}
+  if(data){
+    const {
+      merchantName,
+      merchantId,
+      merchantIdString,
+      merchantLogo,
+      perCapitaConsumption,
+      businessTime,
+      tag,
+      merchantAddress
+    } = data
+    return (
+      <View className='shopCard_box'>
+        <View className='shop_card_details'>
+          <View className='dakale_nullImage shop_card_left'
+                style={merchantLogo ? {...backgroundObj(merchantLogo)} : {}}></View>
+          <View className='shop_card_right'>
+            <View className='shopCard_right1'>
+              <View className='shopCard_userName font_hide'>
+                {merchantName || '--'}
+              </View>
+              <View className='shopCard_go'
+                    onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`)}>
+              </View>
             </View>
-            <View className='shopCard_go'
-                  onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`)}>
+            <View className='shopCard_right2 font_hide'>
+              {`人均￥${perCapitaConsumption || 0}元 | ${businessTime}`}
             </View>
-          </View>
-          <View className='shopCard_right2 font_hide'>
-            {`人均￥${perCapitaConsumption || 0}元 | ${businessTime}`}
-          </View>
-          <View className='shopCard_right3'>
-            {filterStrList(tag).map(item => {
-              return (
-                <View className='shopCard__right3_tags'>
-                  {item}
-                </View>
-              )
-            })}
+            <View className='shopCard_right3'>
+              {filterStrList(tag).map(item => {
+                return (
+                  <View className='shopCard__right3_tags'>
+                    {item}
+                  </View>
+                )
+              })}
 
-          </View>
-          <View className='shopCard_right4 font_hide'>
-            杭州市萧山区 | {merchantAddress}
+            </View>
+            <View className='shopCard_right4 font_hide'>
+              杭州市萧山区 | {merchantAddress}
+            </View>
           </View>
         </View>
       </View>
-    </View>
-  )
+    )
+  }
+ return  null
 }
 // GetDistance(lat,lnt,merchantLat,merchantLnt)||
 //套餐详情

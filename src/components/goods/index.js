@@ -61,10 +61,10 @@ export default (props) => {
     )
   }
   const createShopGoods = (item) => {
-    const {payFee, orderDesc, status} = item
+    const {payFee, orderDesc, status,orderSn} = item
     let merchant = orderDesc && JSON.parse(orderDesc)
     return (
-      <View className='createGood_box' key={item.payFee}>
+      <View className='createGood_box' key={item.payFee} onClick={() => navigateTo(`/pages/goods/kolShopGoods/index?orderSn=${orderSn}`)}>
         {createShopTop(item, merchant)}
         <View className='createGood_content'>
           <View className='createdGood_details_box'>
@@ -102,13 +102,15 @@ export default (props) => {
   }
   const createShopTop = (item, merchant) => {
     const {
-      orderDesc,
       status,
       payFee
     } = item
     return (
       <View className='createGood_title'
-            onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchant.merchantIdString}`)}>
+            onClick={(e) => {
+              e.stopPropagation();
+              navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchant.merchantIdString}`)
+            }}>
         <View className='createGood_title_box'>
           <View className='createGood_iconBox createGood_bg2'>
             商品
@@ -131,10 +133,12 @@ export default (props) => {
   const createBottom = (item) => {
     const {
       status,
-      payTime,
-      orderSn
+      createTime,
+      orderSn,
+      orderDesc,
+      kolMomentsIdString,
     } = item
-    console.log(item)
+    const {merchantIdString , goodsIdString} = (orderDesc && JSON.parse(orderDesc))||{}
     switch (status) {
       case '0':
         return (
@@ -142,10 +146,9 @@ export default (props) => {
             <View className='createGood_btn_style'>
               <View className='createGood_btn_left'>
                 待付款：<Text style={{color: 'rgba(51, 51, 51, 1)'}}>{<InterTime fn={() => updateStatus(item)}
-                                                                             times={payTime}></InterTime>}</Text>
+                                                                             times={createTime}></InterTime>}</Text>
               </View>
-              <View className='createGood_btn_right createGood_btn_color1'
-                    onClick={() => navigateTo(`/pages/goods/kolShopGoods/index?orderSn=${orderSn}`)}>去付款</View>
+              <View className='createGood_btn_right createGood_btn_color1'>去付款</View>
             </View>
           </View>
         )
@@ -155,8 +158,7 @@ export default (props) => {
             <View className='createGood_btn_style'>
               <View className='createGood_btn_left'>
               </View>
-              <View className='createGood_btn_right createGood_btn_color1'
-                    onClick={() => navigateTo(`/pages/goods/kolShopGoods/index?orderSn=${orderSn}`)}>去使用</View>
+              <View className='createGood_btn_right createGood_btn_color1'>去使用</View>
             </View>
           </View>
         )
@@ -164,7 +166,6 @@ export default (props) => {
         <View className='createGood_bottom'>
           <View className='createGood_btn_style'>
             <View className='createGood_btn_left'>
-              {/*待付款：<Text style={{color: 'rgba(51, 51, 51, 1)'}}>13 : 23</Text>*/}
             </View>
             <View onClick={() => navigateTo(`/pages/goods/kolShopGoods/index?orderSn=${orderSn}`)}
                   className='createGood_btn_right createGood_btn_color1'>再次购买</View>
@@ -177,8 +178,15 @@ export default (props) => {
               <View className='createGood_btn_left'>
                 {/*待付款：<Text style={{color: 'rgba(51, 51, 51, 1)'}}>13 : 23</Text>*/}
               </View>
-              <View className='createGood_btn_right createGood_btn_color1'
-                    onClick={() => navigateTo(`/pages/goods/kolShopGoods/index?orderSn=${orderSn}`)}>重新购买</View>
+              <View
+                className='createGood_btn_right createGood_btn_color1'
+                onClick={
+                  (e) =>
+                  {e.stopPropagation();
+                  navigateTo(`/pages/perimeter/shopDetails/index?kolMomentsId=${kolMomentsIdString}&merchantId=${merchantIdString}&kolGoodsId=${goodsIdString}`)}}
+              >
+                重新购买
+              </View>
             </View>
           </View>
         )
@@ -189,8 +197,7 @@ export default (props) => {
               <View className='createGood_btn_left'>
                 {/*待付款：<Text style={{color: 'rgba(51, 51, 51, 1)'}}>13 : 23</Text>*/}
               </View>
-              <View className='createGood_btn_right createGood_btn_color2'
-                    onClick={() => navigateTo(`/pages/goods/kolShopGoods/index?orderSn=${orderSn}`)}>
+              <View className='createGood_btn_right createGood_btn_color2'>
                 {/*再次购买*/}
                 取消申请
               </View>
@@ -210,7 +217,7 @@ export default (props) => {
         if (orderType === 'kolGoods') {
           const {
             status,
-            payTime
+            payTime,
           } = item;
           return createShopGoods(item)
         } else if (orderType === 'scan') {

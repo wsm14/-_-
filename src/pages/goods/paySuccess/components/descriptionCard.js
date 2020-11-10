@@ -45,11 +45,10 @@ export default (props) => {
             list.map((item, index) => {
               return (
                 <SwiperItem>
-                  {item.status !=='1' && <View className='code_onloader public_center'>
+                  {item.status ==='1' && <View className='code_onloader public_center'>
                     <View className='code_onloader_btn color1 font24'>券码已使用</View>
                   </View>}
-
-                  <Canvas id={'canvas' + index} className='tests' style={item.status !=='1'?{opacity:'0.1'}:{}} canvasId={'canvas' + index}></Canvas>
+                  <Canvas id={'canvas' + index} className='tests' style={item.status ==='1'?{opacity:'0.1'}:{}} canvasId={'canvas' + index}></Canvas>
                 </SwiperItem>
               )
             })}
@@ -126,7 +125,7 @@ export default (props) => {
           </View>
         </View>
         {setCode()}
-        {list.length > 0 && <View style={list[current]['status'] !== '1'?{color:'#CCCCCC',textDecoration:'line-through'}:{}} className={classNames('color1 font24 code_num')}>{list[current]['verificationCode']}</View>}
+        {list.length > 0 && <View style={list[current]['status'] === '1'?{color:'#CCCCCC',textDecoration:'line-through'}:{}} className={classNames('color1 font24 code_num')}>{list[current]['verificationCode']}</View>}
         <View className='public_center color1 font24 code_count'>{current + 1 + '/' + list.length} </View>
         <View onClick={() => fn&&fn()} className='public_center font24 color2 code_onRead'>
           <View className='onReadly_icon onReadly_iconBox'></View>

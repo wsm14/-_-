@@ -10,6 +10,7 @@ page {
   width: 100%;
   color: #333333;
   padding-bottom: 150px;
+  background: rgba(255, 255, 255, 1);
   .merchantDetails_shop {
     margin: 0 32px;
     padding-top: 34px;
@@ -277,7 +278,6 @@ page {
   }
   .merchant_newPrice{
     width: 686px;
-    height: 470px;
     white-space: nowrap;
     margin: 0 auto;
   }
@@ -340,6 +340,12 @@ page {
       margin-left: 40px;
       margin-top: 6px;
       background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/104.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .merchant_layer_btnIcon4{
+      margin-left: 40px;
+      margin-top: 6px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/108.png") no-repeat;
       background-size: 100% 100%;
     }
   }

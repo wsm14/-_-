@@ -196,7 +196,7 @@ class Index extends Component {
                 interval: setIntive(this.state.time, this.getBean.bind(this)),
               })
             })
-          } else if (this.state.kolMomentsInfo.watchStatus == 0 && this.state.time) {
+          } else if (this.state.kolMomentsInfo.watchStatus == 0 && (this.state.time||this.state.time===0)) {
             this.initInterval()
           }
         })
@@ -267,10 +267,12 @@ class Index extends Component {
     })
   }//设置定时器领取卡豆
   saveBean() {
-    const {kolMomentsInfo: {kolMomentId}, kolMomentsInfo} = this.state
+    const {kolMomentsInfo: {kolMomentId,userIdString}, kolMomentsInfo} = this.state
     const {shareDetails: {saveWatch}} = kol
     httpPost({
-      data: {momentId: kolMomentId},
+      data: {momentId: kolMomentId,
+        momentUserId: userIdString
+      },
       url: saveWatch
     }, res => {
       this.setState({toast: true, kolMomentsInfo: {...kolMomentsInfo, watchStatus: '1'}})
@@ -356,6 +358,7 @@ class Index extends Component {
       shareStatus,
       stopStatus
     } = this.state
+    console.log(kolMomentsInfo)
     return (
       <View className='shareImage_box'>
         {shareStatus == 'share' &&
@@ -428,9 +431,9 @@ class Index extends Component {
             {title}
           </View>
           {/*//文章名称*/}
-          {!this.kolStatus() && !topicId && topicName &&
+          {this.kolStatus() && topicId && topicName &&
           <View className='shareImage_conversation font_hide'>
-            {topicName}
+            #{topicName}
           </View>}
           {/*//文章话题*/}
           <View className='shareImage_dec'>

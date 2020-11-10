@@ -450,3 +450,9 @@ export const filterWeek = (str) => {
   }
   return `每周${string.join(' ')}`
 }
+export const getLat = () =>{
+  return Taro.getStorageSync('lat')
+}
+export const getLnt = () => {
+  return Taro.getStorageSync('lnt')
+}

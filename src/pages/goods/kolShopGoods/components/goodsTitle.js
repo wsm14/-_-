@@ -33,6 +33,7 @@ export default (props) => {
         case '1': return '到店请出示核销码';
         case '2': return  kolData.closeReason
         case '3': return '商家已核销，订单已完成';
+        case '6': return '申请退款中，请等待平台处理'
       }
     }
     return null

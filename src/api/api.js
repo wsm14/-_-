@@ -103,6 +103,9 @@ export const perimeter = {
   shopDetails: {
     getGoodsById: '/user/kolMoments/listKolMomentByGoodsId',//获取kol达人带货商品动态
     getGoodsDetail: '/user/kolGoods/getKolGoodsDetail',//kol商品详情
+  },
+  merchantDetails: {
+    getMomentByMerchantId:'/user/kolMoments/listKolMomentByMerchantId'
   }
 }
 export const goods = {
@@ -116,10 +119,10 @@ export const goods = {
      * */
    },
    payWeex: {
-     getKolOrderPrepayment: '/user/order/getKolOrderPrepaymentResult',//获取支付详情
+     getKolOrderPrepayment: '/user/order/getOrderPrepaymentResult',//获取支付详情
    },
    listSpecialGoods: '/user/specialGoods/listSpecialGoods',//获取猜你喜欢
    getOrderResult: '/user/order/getOrderResult',//支付成功时跳转页面
    getKolOrderDetail: '/user/order/getOrderDetail',//获取带货订单详情
-   updateKol: '/user/order/updateKolOrderStatus',
+   updateKol: '/user/order/updateOrderStatus',
 }

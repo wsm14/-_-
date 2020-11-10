@@ -80,12 +80,12 @@ class Index extends Component {
       },
       url: saveKolGoodsOrder
     }, res => {
-      const {orderSn ,status}  = res
+      const {orderSn ,status,orderType}  = res
       if(status === '1'){
-        return redirectTo(`/pages/goods/paySuccess/index?orderSn=${orderSn}`)
+        return redirectTo(`/pages/goods/paySuccess/index?orderSn=${orderSn}&orderType=${orderType}`)
       }
       else {
-       return  redirectTo(`/pages/goods/payWeex/index?orderSn=${orderSn}`)
+       return  redirectTo(`/pages/goods/payWeex/index?orderSn=${orderSn}&orderType=${orderType}`)
       }
     })
   }

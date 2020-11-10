@@ -35,7 +35,7 @@ class MerchantDetails extends Component{
       kolMomentsId: getCurrentInstance().router.params.kolMomentsId
     }
   }
-  componentDidMount() {
+  componentDidShow() {
     this.getDetailsById()
     this.getGoodKolById();
   }
@@ -148,7 +148,7 @@ class MerchantDetails extends Component{
 
           </View>
           <View className='shopdetails_getPrice'>
-            <View className='shopdetails_getPrice_tag'>{goodsStock?'剩余数量'+goodsStock : '已售罄'}</View>
+            <View className='shopdetails_getPrice_tag'>{goodsStock ==='0'?'剩余数量'+goodsStock : '已售罄'}</View>
           </View>
         </View>
         {/*达人推荐*/}
