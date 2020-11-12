@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {Canvas, Swiper, SwiperItem, Text, View} from "@tarojs/components";
+import {Canvas, CoverView, Swiper, SwiperItem, Text, View} from "@tarojs/components";
 import QR from 'wxmp-qrcode'
 import './../index.scss'
 import classNames from 'classnames'
@@ -30,7 +30,9 @@ export default (props) => {
   useEffect(() => {
     setTimeout(() => {
       list.forEach((item, index) => {
-        QR.draw(item.verificationUrl, `canvas${index}`)
+        if(item.status === '0'){
+          QR.draw(item.verificationUrl, `canvas${index}`)
+        }
       })
     }, 1)
   }, [list])
@@ -45,10 +47,9 @@ export default (props) => {
             list.map((item, index) => {
               return (
                 <SwiperItem>
-                  {item.status ==='1' && <View className='code_onloader public_center'>
-                    <View className='code_onloader_btn color1 font24'>券码已使用</View>
-                  </View>}
-                  <Canvas id={'canvas' + index} className='tests' style={item.status ==='1'?{opacity:'0.1'}:{}} canvasId={'canvas' + index}></Canvas>
+                  {item.status ==='1' ?
+                    <View className='code_onloader bgCode public_center'></View>:
+                    <Canvas id={'canvas' + index} className='tests' canvasId={'canvas' + index}></Canvas>}
                 </SwiperItem>
               )
             })}

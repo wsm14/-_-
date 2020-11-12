@@ -9,7 +9,7 @@ const scale = () => {
   return Taro.getSystemInfoSync().windowWidth / 375;
 }
 export default (props) => {
-  const {beanStatus, beanNum, interval, length} = props
+  const {beanStatus, beanNum, interval, length,lookStatus} = props
   const [time, setTime] = useState(null)
   const [toast, setToast] = useState(1)
   const [computedTime, setComputedTime] = useState(0)
@@ -35,7 +35,7 @@ export default (props) => {
     ctx.setStrokeStyle('#EF476F'); // 设置圆环的颜色
     ctx.setLineCap('round') // 设置圆环端点的形状
     ctx.beginPath();//开始一个新的路径
-    ctx.arc(21 * size, 21 * size, 20 * size, 0, (2 * (((length - time) * (1 / length))) * Math.PI), false);
+    ctx.arc(21 * size, 21 * size, 20 * size, 30, (2 * (((length - time) * (1 / length))) * Math.PI)+30,  false);
     ctx.stroke();//对当前路径进行描边
     ctx.draw();
   }
@@ -45,14 +45,18 @@ export default (props) => {
         {beanStatus !== '1' &&
         <Canvas id='animateCanvas' canvasId='animateCanvas' className='animateCanvas'></Canvas>
         }
-        {beanStatus === '1' &&
+        {lookStatus === '0' && beanStatus === '1' &&
         <View
           className='getBean_toast public_center animated bounceInUp'>+{parseInt(beanNum) > 999 ? 999 : beanNum}</View>}
-
+        {beanStatus === '1'&& lookStatus !== '0' &&
+        <View
+          className='getBean_toast bold public_center'>已领取</View>}
       </View>
-      <View className={classNames('canvas_tag beanLookToast', toast === 0 && 'animated fadeOut')}>
-        {beanStatus == '1' ? `成功领取${beanNum}卡豆` : `看完可捡${beanNum}卡豆`}
-      </View>
+      {beanStatus === '0' ?
+        <View className={classNames('canvas_tag beanLookToast', toast === 0 && 'animated fadeOut')}>
+           看完可捡{beanNum}卡豆
+        </View>:null}
     </View>
   )
 }
+

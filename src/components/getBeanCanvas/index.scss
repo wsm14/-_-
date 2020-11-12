@@ -1,5 +1,5 @@
 .canvas_box{
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -15,8 +15,9 @@
       position: absolute;
       left: 0px;
       right: 0px;
+      top: 10px;
       height: 33px;
-      font-size: 24px;
+      font-size: 20px;
       color: #EF476F;
     }
     .animateCanvas{

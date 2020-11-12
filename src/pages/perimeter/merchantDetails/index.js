@@ -154,7 +154,19 @@ class MerchantDetails extends Component {
   }//上拉加载
   render() {
     const {
-      userMerchant, userMerchant: {merchantCoverImg, merchantName, goodsList}, bannerList,
+      userMerchant,
+      userMerchant:
+        {merchantCoverImg,
+          merchantName,
+          goodsList,
+          tag,
+          businessHub,
+          topCategoryValue,
+          cuisine,
+          perCapitaConsumption
+        },
+      bannerList,
+      userMerchantInfo,
       userMerchantInfo: {
         businessStatus,
         businessTime,
@@ -188,15 +200,13 @@ class MerchantDetails extends Component {
             {merchantName}
           </View>
           <View className='merchant_desc'>
-            「萧山商圈·西餐 人均98元」
+            「{businessHub}·{cuisine} 人均{perCapitaConsumption}元」
           </View>
           <View className='merchant_tag'>
             <View className='merchat_tag_box'>
               人气商家
             </View>
-            <View className='merchat_tag_box'>
-              西餐TOP10
-            </View>
+
           </View>
           <ScrollView
             scrollX
@@ -309,25 +319,25 @@ class MerchantDetails extends Component {
         }
         {kolMomentsList && kolMomentsList.length > 0 &&
         <>
-        <View className='merchant_active'>
-          <View className='merchant_active_title'>
-            <View className='merchant_active_iconBox active_icon4'>
+          <View className='merchant_active'>
+            <View className='merchant_active_title'>
+              <View className='merchant_active_iconBox active_icon4'>
+
+              </View>
+              <View className='merchant_active_biaoti'>
+                探店分享
+              </View>
 
             </View>
-            <View className='merchant_active_biaoti'>
-              探店分享
+            <View className='merchant_active_dec'>
+              哒人分享 精彩推荐
             </View>
-
           </View>
-          <View className='merchant_active_dec'>
-            哒人分享 精彩推荐
-          </View>
-        </View>
-        {kolMomentsList.map((item, index) => {
-          let that = this
-          return (exploreShop(this, item))
-        })}
-          </>
+          {kolMomentsList.map((item, index) => {
+            let that = this
+            return (exploreShop(this, item))
+          })}
+        </>
         }
         <View className='merchant_layer'>
           <View className='merchant_layer_btn'>
@@ -337,13 +347,13 @@ class MerchantDetails extends Component {
             </View>
             <View className='merchant_layer_limit'></View>
             <View className='merchant_layer_btn2'>
-              <View className='merchant_layer_btnBox merchant_layer_btnIcon2'></View>
+              <View className='merchant_layer_btnBox merchant_layer_btnIcon3'></View>
               <View>到店打卡</View>
             </View>
             <View className='merchant_layer_limit'></View>
             {merchantFollowStatus === '0' ?
               <View className='merchant_layer_btn2'>
-                <View className='merchant_layer_btnBox merchant_layer_btnIcon3' onClick={() => saveFollow({
+                <View className='merchant_layer_btnBox merchant_layer_btnIcon2' onClick={() => saveFollow({
                   followType: 'merchant',
                   followUserId: userIdString,
                 }, res => {
@@ -380,9 +390,9 @@ class MerchantDetails extends Component {
         <MarkPhone onClose={() => this.setState({visible: false})} onCancel={() => this.setState({visible: false})}
                    data={filterStrList(telephone)}></MarkPhone>
         }
-        </View>
-          )
-        }
-        }
+      </View>
+    )
+  }
+}
 
-        export default MerchantDetails
+export default MerchantDetails

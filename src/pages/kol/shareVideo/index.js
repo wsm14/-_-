@@ -45,6 +45,7 @@ class Index extends Component {
       viewFlag: true,
       stopStatus: false,
       decStatus: true,
+      lookStatus: '1'
     }
   }
 
@@ -81,6 +82,7 @@ class Index extends Component {
       }
       this.setState({
         kolMomentsInfo,
+        lookStatus: kolMomentsInfo.watchStatus,
         visible: false,
         beanSet: true
       }, res => {
@@ -363,12 +365,14 @@ class Index extends Component {
         length,
         goodsName,
         goodsPrice,
-        goodsIdString
+        goodsIdString,
+        userLevelImage
       },
       time,
       shareStatus,
       viewFlag,
-      stopStatus
+      stopStatus,
+      lookStatus
     } = this.state
     return (
       <View className='shareVideo_box'>
@@ -416,9 +420,9 @@ class Index extends Component {
                     onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`))}
               >
               </View>
-              {userLevel && userLevel !== '0' && <View className='shareVideo_tipIcon'>
+             <View className='shareVideo_tipIcon' style={backgroundObj(userLevelImage)}>
 
-              </View>}
+              </View>
               <View className='shareVideo_userName font_hide'>
                 {username}
               </View>
@@ -463,7 +467,7 @@ class Index extends Component {
               >
                 <View className='shop_icon'></View>
                 <View className='shop_font font_hide'>
-                  {goodsName}
+                  <Text className='shop_video_good font_hide'>{goodsName}</Text>
                   <Text style={{fontSize:Taro.pxTransform(20)}}>{' ¥ '}</Text>
                   <Text style={{fontSize:Taro.pxTransform(28)}}>{goodsPrice}</Text>
                 </View>
@@ -517,6 +521,7 @@ class Index extends Component {
             beanNum={beanAmount}
             interval={time}
             length={length}
+            lookStatus={lookStatus}
           >
           </GetBeanCanvas>
           }
@@ -525,7 +530,8 @@ class Index extends Component {
             data={kolMomentsInfo}
             visible={() => {
               this.setState({
-                toast: false
+                toast: false,
+                lookStatus: true
               })
             }}
           >

@@ -69,10 +69,9 @@ export const filterHttpStatus = (value) => {
 //http错误信息
 export const goBack = function (fn) {
   Taro.navigateBack({
+    delta: 1, // 返回上一级页面
     success: () => {
-      if (fn) {
-        this.Toast(fn)
-      }
+      fn && fn();
     }
   })
 }
@@ -131,12 +130,23 @@ export const filterTime = function (time) {
 export const setPeople = function (num) {
   if (typeof num == "string") {
     if (num.length > 4) {
-      return (parseInt(num) / 10000).toString().split('.')[0] + '万'
+      let str = (parseInt(num) / 10000).toString().split('.')
+      if (str.length > 1) {
+        return str[0] + '.' + str[1][0] + '万'
+      } else {
+        return str[0]+'万'
+      }
+
     }
     return num
   } else {
     if (num >= 10000) {
-      return (num / 10000).toString().split('.')[0] + '万'
+      let str =  (num / 10000).toString().split('.')
+      if (str.length > 1) {
+        return str[0] + '.' + str[1][0] + '万'
+      } else {
+        return str[0]+'万'
+      }
     }
     return num
   }
@@ -352,15 +362,21 @@ export const filterSetting = (str) => {
 }
 export const filterActive = (type) => {
   let list = type.map((item, index) => {
-    if (item === '1') {
+    if(item === '0' && index === 0){
       if (index === 0) {
         return '免预约'
+      }
+    }
+    else if (item === '1') {
+      if (index === 0) {
+        return null
       } else if (index === 1) {
         return '随时退'
       } else if (index === 2) {
         return '过期退'
       }
-    } else return null
+    }
+    else return null
   }).filter(item => {
     return item !== null
   })
@@ -431,26 +447,26 @@ export const filterWeek = (str) => {
     console.log(string)
     string = string.map(item => {
       if (item == '1') {
-        console.log(1)
         return item = '一'
       } else if (item == '2') {
-        return item ='二'
+        return item = '二'
       } else if (item == '3') {
-        return item ='三'
+        return item = '三'
       } else if (item == '4') {
-        return item ='四'
+        return item = '四'
       } else if (item == '5') {
-        return item ='五'
+        return item = '五'
       } else if (item == '6') {
-        return item ='六'
+        return item = '六'
       } else if (item == '7') {
-        return item ='日'
+        return item = '日'
       }
     })
+    return `每周${string.join('、')}`
   }
-  return `每周${string.join(' ')}`
+ return null
 }
-export const getLat = () =>{
+export const getLat = () => {
   return Taro.getStorageSync('lat')
 }
 export const getLnt = () => {

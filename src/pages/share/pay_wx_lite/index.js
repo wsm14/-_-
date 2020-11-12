@@ -20,6 +20,7 @@ class Index extends Component {
         type: 'price',
         value: '0',
       },
+      text:''
     }
   }
   getOrderResult() {
@@ -54,6 +55,7 @@ class Index extends Component {
             if(payRes.result_status == 'succeeded'){
                 const {id} = payRes
                  that.setState({
+                   text:JSON.stringify(payRes),
                    payStatus: {
                      type: 'price',
                      value: '1',
@@ -86,10 +88,12 @@ class Index extends Component {
       payFee,
       createTime,
       expiredTime},
-      payStatus
+      payStatus,
+      text
     } = this.state
     return (
       <View className='pay_wx_lite'>
+        {text}
         <View className='pay_wx_lite_price'>
           <View className='pay_title'>实付款</View>
           <View className='pay_price'><Text style={{display:'inline-block',fontSize:Taro.pxTransform(36)}}>¥</Text>{payFee}</View>

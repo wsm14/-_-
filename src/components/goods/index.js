@@ -138,7 +138,7 @@ export default (props) => {
       orderDesc,
       kolMomentsIdString,
     } = item
-    const {merchantIdString , goodsIdString} = (orderDesc && JSON.parse(orderDesc))||{}
+    const {merchantIdString ,kolGoods:{goodsIdString}} = (orderDesc && JSON.parse(orderDesc))||{}
     switch (status) {
       case '0':
         return (

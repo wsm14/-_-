@@ -96,6 +96,7 @@ subPackages:[
     {
     "root": "pages/perimeter/",
     "pages": [
+      'favourableDetails/index',//砍价详情
       "shopDetails/index", //商品详情
       "merchantDetails/index", //周边详情
       "special/index",//特价商品
@@ -107,6 +108,7 @@ subPackages:[
     "pages": [
       "payWeex/index", //kol支付
       "configOrder/index", //kol下单
+      'favourOrder/index',//特价下单
       'kolShopGoods/index',
       'getShopGoods/index',
       'paySuccess/index',

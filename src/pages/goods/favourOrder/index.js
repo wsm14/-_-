@@ -16,16 +16,16 @@ class Index extends Component {
       },
       merchantId: getCurrentInstance().router.params.merchantId,
       useBeanStatus: '0',
-      kolGoodsDTO: {
-        goodsId: getCurrentInstance().router.params.kolGoodsId,
+      specialGoodsDTO: {
+        goodsId: getCurrentInstance().router.params.specialGoodsId,
         goodsCount: 1
       },
-      kolGoodsInfo: {},
+      specialGoodsInfo: {},
       visible: false
     }
   }
   componentWillUnmount() {
-    if(!getCurrentInstance().router.params.merchantId||!getCurrentInstance().router.params.kolGoodsId){
+    if(!getCurrentInstance().router.params.merchantId||!getCurrentInstance().router.params.specialGoodsId){
         goBack(() => toast('参数缺失'))
     }
   }
@@ -35,19 +35,19 @@ class Index extends Component {
   }
 
   computedCount(type) {
-    const {kolGoodsDTO, kolGoodsDTO: {goodsCount}} = this.state
+    const {specialGoodsDTO, specialGoodsDTO: {goodsCount}} = this.state
     if (type === 'add') {
       this.setState({
-        kolGoodsDTO: {
-          ...kolGoodsDTO,
+        specialGoodsDTO: {
+          ...specialGoodsDTO,
           goodsCount: goodsCount + 1
         }
       })
     } else {
       if (goodsCount > 1) {
         this.setState({
-          kolGoodsDTO: {
-            ...kolGoodsDTO,
+          specialGoodsDTO: {
+            ...specialGoodsDTO,
             goodsCount: goodsCount - 1
           }
         })
@@ -57,29 +57,29 @@ class Index extends Component {
 
   getKolGoodsOrder() {
     const {httpData} = this.state
-    const {configOrder: {getKolGoodsOrderPrice}} = goods
+    const {favourOrder: {getSpecialGoods}} = goods
     httpGet({
       data: httpData || {},
-      url: getKolGoodsOrderPrice
+      url: getSpecialGoods
     }, res => {
-      const {kolGoodsInfo} = res
+      const {specialGoodsInfo} = res
       this.setState({
-        kolGoodsInfo
+        specialGoodsInfo
       })
     })
   }
 
   saveKolGoodsOrder() {
-    const {merchantId, useBeanStatus, kolGoodsDTO} = this.state
-    const {configOrder: {saveKolGoodsOrder}} = goods
+    const {merchantId, useBeanStatus, specialGoodsDTO} = this.state
+    const {favourOrder: {saveSpecialGoods}} = goods
     httpPost({
       data: {
         merchantId: merchantId,
         useBeanStatus: useBeanStatus,
         kolMomentsId:getCurrentInstance().router.params.kolMomentsId,
-        kolGoodsDTO
+        specialGoodsDTO
       },
-      url: saveKolGoodsOrder
+      url: saveSpecialGoods
     }, res => {
       const {orderSn ,status,orderType}  = res
       if(status === '1'){
@@ -92,7 +92,7 @@ class Index extends Component {
   }
 
   useBean() {
-    const {kolGoodsInfo: {userBean}, useBeanStatus} = this.state
+    const {specialGoodsInfo: {userBean}, useBeanStatus} = this.state
     if (userBean == '0') {
       return toast('卡豆为0')
     } else {
@@ -117,14 +117,14 @@ class Index extends Component {
 
   render() {
     const {
-      kolGoodsInfo,
+      specialGoodsInfo,
       visible,
-      kolGoodsInfo: {
+      specialGoodsInfo: {
         merchantLogo,
         merchantName,
         goodsImg,
         goodsName,
-        kolPrice,
+        realPrice,
         needOrder,
         allowExpireRefund,
         allowRefund,
@@ -136,13 +136,13 @@ class Index extends Component {
         telephone,
         useWeek
       },
-      kolGoodsDTO: {
+      specialGoodsDTO: {
         goodsCount
       },
       useBeanStatus
     } = this.state
       return (
-        <View className='order_box'>
+        <View className='favOrder_box'>
           <View className='order_details_box'>
             <View className='order_details_merchant'>
               <View className='order_merchant_details'
@@ -174,7 +174,7 @@ class Index extends Component {
 
                   <View className='order_toast'>哒卡乐专享价</View>
                   <View className='order_price'>
-                    <Text style={{color: 'rgba(51, 51, 51, 1)'}}>¥</Text>{kolPrice}
+                    <Text style={{color: 'rgba(51, 51, 51, 1)'}}>¥</Text>{realPrice}
                   </View>
                 </View>
                 <View className='order_shopDetails_price'>
@@ -224,15 +224,15 @@ class Index extends Component {
                 ¥
                 <Text style={{fontSize: Taro.pxTransform(32), fontWeight: 'bold'}}>
                   {useBeanStatus === '1' ?
-                    ((Number(kolPrice) * goodsCount)-(userBean/100))>0?((Number(kolPrice) * goodsCount)-(userBean/100)):0
+                    ((Number(realPrice) * goodsCount)-(userBean/100))>0?((Number(realPrice) * goodsCount)-(userBean/100)):0
                       :
-                    Number(kolPrice) * goodsCount
+                    Number(realPrice) * goodsCount
                   }
                 </Text>
               </Text>
             </View>
             <View className='order_beanRmb'>
-              共抵扣：¥{useBeanStatus === '1' ? this.computedPrice((Number(kolPrice) * goodsCount),userBean) : '0'}
+              共抵扣：¥{useBeanStatus === '1' ? this.computedPrice((Number(realPrice) * goodsCount),userBean) : '0'}
               <Text className='order_computed'>
                 共{goodsCount}件
               </Text>

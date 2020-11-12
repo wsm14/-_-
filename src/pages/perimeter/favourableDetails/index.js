@@ -21,19 +21,18 @@ class MerchantDetails extends Component{
     super(...arguments)
     this.state ={
       httpData: {
-        kolGoodsId: getCurrentInstance().router.params.kolGoodsId||'',
+        specialGoodsId: getCurrentInstance().router.params.specialGoodsId||'',
         merchantId: getCurrentInstance().router.params.merchantId||''
       },
       httpDataById: {
-        goodsId: getCurrentInstance().router.params.kolGoodsId||'',
+        goodsId: getCurrentInstance().router.params.specialGoodsId||'',
         merchantId: getCurrentInstance().router.params.merchantId||'',
       },
       lnt: Taro.getStorageSync('lnt'),
       lat: Taro.getStorageSync('lat'),
-      kolGoodsInfo: {},//商品详情
+      specialGoodsInfo: {},//商品详情
       visible: false,
       kolMomentsInfo: {},
-      kolMomentsId: getCurrentInstance().router.params.kolMomentsId
     }
   }
   componentDidShow() {
@@ -48,21 +47,23 @@ class MerchantDetails extends Component{
       data: httpDataById
     },res => {
        const {kolMomentsInfo} = res
+      console.log(res)
        this.setState({
          kolMomentsInfo
       })
     })
   }
   getDetailsById() {
-    const {shopDetails:{getGoodsDetail}} = perimeter
+    const {getSpecialGoodsDetail} = perimeter
     const {httpData} = this.state
     httpGet({
-      url: getGoodsDetail,
+      url: getSpecialGoodsDetail,
       data: httpData
     },res => {
-      const {kolGoodsInfo} = res
+      console.log(res)
+      const {specialGoodsInfo} = res
       this.setState({
-        kolGoodsInfo
+        specialGoodsInfo
       })
     })
   }
@@ -70,10 +71,10 @@ class MerchantDetails extends Component{
     // 生命周期函数--监听页面初次渲染完成
   }
   render() {
-    const {kolGoodsInfo:{
-      goodsImg,
+
+    const {specialGoodsInfo:{
       oriPrice,
-      kolPrice,
+      realPrice,
       activityEndTime,
       goodsName,
       allowExpireRefund,
@@ -86,21 +87,19 @@ class MerchantDetails extends Component{
       useTime,
       goodsDesc,
       telephone,
-      likeAmount,
       packageGoods,
       goodsIdString,
       merchantIdString,
       allImgs,
       goodsDescImg
     },
-      kolGoodsInfo,
+      specialGoodsInfo,
       kolMomentsInfo,
       visible,
-      kolMomentsId
     } =this.state
-    if(Object.keys(kolGoodsInfo).length> 0){
+    if(Object.keys(specialGoodsInfo).length> 0){
       return(
-        <View className='page_shopBox'>
+        <View className='favourable_Details'>
           <View className='shopDetails_banner dakale_nullImage'>
             <Banner
               autoplay={filterStrList(allImgs||[]).length>1?true:false}
@@ -114,13 +113,13 @@ class MerchantDetails extends Component{
             <View className='shopdetails_priceBox'>
               <View className='shopdetails_top public_auto'>
                 <View className='shopdetails_setprice'>
-                  <Text className='shopdetails_bigFont'>¥</Text>{kolPrice || '--'}
+                  <Text className='shopdetails_bigFont'>¥</Text>{realPrice || '--'}
                   <Text className='shopdetails_lineFont'>¥ {oriPrice || '--'}</Text>
                 </View>
                 <View className='shopdetails_priceIcon'>哒卡乐专享价</View>
               </View>
               <View className='shopdetails_bottom public_auto'>
-                <View className='shopdetails_setbean'>({Number(kolPrice)*100}卡豆）</View>
+                <View className='shopdetails_setbean'>({Number(realPrice)*100}卡豆）</View>
                 <View className='shopdetails_time'>活动截止日期：{activityEndTime||'--'}</View>
               </View>
             </View>
@@ -159,7 +158,7 @@ class MerchantDetails extends Component{
             <View className ='shopdetails_shop_merchantDetails'>
               使用商家
             </View>
-            {shopCard(this,kolGoodsInfo)}
+            {shopCard(this,specialGoodsInfo)}
 
             {packageGoods &&shopGoodsDetails(this,packageGoods)}
             {goodsDesc &&
@@ -179,12 +178,15 @@ class MerchantDetails extends Component{
                 )
               })}
             </View>
-            <View className ='shopdetails_shop_merchantDetails'>
-              哒人推荐
-            </View>
-            <View style={{marginTop:Taro.pxTransform(24)}}>
-              {exploreShop(this,kolMomentsInfo)}
-            </View>
+            {Object.keys(kolMomentsInfo).length>0 &&
+            <>
+              <View className ='shopdetails_shop_merchantDetails'>
+                哒人推荐
+              </View>
+              <View style={{marginTop:Taro.pxTransform(24)}}>
+                {exploreShop(this,kolMomentsInfo)}
+              </View>
+            </>}
           </View>
           {/*使用方法*/}
           <View className='shopdetails_shop_player'>
@@ -237,7 +239,7 @@ class MerchantDetails extends Component{
             </View>
             <View
               className='shopdetails_shop_goshop'
-              onClick={() => navigateTo(`/pages/goods/configOrder/index?kolGoodsId=${goodsIdString}&merchantId=${merchantIdString}&kolMomentsId=${kolMomentsId}`)}>
+              onClick={() => navigateTo(`/pages/goods/favourOrder/index?specialGoodsId=${goodsIdString}&merchantId=${merchantIdString}`)}>
               立即购买
             </View>
           </View>

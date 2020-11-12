@@ -1,0 +1,250 @@
+.permerter_favourable {
+  width: 686px;
+  height: 540px;
+  border-radius: 20px;
+  margin: 24px 32px 0;
+  background: #FFFFFF;
+  line-height: 1;
+  position: relative;
+
+  .permerter_favourable_swiper {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+  }
+
+  .permerter_favourable_child {
+    @extend .permerter_favourable_swiper
+  }
+
+  .permerter_favourable_details {
+    position: absolute;
+    z-index: 1001;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 30px;
+
+    .permerter_favourable_title {
+      display: flex;
+      height: 40px;
+      align-items: center;
+    }
+
+    .permerter_favourable_icon {
+      margin-left: 8px;
+      width: 36px;
+      height: 36px;
+    }
+
+    .permerter_favourable_dec {
+      margin-top: 12px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .permerter_favourable_lunbo {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 320px;
+      top: 152px;
+
+      .permerter_favourable_lunboText {
+        height: 320px;
+
+        .le-img {
+          transform: scale(0.8);
+          transition: all 0.3s ease;
+          border-radius: 8px;
+        }
+
+        .le-active {
+          transform: scale(1);
+          transition: all 0.3s ease;
+        }
+
+        .permerter_favourable_lunboImg {
+          width: 490px;
+          background: #FFFFFF;
+          border-radius: 8px;
+          height: 283px;
+          margin: 0 auto;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          .permerter_favourable_btn {
+            position: absolute;
+            width: 180px;
+            height: 60px;
+            bottom: -30px;
+            left: 155px;
+          }
+        }
+
+        .permerter_favourable_goods {
+          display: flex;
+          height: 190px;
+          position: relative;
+          margin-top: 32px;
+          .permerter_favourable_left {
+            width: 190px;
+            height: 190px;
+            border-radius: 8px;
+            position: relative;
+
+            .permerter_favourable_top {
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 52px;
+              padding-right: 13px;
+              background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+              border-radius: 8px 8px 0px 0px;
+              display: flex;
+              justify-content: flex-end;
+              align-items: center;
+
+              .permerter_accress_icon {
+                background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon10.png") no-repeat;
+                background-size: 100% 100%;
+                width: 28px;
+                height: 28px;
+                margin-right: 8px;
+              }
+            }
+
+            .permerter_favourable_bottom {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              height: 52px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              .permerter_favourable_userProfile {
+                width: 30px;
+                height: 30px;
+                margin-right: 11px;
+              }
+
+              .permerter_favourable_name {
+                width: 120px;
+                height: 24px;
+                //line-height: 24px;
+              }
+            }
+          }
+
+          .permerter_favourable_right {
+            margin-left: 24px;
+            width: 210px;
+            height: 190px;
+
+            .permerter_fav_title {
+              padding-top: 8px;
+              width: 180px;
+            }
+
+            .permerter_fav_tag {
+              display: flex;
+              align-items: center;
+              margin-top: 8px;
+              height: 28px;
+
+              .permerter_fav_box {
+                height: 28px;
+                line-height: 28px;
+                padding: 0 4px;
+                margin-right: 8px;
+                background: #F5F5F5;
+                box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.05);
+                border-radius: 4px;
+                font-size: 20px;
+                font-weight: 400;
+                color: #999999;
+                text-shadow: 0px 2px 24px rgba(0, 0, 0, 0.05);
+              }
+
+              .permerter_fav_box:last-child {
+                margin-right: 0;
+              }
+            }
+
+            .permerter_fav_set {
+              margin-top: 16px;
+              height: 20px;
+            }
+
+            .permerter_fav_price {
+              height: 32px;
+              margin-top: 8px;
+              display: flex;
+              white-space: nowrap;
+              justify-content: space-between;
+
+              .permerter_fav_left {
+                height: 32px;
+                font-size: 32px;
+                font-family: PingFangSC-Medium, PingFang SC;
+                font-weight: 600;
+                color: #EF476F;
+                line-height: 32px;
+              }
+
+              .permerter_fav_right {
+                height: 24px;
+                font-size: 24px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                font-weight: 400;
+                color: #CCCCCC;
+                position: relative;
+                line-height: 32px;
+                text-decoration: line-through;
+              }
+            }
+
+            .permerter_fav_bean {
+              margin-top: 4px;
+              line-height: 24px;
+              height: 24px;
+            }
+          }
+        }
+
+      }
+    }
+
+  }
+
+  .permerter_near {
+    position: absolute;
+    height: 6px;
+    bottom: 31px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+
+    .permerter_near_linerTrue {
+      width: 30px;
+      height: 6px;
+      background: #FFFFFF;
+      border-radius: 6px;
+      margin-right: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .permerter_near_false {
+      width: 20px;
+      height: 6px;
+      background: #FFFFFF;
+      border-radius: 6px;
+      margin-right: 8px;
+      transition: all 0.3s ease;
+    }
+  }
+}

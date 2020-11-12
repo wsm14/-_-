@@ -25,6 +25,7 @@ export default (props) => {
         <Swiper
           style={style}
           circular
+          autoplay
           onChange={(e) => {
             setCurrent(e.detail.current + 1)
           }}

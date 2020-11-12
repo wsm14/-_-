@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import {Text, View} from "@tarojs/components";
 import './../index.scss'
 import classNames from 'classnames'
+import Taro from "@tarojs/taro";
+import {toast} from "@/common/utils";
 
 export default (props) => {
   const {data} = props
@@ -19,7 +21,17 @@ export default (props) => {
   useEffect(() => {
     setKolData(data)
   }, [data])
-
+  const setClipboard =(str) => {
+    Taro.setClipboardData({
+      data: str,
+      success: function (res) {
+       toast('已复制')
+      },
+      fail: function (res) {
+        toast('复制失败')
+      }
+    })
+  }
   if (kolData) {
     const {status, createTime, paySn, payType, payTime, orderSn, verificationTime,closeTime,closeReason} = kolData
     console.log(status)
@@ -30,8 +42,8 @@ export default (props) => {
             <View className='font32 color1 bold'>订单信息</View>
             <View className='font24 public_auto kolGoods_cardHeight'>
               <View className='color2'>订单号码</View>
-              <View className='font24 public_center'>
-                <Text className='color1'>{paySn}</Text>
+              <View className='font24 public_center' onClick={() =>setClipboard(orderSn)}>
+                <Text className='color1'>{orderSn}</Text>
                 <Text className='kolGoods_cardliner'></Text>
                 <Text className='color4'>复制</Text>
               </View>
@@ -65,7 +77,7 @@ export default (props) => {
             <View className='font32 color1 bold'>订单信息</View>
             <View className='font24 public_auto kolGoods_cardHeight'>
               <View className='color2'>订单号码</View>
-              <View className='font24 public_center'>
+              <View className='font24 public_center' onClick={() =>setClipboard(orderSn)}>
                 <Text className='color1'>{orderSn}</Text>
                 <Text className='kolGoods_cardliner'></Text>
                 <Text className='color4'>复制</Text>
@@ -105,7 +117,7 @@ export default (props) => {
                <View className='font32 color1 bold'>订单信息</View>
                <View className='font24 public_auto kolGoods_cardHeight'>
                  <View className='color2'>订单号码</View>
-                 <View className='font24 public_center'>
+                 <View className='font24 public_center' onClick={() =>setClipboard(orderSn)}>
                    <Text className='color1'>{orderSn}</Text>
                    <Text className='kolGoods_cardliner'></Text>
                    <Text className='color4'>复制</Text>

@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react'
-import {Button, Canvas, Swiper, SwiperItem, Text, View} from "@tarojs/components";
+import {Button, Canvas, CoverImage, CoverView, Swiper, SwiperItem, Text, View} from "@tarojs/components";
 import QR from 'wxmp-qrcode'
 import './../index.scss'
 import classNames from 'classnames'
 
-import {backgroundObj,filterWeek,filterStrList} from "@/common/utils";
+import {backgroundObj,filterWeek,filterStrList,navigateTo} from "@/common/utils";
 
 export default (props) => {
   const {data, fn,telephone,style} = props
@@ -29,7 +29,9 @@ export default (props) => {
   useEffect(() => {
     setTimeout(() => {
       list.forEach((item, index) => {
-        QR.draw(item.verificationUrl, `canvas${index}`)
+        if(item.status === '0'){
+          QR.draw(item.verificationUrl, `canvas${index}`)
+        }
       })
     }, 1)
   }, [list])
@@ -44,16 +46,15 @@ export default (props) => {
             list.map((item, index) => {
               return (
                 <SwiperItem>
-                  {item.status ==='1' && <View className='code_onloader public_center'>
-                    <View className='code_onloader_btn color1 font24'>券码已使用</View>
-                  </View>}
-
-                  <Canvas id={'canvas' + index} className='tests' style={item.status ==='1'?{opacity:'0.1'}:{}} canvasId={'canvas' + index}></Canvas>
+                  {item.status ==='1' ?
+                  <View className='code_onloader bgCode public_center'>
+                  </View>:
+                    <Canvas id={'canvas' + index} className='tests' canvasId={'canvas' + index}></Canvas>
+                  }
                 </SwiperItem>
               )
             })}
         </Swiper>
-
         <View onClick={() => onChangeLeft()} className='code_left codeLeft_icon codePosition'></View>
         <View onClick={() => onChangeRight()} className='code_right codeLeft_right codePosition'></View>
       </View>
@@ -104,7 +105,7 @@ export default (props) => {
   return (
     <View className='descriptionCard_title' style={style?style:{}}>
       <View className='descriptionCard_box'>
-        <View className='descriptionCard_merchant'>
+        <View onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${orderDescs.merchantIdString}`)} className='descriptionCard_merchant'>
           <View className='descriptionCard_profile dakale_nullImage'
                 style={backgroundObj(orderDescs.merchantImg)}></View>
           <View className='descriptionCard_merchantTitle font_hide'>{orderDescs.merchantName}</View>
@@ -148,9 +149,7 @@ export default (props) => {
             </View>
             <View onClick={() => telephone()} className='kolgoods_go_right public_center'>
               <View className='kolgoods_go_rightBox public_center'>
-                <View className='kolgoods_goIcon_box kol_telephone'>
-
-                </View>
+                <View className='kolgoods_goIcon_box kol_telephone'></View>
                 联系商家
               </View>
             </View>

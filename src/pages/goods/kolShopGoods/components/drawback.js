@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import {View} from "@tarojs/components";
+import {CoverImage, CoverView} from "@tarojs/components";
 import classNames from 'classnames'
 export default (props) => {
   const {close,cancel} = props
@@ -10,24 +10,24 @@ export default (props) => {
     e.stopPropagation()
   }
    return (
-     <View className='public_fixed animated bounceInUp' onClick={() => close()}  onTouchMove={handleTouchMove}>
-       <View className='draw_box' onClick={(e)=> e.stopPropagation()}>
-         <View className='draw_top public_auto'>
-           <View className='font28 color2' onClick={() =>close()}>取消</View>
-           <View className='font32 color1 bold'>选择退款原因</View>
-           <View className='font28 color4' onClick={() => cancel(list[str])}>确定</View>
-         </View>
-         <View className='draw_center'>
+     <CoverView className='public_fixed animated bounceInUp' onClick={() => close()}  onTouchMove={handleTouchMove}>
+       <CoverView className='draw_box' onClick={(e)=> e.stopPropagation()}>
+         <CoverView className='draw_top public_auto'>
+           <CoverView className='font28 color2' onClick={() =>close()}>取消</CoverView>
+           <CoverView className='font32 color1 bold'>选择退款原因</CoverView>
+           <CoverView className='font28 color4' onClick={() => cancel(list[str])}>确定</CoverView>
+         </CoverView>
+         <CoverView className='draw_center'>
            {list.map((item,index) => {
              return (
-               <View className='draw_select public_auto' onClick={() => setStr(index)}>
-                 <View className='color8 font28'>{item}</View>
-                 <View className={classNames('draw_selectIcon',str === index?'kol_drawTrue' : 'kol_drawFalse')}></View>
-               </View>
+               <CoverView className='draw_select public_auto' onClick={() => setStr(index)}>
+                 <CoverView className='color8 font28'>{item}</CoverView>
+                 <CoverImage className='draw_selectIcon' src={str === index?'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/drawTrue.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/drawFlase.png'}></CoverImage>
+               </CoverView>
              )
            })}
-         </View>
-       </View>
-     </View>
+         </CoverView>
+       </CoverView>
+     </CoverView>
    )
 }

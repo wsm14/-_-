@@ -69,7 +69,7 @@ export const shopDetails = (data, obj) => {
         <View className='shopDetails_Img dakale_nullImage' style={backgroundObj(goodsImg)}>
           <View className='shopDetails_city'>
             <View className='shopDetails_city_icon'></View>
-            <View className='shopDetails_city_font'>{GetDistance(getLat, getLnt,lat,lnt,)}</View>
+            <View className='shopDetails_city_font'>{GetDistance(getLat, getLnt, lat, lnt,)}</View>
           </View>
           <View className='shopDetails_user'>
             <View className='user_profile dakale_profile' style={backgroundObj(merchantLogo)}>
@@ -109,27 +109,26 @@ export const shopDetails = (data, obj) => {
         </View>
       </View>
     )
-  }
-  else return null
+  } else return null
 
 
 }
 //商品标签
 export const billboard = (_this, data, obj) => {
- if(data){
-   const {
-     goodsImg,
-     goodsName
+  if (data) {
+    const {
+      goodsImg,
+      goodsName
 
-   } = data
-   return (
-     <View className='billboard_box'>
-       <View style={goodsImg?{...backgroundObj(goodsImg)}:{}} className='billboard_img dakale_nullImage'></View>
-       <View className='billboard_title font_hide'>{goodsName}</View>
-     </View>
-   )
- }
-  return  null
+    } = data
+    return (
+      <View className='billboard_box'>
+        <View style={goodsImg ? {...backgroundObj(goodsImg)} : {}} className='billboard_img dakale_nullImage'></View>
+        <View className='billboard_title font_hide'>{goodsName}</View>
+      </View>
+    )
+  }
+  return null
 }
 //达人视频图文
 export const exploreShop = (_this, data, fn) => {
@@ -157,6 +156,7 @@ export const exploreShop = (_this, data, fn) => {
       userLikeStatus,
       beanFlag
     } = data
+    console.log(data)
     return (
       <View className='explore_box'>
         <View className='explore_img dakale_nullImage' style={{...backgroundObj(frontImage)}}
@@ -189,7 +189,7 @@ export const exploreShop = (_this, data, fn) => {
           </View>}
           {title}
         </View>
-        {beanFlag ==='1' &&
+        {beanFlag === '1' &&
         <View className={classNames('explore_bean', watchStatus === '1' && 'getbeanColor2')}>
           <View className={classNames('explore_lookGet', watchStatus === '0' ? 'explore_beanBg1' : 'explore_beanBg2')}>
 
@@ -197,13 +197,9 @@ export const exploreShop = (_this, data, fn) => {
           {watchStatus === '1' ? `已捡${beanAmount}卡豆` : `观看可捡${beanAmount}卡豆`}
         </View>}
         <View className='explore_user'>
-          <View className='explore_user_left'>
+          <View className='explore_user_left' onClick={() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`)}>
             <View className='explore_user_profile' style={{...backgroundObj(userProfile)}}></View>
             <View className='explore_user_name font_hide'>{username}</View>
-            {/*  <View*/}
-            {/*    className={classNames('explore_user_fallBox', userLikeStatus === '0' ? 'explore_user_color1' : 'explore_user_color2')}>*/}
-            {/*    {userLikeStatus === '0' ? '未关注' : '已关注'}*/}
-            {/*  </View>*/}
           </View>
           <View className='explore_user_right'>
             <View
@@ -211,7 +207,7 @@ export const exploreShop = (_this, data, fn) => {
               onClick={(e) => {
                 e.stopPropagation();
                 let that = _this
-                if(fn){
+                if (fn) {
                   return fn()
                 }
                 const {
@@ -253,7 +249,7 @@ export const exploreShop = (_this, data, fn) => {
 }
 //店铺卡片
 export const shopCard = (_this, data, obj) => {
-  if(data){
+  if (data) {
     const {
       merchantName,
       merchantId,
@@ -262,13 +258,19 @@ export const shopCard = (_this, data, obj) => {
       perCapitaConsumption,
       businessTime,
       tag,
-      merchantAddress
+      merchantAddress,
+      lat,lnt
     } = data
     return (
       <View className='shopCard_box'>
         <View className='shop_card_details'>
           <View className='dakale_nullImage shop_card_left'
-                style={merchantLogo ? {...backgroundObj(merchantLogo)} : {}}></View>
+                style={merchantLogo ? {...backgroundObj(merchantLogo)} : {}}>
+
+            <View className='merchant_mit  public_center font28 color6'>
+              {GetDistance(getLat(), getLnt(),lat,lnt)}
+            </View>
+          </View>
           <View className='shop_card_right'>
             <View className='shopCard_right1'>
               <View className='shopCard_userName font_hide'>
@@ -299,9 +301,9 @@ export const shopCard = (_this, data, obj) => {
       </View>
     )
   }
- return  null
+  return null
 }
-// GetDistance(lat,lnt,merchantLat,merchantLnt)||
+
 //套餐详情
 export const shopGoodsDetails = (_this, data, obj) => {
   const list = JSON.parse(data) || []
@@ -317,8 +319,10 @@ export const shopGoodsDetails = (_this, data, obj) => {
           } = item
           return (
             <View className='goods_box_center'>
-              <View className='goods_box_font1'>{goodsName} <Text
-                className='goods_box_font3'>({goodsNum}份)</Text></View>
+              <View className='goods_box_font1 font_hide'>{goodsName}
+              <Text
+                className='goods_box_font3'>({goodsNum}份)</Text>
+              </View>
               <View className='goods_box_font2'>¥{goodsPrice}</View>
             </View>
           )

@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import {ScrollView, View} from "@tarojs/components";
 import {shopDetails} from '@/components/publicShopStyle'
-import {goods} from '@/api/api'
+import {perimeter} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import './index.scss'
 import {toast} from "@/common/utils";
@@ -22,7 +22,7 @@ export default (props) => {
      }
   },[httpData])
   const getLovely = () => {
-     const {listSpecialGoods} = goods
+     const {listSpecialGoods} = perimeter
      httpGet({
        url: listSpecialGoods,
        data: httpData

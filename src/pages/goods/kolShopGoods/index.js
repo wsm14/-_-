@@ -12,6 +12,7 @@ import BtnLayer from './components/bottonBtn'
 import MakePhone from '@/components/payTelephone'
 import Draw from './components/drawback'
 import StopBean from '@/components/stopBean'
+import Lovely from '@/components/lovely'
 class Index extends Component {
   constructor() {
     super(...arguments)
@@ -22,7 +23,8 @@ class Index extends Component {
       orderInfo: {},
       telephone: false,
       draw: false,
-      visible: false
+      visible: false,
+      closeVisible: false
     }
   }
 
@@ -31,11 +33,9 @@ class Index extends Component {
       goBack('参数缺失')
     }
   }
-
   componentDidShow() {
     this.getKolDetails()
   }
-
   filterPrice(payFee) {
     if (payFee) {
       let str = payFee.split('.')
@@ -81,15 +81,20 @@ class Index extends Component {
   }
   getDataStatus(){
     const {updateKol} = goods
-    httpPost({
-      data:{
-        orderSn: getCurrentInstance().router.params.orderSn,
-        status: '1',
-      },
-      url: updateKol,
-    },res => {
-      this.getKolDetails()
+    this.setState({
+     visible: false
+    }, res => {
+      httpPost({
+        data:{
+          orderSn: getCurrentInstance().router.params.orderSn,
+          status: '1',
+        },
+        url: updateKol,
+      },res => {
+        this.getKolDetails()
+      })
     })
+
   }
   getKolDetails() {
     const {getKolOrderDetail} = goods
@@ -105,11 +110,39 @@ class Index extends Component {
       })
     })
   }
-
+  deleteGoods() {
+    const {deleteKolStatus} = goods
+    const {httpData} = this.state
+    this.setState({
+      visible: false
+    }, res => {
+      httpPost({
+        data:  httpData,
+        url: deleteKolStatus
+      },res => {
+        goBack(() => toast('删除成功'))
+      })
+    })
+  }
+  closeSn() {
+    const {updateKol} = goods
+    this.setState({
+      closeVisible: false
+    }, res => {
+      httpPost({
+        data:{
+          orderSn: getCurrentInstance().router.params.orderSn,
+          status: '2',
+        },
+        url: updateKol,
+      },res => {
+        this.getKolDetails()
+      })
+    })
+  }
   onError(msg) {
     console.log(msg)
   }
-
   render() {
     const {
       orderInfo,
@@ -121,7 +154,8 @@ class Index extends Component {
       },
       telephone,
       draw,
-      visible
+      visible,
+      closeVisible
     } = this.state
     if(orderInfo && status === '6'){
       return(
@@ -176,8 +210,15 @@ class Index extends Component {
             </View>
           </View>
           <ShopDetails data={orderInfo}/>
-          <BtnLayer data={orderInfo}></BtnLayer>
-          {visible && <StopBean cancel={} canfirm={}></StopBean>}
+          <BtnLayer remove={() => this.setState({visible: true})} data={orderInfo}></BtnLayer>
+          {visible &&
+          <StopBean
+            content={'确认取消申请退款？'}
+            cancel={() => {this.setState({visible: false})}}
+            canfirm={() =>this.getDataStatus()}
+            cancelText={'确认'}
+            canfirmText ={'取消'}>
+          </StopBean>}
         </View>
       )
     }
@@ -185,7 +226,7 @@ class Index extends Component {
       return (
         <View className='kolGoods_details_kolGoodsDetails'>
           <Title onOpen={() =>this.setState({draw: true})} data={orderInfo}></Title>
-          <BtnLayer data={orderInfo}></BtnLayer>
+          <BtnLayer closeSn = {()=> this.setState({closeVisible: true})} deleteSn={() => this.setState({visible: true})} data={orderInfo}></BtnLayer>
           <ShopCard telephone = {() => this.setState({telephone: true})}  fn={() => this.getKolDetails()} data={orderInfo}></ShopCard>
           <View className='kolGoods_details'>
             <View className='kolGoods_detailsBox'>
@@ -203,16 +244,37 @@ class Index extends Component {
               {/*</View>*/}
               <View className='kolGoods_details_liner'></View>
               <View className='kolGoods_details_price public_auto bold'>
-                <View className='font28 color1 '>待付金额 </View>
+                <View className='font28 color1 '>
+                  待付金额
+                </View>
                 {this.filterPrice(payFee)}
               </View>
             </View>
           </View>
           <ShopDetails data={orderInfo}/>
+          <Lovely></Lovely>
           {telephone &&
           <MakePhone data={filterStrList(merchantMobile)} onClose={() => this.setState({telephone: false})}
                      onCancel={() => this.setState({telephone: false})}></MakePhone>}
           {draw && <Draw cancel={this.updateStatus.bind(this)} close={() =>this.setState({draw: false})}></Draw>}
+          {visible &&
+          <StopBean
+            content={'确认删除订单？'}
+            cancel={() => {this.setState({visible: false})}}
+            canfirm={() => this.deleteGoods()}
+            cancelText={'确认'}
+            canfirmText ={'取消'}>
+          </StopBean>}
+          {status === '0' && closeVisible &&
+          <StopBean
+            content={'确认关闭订单?'}
+            cancel={() => {this.setState({closeVisible: false})}}
+            canfirm={() => this.closeSn()}
+            cancelText={'确认'}
+            canfirmText ={'取消'}>
+          </StopBean>}
+
+
         </View>
       )
     }

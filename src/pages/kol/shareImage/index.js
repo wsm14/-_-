@@ -53,6 +53,8 @@ class Index extends Component {
       beanSet: false,
       shareStatus: getCurrentInstance().router.params.type || '',
       stopStatus: false,
+      getBeanNow: false,
+      lookStatus: '1'
     }
   }
 
@@ -184,6 +186,7 @@ class Index extends Component {
       } else {
         this.setState({
           kolMomentsInfo,
+          lookStatus: kolMomentsInfo.watchStatus,
           visible: false,
           beanSet: true,
           bannerSetting: {...bannerSetting, data: imgList(imageContent, imageHost, 'key')}
@@ -348,7 +351,8 @@ class Index extends Component {
         goodsIdString,
         goodsName,
         goodsPrice,
-        userLevel
+        userLevel,
+        userLevelImage
       },
       time,
       visible,
@@ -356,7 +360,8 @@ class Index extends Component {
       toast,
       beanSet,
       shareStatus,
-      stopStatus
+      stopStatus,
+      lookStatus
     } = this.state
     console.log(kolMomentsInfo)
     return (
@@ -419,8 +424,8 @@ class Index extends Component {
                     this.link_stop(() => navigateTo(`/pages/perimeter/shopDetails/index?merchantId=${merchantIdString}&kolGoodsId=${goodsIdString}&kolMomentsId=${getCurrentInstance().router.params.kolMomentId}`))}
             >
               <View className='image_shop_icon'></View>
-              <View className='image_shop_font font_hide'>
-                {goodsName || '--'}
+              <View className='image_shop_font'>
+                <Text className='goods_image_shop font_hide'>{goodsName || '--'}</Text>
                 <Text style={{fontSize: Taro.pxTransform(20)}}>{' ¥ '}</Text>
                 <Text style={{fontSize: Taro.pxTransform(28)}}>{goodsPrice || '0'}</Text>
               </View>
@@ -451,9 +456,7 @@ class Index extends Component {
                   onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`))}
             >
             </View>
-            {userLevel && userLevel !== '0' && <View className='shareImages_tipIcon'>
-
-            </View>}
+           <View className='shareImages_tipIcon'style={backgroundObj(userLevelImage)}></View>
             <View className='shareImages_userName font_hide'>
               {username}
             </View>
@@ -491,6 +494,7 @@ class Index extends Component {
           beanNum={beanAmount}
           interval={time}
           length={length}
+          lookStatus={lookStatus}
         >
         </GetBeanCanvas>
         }
@@ -499,7 +503,8 @@ class Index extends Component {
           data={kolMomentsInfo}
           visible={() => {
             this.setState({
-              toast: false
+              toast: false,
+              lookStatus: '1'
             })
           }}
         >

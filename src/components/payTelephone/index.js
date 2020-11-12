@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import {View} from '@tarojs/components'
+import {CoverView, View} from '@tarojs/components'
 import {AtActionSheet ,AtActionSheetItem} from 'taro-ui'
 import Taro from '@tarojs/taro'
 import {toast} from "@/common/utils";
@@ -12,7 +12,7 @@ export default (props) =>{
     }
   },[data])
   return (
-    <View style={{color: '#333333'}}>
+    <CoverView style={{color: '#333333'}}>
       <AtActionSheet style={{color: 'black'}} onClose = {onClose} onCancel={onCancel} isOpened cancelText='取消' title=''>
         {list.map((item) => {
           return (
@@ -31,7 +31,7 @@ export default (props) =>{
         })}
 
       </AtActionSheet>
-    </View>
+    </CoverView>
 
   )
 }

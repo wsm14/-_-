@@ -63,7 +63,17 @@ class Index extends Component {
     return
   }
   componentDidShow() {
-    this.getOrder()
+    this.setState({
+      orderList: [],
+      countStatus: true,
+      httpData: {
+        page: 1,
+        limit: 10,
+        // orderType: 'kolGoods,scan'
+      },
+    },res => {
+      this.getOrder()
+    })
   }
   getOrder() {
     const {httpData} = this.state
@@ -113,6 +123,7 @@ class Index extends Component {
     }
 
   }//上拉加载
+
   render() {
     const {
       setting,
@@ -131,7 +142,7 @@ class Index extends Component {
     return (
       <View className='goods_tabbar_box'>
         <Tabs fn={this.setIndex.bind(this)} style={tabStyle} {...setting}></Tabs>
-        {orderList.length ===0 ? goodsNullStatus() :
+        {orderList.length === 0 ? goodsNullStatus() :
           <Goods pageDown={() => {}} list={orderList}></Goods>
         }
       </View>

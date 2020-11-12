@@ -40,16 +40,13 @@ page {
     }
 
     .shareVideo_tipIcon {
-      width: 32px;
-      height: 26px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon66.png") no-repeat;
-      background-size: 100% 100%;
+      width: 43px;
+      height: 27px;
       margin-right: 4px;
     }
 
     .shareVideo_userName {
       width: 196px;
-      height: 28px;
       font-size: 28px;
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 500;
@@ -183,6 +180,12 @@ page {
           font-weight: 400;
           color: #FFFFFF;
           line-height: 24px;
+          display: flex;
+          .shop_video_good{
+            max-width: 120px;
+            font-size: 24px;
+            margin-right: 20px;
+          }
         }
       }
     }

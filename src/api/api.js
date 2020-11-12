@@ -89,6 +89,7 @@ export const index = {
     getUserSimpleInfo: '/user/userInfo/getUserSimpleInfo',//获取我的简单信息
     getDomain: '/common/domain/listDomainAndTopic',//获取 所有领域和对应话题
     getListKol: '/user/kolMoments/listKolMoments',//获取所有kol列表
+    getSetting: '/common/dictionary/listDictionaryByParent'
   },
   goods: {
     'orderDetails': '/user/order/listOrderOrderStatus',//获取我的订单
@@ -100,13 +101,15 @@ export const share = {
   }
 }
 export const perimeter = {
+  listSpecialGoods: '/user/specialGoods/listSpecialGoods',//搜索附近可以带货商品
   shopDetails: {
     getGoodsById: '/user/kolMoments/listKolMomentByGoodsId',//获取kol达人带货商品动态
     getGoodsDetail: '/user/kolGoods/getKolGoodsDetail',//kol商品详情
   },
   merchantDetails: {
-    getMomentByMerchantId:'/user/kolMoments/listKolMomentByMerchantId'
-  }
+    getMomentByMerchantId: '/user/kolMoments/listKolMomentByMerchantId'
+  },
+   getSpecialGoodsDetail: '/user/specialGoods/getSpecialGoodsDetail'
 }
 export const goods = {
    configOrder: {
@@ -118,11 +121,15 @@ export const goods = {
      * merchantId 商家ID
      * */
    },
+   favourOrder: {
+     getSpecialGoods: '/user/specialGoods/getSpecialGoodsOrderPrice',//确认特价商品订单信息
+     saveSpecialGoods: '/user/order/saveSpecialGoodsOrder'//特价商品支付订单
+   },
    payWeex: {
      getKolOrderPrepayment: '/user/order/getOrderPrepaymentResult',//获取支付详情
    },
-   listSpecialGoods: '/user/specialGoods/listSpecialGoods',//获取猜你喜欢
    getOrderResult: '/user/order/getOrderResult',//支付成功时跳转页面
    getKolOrderDetail: '/user/order/getOrderDetail',//获取带货订单详情
-   updateKol: '/user/order/updateOrderStatus',
+   updateKol: '/user/order/updateOrderStatus',//修改订单 状态
+   deleteKolStatus: '/user/order/deleteOrder', //删除订单
 }

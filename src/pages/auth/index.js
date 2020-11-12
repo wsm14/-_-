@@ -133,7 +133,8 @@ class Index extends Component {
     //如果未授权则调用初始化函数根据初始化数据进行对于操作  type 1 未授权手机  type 2 信息手机未授权
   } // 判断用户是否授权
   componentDidShow() {
-    Taro.clearStorage({
+    Taro.removeStorage({
+      key: 'userInfo',
       success: res => {
         this.setHomeinit();
       },

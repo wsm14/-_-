@@ -121,7 +121,6 @@ export const httpPost = (obj,fn) =>{
               toast(resultDesc);
               resultOperate[resultCode].fn();
               return navigateTo(resultOperate[resultCode].link)
-
             }
             return  toast(resultDesc);
           }
