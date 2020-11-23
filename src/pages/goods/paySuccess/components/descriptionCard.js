@@ -117,12 +117,26 @@ export default (props) => {
         <View className='descriptionCard_goods_liner'></View>
         <View className='descriptionCard_goods_tags public_center'>
           <View className='kolTagBox public_center'>
-            <View className='kolTag kolTagIcons'></View>
-            <View className='font24 color2 kolTag_font'>免预约</View>
-            <View className='kolTag kolTagIcons'></View>
-            <View className='font24 color2 kolTag_font'>随时退</View>
-            <View className='kolTag kolTagIcons'></View>
-            <View className='font24 color2 kolTag_font'>过期退</View>
+            {kolGoods.needOrder === '0' &&
+            (<View className='public_center'>
+                <View className='kolTag kolTagIcons'></View>
+                <View className='font24 color2 kolTag_font'>免预约</View>
+            </View>
+            )
+          }
+            {kolGoods.allowRefund === '0' &&
+            (<View className='public_center'>
+                <View className='kolTag kolTagIcons'></View>
+                <View className='font24 color2 kolTag_font'>随时退</View>
+            </View>
+            )
+          }
+            {kolGoods.allowExpireRefund === '0' &&
+            (<View className='public_center'>
+                <View className='kolTag kolTagIcons'></View>
+                <View className='font24 color2 kolTag_font'>过期退</View>
+              </View>)
+            }
           </View>
         </View>
         {setCode()}

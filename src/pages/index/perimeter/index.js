@@ -6,6 +6,7 @@ import {wxapiGet, index, perimeter} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import NallStatus from '@/components/nullStatus'
 import Favourable from './components/favourable'
+import Waterfall from '@/components/waterfall'
 import {
   login,
   authGeography
@@ -60,7 +61,6 @@ class Index extends Component {
       }
     }
   }
-
   //获取个人足迹
   onPageScroll(e) {
     const {setBackGround} = this.state
@@ -223,20 +223,9 @@ class Index extends Component {
 
   }
 
-  getSpecialGood() {
-    const {specialGoods} = this.state
-    const {listSpecialGoods} = perimeter
-    httpGet({
-      url: listSpecialGoods,
-      data: specialGoods
-    }, res => {
-      console.log(res)
-    })
-  }
 
-  createdShareMerchant = (data) => {
-    const {lnt, lat} = this.state
-    return (data.map((item, index) => {
+  createdShareMerchant = (item) => {
+      const {lnt, lat} = this.state
       const {
         frontImage,
         frontImageHeight,
@@ -253,7 +242,6 @@ class Index extends Component {
         likeAmount,
         imageNum,
         merchantAddress,
-        distanceRange,
         userLikeStatus,
         beanFlag,
         kolMomentsId,
@@ -321,17 +309,13 @@ class Index extends Component {
             </View>
           </View>
         </View>
-      )
-    }))
+    )
   }
   setMap = (res) => {
     const {latitude, longitude} = res
     this.setState({
       lnt: longitude,
       lat: latitude
-    }, res => {
-      Taro.setStorageSync('lnt', longitude)
-      Taro.setStorageSync('lat', latitude)
     })
   }
 
@@ -348,41 +332,42 @@ class Index extends Component {
     authGeography((res) => this.setMap(res))
     this.getSetting()
     this.getBanner(bannerHttp, 'bannerList')
-    this.getUserSimpleInfo()
+    // this.getUserSimpleInfo()
     this.getDomain()
-    this.getSpecialGood()
-
+  }
+  componentDidShow() {
+    this.getUserSimpleInfo()
   }
 
-  onPullDownRefresh() {
-    const {bannerHttp, specialHttp} = this.state
-    this.setState({
-      userDetails: {},
-      domainList: [],
-      selectIndex: 0,
-      topicList: [],
-      scroll_left: 0,
-      kolHttp: {
-        domainId: '',
-        topicId: '',
-        page: 1,
-        limit: 10
-      },
-      kolMomentsList: [],
-      setBackGround: {},
-      iconStatus: false,
-      countStatus: true,
-      surroundingSpecial: [],
-      subKeyValueList: []
-    }, res => {
-      this.getKolList();
-      this.getSetting()
-      this.getBanner(bannerHttp, 'bannerList')
-      this.getUserSimpleInfo()
-      this.getDomain()
-      authGeography((res) => this.setMap(res))
-    })
-  }
+  // onPullDownRefresh() {
+  //   const {bannerHttp, specialHttp} = this.state
+  //   this.setState({
+  //     userDetails: {},
+  //     domainList: [],
+  //     selectIndex: 0,
+  //     topicList: [],
+  //     scroll_left: 0,
+  //     kolHttp: {
+  //       domainId: '',
+  //       topicId: '',
+  //       page: 1,
+  //       limit: 10
+  //     },
+  //     kolMomentsList: [],
+  //     setBackGround: {},
+  //     iconStatus: false,
+  //     countStatus: true,
+  //     surroundingSpecial: [],
+  //     subKeyValueList: []
+  //   }, res => {
+  //     this.getKolList();
+  //     this.getSetting()
+  //     this.getBanner(bannerHttp, 'bannerList')
+  //     this.getUserSimpleInfo()
+  //     this.getDomain()
+  //     authGeography((res) => this.setMap(res))
+  //   })
+  // }
 
   onReachBottom() {
     this.pageDown()
@@ -619,9 +604,16 @@ class Index extends Component {
           <View
             className='permerter_userDetails_box'
           >{kolMomentsList.length > 0 ?
-            <View className='userDetails_falls'>
-              {this.createdShareMerchant(kolMomentsList)}
-            </View> :
+            <Waterfall
+              list={kolMomentsList}
+              createDom={this.createdShareMerchant.bind(this)}
+              imgHight={'frontImageHeight'}
+              imgWidth={'frontImageWidth'}
+              setWidth={335}
+              style={{width:Taro.pxTransform(335)}}
+            >
+            </Waterfall>
+            :
             <NallStatus></NallStatus>
           }
           </View>

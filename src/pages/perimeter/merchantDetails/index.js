@@ -2,12 +2,11 @@ import React, {Component} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {ScrollView, Text, View} from '@tarojs/components'
 import Banner from '@/components/banner'
-import {coupons, billboard, exploreShop} from '@/components/publicShopStyle'
+import {coupons, billboard, exploreShop,shopDetails} from '@/components/publicShopStyle'
 import MarkPhone from '@/components/payTelephone'
 import {wxapiGet, perimeter} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import APPShare from '@/components/shareApp'
-import Lovely from '@/components/lovely'
 import classNames from 'classnames'
 import {
   imgList,
@@ -38,26 +37,28 @@ class MerchantDetails extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      merchantHttpData: {merchantId: getCurrentInstance().router.params.merchantId || '1'},
+      merchantHttpData: {merchantId: getCurrentInstance().router.params.merchantId },
       banner: {
         bannerType: 'merchant',
-        merchantId: getCurrentInstance().router.params.merchantId || '1'
+        merchantId: getCurrentInstance().router.params.merchantId
       },
       userMerchant: {},
       bannerList: [],
       userMerchantInfo: {},
       userInfo: {
-        userId: getCurrentInstance().router.params.shareUserId || ''
+        userId: getCurrentInstance().router.params.shareUserId
       },
       getMerchantDetails: {
-        merchantId: getCurrentInstance().router.params.merchantId || '1',
+        merchantId: getCurrentInstance().router.params.merchantId,
         page: 1,
         limit: 5,
       },
-      type: getCurrentInstance().router.params.type || '',
+      type: getCurrentInstance().router.params.type,
       kolMomentsList: [],
       countStatus: true,
-      visible: false
+      visible: false,
+      specialGoodsList: [],
+      goodsList:[]
     }
   }
 
@@ -73,8 +74,20 @@ class MerchantDetails extends Component {
     this.getListRecommend()
     this.getMerchantById()
     this.getMerchantDetails()
+    this.getGoodList()
   }
-
+  getGoodList() {
+    const {merchantDetails: {getListMerchant}} = perimeter
+    return httpGet({
+      data: { merchantId: getCurrentInstance().router.params.merchantId},
+      url: getListMerchant
+    }, res => {
+      const {goodsList} = res
+      this.setState({
+        goodsList
+      })
+    })
+  }
   getMerchantDetails() {
     const {merchantDetails: {getMomentByMerchantId}} = perimeter
     const {getMerchantDetails, countStatus} = this.state
@@ -93,7 +106,7 @@ class MerchantDetails extends Component {
       })
     })
   }
-
+  //获取商家信息
   getMerchantById() {
     const {merchantHttpData} = this.state
     return httpGet({
@@ -103,11 +116,12 @@ class MerchantDetails extends Component {
       const {userMerchant} = res
       console.log(res)
       this.setState({
-        userMerchantInfo: userMerchant
+        userMerchantInfo: {...userMerchant}
+      },res => {
+        this.getMerchantLove()
       })
     })
   }
-
   getBannerList() {
     const {banner} = this.state
     httpGet(
@@ -123,7 +137,7 @@ class MerchantDetails extends Component {
       }
     )
   }
-
+  //获取商家轮播图
   getListRecommend() {
     const {merchantHttpData} = this.state
     return httpGet({
@@ -135,7 +149,21 @@ class MerchantDetails extends Component {
       })
     })
   }
-
+  getMerchantLove() {
+    const { userMerchantInfo:{merchantId}} = this.state
+    const {getMerchantSpecialGoods} = perimeter
+    httpGet({
+      url: getMerchantSpecialGoods,
+      data: {
+        merchantId: merchantId,
+        page: 1,
+        limit: 6
+      }
+    }, res => {
+      const {specialGoodsList} =res
+    })
+  }
+  //获取商家猜你喜欢
   onReachBottom() {
     const {getMerchantDetails, countStatus} = this.state
     if (countStatus) {
@@ -158,7 +186,6 @@ class MerchantDetails extends Component {
       userMerchant:
         {merchantCoverImg,
           merchantName,
-          goodsList,
           tag,
           businessHub,
           topCategoryValue,
@@ -183,7 +210,9 @@ class MerchantDetails extends Component {
         merchantFollowStatus
       },
       kolMomentsList,
-      visible
+      visible,
+      specialGoodsList,
+      goodsList
     } = this.state
     return (
       <View className='merchantBox'>
@@ -277,22 +306,33 @@ class MerchantDetails extends Component {
         {/*{coupons()}*/}
         {/*{coupons()}*/}
         {/*{coupons()}*/}
-        <View className='merchant_active' onClick={() => navigateTo('/pages/perimeter/special/index')}>
-          <View className='merchant_active_title'>
-            <View className='merchant_active_iconBox active_icon2'>
+        {specialGoodsList.length > 0&&
+          <>
+            <View className='merchant_active' onClick={() => navigateTo('/pages/perimeter/special/index')}>
+              <View className='merchant_active_title'>
+                <View className='merchant_active_iconBox active_icon2'>
 
-            </View>
-            <View className='merchant_active_biaoti'>
-              特价活动
-            </View>
+                </View>
+                <View className='merchant_active_biaoti'>
+                  特价活动
+                </View>
 
-          </View>
-          <View className='merchant_active_dec'>
-            店铺超限时特价活动 限时限量
-          </View>
-          <View className='active_go'></View>
-        </View>
-        <Lovely type={true}></Lovely>
+              </View>
+              <View className='merchant_active_dec'>
+                店铺超限时特价活动 限时限量
+              </View>
+              <View className='active_go'></View>
+            </View>
+            <ScrollView
+              className='merchant_newPrice'
+            >
+              {specialGoodsList.map(item => {
+                return (shopDetails(item))
+              })}
+            </ScrollView>
+          </>
+        }
+
         {goodsList && goodsList.length > 0 &&
         <>
           <View className='merchant_active'>

@@ -20,7 +20,6 @@ class Index extends Component {
         type: 'price',
         value: '0',
       },
-      text:''
     }
   }
   getOrderResult() {
@@ -93,14 +92,15 @@ class Index extends Component {
     } = this.state
     return (
       <View className='pay_wx_lite'>
-        {text}
         <View className='pay_wx_lite_price'>
           <View className='pay_title'>实付款</View>
           <View className='pay_price'><Text style={{display:'inline-block',fontSize:Taro.pxTransform(36)}}>¥</Text>{payFee}</View>
-          <View className='pay_time'>支付剩余时间
-            {createTime&& <InterTime mint={expiredTime}  times={createTime} fn={()=> {goBack()}}></InterTime>}
-            {/**/}
-          </View>
+          {payStatus.value==='0' &&
+            <View className='pay_time'>支付剩余时间
+              {createTime&& <InterTime mint={expiredTime}  times={createTime} fn={()=> {goBack()}}></InterTime>}
+              {/**/}
+            </View>
+          }
         </View>
         <Button
           appParameter={JSON.stringify(payStatus)}

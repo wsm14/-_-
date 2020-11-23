@@ -1,6 +1,7 @@
 .tabFont{
   height: 28px;
   line-height: 28px;
+  position: relative;
 }
 .tabChecked{
   color: rgba(51, 51, 51, 1);
@@ -18,5 +19,6 @@
   height: 8px;
   background: #07C0C2;
   border-radius: 5px;
-  left: 78px;
+  left: 50%;
+  transform: translate(-50%,27px);
 }

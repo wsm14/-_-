@@ -1,0 +1,80 @@
+page {
+  width: 100%;
+  height: 100%;
+}
+
+.rewardDetails_box{
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+  .rewardDetails_selectId{
+    padding: 132px 32px 0;
+    height: 24px;
+    display: flex;
+    .rewardDetails_time{
+      height: 24px;
+      display: flex;
+      align-items: center;
+
+    }
+    .rewardDetails_icon{
+      width: 24px;
+      height: 24px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon332.png") no-repeat;
+      background-size: 100% 100%;
+      margin-left: 8px;
+    }
+    .rewardDetails_cad{
+      height: 24px;
+      display: flex;
+      align-items: center;
+      margin-left: 40px;
+    }
+  }
+  .rewardDetails_layer{
+    position: fixed;
+    top: 88px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    .rewardDetails_layer_content{
+      background: #F5F5F5;
+      .rewardDetails_layer_tab{
+        background: #FFFFFF;
+        padding: 24px 32px;
+        height: 24px;
+        display: flex;
+        .rewardDetails_layer_tabs{
+          height: 24px;
+          display: flex;
+        }
+        .rewardDetails_layer_tabBox{
+          height: 24px;
+          display: flex;
+          align-items: center;
+          margin-right: 40px;
+        }
+        .rewardDetails_layer_icon1{
+          width: 24px;
+          height: 24px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon332.png") no-repeat;
+          background-size: 100% 100%;
+          margin-left: 8px;
+
+        }
+        .rewardDetails_layer_icon2{
+          width: 24px;
+          height: 24px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon333.png") no-repeat;
+          background-size: 100% 100%;
+          margin-left: 8px;
+        }
+      }
+      .rewardDetails_layer_tagBox{
+        padding: 40px 32px 0;
+        background: #FFFFFF;
+      }
+    }
+  }
+}

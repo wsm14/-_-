@@ -1,11 +1,9 @@
 export default {
   pages: [
-    // 'pages/goods/paySuccess/index',
-    // 'pages/goods/kolShopGoods/index',
-    // 'pages/goods/getShopGoods/index',
     "pages/index/perimeter/index", //周边打卡
+    'pages/index/takeCard/index',
     "pages/index/goods/index",
-    "pages/user/index", //首页个人
+    "pages/index/user/index", //首页个人
     "pages/index/lookShare/shareImage/index", //圖文详情
     "pages/index/lookShare/shareVideo/index", //视频详情
     "pages/index/lookShare/index", //看视频图文
@@ -16,7 +14,7 @@ export default {
   ],
   window: {
     backgroundTextStyle: "light",
-    navigationBarBackgroundColor: "#fff",
+    navigationBarBackgroundColor: "#ffffff",
     navigationBarTitleText: "WeChat",
     navigationBarTextStyle: "black",
     navigationStyle: "custom",
@@ -33,12 +31,12 @@ export default {
         selectedIconPath: "./assets/image/tab-bar/perimeterTrue.png",
         text: "周边",
       },
-      // {
-      //   pagePath: "pages/perimeter/index",
-      //   iconPath: "./assets/image/tab-bar/card.png",
-      //   selectedIconPath: "./assets/image/tab-bar/cardTrue.png",
-      //   text: "打卡",
-      // },
+      {
+        pagePath: "pages/index/takeCard/index",
+        iconPath: "./assets/image/tab-bar/card.png",
+        selectedIconPath: "./assets/image/tab-bar/cardTrue.png",
+        text: "打卡",
+      },
       {
         pagePath: "pages/index/goods/index",
         iconPath: "./assets/image/tab-bar/goods.png",
@@ -46,7 +44,7 @@ export default {
         text: "订单"
       },
       {
-        pagePath: "pages/user/index",
+        pagePath: "pages/index/user/index",
         iconPath: "./assets/image/tab-bar/me.png",
         selectedIconPath: "./assets/image/tab-bar/meTrue.png",
         text: "我的",
@@ -62,6 +60,7 @@ subPackages:[
     {
       "root": "pages/kol/",
       "pages": [
+        "report/index",
         "shareVideo/index",///kol视频详情页,
         "shareImage/index",//kol图片详情页,
         "follow/index",//关注列表,
@@ -71,6 +70,8 @@ subPackages:[
     {
     "root": "pages/newUser/",
     "pages": [
+      "rewardDetails/index",
+      "wallet/index",
       "merchantDetails/index",///商家主页,
       "shopFamily/index",//,我的家店
       "userDetails/index",//个人主页,
@@ -91,15 +92,18 @@ subPackages:[
       "shareFriend/index",//分享好友,
       'shareShop/index',//分享家店
       'pay_wx_lite/index',//微信支付
+      'webView/index',//webView页面
     ]
   },
     {
     "root": "pages/perimeter/",
     "pages": [
+      'search_fav/index',
       'favourableDetails/index',//砍价详情
       "shopDetails/index", //商品详情
       "merchantDetails/index", //周边详情
       "special/index",//特价商品
+      'perimeteRoducts/index',
       "index", //周边首页
     ]
   },

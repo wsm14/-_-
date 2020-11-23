@@ -1,6 +1,6 @@
 import React from 'react'
 import Taro from '@tarojs/taro'
-import {Text, View} from "@tarojs/components";
+import {Image, Text, View} from "@tarojs/components";
 import {
   filterLogin,
   navigateTo,
@@ -62,11 +62,18 @@ export const coupons = (_this, data, obj) => {
 
 //商品标签
 export const shopDetails = (data, obj) => {
-  if (data) {
-    const {goodsName, goodsImg, oriPrice, realPrice, merchantName, merchantLogo, lat, lnt} = data
+  if(data) {
+    const {goodsName,
+      goodsImg,
+      oriPrice,
+      realPrice,
+      merchantName,
+      specialActivityIdString,
+      merchantLogo, lat, lnt, merchantIdString} = data
     return (
       <View className='shopDetails_box'>
-        <View className='shopDetails_Img dakale_nullImage' style={backgroundObj(goodsImg)}>
+        <View className='shopDetails_Img dakale_nullImage'>
+          <Image src={goodsImg} className='image_box' lazyLoad mode='center'></Image>
           <View className='shopDetails_city'>
             <View className='shopDetails_city_icon'></View>
             <View className='shopDetails_city_font'>{GetDistance(getLat, getLnt, lat, lnt,)}</View>
@@ -87,7 +94,6 @@ export const shopDetails = (data, obj) => {
           <View className='shopDetails_tag'>
             <View className='shopDetails_tag_box'>新鲜爆品</View>
             <View className='shopDetails_tag_box'>新鲜爆品</View>
-            <View className='shopDetails_tag_box'>新鲜爆品</View>
           </View>
           <View className='shopDetails_biaoti'>哒卡乐专享价</View>
           <View className='shopDetails_price'>
@@ -102,16 +108,15 @@ export const shopDetails = (data, obj) => {
           </View>
 
         </View>
-        {/*<View className='shopDetails_btnBox shopDetails_btnColor1'>*/}
-        {/*  立即抢购*/}
-        {/*</View>*/}
-        <View className='shopDetails_btnColor2'>
+        <View className='shopDetails_btnBox shopDetails_btnColor1'
+              onClick={() => navigateTo(`/pages/perimeter/favourableDetails/index?merchantId=${merchantIdString}&specialActivityId=${specialActivityIdString}`)}>
+          立即抢购
         </View>
+        {/*<View className='shopDetails_btnColor2'>*/}
+        {/*</View>*/}
       </View>
     )
   } else return null
-
-
 }
 //商品标签
 export const billboard = (_this, data, obj) => {
@@ -123,7 +128,9 @@ export const billboard = (_this, data, obj) => {
     } = data
     return (
       <View className='billboard_box'>
-        <View style={goodsImg ? {...backgroundObj(goodsImg)} : {}} className='billboard_img dakale_nullImage'></View>
+        <View className='billboard_img dakale_nullImage'>
+          <Image src={goodsImg} lazyLoad mode='center'></Image>
+        </View>
         <View className='billboard_title font_hide'>{goodsName}</View>
       </View>
     )
@@ -338,6 +345,34 @@ export const goodsNullStatus = (_this, data, obj) => {
     <View className='goodsNullStatus'>
       <View className='goodsNullStatus_image'></View>
       <View className='goodsNullStatus_goods'>您还没有相关的订单哦</View>
+    </View>
+  )
+}
+
+
+export const nullShop = () => {
+  return (
+    <View className='nullShop_box'>
+      <View className='nullShop_img'></View>
+      <View className='nullShop_font'>来晚了，商品已下架</View>
+    </View>
+  )
+}
+export const nullMerchantFav = () => {
+  return (
+    <View className='nullMerchantFav_box'>
+      <View className='nullMerchantFav_img'></View>
+      <View className='nullMerchantFav_font'>没有找到相关商家，换一个关键词试试吧</View>
+      <View className='nullMerchantFav_img_title color1 font28'>- 你可能想找 -</View>
+    </View>
+  )
+}
+export const nullGoodsFav = () => {
+  return (
+    <View className='nullGoodsFav_box'>
+      <View className='nullGoodsFav_img'></View>
+      <View className='nullGoodsFav_font'>没有找到相关商品，换一个关键词试试吧</View>
+      <View className='nullGoodsFav_img_title color1 font28'>- 你可能喜欢 -</View>
     </View>
   )
 }

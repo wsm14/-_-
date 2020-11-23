@@ -569,27 +569,11 @@ page {
     .permerter_userDetails_box{
       min-height: 850px;
     }
-    .userDetails_falls {
-      margin: 0 32px;
-      -moz-column-count: 2;
-      /* Firefox */
-      -webkit-column-count: 2;
-      /* Safari 和 Chrome */
-      column-count: 2;
-      -moz-column-gap: 20px;
-      -webkit-column-gap: 20px;
-      column-gap: 20px;
-      padding-bottom: 20px;
 
       .userDetails_falls_details {
-        -moz-page-break-inside: avoid;
-        -webkit-column-break-inside: avoid;
-        break-inside: avoid;
-        margin-bottom: 20px;
-        background: #FFFFFF;
         border-radius: 20px;
         width: 335px;
-
+        margin-bottom: 20px;
         .userDetails_falls_bg {
           width: 100%;
           height: 335px;
@@ -920,7 +904,7 @@ page {
           }
         }
       }
-    }
+
   }
 }
 ::-webkit-scrollbar {

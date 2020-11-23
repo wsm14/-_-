@@ -17,7 +17,7 @@ class Index extends Component {
       merchantId: getCurrentInstance().router.params.merchantId,
       useBeanStatus: '0',
       specialGoodsDTO: {
-        goodsId: getCurrentInstance().router.params.specialGoodsId,
+        id: getCurrentInstance().router.params.specialActivityId,
         goodsCount: 1
       },
       specialGoodsInfo: {},
@@ -25,7 +25,7 @@ class Index extends Component {
     }
   }
   componentWillUnmount() {
-    if(!getCurrentInstance().router.params.merchantId||!getCurrentInstance().router.params.specialGoodsId){
+    if(!getCurrentInstance().router.params.merchantId||!getCurrentInstance().router.params.specialActivityId){
         goBack(() => toast('参数缺失'))
     }
   }
@@ -33,7 +33,6 @@ class Index extends Component {
   componentDidShow() {
     this.getKolGoodsOrder()
   }
-
   computedCount(type) {
     const {specialGoodsDTO, specialGoodsDTO: {goodsCount}} = this.state
     if (type === 'add') {

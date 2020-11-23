@@ -13,7 +13,7 @@ import {Swiper, SwiperItem, View, Image} from '@tarojs/components'
 import classNames from 'classnames'
 import './index.scss'
 export default (props) => {
-  const {style, data, showToast, imgName, auto, height, boxStyle, imgStyle, showNear} = props
+  const {style, data, showToast, imgName, auto, height, boxStyle, imgStyle, showNear,borderRadius} = props
   const [list, setList] = useState([]);
   const [current, setCurrent] = useState('1')
   useEffect(() => {
@@ -37,7 +37,7 @@ export default (props) => {
                   background: `url(${item[imgName]?item[imgName]:item}) no-repeat`,
                   backgroundSize: '100% 100%'
                 } : {background: `url(${item[imgName]?item[imgName]:item}) no-repeat center center/contain`}} key={index}
-                      className='banner_box dakale_nullImage'>
+                      className={classNames('banner_box dakale_nullImage',borderRadius&&'bordersRadius')}>
                 </View>
               </SwiperItem>
             )
@@ -47,7 +47,7 @@ export default (props) => {
           <View style={{width: '100%', height: '100%'}}>
             <View
               style={list.length > 0 ?(imgStyle ? {background: `url(${list[0][imgName]||list[0]}) no-repeat center/cover`,} : {background: `url(${list[0][imgName]}) no-repeat center center/contain`}):({})}
-              className='banner_box dakale_nullImage'>
+              className={classNames('banner_box dakale_nullImage',borderRadius&&'bordersRadius')}>
             </View>
           </View>
         </View>

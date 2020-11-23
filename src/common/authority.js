@@ -1,5 +1,39 @@
 import Taro from '@tarojs/taro'
-import {toast,setLocation,addPhotosAlbum} from '@/common/utils'
+import {toast,addPhotosAlbum} from '@/common/utils'
+export const setLocation = (fn) => {
+  Taro.getLocation({
+    type: 'wgs84',
+    success: (res) => {
+      var latitude = res.latitude
+      var longitude = res.longitude
+      var speed = res.speed
+      var accuracy = res.accuracy;
+      Taro.setStorageSync('lnt', longitude)
+      Taro.setStorageSync('lat', latitude)
+      fn && fn(res)
+    },
+    fail: function (res) {
+      console.log('fail' + JSON.stringify(res))
+    }
+  })
+}
+export const setMap = (fn) => {
+  Taro.getLocation({
+    type: 'gcj02',
+    success: (res) => {
+      var latitude = res.latitude
+      var longitude = res.longitude
+      var speed = res.speed
+      var accuracy = res.accuracy;
+      Taro.setStorageSync('lnt', longitude)
+      Taro.setStorageSync('lat', latitude)
+      fn && fn(res)
+    },
+    fail: function (res) {
+      console.log('fail' + JSON.stringify(res))
+    }
+  })
+}
 export const login = (obj) => {
   let authLogin = obj
   if (authLogin && Object.keys(authLogin).length > 5 && authLogin.mobile.length === 11) {
@@ -10,13 +44,16 @@ export const login = (obj) => {
     return '2'
   }
 }
-export const authGeography = (fn) => {
+export const authGeography = (fn,type) => {
   Taro.getSetting({
     success: (res) => {
       if (!res.authSetting['scope.userLocation']) {
         Taro.authorize({
           scope: 'scope.userLocation',
           success: res => {
+          if(type){
+            return setMap(fn)
+          }
           setLocation(fn)
           },
           fail: res =>{
@@ -30,6 +67,9 @@ export const authGeography = (fn) => {
                      if (dataAu.authSetting["scope.userLocation"] == true) {
                        toast('授权成功',)
                        //再次授权，调用wx.getLocation的API
+                       if(type){
+                         return setMap(fn)
+                       }
                        setLocation(fn)
                      } else {
                        toast('授权失败')
@@ -46,6 +86,9 @@ export const authGeography = (fn) => {
         })
       }
       else {
+        if(type){
+          return setMap(fn)
+        }
         setLocation(fn)
       }
     },
@@ -54,6 +97,13 @@ export const authGeography = (fn) => {
     }
   })
 }
+//获取定位
+/*
+*
+* map
+*
+*
+* */
 export const authPhotosAlbum = (path) => {
   Taro.getSetting({
     success: (res) => {
@@ -89,7 +139,6 @@ export const authPhotosAlbum = (path) => {
         })
       }
       else {
-        console.log(1111)
         addPhotosAlbum(path)
       }
     },
@@ -98,17 +147,19 @@ export const authPhotosAlbum = (path) => {
     }
   })
 }
+//保存相册
 export const authWxLogin = (fn) => {
   Taro.login({
     success: function (res) {
       if (res.code) {
          fn  &&  fn(res.code)
       } else {
-        console.log('获取用户登录态失败！' + res.errMsg)
+        toast('获取用户登录态失败！' + res.errMsg)
       }
     }
   })
 }
+//微信openId
 export const internet = (obj,fn) => {
   Taro.onNetworkStatusChange(function (res){
     const {isConnected,networkType} = res

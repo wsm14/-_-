@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {Text, View} from '@tarojs/components'
-import {shopDetails} from '@/components/publicShopStyle'
 import {goods} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import classNames from 'classnames'

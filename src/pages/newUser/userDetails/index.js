@@ -24,7 +24,7 @@ class Index extends Component {
     super(...arguments)
     this.state = {
       status: false,
-      current: '0',
+      current: getCurrentInstance().router.params.count ||0,
       ViewTabs: ['分享', '收藏', '关注的店', '打卡足迹'],
       routerId: getCurrentInstance().router.params.userStingId || '',
       type: getCurrentInstance().router.params.type || '',
@@ -426,7 +426,7 @@ class Index extends Component {
   //上拉加载
   componentDidShow() {
     this.getUserDetails()
-    this.getShare()
+    this.currentTabSwitch(parseInt(this.state.current), [])
   }
 
   currentTabs(index) {
@@ -438,6 +438,7 @@ class Index extends Component {
   }
 
   currentTabSwitch(index, list) {
+    console.log(index)
     switch (index) {
       case 0:
         return this.setState({page: 1, publicList: list, countStatus: true}, res => {
@@ -612,10 +613,10 @@ class Index extends Component {
           </View>
           {publicList.length ==0 &&<NullStatus></NullStatus>}
           <View className='userDetails_falls'>
-            {current == '0' && this.createdShareMerchant(publicList)}
-            {current == '1' && this.createdShareMerchant(publicList)}
-            {current == '2' && this.createdShopMerchant(publicList)}
-            {current == '3' && this.createdShopMerchant(publicList)}
+            {current == 0 && this.createdShareMerchant(publicList)}
+            {current == 1 && this.createdShareMerchant(publicList)}
+            {current == 2 && this.createdShopMerchant(publicList)}
+            {current == 3 && this.createdShopMerchant(publicList)}
           </View>
         </View>
       </View>

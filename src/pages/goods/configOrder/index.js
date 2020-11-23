@@ -17,7 +17,7 @@ class Index extends Component {
       merchantId: getCurrentInstance().router.params.merchantId,
       useBeanStatus: '0',
       kolGoodsDTO: {
-        goodsId: getCurrentInstance().router.params.kolGoodsId,
+        id: getCurrentInstance().router.params.kolActivityId,
         goodsCount: 1
       },
       kolGoodsInfo: {},
@@ -25,7 +25,7 @@ class Index extends Component {
     }
   }
   componentWillUnmount() {
-    if(!getCurrentInstance().router.params.merchantId||!getCurrentInstance().router.params.kolGoodsId){
+    if(!getCurrentInstance().router.params.merchantId||!getCurrentInstance().router.params.kolActivityId){
         goBack(() => toast('参数缺失'))
     }
   }

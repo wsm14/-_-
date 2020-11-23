@@ -107,6 +107,7 @@
 .shopDetails_box{
   width: 331px;
   height: 468px;
+  margin-bottom: 20px;
   background: #FFFFFF;
   box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -120,6 +121,10 @@
     width: 331px;
     box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.05);
     position: relative;
+    .image_box{
+      height: 186px;
+      width: 331px;
+    }
     .shopDetails_city{
       position: absolute;
       top: 12px;
@@ -579,7 +584,6 @@
   background: rgba(0, 0, 0, 0.6);
   border-radius: 10px;
 }
-
 .explore_share_videoTag {
   position: absolute;
   top: 10px;
@@ -666,4 +670,73 @@
    margin: 32px auto 0;
    text-align: center;
  }
+}
+.nullShop_box{
+  .nullShop_img{
+    margin: 64px 225px 0;
+    width: 300px;
+    height: 300px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/nullmerchantShop.png") no-repeat;
+    background-size: 100% 100%;
+  }
+ .nullShop_font{
+   text-align: center;
+   height: 28px;
+   font-size: 28px;
+   font-family: PingFangSC-Regular, PingFang SC;
+   font-weight: 400;
+   color: #999999;
+   margin-top: 32px;
+ }
+}
+
+.nullMerchantFav_box{
+  .nullMerchantFav_img{
+    margin:64px 225px 0;
+    width: 300px;
+    height: 300px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/nullMerchantss.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .nullMerchantFav_font{
+    text-align: center;
+    height: 28px;
+    font-size: 28px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #999999;
+    margin-top: 32px;
+  }
+  .nullMerchantFav_img_title{
+    margin-top: 80px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    padding-bottom: 40px;
+  }
+}
+.nullGoodsFav_box{
+  .nullGoodsFav_img{
+    margin:64px 225px 0;
+    width: 300px;
+    height: 300px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/nullGoodsss.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .nullGoodsFav_font{
+    text-align: center;
+    height: 28px;
+    font-size: 28px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #999999;
+    margin-top: 32px;
+  }
+  .nullGoodsFav_img_title{
+    margin-top: 80px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    padding-bottom: 40px;
+  }
 }

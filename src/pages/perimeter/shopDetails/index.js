@@ -4,28 +4,30 @@ import {Image, ScrollView, Text, View} from '@tarojs/components'
 import Banner from '@/components/banner'
 import {perimeter} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
+import {nullShop} from '@/components/publicShopStyle'
 import classNames from 'classnames'
 import {
   backgroundObj,
   GetDistance,
   filterSetting,
   filterStrList,
-  filterWeek
+  filterWeek,
+  navigateTo
 } from '@/common/utils'
 import {exploreShop,shopCard,shopGoodsDetails} from '@/components/publicShopStyle'
 import MakePhone from '@/components/payTelephone'
+import Lovely from '@/components/lovely'
 import './index.scss'
-import {navigateTo} from "../../../common/utils";
 class MerchantDetails extends Component{
   constructor () {
     super(...arguments)
     this.state ={
       httpData: {
-        kolGoodsId: getCurrentInstance().router.params.kolGoodsId||'',
+        kolActivityId: getCurrentInstance().router.params.kolActivityIdString||'',
         merchantId: getCurrentInstance().router.params.merchantId||''
       },
       httpDataById: {
-        goodsId: getCurrentInstance().router.params.kolGoodsId||'',
+        kolActivityId: getCurrentInstance().router.params.kolActivityIdString||'',
         merchantId: getCurrentInstance().router.params.merchantId||'',
       },
       lnt: Taro.getStorageSync('lnt'),
@@ -91,7 +93,8 @@ class MerchantDetails extends Component{
       goodsIdString,
       merchantIdString,
       allImgs,
-      goodsDescImg
+      goodsDescImg,
+      kolActivityIdString
     },
       kolGoodsInfo,
       kolMomentsInfo,
@@ -151,7 +154,7 @@ class MerchantDetails extends Component{
 
             </View>
             <View className='shopdetails_getPrice'>
-              <View className='shopdetails_getPrice_tag'>{goodsStock ==='0'?'剩余数量'+goodsStock : '已售罄'}</View>
+              <View className='shopdetails_getPrice_tag'>{goodsStock !=='0'?'剩余数量'+goodsStock : '已售罄'}</View>
             </View>
           </View>
           {/*达人推荐*/}
@@ -237,7 +240,7 @@ class MerchantDetails extends Component{
             </View>
             <View
               className='shopdetails_shop_goshop'
-              onClick={() => navigateTo(`/pages/goods/configOrder/index?kolGoodsId=${goodsIdString}&merchantId=${merchantIdString}&kolMomentsId=${kolMomentsId}`)}>
+              onClick={() => navigateTo(`/pages/goods/configOrder/index?kolActivityId=${kolActivityIdString}&merchantId=${merchantIdString}&kolMomentsId=${kolMomentsId}`)}>
               立即购买
             </View>
           </View>
@@ -251,7 +254,14 @@ class MerchantDetails extends Component{
         </View>
       )
     }
-    else  return null
+    else  return (
+      <View>
+        {nullShop()}
+        <View className='make_youLove'>
+          <Lovely></Lovely>
+        </View>
+      </View>
+    )
   }
 }
 export default MerchantDetails

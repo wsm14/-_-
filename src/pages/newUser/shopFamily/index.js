@@ -84,7 +84,6 @@ class Index extends Component {
   errorToast(e) {
   }
   render () {
-
     const {merchant,merchant:{totalCount},userMerchantList,countStatus} = this.state
     return (
       <View className='page_family'>

@@ -1,7 +1,4 @@
 export const wxapiGet = {
-  wechatAuth: '/user/wechat/auth',//小程序授权
-  wechatBindMobile: '/user/wechat/bindMobileByWechatXcx',//小程序绑定手机
-  wechatBindData: '/user/wechat/getEncryptedData',// /小程序获取加密数据
   wechatBanner: '/common/banner/listBanner',  //轮播图
   wechatConditions: '/user/userMerchant/listAllBySearchConditions', //周边商家列表
   wechatMerchantList: '/user/userMerchant/recommendMerchantList',//首页猜你喜欢
@@ -107,9 +104,14 @@ export const perimeter = {
     getGoodsDetail: '/user/kolGoods/getKolGoodsDetail',//kol商品详情
   },
   merchantDetails: {
-    getMomentByMerchantId: '/user/kolMoments/listKolMomentByMerchantId'
+    getMomentByMerchantId: '/user/kolMoments/listKolMomentByMerchantId',
+    getListMerchant: '/user/goods/listAllPutShelfGoodsByMerchantId',
   },
-   getSpecialGoodsDetail: '/user/specialGoods/getSpecialGoodsDetail'
+  getListCategory: '/common/category/listCategoryByParentId',//获取周边带货分类
+  getSpecialGoodsDetail: '/user/specialGoods/getSpecialGoodsDetail',//获取周边商品详情
+  getSpecialGoodsMerchant: '/user/userMerchant/searchSpecialGoodsMerchant',//搜索存在特价商品的商家列表
+  getMerchantSpecialGoods: '/user/specialGoods/listMerchantSpecialGoods',//查询商家的特价商品
+
 }
 export const goods = {
    configOrder: {

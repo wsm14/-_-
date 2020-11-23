@@ -4,16 +4,7 @@ import {View} from '@tarojs/components'
 import {index} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import {
-  filterLogin,
-  navigateTo,
-  backgroundObj,
-  setPeople,
-  computedHeight,
-  filterTime,
-  NavHeight,
   toast,
-  GetDistance,
-  goDown,
   filterGoodsStatus
 } from '@/common/utils'
 import Tabs from '@/components/tabs'
@@ -41,7 +32,6 @@ class Index extends Component {
       countStatus: true
     }
   }
-  //获取个人足迹
   setIndex(index) {
     if(index != this.state.setting.current){
       this.setState({

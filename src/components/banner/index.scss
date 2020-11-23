@@ -3,6 +3,9 @@
   height: 100%;
   position: relative;
 }
+.bordersRadius{
+  border-radius: 20px;
+}
 .banner_toast{
   position: absolute;
   left: 0;
@@ -30,9 +33,9 @@
 .show_near{
   position: absolute;
   height: 6px;
-  top: 460px;
   left: 0;
   right: 0;
+  bottom: 24px;
   display: flex;
   justify-content: center;
   .show_near_linerTrue{

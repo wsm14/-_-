@@ -441,4 +441,27 @@ page {
     height: 36px;
     margin-right: 8px;
   }
+  .report_layer_byUser{
+    position: fixed;
+    z-index: 1111;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .report_layer_btn{
+      width: 280px;
+      height: 70px;
+      background: #07C0C2;
+      line-height: 70px;
+      font-size:32px;
+      color: #FFFFFF;
+      text-align: center;
+      border-radius: 36px;
+      font-weight: bold;
+    }
+  }
 }

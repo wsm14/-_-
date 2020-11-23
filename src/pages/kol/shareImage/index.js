@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
-import {View, Text} from '@tarojs/components'
+import {View, Text, CoverView} from '@tarojs/components'
 import GetBeanCanvas from '@/components/getBeanCanvas'
 import StopBean from '@/components/stopBean'
 import Nav from '@/components/nav'
@@ -25,7 +25,8 @@ import {
   saveFall,
   toast,
   onShareFriend,
-  onTimeline
+  onTimeline,
+  objStatus
 } from '@/common/utils'
 import './index.scss'
 
@@ -54,7 +55,8 @@ class Index extends Component {
       shareStatus: getCurrentInstance().router.params.type || '',
       stopStatus: false,
       getBeanNow: false,
-      lookStatus: '1'
+      lookStatus: '1',
+      reportStatus: false
     }
   }
 
@@ -199,7 +201,7 @@ class Index extends Component {
                 interval: setIntive(this.state.time, this.getBean.bind(this)),
               })
             })
-          } else if (this.state.kolMomentsInfo.watchStatus == 0 && (this.state.time||this.state.time===0)) {
+          } else if (this.state.kolMomentsInfo.watchStatus == 0 && (this.state.time || this.state.time === 0)) {
             this.initInterval()
           }
         })
@@ -270,10 +272,11 @@ class Index extends Component {
     })
   }//设置定时器领取卡豆
   saveBean() {
-    const {kolMomentsInfo: {kolMomentId,userIdString}, kolMomentsInfo} = this.state
+    const {kolMomentsInfo: {kolMomentId, userIdString}, kolMomentsInfo} = this.state
     const {shareDetails: {saveWatch}} = kol
     httpPost({
-      data: {momentId: kolMomentId,
+      data: {
+        momentId: kolMomentId,
         momentUserId: userIdString
       },
       url: saveWatch
@@ -320,7 +323,9 @@ class Index extends Component {
       this.state.linkFn && this.state.linkFn()
     })
   }
-
+  componentDidHide() {
+    this.stopInterval(this.state.interval)
+  }
   render() {
     const {
       kolMomentsInfo,
@@ -348,11 +353,13 @@ class Index extends Component {
         interactionTime,
         merchantCityName,
         length,
-        goodsIdString,
+        kolActivityIdString,
         goodsName,
         goodsPrice,
         userLevel,
-        userLevelImage
+        userLevelImage,
+        kolMomentId,
+        contentType
       },
       time,
       visible,
@@ -361,156 +368,176 @@ class Index extends Component {
       beanSet,
       shareStatus,
       stopStatus,
-      lookStatus
+      lookStatus,
+      reportStatus
     } = this.state
-    console.log(kolMomentsInfo)
-    return (
-      <View className='shareImage_box'>
-        {shareStatus == 'share' &&
-        <APPShare
-          {...{
-            content: '我在哒卡乐发了一篇有趣的图文',
-            userId: getCurrentInstance().router.params.shareUserId,
-            jumpObj: {
-              jumpUrl: 'MomentImageKol',
-              momentId: getCurrentInstance().router.params.kolMomentId,
-              type: 'jumpToPage',
-              jumpType: "native",
-              path: 'DKLShareKOLImagePlayerViewController',
-              params: {momentId: getCurrentInstance().router.params.kolMomentId}
-            }
-          }
-          }>
-        </APPShare>}
-        {stopStatus &&
-        <StopBean
-          canfirm={() => this.canfirm()}
-          cancel={() => this.cancel()}
+    if (objStatus(kolMomentsInfo)) {
+      return (
+        <View className='shareImage_box'
+              onLongPress={() => this.setState({
+                reportStatus: true
+         })}
         >
-        </StopBean>
-        }
-        <Banner {...bannerSetting}></Banner>
-        <View className='shareImage_details'>
-          <View className='sharekol_Image'>
-            <View className='shareImage_shopDetails'
-            >
-              <View
-                className='shareImage_shopProfile'
-                style={backgroundObj(merchantCover)}
-                onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`))}
-              >
-              </View>
-              <View className='shareImage_shopFont'>
-                <View className='shareImage_shopName font_hide'>{merchantName}</View>
-                <View
-                  className='shareImage_shopTag font_hide'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange + ' | ' + merchantAddress}</View>
-              </View>
-            </View>
-            <View className='shareImage_merchant'
-                  onClick={() => this.link_stop(() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`))}
-            >
-
-            </View>
-          </View>
-          {/*//商家详情*/}
-          {goodsIdString &&
-          <View className='shareImage_shop_couponBox'>
-            {/*<View className='public_center image_coupon_box'>*/}
-            {/*  <View className='image_coupon_icon'></View>*/}
-            {/*  <View className='image_coupon_font'>看完领券</View>*/}
-            {/*</View>*/}
-            <View className='image_goshop public_center'
-                  onClick={() =>
-                    this.link_stop(() => navigateTo(`/pages/perimeter/shopDetails/index?merchantId=${merchantIdString}&kolGoodsId=${goodsIdString}&kolMomentsId=${getCurrentInstance().router.params.kolMomentId}`))}
-            >
-              <View className='image_shop_icon'></View>
-              <View className='image_shop_font'>
-                <Text className='goods_image_shop font_hide'>{goodsName || '--'}</Text>
-                <Text style={{fontSize: Taro.pxTransform(20)}}>{' ¥ '}</Text>
-                <Text style={{fontSize: Taro.pxTransform(28)}}>{goodsPrice || '0'}</Text>
-              </View>
-            </View>
-          </View>
+          {shareStatus == 'share' &&
+          <APPShare
+            {...{
+              content: '我在哒卡乐发了一篇有趣的图文',
+              userId: getCurrentInstance().router.params.shareUserId,
+              jumpObj: {
+                jumpUrl: 'MomentImageKol',
+                momentId: getCurrentInstance().router.params.kolMomentId,
+                type: 'jumpToPage',
+                jumpType: "native",
+                path: 'DKLShareKOLImagePlayerViewController',
+                params: {momentId: getCurrentInstance().router.params.kolMomentId}
+              }
+            }
+            }>
+          </APPShare>}
+          {stopStatus &&
+          <StopBean
+            canfirm={() => this.canfirm()}
+            cancel={() => this.cancel()}
+          >
+          </StopBean>
           }
-          <View className='shareImage_title'>
-            {title}
-          </View>
-          {/*//文章名称*/}
-          {this.kolStatus() && topicId && topicName &&
-          <View className='shareImage_conversation font_hide'>
-            #{topicName}
-          </View>}
-          {/*//文章话题*/}
-          <View className='shareImage_dec'>
-            {message}
-          </View>
-          {/*//文章详情*/}
-          <View className='shareImage_time'>
-            {'发布于' + interactionTime}
-          </View>
-          {/*//文章时间*/}
-        </View>
-        <View className={('animated fadeInUp shareImages_details_box')}>
-          <View style={{display: 'flex', alignItems: 'center'}}>
-            <View className='shareImages_userProfile' style={backgroundObj(userProfile)}
-                  onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`))}
-            >
-            </View>
-           <View className='shareImages_tipIcon'style={backgroundObj(userLevelImage)}></View>
-            <View className='shareImages_userName font_hide'>
-              {username}
-            </View>
-            <View
-              onClick={(e) => this.followStatus(e)}
-              className={classNames(userFollowStatus === '0' ? 'shareImages_installNow' : 'shareImages_install')}>
-              {userFollowStatus === '0' ? '关注' : '已关注'}
-            </View>
-          </View>
-          <View style={{display: 'flex', alignItems: 'center', minWidth: Taro.pxTransform(220)}}>
-            <View onClick={() => this.fallStatus()}
-                  className={classNames('shareImages_icon_size', userLikeStatus === '1' ? 'shareImages_zd_icon2' : 'shareImages_zd_icon1')}>
-
-            </View>
-            <View className='shareImages_icon_num'>
-              {setPeople(likeAmount)}
-            </View>
-            {this.kolStatus() &&
-            <View style={{display: 'flex', alignItems: 'center'}}>
-              <View
-                className={classNames('shareImages_icon_size', momentCollectionStatus === '1' ? 'shareImages_shoucang_icon2' : 'shareImages_shoucang_icon1')}
-                onClick={() => this.collectionStatus()}
+          <Banner {...bannerSetting}></Banner>
+          <View className='shareImage_details'>
+            <View className='sharekol_Image'>
+              <View className='shareImage_shopDetails'
               >
+                <View
+                  className='shareImage_shopProfile'
+                  style={backgroundObj(merchantCover)}
+                  onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`))}
+                >
+                </View>
+                <View className='shareImage_shopFont'>
+                  <View className='shareImage_shopName font_hide'>{merchantName}</View>
+                  <View
+                    className='shareImage_shopTag font_hide'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange + ' | ' + merchantAddress}</View>
+                </View>
+              </View>
+              <View className='shareImage_merchant'
+                    onClick={() => this.link_stop(() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`))}
+              >
+
+              </View>
+            </View>
+            {/*//商家详情*/}
+            {kolActivityIdString &&
+            <View className='shareImage_shop_couponBox'>
+              {/*<View className='public_center image_coupon_box'>*/}
+              {/*  <View className='image_coupon_icon'></View>*/}
+              {/*  <View className='image_coupon_font'>看完领券</View>*/}
+              {/*</View>*/}
+              <View className='image_goshop public_center'
+                    onClick={() =>
+                      this.link_stop(() => navigateTo(`/pages/perimeter/shopDetails/index?merchantId=${merchantIdString}&kolActivityIdString=${kolActivityIdString}&kolMomentsId=${getCurrentInstance().router.params.kolMomentId}`))}
+              >
+                <View className='image_shop_icon'></View>
+                <View className='image_shop_font'>
+                  <Text className='goods_image_shop font_hide'>{goodsName || '--'}</Text>
+                  <Text style={{fontSize: Taro.pxTransform(20)}}>{' ¥ '}</Text>
+                  <Text style={{fontSize: Taro.pxTransform(28)}}>{goodsPrice || '0'}</Text>
+                </View>
+              </View>
+            </View>
+            }
+            <View className='shareImage_title'>
+              {title}
+            </View>
+            {/*//文章名称*/}
+            {this.kolStatus() && topicId && topicName &&
+            <View className='shareImage_conversation font_hide'>
+              #{topicName}
+            </View>}
+            {/*//文章话题*/}
+            <View className='shareImage_dec'>
+              {message}
+            </View>
+            {/*//文章详情*/}
+            <View className='shareImage_time'>
+              {'发布于' + interactionTime}
+            </View>
+            {/*//文章时间*/}
+          </View>
+          <View className={('animated fadeInUp shareImages_details_box')}>
+            <View style={{display: 'flex', alignItems: 'center'}}>
+              <View className='shareImages_userProfile' style={backgroundObj(userProfile)}
+                    onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`))}
+              >
+              </View>
+              <View className='shareImages_tipIcon' style={backgroundObj(userLevelImage)}></View>
+              <View className='shareImages_userName font_hide'>
+                {username}
+              </View>
+              <View
+                onClick={(e) => this.followStatus(e)}
+                className={classNames(userFollowStatus === '0' ? 'shareImages_installNow' : 'shareImages_install')}>
+                {userFollowStatus === '0' ? '关注' : '已关注'}
+              </View>
+            </View>
+            <View style={{display: 'flex', alignItems: 'center', minWidth: Taro.pxTransform(220)}}>
+              <View onClick={() => this.fallStatus()}
+                    className={classNames('shareImages_icon_size', userLikeStatus === '1' ? 'shareImages_zd_icon2' : 'shareImages_zd_icon1')}>
+
               </View>
               <View className='shareImages_icon_num'>
-                {setPeople(collectionAmount)}
+                {setPeople(likeAmount)}
               </View>
+              {this.kolStatus() &&
+              <View style={{display: 'flex', alignItems: 'center'}}>
+                <View
+                  className={classNames('shareImages_icon_size', momentCollectionStatus === '1' ? 'shareImages_shoucang_icon2' : 'shareImages_shoucang_icon1')}
+                  onClick={() => this.collectionStatus()}
+                >
+                </View>
+                <View className='shareImages_icon_num'>
+                  {setPeople(collectionAmount)}
+                </View>
+              </View>
+              }
             </View>
-            }
           </View>
+          {beanSet &&
+          <GetBeanCanvas
+            beanStatus={watchStatus}
+            beanNum={beanAmount}
+            interval={time}
+            length={length}
+            lookStatus={lookStatus}
+          >
+          </GetBeanCanvas>
+          }
+          {toast &&
+          <Toast
+            data={kolMomentsInfo}
+            visible={() => {
+              this.setState({
+                toast: false,
+                lookStatus: '1'
+              })
+            }}
+          >
+          </Toast>}
+          {shareStatus !== 'share' &&
+          reportStatus &&
+          <CoverView className='report_layer_byUser' onClick={(e) => {
+            e.stopPropagation();
+            this.setState({reportStatus: false})
+          }}>
+            <CoverView className='report_layer_btn'
+                       onClick={(e) =>
+                         navigateTo(`/pages/kol/report/index?name=${username}&momentsId=${kolMomentId}&pushUserId=${userIdString}&momentsType=${contentType}`)}>
+              举报
+            </CoverView>
+          </CoverView>
+          }
         </View>
-        {beanSet &&
-        <GetBeanCanvas
-          beanStatus={watchStatus}
-          beanNum={beanAmount}
-          interval={time}
-          length={length}
-          lookStatus={lookStatus}
-        >
-        </GetBeanCanvas>
-        }
-        {toast &&
-        <Toast
-          data={kolMomentsInfo}
-          visible={() => {
-            this.setState({
-              toast: false,
-              lookStatus: '1'
-            })
-          }}
-        >
-        </Toast>}
-      </View>
-    )
+      )
+    }
+    return null
   }
 }
 

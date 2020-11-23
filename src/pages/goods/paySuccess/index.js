@@ -4,7 +4,7 @@ import {Text, View} from "@tarojs/components";
 import {goods} from '@/api/api'
 import {httpGet, httpPost} from '@/api/newRequest'
 import './index.scss'
-import {toast, backgroundObj, filterActive,goBack,switchTab} from "@/common/utils";
+import {toast, backgroundObj, filterActive,goBack,switchTab,filterGoods} from "@/common/utils";
 import Title from './components/goodsTitle'
 import ShopCard from './components/descriptionCard'
 import Lovely from '@/components/lovely'
@@ -36,7 +36,7 @@ class Index extends Component {
     }, res => {
       const {orderResult} = res
       this.setState({
-        orderResult
+        orderResult:filterGoods(orderResult)
       })
     })
   }

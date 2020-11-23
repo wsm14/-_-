@@ -28,7 +28,6 @@ export const redirectTo = (url) => {
   })
   //重定向
 }
-
 export const switchTab = (url) => {
   Taro.switchTab({
     url: url
@@ -295,21 +294,6 @@ export const onTimeline = (option) => {
   }
 }
 //设置分享朋友圈
-export const setLocation = (fn) => {
-  Taro.getLocation({
-    type: 'wgs84',
-    success: (res) => {
-      var latitude = res.latitude
-      var longitude = res.longitude
-      var speed = res.speed
-      var accuracy = res.accuracy;
-      fn && fn(res)
-    },
-    fail: function (res) {
-      console.log('fail' + JSON.stringify(res))
-    }
-  })
-}
 export const filterLimit = number => {
   if (number < 1) {
     return (number * 1000) + 'm'
@@ -439,12 +423,19 @@ export const filterGoodsStatus = (status) => {
   }
 }
 //订单列表索引映射状态值
-
+export const objStatus = (obj) => {
+   if(Object.keys(obj).length > 0){
+     return true
+   }
+   return false
+}
 export const filterWeek = (str) => {
   let string = []
-  if (str) {
+  if(str && str.includes('1,2,3,4,5,6,7')){
+    return '每天'
+  }
+  else if (str) {
     string = str.split(',')
-    console.log(string)
     string = string.map(item => {
       if (item == '1') {
         return item = '一'
@@ -472,3 +463,32 @@ export const getLat = () => {
 export const getLnt = () => {
   return Taro.getStorageSync('lnt')
 }
+export const getDom = (id,fn) => {
+ Taro.createSelectorQuery().selectAll(id).boundingClientRect(function (rect) {
+   fn(rect)
+  }).exec()
+}
+export const filterGoods = (data) => {
+  let {orderDesc} = data
+  orderDesc = JSON.parse(orderDesc)
+  let {kolGoods} = orderDesc
+  if(!kolGoods){
+    orderDesc.kolGoods =  orderDesc.specialGoods
+    orderDesc  = JSON.stringify(orderDesc)
+    return {
+      ...data,
+      orderDesc:orderDesc
+    }
+  }
+  else return data
+}
+export const removeLogin = () => Taro.removeStorage({
+  key: 'userInfo',
+  success: res => {
+
+  },
+  fail: res => {
+    toast('缓存清理错误')
+  }
+})
+//返回dom节点

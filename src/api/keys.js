@@ -29,9 +29,6 @@ function setString(randomFlag, min, max) {
 }
 
 function sort(obj) {
-  if(Taro.getStorageSync('token') && Taro.getStorageSync('token') !== ""){
-    obj.token = Taro.getStorageSync('token')
-  }
   let setObj = {
     ...obj,
   }
@@ -58,7 +55,7 @@ function Conversion(obj) {
 }
 function filterObj(obj) {
   Object.keys(obj).forEach(item => {
-    if(obj[item] ==null ||obj[item] ==undefined){
+    if(obj[item] ==null ||obj[item] ==undefined || obj[item] ==''){
       delete obj[item]
     }
   })

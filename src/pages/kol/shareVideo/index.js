@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
-import {View, Text} from '@tarojs/components'
+import {View, Text, CoverView} from '@tarojs/components'
 import GetBeanCanvas from '@/components/getBeanCanvas'
 import StopBean from '@/components/stopBean'
 import Modal from '@/components/modal'
@@ -45,7 +45,8 @@ class Index extends Component {
       viewFlag: true,
       stopStatus: false,
       decStatus: true,
-      lookStatus: '1'
+      lookStatus: '1',
+      reportStatus: false
     }
   }
 
@@ -94,7 +95,7 @@ class Index extends Component {
               interval: setIntive(this.state.time, this.getBean.bind(this)),
             })
           })
-        } else if (this.state.kolMomentsInfo.watchStatus == 0 &&  (this.state.time||this.state.time===0)) {
+        } else if (this.state.kolMomentsInfo.watchStatus == 0 && (this.state.time || this.state.time === 0)) {
           this.initInterval()
         }
       })
@@ -111,10 +112,11 @@ class Index extends Component {
     })
   }//设置定时器领取卡豆
   saveBean() {
-    const {kolMomentsInfo: {kolMomentId,userIdString}, kolMomentsInfo} = this.state
+    const {kolMomentsInfo: {kolMomentId, userIdString}, kolMomentsInfo} = this.state
     const {shareDetails: {saveWatch}} = kol
     httpPost({
-      data: {momentId: kolMomentId,
+      data: {
+        momentId: kolMomentId,
         momentUserId: userIdString
       },
       url: saveWatch
@@ -309,7 +311,9 @@ class Index extends Component {
       fn && fn()
     }
   }
-
+  componentDidHide() {
+    this.stopInterval(this.state.interval)
+  }
   canfirm() {
     this.setState({
       stopStatus: false,
@@ -365,14 +369,18 @@ class Index extends Component {
         length,
         goodsName,
         goodsPrice,
-        goodsIdString,
-        userLevelImage
+        kolActivityIdString,
+        userLevelImage,
+        kolMomentId,
+        contentType
+
       },
       time,
       shareStatus,
       viewFlag,
       stopStatus,
-      lookStatus
+      lookStatus,
+      reportStatus
     } = this.state
     return (
       <View className='shareVideo_box'>
@@ -403,6 +411,10 @@ class Index extends Component {
           onTouchStart={(e) => {
             touch.touchStart(e)
           }}
+
+          onLongPress={() => this.setState({
+            reportStatus: true
+          })}
           onClick={
             (e) => touch.multipleTap(e, () => this.setState({viewFlag: !this.state.viewFlag}))}
           className='shareVideo_setting'>
@@ -415,12 +427,12 @@ class Index extends Component {
         </View>
         <View style={!viewFlag ? {visibility: 'hidden'} : {}}>
           <View className={('animated fadeInUp shareVideo_details_box')}>
-            <View style={{display:'flex',alignItems:'center'}}>
+            <View style={{display: 'flex', alignItems: 'center'}}>
               <View className='shareVideo_userProfile' style={backgroundObj(userProfile)}
                     onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`))}
               >
               </View>
-             <View className='shareVideo_tipIcon' style={backgroundObj(userLevelImage)}>
+              <View className='shareVideo_tipIcon' style={backgroundObj(userLevelImage)}>
 
               </View>
               <View className='shareVideo_userName font_hide'>
@@ -432,7 +444,7 @@ class Index extends Component {
                 {userFollowStatus === '0' ? '关注' : '已关注'}
               </View>
             </View>
-            <View style={{display:'flex',alignItems:'center',minWidth:Taro.pxTransform(220)}}>
+            <View style={{display: 'flex', alignItems: 'center', minWidth: Taro.pxTransform(220)}}>
               <View onClick={() => this.fallStatus()}
                     className={classNames('shareVideo_icon_size', userLikeStatus === '1' ? 'shareVideo_zd_icon2' : 'shareVideo_zd_icon1')}>
 
@@ -455,21 +467,21 @@ class Index extends Component {
             </View>
           </View>
           {this.kolStatus() && <View className='bounceInUp animated shareVideo_shop'>
-            {goodsIdString &&
+            {kolActivityIdString &&
             <View className='shareVideo_shop_couponBox'>
               {/*<View className='public_center coupon_box'>*/}
               {/*  <View className='coupon_icon'></View>*/}
               {/*  <View className='coupon_font'>看完领券</View>*/}
               {/*</View>*/}
               <View className='goshop public_center'
-              onClick={() =>
-                this.link_stop(() => navigateTo(`/pages/perimeter/shopDetails/index?merchantId=${merchantIdString}&kolGoodsId=${goodsIdString}&kolMomentsId=${getCurrentInstance().router.params.kolMomentId}`))}
+                    onClick={() =>
+                      this.link_stop(() => navigateTo(`/pages/perimeter/shopDetails/index?merchantId=${merchantIdString}&kolActivityIdString=${kolActivityIdString}&kolMomentsId=${getCurrentInstance().router.params.kolMomentId}`))}
               >
                 <View className='shop_icon'></View>
                 <View className='shop_font font_hide'>
                   <Text className='shop_video_good font_hide'>{goodsName}</Text>
-                  <Text style={{fontSize:Taro.pxTransform(20)}}>{' ¥ '}</Text>
-                  <Text style={{fontSize:Taro.pxTransform(28)}}>{goodsPrice}</Text>
+                  <Text style={{fontSize: Taro.pxTransform(20)}}>{' ¥ '}</Text>
+                  <Text style={{fontSize: Taro.pxTransform(28)}}>{goodsPrice}</Text>
                 </View>
               </View>
             </View>
@@ -486,7 +498,7 @@ class Index extends Component {
                 <View className='shareVideo_shopFont'>
                   <View className='shareVideo_shopName font_hide'>{merchantName}</View>
                   <View
-                    className='shareVideo_shopTag font_hide'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange+' | '+merchantAddress}</View>
+                    className='shareVideo_shopTag font_hide'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange + ' | ' + merchantAddress}</View>
                 </View>
               </View>
               <View className='shareVideo_merchant'
@@ -538,6 +550,16 @@ class Index extends Component {
           </Toast>
           }
         </View>
+        {shareStatus !== 'share' &&
+         reportStatus &&
+           <CoverView className='report_layer_byUser' onClick={(e) => {e.stopPropagation(); this.setState({reportStatus: false})}}>
+             <CoverView className='report_layer_btn'
+                        onClick={(e) =>
+                          navigateTo(`/pages/kol/report/index?name=${username}&momentsId=${kolMomentId}&pushUserId=${userIdString}&momentsType=${contentType}`) }>
+               举报
+             </CoverView>
+           </CoverView>
+        }
       </View>
     )
   }
