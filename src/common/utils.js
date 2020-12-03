@@ -14,6 +14,7 @@
 import Taro from '@tarojs/taro'
 import {user} from '@/api/api'
 import {httpPost} from '@/api/newRequest'
+import {View} from "@tarojs/components";
 // import moment from 'moment'
 export const navigateTo = (url) => {
   Taro.navigateTo({

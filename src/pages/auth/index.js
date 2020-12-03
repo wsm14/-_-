@@ -75,12 +75,19 @@ class Index extends Component {
       const {encryptedData, iv, rawData, userInfo: {nickName, gender, avatarUrl}} = e.detail
       if (errMsg === 'getUserInfo:ok') {
         getUserInfo({avatarUrl, gender, nickName, encryptedData, iv, openId, unionId}, res => {
-          Taro.setStorageSync('userInfo', res.userInfo)
-          this.setState({
-            btnStatus: 1,
-            unionId: res.userInfo.unionId,
-            visible: true
-          })
+          const {mobile} = res.userInfo
+          if(mobile && mobile.length ===11){
+            Taro.setStorageSync('userInfo', res.userInfo)
+            return  goBack(() =>toast('登录成功'))
+          }
+          else {
+            Taro.setStorageSync('userInfo', res.userInfo)
+            this.setState({
+              btnStatus: 1,
+              unionId: res.userInfo.unionId,
+              visible: true
+            })
+          }
         })
       } else {
         toast('授权用户信息失败')

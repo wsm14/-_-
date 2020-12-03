@@ -34,7 +34,7 @@ export const wxapiPost = {
   wechatBeanDetail: '/user/beanDetail/saveWatchBeanDetailByUserId',//看视频获取卡豆
   wechatBeanMark: '/user/beanDetail/saveMarkBeanDetailByUserId',//打卡获取卡豆
   wechatPayOrder: '/user/pay/adapay/payOrder',// 扫码支付
-  wechatPayDelayOrder: '/user/pay/adapay/payDelayOrder'// kol下单
+  wechatPayDelayOrder: '/user/pay/adapay/payDelayOrder'// 下单
 }
 
 export const user = {

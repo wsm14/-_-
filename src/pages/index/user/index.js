@@ -168,7 +168,7 @@ class Index extends React.Component {
               )
             }}></View>
           </View>
-          <View className='user_surplus_center'>
+          <View onClick={() => navigateTo('/pages/newUser/wallet/index')} className='user_surplus_center'>
             <View className='user_surplus_wallet'>
               <View className='color7 font24'>明细</View>
               <View className='user_wallet_box user_decIcon'></View>

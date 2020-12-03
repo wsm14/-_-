@@ -14,4 +14,16 @@ export const getMainPage = (data,fn) => {
     return  fn(res)
   })
 }
+//我的页面数据
+
+export const getBeanDetailByUserId = (data,fn) => {
+  httpGet({
+    url: '/user/beanDetail/listBeanDetailByUserId',
+    data:data
+  },res => {
+    return  fn(res)
+  })
+}
+//我的页面数据
+
 

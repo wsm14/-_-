@@ -33,7 +33,7 @@ class Index extends Component {
           <View className='page_userLever_details'></View>
           <View className='page_userLever_beanBox'>
             <View className='page_userLever_beanDec'>
-              <View className='page_userLever_money page_userLever_moneyPad1'>
+              <View onClick={() => navigateTo('/pages/newUser/rewardDetails/index')} className='page_userLever_money page_userLever_moneyPad1'>
                 <View className='page_userLever_moneyBox  page_userLever_moneyPad1'>
                  奖励卡豆
                   <View className='page_userLever_question'></View>

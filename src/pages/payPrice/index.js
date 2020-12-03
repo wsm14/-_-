@@ -25,10 +25,11 @@ Page({
   },
   onLoad: function (option) {
     let self = this
-    if(option.orderSn && option.payMonth){
+    if(option.orderSn && option.payMonth && option.orderType){
       self.setData({
         orderSn: option.orderSn,
         payMonth: option.payMonth,
+        orderType:option.orderType
       })
     }
     else {
@@ -139,9 +140,9 @@ Page({
   creatGoodsDetails() {
     let self = this
     if(self.data.payMonth.length>0 && self.data.orderSn.length>0){
-      const {orderSn,payMonth} = self.data
+      const {orderSn,payMonth,orderType} = self.data
       Ajax({
-        data: {orderSn,payMonth},
+        data: {orderSn,payMonth,orderType},
         url: wxapiGet.wechatPrepaymentResult
       }, 'get').then(
         res => {

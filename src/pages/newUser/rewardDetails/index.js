@@ -1,11 +1,12 @@
-import React, {Component, useState} from 'react'
+import React, {Component, useState, useRef} from 'react'
 import {View, Text} from '@tarojs/components'
 import Taro from "@tarojs/taro";
 import './index.scss'
-import {toast} from '@/common/utils'
-import {navigateTo} from "../../../common/utils";
+import {navigateTo, marginTags} from "@/common/utils";
 import classNames from 'classnames'
 import Tabs from '@/components/tabs'
+import Earn from './components/earn'
+import {getRootAndParent} from '@/server/common'
 
 class Index extends Component {
   constructor() {
@@ -13,51 +14,36 @@ class Index extends Component {
     this.state = {
       setting: {
         tabList: ['卡豆收入', '卡豆支出', '现金记录'],
+        tabData: [
+          {root: 'userTrade', parent: 'earn'},
+          {root: 'userTrade', parent: 'expenses'},
+          {root: 'userCashTrade'}],
         current: 0
       },
-      visible: false,
       type: 0,
-      testObj: [
-        {
-          list: [{id:'1',name:'嘻嘻嘻'}, {id:'2',name:'哈哈哈'},{id:'3',name: '滴滴滴'}]
-        },
-        {
-          list: [{id:'4',name:'得得得'}, {id:'5',name:'测测测'},{id:'6',name: '哇哇哇'} ]
-        },
-        {
-          list: [{id:'7',name:'嘎嘎嘎嘎'}, {id:'8',name:'得得得而'},{id:'9',name: '嘻嘻'},
-            {id:'10',name:'得得得而'},{id:'11',name: '嘻嘻'}]
-        }
-      ]
+      keyValueList: {
+        '0': [],
+        '1': [],
+        '2': []
+      },
+      checkedIndex: 0
     }
   }
-  setShowLayer(type,boolean) {
-    if(type){
-      this.setState({
-        type:type
-      },res =>{
-        this.setState({
-          visible: boolean
-        })
-      })
-    }
-    else {
-      this.setState({
-        visible: boolean
-      })
-    }
-  }
+
+
+  //显示隐藏弹层
   setType(index) {
     const {type} = this.state
-    if(type ===index){
+    if (type === index) {
       return
-    }
-    else {
+    } else {
       this.setState({
-        type:index
+        type: index
       })
     }
   }
+
+  // 切换查询条件类型
   setIndex(index) {
     if (index != this.state.setting.current) {
       this.setState({
@@ -65,13 +51,44 @@ class Index extends Component {
           ...this.state.setting,
           current: index
         },
+        checkedIndex: 0,
+        visible: false
       })
+      if (this.state.keyValueList[index].length === 0) {
+        getRootAndParent(this.state.setting.tabData[index], (res) => {
+          const {keyValueList} = res
+          keyValueList.unshift({
+            value: "全部类型",
+            child: ''
+          })
+          this.setState({
+            keyValueList: {
+              ...this.state.keyValueList,
+              [index]: keyValueList
+            }
+          })
+        })
+      }
     }
     return
   }
 
-  componentDidMount() {
 
+  //切换查看类型
+  componentDidMount() {
+    getRootAndParent(this.state.setting.tabData[0], (res) => {
+      const {keyValueList} = res
+      keyValueList.unshift({
+        value: "全部类型",
+        child: ''
+      })
+      this.setState({
+        keyValueList: {
+          ...this.state.keyValueList,
+          0: keyValueList
+        }
+      })
+    })
   }
 
   errorToast(e) {
@@ -80,12 +97,17 @@ class Index extends Component {
   render() {
     const {
       setting,
+      setting: {
+        current
+      },
       type,
-      visible
+      visible,
+      keyValueList,
+      checkedIndex
     } = this.state
     const tabStyle = {
       height: Taro.pxTransform(88),
-      borderRadius: '0px',
+      borderRadius: '0px 0px 20px 20px',
       display: 'flex',
       left: '0',
       right: '0',
@@ -98,40 +120,7 @@ class Index extends Component {
     return (
       <View className='rewardDetails_box'>
         <Tabs fn={this.setIndex.bind(this)} style={tabStyle} {...setting}></Tabs>
-        <View className='rewardDetails_selectId'>
-          <View className='rewardDetails_time font24 bold' onClick={() => this.setShowLayer(0,true)}>
-            全部时间 <View className='rewardDetails_icon'></View>
-          </View>
-          <View className='rewardDetails_cad font24 bold' onClick={() => this.setShowLayer(1,true)}>
-            全部类型 <View className='rewardDetails_icon'></View>
-          </View>
-        </View>
-        {visible &&
-        <View className='rewardDetails_layer animated fadeInUp'>
-          <View className='rewardDetails_layer_content'>
-            <View className='rewardDetails_layer_tab'>
-              <View className={classNames('rewardDetails_layer_tabs font24', type === 0 ? 'color4' : 'color1')} onClick={() => this.setType(0)}>
-                全部时间
-                <View
-                  className={classNames('rewardDetails_layer_tabBox', type === 0 ? 'rewardDetails_layer_icon2' : 'rewardDetails_layer_icon1')}>
-                </View>
-              </View>
-              <View className={classNames('rewardDetails_layer_tabs font24', type !== 0 ? 'color4' : 'color1')} onClick={() => this.setType(1)}>
-                全部类型
-                <View
-                  className={classNames('rewardDetails_layer_tabBox', type !== 0 ? 'rewardDetails_layer_icon2' : 'rewardDetails_layer_icon1')}>
-                </View>
-              </View>
-            </View>
-            <View className='rewardDetails_layer_content'>
-              {type === 1 &&
-                <View className='rewardDetails_layer_tagBox'>
-
-                </View>
-              }
-            </View>
-          </View>
-        </View>}
+        <Earn list={keyValueList[0]}></Earn>
       </View>
     )
   }
