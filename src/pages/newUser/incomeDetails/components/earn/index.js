@@ -3,7 +3,7 @@ import Taro, {useReachBottom} from '@tarojs/taro'
 import {Image, Text, View} from "@tarojs/components";
 import classNames from "classnames";
 import PickTimes from "../pickTimes";
-import {getBeanDetailByUserId, getBeanDetail} from '@/server/user'
+import {getListIncome,getIncomeTotalBean} from '@/server/user'
 import {toast} from "@/common/utils";
 import './../../index.scss'
 
@@ -36,7 +36,7 @@ export default function earn({list, showStatus}) {
   const [num, setNum] = useState(0)
   const cRef = useRef()
   const getAllBean = () => {
-    getBeanDetail({
+    getIncomeTotalBean({
       ...httpData,
       detailType: 'add'
     }, res => {
@@ -45,7 +45,7 @@ export default function earn({list, showStatus}) {
     })
   }
   const getRenderList = () => {
-    getBeanDetailByUserId(httpData, res => {
+    getListIncome(httpData, res => {
       const {beanDetailList} = res
       if (beanDetailList && beanDetailList.length > 0) {
         setRenderList([

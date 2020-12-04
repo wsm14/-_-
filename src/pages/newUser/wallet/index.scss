@@ -93,7 +93,7 @@ page {
     }
     .page_userLever_card{
       width: 686px;
-      height: 160px;
+      min-height: 160px;
       background: #FFFFFF;
       border-radius: 8px;
       margin: 24px auto 0;
@@ -107,6 +107,29 @@ page {
         display: flex;
         align-items: center;
         margin: 24px 0 0 32px;
+      }
+      .page_userLever_bankCarkBox{
+        padding-bottom: 40px;
+      }
+      .page_userLever_bankCark{
+        height: 108px;
+        background: #007D38;
+        border-radius: 8px;
+        align-items: center;
+        padding:0 24px;
+        display: flex;
+        margin: 24px 32px 0px;
+        .page_userLever_icon{
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+        }
+        .page_userLever_name{
+          margin-left: 16px;
+        }
+        .page_userLever_bankId{
+          margin-left: auto;
+        }
       }
       .page_userLever_cardGo{
         width: 36px;
@@ -162,5 +185,22 @@ page {
     right: 0;
     height: 24px;
     text-align: center;
+  }
+}
+.point_box{
+  margin: 34px 40px 0;
+  .point_title{
+    height: 28px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 28px;
+  }
+  .point_center{
+    font-size: 28px;
+    font-weight: 400;
+    color: #666666;
+    line-height: 42px;
+    margin: 8px 0 24px;
   }
 }

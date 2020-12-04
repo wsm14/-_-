@@ -18,8 +18,8 @@ class Index extends Component {
       setting: {
         tabList: ['卡豆收入', '卡豆支出', '现金记录'],
         tabData: [
-          {root: 'userTrade', parent: 'earn'},
-          {root: 'userTrade', parent: 'expenses'},
+          {root: 'userIncomeTrade', parent: 'earn'},
+          {root: 'userIncomeTrade', parent: 'expenses'},
           {root: 'userCashTrade'}],
         current: 0
       },
@@ -33,6 +33,8 @@ class Index extends Component {
       visible: true
     }
   }
+
+
   //显示隐藏弹层
   setType(index) {
     const {type} = this.state

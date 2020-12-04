@@ -3,7 +3,7 @@ import Taro, {useReachBottom} from '@tarojs/taro'
 import {Image, Text, View} from "@tarojs/components";
 import classNames from "classnames";
 import PickTimes from "../pickTimes";
-import {getBeanDetailByUserId, getBeanDetail} from '@/server/user'
+import {getCashDetailList, getCashDetail} from '@/server/user'
 import {toast} from "@/common/utils";
 import './../../index.scss'
 
@@ -17,7 +17,7 @@ const marginTags = (list, num, style, components) => {
     })
   )
 }
-export default function earn({list, showStatus}) {
+export default function expenses({list, showStatus}) {
   const [types, setType] = useState({
     visible: false,
     type: 0,
@@ -26,30 +26,28 @@ export default function earn({list, showStatus}) {
   const [renderList, setRenderList] = useState([])
   const [checkedIndex, setIndex] = useState(0)
   const [httpData, setHttpData] = useState({
-    gainMonth: '',
+    tradeMonth: '',
     beanType: '',
     page: 1,
     limit: 10,
-    detailType: 'add'
   })
   const [countStatus, setCountStatus] = useState(true)
   const [num, setNum] = useState(0)
   const cRef = useRef()
   const getAllBean = () => {
-    getBeanDetail({
+    getCashDetail({
       ...httpData,
-      detailType: 'add'
     }, res => {
-      const {beanIncomeNum} = res
-      setNum(beanIncomeNum)
+      const {cashExpensesNum = '0'} = res
+      setNum(cashExpensesNum)
     })
   }
   const getRenderList = () => {
-    getBeanDetailByUserId(httpData, res => {
-      const {beanDetailList} = res
-      if (beanDetailList && beanDetailList.length > 0) {
+    getCashDetailList(httpData, res => {
+      const {cashDetailList} = res
+      if (cashDetailList && cashDetailList.length > 0) {
         setRenderList([
-          ...renderList, ...beanDetailList
+          ...renderList, ...cashDetailList
         ])
       } else {
         setCountStatus(false)
@@ -87,14 +85,14 @@ export default function earn({list, showStatus}) {
             type: 0,
           })}
         >
-          {httpData.gainMonth || '全部时间'} <View className='rewardDetails_icon'></View>
+          {httpData.tradeMonth || '全部时间'} <View className='rewardDetails_icon'></View>
         </View>
         <View className='rewardDetails_cad font24 bold' onClick={() => setType({
           visible: true,
           type: 1,
         })}>
-          {currentList[checkedIndex] && currentList[checkedIndex].value || '全部类型'}<View
-          className='rewardDetails_icon'></View>
+          {currentList[checkedIndex] && currentList[checkedIndex].value || '全部类型'}
+          <View className='rewardDetails_icon'></View>
         </View>
       </View>
       {visible && <View onClick={(e) => {
@@ -149,20 +147,24 @@ export default function earn({list, showStatus}) {
             <View className='rewardDetails_TimeBtn font28 public_auto'>
               <View className='rewardDetails_btnLeft public_center color1' onClick={async () => {
                 await setRenderList([])
+                await setCountStatus(true)
                 await setHttpData({
                   ...httpData,
-                  gainMonth: '',
+                  tradeMonth: '',
                   page: 1,
                 })
                 await setType({
                   ...types,
                   visible: false
                 })
-                await setCountStatus(true)
               }}>全部时间</View>
               <View className='rewardDetails_btnRight public_center color4' onClick={async () => {
                 let dataTime = await cRef.current.getTimes()
+                dataTime = {
+                  tradeMonth: dataTime.gainMonth,
+                }
                 await setRenderList([])
+                await setCountStatus(true)
                 await setHttpData({
                   ...httpData,
                   page: 1,
@@ -172,7 +174,6 @@ export default function earn({list, showStatus}) {
                   ...types,
                   visible: false
                 })
-                await setCountStatus(true)
               }}
               >确认</View>
             </View>
@@ -197,7 +198,6 @@ export default function earn({list, showStatus}) {
                         ...httpData,
                         beanType: item.child,
                         page: 1,
-                        detailType: 'add'
                       })
                     }}
                   >
@@ -212,12 +212,12 @@ export default function earn({list, showStatus}) {
       </View>}
       <View className='rewardDetails_bean_box'>
         <View className='rewardDetails_bean_title'>
-          <Text className='color2 font28'>卡豆收入：</Text>
-          <Text className='color3 font32 bold'>{num}</Text>
+          <Text className='color2 font28'>现金支出：</Text>
+          <Text className='color1 font32 bold'><Text className='font20'>¥ </Text>{num}</Text>
         </View>
         <View className='rewardDetails_bean_content'>
           {renderList.map(item => {
-            const {detailContent = '', detailTitle = '', detailImg, beanTime = '', beanAmount = ''} = item
+            const {detailContent = '', detailTitle = '', detailImg, identificationType, cashTime = '', cashAmount = ''} = item
             return (
               <View className='rewardDetails_bean_tags'>
                 <View className='rewardDetails_bean_tagsPad'>
@@ -230,10 +230,10 @@ export default function earn({list, showStatus}) {
                       {detailTitle + `(${detailContent})`}
                     </View>
                     <View className='rewardDetails_bean_detailsTime'>
-                      {beanTime}
+                      {cashTime}
                     </View>
                   </View>
-                  <View className='rewardDetails_bean_num font32 color1 bold'>+{beanAmount}</View>
+                  <View className='rewardDetails_bean_num font32 color1 bold'>-{cashAmount}</View>
                 </View>
               </View>
             )
