@@ -1,5 +1,7 @@
-import Taro from '@tarojs/taro'
-import {toast,addPhotosAlbum} from '@/common/utils'
+import Taro, {getCurrentInstance, getCurrentPages} from '@tarojs/taro'
+import {toast, addPhotosAlbum} from '@/common/utils'
+import qs from 'qs'
+
 export const setLocation = (fn) => {
   Taro.getLocation({
     type: 'wgs84',
@@ -44,59 +46,58 @@ export const login = (obj) => {
     return '2'
   }
 }
-export const authGeography = (fn,type) => {
+export const authGeography = (fn, type) => {
   Taro.getSetting({
     success: (res) => {
       if (!res.authSetting['scope.userLocation']) {
         Taro.authorize({
           scope: 'scope.userLocation',
           success: res => {
-          if(type){
-            return setMap(fn)
-          }
-          setLocation(fn)
+            if (type) {
+              return setMap(fn)
+            }
+            setLocation(fn)
           },
-          fail: res =>{
+          fail: res => {
             Taro.showModal({
               title: '是否要打开设置页面',
               content: '需要获取您的位置，请到小程序的设置中打开授权',
               success: function (res) {
                 if (res.confirm) {
-                 Taro.openSetting({
-                   success: dataAu => {
-                     if (dataAu.authSetting["scope.userLocation"] == true) {
-                       toast('授权成功',)
-                       //再次授权，调用wx.getLocation的API
-                       if(type){
-                         return setMap(fn)
-                       }
-                       setLocation(fn)
-                     } else {
-                       toast('授权失败')
-                     }
-                   }
-                 })
-                }
-                else if(res.cancel){
+                  Taro.openSetting({
+                    success: dataAu => {
+                      if (dataAu.authSetting["scope.userLocation"] == true) {
+                        toast('授权成功',)
+                        //再次授权，调用wx.getLocation的API
+                        if (type) {
+                          return setMap(fn)
+                        }
+                        setLocation(fn)
+                      } else {
+                        toast('授权失败')
+                      }
+                    }
+                  })
+                } else if (res.cancel) {
                   toast('授权失败')
                 }
               }
             })
           }
         })
-      }
-      else {
-        if(type){
+      } else {
+        if (type) {
           return setMap(fn)
         }
         setLocation(fn)
       }
     },
-    fail:  res  =>{
+    fail: res => {
       toast('授权接口调用失败，请检查网络')
     }
   })
 }
+
 //获取定位
 /*
 *
@@ -113,7 +114,7 @@ export const authPhotosAlbum = (path) => {
           success: res => {
             addPhotosAlbum(path)
           },
-          fail: res =>{
+          fail: res => {
             Taro.showModal({
               title: '是否要打开设置页面',
               content: '需要您设置保存照片权限',
@@ -129,20 +130,18 @@ export const authPhotosAlbum = (path) => {
                       }
                     }
                   })
-                }
-                else if(res.cancel){
+                } else if (res.cancel) {
                   toast('授权失败')
                 }
               }
             })
           }
         })
-      }
-      else {
+      } else {
         addPhotosAlbum(path)
       }
     },
-    fail:  res  =>{
+    fail: res => {
       toast('授权接口调用失败，请检查网络')
     }
   })
@@ -152,7 +151,7 @@ export const authWxLogin = (fn) => {
   Taro.login({
     success: function (res) {
       if (res.code) {
-         fn  &&  fn(res.code)
+        fn && fn(res.code)
       } else {
         toast('获取用户登录态失败！' + res.errMsg)
       }
@@ -160,20 +159,42 @@ export const authWxLogin = (fn) => {
   })
 }
 //微信openId
-export const internet = (obj,fn) => {
-  Taro.onNetworkStatusChange(function (res){
-    const {isConnected,networkType} = res
-    if(isConnected == false && networkType =='none'){
+export const internet = (obj, fn) => {
+  Taro.onNetworkStatusChange(function (res) {
+    const {isConnected, networkType} = res
+    if (isConnected == false && networkType == 'none') {
       Taro.showToast({
         title: '网络错误',
         icon: 'none',
         duration: 2000
       })
-    }
-    else {
-      if(Object.keys(obj).length<5){
+    } else {
+      if (Object.keys(obj).length < 5) {
         fn && fn();
       }
+    }
+  })
+}
+//网络环境
+export const scanCode = (fn) => {
+  Taro.scanCode({
+    onlyFromCamera: false,
+    success: results => {
+      const {path, scanType, result} = results
+      if (scanType === 'QR_CODE') {
+        let data = qs.parse(result.split('?')[1])
+        if (result.includes('https://www.dakale.net') && data.action === 'pay' && data.merchantId) {
+          return fn && fn(data)
+        } else if (result.includes('https://www.dakale.net') && data.action === 'mark' && data.merchantId) {
+          return fn && fn(data)
+        } else {
+          return toast('二维码错误或参数缺失')
+        }
+      }
+      return toast('扫码类型错误')
+    },
+    fail: res => {
+      // toast('扫码')
     }
   })
 }

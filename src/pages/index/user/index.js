@@ -1,12 +1,13 @@
 import React from "react";
-import Taro,{getCurrentPages} from '@tarojs/taro'
+import Taro, {getCurrentPages} from '@tarojs/taro'
 import {Button, Image, View} from '@tarojs/components'
 import Tab1 from './components/userTab'
 import './index.scss'
 import {getMainPage} from '@/server/user'
-import {backgroundObj, removeLogin, navigateTo,filterStrList} from '@/common/utils'
+import {backgroundObj, removeLogin, navigateTo, filterStrList} from '@/common/utils'
 import MakePhone from '@/components/payTelephone'
 import classNames from 'classnames'
+import {scanCode} from '@/common/authority'
 
 class Index extends React.Component {
   constructor() {
@@ -38,11 +39,11 @@ class Index extends React.Component {
       ],
       loginStatus: 0,
       userInfo: {},
-      merchantMobile:'400-800-5881',
+      merchantMobile: '400-800-5881',
       telephone: false,
-      link:'https://web-new.dakale.net/product/page/bannerShare/merchantPlaybill.html',
-      link1:'https://web-new.dakale.net/product/page/policy/cooperation.html',
-      link2:'https://web-new.dakale.net/product/page/policy/eQuity.html',
+      link: 'https://web-new.dakale.net/product/page/bannerShare/merchantPlaybill.html',
+      link1: 'https://web-new.dakale.net/product/page/policy/cooperation.html',
+      link2: 'https://web-new.dakale.net/product/page/policy/eQuity.html',
     }
   }
 
@@ -74,12 +75,20 @@ class Index extends React.Component {
       }
     })
   }
+  getPayByCode(data){
+    const {merchantId,action} = data
+    if(action && merchantId && action === 'pay'){
+      navigateTo(`/pages/goods/codePay/index?merchantId=${merchantId}`)
+    }
+  }
   componentDidMount() {
     // this.getBanner()
   }
+
   componentDidShow() {
     this.getUserDetails()
   }
+
   render() {
     const {
       bannerList,
@@ -151,7 +160,10 @@ class Index extends React.Component {
               </View>
             </View>
 
-            <View className='user_Code users_codeBg'>
+            <View className='user_Code users_codeBg' onClick={(e) => {
+              e.stopPropagation();
+              scanCode(this.getPayByCode.bind(this))
+            }}>
 
             </View>
           </View>
@@ -200,8 +212,8 @@ class Index extends React.Component {
               </View>
             </View>
             <View className='user_forImg user_shopImg' onClick={() => {
-                    navigateTo('/pages/newUser/shopFamily/index')
-                  }}
+              navigateTo('/pages/newUser/shopFamily/index')
+            }}
             >
               <View className='user_forMytitle'>我的家店今日贡献</View>
               <View className='user_forBeans'>

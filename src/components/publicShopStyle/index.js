@@ -76,7 +76,7 @@ export const shopDetails = (data, obj) => {
           <Image src={goodsImg} className='image_box' lazyLoad mode='center'></Image>
           <View className='shopDetails_city'>
             <View className='shopDetails_city_icon'></View>
-            <View className='shopDetails_city_font'>{GetDistance(getLat, getLnt, lat, lnt,)}</View>
+            <View className='shopDetails_city_font'>{GetDistance(getLat(), getLnt(), lat, lnt,)}</View>
           </View>
           <View className='shopDetails_user'>
             <View className='user_profile dakale_profile' style={backgroundObj(merchantLogo)}>

@@ -1,77 +1,119 @@
 import React, {Component} from "react";
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {Button, Text, View} from "@tarojs/components";
-import {wxapiPost,goods} from '@/api/api'
-import {httpGet, httpPost} from '@/api/newRequest'
-import {authWxLogin} from '@/common/authority'
-const AdaPay = require('./../../payPrice/adaPay.js')
+import {authWxLogin, internet} from '@/common/authority'
+import {getOrderPrepaymentResult, payOrder, payDelayOrder} from '@/server/goods'
 import './index.scss'
-import InterTime from '@/components/InterTime'
-import {toast,goBack,redirectTo} from "@/common/utils";
+import {toast, goBack, redirectTo} from "@/common/utils";
+import classNames from 'classnames'
+const AdaPay = require('./../../payPrice/adaPay.js')
+
 class Index extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-     orderSn: getCurrentInstance().router.params.orderSn,
-     orderType: getCurrentInstance().router.params.orderType,
-     token: getCurrentInstance().router.params.token,
-     orderResult: {},
-     payStatus: {
+      orderSn: getCurrentInstance().router.params.orderSn,
+      orderType: getCurrentInstance().router.params.orderType,
+      token: getCurrentInstance().router.params.token,
+      payMonth: getCurrentInstance().router.params.payMonth || '',
+      orderResult: {},
+      payStatus: {
         type: 'price',
         value: '0',
       },
     }
   }
+
   getOrderResult() {
-    const {payWeex: {getKolOrderPrepayment}} = goods
-    const {orderSn ,orderType ,token } = this.state
-    httpGet({
-      data: {
-        orderSn:orderSn,
-        orderType:orderType,
-        token: token},
-      url: getKolOrderPrepayment
+    const {orderSn, orderType, token, payMonth} = this.state
+    getOrderPrepaymentResult({
+      orderSn: orderSn,
+      orderType: orderType,
+      token: token,
+      payMonth
     }, res => {
-      const {orderResult } = res
+      const {orderResult} = res
       this.setState({
-       orderResult
-     })
+        orderResult
+      })
     })
   }
+
   creatOrder(res) {
-    let code  = res
-    let that  = this
-    const {wechatPayDelayOrder} = wxapiPost
-    const {orderSn,token} = this.state
-    httpPost({
-      url: wechatPayDelayOrder,
-      data: {orderSn:orderSn,payType:'wx_lite',wechatCode:code,token:token }},
-      (result,data) => {
-        const {success,resultDesc} = data
-        if (success &&  data.content.status==='succeeded') {
-          let payment = data.content
-          AdaPay.doPay(payment, (payRes) => {
-            if(payRes.result_status == 'succeeded'){
-                const {id} = payRes
-                 that.setState({
-                   text:JSON.stringify(payRes),
-                   payStatus: {
-                     type: 'price',
-                     value: '1',
-                     id:id
-                   },
-                })
-            }
-          })
-        }
-        else {
-          toast(resultDesc||data.content.error_msg)
-        }
+    let code = res
+    let that = this
+    const {orderType,} = this.state
+    if (orderType === 'scan') {
+      that.scanPay(res)
+    } else {
+      that.goodsPay(res)
+    }
+  }
+
+  goodsPay(res) {
+    let that = this
+    const {orderSn, token} = this.state
+    payDelayOrder({orderSn: orderSn, payType: 'wx_lite', wechatCode: res, token}, result => {
+      const {status, error_msg} = result
+      if (status === 'succeeded') {
+        AdaPay.doPay(result, (payRes) => {
+          if (payRes.result_status == 'succeeded') {
+            const {id} = payRes
+            that.setState({
+              payStatus: {
+                type: 'price',
+                value: '1',
+                id: id
+              },
+            })
+            Taro.setNavigationBarTitle({
+              title: '支付成功'
+            })
+          }
+        })
+      } else {
+        toast(error_msg || '支付失败')
+      }
     })
   }
-  payByKol(){
+
+  scanPay(res) {
+    let that = this
+    const {orderSn, token, payMonth} = this.state
+    payOrder({orderSn: orderSn, payMonth, payType: 'wx_lite', wechatCode: res, token}, result => {
+      const {status, error_msg} = result
+      if (status === 'succeeded') {
+        AdaPay.doPay(result, (payRes) => {
+          if (payRes.result_status == 'succeeded') {
+            const {id} = payRes
+            that.setState({
+              payStatus: {
+                type: 'price',
+                value: '1',
+                id: id
+              },
+            })
+            Taro.setNavigationBarTitle({
+              title: '支付成功'
+            })
+          }
+        })
+      } else {
+        toast(error_msg || '支付失败')
+      }
+    })
+  }
+
+  payByKol() {
     authWxLogin(this.creatOrder.bind(this))
   }
+
+  componentWillMount() {
+    if (!getCurrentInstance().router.params.orderSn || !getCurrentInstance().router.params.orderType) {
+      return toast('参数缺失，无法支付，请返回App')
+    }
+  }
+
   componentDidShow() {
     Taro.clearStorage(
       {
@@ -81,36 +123,64 @@ class Index extends Component {
       }
     )
   }
+
   render() {
     const {
       orderResult: {
-      payFee,
-      createTime,
-      expiredTime},
+        payFee,
+        merchantName,
+        orderSn
+      },
       payStatus,
-      text
+      payStatus: {
+        value
+      },
+      payMonth,
+      orderType
     } = this.state
+    const renders = {
+      '0': (
+        <>
+          <Button
+            appParameter={JSON.stringify(payStatus)}
+            openType='launchApp' onError={(e) => {
+            toast('返回异常')
+          }} className='page_back_btn font32'>返回APP</Button>
+          <View className='pay_wx_lite_btn public_center' onClick={() => this.payByKol()}>
+            <View className='pay_wx_lite_btnGo font32 bold color6'>立即支付</View>
+          </View>
+        </>),
+      '1': (
+        <>
+          <Button
+            appParameter={JSON.stringify(payStatus)}
+            openType='launchApp' onError={(e) => {
+            toast('返回异常')
+          }} className='page_back_bottomBtn color4 bold font32'>返回APP</Button>
+        </>)
+    }[value]
     return (
       <View className='pay_wx_lite'>
-        <View className='pay_wx_lite_price'>
-          <View className='pay_title'>实付款</View>
-          <View className='pay_price'><Text style={{display:'inline-block',fontSize:Taro.pxTransform(36)}}>¥</Text>{payFee}</View>
-          {payStatus.value==='0' &&
-            <View className='pay_time'>支付剩余时间
-              {createTime&& <InterTime mint={expiredTime}  times={createTime} fn={()=> {goBack()}}></InterTime>}
-              {/**/}
-            </View>
-          }
-        </View>
-        <Button
-          appParameter={JSON.stringify(payStatus)}
-          openType='launchApp' onError={(e) => {toast('返回异常')}} className='page_back_btn'>返回APP</Button>
-        {payStatus.value === '0' &&
-        <View className='pay_wx_lite_btn public_center' onClick={() => this.payByKol()}>
-          <View className='pay_wx_lite_btnGo'>
-            微信支付{" "}¥{payFee}</View>
-        </View>
+        {value === '1' &&
+        <View className='pay_wx_successIcon'></View>
         }
+        <View className={classNames('color1 bold',value ==='0'?'pay_wx_price':'pay_wx_successMargin')}>
+          <View className='pay_wx_priceIcon'>¥</View>
+          <View className='pay_wx_priceNum'>{payFee}</View>
+        </View>
+        <View className='pay_wx_goodsBox'>
+          <View className='pay_wx_goods'>
+            <View className='public_auto pay_wx_goodsDetails'>
+              <View className='color1 font28'>收款方</View>
+              <View className='color2 font28 font_hide'>{merchantName}</View>
+            </View>
+            <View className='public_auto pay_wx_goodsDetails'>
+              <View className='color1 font28'>订单编号</View>
+              <View className='color2 font28'>{orderSn}</View>
+            </View>
+          </View>
+        </View>
+        {renders}
       </View>
     )
   }

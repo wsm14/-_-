@@ -41,7 +41,7 @@ const httpCondition = {
     'apptype': 'user',
     'content-type': 'application/x-www-form-urlencoded',
   },
-  timeout: 3000,
+  timeout: 10000,
   dataType: 'json'
 }
 

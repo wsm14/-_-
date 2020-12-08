@@ -1,0 +1,72 @@
+page {
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+}
+
+.code_scanPay_box {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #F5F5F5;
+  position: relative;
+
+  .code_scanPay_top {
+    width: 686px;
+    height: 495px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    margin: 32px 32px 0;
+    text-align: center;
+    .code_scanPay_bg {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon334.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .code_scanPay_payStatus {
+      margin-top: 23px;
+      color: #666666;
+
+    }
+    .code_scanPay_payNum{
+      margin: 32px auto 0;
+      height: 60px;
+      line-height: 60px;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      .code_scanPay_icon{
+        height: 60px;
+        line-height: 75px;
+      }
+      .code_scanPay_font{
+        height: 60px;
+        display: inline-block;
+        font-size: 60px;
+      }
+    }
+    .code_scanPay_btnBox{
+      margin: 40px auto 0;
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      width: 452px;
+      .code_scanPay_btn{
+        width: 214px;
+        height: 60px;
+        background: #06C0C2;
+        border-radius: 8px;
+        text-align: center;
+        line-height: 60px;
+        color: #ffffff;
+        margin-right: 24px;
+
+      }
+    }
+  }
+  .code_scanPay_loveMagin{
+    margin-top: 64px;
+  }
+}

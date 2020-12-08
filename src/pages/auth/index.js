@@ -7,9 +7,6 @@ import {authWxLogin} from '@/common/authority'
 import {getOpenId, getUserInfo, bindTelephone} from '@/server/auth'
 import './index.scss'
 import {goBack, toast} from "../../common/utils";
-import ajax from "../../api/request";
-import {wxapiGet} from "../../api/api";
-
 @inject('store')
 @observer
 class Index extends Component {

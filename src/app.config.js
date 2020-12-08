@@ -56,10 +56,11 @@ export default {
       desc: "位置信息将用于与商家位置的信息共享",
     },
   },
-subPackages:[
+  subPackages: [
     {
       "root": "pages/kol/",
       "pages": [
+        "legal/index",//达人等级
         "report/index",//举报
         "shareVideo/index",///kol视频详情页,
         "shareImage/index",//kol图片详情页,
@@ -68,56 +69,58 @@ subPackages:[
       ]
     },
     {
-    "root": "pages/newUser/",
-    "pages": [
-      'incomeDetails/index',//收益明细
-      "rewardDetails/index",//奖励 明细
-      "wallet/index",//钱包
-      "merchantDetails/index",///商家主页,
-      "shopFamily/index",//,我的家店
-      "userDetails/index",//个人主页,
-      "userFamily/index",//我的家人,
-      "goods/index", //我的订单
-      "record/index", //打卡记录
-      "beanRule/index", //卡豆权益
-      "userConceal/index", //协议规则
-      "accustomed/expressCard/index", //关爱打卡
-      'accustomed/addExpressCard/index'//配置关爱打卡
-    ]
-  },
+      "root": "pages/newUser/",
+      "pages": [
+        'incomeDetails/index',//收益明细
+        "rewardDetails/index",//奖励 明细
+        "wallet/index",//钱包
+        "merchantDetails/index",///商家主页,
+        "shopFamily/index",//,我的家店
+        "userDetails/index",//个人主页,
+        "userFamily/index",//我的家人,
+        "record/index", //打卡记录
+        "beanRule/index", //卡豆权益
+        "userConceal/index", //协议规则
+        "accustomed/expressCard/index", //关爱打卡
+        'accustomed/addExpressCard/index'//配置关爱打卡
+      ]
+    },
     {
-    "root": "pages/share/",
-    "pages": [
-      "download/index",///下载,
-      "step/index",//,同步步数
-      "shareFriend/index",//分享好友,
-      'shareShop/index',//分享家店
-      'pay_wx_lite/index',//微信支付
-      'webView/index',//webView页面
-    ]
-  },
+      "root": "pages/share/",
+      "pages": [
+        "download/index",///下载,
+        "step/index",//,同步步数
+        "shareFriend/index",//分享好友,
+        'shareShop/index',//分享家店
+        'pay_wx_lite/index',//微信支付
+        'webView/index',//webView页面
+      ]
+    },
     {
-    "root": "pages/perimeter/",
-    "pages": [
-      'search_fav/index',
-      'favourableDetails/index',//砍价详情
-      "shopDetails/index", //商品详情
-      "merchantDetails/index", //周边详情
-      "special/index",//特价商品
-      'perimeteRoducts/index',
-      "index", //周边首页
-    ]
-  },
-  {
-    "root": "pages/goods/",
-    "pages": [
-      "payWeex/index", //kol支付
-      "configOrder/index", //kol下单
-      'favourOrder/index',//特价下单
-      'kolShopGoods/index',
-      'getShopGoods/index',
-      'paySuccess/index',
-    ]
-  },
+      "root": "pages/perimeter/",
+      "pages": [
+        'search_fav/index',
+        'favourableDetails/index',//砍价详情
+        "shopDetails/index", //商品详情
+        "merchantDetails/index", //周边详情
+        "special/index",//特价商品
+        'perimeteRoducts/index',
+        "index", //周边首页
+      ]
+    },
+    {
+      "root": "pages/goods/",
+      "pages": [
+        "payWeex/index", //kol支付
+        "configOrder/index", //kol下单
+        'favourOrder/index',//特价下单
+        'kolShopGoods/index',//普通商品详情
+        'getShopGoods/index',//扫码订单详情
+        'paySuccess/index',//kol支付成功
+        'codePay/index',//扫码订单生成订单页
+        'code_wx_pay/index',//扫码订单支付页面
+        'code_scanPay_Susccess/index',//扫码订单成功页面
+      ]
+    },
   ]
 }

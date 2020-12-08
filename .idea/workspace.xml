@@ -11,27 +11,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c250933-678c-4f5c-9059-9683dc632f42" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/dakale_toast/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/dakale_toast/index.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/newUser/incomeDetails/components/earn/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/newUser/incomeDetails/components/expenses/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/newUser/incomeDetails/components/pickTime.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/newUser/incomeDetails/components/pickTimes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/newUser/incomeDetails/components/userCashTrade/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/newUser/incomeDetails/index.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/newUser/incomeDetails/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/newUser/incomeDetails/index.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/newUser/rewardDetails/components/expenses/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/newUser/rewardDetails/components/userCashTrade/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/pay_btn/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/pay_btn/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/goods/codePay/index.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/goods/codePay/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/goods/codePay/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/goods/code_scanPay_Susccess/index.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/goods/code_scanPay_Susccess/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/goods/code_scanPay_Susccess/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/goods/code_wx_pay/index.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/goods/code_wx_pay/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/goods/code_wx_pay/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/kol/legal/index.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/kol/legal/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/kol/legal/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/goods/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/newRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/newRequest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/newUser/rewardDetails/components/earn/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/newUser/rewardDetails/components/earn/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/newUser/rewardDetails/components/pickTimes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/newUser/rewardDetails/components/pickTimes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/newUser/rewardDetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/newUser/rewardDetails/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/newUser/rewardDetails/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/newUser/rewardDetails/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/newUser/wallet/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/newUser/wallet/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/newUser/wallet/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/newUser/wallet/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/user/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/user/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/authority.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/authority.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/publicShopStyle/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/publicShopStyle/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/auth/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/index/index.config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/index/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/legal/components/legalDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/index/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/legal/components/leverTitle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/user/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/user/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/newUser/goods/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/newUser/goods/index.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/share/pay_wx_lite/index.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/share/pay_wx_lite/index.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/share/pay_wx_lite/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/share/pay_wx_lite/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/share/pay_wx_lite/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/share/pay_wx_lite/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/auth/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/kol/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/kol/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,8 +55,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Sass File" />
-        <option value="JavaScript File" />
         <option value="SCSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -61,7 +74,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../dakale-web-app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/goods/code_scanPay_Susccess" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -83,19 +96,19 @@
     <property name="ts.external.directory.path" value="D:\IntelliJ IDEA 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\goods\code_scanPay_Susccess" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\server\goods" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\goods\code_wx_pay" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\components\pay_btn" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\goods\codePay" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\index" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\perimeter" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\components\lovely" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\assets\css" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\newUser" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\newUser\rewardDetails\components\expenses" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\server\common" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\kol\report" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\newUser\rewardDetails" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -198,6 +211,13 @@
       <workItem from="1606876084808" duration="27000" />
       <workItem from="1606960901224" duration="31456000" />
       <workItem from="1607045999370" duration="25486000" />
+      <workItem from="1607138489722" duration="571000" />
+      <workItem from="1607139515047" duration="424000" />
+      <workItem from="1607140020125" duration="39000" />
+      <workItem from="1607155594557" duration="3592000" />
+      <workItem from="1607304806850" duration="31208000" />
+      <workItem from="1607347617838" duration="249000" />
+      <workItem from="1607394858730" duration="25639000" />
     </task>
     <servers />
   </component>
@@ -233,14 +253,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605531547496" />
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1605688048974">
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607413747164">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605688048974" />
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1607074845203">
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607413747164" />
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1607406320001">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607074845203" />
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607406320001" />
     <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1602316084205">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -265,18 +285,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="566" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1603433639002" />
-    <state x="661" y="254" width="656" height="584" key="find.popup" timestamp="1607077026271">
+    <state x="661" y="254" width="656" height="584" key="find.popup" timestamp="1607428122239">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="661" y="254" width="656" height="584" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607077026271" />
+    <state x="661" y="254" width="656" height="584" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607428122239" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1606989627213">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606989627213" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1606990037602">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1607343703340">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606990037602" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607343703340" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -422,11 +442,6 @@
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/pages/newUser/goods/index.js</url>
-          <line>93</line>
-          <option name="timeStamp" value="69" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/common/utils.js</url>
           <line>175</line>
           <option name="timeStamp" value="71" />
@@ -533,7 +548,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/common/authority.js</url>
-          <line>36</line>
+          <line>38</line>
           <option name="timeStamp" value="105" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -617,11 +632,6 @@
           <option name="timeStamp" value="138" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/pages/share/pay_wx_lite/index.js</url>
-          <line>35</line>
-          <option name="timeStamp" value="140" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/goods/kolShopGoods/index.js</url>
           <line>59</line>
           <option name="timeStamp" value="141" />
@@ -653,7 +663,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/auth/index.js</url>
-          <line>146</line>
+          <line>143</line>
           <option name="timeStamp" value="149" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -783,17 +793,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/user/index.js</url>
-          <line>158</line>
+          <line>170</line>
           <option name="timeStamp" value="179" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/user/index.js</url>
-          <line>159</line>
+          <line>171</line>
           <option name="timeStamp" value="180" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/user/index.js</url>
-          <line>235</line>
+          <line>247</line>
           <option name="timeStamp" value="181" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -823,7 +833,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/user/index.js</url>
-          <line>163</line>
+          <line>175</line>
           <option name="timeStamp" value="187" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -889,44 +899,80 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/server/user/index.js</url>
           <line>37</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="213" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/newUser/rewardDetails/components/expenses/index.js</url>
           <line>19</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="217" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/newUser/rewardDetails/components/expenses/index.js</url>
           <line>24</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="218" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/newUser/rewardDetails/components/expenses/index.js</url>
           <line>46</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="219" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/newUser/rewardDetails/components/expenses/index.js</url>
           <line>217</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="221" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/newUser/rewardDetails/components/userCashTrade/index.js</url>
           <line>61</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="222" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/newUser/rewardDetails/index.js</url>
           <line>26</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="223" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/kol/legal/components/legalDetails.js</url>
+          <line>9</line>
+          <option name="timeStamp" value="224" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/kol/legal/components/legalDetails.js</url>
+          <line>31</line>
+          <option name="timeStamp" value="226" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/kol/legal/components/leverTitle.js</url>
+          <line>86</line>
+          <option name="timeStamp" value="227" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/kol/legal/components/leverTitle.js</url>
+          <line>37</line>
+          <option name="timeStamp" value="230" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/kol/legal/components/leverTitle.js</url>
+          <line>62</line>
+          <option name="timeStamp" value="231" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/goods/code_scanPay_Susccess/index.js</url>
+          <line>57</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="234" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/goods/code_wx_pay/index.js</url>
+          <line>42</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="235" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/share/pay_wx_lite/index.js</url>
+          <line>41</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="238" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
