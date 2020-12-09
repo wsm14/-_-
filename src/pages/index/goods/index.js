@@ -8,7 +8,7 @@ import {
   filterGoodsStatus
 } from '@/common/utils'
 import Tabs from '@/components/tabs'
-import Goods from '@/components/goods'
+import Goods from './components/goods'
 import {goodsNullStatus} from '@/components/publicShopStyle'
 import classNames from 'classnames'
 import {inject, observer} from "mobx-react";
@@ -57,6 +57,7 @@ class Index extends Component {
       orderList: [],
       countStatus: true,
       httpData: {
+        ...this.state.httpData,
         page: 1,
         limit: 10,
         // orderType: 'kolGoods,scan'

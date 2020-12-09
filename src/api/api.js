@@ -131,7 +131,7 @@ export const goods = {
      getKolOrderPrepayment: '/user/order/getOrderPrepaymentResult',//获取支付详情
    },
    getOrderResult: '/user/order/getOrderResult',//支付成功时跳转页面
-   getKolOrderDetail: '/user/order/getOrderDetail',//获取带货订单详情
+   getKolOrderDetail: '/user/order/getOrderDetail',//获取订单详情
    updateKol: '/user/order/updateOrderStatus',//修改订单 状态
    deleteKolStatus: '/user/order/deleteOrder', //删除订单
 }

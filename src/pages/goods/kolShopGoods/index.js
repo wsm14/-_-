@@ -13,6 +13,7 @@ import MakePhone from '@/components/payTelephone'
 import Draw from './components/drawback'
 import StopBean from '@/components/stopBean'
 import Lovely from '@/components/lovely'
+import {getOrderDetails,deleteOrder} from '@/server/goods'
 class Index extends Component {
   constructor() {
     super(...arguments)
@@ -34,7 +35,7 @@ class Index extends Component {
     }
   }
   componentDidShow() {
-    this.getKolDetails()
+    this.getGoodsDetails()
   }
   filterPrice(payFee) {
     if (payFee) {
@@ -71,7 +72,7 @@ class Index extends Component {
           },
           url: updateKol,
         },res => {
-          this.getKolDetails()
+          this.getGoodsDetails()
         })
       })
     }
@@ -91,22 +92,16 @@ class Index extends Component {
         },
         url: updateKol,
       },res => {
-        this.getKolDetails()
+        this.getGoodsDetails()
       })
     })
 
   }
-  getKolDetails() {
-    const {getKolOrderDetail} = goods
+  getGoodsDetails() {
     const {httpData} = this.state
-    httpGet({
-      data: httpData,
-      url: getKolOrderDetail
-    }, res => {
-      const {orderInfo} = res
-      console.log(orderInfo)
+    getOrderDetails(httpData, res => {
       this.setState({
-        orderInfo
+        orderInfo: res
       })
     })
   }
@@ -136,7 +131,7 @@ class Index extends Component {
         },
         url: updateKol,
       },res => {
-        this.getKolDetails()
+        this.getGoodsDetails()
       })
     })
   }
@@ -187,7 +182,7 @@ class Index extends Component {
               若超过7日内未处理，默认同意退款
             </View>
           </View>
-          <ShopCard fn={() => this.getKolDetails()}  style={{margin:`${Taro.pxTransform(24)} auto`}} data={orderInfo}></ShopCard>
+          <ShopCard fn={() => this.getGoodsDetails()}  style={{margin:`${Taro.pxTransform(24)} auto`}} data={orderInfo}></ShopCard>
           <View className='kolGoods_details'>
             <View className='kolGoods_detailsBox'>
               <View className='font24 color2 public_auto kolGoods_details_height'>
@@ -227,7 +222,7 @@ class Index extends Component {
         <View className='kolGoods_details_kolGoodsDetails'>
           <Title onOpen={() =>this.setState({draw: true})} data={orderInfo}></Title>
           <BtnLayer closeSn = {()=> this.setState({closeVisible: true})} deleteSn={() => this.setState({visible: true})} data={orderInfo}></BtnLayer>
-          <ShopCard telephone = {() => this.setState({telephone: true})}  fn={() => this.getKolDetails()} data={orderInfo}></ShopCard>
+          <ShopCard telephone = {() => this.setState({telephone: true})}  fn={() => this.getGoodsDetails()} data={orderInfo}></ShopCard>
           <View className='kolGoods_details'>
             <View className='kolGoods_detailsBox'>
               <View className='font24 color2 public_auto kolGoods_details_height'>

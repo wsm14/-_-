@@ -10,7 +10,6 @@ export default {
 
     // "pages/perimeter/beanMark/index", //周边
     "pages/auth/index", //登录
-    "pages/payPrice/index", //小程序支付
   ],
   window: {
     backgroundTextStyle: "light",

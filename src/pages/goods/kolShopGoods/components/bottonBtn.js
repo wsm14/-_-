@@ -4,6 +4,13 @@ import './../index.scss'
 import {toast} from "@/common/utils";
 import Taro from "@tarojs/taro";
 import {navigateTo} from "../../../../common/utils";
+const goSpeGoods = (merchantId, specialActivityId) => {
+  navigateTo(`/pages/perimeter/favourableDetails/index?merchantId=${merchantId}&specialActivityId=${specialActivityId}`)
+}
+//再次Spe下单
+const goKolGoods = (merchantId, kolActivityId, kolMomentsId) => {
+  navigateTo(`/pages/perimeter/shopDetails/index?merchantId=${merchantId}&kolActivityIdString=${kolActivityId}&kolMomentsId=${kolMomentsId}`)
+}
 export default (props) => {
   const  {data,remove,deleteSn,closeSn} = props
   const [order,setOrderDetails] = useState({})
@@ -15,11 +22,16 @@ export default (props) => {
     navigateTo(`/pages/goods/payWeex/index?orderSn=${orderSn}&orderType=${orderType}`)
   }
   const getMerchant  = () => {
-     const {orderDesc,kolMomentsIdString} = order
+     const {orderDesc = {},kolMomentsIdString,orderType} = order
      if(orderDesc){
        let link  =  JSON.parse(orderDesc)
-       const {merchantIdString,kolGoods:{goodsIdString}} =  link
-       navigateTo(`/pages/perimeter/shopDetails/index?kolMomentsId=${kolMomentsIdString}&merchantId=${merchantIdString}&kolGoodsId=${goodsIdString}`)
+       const {merchantIdString,kolGoods = {},specialGoods= {}} =  link
+       if(orderType === 'specialGoods'){
+         goSpeGoods(merchantIdString,specialGoods.activityIdString)
+       }
+       else  {
+         goKolGoods(merchantIdString,kolGoods.activityIdString,kolMomentsIdString)
+       }
      }
      else {
        toast('参数缺失')
@@ -29,6 +41,7 @@ export default (props) => {
     const {
       status
     } = order
+    console.log(order)
     switch (status) {
       case '0': return (
         <View className='kolGoods_bottom_btn'>

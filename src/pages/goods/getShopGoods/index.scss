@@ -1,32 +1,36 @@
-page{
+page {
   width: 100%;
   height: 100%;
   background: #F5F5F5;
 }
 
-.goods_details_goodsDetails{
+.goods_details_goodsDetails {
   padding-bottom: 188px;
   width: 100%;
-  height: 100%;
   overflow: auto;
   color: #FFFFFF;
-  .goodsTitle_top{
-    padding:0 32px;
+
+  .goodsTitle_top {
+    padding: 0 32px;
     height: 232px;
     background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon258.png") center/cover;
-    .goodsTitle_status{
-       height: 60px;
-       display: flex;
-       align-items: center;
-      .goodsTitle_iconBox{
+
+    .goodsTitle_status {
+      height: 60px;
+      display: flex;
+      align-items: center;
+
+      .goodsTitle_iconBox {
         width: 60px;
-        height:60px;
+        height: 60px;
       }
-      .goodsTitle_icon1{
+
+      .goodsTitle_icon1 {
         background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon259.png") no-repeat;
         background-size: 100% 100%;
       }
-      .goodsTitle_font{
+
+      .goodsTitle_font {
         height: 60px;
         line-height: 60px;
         font-size: 48px;
@@ -34,7 +38,8 @@ page{
         font-weight: 600;
       }
     }
-    .goodsTitle_dec{
+
+    .goodsTitle_dec {
       margin-top: 16px;
       height: 24px;
       font-size: 24px;
@@ -42,28 +47,33 @@ page{
       font-weight: 400;
       line-height: 24px;
       margin-left: 76px;
-   }
+    }
   }
-  .descriptionCard_title{
+
+  .descriptionCard_title {
     width: 686px;
     margin: -74px auto 0;
     background: #FFFFFF;
     border-radius: 12px;
 
   }
-  .descriptionCard_box{
+
+  .descriptionCard_box {
     padding: 24px 32px 0;
     font-size: 24px;
-    .descriptionCard_merchant{
+
+    .descriptionCard_merchant {
       height: 64px;
       display: flex;
       align-items: center;
-      .descriptionCard_profile{
+
+      .descriptionCard_profile {
         width: 64px;
         height: 64px;
         border-radius: 50%;
       }
-      .descriptionCard_merchantTitle{
+
+      .descriptionCard_merchantTitle {
         width: 498px;
         height: 42px;
         font-size: 28px;
@@ -73,16 +83,19 @@ page{
         line-height: 42px;
         margin-left: 29px;
       }
-      .descriptionCard_goIcon{
+
+      .descriptionCard_goIcon {
         width: 36px;
         height: 36px;
         background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon260.png") no-repeat;
         background-size: 100% 100%;
       }
     }
-    .descriptionCard_dec{
+
+    .descriptionCard_dec {
       padding-top: 32px;
-      .descriptionCard_discount{
+
+      .descriptionCard_discount {
         height: 24px;
         display: flex;
         align-items: center;
@@ -91,16 +104,19 @@ page{
       }
     }
   }
-  .discount_top{
+
+  .discount_top {
     margin-top: 24px;
   }
-  .descriptionCard_liner{
+
+  .descriptionCard_liner {
     width: 622px;
     height: 1px;
     background: #E5E5E5;
     margin: 31px auto 0;
   }
-  .descriptionCard_payPrice{
+
+  .descriptionCard_payPrice {
     height: 104px;
     line-height: 104px;
     align-items: center;
@@ -108,17 +124,24 @@ page{
     justify-content: space-between;
   }
 
-  .goods_card{
+  .goods_details_margins {
+    margin-top: 64px;
+  }
+
+  .goods_card {
     width: 686px;
     background: #FFFFFF;
     border-radius: 12px;
     margin: 24px auto;
+
     .goods_cardBox {
       padding: 32px 32px 40px;
-      .goods_cardHeight{
+
+      .goods_cardHeight {
         height: 24px;
         margin-top: 24px;
-        .goods_cardliner{
+
+        .goods_cardliner {
           width: 2px;
           height: 20px;
           background: #E5E5E5;
@@ -126,11 +149,13 @@ page{
           margin: 0 16px;
         }
       }
-      .goods_payHeight{
+
+      .goods_payHeight {
         height: 30px;
         line-height: 30px;
         margin-top: 24px;
-        .pay_icon_box{
+
+        .pay_icon_box {
           width: 30px;
           height: 30px;
           margin-right: 11px;
@@ -139,7 +164,7 @@ page{
     }
   }
 
-  .goods_bottom_btnBox{
+  .goods_bottom_btnBox {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -149,11 +174,13 @@ page{
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    .goods_bottom_btn{
+
+    .goods_bottom_btn {
       padding: 0 32px;
       height: 80px;
     }
-    .goods_submit{
+
+    .goods_submit {
       width: 220px;
       height: 80px;
       border-radius: 8px;

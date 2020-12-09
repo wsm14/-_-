@@ -472,8 +472,11 @@ export const getDom = (id,fn) => {
 export const filterGoods = (data) => {
   let {orderDesc} = data
   orderDesc = JSON.parse(orderDesc)
-  let {kolGoods} = orderDesc
-  if(!kolGoods){
+  let {kolGoods,specialGoods} = orderDesc
+  if(!kolGoods && !specialGoods){
+    return data
+  }
+  else if(!kolGoods){
     orderDesc.kolGoods =  orderDesc.specialGoods
     orderDesc  = JSON.stringify(orderDesc)
     return {
@@ -481,6 +484,7 @@ export const filterGoods = (data) => {
       orderDesc:orderDesc
     }
   }
+
   else return data
 }
 export const removeLogin = () => Taro.removeStorage({
