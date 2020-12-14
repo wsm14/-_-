@@ -1,10 +1,11 @@
-import Taro, { Component } from '@tarojs/taro'
-import { View,Text, Swiper, SwiperItem} from '@tarojs/components'
+import Taro from '@tarojs/taro'
+import React ,{ Component }  from 'react'
+import { View,Text} from '@tarojs/components'
 import {AtButton} from 'taro-ui'
 import './index.scss'
-import { observer, inject } from '@tarojs/mobx'
+import { observer, inject } from 'mobx-react'
 import Utils from './../../utils/utils'
-@inject('authStore')
+@inject('store')
 @observer
 class Index extends Component {
   defaultProps = {}
@@ -47,7 +48,7 @@ class Index extends Component {
               text: '授权手机号码'
             }
           },()=>{
-             this.props.authStore.setUserInfoStore(Taro.getStorageSync('userInfo'))
+             this.props.store.authStore.setUserInfoStore(Taro.getStorageSync('userInfo'))
           })
         }
         else {
@@ -84,7 +85,7 @@ class Index extends Component {
               handleType:'',
             },
           },res =>{
-            this.props.authStore.setUserInfoStore(Taro.getStorageSync('userInfo'))
+            this.props.store.authStore.setUserInfoStore(Taro.getStorageSync('userInfo'))
             Utils.goBack('登录成功')
           })
         }
@@ -123,7 +124,7 @@ class Index extends Component {
             })
           }
           else if(res === 0){
-            this.props.authStore.setUserInfoStore(Taro.getStorageSync('userInfo'))
+            this.props.store.authStore.setUserInfoStore(Taro.getStorageSync('userInfo'))
             Utils.goBack('登录成功')
           }
         }
@@ -131,7 +132,7 @@ class Index extends Component {
     }
     //如果未授权则调用初始化函数根据初始化数据进行对于操作  type 1 未授权手机  type 2 信息手机未授权
   } // 判断用户是否授权
-  componentDidMount () {
+  componentDidShow() {
     this.setHomeinit();
   }
   render () {
@@ -142,7 +143,7 @@ class Index extends Component {
         </View>
         <View>
           <AtButton
-            className='btn-button'
+            className='btn-button'q
             openType = {btnType.type}
             onGetUserInfo = {(e) => btnType.fn(e,btnType.handleType)}
             onGetPhoneNumber = {(e) => btnType.fn(e,btnType.handleType)}

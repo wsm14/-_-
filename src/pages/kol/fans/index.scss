@@ -1,0 +1,116 @@
+page{
+  background: #F5F5F5;
+  width: 100%;
+  height: 100%;
+}
+.fans_box{
+  width: 100%;
+  background: #ffffff;
+  .fans_tab{
+    height: 144px;
+    overflow-y: hidden;
+    display: flex;
+    align-items: center;
+    margin: 0 32px;
+    line-height: 1;
+    position: relative;
+    box-sizing: border-box;
+    .fans_userProFile{
+      width: 80px;
+      height: 80px;
+      border-radius: 40px;
+      background: #FD96A9;
+    }
+    .fans_userDetails{
+      margin-left: 12px;
+      height: 80px;
+      .fans_userName{
+        padding-top: 6px;
+        height: 30px;
+        font-size: 28px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #333333;
+        display: flex;
+        align-items: center;
+        .follow_userTop{
+          max-width: 250px;
+          overflow: hidden;
+          height: 30px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .fans_tag{
+          width: 88px;
+          height: 30px;
+          background: #EF476F;
+          border-radius: 15px;
+          display: flex;
+          margin-left: 20px;
+          justify-content: center;
+          align-items: center;
+          .fans_icon{
+            width: 24px;
+            height: 24px;
+            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/follow_win.png") no-repeat;
+            background-size: 100% 100%;
+            margin-right: 4px;
+          }
+          .fans_tagFont{
+            height: 30px;
+            line-height: 30px;
+            width: 40px;
+            font-size: 20px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: #FFFFFF;
+          }
+        }
+      }
+      .fans_userDescribe{
+        width: 360px;
+        height: 28px;
+        font-size: 24px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #999999;
+        line-height: 28px;
+        margin-top: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    .fans_userInterest_box{
+      width: 148px;
+      height: 60px;
+      position: absolute;
+      top: 41px;
+      right: 0;
+      text-align: center;
+      font-size: 28px;
+      line-height: 60px;
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+    .fans_userInterest_true{
+      color: #07C0C2;
+      border: 1px solid #07C0C2;
+    }
+    .fans_userInterest_false{
+      color: #999999;
+      border: 1px solid #B5B5B5;
+    }
+  }
+  .fans_over{
+    width: 100%;
+    height: 33px;
+    padding: 32px 0;
+    background: #F5F5F5;
+    font-size: 24px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #CCCCCC;
+    text-align: center;
+  }
+}

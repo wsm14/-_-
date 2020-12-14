@@ -74,12 +74,12 @@
 .page_share_shop{
   position: absolute;
   bottom: 249px;
-  width: 373px;
-  min-height: 80px;
   background: rgba(255,255,255,0.2);
   border-radius: 10px;
   left: 29px;
   z-index: 100;
+  padding-right: 10px;
+  padding-bottom: 10px;
 }
 .page_shareShop_top{
   padding-top: 10px;
@@ -89,7 +89,6 @@
   color:rgba(255,255,255,1);
 }
 .page_shareShop_name{
-  width: 250px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -108,7 +107,7 @@
 }
 .lineColor{
   background: rgba(255, 255, 255, 1);
-  margin: 5px 10px 0 0;
+  margin: 5px 10px 0 10px;
   vertical-align: top;
   display: inline-block;
 
@@ -166,6 +165,8 @@
   line-height: 60px;
   display: inline-block;
   margin-left: 16px;
+  display: flex;
+  align-items: center;
 }
 .page_share_username:after{
   width: 34px;
@@ -192,7 +193,8 @@
   color:rgba(255,255,255,1);
   line-height:39px;
   vertical-align: top;
-  padding-top: 34px;
+  padding-top: 8px;
+  padding-left: 78px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -419,7 +421,7 @@
   line-height: 50px;
 }
 .page_share_openApp{
-  width:259px;
+  width:269px;
   height:72px;
   background:rgba(21,206,208,1);
   box-shadow:0px 2px 8px 0px rgba(5,147,149,0.72);

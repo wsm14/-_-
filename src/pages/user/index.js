@@ -1,22 +1,14 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro from '@tarojs/taro'
 import {View, Image, Button} from '@tarojs/components'
 import './user.scss'
 import {wxapiGet, wxapiPost} from '../../api/api'
 import Ajax from '../../api/request'
 import Utils from  './../../utils/utils'
-import Toast from '../../layout/Toast'
-import {inject, observer} from "@tarojs/mobx";
-@inject('authStore')
+import {inject, observer} from "mobx-react";
+@inject('store')
 @observer
 class Index extends Component {
-  defaultProps = {}
-  config = {
-    navigationBarTitleText: '个人登录',
-    // "enablePullDownRefresh": true,
-    // onReachBottomDistance:10,
-    backgroundTextStyle:'dark',
-  }
-
   constructor () {
     super(...arguments)
     this.state = {
@@ -38,11 +30,11 @@ class Index extends Component {
       toastType:0,
       user:{},
       tabbar: [
-        {id :1,title:'打卡记录',router:'/pages/user/record/index',classNames:'user_tabTitle user_bgtab2'},
-        {id :2,title:'我的订单',router:'/pages/user/goods/index',classNames:'user_tabTitle user_bgtab3'},
-        {id :3,title:'关爱打卡',router:'/pages/index/accustomed/expressCard/index',classNames:'user_tabTitle user_bgtab4'},
-        {id :4,title:'卡豆权益',router:'/pages/user/beanRule/index',classNames:'user_tabTitle user_bgtab5'},
-        {id :5,title:'协议规则',router:'/pages/user/userConceal/index',classNames:'user_tabTitle user_bgtab6'},
+        {id :1,title:'打卡记录',router:'/pages/newUser/record/index',classNames:'user_tabTitle user_bgtab2'},
+        {id :2,title:'我的订单',router:'/pages/newUser/goods/index',classNames:'user_tabTitle user_bgtab3'},
+        {id :3,title:'关爱打卡',router:'/pages/newUser/accustomed/expressCard/index',classNames:'user_tabTitle user_bgtab4'},
+        {id :4,title:'卡豆权益',router:'/pages/newUser/beanRule/index',classNames:'user_tabTitle user_bgtab5'},
+        {id :5,title:'协议规则',router:'/pages/newUser/userConceal/index',classNames:'user_tabTitle user_bgtab6'},
       ]
     }
   }
@@ -50,7 +42,7 @@ class Index extends Component {
     this.getuserData()
   }
   saveMark (res){
-    this.props.beanStore.setInit()
+    this.props.store.beanStore.setInit()
     let {result} = res
     result = result.split('?')[1]
     result = result.split('&')
@@ -70,7 +62,7 @@ class Index extends Component {
           const {success,resultCode, resultDesc} = res.data
           if (success) {
             let {content} = res.data
-            this.props.beanStore.setMarkInfo(content)
+            this.props.store.beanStore.setMarkInfo(content)
             if(content.resultCode == '3018'){
               this.props.beanStore.setMerchantId({merchantId:merchantId})
               Utils.Toast('无法打卡，不在打卡范围内')
@@ -78,8 +70,8 @@ class Index extends Component {
             Utils.navigateTo('/pages/perimeter/beanMark/index')
           }
           else {
-            this.props.beanStore.setCode(resultCode)
-            this.props.beanStore.setMerchantId({merchantId:merchantId})
+            this.props.store.beanStore.setCode(resultCode)
+            this.props.store.beanStore.setMerchantId({merchantId:merchantId})
             Utils.Toast(resultDesc)
           }
         }
@@ -154,9 +146,8 @@ class Index extends Component {
     })
   }//关闭提示框
   render () {
-    const { userInfo } = this.props.authStore
+    const { userInfo } = this.props.store.authStore
     const { tabbar ,user } = this.state
-    console.log(user)
     return (
       <View className='user_box'>
         <View className='user_Title'>
@@ -177,7 +168,8 @@ class Index extends Component {
               请绑定手机
             </View>
           </View>:null}
-          {Object.keys(userInfo).length >5 && userInfo.mobile.length ===11 ? <View className='user_title_Details'>
+          {Object.keys(userInfo).length >5 && userInfo.mobile.length ===11 ?
+            <View className='user_title_Details' onClick={() =>Utils.navigateTo('/pages/newUser/userDetails/index')}>
             <View className='user_title_DetailsImg'>
               <Image src={userInfo.profile} ></Image>
             </View>

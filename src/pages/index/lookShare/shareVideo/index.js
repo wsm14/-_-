@@ -1,33 +1,28 @@
-import Taro from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro ,{getCurrentInstance}from '@tarojs/taro'
 import {View, Text, Swiper, SwiperItem, Video, Button} from '@tarojs/components'
 import {wxapiGet, wxapiPost} from './../../../../api/api'
 import Ajax from './../../../../api/request'
 import Utils from "./../../../../utils/utils";
 import './index.scss'
-import {transaction} from "mobx";
-export default class ShareImage extends Taro.Component{
-  defaultProps = {}
+export default class ShareVideo extends Component{
   constructor() {
     super(...arguments);
     this.state = {
       getUserMomentDetail : {
-        momentId: this.$router.params.momentId || '',
+        momentId: getCurrentInstance().router.params.momentId || '',
       },
       userMomentsInfo:{
       },
       userInfo: {
-        userId: this.$router.params.shareUserId||''
+        userId: getCurrentInstance().router.params.shareUserId||''
       },
       getBean: false,
       promptToast: false,
-      type: this.$router.params.type || '',
+      type: getCurrentInstance().router.params.type || '',
       shareUserProfile: '',
       shareUserName: ''
     }
-  }
-  config = {
-    navigationStyle:'default',
-    navigationBarTitleText: '视频详情'
   }
   componentDidShow() {
     Taro.hideHomeButton();
@@ -89,7 +84,7 @@ export default class ShareImage extends Taro.Component{
   }
   saveBean(){
     Ajax({
-      data: { momentId: this.$router.params.momentId},
+      data: { momentId: getCurrentInstance().router.params.momentId},
       url: wxapiPost.wechatBeanDetail
     },'post').then(res =>{
       if(res.errMsg !== 'request:ok'){
@@ -149,8 +144,44 @@ export default class ShareImage extends Taro.Component{
   goAppError(e){
     Utils.goDown();
   }
+  onShareAppMessage(options) {
+    // 设置转发内容 -- 适用于: 页面右上角 ... 和 页面按钮
+    const { userMomentsInfo }  =this.state
+    var shareObj = {
+      title: `${userMomentsInfo.title||'视频分享'}`,
+      imageUrl: `${userMomentsInfo.frontImage}`,
+      success: function(res) {
+        // 转发成功之后的回调
+        if (res.errMsg == 'shareAppMessage:ok') {
+            Utils.Toast('转发成功')
+        }
+      },
+      fail: function(res) {
+        // 转发失败之后的回调
+        if (res.errMsg == 'shareAppMessage:fail cancel') {
+          // 用户取消转发
+          Utils.Toast('取消转发')
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+          // 转发失败，其中 detail message 为详细失败信息
+          Utils.Toast('转发失败')
+        }
+      },
+      complete: function() {
+        // 转发结束之后的回调（转发成不成功都会执行）
+        console.log('---转发完成---');
+      }
+    };
+    return shareObj;
+  }
+  onShareTimeline(){
+    const { userMomentsInfo }  =this.state
+    return {
+      title: `${userMomentsInfo.title||'视频分享'}`,
+      imageUrl: `${userMomentsInfo.frontImage}`,
+    }
+  }
   render() {
-    const { userMomentsInfo ,getBean,promptToast,shareUserName,type,shareUserProfile}  =this.state
+    const {getUserMomentDetail, userMomentsInfo ,getBean,promptToast,shareUserName,type,shareUserProfile}  =this.state
     const height = userMomentsInfo.videoContent && parseInt(JSON.parse(userMomentsInfo.videoContent).height)
     return (
       <View className = "page_share_layer">
@@ -164,12 +195,16 @@ export default class ShareImage extends Taro.Component{
               </View>
             </View>
             <View  className='page_share_btn'>
-              <Button openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle'>打开APP</Button>
+              <Button  openType='launchApp'
+                       appParameter={JSON.stringify({jumpUrl: 'videoMomentDetailPage',id: getUserMomentDetail.momentId,
+                         type : 'jumpToPage', jumpType : "native" ,path:'videoMomentDetailPage',params:{id: getUserMomentDetail.momentId}})}
+                       onError={(e) =>this.goAppError(e)} className='page_share_btnStyle'>打开APP</Button>
             </View>
           </View>
         </View>}
         {type == 'share' && <View className='page_share_openApp'>
-          <Button openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle1'>App内打开</Button>
+          <Button  appParameter={JSON.stringify({jumpUrl: 'videoMomentDetailPage',id: getUserMomentDetail.momentId,
+            type : 'jumpToPage', jumpType : "native" ,path:'videoMomentDetailPage',params:{id: getUserMomentDetail.momentId}})} openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle1'>App内打开</Button>
         </View>}
         {userMomentsInfo.watchStatus =='0' && userMomentsInfo.beanFlag =='1' && type!= 'share' &&<View className="page_share_title">
           <View className="page_share_left">
@@ -205,19 +240,20 @@ export default class ShareImage extends Taro.Component{
         {/*   来自同城*/}
         {/* </View>*/}
         {userMomentsInfo.userType == 'merchant' &&
-        <View className="page_share_shop">
+        <View className="page_share_shop" onClick={() =>Utils.goDown()}>
           <View className="page_shareShop_top">
             <Text className="page_shareShop_name">{userMomentsInfo.merchantName}</Text>
             <Text className="page_liner lineColor"></Text>
             <Text className="page_line_city">{userMomentsInfo.districtName}</Text>
           </View>
           <View className="page_share_people">
-            <Text className="page_share_frequency">{userMomentsInfo.viewAmount}次看过此地</Text><Text className="page_share_tag">在您附近的美食</Text>
+            <Text className="page_share_frequency">{userMomentsInfo.viewAmount}次看过此地</Text>
+            {userMomentsInfo.categoryName && userMomentsInfo.categoryName == '美食' && <Text className="page_share_tag">在您附近的美食</Text>}
           </View>
         </View>}
-        <View className="page_share_userdata">
+        <View className="page_share_userdata" onClick={() =>Utils.goDown()}>
           <View className="page_share_user">
-            <Text className="page_share_userprofile" style={{background:`url(${userMomentsInfo.userProfile}) no-repeat center/cover`}}></Text>
+            <Text className="page_share_userprofile" style={userMomentsInfo.userProfile?{background:`url(${userMomentsInfo.userProfile}) no-repeat center/cover`}:{background:`url(https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/iconindex.png) no-repeat center/cover`}}></Text>
             <Text className="page_share_username">{userMomentsInfo.username}</Text>
           </View>
           <View className="page_share_details">

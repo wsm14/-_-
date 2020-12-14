@@ -1,4 +1,4 @@
-import {useState} from '@tarojs/taro'
+import {useState} from 'react'
 import {Text,View,Image} from '@tarojs/components'
 import './Toast.scss'
 import loading from './loading.png'

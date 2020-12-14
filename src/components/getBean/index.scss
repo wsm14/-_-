@@ -1,0 +1,19 @@
+.bean_box{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 130px;
+  text-align: center;
+}
+.bean_Time{
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 64px;
+  z-index: 1;
+  font-size: 25px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  padding: 20px 40px;
+  top: 0;
+}

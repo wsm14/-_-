@@ -1,0 +1,52 @@
+.banner_box{
+  width:100%;
+  height: 100%;background: no-repeat;
+  position: relative;
+}
+.banner_toast{
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 40px;
+  bottom: 12px;
+  text-align: center;
+}
+.banner_tags{
+  height: 40px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  font-size: 24px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  padding: 0 31px;
+  line-height: 40px;
+  display: inline-block;
+}
+.test{
+  overflow: auto;
+  height: auto;
+}
+.show_near{
+  position: absolute;
+  height: 6px;
+  top: 460px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  .show_near_linerTrue{
+    width: 30px;
+    height: 6px;
+    background: #FFFFFF;
+    border-radius: 3px;
+    margin-right: 8px;
+  }
+  .show_near_false{
+    width: 20px;
+    height: 6px;
+    background: #FFFFFF;
+    border-radius: 3px;
+    margin-right: 8px;
+  }
+}
