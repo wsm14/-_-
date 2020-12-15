@@ -263,7 +263,6 @@ class Index extends PureComponent {
       location: `${latitude},${longitude}`,
       key: mapTx,
     }, res => {
-      console.log(res)
       const {message,result} = res
       if(message === 'query ok'){
           const {address_component:{city}} = result
@@ -388,7 +387,7 @@ class Index extends PureComponent {
                 <CoverImage className='perimerter_city_box'
                             src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon46.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon40.png'}>
                 </CoverImage>
-                <CoverView className='perimerter_city_font'>杭州</CoverView>
+                <CoverView onClick={(e) =>{e.stopPropagation(); navigateTo('/pages/perimeter/city/index')}} className='perimerter_city_font'>杭州</CoverView>
                 <CoverImage className='perimerter_city_select'
                             src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon47.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon41.png'}></CoverImage>
               </CoverView>
@@ -444,21 +443,13 @@ class Index extends PureComponent {
 
                 </View>
               </View>
-              <View style={{visibility: 'hidden'}} className='perimerter_userKol'>
-                {level === '0' ?
-                  <View className='kol_icon1'>
-                    <View className='kol_icon_bg'></View>
-                    <View className='kol_icon_font'>
-                      解锁哒人等级
-                    </View>
-                  </View> :
-                  <View onClick={() => navigateTo('/pages/kol/legal/index')} className='kol_icon2'>
-                    <View className='kol_icon_bg'></View>
-                    <View className='kol_icon_font'>
-                      {userLevelSign || '无哒人名称'}
-                    </View>
+              <View style={level === '0'? {visibility: 'hidden'}:{}} className='perimerter_userKol'>
+                <View onClick={() => navigateTo('/pages/kol/legal/index')} className='kol_icon2'>
+                  <View className='kol_icon_bg'></View>
+                  <View className='kol_icon_font'>
+                    {userLevelSign || '无哒人名称'}
                   </View>
-                }
+                </View>
               </View>
             </View>
             <View className='perimerter_getBean'>

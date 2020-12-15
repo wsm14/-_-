@@ -5,6 +5,7 @@
 * httpGet get请求 url-请求路径 data-请求数据 fn-请求成功的执行函数
 * httpPost post请求 url-请求路径 data-请求数据 fn-请求成功的执行函数
 * encrypt 对数据进行加密处理
+* requestUrl 请求去重
 */
 import Taro, {getCurrentPages} from '@tarojs/taro'
 
@@ -44,7 +45,7 @@ const httpCondition = {
   timeout: 10000,
   dataType: 'json'
 }
-
+let requestUrl = []
 export const httpGet = (obj, fn) => {
   Taro.showLoading({
     title: '加载中',
@@ -52,44 +53,44 @@ export const httpGet = (obj, fn) => {
   if (Taro.getStorageSync('userInfo') && Taro.getStorageSync('userInfo').mobile.length === 11 && Taro.getStorageSync('userInfo').token) {
     obj.data.token = Taro.getStorageSync('userInfo').token
   }
-  Taro.request({
-    ...httpCondition,
-    header: {
-      ...httpCondition.header,
-      'lnt': Taro.getStorageSync('lnt'),
-      'lat': Taro.getStorageSync('lat'),
-    },
-    url:baseUrl + obj.url,
-    data: encrypt(obj.data) || {},
-    method: 'get',
-    success: (res) => {
-      Taro.hideLoading()
-      const {data, statusCode} = res
-      if (statusCode === 200 && res.data.success) {
-        const {content} = data
-        fn && fn(content)
-      } else {
-        if (statusCode !== 200) {
-          toast("服务路径不存在")
-        } else if (!data.success) {
-          const {resultDesc, resultCode} = data
-          if (resultOperate[resultCode]) {
-            toast(resultDesc);
-            resultOperate[resultCode].fn();
-            return navigateTo(resultOperate[resultCode].link)
+    Taro.request({
+      ...httpCondition,
+      header: {
+        ...httpCondition.header,
+        'lnt': Taro.getStorageSync('lnt'),
+        'lat': Taro.getStorageSync('lat'),
+      },
+      url:baseUrl + obj.url,
+      data: encrypt(obj.data) || {},
+      method: 'get',
+      success: (res) => {
+        Taro.hideLoading()
+        const {data, statusCode} = res
+        if (statusCode === 200 && res.data.success) {
+          const {content} = data
+          fn && fn(content)
+        } else {
+          if (statusCode !== 200) {
+            toast("服务路径不存在")
+          } else if (!data.success) {
+            const {resultDesc, resultCode} = data
+            if (resultOperate[resultCode]) {
+              toast(resultDesc);
+              resultOperate[resultCode].fn();
+              return navigateTo(resultOperate[resultCode].link)
+            }
+            return toast(resultDesc);
           }
-          return toast(resultDesc);
         }
+      },
+      fail: (res) => {
+        Taro.hideLoading()
+        const {errMsg} = res
+        toast(filterHttpStatus(errMsg))
+      },
+      complete: () => {
       }
-    },
-    fail: (res) => {
-      Taro.hideLoading()
-      const {errMsg} = res
-      toast(filterHttpStatus(errMsg))
-    },
-    complete: () => {
-    }
-  })
+    })
 }
 
 export const httpPost = (obj, fn) => {
@@ -100,45 +101,55 @@ export const httpPost = (obj, fn) => {
   if (Taro.getStorageSync('userInfo') && Taro.getStorageSync('userInfo').mobile.length === 11 && Taro.getStorageSync('userInfo').token) {
     obj.data.token = Taro.getStorageSync('userInfo').token
   }
-  Taro.request({
-    ...httpCondition,
-    header: {
-      ...httpCondition.header,
-      'content-type': 'application/json',
-      'lnt': Taro.getStorageSync('lnt'),
-      'lat': Taro.getStorageSync('lat'),
-    },
-    url: baseUrl + obj.url,
-    data: encrypt(obj.data) || {},
-    method: 'post',
-    success: (res) => {
-      Taro.hideLoading()
-      const {data, statusCode} = res
-      if (statusCode === 200 && res.data.success) {
-        const {content} = data
-        fn && fn(content, data)
-      } else {
-        if (statusCode !== 200) {
-          toast("服务路径不存在")
-        } else if (!data.success) {
-          const {resultDesc, resultCode} = data
-          if (resultOperate[resultCode]) {
-            toast(resultDesc);
-            resultOperate[resultCode].fn();
-            return navigateTo(resultOperate[resultCode].link)
+  if(requestUrl.includes(obj.url)){
+    return
+  }
+  else {
+    requestUrl.push(obj.url)
+    Taro.request({
+      ...httpCondition,
+      header: {
+        ...httpCondition.header,
+        'content-type': 'application/json',
+        'lnt': Taro.getStorageSync('lnt'),
+        'lat': Taro.getStorageSync('lat'),
+      },
+      url: baseUrl + obj.url,
+      data: encrypt(obj.data) || {},
+      method: 'post',
+      success: (res) => {
+        Taro.hideLoading()
+        const {data, statusCode} = res
+        if (statusCode === 200 && res.data.success) {
+          const {content} = data
+          fn && fn(content, data)
+        } else {
+          if (statusCode !== 200) {
+            toast("服务路径不存在")
+          } else if (!data.success) {
+            const {resultDesc, resultCode} = data
+            if (resultOperate[resultCode]) {
+              toast(resultDesc);
+              resultOperate[resultCode].fn();
+              return navigateTo(resultOperate[resultCode].link)
+            }
+            return toast(resultDesc);
           }
-          return toast(resultDesc);
         }
+      },
+      fail: (res) => {
+        Taro.hideLoading()
+        const {errMsg} = res
+        toast(filterHttpStatus(errMsg))
+      },
+      complete: () => {
+        requestUrl = requestUrl.filter(item => {
+          return item !==obj.url
+        })
       }
-    },
-    fail: (res) => {
-      Taro.hideLoading()
-      const {errMsg} = res
-      toast(filterHttpStatus(errMsg))
-    },
-    complete: () => {
-    }
-  })
+    })
+  }
+
 }
 
 export const httpOtherGet = (obj, fn) => {

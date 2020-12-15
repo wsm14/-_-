@@ -16,7 +16,6 @@ const store = {
   shareStore,
   goodsStore,
 }
-// React.prototype.Event = new Event()
 class App extends Component {
   componentDidMount () {}
 

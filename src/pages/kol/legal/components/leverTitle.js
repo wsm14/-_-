@@ -19,12 +19,12 @@ export default ({isKol, levelConfigInfo = {}, levelFlag, nextLevelName}) => {
   const [left, setLeft] = useState(50)
   const [length, setLength] = useState('minLengths')
   const setSlider = (val) => {
-    const {detail:{scrollLeft}} = val
+    const {detail: {scrollLeft}} = val
     let box = 350
-    setLeft((((scrollLeft/2)/box)*100)+50)
+    setLeft((((scrollLeft / 2) / box) * 100) + 50)
   }
   const setTemplate = {
-    minLengths: (<View className='legal_title_iconDetails'>
+    minLengths: (<View className='legal_title_iconDetails' style={list.length > 4 ? {flexFlow: 'column wrap'} : {}}>
       {list.map((item, index) => {
         const {title, icon} = item
         return (
@@ -38,9 +38,9 @@ export default ({isKol, levelConfigInfo = {}, levelFlag, nextLevelName}) => {
     maxLengths: (
       <View className='legal_title_iconScroll'>
         <ScrollView
-         scrollX
-         onScroll={setSlider}
-         className='scroll_style'
+          scrollX
+          onScroll={setSlider}
+          className='scroll_style'
         >
           <View className='legal_title_iconNoMargin'>
             {list.map((item, index) => {
@@ -55,13 +55,13 @@ export default ({isKol, levelConfigInfo = {}, levelFlag, nextLevelName}) => {
           </View>
         </ScrollView>
         <View className="slider">
-          <View style={{left:left+'%'}} className="slider-inside .slider-inside-location"></View>
+          <View style={{left: left + '%'}} className="slider-inside .slider-inside-location"></View>
         </View>
       </View>
-      ),
+    ),
   }[length]
   useEffect(() => {
-    const {rights,pictures} = levelConfigInfo
+    const {rights, pictures} = levelConfigInfo
     if (rights && JSON.parse(rights)) {
       setList([...JSON.parse(rights)])
     }
@@ -85,10 +85,11 @@ export default ({isKol, levelConfigInfo = {}, levelFlag, nextLevelName}) => {
               {(isKol === '0' && levelFlag === '0') ? '解锁哒人' : 'Lv.' + levelConfigInfo.level + levelConfigInfo.levelName}
             </View>
             <View className='legal_title_font2'>
-              {(isKol === '0' && levelFlag === '0') ? '申请解锁哒人，彰显身份，拥有更多特权' : levelConfigInfo.levelDesc}
+              {(isKol === '0' && levelFlag === '0') ? '申请解锁哒人，彰显身份，拥有更多特权' :`当前等级可享受${list.length}项专属权益`}
             </View>
           </View>
-          <View className='legal_title_topImg dakale_nullImage' style={puction.activity && backgroundObj(puction.activity)}></View>
+          <View className='legal_title_topImg dakale_nullImage'
+                style={puction.activity && backgroundObj(puction.currentLevel)}></View>
         </View>
         <View className='legal_title_content'>
           {setTemplate}
