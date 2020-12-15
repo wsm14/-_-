@@ -97,7 +97,6 @@ export const authGeography = (fn, type) => {
     }
   })
 }
-
 //获取定位
 /*
 *
@@ -198,3 +197,5 @@ export const scanCode = (fn) => {
     }
   })
 }
+//腾讯地图key值
+export const mapTx  = 'V44BZ-PNPR4-Z6PUO-X2YUZ-5GAVO-MRBYQ';

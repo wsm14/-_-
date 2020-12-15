@@ -2,11 +2,12 @@ import React, {Component} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {ScrollView, Text, View} from '@tarojs/components'
 import Banner from '@/components/banner'
-import {coupons, billboard, exploreShop,shopDetails} from '@/components/publicShopStyle'
+import {coupons, billboard, shopDetails} from '@/components/publicShopStyle'
 import MarkPhone from '@/components/payTelephone'
 import {wxapiGet, perimeter} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import APPShare from '@/components/shareApp'
+import {scanCode} from '@/common/authority'
 import classNames from 'classnames'
 import {
   imgList,
@@ -27,17 +28,19 @@ import {
   filterSetting,
   filterStrList,
   getLat,
-  getLnt
+  getLnt,
+  filterTime,
+  mapGo,
+  getPayByCode
 } from '@/common/utils'
 import './merchantDetails.scss'
-import {httpPost} from "../../../api/newRequest";
-import {AtActionSheet} from "taro-ui";
+import evens from "@/common/evens";
 
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      merchantHttpData: {merchantId: getCurrentInstance().router.params.merchantId },
+      merchantHttpData: {merchantId: getCurrentInstance().router.params.merchantId},
       banner: {
         bannerType: 'merchant',
         merchantId: getCurrentInstance().router.params.merchantId
@@ -53,33 +56,35 @@ class MerchantDetails extends Component {
         page: 1,
         limit: 5,
       },
-      type: getCurrentInstance().router.params.type,
+      shareStatus: getCurrentInstance().router.params.type,
       kolMomentsList: [],
       countStatus: true,
       visible: false,
       specialGoodsList: [],
-      goodsList:[]
+      goodsList: []
     }
   }
 
   componentWillMount() {
   }
 
-  onReady() {
-    // 生命周期函数--监听页面初次渲染完成
-  }
 
-  componentDidShow() {
+  componentDidMount() {
     this.getBannerList()
     this.getListRecommend()
     this.getMerchantById()
     this.getMerchantDetails()
     this.getGoodList()
   }
+
+  componentDidShow() {
+    evens.$on('updateList', this.updateList.bind(this))
+  }
+
   getGoodList() {
     const {merchantDetails: {getListMerchant}} = perimeter
     return httpGet({
-      data: { merchantId: getCurrentInstance().router.params.merchantId},
+      data: {merchantId: getCurrentInstance().router.params.merchantId},
       url: getListMerchant
     }, res => {
       const {goodsList} = res
@@ -88,6 +93,7 @@ class MerchantDetails extends Component {
       })
     })
   }
+
   getMerchantDetails() {
     const {merchantDetails: {getMomentByMerchantId}} = perimeter
     const {getMerchantDetails, countStatus} = this.state
@@ -106,6 +112,21 @@ class MerchantDetails extends Component {
       })
     })
   }
+
+  updateList(obj) {
+    const {kolMomentsList} = this.state
+    let list = kolMomentsList.map(item => {
+      if (item['kolMomentsId'] === obj['kolMomentId']) {
+        obj['kolMomentsId'] = item['kolMomentsId']
+        return obj
+      }
+      return item
+    })
+    this.setState({
+      kolMomentsList: list
+    })
+  }
+
   //获取商家信息
   getMerchantById() {
     const {merchantHttpData} = this.state
@@ -114,14 +135,14 @@ class MerchantDetails extends Component {
       url: wxapiGet.wechatGetUserMerchant
     }, res => {
       const {userMerchant} = res
-      console.log(res)
       this.setState({
         userMerchantInfo: {...userMerchant}
-      },res => {
+      }, res => {
         this.getMerchantLove()
       })
     })
   }
+
   getBannerList() {
     const {banner} = this.state
     httpGet(
@@ -130,7 +151,6 @@ class MerchantDetails extends Component {
         url: wxapiGet.wechatUserBanner
       }, res => {
         const {bannerList} = res
-        console.log(res)
         this.setState({
           bannerList
         })
@@ -149,8 +169,9 @@ class MerchantDetails extends Component {
       })
     })
   }
+
   getMerchantLove() {
-    const { userMerchantInfo:{merchantId}} = this.state
+    const {userMerchantInfo: {merchantId}} = this.state
     const {getMerchantSpecialGoods} = perimeter
     httpGet({
       url: getMerchantSpecialGoods,
@@ -160,10 +181,133 @@ class MerchantDetails extends Component {
         limit: 6
       }
     }, res => {
-      const {specialGoodsList} =res
+      const {specialGoodsList} = res
     })
   }
+
   //获取商家猜你喜欢
+  exploreShop(data, index) {
+    const {
+      kolMomentsId,
+      contentType,
+      userId,
+      userIdString,
+      likeAmount,
+      topicName,
+      frontImage,
+      beanAmount,
+      length,
+      title,
+      username,
+      userProfile,
+      imageNum,
+      frontImageWidth,
+      frontImageHeight,
+      watchStatus,
+      merchantLnt,
+      merchantLat,
+      merchantAddress,
+      userLikeStatus,
+      beanFlag
+    } = data
+    return (
+      <View className='explore_box'>
+        <View className='explore_img dakale_nullImage' style={{...backgroundObj(frontImage)}}
+              onClick={() => {
+                if (contentType === 'video') {
+                  navigateTo(`/pages/kol/shareVideo/index?kolMomentId=${kolMomentsId}`)
+                } else {
+                  navigateTo(`/pages/kol/shareImage/index?kolMomentId=${kolMomentsId}`)
+                }
+              }}
+        >
+          {contentType == 'video' ?
+            <View className='explore_share_imgTag'>
+              {filterTime(length || '0')}
+            </View> :
+            <View className='explore_share_videoTag'>
+              <View className='explore_share_imgIcon'></View>
+              <View className='explore_share_imgfont'>{imageNum}</View>
+            </View>
+          }
+          {contentType == 'video' && <View className='explore_video'></View>}
+          <View className='explore_share_accress'>
+            <View className='explore_share_limitIcon'></View>
+            <View className='explore_share_limit'>{''} {merchantAddress || ''}  </View>
+          </View>
+        </View>
+        <View className='explore_message font_noHide'>
+          {topicName && <View className='tip_box'>
+            <View className='explore_tip font_hide'>{'#' + topicName}</View>
+          </View>}
+          {title}
+        </View>
+        {beanFlag === '1' &&
+        <View className={classNames('explore_bean', watchStatus === '1' && 'getbeanColor2')}>
+          <View className={classNames('explore_lookGet', watchStatus === '0' ? 'explore_beanBg1' : 'explore_beanBg2')}>
+
+          </View>
+          {watchStatus === '1' ? `已捡${beanAmount}卡豆` : `观看可捡${beanAmount}卡豆`}
+        </View>}
+        <View className='explore_user'>
+          <View className='explore_user_left'
+                onClick={() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`)}>
+            <View className='explore_user_profile' style={{...backgroundObj(userProfile)}}></View>
+            <View className='explore_user_name font_hide'>{username}</View>
+          </View>
+          <View className='explore_user_right'>
+            <View
+              className={classNames('explore_user_zan ', userLikeStatus === '1' ? 'explore_user_zan_bg1' : 'explore_user_zan_bg2')}
+              onClick={(e) => {
+                e.stopPropagation();
+                const {
+                  kolMomentsList,
+                } = this.state
+                if (userLikeStatus === '1') {
+                  deleteFall({
+                    kolMomentsId: kolMomentsId,
+                  }, () => {
+                    const kolMomentsInfo = {
+                      ...kolMomentsList[index],
+                      userLikeStatus: '0',
+                      likeAmount: kolMomentsList[index].likeAmount - 1
+                    }
+                    const list = kolMomentsList.map((item, indexs) => {
+                      if (index === indexs) {
+                        return kolMomentsInfo
+                      } else return item
+                    })
+                    this.setState({
+                      kolMomentsList: list
+                    })
+                  })
+                } else {
+                  saveFall({
+                    kolMomentsId: kolMomentsId,
+                  }, () => {
+                    const kolMomentsInfo = {
+                      ...kolMomentsList[index],
+                      userLikeStatus: '1',
+                      likeAmount: kolMomentsList[index].likeAmount + 1
+                    }
+                    const list = kolMomentsList.map((item, indexs) => {
+                      if (index === indexs) {
+                        return kolMomentsInfo
+                      } else return item
+                    })
+                    this.setState({
+                      kolMomentsList: list
+                    })
+                  })
+                }
+              }}></View>
+            <View className='explore_user_number'>{likeAmount}</View>
+          </View>
+        </View>
+      </View>
+    )
+  }
+
   onReachBottom() {
     const {getMerchantDetails, countStatus} = this.state
     if (countStatus) {
@@ -183,130 +327,140 @@ class MerchantDetails extends Component {
   render() {
     const {
       userMerchant,
+      shareStatus,
       userMerchant:
-        {merchantCoverImg,
+        {
+          merchantCoverImg,
           merchantName,
-          tag,
-          businessHub,
           topCategoryValue,
-          cuisine,
-          perCapitaConsumption
         },
       bannerList,
       userMerchantInfo,
       userMerchantInfo: {
+        businessHub,
+        perCapitaConsumption,
         businessStatus,
         businessTime,
         allImgs,
         services,
         address,
-        provinceName,
-        cityName,
         districtName,
+        categoryName,
         lat,
         lnt,
         userIdString,
         telephone,
-        merchantFollowStatus
+        merchantFollowStatus,
+        tag,
       },
       kolMomentsList,
       visible,
       specialGoodsList,
       goodsList
     } = this.state
-    return (
-      <View className='merchantBox'>
-        <Banner
-          autoplay={bannerList.length > 1 ? true : false}
-          imgStyle
-          data={bannerList}
-          imgName={'coverImg'}
-          style={{width: '100%', height: Taro.pxTransform(440)}}
-          boxStyle={{width: '100%', height: Taro.pxTransform(440)}}
-        ></Banner>
-        <View className='merchantDetails_shop'>
-          <View className='merchant_name font_noHide'>
-            {merchantName}
-          </View>
-          <View className='merchant_desc'>
-            「{businessHub}·{cuisine} 人均{perCapitaConsumption}元」
-          </View>
-          <View className='merchant_tag'>
-            <View className='merchat_tag_box'>
-              人气商家
+    if (Object.keys(userMerchantInfo).length > 0) {
+      return (
+        <View className='merchantBox'>
+          {shareStatus == 'share' &&
+          <APPShare
+            {...{jumpUrl: 'shopDetailPage',id: getCurrentInstance().router.params.merchantId,type : 'jumpToPage',
+                jumpType : "native" ,path:'DKLShopDetailViewController',params:{shopId: getCurrentInstance().router.params.merchantId}}}>
+          </APPShare>}
+          <Banner
+            autoplay={bannerList.length > 1 ? true : false}
+            imgStyle
+            data={bannerList}
+            imgName={'coverImg'}
+            style={{width: '100%', height: Taro.pxTransform(440)}}
+            boxStyle={{width: '100%', height: Taro.pxTransform(440)}}
+          ></Banner>
+          <View className='merchantDetails_shop'>
+            <View className='merchant_name font_noHide'>
+              {merchantName}
             </View>
+            <View className='merchant_desc'>
+              「{businessHub && businessHub + '·'}{categoryName} {perCapitaConsumption && '人均' + perCapitaConsumption + '元'}」
+            </View>
+            <View className='merchant_tag'>
+              {filterStrList(tag).map(item => {
+                return (<View className='merchat_tag_box'>
+                  {item}
+                </View>)
+              })}
 
-          </View>
-          <ScrollView
-            scrollX
-            className='merchant_shopImg'>
-            {filterStrList(allImgs).map(item => {
-              return (<View className='shopImgBox' style={{...backgroundObj(item)}}></View>)
-            })}
-          </ScrollView>
-          <View className='share_btn public_center'
-                onClick={() => navigateTo(`/pages/newUser/merchantDetails/index?userId=${userIdString}`)}>
-            <View className='share_icon'></View>
-            <View>看商家分享捡豆</View>
-          </View>
-          <View className='merchant_shop_details'>
-            <View className='merchat_time'>
-              <View className='merchant_time_go'></View>
-              <View className='merchant_time_box'>
-                <View className='merchant_bisinissStatus'>
-                  <Text>
-                    {businessStatus === '0' ? '休息中 | ' : '营业中 | '}
-                  </Text>
-                  <Text style={{color: 'rgba(153, 153, 153, 1)'}}>{businessTime}</Text>
+            </View>
+            <ScrollView
+              scrollX
+              className='merchant_shopImg'>
+              {filterStrList(allImgs).map(item => {
+                return (<View className='shopImgBox' style={{...backgroundObj(item)}}></View>)
+              })}
+            </ScrollView>
+            <View className='share_btn public_center'
+                  onClick={() => navigateTo(`/pages/newUser/merchantDetails/index?userId=${userIdString}`)}>
+              <View className='share_icon'></View>
+              <View>看商家分享捡豆</View>
+            </View>
+            <View className='merchant_shop_details'>
+              <View className='merchat_time'>
+                <View className='merchant_time_go'></View>
+                <View className='merchant_time_box'>
+                  <View className='merchant_bisinissStatus'>
+                    <Text>
+                      {businessStatus === '0' ? '休息中 | ' : '营业中 | '}
+                    </Text>
+                    <Text style={{color: 'rgba(153, 153, 153, 1)'}}>{businessTime}</Text>
+                  </View>
+                  <View className='merchant_time_tags'>
+                    {services && services.map((item, index) => {
+                      if (index < 5) {
+                        return (
+                          <View className={'merchant_tag_shop'}>{item}</View>
+                        )
+                      }
+                    })}
+                  </View>
                 </View>
-                <View className='merchant_time_tags'>
-                  {services && services.map((item, index) => {
-                    if (index < 5) {
-                      return (
-                        <View className={'merchant_tag_shop'}>{item}</View>
-                      )
-                    }
-                  })}
+              </View>
+              <View className='merchat_city_accress'>
+                <View className='merchant_accBox'>
+                  <View className='merchant_city_icon1' onClick={() => mapGo({
+                    lat,lnt,address,name: merchantName
+                  })}></View>
+                  <View className='merchant_city_icon2'></View>
+                  <View className='merchant_city_icon3' onClick={() => this.setState({visible: true})}></View>
+                </View>
+                <View className='merchat_city_details'>
+                  <View className='merchat_city_names font_hide'>
+                    {districtName + address}
+                  </View>
+                  <View className='merchat_city_limit'>
+                    距您{GetDistance(getLat(), getLnt(), lat, lnt) + ' '} {filterSetting(GetDistance(getLat(), getLnt(), lat, lnt))}
+                  </View>
                 </View>
               </View>
             </View>
-            <View className='merchat_city_accress'>
-              <View className='merchant_accBox'>
-                <View className='merchant_city_icon1'></View>
-                <View className='merchant_city_icon2'></View>
-                <View className='merchant_city_icon3' onClick={() => this.setState({visible: true})}></View>
-              </View>
-              <View className='merchat_city_details'>
-                <View className='merchat_city_names font_hide'>
-                  {districtName + address}
-                </View>
-                <View className='merchat_city_limit'>
-                  距您{GetDistance(getLat(), getLnt(), lat, lnt) + ' '} {filterSetting(GetDistance(getLat(), getLnt(), lat, lnt))}
-                </View>
-              </View>
-            </View>
+
           </View>
+          {/*<View className='merchant_active'>*/}
+          {/*  <View className='merchant_active_title'>*/}
+          {/*    <View className='merchant_active_iconBox active_icon1'>*/}
 
-        </View>
-        {/*<View className='merchant_active'>*/}
-        {/*  <View className='merchant_active_title'>*/}
-        {/*    <View className='merchant_active_iconBox active_icon1'>*/}
+          {/*    </View>*/}
+          {/*    <View className='merchant_active_biaoti'>*/}
+          {/*      到店优惠*/}
+          {/*    </View>*/}
 
-        {/*    </View>*/}
-        {/*    <View className='merchant_active_biaoti'>*/}
-        {/*      到店优惠*/}
-        {/*    </View>*/}
-
-        {/*  </View>*/}
-        {/*  <View className='merchant_active_dec'>*/}
-        {/*    店铺超级优惠权益 到店消费直接抵扣*/}
-        {/*  </View>*/}
-        {/*  <View className='active_go'></View>*/}
-        {/*</View>*/}
-        {/*{coupons()}*/}
-        {/*{coupons()}*/}
-        {/*{coupons()}*/}
-        {specialGoodsList.length > 0&&
+          {/*  </View>*/}
+          {/*  <View className='merchant_active_dec'>*/}
+          {/*    店铺超级优惠权益 到店消费直接抵扣*/}
+          {/*  </View>*/}
+          {/*  <View className='active_go'></View>*/}
+          {/*</View>*/}
+          {/*{coupons()}*/}
+          {/*{coupons()}*/}
+          {/*{coupons()}*/}
+          {specialGoodsList.length > 0 &&
           <>
             <View className='merchant_active' onClick={() => navigateTo('/pages/perimeter/special/index')}>
               <View className='merchant_active_title'>
@@ -331,107 +485,109 @@ class MerchantDetails extends Component {
               })}
             </ScrollView>
           </>
-        }
+          }
 
-        {goodsList && goodsList.length > 0 &&
-        <>
-          <View className='merchant_active'>
-            <View className='merchant_active_title'>
-              <View className='merchant_active_iconBox active_icon3'>
+          {goodsList && goodsList.length > 0 &&
+          <>
+            <View className='merchant_active'>
+              <View className='merchant_active_title'>
+                <View className='merchant_active_iconBox active_icon3'>
+                </View>
+                <View className='merchant_active_biaoti'>
+                  商品橱窗
+                </View>
               </View>
-              <View className='merchant_active_biaoti'>
-                商品橱窗
+              <View className='merchant_active_dec'>
+                本店商品展示
               </View>
             </View>
-            <View className='merchant_active_dec'>
-              本店商品展示
+            <ScrollView
+              scrollX
+              className='merchant_billboard'
+            >
+              {goodsList.map((item, index) => {
+                return (billboard(this, item))
+              })}
+            </ScrollView>
+          </>
+          }
+          {kolMomentsList && kolMomentsList.length > 0 &&
+          <>
+            <View className='merchant_active'>
+              <View className='merchant_active_title'>
+                <View className='merchant_active_iconBox active_icon4'>
+
+                </View>
+                <View className='merchant_active_biaoti'>
+                  探店分享
+                </View>
+
+              </View>
+              <View className='merchant_active_dec'>
+                哒人分享 精彩推荐
+              </View>
             </View>
-          </View>
-          <ScrollView
-            scrollX
-            className='merchant_billboard'
-          >
-            {goodsList.map((item, index) => {
-              return (billboard(this, item))
+            {kolMomentsList.map((item, index) => {
+              return (this.exploreShop(item, index))
             })}
-          </ScrollView>
-        </>
-        }
-        {kolMomentsList && kolMomentsList.length > 0 &&
-        <>
-          <View className='merchant_active'>
-            <View className='merchant_active_title'>
-              <View className='merchant_active_iconBox active_icon4'>
-
+          </>
+          }
+          <View className='merchant_layer'>
+            <View className='merchant_layer_btn'>
+              <View className='merchant_layer_btn1'  onClick={() => scanCode(getPayByCode)} >
+                <View className='merchant_layer_btnBox merchant_layer_btnIcon1'></View>
+                <View>买单</View>
               </View>
-              <View className='merchant_active_biaoti'>
-                探店分享
-              </View>
-
-            </View>
-            <View className='merchant_active_dec'>
-              哒人分享 精彩推荐
-            </View>
-          </View>
-          {kolMomentsList.map((item, index) => {
-            let that = this
-            return (exploreShop(this, item))
-          })}
-        </>
-        }
-        <View className='merchant_layer'>
-          <View className='merchant_layer_btn'>
-            <View className='merchant_layer_btn1'>
-              <View className='merchant_layer_btnBox merchant_layer_btnIcon1'></View>
-              <View>买单</View>
-            </View>
-            <View className='merchant_layer_limit'></View>
-            <View className='merchant_layer_btn2'>
-              <View className='merchant_layer_btnBox merchant_layer_btnIcon3'></View>
-              <View>到店打卡</View>
-            </View>
-            <View className='merchant_layer_limit'></View>
-            {merchantFollowStatus === '0' ?
+              <View className='merchant_layer_limit'></View>
               <View className='merchant_layer_btn2'>
-                <View className='merchant_layer_btnBox merchant_layer_btnIcon2' onClick={() => saveFollow({
-                  followType: 'merchant',
-                  followUserId: userIdString,
-                }, res => {
+                <View className='merchant_layer_btnBox merchant_layer_btnIcon3'></View>
+                <View>到店打卡</View>
+              </View>
+              <View className='merchant_layer_limit'></View>
+              {merchantFollowStatus === '0' ?
+                <View className='merchant_layer_btn2'>
+                  <View className='merchant_layer_btnBox merchant_layer_btnIcon2' onClick={() => saveFollow({
+                    followType: 'merchant',
+                    followUserId: userIdString,
+                  }, res => {
+                    this.setState({
+                      userMerchantInfo: {
+                        ...this.state.userMerchantInfo,
+                        merchantFollowStatus: '1'
+                      }
+                    }, () => {
+                      toast('关注成功')
+                    })
+                  })}></View>
+                  <View>关注</View>
+                </View> :
+                <View className='merchant_layer_btn2' onClick={() => deleteFollow({followUserId: userIdString}, res => {
                   this.setState({
                     userMerchantInfo: {
                       ...this.state.userMerchantInfo,
-                      merchantFollowStatus: '1'
+                      merchantFollowStatus: '0'
                     }
                   }, () => {
-                    toast('关注成功')
+                    toast('取消成功')
                   })
-                })}></View>
-                <View>关注</View>
-              </View> :
-              <View className='merchant_layer_btn2' onClick={() => deleteFollow({followUserId: userIdString}, res => {
-                this.setState({
-                  userMerchantInfo: {
-                    ...this.state.userMerchantInfo,
-                    merchantFollowStatus: '0'
-                  }
-                }, () => {
-                  toast('取消成功')
-                })
-              })}>
-                <View className='merchant_layer_btnBox merchant_layer_btnIcon4'></View>
-                <View>已关注</View>
-              </View>
-            }
+                })}>
+                  <View className='merchant_layer_btnBox merchant_layer_btnIcon4'></View>
+                  <View>已关注</View>
+                </View>
+              }
 
+            </View>
+            <View className='merchant_shop' onClick={() => this.setState({visible: true})}>立即预约</View>
           </View>
-          <View className='merchant_shop' onClick={() => this.setState({visible: true})}>立即预约</View>
+          {visible &&
+          <MarkPhone onClose={() => this.setState({visible: false})} onCancel={() => this.setState({visible: false})}
+                     data={filterStrList(telephone)}></MarkPhone>
+          }
         </View>
-        {visible &&
-        <MarkPhone onClose={() => this.setState({visible: false})} onCancel={() => this.setState({visible: false})}
-                   data={filterStrList(telephone)}></MarkPhone>
-        }
-      </View>
-    )
+      )
+    }
+    return null
+
   }
 }
 

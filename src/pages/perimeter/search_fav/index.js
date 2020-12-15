@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 import {CoverView, Input, Text, View} from '@tarojs/components'
 import {backgroundObj, GetDistance, getLat, getLnt, navigateTo, toast} from '@/common/utils'
 import Tabs from '@/components/tabs'
-import {shopDetails,nullMerchantFav,nullGoodsFav} from '@/components/publicShopStyle'
+import {shopDetails,nullMerchantFav,nullGoodsFav,createMerchants} from '@/components/publicShopStyle'
 import {perimeter} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import Waterfall from '@/components/waterfall'
@@ -168,7 +168,6 @@ export default class Index extends React.Component {
 
     }
     else {
-      console.log(current,'333')
       if(countStatus3){
         this.setState({
           publicSearch: {
@@ -185,59 +184,9 @@ export default class Index extends React.Component {
   componentDidMount() {
     this.getShopByMerchant()
   }
-  createMerchants(item) {
-    const {
-      address,
-      brandFlag,
-      businessHub,
-      categoryName,
-      cityName,
-      coverImg,
-      districtName,
-      lat,
-      lnt,
-      markBean,
-      markFlag,
-      merchantName,
-      provinceName,
-      specialGoodsAmount,
-      specialGoodsFlag,
-      userMerchantIdString
-    } = item
-    return (
-      <View className='createMerchant_box'>
-        <View className='createMerchant_image dakale_nullImage'
-        style={backgroundObj(coverImg)}>
-          <View className='createMerchant_toast'>
-            <View className='createMerchant_city'>
-              <View className='createMerchant_city_icon'></View>
-              <View className='createMerchant_city_font color6 font_hide'>
-                {GetDistance(getLat, getLnt, lat, lnt)+' '+ address}</View>
-            </View>
-          </View>
-        </View>
-        <View className='createMerchant_center'>
-          <View className='font28 color1 bold createMerchant_merchantTitle font_hide'> {merchantName} </View>
-          <View className='font24 color2 createMerchant_shopRadius'>
-            {businessHub&&businessHub+'·'}{categoryName}
-          </View>
-          {markFlag && markBean !== 0 &&
-           <View className='merchant_take_card font24 color9 bold'>
-             到店打卡捡豆{markBean}
-           </View>
-          }
-          {specialGoodsFlag && specialGoodsAmount !== 0 &&
-           <View className='merchant_take_special'>
-             {specialGoodsAmount}款特价热卖中
-           </View>
-          }
-        </View>
-      </View>
-    )
-  }
   setPublicList() {
     const {getSpecialGoodsMerchant,listSpecialGoods} = perimeter
-    const {setting: {current },publicSearch} = this.state
+    const {setting: {current},publicSearch} = this.state
     if(current === 0){
       httpGet({
         data: publicSearch,
@@ -328,7 +277,6 @@ export default class Index extends React.Component {
             toast('无更多数据')
           })
         }
-
       }
     })
   }
@@ -369,7 +317,7 @@ export default class Index extends React.Component {
           {current === 1 && merchantGoodList.length === 0 && nullGoodsFav()}
           <Waterfall
             list={current===0?(userMerchantList.length>0?userMerchantList:publicList):(merchantGoodList.length>0?merchantGoodList:publicList)}
-            createDom={current === 0 ?this.createMerchants.bind(this) : shopDetails}
+            createDom={current === 0 ?createMerchants : shopDetails}
             imgHight={240}
           >
           </Waterfall>

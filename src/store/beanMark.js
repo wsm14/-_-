@@ -1,22 +1,25 @@
 import { observable } from 'mobx'
 import Taro from '@tarojs/taro'
 const markStore = observable({
-  beanMarks: {},
-  merchantId: {},
-  code:'',
-  setMarkInfo(obj) {
-    this.beanMarks = obj
+  kolMomentsList: [],
+  setList(list) {
+    this.orderList = [...this.orderList, ...list]
   },
-  setCode(code) {
-    this.code = code
+  setNullList() {
+    this.orderList = []
   },
-  setMerchantId(obj) {
-    this.merchantId = obj
+  deleteList(obj, val) {
+    this.orderList = this.orderList.filter(item => {
+      return item[val] !== obj[val]
+    })
   },
-  setInit(){
-    this.beanMarks = {}
-    this.merchantId = {}
-    this.code = ''
+  updateList(obj, val) {
+    this.orderList = this.orderList.map(item => {
+      if(item[val] ===obj[val]){
+        return  obj
+      }
+      return item
+    })
   }
 })
 export default markStore

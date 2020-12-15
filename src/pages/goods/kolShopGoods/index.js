@@ -4,7 +4,7 @@ import {Text, View} from "@tarojs/components";
 import {goods} from '@/api/api'
 import {httpGet, httpPost} from '@/api/newRequest'
 import './index.scss'
-import {toast, backgroundObj, filterActive, goBack, filterStrList} from "@/common/utils";
+import {toast, backgroundObj, filterActive, goBack, filterStrList,filterPayfont} from "@/common/utils";
 import Title from './components/goodsTitle'
 import ShopCard from './components/descriptionCard'
 import ShopDetails from './components/goodsCard'
@@ -13,7 +13,11 @@ import MakePhone from '@/components/payTelephone'
 import Draw from './components/drawback'
 import StopBean from '@/components/stopBean'
 import Lovely from '@/components/lovely'
-import {getOrderDetails,deleteOrder} from '@/server/goods'
+import {getOrderDetails, deleteOrder} from '@/server/goods'
+import {inject, observer} from "mobx-react";
+
+@inject('store')
+@observer
 class Index extends Component {
   constructor() {
     super(...arguments)
@@ -29,14 +33,7 @@ class Index extends Component {
     }
   }
 
-  componentWillUnmount() {
-    if (!getCurrentInstance().router.params.orderSn) {
-      goBack('参数缺失')
-    }
-  }
-  componentDidShow() {
-    this.getGoodsDetails()
-  }
+
   filterPrice(payFee) {
     if (payFee) {
       let str = payFee.split('.')
@@ -58,45 +55,47 @@ class Index extends Component {
       }
     } else return null
   }
+
   updateStatus(str) {
     const {updateKol} = goods
-    if(str){
+    if (str) {
       this.setState({
         draw: false
-      },res => {
+      }, res => {
         httpPost({
-          data:{
+          data: {
             orderSn: getCurrentInstance().router.params.orderSn,
             status: '6',
             refundReason: str
           },
           url: updateKol,
-        },res => {
+        }, res => {
           this.getGoodsDetails()
         })
       })
-    }
-    else {
+    } else {
       toast('请选择退款原因')
     }
   }
-  getDataStatus(){
+
+  getDataStatus() {
     const {updateKol} = goods
     this.setState({
-     visible: false
+      visible: false
     }, res => {
       httpPost({
-        data:{
+        data: {
           orderSn: getCurrentInstance().router.params.orderSn,
           status: '1',
         },
         url: updateKol,
-      },res => {
+      }, res => {
         this.getGoodsDetails()
       })
     })
 
   }
+
   getGoodsDetails() {
     const {httpData} = this.state
     getOrderDetails(httpData, res => {
@@ -105,39 +104,65 @@ class Index extends Component {
       })
     })
   }
+
   deleteGoods() {
+    const that = this
     const {deleteKolStatus} = goods
-    const {httpData} = this.state
+    const {httpData, orderInfo} = this.state
     this.setState({
       visible: false
     }, res => {
       httpPost({
-        data:  httpData,
+        data: httpData,
         url: deleteKolStatus
-      },res => {
-        goBack(() => toast('删除成功'))
+      }, res => {
+        that.props.store.goodsStore.deleteList(orderInfo, 'orderSn')
+        this.setState({
+          orderInfo: {}
+        }, res => {
+          goBack(() => toast('删除成功'))
+        })
       })
     })
   }
+
   closeSn() {
     const {updateKol} = goods
     this.setState({
       closeVisible: false
     }, res => {
       httpPost({
-        data:{
+        data: {
           orderSn: getCurrentInstance().router.params.orderSn,
           status: '2',
         },
         url: updateKol,
-      },res => {
+      }, res => {
         this.getGoodsDetails()
       })
     })
   }
-  onError(msg) {
-    console.log(msg)
+
+  componentWillUnmount() {
+    if (!getCurrentInstance().router.params.orderSn) {
+      goBack('参数缺失')
+    }
   }
+
+  componentDidShow() {
+    this.getGoodsDetails()
+  }
+
+  componentWillUnmount() {
+    let that = this
+    const {orderInfo} = this.state
+    console.log(111)
+    that.props.store.goodsStore.updateList(orderInfo, 'orderSn')
+  }
+
+  onError(msg) {
+  }
+
   render() {
     const {
       orderInfo,
@@ -152,10 +177,10 @@ class Index extends Component {
       visible,
       closeVisible
     } = this.state
-    if(orderInfo && status === '6'){
-      return(
+    if (orderInfo && status === '6') {
+      return (
         <View className='kolGoods_details_kolGoodsDetails'>
-          <Title onOpen={() =>this.setState({draw: true})} data={orderInfo}></Title>
+          <Title onOpen={() => this.setState({draw: true})} data={orderInfo}></Title>
           <View className='kolGoods_details_refund'>
             <View className='refund_top'>
               <View className='refund_top_box'>
@@ -166,7 +191,7 @@ class Index extends Component {
                 <View className='refund_icon_box public_center refund_icon_margin3'>
                   <View className='refund_icon refund_icon2'></View>
                 </View>
-                <View  className='refund_icon_liner2 refund_icon_margin4'></View>
+                <View className='refund_icon_liner2 refund_icon_margin4'></View>
                 <View className='refund_icon_box refund_icon_bgColor public_center refund_icon_margin5'>
                   <View className='refund_icon refund_icon3'></View>
                 </View>
@@ -182,7 +207,8 @@ class Index extends Component {
               若超过7日内未处理，默认同意退款
             </View>
           </View>
-          <ShopCard fn={() => this.getGoodsDetails()}  style={{margin:`${Taro.pxTransform(24)} auto`}} data={orderInfo}></ShopCard>
+          <ShopCard fn={() => this.getGoodsDetails()} style={{margin: `${Taro.pxTransform(24)} auto`}}
+                    data={orderInfo}></ShopCard>
           <View className='kolGoods_details'>
             <View className='kolGoods_detailsBox'>
               <View className='font24 color2 public_auto kolGoods_details_height'>
@@ -191,7 +217,7 @@ class Index extends Component {
               </View>
               <View className='kolGoods_details_top font24 color2 public_auto kolGoods_details_height'>
                 <View>卡豆抵扣</View>
-                <View className='color1'>{Number(totalFee) * 100 + '卡豆'} (¥ {totalFee})</View>
+                <View className='color1'>{'-' + Number(totalFee) * 100 + '卡豆'} (¥ {totalFee})</View>
               </View>
               {/*<View className='kolGoods_details_top font24 color2 public_auto kolGoods_details_height'>*/}
               {/*  <View>优惠券</View>*/}
@@ -209,20 +235,23 @@ class Index extends Component {
           {visible &&
           <StopBean
             content={'确认取消申请退款？'}
-            cancel={() => {this.setState({visible: false})}}
-            canfirm={() =>this.getDataStatus()}
+            cancel={() => {
+              this.setState({visible: false})
+            }}
+            canfirm={() => this.getDataStatus()}
             cancelText={'确认'}
-            canfirmText ={'取消'}>
+            canfirmText={'取消'}>
           </StopBean>}
         </View>
       )
-    }
-    else if (orderInfo && status) {
+    } else if (orderInfo && status) {
       return (
         <View className='kolGoods_details_kolGoodsDetails'>
-          <Title onOpen={() =>this.setState({draw: true})} data={orderInfo}></Title>
-          <BtnLayer closeSn = {()=> this.setState({closeVisible: true})} deleteSn={() => this.setState({visible: true})} data={orderInfo}></BtnLayer>
-          <ShopCard telephone = {() => this.setState({telephone: true})}  fn={() => this.getGoodsDetails()} data={orderInfo}></ShopCard>
+          <Title onOpen={() => this.setState({draw: true})} data={orderInfo}></Title>
+          <BtnLayer closeSn={() => this.setState({closeVisible: true})} deleteSn={() => this.setState({visible: true})}
+                    data={orderInfo}></BtnLayer>
+          <ShopCard telephone={() => this.setState({telephone: true})} fn={() => this.getGoodsDetails()}
+                    data={orderInfo}></ShopCard>
           <View className='kolGoods_details'>
             <View className='kolGoods_detailsBox'>
               <View className='font24 color2 public_auto kolGoods_details_height'>
@@ -240,40 +269,45 @@ class Index extends Component {
               <View className='kolGoods_details_liner'></View>
               <View className='kolGoods_details_price public_auto bold'>
                 <View className='font28 color1 '>
-                  待付金额
+                  {filterPayfont(status)}金额
                 </View>
                 {this.filterPrice(payFee)}
               </View>
             </View>
           </View>
           <ShopDetails data={orderInfo}/>
-          <Lovely></Lovely>
+          <View style={{marginTop: Taro.pxTransform(64)}}>
+            <Lovely></Lovely>
+          </View>
           {telephone &&
           <MakePhone data={filterStrList(merchantMobile)} onClose={() => this.setState({telephone: false})}
                      onCancel={() => this.setState({telephone: false})}></MakePhone>}
-          {draw && <Draw cancel={this.updateStatus.bind(this)} close={() =>this.setState({draw: false})}></Draw>}
+          {draw && <Draw cancel={this.updateStatus.bind(this)} close={() => this.setState({draw: false})}></Draw>}
           {visible &&
           <StopBean
             content={'确认删除订单？'}
-            cancel={() => {this.setState({visible: false})}}
+            cancel={() => {
+              this.setState({visible: false})
+            }}
             canfirm={() => this.deleteGoods()}
             cancelText={'确认'}
-            canfirmText ={'取消'}>
+            canfirmText={'取消'}>
           </StopBean>}
           {status === '0' && closeVisible &&
           <StopBean
             content={'确认关闭订单?'}
-            cancel={() => {this.setState({closeVisible: false})}}
+            cancel={() => {
+              this.setState({closeVisible: false})
+            }}
             canfirm={() => this.closeSn()}
             cancelText={'确认'}
-            canfirmText ={'取消'}>
+            canfirmText={'取消'}>
           </StopBean>}
 
 
         </View>
       )
-    }
-    else return null
+    } else return null
   }
 }
 

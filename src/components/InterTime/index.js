@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {toast} from "../../common/utils";
+
 function getSeconds(s) {
   var sTime = parseInt(s);// 秒
   var mTime = 0;// 分
   var hTime = 0;// 时
-  if(sTime > 60) {//如果秒数大于60，将秒数转换成整数
+  if (sTime > 60) {//如果秒数大于60，将秒数转换成整数
     //获取分钟，除以60取整数，得到整数分钟
     mTime = parseInt(sTime / 60);
     //获取秒数，秒数取佘，得到整数秒数
     sTime = parseInt(sTime % 60);
     //如果分钟大于60，将分钟转换成小时
-    if(mTime > 60) {
+    if (mTime > 60) {
       //获取小时，获取分钟除以60，得到整数小时
       hTime = parseInt(mTime / 60);
       //获取小时后取佘的分，获取分钟除以60取佘的分
@@ -18,14 +19,14 @@ function getSeconds(s) {
     }
   }
   var result = '';
-  if(sTime >=0 && sTime < 10){
+  if (sTime >= 0 && sTime < 10) {
     result = "0" + parseInt(sTime) + "";
-  }else{
+  } else {
     result = "" + parseInt(sTime) + "";
   }
-  if(mTime >= 0 && mTime < 10) {
+  if (mTime >= 0 && mTime < 10) {
     result = "0" + parseInt(mTime) + ":" + result;
-  }else{
+  } else {
     result = "" + parseInt(mTime) + ":" + result;
   }
   // if(hTime >= 0 && hTime < 10) {
@@ -33,24 +34,27 @@ function getSeconds(s) {
   // }else{
   //   result = "" + parseInt(hTime) + ":" + result;
   // }
-  return result;
+  if (sTime > 0) {
+    return result;
+  } else return ''
 }
-export default  (props) => {
-  const {times,fn,mint} = props
-  let time = parseInt(new Date().getTime()/1000)-parseInt(new Date(times.replace(/-/g, '/')).getTime()/1000)
+
+export default (props) => {
+  const {times, fn, mint} = props
+  let time = parseInt(new Date().getTime() / 1000) - parseInt(new Date(times.replace(/-/g, '/')).getTime() / 1000)
   const [interVal, setIntervals] = useState(0)
   let i = 0
-  useEffect(() =>{
+  useEffect(() => {
     let setTime = setInterval(() => {
       i++
-      setIntervals(((mint?parseInt(mint)*60:300)-time) - i)
-      if((300-time) === i){
+      setIntervals(((mint ? parseInt(mint) * 60 : 300) - time) - i)
+      if ((300 - time) === i) {
         clearInterval(setTime)
         fn && fn();
       }
-    },1000)
-  },[])
+    }, 1000)
+  }, [])
   return (<>{
-     getSeconds(interVal||0)
+    getSeconds(interVal)
   }</>)
 }

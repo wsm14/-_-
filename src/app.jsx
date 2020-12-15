@@ -3,17 +3,20 @@ import { Provider } from 'mobx-react'
 import authStore from "./store/auth";
 import beanStore from "./store/beanMark";
 import shareStore from "./store/shareImage";
+import goodsStore from "./store/goods";
 import 'taro-ui/dist/style/index.scss'
 import './assets/css/app.scss'
 import './assets/css/color.scss'
 import './assets/css/font.scss'
 import './assets/css/background.scss'
+import evens from './common/evens'
 const store = {
   authStore,
   beanStore,
   shareStore,
+  goodsStore,
 }
-
+// React.prototype.Event = new Event()
 class App extends Component {
   componentDidMount () {}
 

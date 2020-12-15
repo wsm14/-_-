@@ -41,7 +41,6 @@ export default (props) => {
     const {
       status
     } = order
-    console.log(order)
     switch (status) {
       case '0': return (
         <View className='kolGoods_bottom_btn'>

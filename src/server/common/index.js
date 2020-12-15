@@ -1,4 +1,5 @@
-import {httpGet,httpPost} from "@/api/newRequest";
+import {httpGet,httpPost,httpOtherGet} from "@/api/newRequest";
+import Taro from '@tarojs/taro'
 /*
 * params
 *
@@ -18,3 +19,12 @@ export const getRootAndParent = (data,fn) => {
   })
 }
 //我的页面数据
+export const getAddress = (data,fn) => {
+  httpOtherGet({
+    data:data,
+    url:'https://apis.map.qq.com/ws/geocoder/v1/'
+  },res => {
+    return  fn(res)
+  })
+}
+//获取城市定位信息

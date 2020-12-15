@@ -12,7 +12,8 @@ class Index extends Component {
     super(...arguments)
     this.state = {
       orderSn: getCurrentInstance().router.params.orderSn,
-      orderResult: {}
+      orderResult: {},
+
     }
   }
 
@@ -48,7 +49,8 @@ class Index extends Component {
         payFee,
         payTitle
       },
-      orderResult
+      orderResult,
+      orderSn
     } = this.state
     if (Object.keys(orderResult).length > 0) {
       return (
@@ -64,7 +66,7 @@ class Index extends Component {
             </View>
             <View className='code_scanPay_btnBox'>
               <View className='code_scanPay_btn' onClick={() => switchTab('/pages/index/user/index')}>返回首页</View>
-              <View className='code_scanPay_btn'>查看订单</View>
+              <View className='code_scanPay_btn' onClick={() => redirectTo(`/pages/goods/getShopGoods/index?orderSn=${orderSn}`)}>查看订单</View>
             </View>
           </View>
           <View className='code_scanPay_loveMagin'>

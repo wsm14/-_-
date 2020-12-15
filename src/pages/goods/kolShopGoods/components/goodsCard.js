@@ -34,7 +34,6 @@ export default (props) => {
   }
   if (kolData) {
     const {status, createTime, paySn, payType, payTime, orderSn, verificationTime,closeTime,closeReason} = kolData
-    console.log(status)
     if (status === '0') {
       return (
         <View className='kolGoods_card'>

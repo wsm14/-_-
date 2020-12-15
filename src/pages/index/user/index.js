@@ -4,7 +4,7 @@ import {Button, Image, View} from '@tarojs/components'
 import Tab1 from './components/userTab'
 import './index.scss'
 import {getMainPage} from '@/server/user'
-import {backgroundObj, removeLogin, navigateTo, filterStrList} from '@/common/utils'
+import {backgroundObj, removeLogin, navigateTo, filterStrList,getPayByCode} from '@/common/utils'
 import MakePhone from '@/components/payTelephone'
 import classNames from 'classnames'
 import {scanCode} from '@/common/authority'
@@ -74,12 +74,6 @@ class Index extends React.Component {
         })
       }
     })
-  }
-  getPayByCode(data){
-    const {merchantId,action} = data
-    if(action && merchantId && action === 'pay'){
-      navigateTo(`/pages/goods/codePay/index?merchantId=${merchantId}`)
-    }
   }
   componentDidMount() {
     // this.getBanner()
@@ -162,7 +156,7 @@ class Index extends React.Component {
 
             <View className='user_Code users_codeBg' onClick={(e) => {
               e.stopPropagation();
-              scanCode(this.getPayByCode.bind(this))
+              scanCode(getPayByCode)
             }}>
 
             </View>

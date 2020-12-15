@@ -62,14 +62,16 @@ export const coupons = (_this, data, obj) => {
 
 //商品标签
 export const shopDetails = (data, obj) => {
-  if(data) {
-    const {goodsName,
+  if (data) {
+    const {
+      goodsName,
       goodsImg,
       oriPrice,
       realPrice,
       merchantName,
       specialActivityIdString,
-      merchantLogo, lat, lnt, merchantIdString} = data
+      merchantLogo, lat, lnt, merchantIdString
+    } = data
     return (
       <View className='shopDetails_box'>
         <View className='shopDetails_Img dakale_nullImage'>
@@ -128,8 +130,7 @@ export const billboard = (_this, data, obj) => {
     } = data
     return (
       <View className='billboard_box'>
-        <View className='billboard_img dakale_nullImage'>
-          <Image src={goodsImg} lazyLoad mode='center'></Image>
+        <View className='billboard_img dakale_nullImage' style={goodsImg?backgroundObj(goodsImg):{}}>
         </View>
         <View className='billboard_title font_hide'>{goodsName}</View>
       </View>
@@ -204,7 +205,8 @@ export const exploreShop = (_this, data, fn) => {
           {watchStatus === '1' ? `已捡${beanAmount}卡豆` : `观看可捡${beanAmount}卡豆`}
         </View>}
         <View className='explore_user'>
-          <View className='explore_user_left' onClick={() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`)}>
+          <View className='explore_user_left'
+                onClick={() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`)}>
             <View className='explore_user_profile' style={{...backgroundObj(userProfile)}}></View>
             <View className='explore_user_name font_hide'>{username}</View>
           </View>
@@ -266,7 +268,7 @@ export const shopCard = (_this, data, obj) => {
       businessTime,
       tag,
       merchantAddress,
-      lat,lnt
+      lat, lnt
     } = data
     return (
       <View className='shopCard_box'>
@@ -274,8 +276,8 @@ export const shopCard = (_this, data, obj) => {
           <View className='dakale_nullImage shop_card_left'
                 style={merchantLogo ? {...backgroundObj(merchantLogo)} : {}}>
 
-            <View className='merchant_mit  public_center font28 color6'>
-              {GetDistance(getLat(), getLnt(),lat,lnt)}
+            <View className='merchant_mit  public_center font20 color6'>
+              {'距你' + GetDistance(getLat(), getLnt(), lat, lnt)}
             </View>
           </View>
           <View className='shop_card_right'>
@@ -327,8 +329,8 @@ export const shopGoodsDetails = (_this, data, obj) => {
           return (
             <View className='goods_box_center'>
               <View className='goods_box_font1 font_hide'>{goodsName}
-              <Text
-                className='goods_box_font3'>({goodsNum}份)</Text>
+                <Text
+                  className='goods_box_font3'>({goodsNum}份)</Text>
               </View>
               <View className='goods_box_font2'>¥{goodsPrice}</View>
             </View>
@@ -339,6 +341,150 @@ export const shopGoodsDetails = (_this, data, obj) => {
     </View>
   )
 }
+
+export const createdShareKol = (item) => {
+  const {
+    frontImage,
+    frontImageHeight,
+    frontImageWidth,
+    merchantName,
+    contentType,
+    length,
+    topicName,
+    title,
+    watchStatus,
+    beanAmount,
+    userProfile,
+    username,
+    likeAmount,
+    imageNum,
+    merchantAddress,
+    userLikeStatus,
+    beanFlag,
+    kolMomentsId,
+    merchantLat,
+    merchantLnt
+  } = item
+  return (
+    <View className='userDetails_falls_details' onClick={() => {
+      if (contentType === 'video') {
+        navigateTo(`/pages/kol/shareVideo/index?kolMomentId=${kolMomentsId}`)
+      } else {
+        navigateTo(`/pages/kol/shareImage/index?kolMomentId=${kolMomentsId}`)
+      }
+    }}>
+      <View className='userDetails_falls_makebg'
+            style={{
+              ...backgroundObj(frontImage),
+              height: Taro.pxTransform(computedHeight(frontImageWidth, frontImageHeight, 335))
+            }}>
+        {contentType == 'video' ?
+          <View className='userDetails_share_imgTag'>
+            {filterTime(length)}
+          </View> :
+          <View className='userDetails_share_videoTag'>
+            <View className='userDetails_share_imgIcon'></View>
+            <View className='userDetails_share_imgfont'>{imageNum}</View>
+          </View>
+        }
+        <View className='userDetails_share_accress'>
+          <View className='userDetails_share_limitIcon'></View>
+          <View
+            className='userDetails_share_limit'>{GetDistance(getLat(),
+            getLnt(), merchantLat, merchantLnt) + ''} {merchantAddress || ''}  </View>
+        </View>
+      </View>
+      <View className='userDetails_share_about'>
+        {topicName && <View className='userDetails_share_tip'>{'#' + topicName}</View>}
+        <View className='userDetails_share_title'>{title}</View>
+        {beanFlag == '1' ?
+          watchStatus == '1' ?
+            <View className='userDetails_share_getBean getbeanColor2'>
+              已捡{beanAmount}豆
+            </View>
+            :
+            <View className='userDetails_share_getBean getbeanColor1'>
+              观看可捡{beanAmount}豆
+            </View>
+          : null
+        }
+
+        <View className='userDetails_share_aboutUser'>
+          <View className='userDetails_share_userbox'>
+            <View style={{...backgroundObj(userProfile)}} className='userDetails_share_userProfile'>
+
+            </View>
+            <View className='userDetails_share_userName'>
+              {username}
+            </View>
+          </View>
+          <View className='userDetails_share_status'>
+            <View
+              className={classNames(userLikeStatus == '1' ? 'status_box userDetails_share_icon1' : 'status_box userDetails_share_icon2')}>
+            </View>
+            <View className='userDetails_share_nums'>{setPeople(likeAmount)}</View>
+          </View>
+        </View>
+      </View>
+    </View>
+  )
+}
+//达人带货tab ui
+export const createMerchants = (item) => {
+  const {
+    address,
+    brandFlag,
+    businessHub,
+    categoryName,
+    cityName,
+    coverImg,
+    districtName,
+    lat,
+    lnt,
+    markBean,
+    markFlag,
+    merchantName,
+    provinceName,
+    specialGoodsAmount,
+    specialGoodsFlag,
+    merchantId,
+    userMerchantIdString
+  } = item
+  return (
+    <View className='createMerchant_box' onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantId}`)}>
+      <View className='createMerchant_image dakale_nullImage'
+            style={backgroundObj(coverImg)}>
+        <View className='createMerchant_toast'>
+          <View className='createMerchant_city'>
+            <View className='createMerchant_city_icon'></View>
+            <View className='createMerchant_city_font color6 font_hide'>
+              {GetDistance(getLat, getLnt, lat, lnt)+' '+ address}</View>
+          </View>
+        </View>
+      </View>
+      <View className='createMerchant_center'>
+        <View className='font28 color1 bold createMerchant_merchantTitle font_hide'> {merchantName} </View>
+        <View className='font24 color2 createMerchant_shopRadius'>
+          {businessHub&&businessHub+'·'}{categoryName}
+        </View>
+        {markFlag && markBean !== 0 &&
+        <View className='merchant_take_card font24 color9 bold'>
+          到店打卡捡豆{markBean}
+        </View>
+        }
+        {specialGoodsFlag && specialGoodsAmount !== 0 &&
+        <View className='merchant_take_special'>
+          {specialGoodsAmount}款特价热卖中
+        </View>
+        }
+      </View>
+    </View>
+  )
+}
+//店铺 ui
+
+
+
 
 export const goodsNullStatus = (_this, data, obj) => {
   return (

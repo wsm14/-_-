@@ -14,7 +14,7 @@ import {getDom,computedHeight} from "@/common/utils";
 import './index.scss'
 import Taro from "@tarojs/taro";
 export default (props) =>{
-  const {style,list,createDom,imgHight,imgWidth,setWidth} = props
+  const {style,list,createDom,imgHight,imgWidth,setWidth,noMargin} = props
   const [leftList,setLeftList] = useState([])
   const [rightList,setRightList] = useState([])
   useEffect(() => {
@@ -48,7 +48,7 @@ export default (props) =>{
   }
   if(list){
     return (
-      <View  className='page_content'>
+      <View style={noMargin?noMargin:{}} className='page_content'>
         <View style={style?{...style}:{}}  className='page_left'>
           {leftList.map(item => {
             return(

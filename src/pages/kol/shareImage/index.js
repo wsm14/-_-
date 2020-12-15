@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react'
-import Taro, {getCurrentInstance} from '@tarojs/taro'
+import Taro, {getCurrentInstance,EventChannel} from '@tarojs/taro'
 import {View, Text, CoverView} from '@tarojs/components'
 import GetBeanCanvas from '@/components/getBeanCanvas'
 import StopBean from '@/components/stopBean'
@@ -29,6 +29,7 @@ import {
   objStatus
 } from '@/common/utils'
 import './index.scss'
+import evens from "@/common/evens";
 
 class Index extends Component {
   constructor() {
@@ -325,6 +326,10 @@ class Index extends Component {
   }
   componentDidHide() {
     this.stopInterval(this.state.interval)
+  }
+  componentWillUnmount() {
+    const {kolMomentsInfo} = this.state
+    evens.$emit('updateList',kolMomentsInfo)
   }
   render() {
     const {

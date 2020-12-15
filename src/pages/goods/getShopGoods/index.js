@@ -10,6 +10,9 @@ import StopBean from '@/components/stopBean'
 import {getOrderDetails,deleteOrder} from '@/server/goods'
 import {toast,goBack} from "@/common/utils";
 import Lovely from '@/components/lovely'
+import {inject, observer} from "mobx-react";
+@inject('store')
+@observer
 class Index extends Component {
   constructor() {
     super(...arguments)
@@ -37,11 +40,13 @@ class Index extends Component {
   }
 
   deleteOrder() {
-    const {httpData} = this.state
+    const {httpData,orderInfo} = this.state
+    let that = this
     this.setState({
       visible: false
     }, res => {
       deleteOrder(httpData,res => {
+        that.props.store.goodsStore.deleteList(orderInfo,'orderSn')
         goBack(() => toast('删除成功'))
       })
     })

@@ -1,35 +1,38 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
-import {Input, ScrollView, Swiper, SwiperItem, View} from '@tarojs/components'
+import {Input, ScrollView, Swiper, SwiperItem, View, CoverView, CoverImage, Text} from '@tarojs/components'
 import Banner from '@/components/banner'
 import {wxapiGet, index, perimeter} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import NallStatus from '@/components/nullStatus'
 import Favourable from './components/favourable'
 import Waterfall from '@/components/waterfall'
+import {createdShareKol} from '@/components/publicShopStyle'
 import {
   login,
-  authGeography
+  authGeography,
+  scanCode,
+  mapTx
 } from '@/common/authority'
 import {
   filterLogin,
   navigateTo,
   backgroundObj,
   setPeople,
-  computedHeight,
-  filterTime,
   NavHeight,
   toast,
-  GetDistance,
-  goDown
+  goDown,
+  getPayByCode
 } from '@/common/utils'
 import classNames from 'classnames'
 import './perimeter.scss'
 import {inject, observer} from "mobx-react";
-
+import evens from "@/common/evens";
+import {getAddress} from '@/server/common'
+import Toast from '@/components/dakale_toast'
 @inject('store')
 @observer
-class Index extends Component {
+class Index extends PureComponent {
   constructor() {
     super(...arguments)
     this.state = {
@@ -58,11 +61,24 @@ class Index extends Component {
       specialGoods: {
         page: 1,
         limit: 10
-      }
+      },
+      visible: false,
+      result: {},
     }
+    this.interceptors = null
   }
+
   //获取个人足迹
   onPageScroll(e) {
+    if (this.interceptors) {
+      clearTimeout(this.interceptors)
+      this.interceptors = setTimeout(this.setSearch.bind(this, e), 50)
+    } else {
+      this.interceptors = setTimeout(this.setSearch.bind(this, e), 50)
+    }
+  }
+
+  setSearch(e) {
     const {setBackGround} = this.state
     let scale = 0
     if (e.scrollTop >= 125) {
@@ -223,102 +239,53 @@ class Index extends Component {
 
   }
 
-
-  createdShareMerchant = (item) => {
-      const {lnt, lat} = this.state
-      const {
-        frontImage,
-        frontImageHeight,
-        frontImageWidth,
-        merchantName,
-        contentType,
-        length,
-        topicName,
-        title,
-        watchStatus,
-        beanAmount,
-        userProfile,
-        username,
-        likeAmount,
-        imageNum,
-        merchantAddress,
-        userLikeStatus,
-        beanFlag,
-        kolMomentsId,
-        merchantLat,
-        merchantLnt
-      } = item
-      return (
-        <View className='userDetails_falls_details' onClick={() => {
-          if (contentType === 'video') {
-            navigateTo(`/pages/kol/shareVideo/index?kolMomentId=${kolMomentsId}`)
-          } else {
-            navigateTo(`/pages/kol/shareImage/index?kolMomentId=${kolMomentsId}`)
-          }
-        }}>
-          <View className='userDetails_falls_makebg'
-                style={{
-                  ...backgroundObj(frontImage),
-                  height: Taro.pxTransform(computedHeight(frontImageWidth, frontImageHeight, 335))
-                }}>
-            {contentType == 'video' ?
-              <View className='userDetails_share_imgTag'>
-                {filterTime(length)}
-              </View> :
-              <View className='userDetails_share_videoTag'>
-                <View className='userDetails_share_imgIcon'></View>
-                <View className='userDetails_share_imgfont'>{imageNum}</View>
-              </View>
-            }
-            <View className='userDetails_share_accress'>
-              <View className='userDetails_share_limitIcon'></View>
-              <View
-                className='userDetails_share_limit'>{GetDistance(lat, lnt, merchantLat, merchantLnt) + ''} {merchantAddress || ''}  </View>
-            </View>
-          </View>
-          <View className='userDetails_share_about'>
-            {topicName && <View className='userDetails_share_tip'>{'#' + topicName}</View>}
-            <View className='userDetails_share_title'>{title}</View>
-            {beanFlag == '1' ?
-              watchStatus == '1' ?
-                <View className='userDetails_share_getBean getbeanColor2'>
-                  已捡{beanAmount}豆
-                </View>
-                :
-                <View className='userDetails_share_getBean getbeanColor1'>
-                  观看可捡{beanAmount}豆
-                </View>
-              : null
-            }
-
-            <View className='userDetails_share_aboutUser'>
-              <View className='userDetails_share_userbox'>
-                <View style={{...backgroundObj(userProfile)}} className='userDetails_share_userProfile'>
-
-                </View>
-                <View className='userDetails_share_userName'>
-                  {username}
-                </View>
-              </View>
-              <View className='userDetails_share_status'>
-                <View
-                  className={classNames(userLikeStatus == '1' ? 'status_box userDetails_share_icon1' : 'status_box userDetails_share_icon2')}>
-                </View>
-                <View className='userDetails_share_nums'>{setPeople(likeAmount)}</View>
-              </View>
-            </View>
-          </View>
-        </View>
-    )
+  updateList(obj) {
+    const {kolMomentsList} = this.state
+    let list = kolMomentsList.map(item => {
+      if (item['kolMomentsId'] === obj['kolMomentId']) {
+        obj['kolMomentsId'] = item['kolMomentsId']
+        return obj
+      }
+      return item
+    })
+    this.setState({
+      kolMomentsList: list
+    })
   }
+
   setMap = (res) => {
     const {latitude, longitude} = res
     this.setState({
       lnt: longitude,
       lat: latitude
     })
-  }
+    getAddress({
+      location: `${latitude},${longitude}`,
+      key: mapTx,
+    }, res => {
+      console.log(res)
+      const {message,result} = res
+      if(message === 'query ok'){
+          const {address_component:{city}} = result
+         if(city !== '杭州市'){
+           this.setState({
+             result,
+             visible: true
+           })
+         }
+         else {
+           this.setState({
+             result
+           })
+         }
 
+      }
+      else{
+        toast(message)
+      }
+    })
+  }
+  //获取具体位置信息 设置经纬度
   componentDidMount() {
     const {bannerHttp, specialHttp} = this.state
     this.getKolList();
@@ -332,42 +299,14 @@ class Index extends Component {
     authGeography((res) => this.setMap(res))
     this.getSetting()
     this.getBanner(bannerHttp, 'bannerList')
-    // this.getUserSimpleInfo()
     this.getDomain()
   }
+
   componentDidShow() {
     this.getUserSimpleInfo()
+    evens.$on('updateList', this.updateList.bind(this))
   }
 
-  // onPullDownRefresh() {
-  //   const {bannerHttp, specialHttp} = this.state
-  //   this.setState({
-  //     userDetails: {},
-  //     domainList: [],
-  //     selectIndex: 0,
-  //     topicList: [],
-  //     scroll_left: 0,
-  //     kolHttp: {
-  //       domainId: '',
-  //       topicId: '',
-  //       page: 1,
-  //       limit: 10
-  //     },
-  //     kolMomentsList: [],
-  //     setBackGround: {},
-  //     iconStatus: false,
-  //     countStatus: true,
-  //     surroundingSpecial: [],
-  //     subKeyValueList: []
-  //   }, res => {
-  //     this.getKolList();
-  //     this.getSetting()
-  //     this.getBanner(bannerHttp, 'bannerList')
-  //     this.getUserSimpleInfo()
-  //     this.getDomain()
-  //     authGeography((res) => this.setMap(res))
-  //   })
-  // }
 
   onReachBottom() {
     this.pageDown()
@@ -399,7 +338,15 @@ class Index extends Component {
       }
     })
   }
-
+  tishiDom() {
+    return (
+      <View className='perimeter_toast_box'>
+        <View>自动定位杭州，更多精彩敬请期待
+          详情可咨询客服，联系电话：<Text className='color4'>
+            400 -800-5881</Text></View>
+      </View>
+    )
+  }
   render() {
     const {
       bannerList,
@@ -424,26 +371,43 @@ class Index extends Component {
       iconStatus,
       userDetails,
       subKeyValueList,
+      result: {
+        formatted_addresses = {
+
+        }
+      },
+      visible
     } = this.state
     const {userInfo} = this.props.store.authStore
     return (
       <View className='perimerter_box'>
-        {/*<View  style={setBackGround} className='perimerter_fixed'>*/}
-        {/*  <View style={navHeight} className='perimerter_fixed_title'>*/}
-        {/*    <View className='perimerter_title'>*/}
-        {/*      <View className='perimerter_city'>*/}
-        {/*        <View className={classNames('perimerter_city_box',iconStatus?'perimerter_city_icon2':'perimerter_city_icon1')}></View>*/}
-        {/*        <View className='perimerter_city_font'>杭州</View>*/}
-        {/*        <View className={classNames('perimerter_city_select',iconStatus?'perimerter_city_selectIcon2':'perimerter_city_selectIcon1')}></View>*/}
-        {/*      </View>*/}
-        {/*      周边*/}
-        {/*    </View>*/}
-        {/*    <View className='perimerter_search'>*/}
-        {/*      <Input placeholderClass={classNames(iconStatus?'placeholder_style1':'placeholder_style2')} className={classNames(iconStatus?'perimerter_input2':'perimerter_input1')} placeholder={'搜一下附近玩乐'}></Input>*/}
-        {/*      <View className={classNames('perimerter_codeBox',iconStatus?'perimerter_code2':'perimerter_code1')}></View>*/}
-        {/*    </View>*/}
-        {/*  </View>*/}
-        {/*</View>*/}
+        <CoverView style={setBackGround} className='perimerter_fixed'>
+          <CoverView style={navHeight} className='perimerter_fixed_title'>
+            <CoverView className='perimerter_title'>
+              <CoverView className='perimerter_city'>
+                <CoverImage className='perimerter_city_box'
+                            src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon46.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon40.png'}>
+                </CoverImage>
+                <CoverView className='perimerter_city_font'>杭州</CoverView>
+                <CoverImage className='perimerter_city_select'
+                            src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon47.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon41.png'}></CoverImage>
+              </CoverView>
+              周边
+            </CoverView>
+            <CoverView className='perimerter_search'>
+              <CoverView onClick={() => navigateTo('/pages/perimeter/search_shop/index')}
+                         placeholderClass={classNames(iconStatus ? 'placeholder_style1' : 'placeholder_style2')}
+                         className={classNames(iconStatus ? 'perimerter_input2' : 'perimerter_input1')}>
+                搜一下附近玩乐
+              </CoverView>
+              <CoverImage
+                className='perimerter_codeBox'
+                onClick={() => scanCode(getPayByCode)}
+                src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon45.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon42.png'}>
+              </CoverImage>
+            </CoverView>
+          </CoverView>
+        </CoverView>
         <View className='perimerter_top'>
           <Banner
             showNear={true}
@@ -488,7 +452,7 @@ class Index extends Component {
                       解锁哒人等级
                     </View>
                   </View> :
-                  <View className='kol_icon2'>
+                  <View onClick={() => navigateTo('/pages/kol/legal/index')} className='kol_icon2'>
                     <View className='kol_icon_bg'></View>
                     <View className='kol_icon_font'>
                       {userLevelSign || '无哒人名称'}
@@ -506,7 +470,8 @@ class Index extends Component {
                 今日收益{'  ' + setPeople(userTodayEarn || 0)}
               </View>
             </View>
-            <View className='perimerter_quan' onClick={() => goDown()}>{userCouponNum | 0}张券可用</View>
+            <View className='perimerter_quan'
+                  onClick={() => navigateTo('/pages/coupon/wraparound/index')}>{userCouponNum | 0}张券可用</View>
           </View>
         }
         {subKeyValueList.length > 0 &&
@@ -518,8 +483,8 @@ class Index extends Component {
               <View className='permerter_active_accress'>
                 <View className='permerter_active_tag'>
                   <View className='permerter_active_cityIcon'></View>
-                  <View className='permerter_active_cityFont'>
-                    国泰科技大厦一楼
+                  <View className='permerter_active_cityFont font_hide'>
+                    {formatted_addresses.recommend||'国泰科技大厦 '}
                   </View>
                 </View>
               </View>
@@ -606,11 +571,11 @@ class Index extends Component {
           >{kolMomentsList.length > 0 ?
             <Waterfall
               list={kolMomentsList}
-              createDom={this.createdShareMerchant.bind(this)}
+              createDom={createdShareKol}
               imgHight={'frontImageHeight'}
               imgWidth={'frontImageWidth'}
               setWidth={335}
-              style={{width:Taro.pxTransform(335)}}
+              style={{width: Taro.pxTransform(335)}}
             >
             </Waterfall>
             :
@@ -619,6 +584,8 @@ class Index extends Component {
           </View>
 
         </View>
+        {visible && <Toast title={'您的城市即将开通服务'} Components={this.tishiDom.bind(this)}
+                           close={() => this.setState({visible: false})}></Toast>}
       </View>
     )
   }

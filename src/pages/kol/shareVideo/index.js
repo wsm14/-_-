@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Taro, {getCurrentInstance} from '@tarojs/taro'
+import Taro, {getCurrentInstance,EventChannel} from '@tarojs/taro'
 import {View, Text, CoverView} from '@tarojs/components'
 import GetBeanCanvas from '@/components/getBeanCanvas'
 import StopBean from '@/components/stopBean'
@@ -28,6 +28,8 @@ import {
 import touch from '@/common/touch'
 import classNames from 'classnames'
 import './index.scss'
+import evens from "@/common/evens";
+import {getDom} from "../../../common/utils";
 
 class Index extends Component {
   constructor() {
@@ -44,29 +46,13 @@ class Index extends Component {
       shareStatus: getCurrentInstance().router.params.type || '',
       viewFlag: true,
       stopStatus: false,
-      decStatus: true,
+      decStatus: null,
       lookStatus: '1',
       reportStatus: false
     }
   }
 
-  componentDidShow() {
-    this.shareDetailsById();
-  }
 
-  componentWillUpdate(nextProps, nextState) {
-    let that = this
-    if (nextProps.decStatus !== nextState.decStatus && nextState == true) {
-      Taro.createSelectorQuery().selectAll('.shareVideo_dec_box').boundingClientRect(function (res) {
-        if (res && res[0].height > parseInt(Taro.pxTransform(42))) {
-          that.setState({
-            decStatus: false,
-            initDec: false
-          })
-        }
-      }).exec()
-    }
-  }
 
   shareDetailsById() {
     // 阻止事件冒泡
@@ -101,7 +87,6 @@ class Index extends Component {
       })
     })
   }
-
   getBean(time) {
     this.setState({
       time: time
@@ -161,7 +146,6 @@ class Index extends Component {
       }))
     }
   }
-
   //用户关注状态
   collectionStatus() {
     let that = this
@@ -199,7 +183,6 @@ class Index extends Component {
       })
     }
   }
-
   //用户收藏信息
   fallStatus() {
     let that = this
@@ -235,7 +218,6 @@ class Index extends Component {
       })
     }
   }
-
   kolStatus() {
     const {kolMomentsInfo: {merchantIdString, userLevel}} = this.state
     if (merchantIdString || userLevel > 1) {
@@ -243,7 +225,6 @@ class Index extends Component {
     }
     return false
   }
-
   //用户收藏信息
   //用户点赞信息
   stopInterval(obj) {
@@ -311,9 +292,7 @@ class Index extends Component {
       fn && fn()
     }
   }
-  componentDidHide() {
-    this.stopInterval(this.state.interval)
-  }
+
   canfirm() {
     this.setState({
       stopStatus: false,
@@ -330,6 +309,34 @@ class Index extends Component {
     })
   }
 
+  componentDidShow() {
+    this.shareDetailsById();
+  }
+  setShowStatus() {
+    getDom('.shareVideo_dec_box',res => {
+      if(res[0]){
+        const {height} = res[0]
+        if(height>46){
+          this.setState({
+            decStatus: true,
+          })
+        }
+      }
+    })
+
+  }
+  onReady() {
+    setTimeout(this.setShowStatus.bind(this),500)
+  }
+  componentDidHide() {
+    this.stopInterval(this.state.interval)
+  }
+  componentWillUnmount() {
+    const {kolMomentsInfo} = this.state
+    if(Object.keys(kolMomentsInfo).length > 0){
+      evens.$emit('updateList',kolMomentsInfo)
+    }
+  }
   render() {
     const navSetting = {
       style: {
@@ -382,8 +389,9 @@ class Index extends Component {
       lookStatus,
       reportStatus
     } = this.state
-    return (
-      <View className='shareVideo_box'>
+
+    if (Object.keys(kolMomentsInfo).length > 0) {
+      return (<View className='shareVideo_box'>
         {stopStatus &&
         <StopBean
           canfirm={() => this.canfirm()}
@@ -514,14 +522,18 @@ class Index extends Component {
                 </Text>
               </View>}
               {message}
-              {decStatus && <View className='shareVideo_dec_show' onClick={() => {
-                this.setState({decStatus: false})
-              }}></View>}
             </View>
             <View className='shareVideo_dec_details'>
-              {!decStatus && <View className='shareVideo_dec_hide' onClick={() => {
+              {decStatus && <View className='shareVideo_dec_hide' onClick={() => {
+                this.setState({decStatus: false})
+              }}>
+                <View style={{width: '100%', textAlign: "right"}}>展开</View>
+                {/*<View className='shareVideo_dec_hideIcon'></View>*/}
+              </View>}
+              {(!decStatus &&decStatus !== null) && <View className='shareVideo_dec_hide' onClick={() => {
                 this.setState({decStatus: true})
               }}>
+                <View className='font24 color6'>{'发布于' + interactionTime}</View>
                 <View>收起</View>
                 {/*<View className='shareVideo_dec_hideIcon'></View>*/}
               </View>}
@@ -551,18 +563,22 @@ class Index extends Component {
           }
         </View>
         {shareStatus !== 'share' &&
-         reportStatus &&
-           <CoverView className='report_layer_byUser' onClick={(e) => {e.stopPropagation(); this.setState({reportStatus: false})}}>
-             <CoverView className='report_layer_btn'
-                        onClick={(e) =>
-                          navigateTo(`/pages/kol/report/index?name=${username}&momentsId=${kolMomentId}&pushUserId=${userIdString}&momentsType=${contentType}`) }>
-               举报
-             </CoverView>
-           </CoverView>
+        reportStatus &&
+        <CoverView className='report_layer_byUser' onClick={(e) => {
+          e.stopPropagation();
+          this.setState({reportStatus: false})
+        }}>
+          <CoverView className='report_layer_btn'
+                     onClick={(e) =>
+                       navigateTo(`/pages/kol/report/index?name=${username}&momentsId=${kolMomentId}&pushUserId=${userIdString}&momentsType=${contentType}`)}>
+            举报
+          </CoverView>
+        </CoverView>
         }
-      </View>
-    )
+      </View>)
+    } else return null
   }
+
 }
 
 export default Index

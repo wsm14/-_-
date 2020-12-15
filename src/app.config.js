@@ -7,7 +7,7 @@ export default {
     "pages/index/lookShare/shareImage/index", //圖文详情
     "pages/index/lookShare/shareVideo/index", //视频详情
     "pages/index/lookShare/index", //看视频图文
-
+    "pages/payPrice/index", //小程序支付兼容
     // "pages/perimeter/beanMark/index", //周边
     "pages/auth/index", //登录
   ],
@@ -98,7 +98,8 @@ export default {
     {
       "root": "pages/perimeter/",
       "pages": [
-        'search_fav/index',
+        'search_shop/index',//商家搜索
+        'search_fav/index',//特价搜索
         'favourableDetails/index',//砍价详情
         "shopDetails/index", //商品详情
         "merchantDetails/index", //周边详情
@@ -119,6 +120,13 @@ export default {
         'codePay/index',//扫码订单生成订单页
         'code_wx_pay/index',//扫码订单支付页面
         'code_scanPay_Susccess/index',//扫码订单成功页面
+      ]
+    },
+    {
+      "root": "pages/coupon/",
+      "pages": [
+        "wraparound/index", //券包
+        "couponDetails/index", //券包详情
       ]
     },
   ]

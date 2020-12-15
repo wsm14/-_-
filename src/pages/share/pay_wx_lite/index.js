@@ -115,6 +115,7 @@ class Index extends Component {
   }
 
   componentDidShow() {
+    const {orderResult} = this.state
     Taro.clearStorage(
       {
         success: res => {
@@ -122,6 +123,7 @@ class Index extends Component {
         }
       }
     )
+    internet(orderResult,() =>this.getOrderResult())
   }
 
   render() {

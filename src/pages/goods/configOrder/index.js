@@ -110,9 +110,9 @@ class Index extends Component {
   }
   computedPrice(price,bean){
     if(Number(bean) > price*100){
-      return price
+      return price.toFixed(2)
     }
-    else return Number(bean)/100
+    else return (Number(bean)/100).toFixed(2)
   }
 
   render() {
@@ -224,9 +224,9 @@ class Index extends Component {
                 ¥
                 <Text style={{fontSize: Taro.pxTransform(32), fontWeight: 'bold'}}>
                   {useBeanStatus === '1' ?
-                    ((Number(kolPrice) * goodsCount)-(userBean/100))>0?((Number(kolPrice) * goodsCount)-(userBean/100)):0
+                    ((Number(kolPrice) * goodsCount)-(userBean/100))>0?(((Number(kolPrice) * goodsCount)-(userBean/100))).toFixed(2):0
                       :
-                    Number(kolPrice) * goodsCount
+                    (Number(kolPrice) * goodsCount).toFixed(2)
                   }
                 </Text>
               </Text>

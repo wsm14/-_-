@@ -4,7 +4,7 @@ import QR from 'wxmp-qrcode'
 import './../index.scss'
 import classNames from 'classnames'
 
-import {backgroundObj,filterWeek,filterStrList,navigateTo} from "@/common/utils";
+import {backgroundObj,filterWeek,filterStrList,navigateTo,mapGo} from "@/common/utils";
 
 export default (props) => {
   const {data, fn,telephone,style} = props
@@ -154,7 +154,9 @@ export default (props) => {
             <View className='onReadly_icon onReadly_iconBox'></View>
             如果券码不显示，点这里刷新
           </View>
-          <View className='kolgoods_go public_auto font24 color1'>
+          <View className='kolgoods_go public_auto font24 color1' onClick={() => mapGo({
+            lat:data.merchantLat,lnt:data.merchantLnt,address:data.merchantAddress,name: orderResult.merchantName
+          })}>
             <View className='kolgoods_go_left public_center'>
               <View className='kolgoods_go_leftBox public_center'>
                 <View className='kolgoods_goIcon_box kol_telephone'>

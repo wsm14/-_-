@@ -16,9 +16,10 @@ import {user} from '@/api/api'
 import {httpPost} from '@/api/newRequest'
 import {View} from "@tarojs/components";
 // import moment from 'moment'
-export const navigateTo = (url) => {
+export const navigateTo = (url,events) => {
   Taro.navigateTo({
-    url: url
+    url: url,
+    events:events||{},
   })
   //跳转
 }
@@ -387,6 +388,12 @@ export const filterPayStatus = (string) => {
       return '申请退款中'
   }
 }
+export const filterPayfont = (string) => {
+  if(string == '0'||string== '2'|| string =='5'){
+    return  '待付'
+  }
+  return '实付'
+}
 //订单所显示文字
 export const filterPayColor = (string) => {
   switch (string) {
@@ -497,3 +504,27 @@ export const removeLogin = () => Taro.removeStorage({
   }
 })
 //返回dom节点
+export const mapGo = (item) => {
+  Taro.openLocation({
+    latitude: parseFloat(item.lat),
+    longitude: parseFloat(item.lnt),
+    address: item.address||'',
+    name: item.merchantName||'',
+  })
+}
+export const getPayByCode =(data) => {
+  const {merchantId,action} = data
+  if(action && merchantId && action === 'pay'){
+    navigateTo(`/pages/goods/codePay/index?merchantId=${merchantId}`)
+  }
+}
+export const removeStorage = (key) => Taro.removeStorage({
+  key: key,
+  success: res => {
+
+  },
+  fail: res => {
+    toast('缓存清理错误')
+  }
+})
+

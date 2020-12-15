@@ -26,8 +26,8 @@ const env = process.env.NODE_ENV === 'development' ? 'development' : 'production
 
 switch (env) {
   case 'development':
-    baseUrl = 'https://devgateway.dakale.net'
-    // baseUrl = 'https://pregateway.dakale.net'
+    // baseUrl = 'https://devgateway.dakale.net'
+    baseUrl = 'https://pregateway.dakale.net'
     // baseUrl = 'https://gateway1.dakale.net'
     break
   case 'production':
@@ -59,7 +59,7 @@ export const httpGet = (obj, fn) => {
       'lnt': Taro.getStorageSync('lnt'),
       'lat': Taro.getStorageSync('lat'),
     },
-    url: baseUrl + obj.url,
+    url:baseUrl + obj.url,
     data: encrypt(obj.data) || {},
     method: 'get',
     success: (res) => {
@@ -129,6 +129,40 @@ export const httpPost = (obj, fn) => {
           }
           return toast(resultDesc);
         }
+      }
+    },
+    fail: (res) => {
+      Taro.hideLoading()
+      const {errMsg} = res
+      toast(filterHttpStatus(errMsg))
+    },
+    complete: () => {
+    }
+  })
+}
+
+export const httpOtherGet = (obj, fn) => {
+  Taro.showLoading({
+    title: '加载中',
+  })
+  Taro.request({
+    ...httpCondition,
+    header: {
+      ...httpCondition.header,
+      'lnt': Taro.getStorageSync('lnt'),
+      'lat': Taro.getStorageSync('lat'),
+    },
+    url: obj.url,
+    data:  obj.data || {},
+    method: 'get',
+    success: (res) => {
+      Taro.hideLoading()
+      const {data, statusCode} = res
+      if (statusCode === 200) {
+        fn && fn(data)
+      }
+      else {
+        toast('请求失败...')
       }
     },
     fail: (res) => {
