@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Taro ,{getCurrentInstance} from '@tarojs/taro'
 import { View,Text, Swiper,Image, SwiperItem} from '@tarojs/components'
-import {AtToast,AtTabBar} from "taro-ui"
 import Utils from '../../../../utils/utils'
 import './index.scss'
 import {wxapiGet ,wxapiPost} from "./../../../../api/api";

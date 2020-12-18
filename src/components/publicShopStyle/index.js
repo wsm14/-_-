@@ -1,6 +1,6 @@
 import React from 'react'
 import Taro from '@tarojs/taro'
-import {Image, Text, View} from "@tarojs/components";
+import {Image, Text, View, CoverView, CoverImage} from "@tarojs/components";
 import {
   filterLogin,
   navigateTo,
@@ -59,7 +59,6 @@ export const coupons = (_this, data, obj) => {
     </View>
   )
 }
-
 //商品标签
 export const shopDetails = (data, obj) => {
   if (data) {
@@ -130,7 +129,7 @@ export const billboard = (_this, data, obj) => {
     } = data
     return (
       <View className='billboard_box'>
-        <View className='billboard_img dakale_nullImage' style={goodsImg?backgroundObj(goodsImg):{}}>
+        <View className='billboard_img dakale_nullImage' style={goodsImg ? backgroundObj(goodsImg) : {}}>
         </View>
         <View className='billboard_title font_hide'>{goodsName}</View>
       </View>
@@ -451,21 +450,22 @@ export const createMerchants = (item) => {
     userMerchantIdString
   } = item
   return (
-    <View className='createMerchant_box' onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantId}`)}>
+    <View className='createMerchant_box'
+          onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantId}`)}>
       <View className='createMerchant_image dakale_nullImage'
             style={backgroundObj(coverImg)}>
         <View className='createMerchant_toast'>
           <View className='createMerchant_city'>
             <View className='createMerchant_city_icon'></View>
             <View className='createMerchant_city_font color6 font_hide'>
-              {GetDistance(getLat, getLnt, lat, lnt)+' '+ address}</View>
+              {GetDistance(getLat(), getLnt(), lat, lnt) + ' ' + address}</View>
           </View>
         </View>
       </View>
       <View className='createMerchant_center'>
         <View className='font28 color1 bold createMerchant_merchantTitle font_hide'> {merchantName} </View>
         <View className='font24 color2 createMerchant_shopRadius'>
-          {businessHub&&businessHub+'·'}{categoryName}
+          {businessHub && businessHub + '·'}{categoryName}
         </View>
         {markFlag && markBean !== 0 &&
         <View className='merchant_take_card font24 color9 bold'>
@@ -482,10 +482,41 @@ export const createMerchants = (item) => {
   )
 }
 //店铺 ui
+export const createMerchantByMap = (item) => {
 
+  const {coverImg, merchantName, businessHub, categoryName, perCapitaConsumption, lat, lnt,markFlag,markBean} = item
+  return (
+    <CoverView className='createMerchantByMap_fathers'>
+      <CoverView className='createMerchantByMap_box'>
+        <CoverView className='createMerchantByMap_child_box'>
+          <CoverImage className='createMerchantByMap_image' src={coverImg}></CoverImage>
+          <CoverView className='createMerchantByMap_child_right'>
+            <CoverView className='createMerchantByMap_text'>
+              <CoverView className='createMerchantByMap_child_title1 font_hide color1 font28'>{merchantName}</CoverView>
+              <CoverView className='createMerchantByMap_child_title2 public_auto'>
+                {businessHub && <CoverView style={{marginRight: Taro.pxTransform(12)}}>{businessHub + ''}</CoverView>}
+                {categoryName && <CoverView style={{marginRight: Taro.pxTransform(12)}}>{categoryName + ' '}</CoverView>}
+                {perCapitaConsumption && <CoverView>{'人均' + perCapitaConsumption + ' '}</CoverView>}
+                <CoverView
+                  className='createMerchantByMap_child_marginRight'>距你 {GetDistance(getLat(), getLnt(), lat, lnt)}</CoverView>
+              </CoverView>
+              <CoverView className='createMerchantByMap_child_title3'>
+                <CoverView className='createMerchantByMap_child_tags'>人气商家</CoverView>
+                <CoverView className='createMerchantByMap_child_tags'>品牌连锁</CoverView>
+              </CoverView>
+            </CoverView>
+          </CoverView>
+        </CoverView>
+      </CoverView>
+      {markFlag === '1' &&
+      <CoverView className='createMerchantByMap_bottomBox public_center bold color6'>
+      <CoverView>到店打卡捡{markBean}</CoverView>
+      <CoverImage className='createMerchantByMap_bottom_image' src={'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon358.png'}></CoverImage></CoverView>
+      }
+    </CoverView>
 
-
-
+  )
+}
 export const goodsNullStatus = (_this, data, obj) => {
   return (
     <View className='goodsNullStatus'>
@@ -494,8 +525,6 @@ export const goodsNullStatus = (_this, data, obj) => {
     </View>
   )
 }
-
-
 export const nullShop = () => {
   return (
     <View className='nullShop_box'>

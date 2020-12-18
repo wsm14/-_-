@@ -36,6 +36,29 @@ export const setMap = (fn) => {
     }
   })
 }
+//获取当前位置
+
+
+export const startLocationUpdate = (fn) => {
+  Taro.startLocationUpdate({
+    // type: 'gcj02',
+    success: (res) => {
+      var latitude = res.latitude
+      var longitude = res.longitude
+      var speed = res.speed
+      var accuracy = res.accuracy;
+      Taro.setStorageSync('lnt', longitude)
+      Taro.setStorageSync('lat', latitude)
+      fn && fn(res)
+    },
+    fail: function (res) {
+      console.log('fail' + JSON.stringify(res))
+    }
+  })
+}
+
+//获取实时定位
+
 export const login = (obj) => {
   let authLogin = obj
   if (authLogin && Object.keys(authLogin).length > 5 && authLogin.mobile.length === 11) {
@@ -46,6 +69,8 @@ export const login = (obj) => {
     return '2'
   }
 }
+
+
 export const authGeography = (fn, type) => {
   Taro.getSetting({
     success: (res) => {
@@ -60,8 +85,8 @@ export const authGeography = (fn, type) => {
           },
           fail: res => {
             Taro.showModal({
-              title: '是否要打开设置页面',
-              content: '需要获取您的位置，请到小程序的设置中打开授权',
+              title: '获取位置失败',
+              content: '请允许「哒卡乐」使用你的定位，为你推荐更多周边店铺',
               success: function (res) {
                 if (res.confirm) {
                   Taro.openSetting({
@@ -79,7 +104,13 @@ export const authGeography = (fn, type) => {
                     }
                   })
                 } else if (res.cancel) {
-                  toast('授权失败')
+                  toast('授权失败,已配置默认定位')
+                  Taro.setStorageSync('lnt', 120.26457)
+                  Taro.setStorageSync('lat',  30.18534)
+                  fn && (setTimeout(()=> fn({
+                    latitude: 30.18534,
+                    longitude: 120.26457
+                  }),500))
                 }
               }
             })
@@ -104,6 +135,61 @@ export const authGeography = (fn, type) => {
 *
 *
 * */
+
+
+export const authUpdateGeography = (fn) => {
+  Taro.getSetting({
+    success: (res) => {
+      if (!res.authSetting['scope.userLocation']) {
+        Taro.authorize({
+          scope: 'scope.userLocation',
+          success: res => {
+            startLocationUpdate(fn)
+          },
+          fail: res => {
+            Taro.showModal({
+              title: '是否要打开设置页面',
+              content: '需要获取您的位置，请到小程序的设置中打开授权',
+              success: function (res) {
+                if (res.confirm) {
+                  Taro.openSetting({
+                    success: dataAu => {
+                      if (dataAu.authSetting["scope.userLocation"] == true) {
+                        toast('授权成功',)
+                        //再次授权，调用wx.getLocation的API
+                        startLocationUpdate(fn)
+                      } else {
+                        toast('授权失败')
+                      }
+                    }
+                  })
+                } else if (res.cancel) {
+                  toast('授权失败')
+                }
+              }
+            })
+          }
+        })
+      } else {
+        startLocationUpdate(fn)
+      }
+    },
+    fail: res => {
+      toast('授权接口调用失败，请检查网络')
+    }
+  })
+}
+
+
+//获取实时定位
+/*
+*
+* map
+*
+*
+* */
+
+
 export const authPhotosAlbum = (path) => {
   Taro.getSetting({
     success: (res) => {

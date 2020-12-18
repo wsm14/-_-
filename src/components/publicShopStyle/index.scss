@@ -689,7 +689,6 @@
    margin-top: 32px;
  }
 }
-
 .nullMerchantFav_box{
   .nullMerchantFav_img{
     margin:64px 225px 0;
@@ -1078,6 +1077,9 @@
   width: 331px;
   border-radius: 8px;
   margin-bottom: 24px;
+  line-height: 1;
+  vertical-align: top;
+  box-sizing: border-box;
   .createMerchant_image{
     width: 331px;
     height: 280px;
@@ -1142,5 +1144,80 @@
       text-indent: 36px;
       padding-right: 8px;
     }
+  }
+}
+.createMerchantByMap_box{
+  width: 686px;
+  background: #FFFFFF;
+  line-height: 1;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  .createMerchantByMap_child_box{
+    height: 120px;
+    padding: 24px 24px 39px;
+    display: flex;
+    align-items: center;
+    .createMerchantByMap_image{
+      width: 120px;
+      height: 120px;
+      background: #EEEEEE;
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    .createMerchantByMap_child_right{
+      margin-left: 20px;
+      .createMerchantByMap_child_title1{
+        padding-top: 9px;
+        max-width: 480px;
+      }
+      .createMerchantByMap_child_title2{
+        padding-top: 13px;
+        color: #555555;
+        width: 480px;
+        font-size: 22px;
+      }
+      .createMerchantByMap_child_title3{
+        margin-top: 14px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        .createMerchantByMap_child_tags{
+          padding: 0px 8px;
+          height: 30px;
+          background:rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+          border-radius: 4px;
+          font-size: 20px;
+          color: rgba(168, 168, 168, 1);
+          text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+          line-height: 30px;
+          margin-right: 12px;
+        }
+      }
+    }
+  }
+  .createMerchantByMap_text{
+    height: 120px;
+  }
+  .createMerchantByMap_child_marginRight{
+    margin-left: auto;
+  }
+}
+.createMerchantByMap_bottomBox{
+  height: 56px;
+  margin: 0 auto;
+  width: 618px;
+  background: #59CFCF;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 30px 30px;
+  border: 10px solid #FFFFFF;
+  border-top: 0px;
+  text-align: center;
+  line-height: 56px;
+  font-size: 24px;
+  .createMerchantByMap_bottom_image{
+    width: 20px;
+    height: 20px;
+    margin-left: 4px;
   }
 }

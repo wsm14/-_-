@@ -1,15 +1,17 @@
-import React, {useState, useEffect, useRef} from 'react'
-import {Button, Canvas, CoverImage, CoverView, Swiper, SwiperItem, Text, View} from "@tarojs/components";
-import QR from 'wxmp-qrcode'
+import React, {useState, useEffect} from 'react'
+import {Canvas, Swiper, SwiperItem, View} from "@tarojs/components";
 import './../../index.scss'
 import classNames from 'classnames'
 import {backgroundObj, filterWeek, filterStrList, navigateTo, mapGo} from "@/common/utils";
-
+import goLink from '@/common/router'
+import Taro from "@tarojs/taro";
+import drawQrcode from "weapp-qrcode";
 export default (props) => {
   const {data, fn, telephone, style} = props
   const [orderResult, setOrderResult] = useState({})
   const [current, setCurrent] = useState(0)
   const [list, setList] = useState([])
+  const qrwh = (304 / 750) * Taro.getSystemInfoSync().windowWidth;
   useEffect(() => {
     const {orderGoodsVerifications} = data
     setOrderResult(data)
@@ -22,8 +24,14 @@ export default (props) => {
       list.forEach((item, index) => {
         const {verificationUrl} = item
         if (item.status === '0') {
-          QR.draw(verificationUrl, `canvas${index}`)
-        }
+            drawQrcode({
+              width: qrwh,
+              height: qrwh,
+              background: "#FFFFFF",
+              canvasId: `canvas${index}`,
+              text: verificationUrl,
+            });
+          }
       })
     }, 100)
   }, [list])
@@ -32,20 +40,20 @@ export default (props) => {
       <View className='codeBox public_center'>
         <Swiper
           current={current}
-          className='code_swiper'
+          style={{width:qrwh,height:qrwh}}
         >
           {
             list.map((item, index) => {
               const {status} = item
               const codeObj = {
-                '1': (<View className='code_onloader  code_status1 public_center'></View>),
-                '2': (<View className='code_onloader code_status2  public_center'></View>),
-                '3': (<View className='code_onloader code_status3  public_center'></View>)
+                '1': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status1 public_center'></View>),
+                '2': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status2  public_center'></View>),
+                '3': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status3  public_center'></View>)
               }[status]
               return (
                 <SwiperItem>
                   {codeObj ? codeObj :
-                    <Canvas id={'canvas' + index} className='tests' canvasId={'canvas' + index}></Canvas>
+                    <Canvas id={'canvas' + index} style={{width:qrwh,height:qrwh}} canvasId={'canvas' + index}></Canvas>
                   }
                 </SwiperItem>
               )
@@ -75,26 +83,46 @@ export default (props) => {
     '3': (<View className='color7 font24 couponDetails_goods_type'>还有{orderResult.dayNum}天过期</View>),
   }[orderResult.couponStatus]
   const goGoodDetails = (orderSn) => {
-    navigateTo(`/pages/goods/kolShopGoods/index?orderSn=${orderSn}`)
+    goLink({
+      routerName: 'kolShopGoods',
+      args: {
+        orderSn: orderSn
+      }
+    })
   }
   const goShopGoods = () => {
-    // if(orderResult.orderType ==='kolGoods'){
-    //   navigateTo(`/pages/perimeter/shopDetails/index?merchantId=${merchantId}&kolActivityIdString=${kolActivityId}&kolMomentsId=${kolMomentsId}`)
-    // }
-    // else  {
-    //   navigateTo(`/pages/perimeter/favourableDetails/index?merchantId=${merchantId}&specialActivityId=${specialActivityId}`)
-    // }
+    const {merchantIdString, activityIdString, kolMomentsIdString} = orderResult
+    if (orderResult.orderType === 'kolGoods') {
+      goLink({
+        routerName: 'shopDetails',
+        args: {
+          merchantId: merchantIdString,
+          kolActivityIdString: activityIdString,
+          kolMomentsId: kolMomentsIdString
+        }
+      })
+    } else {
+      goLink({
+        routerName: 'favourableDetails',
+        args: {
+          merchantId: merchantIdString,
+          specialActivityId: activityIdString,
+        }
+      })
+    }
   }
 //商品详情
-
 
 
   return (
     <View className='couponDetails_title' style={style ? style : {}}>
       <View className='goMap'
-        onClick={() => mapGo({
-          lat:orderResult.lat,lnt:orderResult.lnt,address:orderResult.merchantAddress,name: orderResult.merchantName
-        })}></View>
+            onClick={() => mapGo({
+              lat: orderResult.lat,
+              lnt: orderResult.lnt,
+              address: orderResult.merchantAddress,
+              name: orderResult.merchantName
+            })}></View>
       <View className='couponDetails_box'>
         <View
           onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${orderResult.merchantIdString}`)}
@@ -109,7 +137,7 @@ export default (props) => {
                 style={backgroundObj(orderResult.couponImg)}></View>
           <View className='couponDetails_shop_details'>
             <View className='font_hide font28 couponDetails_shop_name'>{orderResult.couponName}</View>
-            <View className='font24 color2  font_hide couponDetails_goods_num'>{orderResult.couponTitle}</View>
+            <View className='font24 color2  font_hide couponDetails_goods_num'>{'凭券领取:'+orderResult.couponTitle}</View>
             {orderStatusObj}
           </View>
         </View>
@@ -132,7 +160,7 @@ export default (props) => {
               </View>
             </View>
             <View className='kolgoods_go_right public_center'>
-              <View className='kolgoods_go_rightBox public_center'>
+              <View className='kolgoods_go_rightBox public_center'  onClick={() => goShopGoods()}>
                 <View className='kolgoods_goIcon_box shop_merchant_icon'></View>
                 商品详情
               </View>

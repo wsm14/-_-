@@ -7,7 +7,6 @@ import {wxapiGet,wxapiPost} from './../../../../api/api'
 import Ajax from './../../../../api/request'
 import Utils from './../../../../utils/utils'
 import Nav from '../../../../layout/layoutNav/index'
-import {AtTextarea} from "taro-ui";
 class customizeHabit extends Component {
   defaultProps = {}
   config = {

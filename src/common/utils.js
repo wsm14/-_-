@@ -37,9 +37,9 @@ export const switchTab = (url) => {
   //跳转主页
 }
 //頁面重定向
-export const NavHeight = async () => {
+export const NavHeight = () => {
   let menu = wx.getMenuButtonBoundingClientRect()
-  let res = await Taro.getSystemInfo()
+  let res =  Taro.getSystemInfoSync()
   return res.statusBarHeight + menu.height + (menu.top - res.statusBarHeight) * 2
 }
 //設置自定義導航欄 高度

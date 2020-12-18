@@ -131,7 +131,6 @@ page{
       .codeBox{
         position: relative;
         height: 304px;
-        margin-top: -12px;
         .code_swiper{
           width: 304px;
           height: 304px;
@@ -190,6 +189,7 @@ page{
   height: 24px;
   position: relative;
   text-align: center;
+  margin-top: 10px;
 }
 .code_onRead{
   height: 36px;

@@ -4,7 +4,6 @@ import authStore from "./store/auth";
 import beanStore from "./store/beanMark";
 import shareStore from "./store/shareImage";
 import goodsStore from "./store/goods";
-import 'taro-ui/dist/style/index.scss'
 import './assets/css/app.scss'
 import './assets/css/color.scss'
 import './assets/css/font.scss'
@@ -21,7 +20,6 @@ class App extends Component {
 
   componentDidShow () {
   }
-
   componentDidHide () {}
   componentDidCatchError () {}
   fetchCheckUpdate() {

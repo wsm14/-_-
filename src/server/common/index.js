@@ -28,3 +28,24 @@ export const getAddress = (data,fn) => {
   })
 }
 //获取城市定位信息
+
+export const getCategory = (data,fn) => {
+  httpGet({
+    url: '/common/category/listCategory',
+    data:data
+  },res => {
+    return fn && fn(res)
+  })
+}
+//获取品类
+
+export const getLimit = (data,fn) => {
+  httpGet({
+    data:data,
+    url:'/common/property/getLastProperty'
+  },res => {
+    fn && fn(res)
+  })
+}
+//获取距离
+

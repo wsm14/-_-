@@ -4,6 +4,8 @@ import QR from 'wxmp-qrcode'
 import './../index.scss'
 import classNames from 'classnames'
 import {backgroundObj,filterWeek} from "@/common/utils";
+import drawQrcode from "weapp-qrcode";
+import Taro from "@tarojs/taro";
 
 export default (props) => {
   const {data, fn} = props
@@ -12,6 +14,7 @@ export default (props) => {
   const [list, setList] = useState([])
   const [orderDescs, setOrderDescs] = useState({})
   const [kolGoods, setKolGoods] = useState({})
+  const qrwh = (304 / 750) * Taro.getSystemInfoSync().windowWidth;
   useEffect(() => {
     const {orderGoodsVerifications, orderDesc} = data
     setOrderResult(data)
@@ -30,8 +33,15 @@ export default (props) => {
   useEffect(() => {
     setTimeout(() => {
       list.forEach((item, index) => {
+        const {verificationUrl} = item
         if(item.status === '0'){
-          QR.draw(item.verificationUrl, `canvas${index}`)
+          drawQrcode({
+            width: qrwh,
+            height: qrwh,
+            background: "#FFFFFF",
+            canvasId: `canvas${index}`,
+            text: verificationUrl,
+          });
         }
       })
     }, 1)
@@ -41,15 +51,15 @@ export default (props) => {
       <View className='codeBox public_center'>
         <Swiper
           current={current}
-          className='code_swiper'
+          style={{width:qrwh,height:qrwh}}
         >
           {
             list.map((item, index) => {
               return (
                 <SwiperItem>
                   {item.status ==='1' ?
-                    <View className='code_onloader bgCode public_center'></View>:
-                    <Canvas id={'canvas' + index} className='tests' canvasId={'canvas' + index}></Canvas>}
+                    <View style={{width:qrwh,height:qrwh}} className='code_onloader bgCode public_center'></View>:
+                    <Canvas id={'canvas' + index} style={{width:qrwh,height:qrwh}} canvasId={'canvas' + index}></Canvas>}
                 </SwiperItem>
               )
             })}
@@ -124,14 +134,14 @@ export default (props) => {
             </View>
             )
           }
-            {kolGoods.allowRefund === '0' &&
+            {kolGoods.allowRefund === '1' &&
             (<View className='public_center'>
                 <View className='kolTag kolTagIcons'></View>
                 <View className='font24 color2 kolTag_font'>随时退</View>
             </View>
             )
           }
-            {kolGoods.allowExpireRefund === '0' &&
+            {kolGoods.allowExpireRefund === '1' &&
             (<View className='public_center'>
                 <View className='kolTag kolTagIcons'></View>
                 <View className='font24 color2 kolTag_font'>过期退</View>

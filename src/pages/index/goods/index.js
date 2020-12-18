@@ -57,7 +57,12 @@ class Index extends Component {
   componentDidMount() {
     this.getOrder()
   }
-
+  componentDidShow() {
+    const {store: {goodsStore: {orderList}}} = this.props
+    if(orderList.length === 0){
+      this.getOrder()
+    }
+  }
   getOrder() {
     const {httpData} = this.state
     let that = this

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { View,Text,PickerView,PickerViewColumn} from '@tarojs/components'
-import { AtList, AtListItem } from 'taro-ui'
 import {wxapiGet} from '../../../api/api'
 import Ajax from '../../../api/request'
 import Utils from '../../../utils/utils'

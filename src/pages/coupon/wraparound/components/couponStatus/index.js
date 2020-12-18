@@ -53,7 +53,7 @@ export default (props) => {
           </View>
           <View className='wraparound_couponContent'>
             <View className='wraparound_couponContent_title font_hide font28 color1 bold'>{couponName}</View>
-            <View className='wraparound_couponContent_details font_hide font24 color2'>{couponTitle}</View>
+            <View className='wraparound_couponContent_details font_hide font24 color2'>{'凭券领取:' + couponTitle}</View>
           </View>
         </View>
         <View className='wraparound_liner'></View>

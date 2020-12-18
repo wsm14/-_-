@@ -288,12 +288,8 @@ class Index extends PureComponent {
   componentDidMount() {
     const {bannerHttp, specialHttp} = this.state
     this.getKolList();
-    NavHeight().then(res => {
-      if (res) {
-        this.setState({
-          navHeight: {paddingTop: Taro.pxTransform(parseInt(res))}
-        })
-      }
+    this.setState({
+      navHeight: {paddingTop: Taro.pxTransform(parseInt(NavHeight()))}
     })
     authGeography((res) => this.setMap(res))
     this.getSetting()
@@ -581,5 +577,4 @@ class Index extends PureComponent {
     )
   }
 }
-
 export default Index
