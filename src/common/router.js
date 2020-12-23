@@ -42,8 +42,12 @@ export default ({routerName, type = 'navigateTo', args = {}}) => {
     special: "/pages/perimeter/special/index",//特价商品
     perimeteRoducts: '/pages/perimeter/perimeteRoducts/index',//特价商品选择项
     perimeterIndex: '/pages/perimeter/index',//打卡一条街
+    repeatStatus: '/pages/perimeter/repeatStatus/index',//打卡状态： 重复打卡
+    abnormalStatus: '/pages/perimeter/abnormalStatus/index',//打卡状态： 超过距离
     //周边
     kolShopGoods: '/pages/goods/kolShopGoods/index',
+    codePay: '/pages/goods/codePay/index'
+    //订单  goods
   }[routerName]
   const types = type
 

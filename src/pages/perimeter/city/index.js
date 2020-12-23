@@ -69,12 +69,9 @@ class Index extends Component {
     }
   }
   searchSelect(title) {
-    getDom('#'+title,res => {
-     const {top} = res[0]
-      Taro.pageScrollTo({
-        selector: `#${title}`,
-        duration: 300
-      })
+    Taro.pageScrollTo({
+      selector: `#${title}`,
+      duration: 300
     })
   }
   tishiDom() {

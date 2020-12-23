@@ -4,21 +4,28 @@ import authStore from "./store/auth";
 import beanStore from "./store/beanMark";
 import shareStore from "./store/shareImage";
 import goodsStore from "./store/goods";
+import locationStore from "./store/location";
+import {authUpdateGeography} from '@/common/authority'
 import './assets/css/app.scss'
 import './assets/css/color.scss'
 import './assets/css/font.scss'
 import './assets/css/background.scss'
 import evens from './common/evens'
+import Taro from '@tarojs/taro'
 const store = {
   authStore,
   beanStore,
   shareStore,
   goodsStore,
+  locationStore
 }
 class App extends Component {
-  componentDidMount () {}
+  componentDidMount () {
+    this.fetchLocation()
+  }
 
   componentDidShow () {
+    this.fetchCheckUpdate();
   }
   componentDidHide () {}
   componentDidCatchError () {}
@@ -53,7 +60,13 @@ class App extends Component {
       });
     }
   }
-
+  fetchLocation() {
+    authUpdateGeography(this.fetchUpdataLocation.bind(this))
+  }
+  fetchUpdataLocation(res) {
+    const {latitude,longitude} = res
+    locationStore.setLocation(latitude,longitude);
+  }
   // this.props.children 就是要渲染的页面
   render () {
     return (

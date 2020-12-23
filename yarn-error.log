@@ -1,8 +1,8 @@
 Arguments: 
-  D:\nodejs\node.exe D:\nodejs\node_global\node_modules\yarn\bin\yarn.js add @/api --dev
+  D:\nodejs\node.exe D:\nodejs\node_global\node_modules\yarn\bin\yarn.js
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;D:\nodejs\node_global;D:\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_251\bin;C:\Users\Administrator\Desktop\test\node_modules\chromedriver\lib\chromedriver;
+  C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\node_modules\.bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Administrator\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\Administrator\AppData\Local\Programs\Python\Python39\;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;D:\nodejs\node_global;D:\Microsoft VS Code\bin;C:\Program Files\Java\jdk1.8.0_251\bin;C:\Users\Administrator\Desktop\test\node_modules\chromedriver\lib\chromedriver;
 
 Yarn version: 
   1.22.4
@@ -14,81 +14,84 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.npmjs.org/@%2fapi: Not found
-      at Request.params.callback [as _callback] (D:\nodejs\node_global\node_modules\yarn\lib\cli.js:66987:18)
-      at Request.self.callback (D:\nodejs\node_global\node_modules\yarn\lib\cli.js:140748:22)
-      at Request.emit (events.js:310:20)
-      at Request.<anonymous> (D:\nodejs\node_global\node_modules\yarn\lib\cli.js:141720:10)
-      at Request.emit (events.js:310:20)
-      at IncomingMessage.<anonymous> (D:\nodejs\node_global\node_modules\yarn\lib\cli.js:141642:12)
-      at Object.onceWrapper (events.js:416:28)
-      at IncomingMessage.emit (events.js:322:22)
-      at endReadableNT (_stream_readable.js:1187:12)
-      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+  Error: ENOENT: no such file or directory, copyfile 'C:\Users\Administrator\AppData\Local\Yarn\Cache\v6\npm-whatwg-fetch-2.0.4-dde6a5df315f9d39991aa17621853d720b85566f-integrity\node_modules\whatwg-fetch\LICENSE' -> 'C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\node_modules\mina-painter\node_modules\whatwg-fetch\LICENSE'
 
 npm manifest: 
   {
-    "name": "dakale-webNew-miniprogram",
-    "version": "1.0.0",
-    "private": true,
-    "description": "哒卡乐小程序",
-    "templateInfo": {
-      "name": "mobx",
-      "typescript": false,
-      "css": "sass"
-    },
-    "scripts": {
-      "build:weapp": "taro build --type weapp",
-      "build:swan": "taro build --type swan",
-      "build:alipay": "taro build --type alipay",
-      "build:tt": "taro build --type tt",
-      "build:h5": "taro build --type h5",
-      "build:rn": "taro build --type rn",
-      "build:qq": "taro build --type qq",
-      "build:quickapp": "taro build --type quickapp",
-      "dev:weapp": "npm run build:weapp -- --watch",
-      "dev:swan": "npm run build:swan -- --watch",
-      "dev:alipay": "npm run build:alipay -- --watch",
-      "dev:tt": "npm run build:tt -- --watch",
-      "dev:h5": "npm run build:h5 -- --watch",
-      "dev:rn": "npm run build:rn -- --watch",
-      "dev:qq": "npm run build:qq -- --watch",
-      "dev:quickapp": "npm run build:quickapp -- --watch"
-    },
-    "browserslist": [
-      "last 3 versions",
-      "Android >= 4.1",
-      "ios >= 8"
-    ],
-    "author": "",
-    "license": "MIT",
-    "dependencies": {
-      "@babel/runtime": "^7.7.7",
-      "@tarojs/components": "3.0.14",
-      "@tarojs/react": "3.0.14",
-      "@tarojs/runtime": "3.0.14",
-      "@tarojs/taro": "3.0.14",
-      "mobx": "^4.8.0",
-      "mobx-react": "^6.1.4",
-      "react": "^16.10.0",
-      "react-dom": "^16.10.0",
-      "taro-ui": "^2.3.4"
-    },
-    "devDependencies": {
-      "@babel/core": "^7.8.0",
-      "@tarojs/mini-runner": "3.0.14",
-      "@tarojs/webpack-runner": "3.0.14",
-      "@types/react": "^16.0.0",
-      "@types/webpack-env": "^1.13.6",
-      "babel-preset-taro": "3.0.14",
-      "eslint": "^6.8.0",
-      "eslint-config-taro": "3.0.14",
-      "eslint-plugin-import": "^2.12.0",
-      "eslint-plugin-react": "^7.8.2",
-      "eslint-plugin-react-hooks": "^1.6.1",
-      "md5": "^2.3.0",
-      "stylelint": "9.3.0"
-    }
+  	"name": "dakale-web-miniprogram",
+  	"version": "1.0.0",
+  	"private": true,
+  	"description": "哒卡乐小程序",
+  	"templateInfo": {
+  		"name": "mobx",
+  		"typescript": false,
+  		"css": "sass"
+  	},
+  	"scripts": {
+  		"build:weapp": "taro build --type weapp",
+  		"build:swan": "taro build --type swan",
+  		"build:alipay": "taro build --type alipay",
+  		"build:tt": "taro build --type tt",
+  		"build:h5": "taro build --type h5",
+  		"build:rn": "taro build --type rn",
+  		"build:qq": "taro build --type qq",
+  		"build:quickapp": "taro build --type quickapp",
+  		"dev:weapp": "npm run build:weapp -- --watch",
+  		"dev:swan": "npm run build:swan -- --watch",
+  		"dev:alipay": "npm run build:alipay -- --watch",
+  		"dev:tt": "npm run build:tt -- --watch",
+  		"dev:h5": "npm run build:h5 -- --watch",
+  		"dev:rn": "npm run build:rn -- --watch",
+  		"dev:qq": "npm run build:qq -- --watch",
+  		"dev:quickapp": "npm run build:quickapp -- --watch"
+  	},
+  	"browserslist": [
+  		"last 3 versions",
+  		"Android >= 4.1",
+  		"ios >= 8"
+  	],
+  	"author": "",
+  	"license": "MIT",
+  	"dependencies": {
+  		"@babel/runtime": "^7.7.7",
+  		"@tarojs/components": "3.0.21",
+  		"@tarojs/mobx": "^2.2.10",
+  		"@tarojs/react": "3.0.21",
+  		"@tarojs/runtime": "3.0.21",
+  		"@tarojs/taro": "3.0.21",
+  		"classnames": "^2.2.6",
+  		"md5": "^2.3.0",
+  		"mina-painter": "^1.0.0",
+  		"mobx": "^4.8.0",
+  		"mobx-react": "^6.1.4",
+  		"react": "^16.10.0",
+  		"react-dom": "^16.10.0",
+  		"taro-ui": "3.0.0-alpha.3"
+  	},
+  	"devDependencies": {
+  		"@babel/core": "^7.8.0",
+  		"@babel/plugin-syntax-flow": "^7.12.1",
+  		"@babel/preset-flow": "^7.12.1",
+  		"@tarojs/mini-runner": "3.0.21",
+  		"@tarojs/mobx": "^2.2.10",
+  		"@tarojs/webpack-runner": "3.0.21",
+  		"@types/react": "^16.0.0",
+  		"@types/webpack-env": "^1.13.6",
+  		"babel-preset-taro": "3.0.21",
+  		"classnames": "^2.2.6",
+  		"eslint": "^6.8.0",
+  		"eslint-config-taro": "3.0.21",
+  		"eslint-plugin-import": "^2.12.0",
+  		"eslint-plugin-react": "^7.8.2",
+  		"eslint-plugin-react-hooks": "^1.6.1",
+  		"md5": "^2.3.0",
+  		"mina-painter": "^1.0.0",
+  		"qs": "^6.9.4",
+  		"stylelint": "9.3.0",
+  		"taro-ui": "3.0.0-alpha.3",
+  		"weapp-qrcode": "^1.0.0",
+  		"wxmp-qrcode": "^2.0.3"
+  	}
   }
 
 yarn manifest: 
@@ -1412,7 +1415,7 @@ Lockfile:
     resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
     integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
   
-  "@types/react@^16.0.0", "@types/react@^16.7.3":
+  "@types/react@^16.0.0":
     version "16.9.51"
     resolved "https://registry.npmjs.org/@types/react/-/react-16.9.51.tgz#f8aa51ffa9996f1387f63686696d9b59713d2b60"
     integrity sha512-lQa12IyO+DMlnSZ3+AGHRUiUcpK47aakMMoBG8f7HGxJT8Yfe+WE128HIXaHOHVPReAW0oDS3KAI0JI2DDe1PQ==
@@ -2192,11 +2195,6 @@ Lockfile:
     version "2.1.0"
     resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.1.0.tgz#30fa40c9e7fe07dbc895678cd287024dea241dd9"
     integrity sha512-1Yj8h9Q+QDF5FzhMs/c9+6UntbD5MkRfRwac8DoEm9ZfUBZ7tZ55YcGVAzEe4bXsdQHEk+s9S5wsOKVdZrw0tQ==
-  
-  bind-decorator@^1.0.11:
-    version "1.0.11"
-    resolved "https://registry.npmjs.org/bind-decorator/-/bind-decorator-1.0.11.tgz#e41bc06a1f65dd9cec476c91c5daf3978488252f"
-    integrity sha1-5BvAah9l3ZzsR2yRxdrzl4SIJS8=
   
   bindings@^1.5.0:
     version "1.5.0"
@@ -9400,17 +9398,15 @@ Lockfile:
       mkdirp "^1.0.3"
       yallist "^4.0.0"
   
-  taro-ui@^2.3.4:
-    version "2.3.4"
-    resolved "https://registry.npmjs.org/taro-ui/-/taro-ui-2.3.4.tgz#a7a2cdd67b2b4a49d10c351d89def4d28b9bb192"
-    integrity sha512-qjAGO75bIvBGaOlpbnRKecTjmQIzJZjieFuz2UsfSJHnyGgOhlFviWWHPLQQGE2tFcjC0Zol0BDnO4r87JjdSw==
+  taro-ui@3.0.0-alpha.3:
+    version "3.0.0-alpha.3"
+    resolved "https://registry.npmjs.org/taro-ui/-/taro-ui-3.0.0-alpha.3.tgz#7ce26d71a47f7fbeed4aca6237696284787d3023"
+    integrity sha512-qLVP2/6zh01CbZFZUj2QuhbwtnOd7l1PSzd1Rjl1be1vyq819rFeHA1lApxYLXiw1zpM5v/Ywp7euB88LpQagg==
     dependencies:
-      "@types/react" "^16.7.3"
-      bind-decorator "^1.0.11"
       classnames "^2.2.6"
       dayjs "^1.7.7"
       lodash "^4.17.10"
-      prop-types "^15.6.2"
+      prop-types "^15.7.2"
   
   terser-webpack-plugin@^1.4.3:
     version "1.4.5"

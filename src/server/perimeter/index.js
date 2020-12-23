@@ -56,3 +56,11 @@ export const getSearchConditions = (data, fn) => {
 /*
 *search_shop end
 */
+
+export const saveMarkBean = (data, fn) => {
+  httpPost({
+    url: '/user/beanDetail/saveMarkBeanDetailByUserId',
+    data: data
+  }, res => fn(res))
+}
+

@@ -529,7 +529,7 @@ class Index extends Component {
                   <View className='userDetails_sex_box'>
                     <View className='userDetails_sex_style userDetails_sex_tagStyle'>
                       <View
-                        className={classNames(gender === 'M' ? 'userDetails_sex_girl' : 'userDetails_sex_boy')}></View>
+                        className={classNames(gender === 'F' ? 'userDetails_sex_girl' : 'userDetails_sex_boy')}></View>
                     </View>
                     {filterStrList(tag).length > 0 ? filterStrList(tag).map((item, index) => {
                       if (status) {

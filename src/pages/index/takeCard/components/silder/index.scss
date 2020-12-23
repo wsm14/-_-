@@ -25,26 +25,15 @@
     height: 24px;
     line-height: 24px;
     text-align: center;
+    padding-bottom: 24px;
   }
   .silder_merchantDetails{
-    width: 686px;
+    width: 694px;
     max-height: 640px;
-    padding-top: 24px;
-    padding-bottom: 148px;
     margin: 0 auto;
-    overflow-y: auto;
-  }
-  .silder_btn{
-    width: 400px;
-    height: 80px;
-    background: #EF476F;
-    border-radius: 40px;
-    line-height: 80px;
-    text-align: center;
-    position: absolute;
-    bottom: 34px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+    overflow-y: scroll;
+    .silder_merchantMagin{
+      padding-bottom: 128px;
+    }
   }
 }

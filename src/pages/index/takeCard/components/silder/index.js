@@ -27,11 +27,11 @@ export default (props) => {
       {visible &&
        <CoverView className='silder_merchantDetails'>
         {list.map(item => {
-          return (<CoverView  style={{marginBottom:Taro.pxTransform(24)}}>{createMerchantByMap(item)}</CoverView>)
+          return (<CoverView className='silder_showDwon' style={{marginBottom:Taro.pxTransform(24)}}>{createMerchantByMap(item)}</CoverView>)
         })}
+         <CoverView className='silder_merchantMagin'></CoverView>
       </CoverView>
       }
-      <CoverView className='silder_btn color6 font32 bold'>扫码打卡</CoverView>
     </CoverView>
   )
 }

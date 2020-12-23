@@ -2,7 +2,7 @@ import React from "react";
 import Taro from '@tarojs/taro'
 import {CoverImage, CoverView, Map, View} from "@tarojs/components";
 import MapView from '@/components/map'
-import {authGeography} from '@/common/authority'
+import {authGeography,scanCode} from '@/common/authority'
 import {getMerchantLat} from '@/server/index'
 import Router from '@/common/router'
 import classNames from "classnames";
@@ -13,7 +13,9 @@ import Slider from './components/silder'
 import {createMerchantByMap} from '@/components/publicShopStyle'
 import {getCategory, getLimit} from '@/server/common'
 import './index.scss'
-
+import {inject, observer} from "mobx-react";
+@inject('store')
+@observer
 export default class Index extends React.Component {
   constructor() {
     super(...arguments);
@@ -25,8 +27,8 @@ export default class Index extends React.Component {
         page: 1,
         limit: 20,
         distance: '',
-        filterType: '',
         categoryIds: '',
+        filterType: '',
         smartSiftType: '',
       },
       desIndex: -1,
@@ -36,28 +38,21 @@ export default class Index extends React.Component {
   }
 
   getLocation() {
-    authGeography((e) => {
-      const {
-        latitude,
-        longitude
-      } = e
-      this.setState({
-        data: {
-          ...this.state.data,
-          lat: Number(latitude),
-          lnt: Number(longitude),
-          markers: [
-            {
-              lat: latitude,
-              lnt: longitude
-            }
-          ],
-          desIndex: '0'
-        },
-      }, res => {
-        this.getMerchantData()
-      })
-    }, true)
+    const {lat,lnt} = this.props.store.locationStore
+    this.setState({
+      data: {
+        ...this.state.data,
+        lat,lnt,
+        markers: [
+          {
+            lat,lnt,
+          }
+        ],
+        desIndex: '0'
+      },
+    }, res => {
+      this.getMerchantData()
+    })
   }
 
   //配置地图
@@ -169,7 +164,65 @@ export default class Index extends React.Component {
       }, res => {
         this.getMerchantData()
       })
-    } else {
+    }
+    else if(key === 'filterType'){
+      if(value === '智能排序'){
+        this.setState({
+          httpData: {
+            ...httpData,
+            filterType: '',
+            smartSiftType: '',
+          },
+        }, res => {
+          this.getMerchantData()
+        })
+      }
+      else if(value === '捡豆数量'){
+        this.setState({
+          httpData: {
+            ...httpData,
+            filterType: '1',
+            smartSiftType: '',
+          },
+        }, res => {
+          this.getMerchantData()
+        })
+      }
+      else if(value === '有优惠'){
+        this.setState({
+          httpData: {
+            ...httpData,
+            filterType: '',
+            smartSiftType: 'couponTitles',
+          },
+        }, res => {
+          this.getMerchantData()
+        })
+      }
+      else if(value === '到店打卡'){
+        this.setState({
+          httpData: {
+            ...httpData,
+            filterType: '',
+            smartSiftType: 'markFlag',
+          },
+        }, res => {
+          this.getMerchantData()
+        })
+      }
+      else if(value === '商家分享'){
+        this.setState({
+          httpData: {
+            ...httpData,
+            filterType: '',
+            smartSiftType: 'merchantShare',
+          },
+        }, res => {
+          this.getMerchantData()
+        })
+      }
+    }
+    else {
       this.setState({
         httpData: {
           ...httpData,
@@ -215,6 +268,7 @@ export default class Index extends React.Component {
                  scale={scale}
         ></MapView>
         }
+        <CoverView className='silder_btn color6 font32 bold' onClick={() => scanCode()}>扫码打卡</CoverView>
       </View>
     )
   }

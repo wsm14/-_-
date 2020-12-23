@@ -1,5 +1,7 @@
 import Taro, {getCurrentInstance, getCurrentPages} from '@tarojs/taro'
 import {toast, addPhotosAlbum} from '@/common/utils'
+import {saveMarkBean} from '@/server/perimeter'
+import router from './router'
 import qs from 'qs'
 
 export const setLocation = (fn) => {
@@ -41,15 +43,14 @@ export const setMap = (fn) => {
 
 export const startLocationUpdate = (fn) => {
   Taro.startLocationUpdate({
-    // type: 'gcj02',
     success: (res) => {
-      var latitude = res.latitude
-      var longitude = res.longitude
-      var speed = res.speed
-      var accuracy = res.accuracy;
-      Taro.setStorageSync('lnt', longitude)
-      Taro.setStorageSync('lat', latitude)
-      fn && fn(res)
+      Taro.onLocationChange((res) => {
+        var latitude = res.latitude
+        var longitude = res.longitude
+        Taro.setStorageSync('lnt', longitude)
+        Taro.setStorageSync('lat', latitude)
+        fn && fn(res)
+      });
     },
     fail: function (res) {
       console.log('fail' + JSON.stringify(res))
@@ -106,11 +107,11 @@ export const authGeography = (fn, type) => {
                 } else if (res.cancel) {
                   toast('授权失败,已配置默认定位')
                   Taro.setStorageSync('lnt', 120.26457)
-                  Taro.setStorageSync('lat',  30.18534)
-                  fn && (setTimeout(()=> fn({
+                  Taro.setStorageSync('lat', 30.18534)
+                  fn && (setTimeout(() => fn({
                     latitude: 30.18534,
                     longitude: 120.26457
-                  }),500))
+                  }), 500))
                 }
               }
             })
@@ -148,23 +149,26 @@ export const authUpdateGeography = (fn) => {
           },
           fail: res => {
             Taro.showModal({
-              title: '是否要打开设置页面',
-              content: '需要获取您的位置，请到小程序的设置中打开授权',
+              title: '获取位置失败',
+              content: '请允许「哒卡乐」使用你的定位，为你推荐更多周边店铺',
               success: function (res) {
                 if (res.confirm) {
                   Taro.openSetting({
                     success: dataAu => {
                       if (dataAu.authSetting["scope.userLocation"] == true) {
-                        toast('授权成功',)
-                        //再次授权，调用wx.getLocation的API
+                        toast('授权成功')
                         startLocationUpdate(fn)
                       } else {
-                        toast('授权失败')
+                        toast('授权失败,已配置默认定位')
+                        Taro.setStorageSync('lnt', 120.255384)
+                        Taro.setStorageSync('lat', 30.229271)
                       }
                     }
                   })
                 } else if (res.cancel) {
-                  toast('授权失败')
+                  toast('授权失败,已配置默认定位')
+                  Taro.setStorageSync('lnt', 120.255384)
+                  Taro.setStorageSync('lat', 30.229271)
                 }
               }
             })
@@ -261,7 +265,7 @@ export const internet = (obj, fn) => {
   })
 }
 //网络环境
-export const scanCode = (fn) => {
+export const scanCode = (data) => {
   Taro.scanCode({
     onlyFromCamera: false,
     success: results => {
@@ -269,9 +273,56 @@ export const scanCode = (fn) => {
       if (scanType === 'QR_CODE') {
         let data = qs.parse(result.split('?')[1])
         if (result.includes('https://www.dakale.net') && data.action === 'pay' && data.merchantId) {
-          return fn && fn(data)
+          return router({
+            routerName: 'codePay',
+            args: {
+              merchantId: data.merchantId
+            }
+          })
         } else if (result.includes('https://www.dakale.net') && data.action === 'mark' && data.merchantId) {
-          return fn && fn(data)
+          return saveMarkBean({merchantId: data.merchantId}, res => {
+            const {
+              resultCode,
+              merchantLnt,
+              merchantLat,
+              merchantAddress,
+              beanAmount,
+              merchantName = ''
+            } = res
+            console.log(resultCode,
+              merchantLnt,
+              merchantLat,
+              merchantAddress,
+              beanAmount,)
+            if (resultCode) {
+              const resultCodeObj = {
+                "3018": () => router({
+                  routerName: 'abnormalStatus',
+                  args: {
+                    merchantLnt,
+                    merchantLat,
+                    merchantAddress,
+                    beanAmount,
+                    merchantName
+                  }
+                }),
+                "4003": () => router({
+                  routerName: 'repeatStatus',
+                }),
+                "5019": () => toast('商家不允许打卡，请到指定打卡商家哦~'),
+
+              }[resultCode]()
+            } else {
+              router({
+                routerName: 'merchantDetails',
+                args: {
+                  merchantId: data.merchantId,
+                  beanAmount
+                }
+              })
+            }
+          })
+          // return fn && fn(data)
         } else {
           return toast('二维码错误或参数缺失')
         }
@@ -284,4 +335,4 @@ export const scanCode = (fn) => {
   })
 }
 //腾讯地图key值
-export const mapTx  = 'V44BZ-PNPR4-Z6PUO-X2YUZ-5GAVO-MRBYQ';
+export const mapTx = 'V44BZ-PNPR4-Z6PUO-X2YUZ-5GAVO-MRBYQ';

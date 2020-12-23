@@ -16,8 +16,10 @@ import {toast, filterHttpStatus, navigateTo, redirectTo} from '@/common/utils'
 const resultOperate = {
   "2001": {type: '用户身份不存在', link: '/pages/auth/index',},
   "5005": {
-    type: '用户身份不存在', link: '/pages/auth/index', fn: () => {
-    }
+    type: '用户身份不存在', link: '/pages/auth/index', fn: () => {}
+  },
+  "4003": {
+    type: '商家今日已被打卡', link: '/pages/perimeter/repeatStatus/index', fn: () => {}
   },
 }
 
@@ -28,8 +30,8 @@ const env = process.env.NODE_ENV === 'development' ? 'development' : 'production
 switch (env) {
   case 'development':
     // baseUrl = 'https://devgateway.dakale.net'
-    baseUrl = 'https://pregateway.dakale.net'
-    // baseUrl = 'https://gateway1.dakale.net'
+    // baseUrl = 'https://pregateway.dakale.net'
+    baseUrl = 'https://gateway1.dakale.net'
     break
   case 'production':
     baseUrl = 'https://devgateway.dakale.net'

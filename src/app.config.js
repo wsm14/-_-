@@ -103,9 +103,11 @@ export default {
         'search_fav/index',//特价搜索
         'favourableDetails/index',//砍价详情
         "shopDetails/index", //商品详情
-        "merchantDetails/index", //周边详情
+        "merchantDetails/index", //商家详情
         "special/index",//特价商品
         'perimeteRoducts/index',
+        'repeatStatus/index',//打卡状态： 重复打卡
+        'abnormalStatus/index',//打卡状态： 超过距离
         "index", //周边首页
       ]
     },

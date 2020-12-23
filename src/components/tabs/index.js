@@ -31,7 +31,7 @@ export default (props) =>{
             <View className={classNames('tabFont',  `index${index}`, count === index ? 'tabChecked': 'tabNoChecked')} onClick={() => fn(index)}>
               {item}
               {count === index &&
-              <View className='tab_line animated fadeIn' style={lineStyle}></View>
+               <View className='tab_line animated fadeIn' style={lineStyle}></View>
               }
             </View>
 

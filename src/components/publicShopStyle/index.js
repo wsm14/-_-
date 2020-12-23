@@ -494,9 +494,9 @@ export const createMerchantByMap = (item) => {
             <CoverView className='createMerchantByMap_text'>
               <CoverView className='createMerchantByMap_child_title1 font_hide color1 font28'>{merchantName}</CoverView>
               <CoverView className='createMerchantByMap_child_title2 public_auto'>
-                {businessHub && <CoverView style={{marginRight: Taro.pxTransform(12)}}>{businessHub + ''}</CoverView>}
-                {categoryName && <CoverView style={{marginRight: Taro.pxTransform(12)}}>{categoryName + ' '}</CoverView>}
-                {perCapitaConsumption && <CoverView>{'人均' + perCapitaConsumption + ' '}</CoverView>}
+                {businessHub && <CoverView>{businessHub + ''}</CoverView>}
+                {categoryName && <CoverView style={{marginLeft: Taro.pxTransform(12)}}>{categoryName + ' '}</CoverView>}
+                {perCapitaConsumption && <CoverView style={{marginLeft: Taro.pxTransform(12)}}>{'人均' + perCapitaConsumption + ' '}</CoverView>}
                 <CoverView
                   className='createMerchantByMap_child_marginRight'>距你 {GetDistance(getLat(), getLnt(), lat, lnt)}</CoverView>
               </CoverView>
@@ -509,14 +509,58 @@ export const createMerchantByMap = (item) => {
         </CoverView>
       </CoverView>
       {markFlag === '1' &&
-      <CoverView className='createMerchantByMap_bottomBox public_center bold color6'>
-      <CoverView>到店打卡捡{markBean}</CoverView>
-      <CoverImage className='createMerchantByMap_bottom_image' src={'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon358.png'}></CoverImage></CoverView>
+      <CoverView className='createMerchantByMap_bottom_border'>
+        <CoverView className='createMerchantByMap_bottomBox public_center bold color6'>
+          <CoverView>到店打卡捡{markBean}</CoverView>
+          <CoverImage className='createMerchantByMap_bottom_image' src={'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon358.png'}></CoverImage></CoverView>
+      </CoverView>
+
       }
     </CoverView>
 
   )
 }
+
+
+export const createMerchantByView = (item) => {
+
+  const {coverImg, merchantName, businessHub, categoryName, perCapitaConsumption, lat, lnt,markFlag,markBean} = item
+  return (
+    <View className='createMerchantByMap_fathers'>
+      <View className='createMerchantByMap_box'>
+        <View className='createMerchantByMap_child_box'>
+          <Image lazyLoad mode='center' className='createMerchantByMap_image' src={coverImg}></Image>
+          <View className='createMerchantByMap_child_right'>
+            <View className='createMerchantByMap_text'>
+              <View className='createMerchantByMap_child_title1 font_hide color1 font28'>{merchantName}</View>
+              <View className='createMerchantByMap_child_title2 public_auto'>
+                {businessHub && <View>{businessHub + ''}</View>}
+                {categoryName && <View style={{marginLeft: Taro.pxTransform(12)}}>{categoryName + ' '}</View>}
+                {perCapitaConsumption && <View style={{marginLeft: Taro.pxTransform(12)}}>{'人均' + perCapitaConsumption + ' '}</View>}
+                <View
+                  className='createMerchantByMap_child_marginRight'>距你 {GetDistance(getLat(), getLnt(), lat, lnt)}</View>
+              </View>
+              <View className='createMerchantByMap_child_title3'>
+                <View className='createMerchantByMap_child_tags'>人气商家</View>
+                <View className='createMerchantByMap_child_tags'>品牌连锁</View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      {markFlag === '1' &&
+      <View className='createMerchantByMap_bottom_border'>
+        <View className='createMerchantByMap_bottomBox public_center bold color6'>
+          <View>到店打卡捡{markBean}</View>
+          <Image lazyLoad mode='center' className='createMerchantByMap_bottom_image' src={'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon358.png'}></Image></View>
+      </View>
+
+      }
+    </View>
+
+  )
+}
+
 export const goodsNullStatus = (_this, data, obj) => {
   return (
     <View className='goodsNullStatus'>

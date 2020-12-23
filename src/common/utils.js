@@ -512,12 +512,6 @@ export const mapGo = (item) => {
     name: item.merchantName||'',
   })
 }
-export const getPayByCode =(data) => {
-  const {merchantId,action} = data
-  if(action && merchantId && action === 'pay'){
-    navigateTo(`/pages/goods/codePay/index?merchantId=${merchantId}`)
-  }
-}
 export const removeStorage = (key) => Taro.removeStorage({
   key: key,
   success: res => {

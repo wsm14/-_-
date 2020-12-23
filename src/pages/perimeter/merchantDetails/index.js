@@ -8,6 +8,7 @@ import {wxapiGet, perimeter} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import APPShare from '@/components/shareApp'
 import {scanCode} from '@/common/authority'
+import Toast from '@/components/beanToast'
 import classNames from 'classnames'
 import {
   imgList,
@@ -61,13 +62,10 @@ class MerchantDetails extends Component {
       countStatus: true,
       visible: false,
       specialGoodsList: [],
-      goodsList: []
+      goodsList: [],
+      getBeanStatus: false
     }
   }
-
-  componentWillMount() {
-  }
-
 
   componentDidMount() {
     this.getBannerList()
@@ -75,6 +73,14 @@ class MerchantDetails extends Component {
     this.getMerchantById()
     this.getMerchantDetails()
     this.getGoodList()
+  }
+
+  componentWillMount() {
+    if (getCurrentInstance().router.params.beanAmount) {
+      this.setState({
+        getBeanStatus: true,
+      })
+    }
   }
 
   componentDidShow() {
@@ -157,6 +163,7 @@ class MerchantDetails extends Component {
       }
     )
   }
+
   //获取商家轮播图
   getListRecommend() {
     const {merchantHttpData} = this.state
@@ -356,15 +363,22 @@ class MerchantDetails extends Component {
       kolMomentsList,
       visible,
       specialGoodsList,
-      goodsList
+      goodsList,
+      getBeanStatus
     } = this.state
     if (Object.keys(userMerchantInfo).length > 0) {
       return (
         <View className='merchantBox'>
           {shareStatus == 'share' &&
           <APPShare
-            {...{jumpUrl: 'shopDetailPage',id: getCurrentInstance().router.params.merchantId,type : 'jumpToPage',
-                jumpType : "native" ,path:'DKLShopDetailViewController',params:{shopId: getCurrentInstance().router.params.merchantId}}}>
+            {...{
+              jumpUrl: 'shopDetailPage',
+              id: getCurrentInstance().router.params.merchantId,
+              type: 'jumpToPage',
+              jumpType: "native",
+              path: 'DKLShopDetailViewController',
+              params: {shopId: getCurrentInstance().router.params.merchantId}
+            }}>
           </APPShare>}
           <Banner
             autoplay={bannerList.length > 1 ? true : false}
@@ -425,7 +439,7 @@ class MerchantDetails extends Component {
               <View className='merchat_city_accress'>
                 <View className='merchant_accBox'>
                   <View className='merchant_city_icon1' onClick={() => mapGo({
-                    lat,lnt,address,name: merchantName
+                    lat, lnt, address, name: merchantName
                   })}></View>
                   <View className='merchant_city_icon2'></View>
                   <View className='merchant_city_icon3' onClick={() => this.setState({visible: true})}></View>
@@ -534,7 +548,7 @@ class MerchantDetails extends Component {
           }
           <View className='merchant_layer'>
             <View className='merchant_layer_btn'>
-              <View className='merchant_layer_btn1'  onClick={() => scanCode(getPayByCode)} >
+              <View className='merchant_layer_btn1' onClick={() => scanCode()}>
                 <View className='merchant_layer_btnBox merchant_layer_btnIcon1'></View>
                 <View>买单</View>
               </View>
@@ -579,6 +593,17 @@ class MerchantDetails extends Component {
             </View>
             <View className='merchant_shop' onClick={() => this.setState({visible: true})}>立即预约</View>
           </View>
+          {getBeanStatus &&
+          <Toast
+            data={{beanAmount: getCurrentInstance().router.params.beanAmount || '0'}}
+            visible={() => {
+              this.setState({
+                getBeanStatus: false,
+              })
+            }}
+          >
+          </Toast>
+          }
           {visible &&
           <MarkPhone onClose={() => this.setState({visible: false})} onCancel={() => this.setState({visible: false})}
                      data={filterStrList(telephone)}></MarkPhone>

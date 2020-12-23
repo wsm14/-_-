@@ -22,7 +22,8 @@ import {
   NavHeight,
   toast,
   goDown,
-  getPayByCode
+  getLat,
+  getLnt
 } from '@/common/utils'
 import classNames from 'classnames'
 import './perimeter.scss'
@@ -253,8 +254,9 @@ class Index extends PureComponent {
     })
   }
 
-  setMap = (res) => {
-    const {latitude, longitude} = res
+  setMap (){
+    const latitude  = getLat()
+    const longitude  = getLnt()
     this.setState({
       lnt: longitude,
       lat: latitude
@@ -277,7 +279,6 @@ class Index extends PureComponent {
              result
            })
          }
-
       }
       else{
         toast(message)
@@ -291,7 +292,7 @@ class Index extends PureComponent {
     this.setState({
       navHeight: {paddingTop: Taro.pxTransform(parseInt(NavHeight()))}
     })
-    authGeography((res) => this.setMap(res))
+    this.setMap()
     this.getSetting()
     this.getBanner(bannerHttp, 'bannerList')
     this.getDomain()
@@ -397,7 +398,7 @@ class Index extends PureComponent {
               </CoverView>
               <CoverImage
                 className='perimerter_codeBox'
-                onClick={() => scanCode(getPayByCode)}
+                onClick={() => scanCode()}
                 src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon45.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon42.png'}>
               </CoverImage>
             </CoverView>
