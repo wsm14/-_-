@@ -1,335 +1,209 @@
-.street_box {
+page{
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   line-height: 1;
-  .perimerter_fixed {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 1000000;
-    color: #FFFFFF;
-    padding-bottom: 20px;
-
-    .perimerter_fixed_title {
-      .perimerter_title {
-        height: 40px;
-        position: relative;
-        line-height: 40px;
-        font-size: 36px;
-        font-weight: 600;
-        text-align: center;
-
-        .perimerter_city {
-          position: absolute;
-          top: 0;
-          left: 32px;
-          height: 40px;
-          display: flex;
-          align-items: center;
-
-          .perimerter_city_box {
-            width: 40px;
-            height: 40px;
-          }
-
-          .perimerter_city_icon1 {
-            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon40.png") no-repeat;
-            background-size: 100% 100%;
-          }
-
-          .perimerter_city_icon2 {
-            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon46.png") no-repeat;
-            background-size: 100% 100%;
-          }
-
-          .perimerter_city_font {
-            height: 40px;
-            font-size: 28px;
-            font-weight: 600;
-            line-height: 40px;
-            margin-left: 12px;
-          }
-
-          .perimerter_city_select {
-            width: 24px;
-            height: 24px;
-            margin-left: 12px;
-          }
-
-          .perimerter_city_selectIcon1 {
-            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon41.png") no-repeat;
-            background-size: 100% 100%;
-          }
-          .perimerter_city_selectIcon2 {
-            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon47.png") no-repeat;
-            background-size: 100% 100%;
-          }
-        }
-      }
-
-      .perimerter_search {
-        padding: 32px 38px 0 32px;
-        height: 64px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-
-        .perimerter_input1 {
-          width: 606px;
-          height: 64px;
-          background: rgba(255, 255, 255, 0.25) url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/search_icon.png") no-repeat;
-          border-radius: 32px;
-          text-align: center;
-          line-height: 64px;
-          font-size: 24px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: #FFFFFF;
-          background-size: 36px 36px;
-          background-position: 182px 13px;
-        }
-
-        .perimerter_input2 {
-          width: 606px;
-          height: 64px;
-          border-radius: 32px;
-          line-height: 64px;
-          text-align: center;
-          font-size: 24px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: rgba(153, 153, 153, 1);
-          background: rgba(245, 245, 245, 1) url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon44.png") no-repeat;
-          background-size: 36px 36px;
-          background-position: 182px 13px;
-        }
-
-        .placeholder_style1 {
-          font-size: 24px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          line-height: 24px;
-          color: rgba(153, 153, 153, 1);
-        }
-
-        .placeholder_style2{
-          font-size: 24px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          line-height: 24px;
-          color: white !important;
-        }
-
-        .perimerter_codeBox {
-          width: 48px;
-          height: 48px;
-        }
-        .perimerter_code1{
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon42.png") no-repeat;
-          background-size: 100% 100%;
-        }
-        .perimerter_code2 {
-          width: 48px;
-          height: 48px;
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon45.png") no-repeat;
-          background-size: 100% 100%;
-        }
-      }
-    }
-    .perimerter_fixed_tabs{
-      height: 78px;
-      background: #FFFFFF;
-      display: flex;
-      align-items: center;
-    }
-  }
-  .street_top {
+}
+.street_box {
+  line-height: 1;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  position: relative;
+  z-index: 100;
+  .street_banner {
     width: 100%;
-    height: 450px;
-  }
-  .street_map {
-    width: 690px;
-    height: 320px;
-    background: #FFFFFF;
-    box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    z-index: 10;
-    margin: -62px auto 0;
+    height: 700px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon370.png") no-repeat;
+    background-size: 100% 100%;
     position: relative;
 
-    .street_lookMap_titleBox {
-      padding: 20px 20px 0;
-      position: relative;
+    .street_goBack {
+      position: absolute;
+      left: 32px;
+      top: 114px;
+      width: 48px;
+      height: 48px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon369.png") no-repeat;
+      background-size: 100% 100%;
+    }
+  }
 
-      .street_lookMap_left {
-        font-size: 28px;
-        height: 40px;
-        line-height: 40px;
+  .street_shop {
+    border-radius: 40px 40px 0px 0px;
+    margin-top: -62px;
+    min-height: 876px;
+    width: 100%;
+    z-index: 10;
+    position: relative;
+    flex: 1;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon373.png") no-repeat top/cover;
+
+    .street_tab {
+      max-width: 596px;
+      margin: 46px auto 24px;
+      white-space: nowrap;
+      height: 50px;
+
+      .street_tab_box {
+        height: 28px;
+        line-height: 28px;
+        margin-right: 48px;
+        position: relative;
+        display: inline-block;
       }
 
-      .street_lookMap_right {
-        height: 40px;
-        display: flex;
-        align-items: center;
+      .street_tab_liner {
+        width: 32px;
+        height: 8px;
+        background: #07C0C2;
+        border-radius: 5px;
+        position: absolute;
+        top: 38px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        z-index: 10;
+      }
 
-        .street_lookMap_title {
-          height: 33px;
-          font-size: 24px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: #999999;
-          line-height: 33px;
+      .street_tab_select {
+        height: 28px;
+        line-height: 28px;
+        color: #333333;
+      }
+
+      .street_tab_liner {
+
+      }
+    }
+  }
+
+  .street_shop_details {
+    width: 686px;
+    margin: 0 auto 24px;
+    box-shadow: 0px 3px 27px 0px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    .street_shop_image {
+      border-radius: 8px 8px  0 0;
+      height: 140px;
+      width: 100%;
+      background: #FD96A9;
+      position: relative;
+      .street_merchantImg{
+        width: 100px;
+        height: 100px;
+        border: 2px solid #FFFFFF;
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        top: 64px;
+        z-index: 15;
+        background: #333333;
+        border-radius: 50%;
+      }
+    }
+
+    .street_pinpai {
+      top: 12px;
+      left: 12px;
+      width: 50px;
+      height: 28px;
+      position: absolute;
+      background: #108588;
+      border-radius: 8px 0px 8px 0px;
+      text-align: center;
+      font-size: 18px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 600;
+      color: #FFFFFF;
+      line-height: 28px;
+    }
+    .street_userShop{
+      height: 189px;
+      margin: 0 32px;
+      .street_userShop_title{
+        padding-top: 40px;
+        height: 32px;
+        font-size: 32px;
+        max-width: 532px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .street_userShop_tags{
+        height: 30px;
+        margin-top: 16px;
+        .street_userShop_tagsBox{
+          height: 30px;
+          background: rgba(16, 133, 136, 0.1);
+          border-radius: 4px;
+          line-height: 30px;
+          padding: 0 8px;
+          font-size: 20px;
+          color: rgba(16, 133, 136, 1);
+          margin-right: 12px;
         }
-
-        .street_lookMap_icon {
+        .street_userShop_tagsBox:last-child{
+          margin-right: 0px;
+        }
+      }
+      .street_userShop_limit{
+        height: 24px;
+        margin-top: 16px;
+        color: rgba(102, 102, 102, 1);
+        .street_userShop_icon{
           width: 24px;
           height: 24px;
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon361.png") no-repeat;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon46.png") no-repeat;
           background-size: 100% 100%;
+          margin-right: 12px;
         }
       }
-    }
 
-    .street_mapView {
-      width: 650px;
-      height: 223px;
-      margin: 17px auto 0;
-      background: #FD96A9;
-      border-radius: 8px;
+    }
+    .street_liner{
+      margin: 0 auto;
+      width: 622px;
+      height: 2px;
+      background: #E5E5E5;
+      border-radius: 1px;
+
     }
   }
-  .street_select_fixed {
-    position: fixed;
-    top: 220px;
-    left: 0;
-    right: 0;
-    z-index: 100;
+  .street_shopMarks{
+    margin: 24px 32px 0;
+    height: 36px;
     display: flex;
-    height: 40px;
     align-items: center;
-    padding: 0px 40px 17px 30px;
-    background: #FFFFFF;
-    .street_select_fixedBox{
-      height: 40px;
-      display: flex;
-
-      .street_select_fixedLeft{
-        width: 175px;
-        height: 40px;
-        align-items: center;
-        display: flex;
-      }
-      .street_select_fixedRight{
-        height: 40px;
-        padding-left: 40px;
-        white-space: nowrap;
-        width: 460px;
-        overflow-x: scroll;
-        position: relative;
-      }
+    .street_shopMarks_icon{
+      width: 36px;
+      height: 36px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon372.png") no-repeat;
+      background-size: 100% 100%;
+      margin-right: 8px;
+    }
+    .street_shopMarks_title{
+      height: 36px;
+      line-height: 36px;
     }
   }
-  .street_select {
-    height: 40px;
-    margin: 38px 40px 0 30px;
-    display: flex;
-
+  .street_shopMarksBean{
+    margin: 40px auto 0 ;
+    width: 112px;
+    height: 84px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon371.png") no-repeat;
+    background-size: 100% 100%;
   }
-  .street_select_left {
-    width: 175px;
-    height: 40px;
-    align-items: center;
-    display: flex;
-  }
-  .street_select_scrollView {
-    height: 40px;
-    padding-left: 40px;
-    white-space: nowrap;
-    width: 460px;
-
-
-    .street_select_Tabs:last-child {
-      //margin-right: 0px;
-    }
-  }
-  .street_select_iconBox {
-    width: 24px;
+  .street_shopMarksBeanNum{
+    text-align: center;
     height: 24px;
-    margin-left: 5px;
+    line-height: 24px;
+    margin-top: 24px;
   }
-  .street_select_icon1 {
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon363.png") no-repeat;
-    background-size: 100% 100%;
+  .street_shopMarksLiner{
+    width: 686px;
+    height: 2px;
+    border-radius: 1px;
+    margin-top: 39px;
   }
-  .street_select_icon2 {
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon362.png") no-repeat;
-    background-size: 100% 100%;
-  }
-  .street_select_view{
-    padding: 20px 30px;
-    .createMerchantByView_box{
-      margin-bottom: 20px;
-    }
-  }
-  .street_select_Tabs {
-    height: 40px;
-    display: inline-block;
-    margin-right: 46px;
-    position: relative;
-    color: #333333;
-    font-size: 24px;
-    line-height: 40px;
-    z-index: 10;
-  }
-  .street_select_checked {
-    font-size: 28px;
-    font-weight: bold;
-  }
-  .street_select_liners {
-    width: 2px;
-    height: 23px;
-    background: #333333;
-    margin-left: auto;
-  }
-  .street_select_liner {
-    position: absolute;
-    width: 33px;
-    height: 11px;
-    background: linear-gradient(127deg, #22E8BA 0%, #07C0C2 100%);
-    border-radius: 5px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    top: 29px;
-    z-index: -1;
-  }
-  .street_layer{
-    position: fixed;
-    top: 276px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1000;
-    .street_layer_select{
-      padding: 30px;
-      background: #FFFFFF;
-      border-radius: 0px 0px 20px 20px;
-    }
-    .street_layer_Tabs{
-      height: 33px;
-      line-height: 33px;
-      margin-bottom: 30px;
-      font-size: 24px;
-    }
-    .street_layer_Tabs:last-child{
-      margin-bottom: 0px;
-    }
-  }
-}
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  color: transparent;
 }

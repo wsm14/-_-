@@ -31,6 +31,7 @@ import {inject, observer} from "mobx-react";
 import evens from "@/common/evens";
 import {getAddress} from '@/server/common'
 import Toast from '@/components/dakale_toast'
+import Router  from '@/common/router'
 @inject('store')
 @observer
 class Index extends PureComponent {
@@ -73,9 +74,9 @@ class Index extends PureComponent {
   onPageScroll(e) {
     if (this.interceptors) {
       clearTimeout(this.interceptors)
-      this.interceptors = setTimeout(this.setSearch.bind(this, e), 50)
+      this.interceptors = setTimeout(this.setSearch.bind(this, e), 1)
     } else {
-      this.interceptors = setTimeout(this.setSearch.bind(this, e), 50)
+      this.interceptors = setTimeout(this.setSearch.bind(this, e), 1)
     }
   }
 
@@ -464,7 +465,7 @@ class Index extends PureComponent {
         }
         {subKeyValueList.length > 0 &&
         <View className='perimerter_active'>
-          <View className='perimerter_beanActive' onClick={() => goDown()}>
+          <View className='perimerter_beanActive' onClick={() => Router({routerName:'perimeterIndex'})}>
             <View className='perimerter_dec'>
               <View className='perimerter_title'>{subKeyValueList[0].title}</View>
               <View className='permerter_intertion permerter_interSize1'>{subKeyValueList[0].subtitle}</View>

@@ -72,9 +72,9 @@ class Index extends Component {
       url: orderDetails
     }, res => {
       const {orderList} = res
+      Taro.stopPullDownRefresh()
       if (orderList && orderList.length > 0) {
         that.props.store.goodsStore.setOrderList(orderList)
-        Taro.stopPullDownRefresh()
       } else {
         this.setState({
           countStatus: false,

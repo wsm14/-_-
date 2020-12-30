@@ -8,64 +8,29 @@ import Banner from '@/components/banner'
 import {getBanner, getCategory} from '@/server/common'
 import {getSearchConditions} from '@/server/perimeter'
 import {toast, navigateTo} from "@/common/utils";
-import {createMerchantByView} from '@/components/publicShopStyle'
-
+import Router from '@/common/router'
+import {goBack, getDom,GetDistance,backgroundObj, filterStrList,getLat, getLnt} from "@/common/utils";
 
 @inject('store')
 @observer
 class Index extends Component {
   constructor() {
     super(...arguments)
-    this.interceptors = null
     this.state = {
       bannerType: 'near',//轮播图参数
       categoryDTOList: [],
-      bannerList: [],
-      tabCount: 0,
       httpData: {
         page: 1,
         limit: 10,
         distance: '',
         categoryIds: '',
-        filterType: '',
+        filterType: '1',
         smartSiftType: '',
       },
-      selectList: [
-        {
-          title: '智能排序',
-          key: 'filterType',
-          value: ''
-        },
-        {
-          title: '捡豆数量',
-          key: 'filterType',
-          value: '1'
-        },
-        {
-          title: '有优惠',
-          key: 'smartSiftType',
-          value: 'couponTitles'
-        },
-        {
-          title: '到店打卡',
-          key: 'smartSiftType',
-          value: 'markFlag'
-        },
-        {
-          title: '商家分享',
-          key: 'smartSiftType',
-          value: 'merchantShare'
-        }
-      ],
+      scroll_left: 0,
       countStatus: true,
       userMerchantList: [],
-      navHeight: {paddingTop: Taro.pxTransform(64)},
-      setBackGround: {},
-      iconStatus: false,
-      scrollSelect: false,
-      visible: false,
-
-      selectIndex: '智能排序'
+      categoryIndex: 0
     }
   }
 
@@ -109,37 +74,34 @@ class Index extends Component {
     })
   }
 
-  setCategory(item, index) {
-    const {httpData} = this.state
-    if (!item && index === 0) {
+  setCategoryById(id, index) {
+    const {categoryIndex} = this.state
+    console.log(id)
+    if (index!==categoryIndex) {
       this.setState({
         httpData: {
-          ...httpData,
-          page: 1,
-          categoryIds: '',
-
+          ...this.state.httpData,
+          categoryIds: id,
         },
-        tabCount: index,
-        userMerchantList: [],
         countStatus: true,
-      }, res => {
-        this.getMerchantAll()
-      })
-    } else {
-      const {categoryIdString} = item
-      this.setState({
-        httpData: {
-          ...httpData,
-          page: 1,
-          categoryIds: categoryIdString,
-        },
-        tabCount: index,
+        categoryIndex: index,
         userMerchantList: [],
-        countStatus: true,
       }, res => {
+        if (index > 3) {
+          getDom('.street_tab_box', (res) => {
+            let width = 0
+            for (let i = 0; i < (index - 3); i++) {
+              width = width + Number(res[i].width) + 24
+            }
+            this.setState({
+              scroll_left: width
+            })
+          })
+        }
         this.getMerchantAll()
       })
     }
+    else  return
   }
 
   componentDidMount() {
@@ -149,71 +111,7 @@ class Index extends Component {
   }
 
   //获取个人足迹
-  onPageScroll(e) {
-    if (this.interceptors) {
-      clearTimeout(this.interceptors)
-      this.interceptors = setTimeout(this.setSearch.bind(this, e), 50)
-    } else {
-      this.interceptors = setTimeout(this.setSearch.bind(this, e), 50)
-    }
-    const {scrollTop} = e
-    if (scrollTop > 255) {
-      this.setState({
-        scrollSelect: true
-      })
-    } else {
-      this.setState({
-        scrollSelect: false
-      })
-    }
 
-  }
-
-  setSearch(e) {
-    const {setBackGround} = this.state
-    let scale = 0
-    console.log(e.scrollTop)
-    if (e.scrollTop >= 125) {
-      this.setState({
-        setBackGround: {
-          color: 'rgba(51, 51, 51, 1)',
-          background: 'rgba(255, 255, 255, 1)'
-        },
-        iconStatus: true
-      }, res => {
-        if (e.scrollTop >= 245) {
-          this.setState({
-            scrollSelect: true
-          })
-        } else {
-          this.setState({
-            scrollSelect: false
-          })
-        }
-      })
-    } else {
-      scale = e.scrollTop / 125
-      this.setState({
-        setBackGround: {
-          background: `rgba(255, 255, 255, 0)`
-        },
-        iconStatus: false
-      })
-    }
-  }
-
-  setScroll() {
-    Taro.pageScrollTo({
-      selector: `.street_select`,
-      duration: 300,
-      complete: res => {
-        console.log(111)
-        this.setState({
-          visible: true
-        })
-      },
-    })
-  }
 
   onReachBottom() {
     const {countStatus, httpData} = this.state
@@ -233,127 +131,90 @@ class Index extends Component {
 
 
   render() {
+    const {lat, lnt} = this.props.store.locationStore
     const {
       categoryDTOList,
       bannerList,
-      tabCount,
       userMerchantList,
-      httpData,
-      navHeight,
-      setBackGround,
-      iconStatus,
-      scrollSelect,
-      visible,
-      selectList,
-      selectIndex
+      categoryIndex,
+      httpData: {
+        categoryIds
+      },
+      scroll_left
     } = this.state
     return (
-      <View catchMove className='street_box'>
-        <CoverView style={setBackGround} className='perimerter_fixed'>
-          <CoverView style={navHeight} className='perimerter_fixed_title'>
-            <CoverView className='perimerter_title'>
-              <CoverView className='perimerter_city'>
-                <CoverImage className='perimerter_city_box'
-                            src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon46.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon40.png'}>
-                </CoverImage>
-                <CoverView onClick={(e) => {
-                  e.stopPropagation();
-                  navigateTo('/pages/perimeter/city/index')
-                }} className='perimerter_city_font'>杭州</CoverView>
-                <CoverImage className='perimerter_city_select'
-                            src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon47.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon41.png'}></CoverImage>
-              </CoverView>
-              打卡
-            </CoverView>
-            <CoverView className='perimerter_search'>
-              <CoverView onClick={() => navigateTo('/pages/perimeter/search_shop/index')}
-                         placeholderClass={classNames(iconStatus ? 'placeholder_style1' : 'placeholder_style2')}
-                         className={classNames(iconStatus ? 'perimerter_input2' : 'perimerter_input1')}>
-                搜一下附近玩乐
-              </CoverView>
-              <CoverImage
-                className='perimerter_codeBox'
-                onClick={() => scanCode()}
-                src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon45.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon42.png'}>
-              </CoverImage>
-            </CoverView>
-          </CoverView>
-        </CoverView>
-        <View className='street_top'>
-          <Banner
-            showNear={true}
-            autoplay={bannerList.length > 1 ? true : false}
-            imgStyle
-            data={bannerList}
-            imgName={'coverImg'}
-            style={{width: '100%', height: '100%'}}
-            boxStyle={{width: '100%', height: '100%'}}
-          ></Banner>
+      <View className='street_box'>
+        <View className='street_banner'>
+          <View className='street_goBack' onClick={() =>goBack()}></View>
         </View>
-        <View className='street_map'>
-          <View className='street_lookMap_titleBox public_auto'>
-            <View className='street_lookMap_left bold'>周边打卡地图</View>
-            <View className='street_lookMap_right'>
-              <View className='street_lookMap_title'>查看全部</View>
-              <View className='street_lookMap_icon'></View>
-            </View>
-          </View>
-          <View className='street_mapView'></View>
-        </View>
-        {<View className={classNames(!scrollSelect ? 'street_select' : 'street_select_fixed')}>
-          <View className='street_select_left' onClick={() => this.setScroll()}>
-            <View className={classNames('font28 color1 bold', visible && 'color4')}>{selectIndex}</View>
-            <View
-              className={classNames('street_select_iconBox', visible ? 'street_select_icon2' : 'street_select_icon1')}></View>
-            <View className='street_select_liners'></View>
-          </View>
-          <ScrollView className='street_select_scrollView'
-                      scrollX
-          >
-            <View onClick={() => this.setCategory('', 0)}
-                  className={classNames('street_select_Tabs', tabCount === 0 && 'font28 bold')}>
-              附近推荐
-              {tabCount === 0 && <View className='street_select_liner'></View>}
+        <View className='street_shop'>
+          <ScrollView
+            scrollX
+            scrollWithAnimation={true}
+            scrollLeft={
+              categoryIndex > 3 ? scroll_left : false}
+            className='street_tab'>
+            <View className='street_tab_box' onClick={() => this.setCategoryById('', 0)}>
+              <View
+                className={classNames('street_tab_select', categoryIndex === 0  ? 'font28 bold' : 'font24')}>附近推荐</View>
+              {categoryIndex === 0  &&
+              <View className='street_tab_liner'></View>}
             </View>
             {categoryDTOList.map((item, index) => {
-              const {categoryName} = item
+              const {categoryName, categoryIdString} = item
               return (
-                <View onClick={() => this.setCategory(item, (index + 1))}
-                      className={classNames('street_select_Tabs', tabCount === (index + 1) && 'font28 bold')}>
-                  {categoryName}
-                  {tabCount === (index + 1) && <View className='street_select_liner'></View>}
+                <View className='street_tab_box' onClick={() => this.setCategoryById(categoryIdString, index + 1)}>
+                  <View
+                    className={classNames('street_tab_select', categoryIndex === index+1 ? 'font28 bold' : 'font24')}>{categoryName}</View>
+                  {categoryIndex === index+1  && <View className='street_tab_liner'></View>}
                 </View>
               )
             })}
-
           </ScrollView>
-        </View>}
-        <View className='street_select_view'>
-          {userMerchantList.map(item => {
+          {userMerchantList.filter(item => item.markFlag === '1').map(items => {
+            const {brandFlag,brandName,merchantName,tag,coverImg,lat,lnt,businessHub,categoryName,perCapitaConsumption,markBean,merchantId} =  items
             return (
-              <View className='createMerchantByView_box'>
-                {createMerchantByView(item)}
+              <View onClick={() => Router({
+                routerName:'merchantDetails',
+                args:{
+                  merchantId: merchantId
+                }
+              })} className='street_shop_details'>
+                <View className='street_shop_image dakale_nullImage' style={backgroundObj(coverImg)}>
+                  {brandFlag === '1' && <View className='street_pinpai'>{brandName}</View>}
+                  <View className='street_merchantImg dakale_profile' style={backgroundObj(coverImg)}></View>
+                </View>
+                <View className='street_userShop'>
+                  <View className='street_userShop_title font_hide  font32 bold'>{merchantName}</View>
+                  <View className='street_userShop_tags public_center'>
+                    {filterStrList(tag).map(val => {
+                      return (
+                        <View  className='street_userShop_tagsBox'>{val}</View>
+                      )})
+                    }
+                  </View>
+                  <View className='street_userShop_limit public_center font24'>
+                    <View className='street_userShop_icon'>
+
+                    </View>
+                    {/*{GetDistance(getLat(), getLnt(), lat, lnt)}*/}
+                    {GetDistance(getLat(), getLnt(), lat, lnt)} {' '+businessHub} {' ' + categoryName} ￥{perCapitaConsumption}/人
+                  </View>
+                </View>
+                <View className='street_liner'></View>
+                <View className='street_shopMarks'>
+                  <View className='street_shopMarks_icon'></View>
+                  <View className='street_shopMarks_title font28 bold  color1'>到店打卡特惠</View>
+                </View>
+                <View className='street_shopMarksBean'></View>
+                <View className='street_shopMarksBeanNum font24'>
+                  打卡捡豆<Text className='color3'>+{markBean}</Text>
+                </View>
+                <View className='street_shopMarksLiner'></View>
               </View>
             )
           })}
         </View>
-        {visible &&
-        <View className='street_layer' catchMove onClick={(e) => {e.stopPropagation();this.setState({
-          visible: false
-        })}}>
-          <View className='street_layer_select'>
-            {selectList.map(item => {
-              return (
-                <View className='street_layer_Tabs'>
-                  <Text className={classNames(selectIndex === item.title?'color4':'color8')}>
-                    {item.title}
-                  </Text>
-                </View>
-              )
-            })}
-          </View>
-        </View>
-        }
       </View>
     )
   }

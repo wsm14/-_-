@@ -492,13 +492,14 @@ class Index extends Component {
               </View>
             </View>
             }
-            <View className='sharekol_merchant'>
+            <View className='sharekol_merchant' onClick={(e) => {e.stopPropagation();this.link_stop(() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`))}}>
               <View className='shareVideo_shopDetails'
               >
                 <View
                   className='shareVideo_shopProfile'
                   style={backgroundObj(merchantCover)}
-                  onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`))}
+
+                  onClick={(e) => {e.stopPropagation();this.link_stop(() => navigateTo(`/pages/newUser/merchantDetails/index?userId=${merchantIdString}`))}}
                 >
                 </View>
                 <View className='shareVideo_shopFont'>
@@ -507,9 +508,7 @@ class Index extends Component {
                     className='shareVideo_shopTag font_hide'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange + ' | ' + merchantAddress}</View>
                 </View>
               </View>
-              <View className='shareVideo_merchant'
-                    onClick={() => this.link_stop(() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`))}
-              >
+              <View className='shareVideo_merchant'>
 
               </View>
             </View>

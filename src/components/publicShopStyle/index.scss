@@ -1255,17 +1255,24 @@
     }
   }
 }
- .createMerchantByMap_fathers{
-   width: 690px;
-   background: transparent;
+.createMerchantByMap_fathers{
+   width:750px;
+   height: 256px;
+   position: relative;
  }
 .createMerchantByMap_box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   width: 686px;
   background: #FFFFFF;
   line-height: 1;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
   margin: 0px auto;
+  z-index: 10;
   .createMerchantByMap_child_box {
     height: 120px;
     padding: 24px 24px 39px;
@@ -1293,6 +1300,7 @@
         color: #555555;
         width: 480px;
         font-size: 22px;
+        display: flex;
       }
 
       .createMerchantByMap_child_title3 {
@@ -1325,33 +1333,119 @@
     margin-left: auto;
   }
 }
-
-.createMerchantByMap_bottom_border {
-  width: 638px;
-  display: flex;
-  justify-items: center;
-  background: #FFFFFF;
-  margin: 0 auto;
-  height: 66px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-  border-radius: 0 0 30px 30px;
-  margin-bottom: 1px;
-}
-
 .createMerchantByMap_bottomBox {
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-  border-radius: 0 0 30px 30px;
-  height: 56px;
-  margin: 0 auto;
-  width: 618px;
-  background: #59CFCF;
+  position: absolute;
+  height: 30px;
   text-align: center;
-  line-height: 56px;
+  left: 0;
+  right: 0;
+  bottom: 32px;
   font-size: 24px;
-
   .createMerchantByMap_bottom_image {
     width: 20px;
     height: 20px;
     margin-left: 8px;
+  }
+}
+
+.createMerchantByMap_byGoods{
+  margin-bottom: 20px;
+  .createMerchantByMap_byGoodsBox{
+    width: 690px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.05) inset;
+    border-radius: 20px;
+    margin: 0 auto;
+    .createMerchantByMap_byGoodsContent{
+      padding: 28px 20px 12px;
+      .createMerchantByMap_byGoodsTitle{
+        height: 40px;
+        line-height: 40px;
+        font-size: 28px;
+        font-weight: 600;
+        color: #333333;
+      }
+      .createMerchantByMap_child_title2 {
+        padding-top: 13px;
+        color: #555555;
+        font-size: 22px;
+        display: flex;
+      }
+      .createMerchantByMap_child_marginRight {
+        margin-left: auto;
+      }
+      .createMerchantByMap_child_title3 {
+        margin-top: 14px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+
+        .createMerchantByMap_child_tags {
+          padding: 0px 8px;
+          height: 30px;
+          background: rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+          border-radius: 4px;
+          font-size: 20px;
+          color: rgba(168, 168, 168, 1);
+          text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+          line-height: 30px;
+          margin-right: 12px;
+        }
+      }
+    }
+    .createMerchantByMap_byGoodsView{
+      margin-top: 20px;
+      display: flex;
+      .createMerchantByMap_byGoodsImageBox{
+        width: 203px;
+        margin-right: 20px;
+        .createMerchantByMap_byGoodsImage{
+          width: 203px;
+          height: 142px;
+          border-radius: 8px;
+        }
+        .createMerchantByMap_byGoodsImagefont{
+          width: 164px;
+          height: 33px;
+          font-size: 24px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #555555;
+          line-height: 33px;
+          text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.05);
+          margin-top: 11px;
+        }
+        .createMerchantByMap_byGoodsImageprice{
+          margin-top: 10px;
+          height: 33px;
+          line-height: 33px;
+          font-size: 24px;
+          color: #FF4F4F;
+        }
+      }
+      .createMerchantByMap_byGoodsImageBox:last-child{
+        margin-right: 0px;
+      }
+    }
+  }
+  .createMerchantByMap_byGoodsMark{
+    width: 634px;
+    height: 60px;
+    margin: 0 auto;
+    position: relative;
+    .createMerchantByMap_byGoodsMark_view{
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      font-size: 24px;
+    }
+    .createMerchantByMap_bottom_image {
+      width: 20px;
+      height: 20px;
+      margin-left: 8px;
+    }
   }
 }

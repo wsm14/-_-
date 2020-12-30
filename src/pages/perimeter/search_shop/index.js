@@ -128,8 +128,10 @@ export default class Index extends React.Component {
     this.setState({
       statistic: {
         searchType: 'applets',
-        keyword: item
+        keyword: item,
+
       },
+      userMerchantList: [],
     }, res => {
       this.getSearchConditions()
     })
@@ -146,9 +148,6 @@ export default class Index extends React.Component {
       },res => {
         this.getSearchConditions()
       })
-    }
-    else {
-      toast('暂无数据')
     }
   }
 

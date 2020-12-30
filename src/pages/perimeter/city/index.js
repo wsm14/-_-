@@ -85,7 +85,7 @@ class Index extends Component {
   }
   render() {
     const tagStyle = {
-      marginRight: '14px'
+      marginRight: Taro.pxTransform(16)
     }
     const {consent, hot, selectValue, cityJson,scrollTop,visible} = this.state
     return (

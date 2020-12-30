@@ -18,8 +18,9 @@ import {
   saveFall,
   deleteFall,
   getLat,
-  getLnt
+  getLnt,
 } from '@/common/utils'
+import Router from '@/common/router'
 import classNames from 'classnames'
 import './index.scss'
 //代金券
@@ -270,7 +271,7 @@ export const shopCard = (_this, data, obj) => {
       lat, lnt
     } = data
     return (
-      <View className='shopCard_box'>
+      <View className='shopCard_box'  onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`)}>
         <View className='shop_card_details'>
           <View className='dakale_nullImage shop_card_left'
                 style={merchantLogo ? {...backgroundObj(merchantLogo)} : {}}>
@@ -284,8 +285,7 @@ export const shopCard = (_this, data, obj) => {
               <View className='shopCard_userName font_hide'>
                 {merchantName || '--'}
               </View>
-              <View className='shopCard_go'
-                    onClick={() => navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`)}>
+              <View className='shopCard_go'>
               </View>
             </View>
             <View className='shopCard_right2 font_hide'>
@@ -484,82 +484,98 @@ export const createMerchants = (item) => {
 //店铺 ui
 export const createMerchantByMap = (item) => {
 
-  const {coverImg, merchantName, businessHub, categoryName, perCapitaConsumption, lat, lnt,markFlag,markBean} = item
-  return (
-    <CoverView className='createMerchantByMap_fathers'>
-      <CoverView className='createMerchantByMap_box'>
-        <CoverView className='createMerchantByMap_child_box'>
-          <CoverImage className='createMerchantByMap_image' src={coverImg}></CoverImage>
-          <CoverView className='createMerchantByMap_child_right'>
-            <CoverView className='createMerchantByMap_text'>
-              <CoverView className='createMerchantByMap_child_title1 font_hide color1 font28'>{merchantName}</CoverView>
-              <CoverView className='createMerchantByMap_child_title2 public_auto'>
-                {businessHub && <CoverView>{businessHub + ''}</CoverView>}
-                {categoryName && <CoverView style={{marginLeft: Taro.pxTransform(12)}}>{categoryName + ' '}</CoverView>}
-                {perCapitaConsumption && <CoverView style={{marginLeft: Taro.pxTransform(12)}}>{'人均' + perCapitaConsumption + ' '}</CoverView>}
-                <CoverView
-                  className='createMerchantByMap_child_marginRight'>距你 {GetDistance(getLat(), getLnt(), lat, lnt)}</CoverView>
-              </CoverView>
-              <CoverView className='createMerchantByMap_child_title3'>
-                <CoverView className='createMerchantByMap_child_tags'>人气商家</CoverView>
-                <CoverView className='createMerchantByMap_child_tags'>品牌连锁</CoverView>
-              </CoverView>
+  const {coverImg, merchantId,merchantName, businessHub, categoryName, perCapitaConsumption, lat, lnt,markFlag,markBean,tag,goodsList} = item
+  const MarkTrue  = 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon364.png'
+  const MarkFalse  = 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon365.png'
+
+  const MarkBottom1  = 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon366.png'
+  const MarkBottom2 = 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon367.png'
+  if(!goodsList ||goodsList.length ===0){
+    return (
+      <CoverView className='createMerchantByMap_fathers' onClick={() => {Router({routerName:'merchantDetails', args: {merchantId}})}}>
+       <CoverImage className='createMerchantByMap_fathers' src={markFlag === '1'?MarkTrue:MarkFalse}></CoverImage>
+       <CoverView className='createMerchantByMap_box'>
+         <CoverView className='createMerchantByMap_child_box'>
+           <CoverImage lazyLoad mode='center' className='createMerchantByMap_image' src={coverImg}></CoverImage>
+           <CoverView className='createMerchantByMap_child_right'>
+             <CoverView className='createMerchantByMap_text'>
+               <CoverView className='createMerchantByMap_child_title1 font_hide color1 font28'>{merchantName}</CoverView>
+               <CoverView className='createMerchantByMap_child_title2'>
+                 {businessHub && <CoverView  style={{paddingRight: Taro.pxTransform(12)}}>{businessHub + ''}</CoverView>}
+                 {categoryName && <CoverView style={{paddingRight: Taro.pxTransform(12)}}>{categoryName + ' '}</CoverView>}
+                 {perCapitaConsumption && <CoverView  style={{paddingRight: Taro.pxTransform(5)}}>{'人均' + perCapitaConsumption + ' '}</CoverView>}
+                 <CoverView
+                   className='createMerchantByMap_child_marginRight'>距你 {GetDistance(getLat(), getLnt(), lat, lnt)}</CoverView>
+               </CoverView>
+               <CoverView className='createMerchantByMap_child_title3'>
+                 {filterStrList(tag).map(val => {
+                   return (
+                     <CoverView className='createMerchantByMap_child_tags'>{val}</CoverView>
+                   )
+                 })}
+               </CoverView>
+             </CoverView>
+           </CoverView>
+         </CoverView>
+       </CoverView>
+       <CoverView className='createMerchantByMap_bottomBox public_center bold color6'>
+         <CoverView>到店打卡捡{markBean}</CoverView>
+         <CoverImage lazyLoad mode='center' className='createMerchantByMap_bottom_image' src={'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon358.png'}></CoverImage>
+       </CoverView>
+     </CoverView>
+    )
+  }
+  else {
+    return (
+      <CoverView className='createMerchantByMap_byGoods' onClick={() => {Router({routerName:'merchantDetails', args: {merchantId}})}}>
+        <CoverView className='createMerchantByMap_byGoodsBox'>
+          <CoverView className='createMerchantByMap_byGoodsContent'>
+            <CoverView className='createMerchantByMap_byGoodsTitle'>{merchantName}</CoverView>
+            <CoverView className='createMerchantByMap_child_title2'>
+              {businessHub && <CoverView  style={{paddingRight: Taro.pxTransform(12)}}>{businessHub + ''}</CoverView>}
+              {categoryName && <CoverView  style={{paddingRight: Taro.pxTransform(12)}}>{categoryName + ' '}</CoverView>}
+              {perCapitaConsumption && <CoverView  style={{paddingRight: Taro.pxTransform(5)}}>{'人均' + perCapitaConsumption + ' '}</CoverView>}
+              <CoverView
+                className='createMerchantByMap_child_marginRight'>距你 {GetDistance(getLat(), getLnt(), lat, lnt)}</CoverView>
+            </CoverView>
+            <CoverView className='createMerchantByMap_child_title3'>
+              {filterStrList(tag).map(val => {
+                return (
+                  <CoverView className='createMerchantByMap_child_tags'>{val}</CoverView>
+                )
+              })}
+            </CoverView>
+            <CoverView className='createMerchantByMap_byGoodsView'>
+              {goodsList.map((items,indexs) => {
+                if(indexs <= 2){
+                  return (
+                    <CoverView className='createMerchantByMap_byGoodsImageBox'>
+                      <CoverImage className='createMerchantByMap_byGoodsImage' src={items.goodsImg}></CoverImage>
+                      <CoverView className='createMerchantByMap_byGoodsImagefont font_hide'>{items.goodsName}</CoverView>
+                      <CoverView className='createMerchantByMap_byGoodsImageprice font_hide'>{'¥'+items.price}</CoverView>
+                    </CoverView>
+                  )
+                }
+              })}
             </CoverView>
           </CoverView>
         </CoverView>
+        <CoverView className='createMerchantByMap_byGoodsMark'>
+          <CoverImage src={markFlag === '1'?MarkBottom1:MarkBottom2}  className='createMerchantByMap_byGoodsMark'></CoverImage>
+          {markFlag === '1'?<CoverView  className='createMerchantByMap_byGoodsMark_view public_center'>
+            <CoverView className='color6'>到店打卡捡{markBean}</CoverView>
+            <CoverImage lazyLoad mode='center' className='createMerchantByMap_bottom_image' src={'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon358.png'}></CoverImage>
+          </CoverView>:
+            <CoverView  className='createMerchantByMap_byGoodsMark_view public_center'>
+              <CoverView className='color2'>暂不支持打卡</CoverView>
+            </CoverView>
+          }
+        </CoverView>
       </CoverView>
-      {markFlag === '1' &&
-      <CoverView className='createMerchantByMap_bottom_border'>
-        <CoverView className='createMerchantByMap_bottomBox public_center bold color6'>
-          <CoverView>到店打卡捡{markBean}</CoverView>
-          <CoverImage className='createMerchantByMap_bottom_image' src={'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon358.png'}></CoverImage></CoverView>
-      </CoverView>
-
-      }
-    </CoverView>
-
-  )
+    )
+  }
 }
 
-
-export const createMerchantByView = (item) => {
-
-  const {coverImg, merchantName, businessHub, categoryName, perCapitaConsumption, lat, lnt,markFlag,markBean} = item
-  return (
-    <View className='createMerchantByMap_fathers'>
-      <View className='createMerchantByMap_box'>
-        <View className='createMerchantByMap_child_box'>
-          <Image lazyLoad mode='center' className='createMerchantByMap_image' src={coverImg}></Image>
-          <View className='createMerchantByMap_child_right'>
-            <View className='createMerchantByMap_text'>
-              <View className='createMerchantByMap_child_title1 font_hide color1 font28'>{merchantName}</View>
-              <View className='createMerchantByMap_child_title2 public_auto'>
-                {businessHub && <View>{businessHub + ''}</View>}
-                {categoryName && <View style={{marginLeft: Taro.pxTransform(12)}}>{categoryName + ' '}</View>}
-                {perCapitaConsumption && <View style={{marginLeft: Taro.pxTransform(12)}}>{'人均' + perCapitaConsumption + ' '}</View>}
-                <View
-                  className='createMerchantByMap_child_marginRight'>距你 {GetDistance(getLat(), getLnt(), lat, lnt)}</View>
-              </View>
-              <View className='createMerchantByMap_child_title3'>
-                <View className='createMerchantByMap_child_tags'>人气商家</View>
-                <View className='createMerchantByMap_child_tags'>品牌连锁</View>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-      {markFlag === '1' &&
-      <View className='createMerchantByMap_bottom_border'>
-        <View className='createMerchantByMap_bottomBox public_center bold color6'>
-          <View>到店打卡捡{markBean}</View>
-          <Image lazyLoad mode='center' className='createMerchantByMap_bottom_image' src={'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon358.png'}></Image></View>
-      </View>
-
-      }
-    </View>
-
-  )
-}
 
 export const goodsNullStatus = (_this, data, obj) => {
   return (

@@ -11,15 +11,10 @@ import {scanCode} from '@/common/authority'
 import Toast from '@/components/beanToast'
 import classNames from 'classnames'
 import {
-  imgList,
   backgroundObj,
-  setPeople,
   saveFollow,
   deleteFollow,
   navigateTo,
-  saveCollection,
-  deleteCollection,
-  setIntive,
   deleteFall,
   saveFall,
   toast,
@@ -32,7 +27,6 @@ import {
   getLnt,
   filterTime,
   mapGo,
-  getPayByCode
 } from '@/common/utils'
 import './merchantDetails.scss'
 import evens from "@/common/evens";
@@ -163,7 +157,6 @@ class MerchantDetails extends Component {
       }
     )
   }
-
   //获取商家轮播图
   getListRecommend() {
     const {merchantHttpData} = this.state
@@ -553,26 +546,28 @@ class MerchantDetails extends Component {
                 <View>买单</View>
               </View>
               <View className='merchant_layer_limit'></View>
-              <View className='merchant_layer_btn2'>
+              <View className='merchant_layer_btn2' onClick={() => scanCode()}>
                 <View className='merchant_layer_btnBox merchant_layer_btnIcon3'></View>
                 <View>到店打卡</View>
               </View>
               <View className='merchant_layer_limit'></View>
               {merchantFollowStatus === '0' ?
-                <View className='merchant_layer_btn2'>
-                  <View className='merchant_layer_btnBox merchant_layer_btnIcon2' onClick={() => saveFollow({
-                    followType: 'merchant',
-                    followUserId: userIdString,
-                  }, res => {
-                    this.setState({
-                      userMerchantInfo: {
-                        ...this.state.userMerchantInfo,
-                        merchantFollowStatus: '1'
-                      }
-                    }, () => {
-                      toast('关注成功')
-                    })
-                  })}></View>
+                <View className='merchant_layer_btn2'
+                      onClick={() => saveFollow({
+                          followType: 'merchant',
+                          followUserId: userIdString,
+                        }, res => {
+                          this.setState({
+                            userMerchantInfo: {
+                              ...this.state.userMerchantInfo,
+                              merchantFollowStatus: '1'
+                            }
+                          }, () => {
+                            toast('关注成功')
+                          })
+                        })}
+                >
+                  <View className='merchant_layer_btnBox merchant_layer_btnIcon2'></View>
                   <View>关注</View>
                 </View> :
                 <View className='merchant_layer_btn2' onClick={() => deleteFollow({followUserId: userIdString}, res => {

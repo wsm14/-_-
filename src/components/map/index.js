@@ -4,7 +4,7 @@ import Taro from '@tarojs/taro'
 import {toast} from "../../common/utils";
 
 export default (props) => {
-  const {style, data, polyline, MarkerType, desIndex, setIndex, openType,scale} = props
+  const {style, data, lat = 0,lnt = 0,polyline, MarkerType, desIndex, setIndex, openType,scale,click = () => {}} = props
   const mapStyle = {
     width: '100%',
     height: '100%'
@@ -22,8 +22,7 @@ export default (props) => {
   }, [desIndex])
   const onMarker = (e) => {
     const {detail: {markerId}} = e
-    console.log(markerId)
-    setIndex(markerId)
+    setIndex && setIndex(markerId)
     // if (openType) {
     //   filterMarker(hashMap.markers).forEach((item) => {
     //     if (item.id == markerId) {
@@ -49,28 +48,13 @@ export default (props) => {
       } else {
         item.iconPath = 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon325.png'
         if (destination && destination == index) {
-          const {merchantName} = item
-          item.callout = {
-            content: merchantName,
-            color: 'rgba(255, 255, 255, 1)',
-            bgColor:'rgba(239, 71, 111, 1)',
-            display: 'ALWAYS',
-            padding: 6,
-            borderRadius: 12,
-            fontSize: 12,
-            anchorX:0,//横向偏移
-          }
           item.width = '80rpx'
           item.height = '80rpx'
-        }
-        else {
-          delete item.callout
         }
       }
       return item
     })
   }
-  const {lnt = 0, lat = 0} = hashMap
   return (
     <Map
       id={'test'}
@@ -78,11 +62,12 @@ export default (props) => {
       min-scale={9}
       max-scale={16}
       scale={scale||16}
-      onMarkerTap={(e) => onMarker(e)}
+      onMarkerTap={(e) =>{onMarker(e)}}
       style={style || mapStyle}
       longitude={lnt}
       latitude={lat}
       markers={filterMarker(marker)}
+      onClick={(e) =>{e.stopPropagation();click()}}
     >
     </Map>
   )
