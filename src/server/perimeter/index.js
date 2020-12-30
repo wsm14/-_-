@@ -64,3 +64,12 @@ export const saveMarkBean = (data, fn) => {
   }, res => fn(res))
 }
 
+
+export const getMainRecommend = (data, fn) => {
+  httpGet({
+    url: '/user/userMerchant/mainRecommendMerchantList',
+    data: data
+  }, res => fn(res))
+}
+//首页卡片商家推荐列表
+

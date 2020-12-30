@@ -28,6 +28,10 @@ import classNames from 'classnames'
 import './index.scss'
 import evens from "@/common/evens";
 import {getDom} from "../../../common/utils";
+import {inject, observer} from "mobx-react";
+@inject('store')
+@observer
+
 
 class Index extends Component {
   constructor() {
@@ -473,12 +477,14 @@ class Index extends Component {
             </View>
           </View>
           {this.kolStatus() && <View className='bounceInUp animated shareVideo_shop'>
-            {kolActivityIdString &&
+            {(kolActivityIdString && this.props.store.activeStore.activeStatusObj.kolGoods === '1') &&
             <View className='shareVideo_shop_couponBox'>
               {/*<View className='public_center coupon_box'>*/}
               {/*  <View className='coupon_icon'></View>*/}
               {/*  <View className='coupon_font'>看完领券</View>*/}
               {/*</View>*/}
+
+
               <View className='goshop public_center'
                     onClick={() =>
                       this.link_stop(() => navigateTo(`/pages/perimeter/shopDetails/index?merchantId=${merchantIdString}&kolActivityIdString=${kolActivityIdString}&kolMomentsId=${getCurrentInstance().router.params.kolMomentId}`))}

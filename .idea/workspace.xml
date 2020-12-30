@@ -11,25 +11,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c250933-678c-4f5c-9059-9683dc632f42" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pages/perimeter/businessSell/index.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/perimeter/businessSell/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/perimeter/businessSell/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/activeStatus.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/newRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/newRequest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/map/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/map/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/publicShopStyle/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/publicShopStyle/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/publicShopStyle/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/publicShopStyle/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index/goods/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/goods/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/perimeter/components/favourable/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/perimeter/components/favourable/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/perimeter/components/favourable/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/perimeter/components/favourable/index.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/index/perimeter/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/perimeter/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index/takeCard/components/silder/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/takeCard/components/silder/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index/takeCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/takeCard/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index/takeCard/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/takeCard/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/takeCard/components/silder/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/takeCard/components/silder/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/shareImage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/shareImage/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/perimeter/city/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/perimeter/city/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/perimeter/city/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/perimeter/city/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/perimeter/index.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/perimeter/index.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/perimeter/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/perimeter/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/perimeter/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/perimeter/index.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/perimeter/merchantDetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/perimeter/merchantDetails/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/perimeter/search_shop/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/perimeter/search_shop/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/common/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/common/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/perimeter/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/perimeter/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +38,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Sass File" />
-        <option value="SCSS File" />
         <option value="JavaScript File" />
+        <option value="SCSS File" />
       </list>
     </option>
   </component>
@@ -59,7 +57,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../dakale-web-admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/perimeter/businessSell" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -81,19 +79,19 @@
     <property name="ts.external.directory.path" value="D:\IntelliJ IDEA 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\perimeter" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\perimeter\abnormalStatus" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\perimeter\repeatStatus" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\perimeter\city" />
-      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\coupon\couponDetails" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\index\takeCard\components" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\index" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\perimeter" />
       <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\components\lovely" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\perimeter\businessSell" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\perimeter" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\perimeter\abnormalStatus" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\perimeter\repeatStatus" />
+      <recent name="C:\Users\Administrator\Desktop\new-dakale\dakale-web-miniprogram\src\pages\perimeter\city" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -227,7 +225,7 @@
       <workItem from="1608860104675" duration="293000" />
       <workItem from="1609226539411" duration="162000" />
       <workItem from="1609231772660" duration="464000" />
-      <workItem from="1609291447041" duration="6357000" />
+      <workItem from="1609291447041" duration="21790000" />
     </task>
     <servers />
   </component>
@@ -263,10 +261,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608608590808" />
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607413747164">
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1609316393012">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607413747164" />
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609316393012" />
     <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1609297365133">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -295,10 +293,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="566" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1603433639002" />
-    <state x="661" y="254" width="656" height="584" key="find.popup" timestamp="1608796239228">
+    <state x="661" y="254" width="656" height="584" key="find.popup" timestamp="1609318777023">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="661" y="254" width="656" height="584" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1608796239228" />
+    <state x="661" y="254" width="656" height="584" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1609318777023" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1607673167168">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -403,7 +401,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareVideo/index.js</url>
-          <line>34</line>
+          <line>38</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -453,7 +451,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareVideo/index.js</url>
-          <line>227</line>
+          <line>231</line>
           <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -598,7 +596,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/perimeter/merchantDetails/index.js</url>
-          <line>609</line>
+          <line>611</line>
           <option name="timeStamp" value="136" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -623,12 +621,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/index.js</url>
-          <line>465</line>
+          <line>470</line>
           <option name="timeStamp" value="145" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareImage/index.js</url>
-          <line>254</line>
+          <line>258</line>
           <option name="timeStamp" value="146" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -638,7 +636,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/index.js</url>
-          <line>430</line>
+          <line>435</line>
           <option name="timeStamp" value="150" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -648,13 +646,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/components/favourable/index.js</url>
-          <line>30</line>
+          <line>11</line>
           <option name="timeStamp" value="152" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/pages/index/perimeter/components/favourable/index.js</url>
-          <line>71</line>
-          <option name="timeStamp" value="153" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/perimeter/shopDetails/index.js</url>
@@ -675,11 +668,6 @@
           <url>file://$PROJECT_DIR$/src/pages/perimeter/perimeteRoducts/index.js</url>
           <line>26</line>
           <option name="timeStamp" value="161" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/pages/index/perimeter/components/favourable/index.js</url>
-          <line>74</line>
-          <option name="timeStamp" value="162" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/perimeter/perimeteRoducts/components/shopDetails/index.js</url>
@@ -813,22 +801,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareImage/index.js</url>
-          <line>468</line>
+          <line>472</line>
           <option name="timeStamp" value="196" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareImage/index.js</url>
-          <line>141</line>
+          <line>145</line>
           <option name="timeStamp" value="197" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareImage/index.js</url>
-          <line>65</line>
+          <line>69</line>
           <option name="timeStamp" value="198" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareImage/index.js</url>
-          <line>263</line>
+          <line>267</line>
           <option name="timeStamp" value="199" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -953,12 +941,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareVideo/index.js</url>
-          <line>96</line>
+          <line>100</line>
           <option name="timeStamp" value="246" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareVideo/index.js</url>
-          <line>67</line>
+          <line>71</line>
           <option name="timeStamp" value="247" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -1002,7 +990,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/index.js</url>
-          <line>301</line>
+          <line>306</line>
           <option name="timeStamp" value="265" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -1072,7 +1060,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/app.jsx</url>
-          <line>31</line>
+          <line>30</line>
           <option name="timeStamp" value="284" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -1104,6 +1092,18 @@
           <url>file://$PROJECT_DIR$/src/pages/perimeter/index.js</url>
           <line>89</line>
           <option name="timeStamp" value="299" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/server/common/index.js</url>
+          <line>51</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="301" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/perimeter/businessSell/index.js</url>
+          <line>29</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="302" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

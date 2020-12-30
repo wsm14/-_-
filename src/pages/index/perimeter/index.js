@@ -29,7 +29,7 @@ import classNames from 'classnames'
 import './perimeter.scss'
 import {inject, observer} from "mobx-react";
 import evens from "@/common/evens";
-import {getAddress} from '@/server/common'
+import {getAddress,getDictionary} from '@/server/common'
 import Toast from '@/components/dakale_toast'
 import Router  from '@/common/router'
 @inject('store')
@@ -288,6 +288,7 @@ class Index extends PureComponent {
   }
   //获取具体位置信息 设置经纬度
   componentDidMount() {
+    const that  = this
     const {bannerHttp, specialHttp} = this.state
     this.getKolList();
     this.setState({
@@ -297,6 +298,10 @@ class Index extends PureComponent {
     this.getSetting()
     this.getBanner(bannerHttp, 'bannerList')
     this.getDomain()
+    getDictionary({parent: 'activity',child:'hideStatus'},res => {
+      const {keyValueInfo} = res
+      that.props.store.activeStore.setActiveStore(keyValueInfo)
+    })
   }
 
   componentDidShow() {
@@ -517,7 +522,7 @@ class Index extends PureComponent {
             </View>
           </View>
         </View>
-        <Favourable></Favourable>
+        {this.props.store.activeStore.activeStatusObj.specialGoods ==='1' && <Favourable></Favourable>}
         <View className='permerter_tab_kol'>
           <ScrollView
             scrollLeft={

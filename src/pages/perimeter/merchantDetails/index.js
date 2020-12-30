@@ -157,6 +157,7 @@ class MerchantDetails extends Component {
       }
     )
   }
+
   //获取商家轮播图
   getListRecommend() {
     const {merchantHttpData} = this.state
@@ -409,7 +410,8 @@ class MerchantDetails extends Component {
               <View>看商家分享捡豆</View>
             </View>
             <View className='merchant_shop_details'>
-              <View className='merchat_time'>
+              <View className='merchat_time'
+                    onClick={() => navigateTo(`/pages/perimeter/businessSell/index?services=${services}&businessStatus=${businessStatus}&businessTime=${businessTime}`)}>
                 <View className='merchant_time_go'></View>
                 <View className='merchant_time_box'>
                   <View className='merchant_bisinissStatus'>
@@ -554,18 +556,18 @@ class MerchantDetails extends Component {
               {merchantFollowStatus === '0' ?
                 <View className='merchant_layer_btn2'
                       onClick={() => saveFollow({
-                          followType: 'merchant',
-                          followUserId: userIdString,
-                        }, res => {
-                          this.setState({
-                            userMerchantInfo: {
-                              ...this.state.userMerchantInfo,
-                              merchantFollowStatus: '1'
-                            }
-                          }, () => {
-                            toast('关注成功')
-                          })
-                        })}
+                        followType: 'merchant',
+                        followUserId: userIdString,
+                      }, res => {
+                        this.setState({
+                          userMerchantInfo: {
+                            ...this.state.userMerchantInfo,
+                            merchantFollowStatus: '1'
+                          }
+                        }, () => {
+                          toast('关注成功')
+                        })
+                      })}
                 >
                   <View className='merchant_layer_btnBox merchant_layer_btnIcon2'></View>
                   <View>关注</View>

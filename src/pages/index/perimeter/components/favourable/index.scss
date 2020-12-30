@@ -71,8 +71,9 @@
           height: 283px;
           margin: 0 auto;
           position: relative;
-          display: flex;
-          justify-content: center;
+          //display: flex;
+          //justify-content: center;
+          //flex-direction: column;
           .permerter_favourable_btn {
             position: absolute;
             width: 180px;
@@ -80,8 +81,21 @@
             bottom: -30px;
             left: 155px;
           }
+          .permerter_favourable_Merchantbtn {
+            position: absolute;
+            width: 180px;
+            height: 72px;
+            bottom: -29px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon377.png") no-repeat;
+            background-size: 100% 100%;
+          }
         }
-
+        .swper_paddings{
+          padding-top: 24px;
+        }
         .permerter_favourable_goods {
           display: flex;
           height: 190px;
@@ -214,7 +228,92 @@
             }
           }
         }
+        .permerter_favourable_binssge{
+          height: 120px;
+          margin: 0px 24px 0;
+          display: flex;
+          .permerter_favourable_merchantProfile{
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+          }
+          .permerter_favourable_merchantDetails{
+            height: 120px;
+            margin-left: 24px;
+            .permerter_merchantDetails_name{
+              max-width: 298px;
+              height: 32px;
+              font-size: 32px;
+              margin-top: 8px;
+            }
+            .permerter_merchantDetails_type{
+              margin-top: 16px;
+              height: 24px;
+              display: flex;
+              align-items: center;
+            }
+            .permerter_merchantDetails_font{
+              height: 24px;
+              line-height: 24px;
+              margin-left: 8px;
+            }
 
+            .permerter_merchantDetails_IconMerchant{
+              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon374.png") no-repeat;
+              background-size: 100% 100%;
+            }
+            .permerter_merchantDetails_IconCity{
+              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon375.png") no-repeat;
+              background-size: 100% 100%;
+            }
+            .permerter_merchantDetails_liner{
+              height: 20px;
+              width: 2px;
+              background: #CCCCCC;
+              margin-left: 8px;
+            }
+          }
+          .permerter_merchantDetails_binsnissage{
+            height: 24px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+          }
+        }
+        .permerter_favourable_liner{
+          width: 442px;
+          height: 2px;
+          background: #E5E5E5;
+          border-radius: 1px;
+          margin: 23px auto 0;
+        }
+        .permerter_favourable_limits{
+          margin: 25px  24px 0;
+          display: flex;
+          align-items: center;
+        }
+        .permerter_favourable_limits  view:nth-child(2){
+          margin-left: 8px;
+        }
+        .permerter_favourable_limits  view:nth-child(3){
+          width: 2px;
+          height: 24px;
+          background: #CCCCCC;
+          margin-left: 12px;
+        }
+        .permerter_favourable_limits  view:nth-child(4){
+          max-width: 321px;
+          height: 24px;
+          margin-left: 12px;
+        }
+        .permerter_merchantDetails_IconBox{
+          width: 24px;
+          height: 24px;
+        }
+        .permerter_merchantDetails_IconLimit{
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon376.png") no-repeat;
+          background-size: 100% 100%;
+        }
       }
     }
 

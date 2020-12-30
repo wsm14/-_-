@@ -1,10 +1,5 @@
-import React, { Component } from 'react'
-import { Provider } from 'mobx-react'
-import authStore from "./store/auth";
-import beanStore from "./store/beanMark";
-import shareStore from "./store/shareImage";
-import goodsStore from "./store/goods";
-import locationStore from "./store/location";
+import React, {Component} from 'react'
+import {Provider} from 'mobx-react'
 import {authUpdateGeography} from '@/common/authority'
 import './assets/css/app.scss'
 import './assets/css/color.scss'
@@ -12,23 +7,27 @@ import './assets/css/font.scss'
 import './assets/css/background.scss'
 import evens from './common/evens'
 import Taro from '@tarojs/taro'
+import Store from './store/index'
+
 const store = {
-  authStore,
-  beanStore,
-  shareStore,
-  goodsStore,
-  locationStore
+  ...Store
 }
+
 class App extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.fetchLocation()
   }
 
-  componentDidShow () {
+  componentDidShow() {
     this.fetchCheckUpdate();
   }
-  componentDidHide () {}
-  componentDidCatchError () {}
+
+  componentDidHide() {
+  }
+
+  componentDidCatchError() {
+  }
+
   fetchCheckUpdate() {
     // 判断目前微信版本是否支持自动更新
     if (Taro.canIUse("getUpdateManager")) {
@@ -60,15 +59,18 @@ class App extends Component {
       });
     }
   }
+
   fetchLocation() {
     authUpdateGeography(this.fetchUpdataLocation.bind(this))
   }
+
   fetchUpdataLocation(res) {
-    const {latitude,longitude} = res
-    locationStore.setLocation(latitude,longitude);
+    const {latitude, longitude} = res
+    locationStore.setLocation(latitude, longitude);
   }
+
   // this.props.children 就是要渲染的页面
-  render () {
+  render() {
     return (
       <Provider store={store}>
         {this.props.children}

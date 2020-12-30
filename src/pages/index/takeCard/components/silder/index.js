@@ -24,8 +24,8 @@ export default (props) => {
         <CoverView className='silder_liner'></CoverView>
         <CoverView className='silder_number color2 font24'>已展示{list.length}个结果</CoverView>
       </CoverView>
-      {visible &&
-       <CoverView className='silder_merchantDetails'>
+      {
+       <CoverView style={visible ?{display:'block'}: {display:'none'}} className='silder_merchantDetails'>
         {list.map(item => {
           return (<CoverView className='silder_showDwon' style={{marginBottom:Taro.pxTransform(24)}}>{createMerchantByMap(item)}</CoverView>)
         })}

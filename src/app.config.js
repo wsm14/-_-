@@ -98,6 +98,7 @@ export default {
     {
       "root": "pages/perimeter/",
       "pages": [
+        'businessSell/index',//商家信息
         'city/index',//城市定位
         'search_shop/index',//商家搜索
         'search_fav/index',//特价搜索

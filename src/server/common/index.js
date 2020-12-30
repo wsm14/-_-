@@ -57,3 +57,22 @@ export const getBanner = (data,fn) => {
     fn && fn(res)
   })
 }
+//获取轮播图
+
+
+/*
+*
+*
+
+parent：activity
+child：hideStatus*/
+export const getDictionary = (data,fn) => {
+  httpGet({
+    data:data,
+    url:'/common/dictionary/getDictionaryByParentAndChild'
+  },res => {
+    fn && fn(res)
+  })
+}
+
+//通过父节点和子节点获取字典

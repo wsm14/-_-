@@ -28,6 +28,10 @@ import {
 } from '@/common/utils'
 import './index.scss'
 import evens from "@/common/evens";
+import {inject, observer} from "mobx-react";
+@inject('store')
+@observer
+
 
 class Index extends Component {
   constructor() {
@@ -428,7 +432,7 @@ class Index extends Component {
               </View>
             </View>
             {/*//商家详情*/}
-            {kolActivityIdString &&
+          {(kolActivityIdString && this.props.store.activeStore.activeStatusObj.kolGoods === '1') &&
             <View className='shareImage_shop_couponBox'>
               {/*<View className='public_center image_coupon_box'>*/}
               {/*  <View className='image_coupon_icon'></View>*/}
