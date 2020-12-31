@@ -29,8 +29,8 @@ const env = process.env.NODE_ENV === 'development' ? 'development' : 'production
 
 switch (env) {
   case 'development':
-    baseUrl = 'https://devgateway.dakale.net'
-    // baseUrl = 'https://pregateway.dakale.net'
+    // baseUrl = 'https://devgateway.dakale.net'
+    baseUrl = 'https://pregateway.dakale.net'
     // baseUrl = 'https://gateway1.dakale.net'
     break
   case 'production':
@@ -49,6 +49,7 @@ const httpCondition = {
 }
 let requestUrl = []
 export const httpGet = (obj, fn) => {
+  const {data:{ header = {} }}  = obj
   Taro.showLoading({
     title: '加载中',
   })
@@ -61,6 +62,7 @@ export const httpGet = (obj, fn) => {
         ...httpCondition.header,
         'lnt': Taro.getStorageSync('lnt'),
         'lat': Taro.getStorageSync('lat'),
+        ...header
       },
       url:baseUrl + obj.url,
       data: encrypt(obj.data) || {},
@@ -96,6 +98,7 @@ export const httpGet = (obj, fn) => {
 }
 
 export const httpPost = (obj, fn) => {
+  const {data:{ header = {} }}  = obj
   Taro.showLoading({
     title: '加载中',
     mask: true
@@ -115,6 +118,7 @@ export const httpPost = (obj, fn) => {
         'content-type': 'application/json',
         'lnt': Taro.getStorageSync('lnt'),
         'lat': Taro.getStorageSync('lat'),
+        ...header,
       },
       url: baseUrl + obj.url,
       data: encrypt(obj.data) || {},

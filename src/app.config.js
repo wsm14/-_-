@@ -93,6 +93,7 @@ export default {
         'shareShop/index',//分享家店
         'pay_wx_lite/index',//微信支付
         'webView/index',//webView页面
+        'mPay_wx_lite/index'//商家端支付页面
       ]
     },
     {

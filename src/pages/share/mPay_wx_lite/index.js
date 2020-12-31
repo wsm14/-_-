@@ -2,9 +2,9 @@ import React, {Component} from "react";
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {Button, Text, View} from "@tarojs/components";
 import {authWxLogin, internet} from '@/common/authority'
-import {getOrderPrepaymentResult, payOrder, payDelayOrder} from '@/server/goods'
+import {getOrderPrepaymentResult, payOrder} from '@/server/merchantPay'
 import './index.scss'
-import {toast, goBack, redirectTo} from "@/common/utils";
+import {toast} from "@/common/utils";
 import classNames from 'classnames'
 const AdaPay = require('./../../payPrice/adaPay.js')
 
@@ -42,39 +42,7 @@ class Index extends Component {
   creatOrder(res) {
     let code = res
     let that = this
-    const {orderType} = this.state
-    if (orderType === 'scan') {
-      that.scanPay(res)
-    } else {
-      that.goodsPay(res)
-    }
-  }
-
-  goodsPay(res) {
-    let that = this
-    const {orderSn, token} = this.state
-    payDelayOrder({orderSn: orderSn, payType: 'wx_lite', wechatCode: res, token}, result => {
-      const {status, error_msg} = result
-      if (status === 'succeeded') {
-        AdaPay.doPay(result, (payRes) => {
-          if (payRes.result_status == 'succeeded') {
-            const {id} = payRes
-            that.setState({
-              payStatus: {
-                type: 'price',
-                value: '1',
-                id: id
-              },
-            })
-            Taro.setNavigationBarTitle({
-              title: '支付成功'
-            })
-          }
-        })
-      } else {
-        toast(error_msg || '支付失败')
-      }
-    })
+    that.scanPay(res)
   }
 
   scanPay(res) {
@@ -145,6 +113,7 @@ class Index extends Component {
         <>
           <Button
             appParameter={JSON.stringify(payStatus)}
+            onLaunchapp={() => { toast('返回成功')}}
             openType='launchApp' onError={(e) => {
             toast('返回异常')
           }} className='page_back_btn font32'>返回APP</Button>
@@ -159,6 +128,7 @@ class Index extends Component {
             openType='launchApp' onError={(e) => {
             toast('返回异常')
           }}
+            onLaunchapp={() => { toast('返回成功')}}
             className='page_back_bottomBtn color4 bold font32'>返回APP</Button>
         </>)
     }[value]
