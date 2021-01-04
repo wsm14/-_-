@@ -11,15 +11,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c250933-678c-4f5c-9059-9683dc632f42" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/share/mPay_wx_lite/index.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/share/mPay_wx_lite/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/share/mPay_wx_lite/index.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/merchantPay/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/newRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/newRequest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/share/pay_wx_lite/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/share/pay_wx_lite/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/perimeter/merchantDetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/perimeter/merchantDetails/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,6 +222,7 @@
       <workItem from="1609384111513" duration="5262000" />
       <workItem from="1609393341997" duration="1807000" />
       <workItem from="1609405977429" duration="395000" />
+      <workItem from="1609723657572" duration="1002000" />
     </task>
     <servers />
   </component>
@@ -596,7 +593,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/perimeter/merchantDetails/index.js</url>
-          <line>611</line>
+          <line>641</line>
           <option name="timeStamp" value="136" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">

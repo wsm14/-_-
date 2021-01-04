@@ -66,7 +66,7 @@ class App extends Component {
 
   fetchUpdataLocation(res) {
     const {latitude, longitude} = res
-    locationStore.setLocation(latitude, longitude);
+    Store.locationStore.setLocation(latitude, longitude);
   }
 
   // this.props.children 就是要渲染的页面

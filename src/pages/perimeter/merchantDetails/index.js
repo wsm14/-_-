@@ -170,6 +170,31 @@ class MerchantDetails extends Component {
       })
     })
   }
+  onShareAppMessage() {
+    const {
+      userMerchant: {
+        merchantName,
+        merchantCoverImg
+      }
+    } = this.state
+    return onShareFriend({
+      title: merchantName,
+      img: merchantCoverImg
+    })
+  }
+
+  onShareTimeline() {
+    const {
+      userMerchant: {
+        merchantName,
+        merchantCoverImg
+      }
+    } = this.state
+    onTimeline({
+      title: merchantName,
+      img: merchantCoverImg
+    })
+  }
 
   getMerchantLove() {
     const {userMerchantInfo: {merchantId}} = this.state
@@ -366,13 +391,18 @@ class MerchantDetails extends Component {
           {shareStatus == 'share' &&
           <APPShare
             {...{
-              jumpUrl: 'shopDetailPage',
-              id: getCurrentInstance().router.params.merchantId,
-              type: 'jumpToPage',
-              jumpType: "native",
-              path: 'DKLShopDetailViewController',
-              params: {shopId: getCurrentInstance().router.params.merchantId}
-            }}>
+              content: '我在哒卡乐发了一篇有趣的图文',
+              userId: getCurrentInstance().router.params.shareUserId,
+              jumpObj: {
+                jumpUrl: 'shopDetailPage',
+                id: getCurrentInstance().router.params.merchantId,
+                type: 'jumpToPage',
+                jumpType: "native",
+                path: 'DKLShopDetailViewController',
+                params: {shopId: getCurrentInstance().router.params.merchantId}
+              }
+            }}
+           >
           </APPShare>}
           <Banner
             autoplay={bannerList.length > 1 ? true : false}
