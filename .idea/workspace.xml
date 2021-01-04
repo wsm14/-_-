@@ -12,10 +12,27 @@
   <component name="ChangeListManager">
     <list default="true" id="9c250933-678c-4f5c-9059-9683dc632f42" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/newRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/newRequest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/getBean/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/getBean/index.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/lookShare/shareImage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/lookShare/shareImage/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/lookShare/shareVideo/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/lookShare/shareVideo/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/perimeter/components/favourable/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/perimeter/components/favourable/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/perimeter/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/perimeter/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/perimeter/perimeter.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/perimeter/perimeter.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/takeCard/index.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/takeCard/index.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/takeCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/takeCard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index/user/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index/user/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/shareImage/index.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/shareImage/index.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/kol/shareVideo/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/newUser/wallet/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/newUser/wallet/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/perimeter/merchantDetails/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/perimeter/merchantDetails/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/index/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/index/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +62,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../dakale-web-app" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -222,7 +239,9 @@
       <workItem from="1609384111513" duration="5262000" />
       <workItem from="1609393341997" duration="1807000" />
       <workItem from="1609405977429" duration="395000" />
-      <workItem from="1609723657572" duration="1002000" />
+      <workItem from="1609723657572" duration="3842000" />
+      <workItem from="1609727527380" duration="57000" />
+      <workItem from="1609738477936" duration="12432000" />
     </task>
     <servers />
   </component>
@@ -258,14 +277,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608608590808" />
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1609316393012">
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1609749800621">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609316393012" />
-    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1609321233891">
+    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609749800621" />
+    <state x="740" y="274" key="FileChooserDialogImpl" timestamp="1609744991633">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609321233891" />
+    <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609744991632" />
     <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1602316084205">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -332,11 +351,6 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/pages/index/lookShare/shareVideo/index.js</url>
-          <line>134</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/newUser/accustomed/index.js</url>
           <line>43</line>
           <option name="timeStamp" value="13" />
@@ -398,7 +412,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareVideo/index.js</url>
-          <line>38</line>
+          <line>36</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -448,12 +462,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareVideo/index.js</url>
-          <line>231</line>
+          <line>226</line>
           <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/index.js</url>
-          <line>221</line>
+          <line>228</line>
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -598,7 +612,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/api/newRequest.js</url>
-          <line>105</line>
+          <line>106</line>
           <option name="timeStamp" value="138" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -613,12 +627,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/index.js</url>
-          <line>289</line>
+          <line>296</line>
           <option name="timeStamp" value="144" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/index.js</url>
-          <line>470</line>
+          <line>480</line>
           <option name="timeStamp" value="145" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -633,7 +647,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/index.js</url>
-          <line>435</line>
+          <line>445</line>
           <option name="timeStamp" value="150" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -778,12 +792,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/newUser/wallet/index.js</url>
-          <line>142</line>
+          <line>141</line>
           <option name="timeStamp" value="191" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/newUser/wallet/index.js</url>
-          <line>46</line>
+          <line>45</line>
           <option name="timeStamp" value="192" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -800,11 +814,6 @@
           <url>file://$PROJECT_DIR$/src/pages/kol/shareImage/index.js</url>
           <line>472</line>
           <option name="timeStamp" value="196" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/pages/kol/shareImage/index.js</url>
-          <line>145</line>
-          <option name="timeStamp" value="197" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareImage/index.js</url>
@@ -833,7 +842,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/newUser/wallet/index.js</url>
-          <line>116</line>
+          <line>115</line>
           <option name="timeStamp" value="207" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -938,17 +947,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareVideo/index.js</url>
-          <line>100</line>
+          <line>95</line>
           <option name="timeStamp" value="246" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/kol/shareVideo/index.js</url>
-          <line>71</line>
+          <line>66</line>
           <option name="timeStamp" value="247" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/index.js</url>
-          <line>257</line>
+          <line>264</line>
           <option name="timeStamp" value="251" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -987,7 +996,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/index.js</url>
-          <line>306</line>
+          <line>313</line>
           <option name="timeStamp" value="265" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -1077,12 +1086,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/index.js</url>
-          <line>73</line>
+          <line>74</line>
           <option name="timeStamp" value="290" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/index/perimeter/index.js</url>
-          <line>82</line>
+          <line>83</line>
           <option name="timeStamp" value="291" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">

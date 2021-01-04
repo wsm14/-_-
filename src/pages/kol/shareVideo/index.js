@@ -21,18 +21,16 @@ import {
   deleteFall,
   toast,
   onShareFriend,
-  onTimeline
+  onTimeline,
+  getDom
 } from '@/common/utils'
 import touch from '@/common/touch'
 import classNames from 'classnames'
 import './index.scss'
 import evens from "@/common/evens";
-import {getDom} from "../../../common/utils";
 import {inject, observer} from "mobx-react";
 @inject('store')
 @observer
-
-
 class Index extends Component {
   constructor() {
     super(...arguments)
@@ -53,9 +51,6 @@ class Index extends Component {
       reportStatus: false
     }
   }
-
-
-
   shareDetailsById() {
     // 阻止事件冒泡
     const {httpData} = this.state
@@ -254,32 +249,6 @@ class Index extends Component {
     })
   }
 
-  onShareAppMessage() {
-    const {
-      kolMomentsInfo: {
-        title,
-        frontImage
-      }
-    } = this.state
-    return onShareFriend({
-      title: title,
-      img: frontImage
-    })
-  }
-
-  onShareTimeline() {
-    const {
-      kolMomentsInfo: {
-        title,
-        frontImage
-      }
-    } = this.state
-    return onTimeline({
-      title: title,
-      img: frontImage
-    })
-  }
-
   link_stop(fn) {
     const {time, kolMomentsInfo: {userIdString}} = this.state
     if (time) {
@@ -310,7 +279,15 @@ class Index extends Component {
       this.state.linkFn && this.state.linkFn()
     })
   }
-
+  componentDidHide() {
+    this.stopInterval(this.state.interval)
+  }
+  componentWillUnmount() {
+    const {kolMomentsInfo} = this.state
+    if(Object.keys(kolMomentsInfo).length > 0){
+      evens.$emit('updateList',kolMomentsInfo)
+    }
+  }
   componentDidShow() {
     this.shareDetailsById();
   }
@@ -330,14 +307,29 @@ class Index extends Component {
   onReady() {
     setTimeout(this.setShowStatus.bind(this),500)
   }
-  componentDidHide() {
-    this.stopInterval(this.state.interval)
+  onShareAppMessage() {
+    const {
+      kolMomentsInfo: {
+        title,
+        frontImage
+      }
+    } = this.state
+    return onShareFriend({
+      title: title,
+      img: frontImage
+    })
   }
-  componentWillUnmount() {
-    const {kolMomentsInfo} = this.state
-    if(Object.keys(kolMomentsInfo).length > 0){
-      evens.$emit('updateList',kolMomentsInfo)
-    }
+  onShareTimeline() {
+    const {
+      kolMomentsInfo: {
+        title,
+        frontImage
+      }
+    } = this.state
+    return onTimeline({
+      title: title,
+      img: frontImage
+    })
   }
   render() {
     const navSetting = {
@@ -382,7 +374,6 @@ class Index extends Component {
         userLevelImage,
         kolMomentId,
         contentType
-
       },
       time,
       shareStatus,
@@ -391,7 +382,6 @@ class Index extends Component {
       lookStatus,
       reportStatus
     } = this.state
-
     if (Object.keys(kolMomentsInfo).length > 0) {
       return (<View className='shareVideo_box'>
         {stopStatus &&
@@ -442,9 +432,7 @@ class Index extends Component {
                     onClick={() => this.link_stop(() => navigateTo(`/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`))}
               >
               </View>
-              <View className='shareVideo_tipIcon' style={backgroundObj(userLevelImage)}>
-
-              </View>
+              <View className='shareVideo_tipIcon' style={backgroundObj(userLevelImage)}></View>
               <View className='shareVideo_userName font_hide'>
                 {username}
               </View>
@@ -483,8 +471,6 @@ class Index extends Component {
               {/*  <View className='coupon_icon'></View>*/}
               {/*  <View className='coupon_font'>看完领券</View>*/}
               {/*</View>*/}
-
-
               <View className='goshop public_center'
                     onClick={() =>
                       this.link_stop(() => navigateTo(`/pages/perimeter/shopDetails/index?merchantId=${merchantIdString}&kolActivityIdString=${kolActivityIdString}&kolMomentsId=${getCurrentInstance().router.params.kolMomentId}`))}
@@ -514,9 +500,7 @@ class Index extends Component {
                     className='shareVideo_shopTag font_hide'>{merchantCityName || '杭州' + '·' + merchantCategoryName + ' ｜ ' + distanceRange + ' | ' + merchantAddress}</View>
                 </View>
               </View>
-              <View className='shareVideo_merchant'>
-
-              </View>
+              <View className='shareVideo_merchant'></View>
             </View>
             <View className={classNames('shareVideo_dec_box', decStatus && "shareVideo_dec_expand")}>
               {topicIdString && userLevel && userLevel !== '0' && <View className='shareVideo_conversation'>
@@ -581,7 +565,5 @@ class Index extends Component {
       </View>)
     } else return null
   }
-
 }
-
 export default Index

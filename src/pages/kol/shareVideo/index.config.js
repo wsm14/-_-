@@ -5,4 +5,6 @@ export default {
   "backgroundColor": "#ffffff",
   "backgroundTextStyle": "light",
   "navigationStyle": "default",
+  "enableShareAppMessage": true,
+  "enableShareTimeline": true
 }

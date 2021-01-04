@@ -8,7 +8,6 @@ export default {
     "pages/index/lookShare/shareVideo/index", //视频详情
     "pages/index/lookShare/index", //看视频图文
     "pages/payPrice/index", //小程序支付兼容
-    // "pages/perimeter/beanMark/index", //周边
     "pages/auth/index", //登录
   ],
   window: {

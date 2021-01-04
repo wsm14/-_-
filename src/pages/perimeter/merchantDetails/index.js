@@ -190,7 +190,7 @@ class MerchantDetails extends Component {
         merchantCoverImg
       }
     } = this.state
-    onTimeline({
+   return onTimeline({
       title: merchantName,
       img: merchantCoverImg
     })

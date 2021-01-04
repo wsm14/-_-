@@ -120,7 +120,7 @@ class Index extends React.Component {
               打卡，记录美好生活
             </View>
           </View>
-          <View className='user_Code users_codeBg'>
+          <View className='users_codeBg user_Code'>
           </View>
         </View>
         }
@@ -162,7 +162,7 @@ class Index extends React.Component {
             </View>
           </View>
         }
-        <View className='user_surplus user_beanBg'>
+        <View className='user_surplus user_beanBg' onClick={() => navigateTo('/pages/newUser/wallet/index')}>
           <View className='user_surplus_title color6'>
             <View className='user_surplus_biaoshi font32'>卡豆余额</View>
             <View className='user_surplus_beanNum font36 bold'>{bean || '0'}</View>
@@ -174,7 +174,7 @@ class Index extends React.Component {
               )
             }}></View>
           </View>
-          <View onClick={() => navigateTo('/pages/newUser/wallet/index')} className='user_surplus_center'>
+          <View className='user_surplus_center'>
             <View className='user_surplus_wallet'>
               <View className='color7 font24'>明细</View>
               <View className='user_wallet_box user_decIcon'></View>

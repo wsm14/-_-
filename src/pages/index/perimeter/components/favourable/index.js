@@ -61,7 +61,7 @@ const favourable = (props) => {
       '0': (item, index) => {
         const {businessHub,lat, lnt,address, merchantName, categoryName, perCapitaConsumption,coverImg,userMerchantIdString} = item
         return (
-          <View className={classNames('permerter_favourable_lunboImg', count === index ? 'le-active' : 'le-img')}>
+          <View onClick={() => goMerchant(userMerchantIdString)} className={classNames('permerter_favourable_lunboImg', count === index ? 'le-active' : 'le-img')}>
             <View className='swper_paddings'>
               <View className='permerter_favourable_binssge'>
                 <View className='permerter_favourable_merchantProfile dakale_nullImage' style={{...backgroundObj(coverImg)}}></View>
@@ -89,7 +89,7 @@ const favourable = (props) => {
               <View></View>
               <View className='font_hide'>{address}</View>
             </View>
-            <View className='permerter_favourable_Merchantbtn' onClick={() => goMerchant(userMerchantIdString)}></View>
+            <View className='permerter_favourable_Merchantbtn'></View>
           </View>
         )
       },
@@ -141,10 +141,12 @@ const favourable = (props) => {
 
     return (
       <View className='permerter_favourable'>
-        <View onClick={() => goFavourble()} className='permerter_favourable_details color6'>
+        <View
+          // onClick={() => goFavourble()}
+          className='permerter_favourable_details color6'>
           <View className='permerter_favourable_title'>
             <Text className='font40 bold'>周边捡豆打卡好店</Text>
-            <Text className='permerter_favourable_icon fraover_go'></Text>
+            {/*<Text className='permerter_favourable_icon fraover_go'></Text>*/}
           </View>
           <View className='permerter_favourable_dec font24'>到店打卡捡豆，豆豆抵消费</View>
           {swiperList &&

@@ -5,7 +5,6 @@ import {wxapiGet,wxapiPost} from './../../../../api/api'
 import Ajax from './../../../../api/request'
 import Utils from "./../../../../utils/utils";
 import './index.scss'
-import './../shareVideo/index.scss'
 export default class ShareImage extends Component{
   defaultProps = {}
   constructor() {

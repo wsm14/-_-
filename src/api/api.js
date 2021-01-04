@@ -4,11 +4,11 @@ export const wxapiGet = {
   wechatMerchantList: '/user/userMerchant/recommendMerchantList',//首页猜你喜欢
   wechatMain: '/user/userInfo/mainPage',//首页个人资料
   wechatShare: '/user/userMoment/listMomentByType',//首页分享
+  wechatUserMomentDetail:'/user/userMoment/getUserMomentDetailById',
   wechatByRoot: '/common/dictionary/listDictionaryByRoot',
   wechatStepAuth: '/user/wechat/stepAuth',//获取微信步数授权
   wechatStepEncryptedData: '/user/wechat/getStepEncryptedData',//获取微信步数
   wechatListCategory: '/user/category/listCategoryByParentId',//获取分类标签，
-  wechatUserMomentDetail: '/user/userMoment/getUserMomentDetailById',//获取分类标签
   wechatListOrder: '/user/order/listOrderOrderStatus',//
   wechatlistCustomMarkInfo: '/user/userHabit/listCustomMarkInfo',//获取用户自定义习惯
   wechatGetUserHabit: '/user/userHabit/getUserHabit', //获取习惯打卡项目

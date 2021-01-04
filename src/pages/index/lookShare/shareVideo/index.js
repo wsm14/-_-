@@ -25,6 +25,7 @@ export default class ShareVideo extends Component{
     }
   }
   componentDidShow() {
+    Taro.hideHomeButton();
     this.getUserMomentDetails()
     this.getUserInfos()
   }
@@ -43,10 +44,10 @@ export default class ShareVideo extends Component{
             userMomentsInfo: content.userMomentsInfo,
           },res =>{
             if(this.state.userMomentsInfo.watchStatus == 0 &&this.state.type!= 'share'){
-             let interval =  Utils.setInterVal(this.state.userMomentsInfo['length']||15, this.getBean.bind(this))
-             this.setState({
-               interVal : interval
-             })
+              let interval =  Utils.setInterVal(this.state.userMomentsInfo['length']||15, this.getBean.bind(this))
+              this.setState({
+                interVal : interval
+              })
             }
           })
         }
@@ -152,7 +153,7 @@ export default class ShareVideo extends Component{
       success: function(res) {
         // 转发成功之后的回调
         if (res.errMsg == 'shareAppMessage:ok') {
-            Utils.Toast('转发成功')
+          Utils.Toast('转发成功')
         }
       },
       fail: function(res) {
@@ -265,13 +266,12 @@ export default class ShareVideo extends Component{
               className='video_box'
               src={JSON.parse(userMomentsInfo.videoContent).url}
               style={{height:Taro.pxTransform(height)}}
-              controls={false}
-              enableProgressGesture={false}
+              controls={true}
+              enableProgressGesture={true}
               autoplay={true}
               showFullscreenBtn={false}
               enablePlayGesture={true}
               loop={true}
-              showPlayBtn={false}
               objectFit='cover'
               poster={userMomentsInfo.frontImage}
               initialTime='0'

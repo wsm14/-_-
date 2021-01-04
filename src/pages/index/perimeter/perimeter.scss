@@ -84,7 +84,6 @@ page {
         .perimerter_input1 {
           width: 606px;
           height: 64px;
-          background: rgba(255, 255, 255, 0.25) url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/search_icon.png") no-repeat;
           border-radius: 32px;
           text-align: center;
           line-height: 64px;
@@ -92,10 +91,16 @@ page {
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: #FFFFFF;
-          background-size: 36px 36px;
-          background-position: 182px 13px;
+          position: relative;
+          background:rgba(255,255,255,0.25) ;
         }
-
+        .searchs_image{
+          width: 36px;
+          height: 36px;
+          position: absolute;
+          left: 183px;
+          top: 13px;
+        }
         .perimerter_input2 {
           width: 606px;
           height: 64px;
@@ -106,9 +111,8 @@ page {
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
-          background: rgba(245, 245, 245, 1) url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon44.png") no-repeat;
-          background-size: 36px 36px;
-          background-position: 182px 13px;
+          position: relative;
+          background:rgba(245,245,245,1) ;
         }
 
         .placeholder_style1 {
@@ -498,10 +502,10 @@ page {
     }
 
     .permerter_kol_domain {
-      margin-top: 48px;
+      margin: 48px 24px 0;
       height: 40px;
       line-height: 40px;
-      width: 137px;
+
       text-align: center;
       display: inline-block;
       font-size: 32px;

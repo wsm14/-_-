@@ -224,7 +224,7 @@ export default class Index extends React.Component {
     const {data, desIndex, selectResult, httpData, scale} = this.state
     return (
       <View className='page_maps'>
-        <CoverView style={{paddingTop: Taro.pxTransform(NavHeight())}} className='page_maps_titleBox'>
+        <CoverView className='page_maps_titleBox'>
           <CoverView className='maps_search'>
             <CoverView onClick={() => this.linkTo()}
                        placeholderClass={'placeholder_style1'}
@@ -239,7 +239,7 @@ export default class Index extends React.Component {
           {createMerchantByMap(data.markers[desIndex])}
         </CoverView>}
         <Slider data={data}></Slider>
-        <Selects Top={78 + NavHeight()}
+        <Selects Top={78}
                  httpData={httpData}
                  list={selectResult} visible={true}
                  onChange={(key, value) => this.setSelectTab(key, value)}></Selects>

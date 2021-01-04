@@ -23,7 +23,8 @@ import {
   toast,
   goDown,
   getLat,
-  getLnt
+  getLnt,
+  getDom
 } from '@/common/utils'
 import classNames from 'classnames'
 import './perimeter.scss'
@@ -161,8 +162,14 @@ class Index extends PureComponent {
     }, res => {
       const {selectIndex} = this.state;
       if (selectIndex > 2) {
-        this.setState({
-          scroll_left: 70 * (selectIndex - 2)
+        getDom('.permerter_kol_domain', (res) => {
+          let width = 0
+          for (let i = 0; i < (index - 2); i++) {
+            width = width + Number(res[i].width) + 24
+          }
+          this.setState({
+            scroll_left: width
+          })
         })
       }
       this.getKolList()
@@ -400,6 +407,9 @@ class Index extends PureComponent {
               <CoverView onClick={() => navigateTo('/pages/perimeter/search_shop/index')}
                          placeholderClass={classNames(iconStatus ? 'placeholder_style1' : 'placeholder_style2')}
                          className={classNames(iconStatus ? 'perimerter_input2' : 'perimerter_input1')}>
+                <CoverImage className='searchs_image' src={iconStatus ?'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon44.png':'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/search_icon.png'}>
+
+                </CoverImage>
                 搜一下附近玩乐
               </CoverView>
               <CoverImage

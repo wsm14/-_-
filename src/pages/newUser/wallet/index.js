@@ -15,7 +15,6 @@ class Index extends Component {
     }
   }
 
-
   componentDidShow() {
     this.getUserInfo()
   }
@@ -52,7 +51,7 @@ class Index extends Component {
           <View className='page_userDetails'>
             <View className='page_userDetails_icon'></View>
             <View className='page_userDetails_title font28 color1'>卡豆余额</View>
-            <View className='page_userDetails_bean color1 bold'>{bean}</View>
+            <View className='page_userDetails_bean color1 bold'>{parseInt(bean||0)+parseInt(incomeBean||0)}</View>
           </View>
           <View className='page_userLever_details'></View>
           <View className='page_userLever_beanBox'>
@@ -66,7 +65,7 @@ class Index extends Component {
                     this.setState({visible: true})
                   }}></View>
                 </View>
-                <View className='page_userLever_fonts color1 font40 bold'>{rewardBean || 0}</View>
+                <View className='page_userLever_fonts color1 font40 bold'>{bean || 0}</View>
                 <View className='page_userLever_linkGo page_userLever_linkGoIcon'
                       onClick={(e) => {
                         e.stopPropagation();
