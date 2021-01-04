@@ -2,11 +2,8 @@ import {wxapiGet,wxapiPost} from './../../api/api'
 import ajax from './../../api/request'
 import Ajax from "../../api/request";
 import Utils from "../../utils/utils";
-import Taro from "@tarojs/taro";
 const app = getApp()
 const AdaPay = require('./adaPay.js')
-// const AdaPay = require('../../../AdaPay-wechat-SDK/AdaPay.js')
-
 Page({
   data: {
     code: '',

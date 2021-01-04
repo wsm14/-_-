@@ -1,118 +1,82 @@
-import Taro, { Component } from '@tarojs/taro'
-import { Provider } from '@tarojs/mobx'
-import authStore from './store/auth'
-import beanStore from './store/beanMark'
-import pageList from './router/index'
-import 'taro-ui/dist/style/index.scss'
-import './app.scss'
-// 如果需要在 h5 环境中开启 React Devtools
-// 取消以下注释：
-// if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
-//   require('nerv-devtools')
-// }
-const store = {
-  authStore,
-  beanStore
-}
-class App extends Component {
-  config = {
-    pages:[
-      'pages/index/index',//首页主页
-      'pages/payPrice/index',//小程序支付
-      'pages/index/lookShare/index',//看视频图文
-      'pages/index/perimeter/index',//周边打卡
-      'pages/perimeter/map/index',//地图
-      'pages/perimeter/beanMark/index',//周边
-      'pages/index/lookShare/shareVideo/index',//视频详情
-      'pages/index/lookShare/shareImage/index',//圖文详情
-      'pages/index/accustomed/drinking/index',//好习惯喝水
-      'pages/index/accustomed/customizeHabit/index',//自定义打卡
-      'pages/index/accustomed/userExploits/index',//我的战绩
-      'pages/index/accustomed/sportsPoster/index',//习惯打卡-比赛详情
-      'pages/index/accustomed/index',//习惯打卡
-      'pages/index/accustomed/habitCard/index',//好习惯打卡详情
-      'pages/index/accustomed/addExpressCard/index',//添加关爱打卡
-      'pages/index/accustomed/expressCard/index',//关爱打卡
-      'pages/index/healthTakeCard/motionRecord/index',//健康打卡-运动记录
-      'pages/index/healthTakeCard/index',//健康打卡主页
-      'pages/index/healthTakeCard/healthEnlist',//健康打卡报名
-      'pages/index/healthTakeCard/ranking',//健康打卡排行榜
+import React, {Component} from 'react'
+import {Provider} from 'mobx-react'
+import {authUpdateGeography} from '@/common/authority'
+import './assets/css/app.scss'
+import './assets/css/color.scss'
+import './assets/css/font.scss'
+import './assets/css/background.scss'
+import evens from './common/evens'
+import Taro from '@tarojs/taro'
+import Store from './store/index'
 
-      'pages/perimeter/merchantDetails/index',//周边详情
-      'pages/perimeter/index',//周边
-      'pages/user/index',//首页个人
-      'pages/user/goods/index',//我的订单
-      'pages/user/record/index',//打卡记录
-      'pages/user/beanRule/index',//卡豆权益
-      'pages/user/userConceal/index',//协议规则
-      'pages/share/step/index',//分享步数
-      'pages/share/download/index',//下载
-      'pages/auth/index',//登录
-    ],
-    subPackages: [
-    ],
-    requiredBackgroundModes: ['audio'],
-    permission:{'scope.userLocation': {
-        desc: '位置信息将用于与商家位置的信息共享'
-      }},
-    window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black',
-      navigationStyle: 'custom',
-    },
-    tabBar: {
-      color: "#A5A5A5",
-      selectedColor: "#07C0C2",
-      backgroundColor: "#fafafa",
-      borderStyle: 'black',
-      list: [{
-        pagePath: "pages/index/index",
-        iconPath: "./assets/image/tab-bar/tab-bar-1.png",
-        selectedIconPath: "./assets/image/tab-bar/tab-bar-1Checked.png",
-        text: "首页"
-      }
-      ,
-        {
-        pagePath: "pages/perimeter/index",
-        iconPath: "./assets/image/tab-bar/tab-bar-2.png",
-        selectedIconPath: "./assets/image/tab-bar/tab-bar-2Checked.png",
-        text: "周边"
-      },
-        // {
-        //   pagePath: "pages/home/index",
-        //   iconPath: "./assets/image/tab-bar/tab-bar-3.png",
-        //   selectedIconPath: "./assets/image/tab-bar/tab-bar-3Checked.png",
-        //   text: "攻略"
-        // },
-        {
-        pagePath: "pages/user/index",
-        iconPath: "./assets/image/tab-bar/tab-bar-4.png",
-        selectedIconPath: "./assets/image/tab-bar/tab-bar-4Checked.png",
-        text: "个人"
-      }]
+const store = {
+  ...Store
+}
+
+class App extends Component {
+  componentDidMount() {
+    this.fetchLocation()
+  }
+
+  componentDidShow() {
+    this.fetchCheckUpdate();
+  }
+
+  componentDidHide() {
+  }
+
+  componentDidCatchError() {
+  }
+
+  fetchCheckUpdate() {
+    // 判断目前微信版本是否支持自动更新
+    if (Taro.canIUse("getUpdateManager")) {
+      const updateManager = Taro.getUpdateManager();
+      updateManager.onCheckForUpdate((res) => {
+        //检测是否有新版本
+        if (res.hasUpdate) {
+          updateManager.onUpdateReady(() => {
+            Taro.showModal({
+              title: "更新提示",
+              confirmText: "确定",
+              showCancel: false,
+              content: "新版本已经准备好，需要重新启动",
+              success: function (res) {
+                if (res.confirm) {
+                  // 更新
+                  updateManager.applyUpdate();
+                }
+              },
+            });
+          });
+        }
+      });
+    } else {
+      Taro.showModal({
+        title: "提示",
+        content:
+          "当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。",
+      });
     }
   }
 
-  componentDidMount () {
+  fetchLocation() {
+    authUpdateGeography(this.fetchUpdataLocation.bind(this))
   }
 
-  componentDidShow () {}
+  fetchUpdataLocation(res) {
+    const {latitude, longitude} = res
+    Store.locationStore.setLocation(latitude, longitude);
+  }
 
-  componentDidHide () {}
-
-  componentDidCatchError () {}
-
-  // 在 App 类中的 render() 函数没有实际作用
-  // 请勿修改此函数
-  render () {
+  // this.props.children 就是要渲染的页面
+  render() {
     return (
       <Provider store={store}>
-        <Index />
+        {this.props.children}
       </Provider>
     )
   }
 }
 
-Taro.render(<App />, document.getElementById('app'))
+export default App

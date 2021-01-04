@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import {encrypt} from './keys'//加密函数
+import encrypt from './keys'//加密函数
 const code = {
   "5005": "用户不存在"
 }
@@ -26,10 +26,16 @@ let baseUrl = '';
 const env = process.env.NODE_ENV === 'development' ? 'development' : 'production'
 switch (env) {
   case 'development':
-    baseUrl = 'https://devgateway.dakale.net'
+    // baseUrl = 'https://devgateway.dakale.net'
+    baseUrl = 'https://pregateway.dakale.net'
+    // baseUrl = 'https://gateway1.dakale.net'
+    break
+  case 'test':
+    baseUrl = 'https://pregateway.dakale.net'
     break
   case 'production':
-    baseUrl = 'https://gateway1.dakale.net'
+    baseUrl = 'https://pregateway.dakale.net'
+    // baseUrl = 'https://gateway1.dakale.net'
     break
 }
 function request(obj,type) {
@@ -45,7 +51,7 @@ function request(obj,type) {
       if(type === 'get'){
         Taro.request({
           url: `${baseUrl+obj.url}`, //仅为示例，并非真实的接口地址
-          data:encrypt(type,obj.data),
+          data:encrypt(obj.data),
           header: getHeader,
           timeout:30000,
           method:type,
@@ -88,7 +94,7 @@ function request(obj,type) {
       else {
         Taro.request({
           url: `${baseUrl+obj.url}`, //仅为示例，并非真实的接口地址
-          data:encrypt(type,obj.data),
+          data:encrypt(obj.data),
           header: PostHeader,
           timeout:30000,
           method:type,

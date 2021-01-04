@@ -1,0 +1,106 @@
+page {
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+}
+
+.city_box {
+  width: 100%;
+  min-height: 100%;
+  padding-bottom: 30px;
+  box-sizing: border-box;
+  background: #ffffff;
+
+  .city_title {
+    padding: 20px 30px 0;
+    height: 33px;
+    font-size: 24px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #777777;
+    line-height: 33px;
+  }
+
+  .city_tags {
+    padding: 20px 28px 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .city_tags_box {
+    width: 158px;
+    height: 56px;
+    border-radius: 10px;
+    border: 1px solid #E6E6E6;
+    font-size: 28px;
+    line-height: 56px;
+    text-align: center;
+    margin-bottom: 16px;
+    background: #EEEEEE;
+    opacity: 0.6;
+  }
+
+  .city_tags_checkedBox {
+    width: 158px;
+    height: 56px;
+    background: #07C0C2;
+    border-radius: 10px;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .city_tags_boxIcon {
+    width: 34px;
+    height: 34px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon355.png") no-repeat;
+    background-size: 100% 100%;
+    margin-right: 6px;
+  }
+
+  .city_type_select {
+    height: 46px;
+    background: #F2F2F2;
+    line-height: 46px;
+    font-size: 26px;
+    padding: 0 32px;
+  }
+
+  .city_type_selectTab {
+    margin: 0 30px;
+    height: 88px;
+    line-height: 88px;
+    border-bottom: 1px solid #E6E6E6;
+  }
+
+  .city_father .city_type_selectTab:last-child {
+    border-bottom: 0px solid #FFFFFF;
+  }
+
+  .city_right_layer {
+    position: fixed;
+    right: 9px;
+    top: 38px;
+    width: 15px;
+    .city_child_box{
+      width: 15px;
+      height: 30px;
+      font-size: 22px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #777777;
+      line-height: 30px;
+      margin-bottom: 8px;
+    }
+  }
+  .city_toast_box{
+    margin: 32px 40px 0;
+    font-size: 28px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #666666;
+    line-height: 42px;
+  }
+}

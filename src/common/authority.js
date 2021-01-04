@@ -1,0 +1,338 @@
+import Taro, {getCurrentInstance, getCurrentPages} from '@tarojs/taro'
+import {toast, addPhotosAlbum} from '@/common/utils'
+import {saveMarkBean} from '@/server/perimeter'
+import router from './router'
+import qs from 'qs'
+
+export const setLocation = (fn) => {
+  Taro.getLocation({
+    type: 'wgs84',
+    success: (res) => {
+      var latitude = res.latitude
+      var longitude = res.longitude
+      var speed = res.speed
+      var accuracy = res.accuracy;
+      Taro.setStorageSync('lnt', longitude)
+      Taro.setStorageSync('lat', latitude)
+      fn && fn(res)
+    },
+    fail: function (res) {
+      console.log('fail' + JSON.stringify(res))
+    }
+  })
+}
+export const setMap = (fn) => {
+  Taro.getLocation({
+    type: 'gcj02',
+    success: (res) => {
+      var latitude = res.latitude
+      var longitude = res.longitude
+      var speed = res.speed
+      var accuracy = res.accuracy;
+      Taro.setStorageSync('lnt', longitude)
+      Taro.setStorageSync('lat', latitude)
+      fn && fn(res)
+    },
+    fail: function (res) {
+      console.log('fail' + JSON.stringify(res))
+    }
+  })
+}
+//获取当前位置
+
+
+export const startLocationUpdate = (fn) => {
+  Taro.startLocationUpdate({
+    success: (res) => {
+      Taro.onLocationChange((res) => {
+        var latitude = res.latitude
+        var longitude = res.longitude
+        Taro.setStorageSync('lnt', longitude)
+        Taro.setStorageSync('lat', latitude)
+        fn && fn(res)
+      });
+    },
+    fail: function (res) {
+      console.log('fail' + JSON.stringify(res))
+    }
+  })
+}
+
+//获取实时定位
+
+export const login = (obj) => {
+  let authLogin = obj
+  if (authLogin && Object.keys(authLogin).length > 5 && authLogin.mobile.length === 11) {
+    return '0'
+  } else if (authLogin && Object.keys(authLogin).length > 5 && authLogin.mobile.length !== 11) {
+    return '1'
+  } else {
+    return '2'
+  }
+}
+
+
+export const authGeography = (fn, type) => {
+  Taro.getSetting({
+    success: (res) => {
+      if (!res.authSetting['scope.userLocation']) {
+        Taro.authorize({
+          scope: 'scope.userLocation',
+          success: res => {
+            if (type) {
+              return setMap(fn)
+            }
+            setLocation(fn)
+          },
+          fail: res => {
+            Taro.showModal({
+              title: '获取位置失败',
+              content: '请允许「哒卡乐」使用你的定位，为你推荐更多周边店铺',
+              success: function (res) {
+                if (res.confirm) {
+                  Taro.openSetting({
+                    success: dataAu => {
+                      if (dataAu.authSetting["scope.userLocation"] == true) {
+                        toast('授权成功',)
+                        //再次授权，调用wx.getLocation的API
+                        if (type) {
+                          return setMap(fn)
+                        }
+                        setLocation(fn)
+                      } else {
+                        toast('授权失败')
+                      }
+                    }
+                  })
+                } else if (res.cancel) {
+                  toast('授权失败,已配置默认定位')
+                  Taro.setStorageSync('lnt', 120.26457)
+                  Taro.setStorageSync('lat', 30.18534)
+                  fn && (setTimeout(() => fn({
+                    latitude: 30.18534,
+                    longitude: 120.26457
+                  }), 500))
+                }
+              }
+            })
+          }
+        })
+      } else {
+        if (type) {
+          return setMap(fn)
+        }
+        setLocation(fn)
+      }
+    },
+    fail: res => {
+      toast('授权接口调用失败，请检查网络')
+    }
+  })
+}
+//获取定位
+/*
+*
+* map
+*
+*
+* */
+
+
+export const authUpdateGeography = (fn) => {
+  Taro.getSetting({
+    success: (res) => {
+      if (!res.authSetting['scope.userLocation']) {
+        Taro.authorize({
+          scope: 'scope.userLocation',
+          success: res => {
+            startLocationUpdate(fn)
+          },
+          fail: res => {
+            Taro.showModal({
+              title: '获取位置失败',
+              content: '请允许「哒卡乐」使用你的定位，为你推荐更多周边店铺',
+              success: function (res) {
+                if (res.confirm) {
+                  Taro.openSetting({
+                    success: dataAu => {
+                      if (dataAu.authSetting["scope.userLocation"] == true) {
+                        toast('授权成功')
+                        startLocationUpdate(fn)
+                      } else {
+                        toast('授权失败,已配置默认定位')
+                        Taro.setStorageSync('lnt', 120.255384)
+                        Taro.setStorageSync('lat', 30.229271)
+                      }
+                    }
+                  })
+                } else if (res.cancel) {
+                  toast('授权失败,已配置默认定位')
+                  Taro.setStorageSync('lnt', 120.255384)
+                  Taro.setStorageSync('lat', 30.229271)
+                }
+              }
+            })
+          }
+        })
+      } else {
+        startLocationUpdate(fn)
+      }
+    },
+    fail: res => {
+      toast('授权接口调用失败，请检查网络')
+    }
+  })
+}
+
+
+//获取实时定位
+/*
+*
+* map
+*
+*
+* */
+
+
+export const authPhotosAlbum = (path) => {
+  Taro.getSetting({
+    success: (res) => {
+      if (!res.authSetting['scope.writePhotosAlbum']) {
+        Taro.authorize({
+          scope: 'scope.writePhotosAlbum',
+          success: res => {
+            addPhotosAlbum(path)
+          },
+          fail: res => {
+            Taro.showModal({
+              title: '是否要打开设置页面',
+              content: '需要您设置保存照片权限',
+              success: function (res) {
+                if (res.confirm) {
+                  Taro.openSetting({
+                    success: dataAu => {
+                      if (dataAu.authSetting["scope.writePhotosAlbum"] == true) {
+                        toast('授权成功')
+                        //再次授权，调用wx.getLocation的API
+                      } else {
+                        toast('授权失败')
+                      }
+                    }
+                  })
+                } else if (res.cancel) {
+                  toast('授权失败')
+                }
+              }
+            })
+          }
+        })
+      } else {
+        addPhotosAlbum(path)
+      }
+    },
+    fail: res => {
+      toast('授权接口调用失败，请检查网络')
+    }
+  })
+}
+//保存相册
+export const authWxLogin = (fn) => {
+  Taro.login({
+    success: function (res) {
+      if (res.code) {
+        fn && fn(res.code)
+      } else {
+        toast('获取用户登录态失败！' + res.errMsg)
+      }
+    }
+  })
+}
+//微信openId
+export const internet = (obj, fn) => {
+  Taro.onNetworkStatusChange(function (res) {
+    const {isConnected, networkType} = res
+    if (isConnected == false && networkType == 'none') {
+      Taro.showToast({
+        title: '网络错误',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      if (Object.keys(obj).length < 5) {
+        fn && fn();
+      }
+    }
+  })
+}
+//网络环境
+export const scanCode = (data) => {
+  Taro.scanCode({
+    onlyFromCamera: false,
+    success: results => {
+      const {path, scanType, result} = results
+      if (scanType === 'QR_CODE') {
+        let data = qs.parse(result.split('?')[1])
+        if (result.includes('https://www.dakale.net') && data.action === 'pay' && data.merchantId) {
+          return router({
+            routerName: 'codePay',
+            args: {
+              merchantId: data.merchantId
+            }
+          })
+        } else if (result.includes('https://www.dakale.net') && data.action === 'mark' && data.merchantId) {
+          return saveMarkBean({merchantId: data.merchantId}, res => {
+            const {
+              resultCode,
+              merchantLnt,
+              merchantLat,
+              merchantAddress,
+              beanAmount,
+              merchantName = ''
+            } = res
+            console.log(resultCode,
+              merchantLnt,
+              merchantLat,
+              merchantAddress,
+              beanAmount,)
+            if (resultCode) {
+              const resultCodeObj = {
+                "3018": () => router({
+                  routerName: 'abnormalStatus',
+                  args: {
+                    merchantLnt,
+                    merchantLat,
+                    merchantAddress,
+                    beanAmount,
+                    merchantName
+                  }
+                }),
+                "4003": () => router({
+                  routerName: 'repeatStatus',
+                }),
+                "5019": () => toast('商家不允许打卡，请到指定打卡商家哦~'),
+
+              }[resultCode]()
+            } else {
+              router({
+                routerName: 'merchantDetails',
+                args: {
+                  merchantId: data.merchantId,
+                  beanAmount
+                }
+              })
+            }
+          })
+          // return fn && fn(data)
+        } else {
+          return toast('二维码错误或参数缺失')
+        }
+      }
+      return toast('扫码类型错误')
+    },
+    fail: res => {
+      // toast('扫码')
+    }
+  })
+}
+//腾讯地图key值
+export const mapTx = 'V44BZ-PNPR4-Z6PUO-X2YUZ-5GAVO-MRBYQ';

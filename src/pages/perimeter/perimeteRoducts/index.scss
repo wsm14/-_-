@@ -1,0 +1,129 @@
+page{
+  width: 100%;
+  height: 100%;
+  background: #F5F5F5;
+}
+.roducts_box{
+  width: 100%;
+  min-height: 100%;
+  padding-bottom: 67px;
+  .roducts_searchBox{
+    height: 88px;
+    background: #FFFFFF;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+   .roducts_search{
+     width: 686px;
+     height: 64px;
+     background: #F5F5F5;
+     border-radius: 32px;
+     .zSearchBox{
+       width: 36px;
+       height: 36px;
+       margin-right: 8px;
+     }
+
+   }
+  }
+  .roducts_bannerBox{
+    position: relative;
+    padding: 128px 32px 0;
+    height: 400px;
+
+  }
+  .roducts_tab{
+    margin: 40px 0 0 32px;
+    height: 40px;
+    width: 718px;
+    white-space: nowrap;
+    .roducts_tab_font{
+      margin-right: 48px;
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+  .products_shop{
+    width: 750px;
+    height: 558px;
+    background: #FFFFFF;
+    border-radius: 20px 20px 0px 0px;
+    margin-top: 24px;
+    .shop_titlte{
+      padding-top: 40px;
+      padding-left: 33px;
+      .shop_titlte_english{
+        margin-top: 12px;
+      }
+    }
+    .shopTab{
+      width: 718px;
+      white-space: nowrap;
+      margin-top: 32px;
+      height: 276px;
+      .shopTab_box{
+        margin-right: 24px;
+        text-align:center;
+        display: inline-block;
+        height: 276px;
+        vertical-align:text-top;
+        .shopTablayer{
+          position: relative;
+          .tab_layer{
+            position: absolute;
+            height: 40px;
+            background: rgba(16, 133, 136, 0.6);
+            border-radius: 0px 0px 8px 8px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-left: 14px;
+            display: flex;
+            align-items: center;
+            .tab_accress_icon{
+              width: 36px;
+              height: 36px;
+              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon10.png") no-repeat;
+              background-size: 100% 100%;
+              margin-right: 8px;
+            }
+            .tab_accress_font{
+              height: 36px;
+              line-height: 36px;
+            }
+          }
+        }
+      }
+      .shopTab_Img{
+        width: 220px;
+        height: 220px;
+      }
+      .imgStyle{
+        width: 180px;
+        height: 180px;
+        margin-top: 20px;
+        border-radius: 8px;
+      }
+      .imgSelect{
+        width: 220px;
+        height: 220px;
+        border-radius: 8px;
+      }
+      .shopTab_title{
+        padding-top: 24px;
+        max-width: 220px;
+      }
+      .shopTab_title1{
+        padding-top: 24px;
+        max-width: 180px;
+      }
+    }
+  }
+  .products_foot_box{
+    margin-top: -98px;
+    min-height: 450px;
+  }
+}

@@ -1,10 +1,9 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { Component } from 'react'
+import Taro from '@tarojs/taro'
 import { View,Text, Swiper, SwiperItem ,OpenData,Button} from '@tarojs/components'
 import Utils from './../../../utils/utils'
 import {wxapiGet} from './../../../api/api'
 import Ajax from './../../../api/request'
-import {AtButton} from 'taro-ui'
-import {login} from "@tarojs/taro-quickapp/src/api/unsupportedApi";
 if (process.env.TARO_ENV === 'h5'){
   require('./index.scss')
 }
@@ -112,7 +111,7 @@ class Index extends Component {
                 this.setState({
                   cuttent : {
                     type: 'step',
-                    value: content.step|| ''},
+                    value: content.step|| 0},
                   hangleType :{
                     ...this.state.appType
                   }

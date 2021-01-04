@@ -1,544 +1,597 @@
-import Taro, { Component } from '@tarojs/taro'
-import { View,Text, Swiper, SwiperItem,Image,Input,Map} from '@tarojs/components'
-import './perimeter.scss'
-import {wxapiGet,wxapiPost} from './../../../api/api'
-import Ajax from './../../../api/request'
-import Utils from './../../../utils/utils'
+import React, {PureComponent} from 'react'
+import Taro, {getCurrentInstance} from '@tarojs/taro'
+import {Input, ScrollView, Swiper, SwiperItem, View, CoverView, CoverImage, Text} from '@tarojs/components'
+import Banner from '@/components/banner'
+import {wxapiGet, index, perimeter} from '@/api/api'
+import {httpGet} from '@/api/newRequest'
+import NallStatus from '@/components/nullStatus'
+import Favourable from './components/favourable'
+import Waterfall from '@/components/waterfall'
+import {createdShareKol} from '@/components/publicShopStyle'
+import {
+  login,
+  authGeography,
+  scanCode,
+  mapTx
+} from '@/common/authority'
+import {
+  filterLogin,
+  navigateTo,
+  backgroundObj,
+  setPeople,
+  NavHeight,
+  toast,
+  goDown,
+  getLat,
+  getLnt,
+  getDom
+} from '@/common/utils'
 import classNames from 'classnames'
-import Freshen from "./../../../layout/Toast";
-import {inject, observer} from "@tarojs/mobx";
-const setTag = (string) =>{
-  if(typeof string ==='string'){
-    return string.split(',').slice(0,2)
-  }
-}
-@inject('beanStore')
+import './perimeter.scss'
+import {inject, observer} from "mobx-react";
+import evens from "@/common/evens";
+import {getAddress,getDictionary} from '@/server/common'
+import Toast from '@/components/dakale_toast'
+import Router  from '@/common/router'
+@inject('store')
 @observer
-class Index extends Component {
-  defaultProps = {}
-  config = {
-    navigationBarTitleText: '周边',
-    // "enablePullDownRefresh": true,
-    // onReachBottomDistance:50,
-  }
+class Index extends PureComponent {
   constructor() {
     super(...arguments)
     this.state = {
-      bannerType: 'merchant',//轮播图参数
-      getMerchantAll: {
-        filterType: '0', //过滤类型
-        page: '1',  //起始页
-        limit: 10,  //每页个数
-        distance: '',  //距离分类
-        categoryIds: ''  //分类
+      bannerHttp: {
+        bannerType: 'main'
       },
-      bannerList: {},//轮播图数组
-      userMerchantList: [],//商家列表数组
-      scrollTop: false,//头部
-      scrollTop_Color:'',//颜色
-      FreshenType: 0, //加载动态
-      liner: false, //距离选择层
-      category: false, //筛选层
-      categoryList: [],
-      categoryCheckedList: [],
-      layerStyle:{}
-    }
-  }
-  getBanner(){
-    Ajax({
-      data: {bannerType: this.state.bannerType},
-      url: wxapiGet.wechatBanner,
-    }, 'get').then(
-      res => {
-        const {errMsg} = res
-        if (errMsg === 'request:ok') {
-          const {success, resultDesc} = res.data
-          if (success) {
-            let {content: {bannerList}} = res.data
-            this.setState({
-              bannerList
-            })
-          } else {
-            Utils.Toast(resultDesc)
-          }
-        }
-      }
-    ).catch(e =>{
-      Utils.Toast(e)
-    })
-  }
-  //获取轮播图
-  getMerchantAll(){
-    Ajax({
-      data: {...this.state.getMerchantAll},
-      url: wxapiGet.wechatSearchConditions
-    }, 'get').then(
-      res => {
-        const {errMsg} = res
-        if (errMsg === 'request:ok') {
-          const {success, resultDesc} = res.data
-          if (success) {
-            let {content: {userMerchantList}} = res.data
-            this.setState({
-              userMerchantList,
-              FreshenType: 0
-            })
-          } else {
-            Utils.Toast(resultDesc)
-          }
-        }
-      }
-    ).catch(e =>{
-      Utils.Toast(e)
-    })
-  }
-  //获取商家列表
-  getListCategory() {
-    Ajax({
-      data: {parentId:'0'},
-      url: wxapiGet.wechatListCategory
-    }, 'get').then(
-      res => {
-        const {errMsg} = res
-        if (errMsg === 'request:ok') {
-          const {success, resultDesc} = res.data
-          if (success) {
-            let {content: {categoryList}} = res.data
-            this.setState({
-              categoryList,
-              liner: false,
-            })
-          } else {
-            Utils.Toast(resultDesc)
-          }
-        }
-      }
-    ).catch(e =>{
-      Utils.Toast(e)
-    })
-  }
-  componentDidMount(){
-    this.getBanner();
-    this.getMerchantAll()
-  }
-  //初始化
-  onPageScroll(Object){
-    const {scrollTop} = Object
-    let opacity = 0
-    let fix = false
-    if(scrollTop>16){
-      opacity = scrollTop/160
-    }
-    if(scrollTop>160){
-      fix = true
-    }
-    this.setState({
-      scrollTop_Color:`rgba(8, 192, 194,${opacity})`,
-      scrollTop: fix
-    })
-  }
-  //卷曲面积调整样式
-  setSearch(obj,key){
-    if(obj[key] === this.state.getMerchantAll[key]){
-      this.setState({
-        getMerchantAll: {
-          ...this.state.getMerchantAll,
-          filterType: '0',
-        },
-        liner:false
-      },res => {
-        this.getMerchantAll();
-      })
-      return
-    }
-    else{
-      this.setState({
-        getMerchantAll: {
-          ...this.state.getMerchantAll,
-          ...obj
-        },
-        liner:false
-      },res => {
-        this.getMerchantAll();
-      })
-    }
-  }
-  //
-  filterReaplace(str) {
-    if(str.includes('https:/')&&!str.includes('https://')){
-      return str.replace('https:/','https://')
-    }
-    return  str
-  }
-  setScroll(){
-    const {userMerchantList} = this.state
-    const style ={
-      position: 'fixed',
-      zIndex: 1000,
-      top: Taro.pxTransform(928),
-      right: 0,
-      bottom: 0,
-      left: 0,
-      background: 'rgba(0,0,0,0.3)',
-    }
-    const style1 ={
-      position: 'fixed',
-      zIndex: 1000,
-      top: Taro.pxTransform(202),
-      right: 0,
-      bottom: 0,
-      left: 0,
-      background: 'rgba(0,0,0,0.3)',
-    }
-    if(userMerchantList.length<2){
-      this.setState({
-        liner: !this.state.liner,
-        layerStyle: style
-      })
-    }
-    else {
-      this.setState({
-        liner: !this.state.liner,
-        layerStyle: style1,
-        scrollTop: true
-      },res =>{
-        Taro.pageScrollTo({
-          scrollTop:161
-        })
-      })
-    }
-  }
-  onReachBottom(){
-    this.setState({
-      getMerchantAll:{
-        ...this.state.getMerchantAll,
-        limit:this.state.getMerchantAll.limit+=10
+      surroundingSpecial: [],
+      bannerList: [],
+      userDetails: {},
+      domainList: [],
+      selectIndex: 0,
+      topicList: [],
+      scroll_left: 0,
+      kolHttp: {
+        domainId: '',
+        topicId: '',
+        page: 1,
+        limit: 10
       },
-      FreshenType: 1
-    },res =>{
-      this.getMerchantAll()
+      kolMomentsList: [],
+      navHeight: {paddingTop: Taro.pxTransform(64)},
+      setBackGround: {},
+      iconStatus: false,
+      countStatus: true,
+      subKeyValueList: [],
+      specialGoods: {
+        page: 1,
+        limit: 10
+      },
+      visible: false,
+      result: {},
+    }
+    this.interceptors = null
+  }
+
+  //获取个人足迹
+  onPageScroll(e) {
+    if (this.interceptors) {
+      clearTimeout(this.interceptors)
+      this.interceptors = setTimeout(this.setSearch.bind(this, e), 1)
+    } else {
+      this.interceptors = setTimeout(this.setSearch.bind(this, e), 1)
+    }
+  }
+
+  setSearch(e) {
+    const {setBackGround} = this.state
+    let scale = 0
+    if (e.scrollTop >= 125) {
+      this.setState({
+        setBackGround: {
+          color: 'rgba(51, 51, 51, 1)',
+          background: 'rgba(255, 255, 255, 1)'
+        },
+        iconStatus: true
+      })
+    } else {
+      scale = e.scrollTop / 125
+      this.setState({
+        setBackGround: {
+          background: `rgba(255, 255, 255, ${scale})`
+        },
+        iconStatus: false
+      })
+    }
+  }
+
+  getBanner(data, val) {
+    const {wechatBanner} = wxapiGet
+    httpGet({
+      data: data,
+      url: wechatBanner
+    }, res => {
+      const {bannerList} = res
+      this.setState({
+        [val]: bannerList
+      })
     })
-  }//上拉加载
-  saveMark (res){
-    this.props.beanStore.setInit()
-    let {result} = res
-    result = result.split('?')[1]
-    result = result.split('&')
-    let merchantId = '';
-    result.forEach(item =>{
-      if(item.includes('merchantId')){
-        merchantId=item.replace('merchantId=','')
-      }
-    })
-    Ajax({
-      data: {merchantId: merchantId},
-      url: wxapiPost.wechatBeanMark,
-    },'post').then(
-      res => {
-        const {errMsg} = res
-        if (errMsg === 'request:ok') {
-          const {success,resultCode, resultDesc} = res.data
-          if (success) {
-            let {content} = res.data
-            this.props.beanStore.setMarkInfo(content)
-            if(content.resultCode == '3018'){
-              this.props.beanStore.setMerchantId({merchantId:merchantId})
-              Utils.Toast('无法打卡，不在打卡范围内')
-            }
-            Utils.navigateTo('/pages/perimeter/beanMark/index')
-          }
-          else {
-            this.props.beanStore.setCode(resultCode)
-            this.props.beanStore.setMerchantId({merchantId:merchantId})
-            Utils.Toast(resultDesc)
-          }
+  }
+
+  getUserSimpleInfo() {
+    const {perimeter: {getUserSimpleInfo}} = index
+    httpGet({
+      data: {},
+      url: getUserSimpleInfo
+    }, res => {
+      this.setState({
+        userDetails: {
+          ...res
         }
-      }
-    ).catch(e =>{
-      Utils.Toast(e)
+      })
     })
   }
-  bubbling(e) {
-    e.stopPropagation()
-  }//阻止事件冒泡
-  handleTouchMove = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
+
+  getDomain() {
+    const {perimeter: {getDomain}} = index
+    httpGet({
+      data: {},
+      url: getDomain
+    }, res => {
+      const {domainList} = res
+      this.setState({
+        domainList,
+        topicList: domainList[0].topicList || []
+      })
+    })
   }
-  //阻止View穿透
-  setChecked(key,arr) {
-    if(arr.includes(key)){
-      arr.forEach((item,index) =>{
-        if(item == key){
-          arr.splice(index,1)
+
+  setTicName(item, index) {
+    const str = 'topicId'
+    const {topicList} = item
+    this.setState({
+      topicList: topicList || [],
+      selectIndex: index,
+      countStatus: true,
+      checkedList: [],
+      kolMomentsList: [],
+      kolHttp: {
+        domainId: item.domainId || '',
+        topicId: '',
+        page: 1,
+        limit: 10
+      }
+    }, res => {
+      const {selectIndex} = this.state;
+      if (selectIndex > 2) {
+        getDom('.permerter_kol_domain', (res) => {
+          let width = 0
+          for (let i = 0; i < (index - 2); i++) {
+            width = width + Number(res[i].width) + 24
+          }
           this.setState({
-              [arr]:[...arr]
-            }
-          )
-        }
-      })
-    }
-    else{
-      arr.push(key)
+            scroll_left: width
+          })
+        })
+      }
+      this.getKolList()
+    })
+
+  }
+
+  setTopic(item) {
+    const {topicId} = item
+    const {kolHttp} = this.state
+    if (kolHttp.topicId === topicId) {
       this.setState({
-        [arr]: [...arr]
+        kolHttp: {
+          ...kolHttp,
+          page: 1,
+          limit: 10,
+          topicId: ''
+        },
+        kolMomentsList: [],
+      }, res => {
+        this.getKolList()
+      })
+    } else {
+      this.setState({
+        kolHttp: {
+          ...kolHttp,
+          page: 1,
+          limit: 10,
+          topicId: topicId,
+        },
+        kolMomentsList: [],
+      }, res => {
+        this.getKolList()
       })
     }
   }
-  //任務篩選
-  setPreparation() {
-    this.setState({
-      liner: false,
-      category: !this.state.category,
-      categoryCheckedList:this.state.getMerchantAll.categoryIds.split(',')
-    },res =>{
-      if(this.state.categoryList.length === 0){
-        this.getListCategory()
+
+  getSetting() {
+    const {perimeter: {getSetting}} = index
+    httpGet({
+      url: getSetting,
+      data: {
+        parent: 'mainFunction'
       }
-      return
+    }, res => {
+      const {keyValueList} = res
+      let subKeyValueList = keyValueList['subKeyValueList'].map(item => {
+        return JSON.parse(item.extraParam)
+      })
+      this.setState({
+        subKeyValueList
+      })
     })
   }
-  setSync(obj) {
-    this.setState({
-        getMerchantAll: {
-          ...this.state.getMerchantAll,
-          ...obj
-        },
-        category: false,
-      },res =>{
-        this.getMerchantAll();
+
+  getKolList() {
+    const {kolHttp} = this.state
+    const {perimeter: {getListKol}} = index
+    httpGet({
+      data: kolHttp,
+      url: getListKol
+    }, res => {
+      const {kolMomentsList} = res
+      if (kolMomentsList && kolMomentsList.length > 0) {
+        this.setState({
+          kolMomentsList: [...this.state.kolMomentsList, ...kolMomentsList]
+        })
+      } else {
+        this.setState({
+          countStatus: false
+        }, res => {
+          toast('暂无数据')
+        })
       }
+    })
+
+  }
+
+  updateList(obj) {
+    const {kolMomentsList} = this.state
+    let list = kolMomentsList.map(item => {
+      if (item['kolMomentsId'] === obj['kolMomentId']) {
+        obj['kolMomentsId'] = item['kolMomentsId']
+        return obj
+      }
+      return item
+    })
+    this.setState({
+      kolMomentsList: list
+    })
+  }
+
+  setMap (){
+    const latitude  = getLat()
+    const longitude  = getLnt()
+    this.setState({
+      lnt: longitude,
+      lat: latitude
+    })
+    getAddress({
+      location: `${latitude},${longitude}`,
+      key: mapTx,
+    }, res => {
+      const {message,result} = res
+      if(message === 'query ok'){
+          const {address_component:{city}} = result
+         if(city !== '杭州市'){
+           this.setState({
+             result,
+             visible: true
+           })
+         }
+         else {
+           this.setState({
+             result
+           })
+         }
+      }
+      else{
+        toast(message)
+      }
+    })
+  }
+  //获取具体位置信息 设置经纬度
+  componentDidMount() {
+    const that  = this
+    const {bannerHttp, specialHttp} = this.state
+    this.getKolList();
+    this.setState({
+      navHeight: {paddingTop: Taro.pxTransform(parseInt(NavHeight()))}
+    })
+    this.setMap()
+    this.getSetting()
+    this.getBanner(bannerHttp, 'bannerList')
+    this.getDomain()
+    getDictionary({parent: 'activity',child:'hideStatus'},res => {
+      const {keyValueInfo} = res
+      that.props.store.activeStore.setActiveStore(keyValueInfo)
+    })
+  }
+
+  componentDidShow() {
+    this.getUserSimpleInfo()
+    evens.$on('updateList', this.updateList.bind(this))
+  }
+
+
+  onReachBottom() {
+    this.pageDown()
+  }
+
+  pageDown() {
+    const {kolHttp, countStatus} = this.state
+    if (countStatus) {
+      this.setState({
+        kolHttp: {
+          ...kolHttp,
+          page: kolHttp.page + 1
+        }
+      }, res => {
+        this.getKolList()
+      })
+    } else {
+      toast('暂无数据')
+    }
+
+  }
+
+  errorToast(e) {
+    this.setState({
+      Toast: {
+        status: 'error',
+        text: e,
+        isOpened: true
+      }
+    })
+  }
+  tishiDom() {
+    return (
+      <View className='perimeter_toast_box'>
+        <View>自动定位杭州，更多精彩敬请期待
+          详情可咨询客服，联系电话：<Text className='color4'>
+            400 -800-5881</Text></View>
+      </View>
     )
   }
-  render () {
+  render() {
     const {
-      scrollTop,
-      scrollTop_Color,
-      bannerList ,
-      userMerchantList,
-      FreshenType,
-      getMerchantAll,
-      liner,
-      category,
-      categoryList,
-      categoryCheckedList,
-      layerStyle} = this.state
-    const style = {
-      position: 'fixed',
-      width: Taro.pxTransform(690),
-      margin: '0 auto',
-      background: '#FFFFFF',
-      zIndex: 10000,
-      paddingBottom: Taro.pxTransform(20),
-      top: Taro.pxTransform(127)
-    }
-    const markers = []
-    if(userMerchantList){
-      userMerchantList.forEach(item =>{
-        let obj = {
-          width: 21,
-          height: 21,
-          iconPath:'https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/perimeter/icon1.png'
+      bannerList,
+      userDetails: {
+        profile,
+        username,
+        userRealNameStatus,
+        userBeanAmount,
+        userTodayEarn,
+        userCouponNum,
+        userLevelSign,
+        level
+      },
+      domainList,
+      selectIndex,
+      topicList,
+      scroll_left,
+      kolMomentsList,
+      kolHttp: {topicId},
+      navHeight,
+      setBackGround,
+      iconStatus,
+      userDetails,
+      subKeyValueList,
+      result: {
+        formatted_addresses = {
+
         }
-        obj.latitude = item.lat;
-        obj.longitude = item.lnt
-        markers.push(obj)
-      })
-    }
-    let lnt = Taro.getStorageSync('lnt') || "120.18293961389162"
-    let lat = Taro.getStorageSync('lat') || "30.24345798737868"
+      },
+      visible
+    } = this.state
+    const {userInfo} = this.props.store.authStore
     return (
-      <View
-        className='perimeter_box'>
-        <View className='perimeter_search f'  style={{background:scrollTop_Color}} onTouchMove={this.handleTouchMove}>
-          <View className='perimeter_goBack' onClick={() =>Utils.goBack()}></View>
-          <View className='perimeter_city'>
-            杭州
-          </View>
-          {/*<View className='perimeter_searchInput'>*/}
-          {/*  <View className='perimeter_searchIcon'></View>*/}
-          {/*  /!*<Input className='perimeter_Inputseach'  placeholder='搜一下附近玩乐' placeholderClass='placeholderClass'></Input>*!/*/}
-          {/*</View>*/}
+      <View className='perimerter_box'>
+        <CoverView style={setBackGround} className='perimerter_fixed'>
+          <CoverView style={navHeight} className='perimerter_fixed_title'>
+            <CoverView className='perimerter_title'>
+              <CoverView className='perimerter_city'>
+                <CoverImage className='perimerter_city_box'
+                            src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon46.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon40.png'}>
+                </CoverImage>
+                <CoverView onClick={(e) =>{e.stopPropagation(); navigateTo('/pages/perimeter/city/index')}} className='perimerter_city_font'>杭州</CoverView>
+                <CoverImage className='perimerter_city_select'
+                            src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon47.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon41.png'}></CoverImage>
+              </CoverView>
+              周边
+            </CoverView>
+            <CoverView className='perimerter_search'>
+              <CoverView onClick={() => navigateTo('/pages/perimeter/search_shop/index')}
+                         placeholderClass={classNames(iconStatus ? 'placeholder_style1' : 'placeholder_style2')}
+                         className={classNames(iconStatus ? 'perimerter_input2' : 'perimerter_input1')}>
+                <CoverImage className='searchs_image' src={iconStatus ?'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon44.png':'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/search_icon.png'}>
+
+                </CoverImage>
+                搜一下附近玩乐
+              </CoverView>
+              <CoverImage
+                className='perimerter_codeBox'
+                onClick={() => scanCode()}
+                src={iconStatus ? 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon45.png' : 'https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon42.png'}>
+              </CoverImage>
+            </CoverView>
+          </CoverView>
+        </CoverView>
+        <View className='perimerter_top'>
+          <Banner
+            showNear={true}
+            autoplay={bannerList.length > 1 ? true : false}
+            imgStyle
+            data={bannerList}
+            imgName={'coverImg'}
+            style={{width: '100%', height: '100%'}}
+            boxStyle={{width: '100%', height: '100%'}}
+          ></Banner>
         </View>
-        <Swiper
-          autoplay={true}
-          className='perimeter_banner'>
-          {bannerList.length>0 &&bannerList.map(item =>{
-            return (
-              <SwiperItem key={item.id}>
-                <View  style={{height:'100%',background:`url(${this.filterReaplace(item.coverImg)}) no-repeat center/cover`}}></View>
-              </SwiperItem>
-            )
-          })}
-        </Swiper>
-        <View className='perimeter_Merchant'>
-          <View className='perimeter_mapBox' onClick={ () => Utils.navigateTo('/pages/share/download/index')}>
-            <View className='perimeter_map'>
-              <View className='perimeter_title'>
-                <View className='perimeter_titleName'>周边打卡地图</View>
-
-                <View className='perimeter_titleLink'>全部</View>
-              </View>
-              <Map className='perimeter_initMap'
-                   scale={9}
-                   markers={markers}
-                   enableZoom={false}
-                   enableScroll={false}
-                   longitude={lnt}
-                   latitude={lat}></Map>
-
+        {login(userInfo) !== '0' || Object.keys(userDetails).length < 5 ?
+          <View className='perimerter_noUser' onClick={() => navigateTo('/pages/auth/index')}>
+            <View className='perimerter_userProfile'></View>
+            <View className='perimerter_userBox'>
+              <View className='perimerter_userName'>登录哒卡乐星球</View>
+              <View className='perimerter_details'>我有亿点本事“豆”你开心</View>
+            </View>
+            <View className='perimerter_btn'>
+              {filterLogin(login(userInfo)) || '去授权'}
             </View>
           </View>
-          <View style={scrollTop?style:{}} className='perimeter_select f page_between'>
-            <View className='perimeter_select_left f'>
-              <View className={classNames(!liner?'perimeter_space':'perimeter_spaceChecked')} onClick={() => this.setScroll()}>
-                距离排序
-              </View>
-              <View className={classNames(getMerchantAll.filterType==='1'?'perimeter_checkSelect':'perimeter_noCheckSelect')} onClick={() => this.setSearch({filterType:'1'},'filterType')}>
-                捡豆数量
-              </View>
-              <View className={classNames(getMerchantAll.filterType==='2'?'perimeter_checkSelect':'perimeter_noCheckSelect')} onClick={() => this.setSearch({filterType:'2'},'filterType')}>
-                人气排行
-              </View>
-            </View>
-            <View className='perimeter_select_right' onClick={() => this.setPreparation()}>
-              分类筛选
-            </View>
-          </View>
-          <View className='perimeter_MerchantDetails'>
-            {userMerchantList.length> 0 && userMerchantList.map((item,index) =>{
-              return (
-                index<3?
-                  <View key={item.merchantId} className='MerchantDetails_style f' key={item.merchantId} onClick={ () => Utils.navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${item.merchantId}`)}>
-                  {item.markFlag== '1' &&
-                  <View className='MerchantDetails_toastBean MerchantDetails_toastBeanStyle1'>
-                    打卡得<Text>{item.markBean}</Text>
-                  </View>}
-                  {item.markFlag== '1' &&
-                  <View className='MerchantDetails_takecard MerchantDetails_takeCardStyle1'
-                        onClick={(e) =>{
-                          e.preventDefault()
-                          e.stopPropagation()
-                          Utils.setHttpCode(this.saveMark.bind(this))}}>
-                    我要打卡
-                  </View>}
-                  <View className='MerchantDetails_Img' style={{background:`url(${item.coverImg}) no-repeat center/cover`}}>
-                  </View>
-                  <View className='MerchantDetails_information'>
-                    <View className='MerchantDetails_name'>
-                      {item.merchantName}
-                    </View>
-                    <View className='MerchantDetails_tag'>
-                      {item.tag && setTag(item.tag).map((items,indexs) =>{
-                        return (
-                          <View key={indexs} className='MerchantDetails_tagStyle MerchantDetails_tagStyleColor1'>{items}</View>
-                        )
-                      })}
+          :
+          <View className='perimerter_card'>
+            <View className='perimerter_userProfile' onClick={() => navigateTo('/pages/newUser/userDetails/index')}
+                  style={backgroundObj(profile)}></View>
+            <View className='perimerter_userBox'>
+              <View className='perimerter_userName'>
+                <View className='perimerter_userflow font_hide'>
+                  {username || '--'}
+                </View>
+                <View
+                  className={classNames('user_user_iconBox', userRealNameStatus === '1' ? 'perimerter_user_icon2' : 'perimerter_user_icon1')}>
 
-                    </View>
-                    <View className='MerchantDetails_takeCardnum'>
-                      <Text className='MerchantDetails_numStyleColor1'>{item.markAmount}人</Text>已打卡
-                    </View>
-                    <View className='MerchantDetails_takeLimit'>
-                      距您{item.distanceRange}
-                    </View>
+                </View>
+              </View>
+              <View style={level === '0'? {visibility: 'hidden'}:{}} className='perimerter_userKol'>
+                <View onClick={() => navigateTo('/pages/kol/legal/index')} className='kol_icon2'>
+                  <View className='kol_icon_bg'></View>
+                  <View className='kol_icon_font'>
+                    {userLevelSign || '无哒人名称'}
                   </View>
                 </View>
-                  :<View key={item.id} className='MerchantDetails_style f' key={item.merchantId} onClick={ () => Utils.navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${item.merchantId}`)}>
-                  {item.markFlag== '1' &&
-                  <View className='MerchantDetails_toastBean MerchantDetails_toastBeanStyle2'>
-                    打卡得<Text>{item.markBean}</Text>
-                  </View>}
-                  {item.markFlag== '1' &&
-                  <View className='MerchantDetails_takecard MerchantDetails_takeCardStyle2'
-                        onClick={(e) =>{
-                          e.preventDefault()
-                          e.stopPropagation()
-                          Utils.setHttpCode(this.saveMark.bind(this))}}>
-                    我要打卡
-                  </View>}
-
-                  <View className='MerchantDetails_Img' style={{background:`url(${item.coverImg}) no-repeat center/cover`}}>
+              </View>
+            </View>
+            <View className='perimerter_getBean'>
+              <View>
+                卡豆余额{'  ' + setPeople(userBeanAmount || 0)}
+              </View>
+              <View className='perimerter_bean_liner'></View>
+              <View>
+                今日收益{'  ' + setPeople(userTodayEarn || 0)}
+              </View>
+            </View>
+            <View className='perimerter_quan'
+                  onClick={() => navigateTo('/pages/coupon/wraparound/index')}>{userCouponNum | 0}张券可用</View>
+          </View>
+        }
+        {subKeyValueList.length > 0 &&
+        <View className='perimerter_active'>
+          <View className='perimerter_beanActive' onClick={() => Router({routerName:'perimeterIndex'})}>
+            <View className='perimerter_dec'>
+              <View className='perimerter_title'>{subKeyValueList[0].title}</View>
+              <View className='permerter_intertion permerter_interSize1'>{subKeyValueList[0].subtitle}</View>
+              <View className='permerter_active_accress'>
+                <View className='permerter_active_tag'>
+                  <View className='permerter_active_cityIcon'></View>
+                  <View className='permerter_active_cityFont font_hide'>
+                    {formatted_addresses.recommend||'国泰科技大厦 '}
                   </View>
-                  <View className='MerchantDetails_information'>
-                    <View className='MerchantDetails_name'>
-                      {item.merchantName}
-                    </View>
-                    <View className='MerchantDetails_tag'>
-                      {item.tag && setTag(item.tag).map((items,indexs) =>{
-                        return (
-                          <View key={indexs} className='MerchantDetails_tagStyle MerchantDetails_tagStyleColor2' >{items}</View>
-                        )
-                      })}
-
-                    </View>
-                    <View className='MerchantDetails_takeCardnum'>
-                      <Text className='MerchantDetails_numStyleColor2'>{item.markAmount}人</Text>已打卡
-                    </View>
-                    <View className='MerchantDetails_takeLimit'>
-                      距您{item.distanceRange}
-                    </View>
-                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View className='permerter_share'>
+            <View className='permerter_share_look' onClick={() => navigateTo('/pages/index/lookShare/index')}>
+              <View className='perimerter_dec'>
+                <View className='perimerter_title'>{subKeyValueList[1].title}</View>
+                <View className='permerter_intertion permerter_interSize2'>{subKeyValueList[1].subtitle}</View>
+              </View>
+            </View>
+            <View className='permerter_share_game' onClick={() => goDown()}>
+              <View className='perimerter_dec'>
+                <View className='perimerter_title'>{subKeyValueList[2].title}</View>
+                <View className='permerter_intertion permerter_interSize2'>{subKeyValueList[2].subtitle}</View>
+              </View>
+            </View>
+          </View>
+        </View>
+        }
+        <View className='permerter_tab'>
+          <View className='permerter_tab_box'>
+            <View className='permerter_tab_iconBox permerter_tab_icon1'
+                  onClick={() => navigateTo('/pages/newUser/record/index')}></View>
+            <View className='permerter_tab_font'>
+              打卡足迹
+            </View>
+          </View>
+          <View className='permerter_tab_box' onClick={() => navigateTo('/pages/share/shareFriend/index')}>
+            <View className='permerter_tab_iconBox permerter_tab_icon2'></View>
+            <View className='permerter_tab_font'>
+              邀请好友
+            </View>
+          </View>
+          <View className='permerter_tab_box'>
+            <View className='permerter_tab_iconBox permerter_tab_icon3'
+                  onClick={() => navigateTo('/pages/share/shareShop/index')}></View>
+            <View className='permerter_tab_font'>
+              我要推店
+            </View>
+          </View>
+        </View>
+        {this.props.store.activeStore.activeStatusObj.specialGoods ==='1' && <Favourable></Favourable>}
+        <View className='permerter_tab_kol'>
+          <ScrollView
+            scrollLeft={
+              selectIndex > 2 ? scroll_left : false}
+            scrollX={true}
+            scrollWithAnimation={true}
+            onScroll={this.setScroll}
+            className='permerter_tab_tags'>
+            {domainList.map((item, index) => {
+              return (
+                <View onClick={() => this.setTicName(item, index)} key={index}
+                      className={classNames('permerter_kol_domain', selectIndex == index && 'checked')}>
+                  {item.domainName}
                 </View>
               )
             })}
-          </View>
-        </View>
-        {liner &&<View className='perimeter_layer' style={layerStyle} onClick={ () => this.setState({liner: false})} onTouchMove={this.handleTouchMove}>
-          <View className='perimeter_layer_space' onClick={this.bubbling}>
-            <View className='perimeter_layer_spaceLimit' onClick={() => this.setSearch({distance:'500'},'distance')}>500m</View>
-            <View className='perimeter_layer_spaceLimit' onClick={() => this.setSearch({distance:'1000'},'distance')}>1km</View>
-            <View className='perimeter_layer_spaceLimit' onClick={() => this.setSearch({distance:'2000'},'distance')}>2km</View>
-            <View className='perimeter_layer_spaceLimit' onClick={() => this.setSearch({distance:''},'distance')}>全部</View>
-          </View>
-        </View>}
-        {category ?
-          <View className='perimeter_layer_categoryById' onTouchMove={this.handleTouchMove} onClick={ () => this.setPreparation()}>
-            <View className='perimeter_layer_category' onClick={this.bubbling}>
-              <View className='perimeter_layer_category_data'>
-                <View className='perimeter_layer_category_title'></View>
-                {categoryList.length>0&&categoryList.map((item,index) =>{
+          </ScrollView>
+          <View className='permerter_tip_box'
+                style={topicList.length == 0 && {height: Taro.pxTransform(30)}}
+          >
+            <ScrollView
+              scrollX={true}
+              className='permerter_tip_tag'
+            >
+              {
+                topicList.map((item, index) => {
                   return (
-                    <View key={item.id} className='perimeter_layer_categoryDetails'>
-                      <View className='perimeter_layer_detailsTitle'>
-                        {item.categoryName}
+                    item.topicId !== topicId ?
+                      <View onClick={() => this.setTopic(item)} className='tip_noCheck'>{item.topicName}</View> :
+                      <View key={index} onClick={() => this.setTopic(item)} className='tip_checked'>
+                        {item.topicName}
+                        <View className='checked_icon'></View>
                       </View>
-                      <View className='perimeter_layer_detailsContext'>
-                        {item.categoryDTOList.map((item1,index1) =>{
-                          return (
-                            <View
-                              key={item1.id}
-                              className={classNames(categoryCheckedList.includes((item1.id).toString())?'perimeter_layer_detailsCheckBtn':'perimeter_layer_detailsBtn',(index1+1)%3 === 0 && 'perimeter_layer_noMargin')}
-                              onClick={() =>this.setChecked((item1.id).toString(),categoryCheckedList)}
-                            >
-                              {item1.categoryName}
-                            </View>
-                          )
-                        })
-                        }
-                      </View>
-                    </View>
                   )
                 })}
-              </View>
-              <View className='perimeter_layer_categoryBottom'>
-                <View className='perimeter_layer_categoryBtn cleanfix'>
-                  <View className='perimeter_layer_categoryButton perimeter_layer_categoryReload' onClick={() =>this.setState({ categoryCheckedList: []})}>
-                    重置
-                  </View>
-                  <View className='perimeter_layer_categoryButton perimeter_layer_categorySubmit' onClick={() =>this.setSync({categoryIds:categoryCheckedList.join(',')})}>
-                    确定
-                  </View>
-                </View>
-              </View>
-            </View>
+            </ScrollView>
           </View>
-          : null
-        }
-        {/*<Freshen type={FreshenType}></Freshen>*/}
+          <View
+            className='permerter_userDetails_box'
+          >{kolMomentsList.length > 0 ?
+            <Waterfall
+              list={kolMomentsList}
+              createDom={createdShareKol}
+              imgHight={'frontImageHeight'}
+              imgWidth={'frontImageWidth'}
+              setWidth={335}
+              style={{width: Taro.pxTransform(335)}}
+            >
+            </Waterfall>
+            :
+            <NallStatus></NallStatus>
+          }
+          </View>
+
+        </View>
+        {visible && <Toast title={'您的城市即将开通服务'} Components={this.tishiDom.bind(this)}
+                           close={() => this.setState({visible: false})}></Toast>}
       </View>
     )
   }
 }
-
 export default Index

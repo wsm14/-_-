@@ -1,0 +1,50 @@
+.canvas_box{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  .canvas_img{
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    position: absolute;
+    top: 54px;
+    left: 34px;
+    .getBean_toast{
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      top: 10px;
+      height: 33px;
+      font-size: 20px;
+      color: #EF476F;
+    }
+    .animateCanvas{
+      width: 84px;
+      height: 84px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: transparent;
+    }
+  }
+  .canvas_tag{
+    font-size: 20px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #FFFFFF;
+    display:inline-block;
+    top: 32px;
+    left: 120px;
+    width: 188px;
+    height: 48px;
+    line-height: 40px;
+    text-align: center;
+    position: absolute;
+    border-radius: 4px;
+    z-index: 1;
+  }
+}

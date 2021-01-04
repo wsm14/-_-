@@ -1,0 +1,117 @@
+.select_box {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 200;
+  line-height: 1;
+  background: rgba(0, 0, 0, 0.6);
+}
+.select_little_box{
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 92px;
+  z-index: 100;
+  line-height: 1;
+}
+.select_box_filter {
+  margin: 32px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+}
+.select_check {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  line-height: 28px;
+  margin-right: 40px;
+
+  .select_checkTo {
+    font-size: 28px;
+    color: #333333;
+    font-weight: bold;
+  }
+
+  .select_checkFalse {
+    color: rgba(102, 102, 102, 1);
+    font-size: 24px;
+  }
+  .select_checkTo_icon{
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+  }
+  .select_checkFalse_icon{
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+  }
+}
+.select_box_data{
+  max-height: 480px;
+  overflow: auto;
+}
+.select_one_box{
+  font-size: 24px;
+  color: rgba(102, 102, 102, 1);
+  max-height: 480px;
+  overflow: auto;
+  .select_one_dataStyle{
+    padding: 0 32px;
+    padding-bottom: 40px;
+  }
+  .select_checked_dataStyle{
+    padding: 0 32px;
+    padding-bottom: 40px;
+    color: rgba(7, 192, 194, 1);
+  }
+}
+.select_two_box{
+  width: 100%;
+  .select_test{
+    overflow: scroll;
+    max-height: 480px;
+    width: 208px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .select_test1{
+    overflow: scroll;
+    max-height: 480px;
+    width: 542px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .select_two_dataStyle1{
+    width: 144px;
+    height: 80px;
+    line-height: 80px;
+    padding: 0 32px;
+    color: rgba(102, 102, 102, 1);
+    background: #F5F5F5;
+    font-size: 24px;
+  }
+  .select_two_checked1{
+    background: #FFFFFF;
+    color: rgba(7, 192, 194, 1);
+  }
+  .select_two_dataStyle2{
+    width: 482px;
+    height: 80px;
+    padding: 0 32px;
+    color: rgba(102, 102, 102, 1);
+    background: #FFFFFF;
+    line-height: 80px;
+    font-size: 24px;
+  }
+  .select_two_checked2{
+    background: #FFFFFF;
+    color: rgba(7, 192, 194, 1);
+  }
+}
