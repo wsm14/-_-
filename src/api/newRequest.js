@@ -30,8 +30,8 @@ const env = process.env.NODE_ENV === 'development' ? 'development' : 'production
 switch (env) {
   case 'development':
     // baseUrl = 'https://devgateway.dakale.net'
-    baseUrl = 'https://pregateway.dakale.net'
-    // baseUrl = 'https://gateway1.dakale.net'
+    // baseUrl = 'https://pregateway.dakale.net'
+    baseUrl = 'https://gateway1.dakale.net'
     break
   case 'production':
     baseUrl = 'https://pregateway.dakale.net'
@@ -50,7 +50,7 @@ const httpCondition = {
 }
 let requestUrl = []
 export const httpGet = (obj, fn) => {
-  const {data:{ header = {} }}  = obj
+  const {header = {} }  = obj
   Taro.showLoading({
     title: '加载中',
   })
@@ -99,7 +99,7 @@ export const httpGet = (obj, fn) => {
 }
 
 export const httpPost = (obj, fn) => {
-  const {data:{ header = {} }}  = obj
+  const {header = {} }  = obj
   Taro.showLoading({
     title: '加载中',
     mask: true
