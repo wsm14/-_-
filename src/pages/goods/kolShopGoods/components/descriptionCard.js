@@ -163,10 +163,10 @@ export default (props) => {
             <View className='onReadly_icon onReadly_iconBox'></View>
             如果券码不显示，点这里刷新
           </View>
-          <View className='kolgoods_go public_auto font24 color1' onClick={() => mapGo({
-            lat:data.merchantLat,lnt:data.merchantLnt,address:data.merchantAddress,name: orderResult.merchantName
-          })}>
-            <View className='kolgoods_go_left public_center'>
+          <View className='kolgoods_go public_auto font24 color1'>
+            <View className='kolgoods_go_left public_center' onClick={() => mapGo({
+              lat:data.merchantLat,lnt:data.merchantLnt,address:data.merchantAddress,name: orderResult.merchantName
+            })}>
               <View className='kolgoods_go_leftBox public_center'>
                 <View className='kolgoods_goIcon_box kol_telephone'>
                 </View>到这里去

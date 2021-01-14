@@ -44,10 +44,18 @@ export default ({routerName, type = 'navigateTo', args = {}}) => {
     perimeterIndex: '/pages/perimeter/index',//打卡一条街
     repeatStatus: '/pages/perimeter/repeatStatus/index',//打卡状态： 重复打卡
     abnormalStatus: '/pages/perimeter/abnormalStatus/index',//打卡状态： 超过距离
+    tipView: '/pages/perimeter/tipView/index',
     //周边
     kolShopGoods: '/pages/goods/kolShopGoods/index',
-    codePay: '/pages/goods/codePay/index'
+    codePay: '/pages/goods/codePay/index',
     //订单  goods
+    legal: "/pages/kol/legal/index",//达人等级
+    report: "/pages/kol/report/index",//举报
+    shareKolVideo: "/pages/kol/shareVideo/index",//kol视频详情页,
+    shareKolImage: "/pages/kol/shareImage/index",//kol图片详情页,
+    follow: "/pages/kol/follow/index",//关注列表,
+    fans: "/pages/kol/fans/index",//粉丝列表,
+    //kol
   }[routerName]
   const types = type
 
@@ -56,7 +64,6 @@ export default ({routerName, type = 'navigateTo', args = {}}) => {
       return `${item}=${args[item]}`
     }).join('&')
   }
-  console.log(routerObj + (args ? `?+${args}` : ''))
   switch (types) {
     case 'navigateTo':
       return navigateTo(routerObj + (args ? `?${args}` : ''))

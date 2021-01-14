@@ -70,7 +70,7 @@ export default (props) => {
         verificationTime,
         userCouponIdString
       } = item
-      (<View className='wraparound_center_box' onClick={(e) => {
+    return (<View className='wraparound_center_box' onClick={(e) => {
         e.stopPropagation();
         goCouponDetails(userCouponIdString)
       }}>
@@ -108,7 +108,7 @@ export default (props) => {
         activeEndDate,
         userCouponIdString
       } = item
-      (<View className='wraparound_center_box' onClick={(e) => {
+    return (<View className='wraparound_center_box' onClick={(e) => {
         e.stopPropagation();
         goCouponDetails(userCouponIdString)
       }}>
@@ -187,7 +187,5 @@ export default (props) => {
       <View className='wraparound_couponType_down' onClick={() => onClose(true)}></View>
       }
     </>
-
-
   )
 }

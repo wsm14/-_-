@@ -51,11 +51,52 @@ export const getSearchConditions = (data, fn) => {
     data: data
   }, res => fn(res))
 }
-
 //搜索所有商家列表（包括不可打卡）
 /*
 *search_shop end
 */
+
+
+
+export const getSearchKolMoments = (data, fn) => {
+  httpGet({
+    url: '/user/kolMoments/searchKolMoments',
+    data: data
+  }, res => fn(res))
+}
+/*
+* page: 页数
+* limit: 行数，
+* keyword 话题名称
+* */
+//搜索哒人发布的kol视频
+
+
+export const getSearchUserList = (data, fn) => {
+  httpGet({
+    url: '/user/userInfo/searchUserList',
+    data: data
+  }, res => fn(res))
+}
+/*
+* page: 页数
+* limit: 行数，
+* keyword 话题名称
+* */
+//搜索所有用户列表
+
+export const getTopicKolMoments = (data, fn) => {
+  httpGet({
+    url: '/user/kolMoments/searchTopicAndKolMoments',
+    data: data
+  }, res => fn(res))
+}
+/*
+* page: 页数
+* limit: 行数，
+* keyword 话题名称
+* */
+//搜索话题和种草数量
 
 export const saveMarkBean = (data, fn) => {
   httpPost({
@@ -73,3 +114,9 @@ export const getMainRecommend = (data, fn) => {
 }
 //首页卡片商家推荐列表
 
+export const getListKolMoments = (data, fn) => {
+  httpGet({
+    url: '/user/kolMoments/listKolMoments',
+    data: data
+  }, res => fn(res))
+}

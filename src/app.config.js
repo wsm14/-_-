@@ -109,6 +109,7 @@ export default {
         'perimeteRoducts/index',
         'repeatStatus/index',//打卡状态： 重复打卡
         'abnormalStatus/index',//打卡状态： 超过距离
+        'tipView/index',//打卡状态： 超过距离
         "index", //周边首页
       ]
     },

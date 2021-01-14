@@ -5,7 +5,6 @@ import './assets/css/app.scss'
 import './assets/css/color.scss'
 import './assets/css/font.scss'
 import './assets/css/background.scss'
-import evens from './common/evens'
 import Taro from '@tarojs/taro'
 import Store from './store/index'
 
