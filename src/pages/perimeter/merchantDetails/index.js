@@ -208,6 +208,9 @@ class MerchantDetails extends Component {
       }
     }, res => {
       const {specialGoodsList} = res
+      this.setState({
+        specialGoodsList:specialGoodsList
+      })
     })
   }
 

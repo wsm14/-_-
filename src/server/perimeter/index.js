@@ -120,3 +120,12 @@ export const getListKolMoments = (data, fn) => {
     data: data
   }, res => fn(res))
 }
+//根据条件查找达人种草
+
+export const getListMomentByType = (data, fn) => {
+  httpGet({
+    url: '/user/userMoment/listMomentByType',
+    data: data
+  }, res => fn(res))
+}
+//首页分享

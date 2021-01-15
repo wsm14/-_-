@@ -324,10 +324,12 @@ export const scanCode = (data) => {
           })
           // return fn && fn(data)
         } else {
-          return toast('二维码错误或参数缺失')
+          toast('二维码错误或参数缺失')
+          return 
         }
       }
-      return toast('扫码类型错误')
+      toast('扫码类型错误')
+      return 
     },
     fail: res => {
       // toast('扫码')

@@ -6,7 +6,6 @@ export default {
     "pages/index/user/index", //首页个人
     "pages/index/lookShare/shareImage/index", //圖文详情
     "pages/index/lookShare/shareVideo/index", //视频详情
-    "pages/index/lookShare/index", //看视频图文
     "pages/payPrice/index", //小程序支付兼容
     "pages/auth/index", //登录
   ],
@@ -110,6 +109,7 @@ export default {
         'repeatStatus/index',//打卡状态： 重复打卡
         'abnormalStatus/index',//打卡状态： 超过距离
         'tipView/index',//打卡状态： 超过距离
+        'lookShare/index', //看视频图文
         "index", //周边首页
       ]
     },

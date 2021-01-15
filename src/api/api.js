@@ -3,7 +3,6 @@ export const wxapiGet = {
   wechatConditions: '/user/userMerchant/listAllBySearchConditions', //周边商家列表
   wechatMerchantList: '/user/userMerchant/recommendMerchantList',//首页猜你喜欢
   wechatMain: '/user/userInfo/mainPage',//首页个人资料
-  wechatShare: '/user/userMoment/listMomentByType',//首页分享
   wechatUserMomentDetail:'/user/userMoment/getUserMomentDetailById',
   wechatByRoot: '/common/dictionary/listDictionaryByRoot',
   wechatStepAuth: '/user/wechat/stepAuth',//获取微信步数授权

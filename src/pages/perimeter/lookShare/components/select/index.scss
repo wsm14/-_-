@@ -1,0 +1,116 @@
+.select_share_box{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 104px;
+  padding: 0px 32px;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  background: white;
+  .select_share_content{
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    position: relative;
+    .select_tab_box{
+      height: 48px;
+      line-height: 48px;
+      display: flex;
+      align-items: center;
+      margin-right: 40px;
+      .select_tab_font{
+        margin-right: 8px;
+      }
+      .select_icon_box{
+        width: 24px;
+        height: 24px;
+      }
+      .select_icon1{
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon404.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      .select_icon2{
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon405.png") no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .select_tab_color1{
+      color: rgba(51, 51, 51, 1);
+    }
+    .select_tab_color2{
+      color: rgba(7, 192, 194, 1);
+    }
+    .select_share_cat{
+      width: 48px;
+      height: 48px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon406.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .select_share_shu{
+      width: 48px;
+      height: 48px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon407.png") no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+}
+.select_share_layer{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 104px;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.6);
+  .select_share_check{
+    padding: 24px 32px 64px;
+    background: #FFFFFF;
+    border-radius: 0px 0px 20px 20px;
+    .select_tags_share{
+      display: flex;
+      flex-wrap: wrap;
+      .select_tags_box{
+        width: 140px;
+        height: 48px;
+        text-align: center;
+        line-height: 48px;
+        font-size: 24px;
+        border-radius: 4px;
+        margin-bottom: 32px;
+        box-sizing: border-box;
+      }
+      .select_tags_color1{
+        border: 1px solid #07C0C2;
+        color: #07C0C2;
+      }
+      .select_tags_color2{
+        color: #999999;
+        border: 1px solid #999999;
+      }
+    }
+    .select_tags_limit{
+      height: 24px;
+      margin-bottom: 40px;
+      font-size: 24px;
+    }
+    .select_tags_colors1{
+      color: rgba(102, 102, 102, 1);
+    }
+    .select_tags_colors2{
+      color: rgba(7, 192, 194, 1);
+    }
+    .select_tags_limit:last-child{
+      margin-bottom: 0px;
+    }
+  }
+}
