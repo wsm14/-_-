@@ -9,12 +9,18 @@ page {
   height: 100%;
   overflow: hidden;
   position: relative;
+  .codePay_orderBox {
+    border-radius: 8px;
+    width: 686px;
+    margin: 0 auto;
+    background: #ffffff;
+  }
   .codePay_top {
     width: 686px;
     height: 384px;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 8px;
-    margin: 30px 32px auto;
+    margin: 30px 32px 24px;
 
     .codePay_merchantDetails {
       padding: 32px 32px 0;
@@ -62,14 +68,14 @@ page {
     .codePay_inputBox {
       margin: 40px 32px 0;
       height: 60px;
-      .codePay_mountAfter{
+      .codePay_mountAfter {
         display: inline-block;
         height: 60px;
         font-weight: bold;
         vertical-align: middle;
         color: #333333;
       }
-      .codePay_inputStyle{
+      .codePay_inputStyle {
         height: 60px;
         display: inline-block;
         font-weight: bold;
@@ -79,9 +85,8 @@ page {
         width: 581px;
         color: #333333;
       }
-      input{
-
-        caret-color:rgba(7, 192, 194, 1)
+      input {
+        caret-color: rgba(7, 192, 194, 1);
       }
     }
 
@@ -126,51 +131,114 @@ page {
     //  animation-timing-function: linear;
     //  animation-iteration-count: infinite;
     //}
-    .codePay_inputLiner{
+    .codePay_inputLiner {
       width: 622px;
       height: 1px;
-      background: #E5E5E5;
+      background: #e5e5e5;
       border-radius: 1px;
       margin: 30px auto 0;
     }
   }
-  .codePay_bean{
+  .codePay_coupon {
+    width: 686px;
+    height: 99px;
+    display: flex;
+    align-items: center;
+    .codePay_coupon_box {
+      height: 36px;
+      width: 622px;
+      margin: 0 auto;
+    }
+    .codePay_coupon_left,
+    .codePay_coupon_right {
+      display: flex;
+      align-items: center;
+      height: 36px;
+      .codePay_coupon_icon {
+        width: 36px;
+        height: 36px;
+        background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon416.png)
+          no-repeat;
+        background-size: 100% 100%;
+        margin-right: 8px;
+      }
+      .codePay_coupon_font1 {
+        height: 36px;
+        line-height: 36px;
+        font-size: 28px;
+        color: #333333;
+        font-weight: 600;
+      }
+      .codePay_coupon_iconGo {
+        width: 24px;
+        height: 24px;
+        background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon415.png)
+          no-repeat;
+        background-size: 100% 100%;
+        margin-left: 4px;
+      }
+      .codePay_coupon_font2 {
+        height: 36px;
+        line-height: 36px;
+        font-size: 24px;
+        color: #333333;
+      }
+    }
+  }
+  .codePay_liner {
+    width: 622px;
+    height: 1px;
+    background: #e5e5e5;
+    border-radius: 1px;
+    margin: 0 auto;
+  }
+  .codePay_bean {
     width: 686px;
     height: 140px;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 8px;
-    margin: 24px 32px 0;
     position: relative;
-    .codePay_bean_title{
-      padding-top: 40px;
-      padding-left: 32px;
+    .codePay_bean_icon {
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon414.png")
+        no-repeat;
+      background-size: 100% 100%;
+      position: absolute;
+      top: 28px;
+      left: 32px;
+      width: 36px;
+      height: 36px;
+    }
+    .codePay_bean_title {
+      padding-top: 32px;
+      padding-left: 76px;
       font-size: 28px;
     }
-    .codePay_pay_iconBox{
+    .codePay_pay_iconBox {
       width: 36px;
       height: 36px;
       position: absolute;
       top: 56px;
       right: 32px;
     }
-    .codePay_bean_font{
+    .codePay_bean_font {
       margin-top: 16px;
-      margin-left: 32px;
-
+      margin-left: 76px;
     }
-    .codePay_pay_icon1{
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon256.png") no-repeat;
+    .codePay_pay_icon1 {
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon256.png")
+        no-repeat;
       background-size: 100% 100%;
     }
-    .codePay_pay_icon2{
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon257.png") no-repeat;
+    .codePay_pay_icon2 {
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon257.png")
+        no-repeat;
       background-size: 100% 100%;
     }
   }
-  .codePay_goPay{
+  .codePay_goPay {
     width: 750px;
     height: 128px;
-    background: #FFFFFF;
+    background: #ffffff;
     box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.1);
     position: absolute;
     bottom: 0;
@@ -178,13 +246,13 @@ page {
     align-items: center;
     justify-content: center;
   }
-  .codePay_goPayBtn{
+  .codePay_goPayBtn {
     width: 686px;
     height: 80px;
-    background: #07C0C2;
+    background: #07c0c2;
     border-radius: 8px;
     text-align: center;
     line-height: 80px;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 }

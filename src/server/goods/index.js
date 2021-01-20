@@ -68,3 +68,13 @@ export const deleteOrder = (data, fn) => {
   }, res => fn(res))
 }
 //删除订单
+
+export const getScanAvailableCoupon = (data, fn) => {
+  httpGet({
+    url: '/user/userCoupon/listScanAvailableCoupon',
+    data: data
+  }, res => {
+    fn && fn(res)
+  })
+}
+//扫码支付可用优惠券列表

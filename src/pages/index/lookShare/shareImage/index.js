@@ -1,262 +1,629 @@
-import React, { Component } from 'react'
-import Taro, {getCurrentInstance} from '@tarojs/taro'
-import {View, Text, Swiper, SwiperItem, Button} from '@tarojs/components'
-import {wxapiGet,wxapiPost} from './../../../../api/api'
-import Ajax from './../../../../api/request'
-import Utils from "./../../../../utils/utils";
-import './index.scss'
-export default class ShareImage extends Component{
-  defaultProps = {}
+import React, { Component, useState } from "react";
+import Taro, { getCurrentInstance, EventChannel } from "@tarojs/taro";
+import { View, Text, CoverView } from "@tarojs/components";
+import GetBeanCanvas from "@/components/getBeanCanvas";
+import StopBean from "@/components/stopBean";
+import Banner from "@/components/banner";
+import Toast from "@/components/beanToast";
+import Coupons from "@/components/coupon";
+import { getAvailableCoupon } from "@/server/coupon";
+import {
+  getUserMomentDetailById,
+  saveWatchBean,
+  saveMerchantCollection,
+  closeMerchantCollection,
+  updateMomentsLikeAmount,
+  deleteMomentsLikeAmount,
+} from "@/server/index";
+import APPShare from "@/components/shareApp";
+import classNames from "classnames";
+import {
+  imgList,
+  backgroundObj,
+  setPeople,
+  saveFollow,
+  deleteFollow,
+  navigateTo,
+  setIntive,
+  toast,
+  onShareFriend,
+  onTimeline,
+  objStatus,
+} from "@/common/utils";
+import "./index.scss";
+import evens from "@/common/evens";
+export default class ShareImage extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      getUserMomentDetail : {
-        momentId: getCurrentInstance().router.params.momentId || '2443' //路由参数
-       },//req 请求参数
-      userMomentsInfo:{
-      }, //req 数据
-      getBean:false, //弹框
-      userInfo: {
-        userId: getCurrentInstance().router.params.shareUserId||''
+      httpData: {
+        momentId: getCurrentInstance().router.params.momentId || "",
       },
-      type: getCurrentInstance().router.params.type || '',
-      shareUserProfile: '',
-      shareUserName: ''
-    }
+      userMomentsInfo: {},
+      visible: false,
+      bannerSetting: {
+        style: {
+          width: "100%",
+          height: Taro.pxTransform(810),
+        },
+        showToast: true,
+        imgName: "key",
+        data: [],
+        height: "height",
+      },
+      toast: false,
+      time: null,
+      beanSet: false,
+      shareStatus: getCurrentInstance().router.params.type || "",
+      stopStatus: false,
+      getBeanNow: false,
+      lookStatus: "1",
+      conpouVisible: false,
+      couponList: [],
+    };
   }
   componentDidMount() {
-    Taro.hideHomeButton();
-    this.getUserInfos()
-    this.getUserMomentDetails() //初始化
+    this.getAvailable();
   }
-  saveBean(){
-    Ajax({
-      data: { momentId: getCurrentInstance().router.params.momentId},
-      url: wxapiPost.wechatBeanDetail
-    },'post').then(res =>{
-      if(res.errMsg !== 'request:ok'){
-        Utils.Toast(res.errMsg)
+
+  componentDidShow() {
+    this.shareDetailsById();
+  }
+  getAvailable() {
+    const {} = this.state;
+    getAvailableCoupon(
+      {
+        identifyId: getCurrentInstance().router.params.momentId,
+        channel: 'moment',
+        merchantId: getCurrentInstance().router.params.merchantId,
+      },
+      (res) => {
+        const { couponList } = res;
+        this.setState({
+          couponList,
+        });
       }
-      else {
-        const {data:{success ,content ,resultDesc} } = res
-        if(success){
-          this.setState({
-            getBean: true,
-            userMomentsInfo: {
-              ...this.state.userMomentsInfo,
-              watchStatus: '1'
+    );
+  }
+  followStatus(e) {
+    e.stopPropagation();
+    let that = this;
+    const {
+      userMomentsInfo,
+      userMomentsInfo: {
+        merchantFollowStatus,
+        merchantIdString,
+        merchantId,
+        userIdString,
+        userType,
+      },
+    } = this.state;
+    if (merchantFollowStatus === "1") {
+      let that = this;
+      const {
+        userMomentsInfo: { userIdString },
+      } = this.state;
+      deleteFollow(
+        {
+          followUserId: userIdString,
+        },
+        () => {
+          that.setState(
+            {
+              userMomentsInfo: {
+                ...userMomentsInfo,
+                merchantFollowStatus: "0",
+              },
+            },
+            (res) => {
+              toast("取消成功");
             }
-          })
+          );
         }
-        else {
-          Utils.Toast(resultDesc)
+      );
+    } else {
+      saveFollow(
+        {
+          followType: "merchant",
+          followUserId: userIdString,
+        },
+        () =>
+          that.setState(
+            {
+              userMomentsInfo: {
+                ...userMomentsInfo,
+                merchantFollowStatus: "1",
+              },
+            },
+            (res) => {
+              toast("关注成功");
+            }
+          )
+      );
+    }
+  }
+
+  //用户关注状态
+  collectionStatus() {
+    let that = this;
+    const {
+      userMomentsInfo: { momentId, merchantCollectionStatus },
+      userMomentsInfo,
+    } = this.state;
+    if (merchantCollectionStatus === "1") {
+      closeMerchantCollection(
+        {
+          collectionId: momentId,
+        },
+        () => {
+          that.setState({
+            userMomentsInfo: {
+              ...userMomentsInfo,
+              merchantCollectionStatus: "0",
+              collectionAmount: parseInt(userMomentsInfo.collectionAmount) - 1,
+            },
+          });
         }
+      );
+    } else {
+      saveMerchantCollection(
+        {
+          collectionId: momentId,
+        },
+        () => {
+          that.setState({
+            userMomentsInfo: {
+              ...userMomentsInfo,
+              merchantCollectionStatus: "1",
+              collectionAmount: parseInt(userMomentsInfo.collectionAmount) + 1,
+            },
+          });
+        }
+      );
+    }
+  }
+  fallStatus() {
+    let that = this;
+    const {
+      userMomentsInfo: { momentId, userLikeStatus },
+      userMomentsInfo,
+    } = this.state;
+    if (userLikeStatus === "1") {
+      deleteMomentsLikeAmount({ likeId: momentId }, (res) => {
+        that.setState({
+          userMomentsInfo: {
+            ...userMomentsInfo,
+            userLikeStatus: "0",
+            likeAmount: parseInt(userMomentsInfo.likeAmount) - 1,
+          },
+        });
+      });
+    } else {
+      updateMomentsLikeAmount({ likeId: momentId }, (res) => {
+        that.setState({
+          userMomentsInfo: {
+            ...userMomentsInfo,
+            userLikeStatus: "1",
+            likeAmount: parseInt(userMomentsInfo.likeAmount) + 1,
+          },
+        });
+      });
+    }
+  }
+
+  //用户点赞信息
+  onShareAppMessage() {
+    const {
+      userMomentsInfo: { title, frontImage },
+    } = this.state;
+    return onShareFriend({
+      title: title,
+      img: frontImage,
+    });
+  }
+
+  onShareTimeline() {
+    const {
+      userMomentsInfo: { title, frontImage },
+    } = this.state;
+    onTimeline({
+      title: title,
+      img: frontImage,
+    });
+  }
+
+  //用户收藏信息
+  shareDetailsById() {
+    // 阻止事件冒泡
+    const { httpData, bannerSetting } = this.state;
+    getUserMomentDetailById(httpData, (res) => {
+      console.log(res);
+      const {
+        userMomentsInfo,
+        userMomentsInfo: { imageContent, imageHost, beanFlag },
+      } = res;
+      if (beanFlag != "1") {
+        this.setState({
+          userMomentsInfo,
+          visible: false,
+          bannerSetting: {
+            ...bannerSetting,
+            data: imgList(imageContent, imageHost, "key"),
+          },
+        });
+        return;
+      } else {
+        this.setState(
+          {
+            userMomentsInfo,
+            lookStatus: userMomentsInfo.watchStatus,
+            visible: false,
+            beanSet: true,
+            bannerSetting: {
+              ...bannerSetting,
+              data: imgList(imageContent, imageHost, "key"),
+            },
+          },
+          (res) => {
+            if (
+              this.state.userMomentsInfo.watchStatus == 0 &&
+              !this.state.interval &&
+              !this.state.time
+            ) {
+              this.setState(
+                {
+                  time: this.state.userMomentsInfo.length,
+                },
+                (res) => {
+                  this.setState({
+                    interval: setIntive(
+                      this.state.time,
+                      this.getBean.bind(this)
+                    ),
+                  });
+                }
+              );
+            } else if (
+              this.state.userMomentsInfo.watchStatus == 0 &&
+              (this.state.time || this.state.time === 0)
+            ) {
+              this.initInterval();
+            }
+          }
+        );
       }
-    })
-  } //领取卡豆
-  getUserMomentDetails(){
-    Ajax({
-      data: this.state.getUserMomentDetail,
-      url: wxapiGet.wechatUserMomentDetail
-    },'get').then(res =>{
-      if(res.errMsg !== 'request:ok'){
-        Utils.Toast(res.errMsg)
-      }
-      else {
-        const {data:{success ,content ,resultDesc} } = res
-        if(success){
-          this.setState({
-            userMomentsInfo: content.userMomentsInfo,
-          },res =>{
-             // if(this.state.userMomentsInfo.watchStatus == 0 ){
-             //    Utils.setInterVal(this.state.userMomentsInfo['length']||15, this.getBean.bind(this))
-             // }
-          })
-        }
-        else {
-          Utils.Toast(resultDesc)
-        }
-      }
-    })
-  } //req拿数据
+    });
+  }
+
+  initInterval() {
+    if (!this.state.interval && this.state.time) {
+      this.setState({
+        interval: setIntive(this.state.time, this.getBean.bind(this)),
+      });
+    }
+  }
+  //初始化详情数据
   getBean(time) {
-     this.setState({
-       userMomentsInfo:{
-         ...this.state.userMomentsInfo,
-         length: time
-       }
-     },res =>{
-       if(time == 0){
-         this.saveBean()
-       }
-     })
-  } //设置定时器领取卡豆
-  getUserInfos() {
-    if(this.state.type == 'share' && this.state.userInfo.userId != ''){
-      Ajax({
-        data: this.state.userInfo,
-        url: wxapiGet.wechatUserByUniqueId
-      },'get').then(res =>{
-        if(res.errMsg !== 'request:ok'){
-          Utils.Toast(res.errMsg)
-        }
-        else {
-          const {data:{success ,content ,resultDesc} } = res
-          if(success){
-            const {content:{userInfo:{profile,username}}} = res.data
-            this.setState({
-              shareUserProfile: profile,
-              shareUserName: username
-            })
-          }
-          else {
-            Utils.Toast(resultDesc)
-          }
-        }
-      })
-    }
-  }
-  goAppError(e){
-    Utils.goDown();
-  }
-  onShareAppMessage(options) {
-    // 设置转发内容 -- 适用于: 页面右上角 ... 和 页面按钮
-    const { userMomentsInfo }  =this.state
-    var shareObj = {
-      title: `${userMomentsInfo.title||'视频分享'}`,
-      imageUrl: `${userMomentsInfo.frontImage}`,
-      success: function(res) {
-        // 转发成功之后的回调
-        if (res.errMsg == 'shareAppMessage:ok') {
-          Utils.Toast('转发成功')
-        }
+    this.setState(
+      {
+        time: time,
       },
-      fail: function(res) {
-        // 转发失败之后的回调
-        if (res.errMsg == 'shareAppMessage:fail cancel') {
-          // 用户取消转发
-          Utils.Toast('取消转发')
-        } else if (res.errMsg == 'shareAppMessage:fail') {
-          // 转发失败，其中 detail message 为详细失败信息
-          Utils.Toast('转发失败')
+      (res) => {
+        if (time == 0) {
+          this.saveBean();
         }
-      },
-      complete: function() {
-        // 转发结束之后的回调（转发成不成功都会执行）
-        console.log('---转发完成---');
       }
-    };
-    return shareObj;
-  }
-  onShareTimeline(){
-    const { userMomentsInfo }  =this.state
-    return {
-      title: `${userMomentsInfo.title||'视频分享'}`,
-      imageUrl: `${userMomentsInfo.frontImage}`,
+    );
+  } //设置定时器领取卡豆
+  saveBean() {
+    const {
+      userMomentsInfo: { momentId, beanLimitStatus },
+      userMomentsInfo,
+    } = this.state;
+    if (beanLimitStatus === "1") {
+      saveWatchBean(
+        {
+          momentId,
+        },
+        (res) => {
+          this.setState({
+            toast: true,
+            userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
+          });
+        }
+      );
     }
+  }
+  //领取卡豆
+  errorToast(e) {}
+
+  stopInterval(obj) {
+    clearInterval(obj);
+    this.setState({
+      interval: null,
+    });
+  }
+
+  link_stop(fn) {
+    const { time } = this.state;
+    if (time) {
+      this.setState(
+        {
+          stopStatus: true,
+          linkFn: fn,
+        },
+        (res) => {
+          this.stopInterval(this.state.interval);
+        }
+      );
+    } else {
+      fn && fn();
+    }
+  }
+
+  canfirm() {
+    this.setState(
+      {
+        stopStatus: false,
+      },
+      (res) => {
+        this.initInterval();
+      }
+    );
+  }
+
+  cancel() {
+    this.setState(
+      {
+        stopStatus: false,
+      },
+      (res) => {
+        this.state.linkFn && this.state.linkFn();
+      }
+    );
+  }
+  componentDidHide() {
+    this.stopInterval(this.state.interval);
+  }
+  componentWillUnmount() {
+    const { userMomentsInfo } = this.state;
+    evens.$emit("updateShareList", userMomentsInfo);
   }
   render() {
-    const {getUserMomentDetail, userMomentsInfo ,time ,getBean,type,shareUserProfile,shareUserName} = this.state
-    if( typeof userMomentsInfo.imageContent == 'string'){
-      userMomentsInfo.imageContent = JSON.parse(userMomentsInfo.imageContent)
-    }
+    const {
+      userMomentsInfo,
+      userMomentsInfo: {
+        merchantIdString, //商家id'
+        merchantCover, //商家組圖
+        merchantName, //商家名稱
+        merchantCategoryName, //商家標簽名稱
+        merchantAddress, //商家地址
+        title, //標題
+        message, //内容
+        collectionAmount, //收藏數量
+        distanceRange, //距離
+        userProfile, //頭像
+        merchantFollowStatus, //關注狀態
+        likeAmount, //點贊，
+        username,
+        userLikeStatus, //點贊狀態
+        merchantCollectionStatus, //收藏狀態,
+        userIdString,
+        watchStatus,
+        topicId,
+        topicName,
+        beanAmount,
+        interactionTime,
+        merchantCityName,
+        length,
+        couponIds,
+        beanLimitStatus,
+      },
+      time,
+      bannerSetting,
+      toast,
+      beanSet,
+      shareStatus,
+      stopStatus,
+      lookStatus,
+      couponList,
+      conpouVisible,
+    } = this.state;
+    if (objStatus(userMomentsInfo)) {
       return (
-         <View>
-           {type == 'share' && <View className = 'page_share_download'>
-             <View className = 'page_share_downloadBox'>
-               <View className='page_share_userDetails'>
-                 <View className= 'page_share_profile' style={{background:`url(${shareUserProfile}) no-repeat center/cover`}}></View>
-                 <View className= 'page_share_userBox'>
-                   <View className='page_share_userName'>{shareUserName}</View>
-                   <View className='page_share_userTitle'>"我在哒卡乐发了一篇有趣的图文"</View>
-                 </View>
-               </View>
-               <View  className='page_share_btn'>
-                 <Button
-                   appParameter={JSON.stringify({jumpUrl: 'imageMomentDetailPage',id: getUserMomentDetail.momentId,
-                     type : 'jumpToPage',
-                     jumpType : "native" ,path:'imageMomentDetailPage',params:{id: getUserMomentDetail.momentId}})}
-                   openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle'>打开APP</Button>
-               </View>
-             </View>
-           </View>}
-           {type == 'share' && <View className='page_share_openApp'>
-             <Button
-               appParameter={JSON.stringify({jumpUrl: 'imageMomentDetailPage',id: getUserMomentDetail.momentId
-               , type : 'jumpToPage', jumpType : "native" ,path:'imageMomentDetailPage',params:{id: getUserMomentDetail.momentId}})}
-               openType='launchApp' onError={(e) =>this.goAppError(e)} className='page_share_btnStyle1'>App内打开</Button>
-           </View>}
-          {/* <View className='NavBar_title'>*/}
-          {/*  <View className='NavBar_userbox clearfix'>*/}
-          {/*    <View className='NavBar_profile' style={{backgroundAttachment:'fixed',background:`url(${userMomentsInfo.userProfile}) no-repeat 0 center/cover`}}></View>*/}
-          {/*    <View className='NavBar_username'>{userMomentsInfo.username?userMomentsInfo.username:'--'}</View>*/}
-          {/*    /!*{userMomentsInfo.beanFlag === '1' && userMomentsInfo.watchStatus === '0' &&<View className='NavBar_getBean'>{userMomentsInfo['length']+'S后可领'+userMomentsInfo.beanAmount}<Text className='Merchant_getBean'></Text></View>}*!/*/}
-          {/*    /!*{userMomentsInfo.beanFlag === '1' && userMomentsInfo.watchStatus !== '0' &&<View className='NavBar_getBean'>已领取{userMomentsInfo.beanAmount}<Text className='Merchant_getBean'></Text></View>}*!/*/}
-          {/*  </View>*/}
-          {/*</View>*/}
-           <Swiper className='banner_box'
-                   circular
-                   autoplay>
-             {userMomentsInfo.imageContent ? userMomentsInfo.imageContent.map((item,index) =>{
-               return (
-
-                 <SwiperItem key={index} style={{width:'100%',height:'100%'}}>
-                   <View style={{width:'100%', height:'100%',backgroundAttachment:'fixed',background:`url(${userMomentsInfo.imageHost+item.key}) no-repeat 0 center/cover`}}>
-                   </View>
-                 </SwiperItem>
-               )
-             }) : null}
-             {/*<View className='banner_index'>1/{userMomentsInfo&&userMomentsInfo.imageContent&&userMomentsInfo.imageContent.length}</View>*/}
-             {userMomentsInfo.categoryName && <View className='banner_tag'>{userMomentsInfo.categoryName}</View>}
-           </Swiper>
-          <View className='Details_box'>
-             <View className='Details_title font_hide'>
-               {userMomentsInfo.title}
-             </View>
-             <View className='Details_body'>
-               {userMomentsInfo.message}
-             </View>
-             <View className='Details_time'>
-               {'编辑于'+userMomentsInfo.interactionTime}
-             </View>
-           </View>
-          {userMomentsInfo.userType && userMomentsInfo.userType ==='merchant'?
-           <View className='Merchant_box'>
-              <View className='Merchant_Details clearfix'>
-                <View className='Merchant_shopImg' style={{backgroundAttachment:'fixed',background:`url(${userMomentsInfo.merchantCover}) no-repeat 0 center/cover`}}></View>
-                <View className='Merchant_shopDetails'>
-                  <View className='Merchant_shopTitle'>
-                    {userMomentsInfo.merchantName}
+        <View className="lookImage_box">
+          {shareStatus == "share" && (
+            <APPShare
+              {...{
+                content: "我在哒卡乐发了一篇有趣的图文",
+                userId: getCurrentInstance().router.params.shareUserId,
+                jumpObj: {
+                  jumpUrl: "imageMomentDetailPage",
+                  id: getCurrentInstance().router.params.momentId,
+                  type: "jumpToPage",
+                  jumpType: "native",
+                  path: "imageMomentDetailPage",
+                  params: { id: getCurrentInstance().router.params.momentId },
+                },
+              }}
+            ></APPShare>
+          )}
+          {stopStatus && (
+            <StopBean
+              canfirm={() => this.canfirm()}
+              cancel={() => this.cancel()}
+            ></StopBean>
+          )}
+          <Banner {...bannerSetting}></Banner>
+          <View className="shareImage_details">
+            <View className="sharekol_Image">
+              <View className="shareImage_shopDetails">
+                <View
+                  className="shareImage_shopProfile"
+                  style={backgroundObj(merchantCover)}
+                  onClick={() =>
+                    this.link_stop(() =>
+                      navigateTo(
+                        `/pages/newUser/merchantDetails/index?userId=${merchantIdString}`
+                      )
+                    )
+                  }
+                ></View>
+                <View className="shareImage_shopFont">
+                  <View className="shareImage_shopName font_hide">
+                    {merchantName}
                   </View>
-                  <View className='Merchant_shopPrice'>
-                    ¥{userMomentsInfo.consumption}/人
-                  </View>
-                  <View className='Merchant_address '>
-                    <Text className='Merchant_text1'>{userMomentsInfo.merchantTag}</Text>
-                    <Text className='Merchant_text2'>{userMomentsInfo.districtName}</Text>
-                    <Text className='Merchant_text3'>距你<Text className='spaceColor'> {userMomentsInfo.distanceRange}</Text>
-                    </Text>
+                  <View className="shareImage_shopTag font_hide">
+                    {merchantCityName ||
+                      "杭州" +
+                        "·" +
+                        merchantCategoryName +
+                        " ｜ " +
+                        distanceRange +
+                        " | " +
+                        merchantAddress}
                   </View>
                 </View>
               </View>
-             {
-               type !=='share' &&
-               <View className='Merchant_btn' onClick={()=>Utils.goDown()}>
-                 立即前往
-               </View>
-             }
-
-            </View>:null}
-           {getBean && <View className='bean_toast'>
-             <View className='bean_toastIcon'  onClick={() => this.setState({getBean: false})}>
-               <View className='bean_box'>
-                 <View className='bean_title'>恭喜获得</View>
-                 <View className='bean_num'><Text className='bean_getNum'>{userMomentsInfo.beanAmount}</Text>卡豆</View>
-                 <View className='bean_btn'>确定</View>
-               </View>
-             </View>
-           </View>}
+              <View
+                className="shareImage_merchant"
+                onClick={() =>
+                  this.link_stop(() =>
+                    navigateTo(
+                      `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
+                    )
+                  )
+                }
+              ></View>
+            </View>
+            {/*//商家详情*/}
+            {(couponList.length>0 && watchStatus  ===  '0') && (
+              <View className="shareImage_shop_couponBox">
+                <View className="public_center image_coupon_box">
+                  <View className="image_coupon_icon"></View>
+                  <View className="image_coupon_font">看完领券</View>
+                </View>
+              </View>
+            )}
+            <View className="shareImage_title">{title}</View>
+            {/*//文章名称*/}
+            {topicId && topicName && (
+              <View className="shareImage_conversation font_hide">
+                #{topicName}
+              </View>
+            )}
+            {/*//文章话题*/}
+            <View className="shareImage_dec">{message}</View>
+            {/*//文章详情*/}
+            <View className="shareImage_time">
+              {"发布于" + interactionTime}
+            </View>
+            {/*//文章时间*/}
+          </View>
+          <View className={"animated fadeInUp shareImages_details_box"}>
+            <View style={{ display: "flex", alignItems: "center" }}>
+              <View
+                className="shareImages_userProfile"
+                style={backgroundObj(userProfile)}
+                onClick={() =>
+                  this.link_stop(() =>
+                    navigateTo(
+                      `/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`
+                    )
+                  )
+                }
+              ></View>
+              <View className="shareImages_userName font_hide">{username}</View>
+              <View
+                onClick={(e) => this.followStatus(e)}
+                className={classNames(
+                  merchantFollowStatus === "0"
+                    ? "shareImages_installNow"
+                    : "shareImages_install"
+                )}
+              >
+                {merchantFollowStatus === "0" ? "关注" : "已关注"}
+              </View>
+            </View>
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+                minWidth: Taro.pxTransform(220),
+              }}
+            >
+              <View
+                onClick={() => this.fallStatus()}
+                className={classNames(
+                  "shareImages_icon_size",
+                  userLikeStatus === "1"
+                    ? "shareImages_zd_icon2"
+                    : "shareImages_zd_icon1"
+                )}
+              ></View>
+              <View className="shareImages_icon_num">
+                {setPeople(likeAmount)}
+              </View>
+              {
+                <View style={{ display: "flex", alignItems: "center" }}>
+                  <View
+                    className={classNames(
+                      "shareImages_icon_size",
+                      merchantCollectionStatus === "1"
+                        ? "shareImages_shoucang_icon2"
+                        : "shareImages_shoucang_icon1"
+                    )}
+                    onClick={() => this.collectionStatus()}
+                  ></View>
+                  <View className="shareImages_icon_num">
+                    {setPeople(collectionAmount)}
+                  </View>
+                </View>
+              }
+            </View>
+          </View>
+          {beanSet && (
+            <GetBeanCanvas
+              beanStatus={watchStatus}
+              beanNum={beanAmount}
+              interval={time}
+              length={length}
+              lookStatus={lookStatus}
+              getBeanStatus={beanLimitStatus}
+            ></GetBeanCanvas>
+          )}
+          {toast && (
+            <Toast
+              data={userMomentsInfo}
+              visible={() => {
+                if (couponList.length > 0) {
+                  this.setState({
+                    toast: false,
+                    lookStatus: "1",
+                    conpouVisible: true,
+                  });
+                } else {
+                  this.setState({
+                    toast: false,
+                    lookStatus: "1",
+                  });
+                }
+              }}
+            ></Toast>
+          )}
+          {conpouVisible && (
+            <Coupons
+              title={"看分享大礼包"}
+              visible={() => {
+                this.setState({ conpouVisible: false });
+              }}
+              type={'moment'}
+              data={couponList}
+            ></Coupons>
+          )}
         </View>
-     )
+      );
+    }
+    return null;
   }
 }

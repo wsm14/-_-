@@ -12,26 +12,26 @@ import {
 } from "@/common/utils";
 import Taro from "@tarojs/taro";
 import "./../index.scss";
-import Router  from '@/common/router'
-const goWatch  = (type,momentId)  => {
-  if(type  ===  'video'){
+import Router from "@/common/router";
+const goWatch = (type, momentId, Id) => {
+  if (type === "video") {
     Router({
-      routerName:'shareVideo',
+      routerName: "shareVideo",
       args: {
-        momentId: momentId
-      }
-    })
-  }
-  else{
+        momentId: momentId,
+        merchantId: Id,
+      },
+    });
+  } else {
     Router({
-      routerName:'shareImage',
+      routerName: "shareImage",
       args: {
-        momentId: momentId
-      }
-    })
+        momentId: momentId,
+        merchantId: Id,
+      },
+    });
   }
-  
-}
+};
 export const createFall = (item, index) => {
   const {
     beanAmount,
@@ -41,7 +41,7 @@ export const createFall = (item, index) => {
     lat,
     lnt,
     likeAmount,
-    serLikeStatus,
+    userLikeStatus,
     watchStatus,
     title,
     momentId,
@@ -54,9 +54,13 @@ export const createFall = (item, index) => {
     length,
     viewAmount,
     imageLength,
+    userIdString,
   } = item;
   return (
-    <View onClick={() => goWatch(contentType,momentId)} className="createFall_box">
+    <View
+      onClick={() => goWatch(contentType, momentId,userIdString)}
+      className="createFall_box"
+    >
       <View className="createFall_image dakale_nullImage">
         <Image
           style={{
@@ -120,7 +124,7 @@ export const createFall = (item, index) => {
             <View
               className={classNames(
                 "createFall_zanIcon",
-                serLikeStatus === "1" ? "createFall_icon2" : "createFall_icon1"
+                userLikeStatus === "1" ? "createFall_icon2" : "createFall_icon1"
               )}
             ></View>
             <View className="createFall_zanName createFall_zanColor1">
@@ -141,7 +145,7 @@ export const createFull = (item) => {
     lat,
     lnt,
     likeAmount,
-    serLikeStatus,
+    userLikeStatus,
     watchStatus,
     title,
     momentId,
@@ -154,10 +158,14 @@ export const createFull = (item) => {
     length,
     viewAmount,
     imageLength,
+    userIdString
   } = item;
 
   return (
-    <View onClick={() => goWatch(contentType,momentId)} className="createFull_box">
+    <View
+      onClick={() => goWatch(contentType, momentId,userIdString)}
+      className="createFull_box"
+    >
       <View className="createFull_image">
         {contentType === "video" && <View className="createFull_video"></View>}
         <Image
@@ -195,7 +203,7 @@ export const createFull = (item) => {
           <View
             className={classNames(
               "createFall_zanIcon",
-              serLikeStatus === "1" ? "createFall_icon2" : "createFall_icon1"
+              userLikeStatus === "1" ? "createFall_icon2" : "createFall_icon1"
             )}
           ></View>
           <View className="createFall_zanName createFall_zanColor1">
@@ -205,7 +213,10 @@ export const createFull = (item) => {
       </View>
       <View className="createFull_userBox public_auto">
         <View className="createFull_userBox_left">
-          <View className="createFull_userBox_profile dakale_profile" style={userProfile?backgroundObj(userProfile):{}}></View>
+          <View
+            className="createFull_userBox_profile dakale_profile"
+            style={userProfile ? backgroundObj(userProfile) : {}}
+          ></View>
           <View className="createFull_userBox_userName font_hide">
             {username}
           </View>
@@ -219,7 +230,7 @@ export const createFull = (item) => {
                 : "createFall_zanColor2"
             )}
           >
-           {watchStatus === "0"
+            {watchStatus === "0"
               ? `观看可捡${beanAmount}豆`
               : `已捡${beanAmount}豆`}
           </View>

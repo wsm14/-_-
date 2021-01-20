@@ -277,7 +277,7 @@ export const shopCard = (_this, data, obj) => {
                 style={merchantLogo ? {...backgroundObj(merchantLogo)} : {}}>
 
             <View className='merchant_mit  public_center font20 color6'>
-              {'距你' + GetDistance(getLat(), getLnt(), lat, lnt)}
+              {GetDistance(getLat(), getLnt(), lat, lnt)}
             </View>
           </View>
           <View className='shop_card_right'>

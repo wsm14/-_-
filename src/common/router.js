@@ -48,6 +48,7 @@ export default ({routerName, type = 'navigateTo', args = {}}) => {
     //周边
     kolShopGoods: '/pages/goods/kolShopGoods/index',
     codePay: '/pages/goods/codePay/index',
+    coupon:'/pages/goods/codeCoupon/index',
     //订单  goods
     legal: "/pages/kol/legal/index",//达人等级
     report: "/pages/kol/report/index",//举报
@@ -55,6 +56,7 @@ export default ({routerName, type = 'navigateTo', args = {}}) => {
     shareKolImage: "/pages/kol/shareImage/index",//kol图片详情页,
     follow: "/pages/kol/follow/index",//关注列表,
     fans: "/pages/kol/fans/index",//粉丝列表,
+ 
     //kol
   }[routerName]
   const types = type

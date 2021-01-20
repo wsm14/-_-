@@ -6,7 +6,7 @@ import './assets/css/color.scss'
 import './assets/css/font.scss'
 import './assets/css/background.scss'
 import Taro from '@tarojs/taro'
-import Store from './store/index'
+import Store from './model/index'
 
 const store = {
   ...Store
@@ -25,6 +25,8 @@ class App extends Component {
   }
 
   componentDidCatchError() {
+  }
+  componentWillUnmount() {
   }
 
   fetchCheckUpdate() {

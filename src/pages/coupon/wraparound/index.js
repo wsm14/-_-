@@ -7,7 +7,14 @@ import Tabs from '@/components/tabs'
 import CouponStatus from './components/couponStatus'
 import NullStatus from './components/nullStatus'
 import './index.scss'
-
+const shine  =  (index) => {
+  switch (index) {
+    case  (0):  return  '0';
+    case  (1):  return  '3';
+    case  (2):  return  '2';
+    case  (3):  return  '1';
+  }
+}
 class Index extends PureComponent {
   constructor() {
     super(...arguments)
@@ -24,12 +31,12 @@ class Index extends PureComponent {
   getCouponList() {
     const {setting: {current}} = this.state
     getCouponList({
-      couponStatus: current.toString()
+      couponStatus: shine(current)
     }, res => {
       const {nearUseList = [], otherUseList = []} = res
       this.setState({
-        nearUseList: nearUseList,
-        otherUseList: otherUseList
+        nearUseList: [...nearUseList],
+        otherUseList: [...otherUseList]
       })
     })
   }
@@ -41,7 +48,9 @@ class Index extends PureComponent {
         setting: {
           ...this.state.setting,
           current: index
-        }
+        },
+        nearUseList : [], 
+        otherUseList : []
       }, res => {
         this.getCouponList()
       })
@@ -86,28 +95,19 @@ class Index extends PureComponent {
       ),
       1: (
         <>
-          {otherUseList.length > 0 && <CouponStatus data={otherUseList}></CouponStatus>}
+          {(otherUseList.length > 0||nearUseList.length>0) && <CouponStatus  data={[...nearUseList,...otherUseList]}></CouponStatus>}
         </>
       ),
       2: (
         <>
-          {otherUseList.length > 0 && <CouponStatus data={otherUseList}></CouponStatus>}
+          {(otherUseList.length > 0||nearUseList.length>0) && <CouponStatus data={[...nearUseList,...otherUseList]}></CouponStatus>}
         </>
       ),
       3: (
         <>
-          {nearUseList.length > 0 &&
-          <>
-            <View className='wraparound_content_margin font32 color1 bold'>周边可用</View>
-            <CouponStatus data={nearUseList} visible={false}></CouponStatus>
-          </>
-          }
-          {otherUseList.length > 0 && <>
-            <View className='wraparound_content_margin font32 color1 bold'>其他</View>
-            <CouponStatus data={otherUseList}></CouponStatus>
-          </>}
+          {(otherUseList.length > 0||nearUseList.length>0) && <CouponStatus   data={[...nearUseList,...otherUseList]}></CouponStatus>}
         </>
-      )
+      ),
     }[current]
     return (
       <View className='wraparound_box'>

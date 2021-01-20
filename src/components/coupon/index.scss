@@ -1,0 +1,126 @@
+.dakale_coupon {
+  .dakale_layer {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    line-height: 1;
+    .dakale_gift {
+      width: 600px;
+      background: #ffffff;
+      border-radius: 20px;
+
+      .dakale_gift_top {
+        height: 90px;
+        line-height: 90px;
+        text-align: center;
+        position: relative;
+        font-size: 32px;
+        font-weight: 600;
+        color: #333333;
+        position: relative;
+        .dakale_gift_closeIcon {
+          width: 44px;
+          height: 44px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon417.png")
+            no-repeat;
+          background-size: 100% 100%;
+          right: 20px;
+          top: 20px;
+          position: absolute;
+        }
+      }
+      .dakale_gift_liner {
+        width: 600px;
+        height: 2px;
+        background: #e5e5e5;
+      }
+      .dakale_gift_content {
+        max-height: 608px;
+        overflow-y: auto;
+        padding: 32px 40px 0;
+        .dakale_gift_coupon {
+          width: 520px;
+          padding-bottom: 24px;
+          .dakale_gift_couponTop {
+            padding: 24px 24px 0;
+            vertical-align: text-top;
+            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon419.png")
+              no-repeat;
+            background-size: 100% 100%;
+          }
+          .dakale_gift_couponCover {
+            display: inline-block;
+            vertical-align: text-top;
+            width: 70px;
+            height: 70px;
+          }
+          .dakale_gift_fonts {
+            display: inline-block;
+            vertical-align: text-top;
+            margin-left: 16px;
+            .dakale_gift_title {
+              width: 386px;
+              max-height: 84px;
+              font-size: 28px;
+              font-weight: 600;
+              color: #333333;
+              line-height: 42px;
+            }
+            .dakale_gift_term {
+              padding-top: 4px;
+              font-size: 20px;
+              font-weight: 400;
+              color: #999999;
+            }
+          }
+          .dakale_gift_couponContent {
+            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon420.png")
+              no-repeat;
+            vertical-align: text-top;
+            height: 111px;
+            background-size: 100% 100%;
+            position: relative;
+            .dakale_gift_address {
+              width: 336px;
+              font-size: 24px;
+              font-weight: 400;
+              color: #999999;
+              padding-top: 32px;
+              padding-left: 24px;
+            }
+            .dakale_gift_date {
+              padding-top: 12px;
+              padding-left: 24px;
+              font-size: 20px;
+              font-weight: 400;
+              color: #ef476f;
+            }
+            .dakale_gift_btn {
+              position: absolute;
+              right: 24px;
+              bottom: 24px;
+              width: 96px;
+              height: 48px;
+              border-radius: 8px;
+              text-align: center;
+              font-size: 24px;
+              line-height: 48px;
+              background: #ef476f;
+              color: #ffffff;
+            }
+            .dakale_gift_opacity {
+              opacity: 0.3;
+            }
+          }
+        }
+      }
+    }
+  }
+}

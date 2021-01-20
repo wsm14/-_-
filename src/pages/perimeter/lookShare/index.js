@@ -9,6 +9,7 @@ import "./index.scss";
 import { toast, getDom } from "@/common/utils";
 import Waterfall from "@/components/waterfall";
 import { Animates3 } from "@/common/animates";
+import evens  from  '@/common/evens'
 class Index extends React.Component {
   constructor() {
     super(...arguments);
@@ -25,16 +26,26 @@ class Index extends React.Component {
       // animates: "1",
     };
   }
-
+  
+  componentDidShow() {
+    evens.$on("updateShareList", this.updateList.bind(this));
+  }
   componentDidMount() {
     this.getListMoments();
   }
-  // componentDidShow() {
-  //   let that = this;
-  //   that.setState({
-  //     animates: Animates3({ duration: 2000 }).export(),
-  //   });
-  // }
+  updateList(obj) {
+    const { userMomentsList } = this.state;
+    let list = userMomentsList.map((item) => {
+      if (item["momentId"] === obj["momentId"]) {
+        obj["momentId"] = item["momentId"];
+        return {...item,...obj};
+      }
+      return item;
+    });
+    this.setState({
+      userMomentsList: list,
+    });
+  }
   updateSelect(obj) {
     const { httpData } = this.state;
     this.setState(
@@ -100,7 +111,7 @@ class Index extends React.Component {
       );
     } else toast("暂无更多");
   }
-
+  
   render() {
     const { userMomentsList, mode } = this.state;
     const viewObj = {
@@ -111,7 +122,6 @@ class Index extends React.Component {
           imgHight={"frontImageHeight"}
           imgWidth={"frontImageWidth"}
           setWidth={335}
-          maxHeight={420}
           style={{ width: Taro.pxTransform(335) }}
         ></Waterfall>
       ),

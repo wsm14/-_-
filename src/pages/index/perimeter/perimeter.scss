@@ -609,3 +609,62 @@ page {
   color: #666666;
   line-height: 42px;
 }
+.permerter_user_login {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 98px;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  z-index: 10000086;
+  .permerter_user_close {
+    width: 48px;
+    height: 48px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon422.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin-left: 32px;
+  }
+  .permerter_user_loginFont {
+    height: 32px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 32px;
+    margin-left: 32px;
+  }
+  .permerter_user_loginbtn {
+    margin-left: 100px;
+    width: 120px;
+    height: 60px;
+    background: #ffffff;
+    border-radius: 8px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 28px;
+    color: rgba(16, 133, 136, 1);
+  }
+}
+.permerter_user_collcetion {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 686px;
+  height: 106px;
+  margin: 0 auto;
+  z-index: 1000086;
+  .permerter_user_position {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    line-height: 126px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+}

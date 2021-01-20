@@ -71,6 +71,7 @@ class Index extends PureComponent {
       },
       visible: false,
       result: {},
+      login: false,
     };
     this.interceptors = null;
   }
@@ -336,6 +337,8 @@ class Index extends PureComponent {
   //获取具体位置信息 设置经纬度
   componentDidMount() {
     const that = this;
+    Taro.setStorageSync("login", (Taro.getStorageSync("login") || 0) + 1);
+    toast(Taro.getStorageSync("login").toString());
     const { bannerHttp, specialHttp } = this.state;
     this.getKolList();
     this.setState({
@@ -712,6 +715,36 @@ class Index extends PureComponent {
             Components={this.tishiDom.bind(this)}
             close={() => this.setState({ visible: false })}
           ></Toast>
+        )}
+        {Taro.getStorageSync("login") === 1 &&
+          !Taro.getStorageSync("userInfo") &&
+          !this.state.login && (
+            <View className="permerter_user_login">
+              <View
+                className="permerter_user_close"
+                onClick={() => this.setState({ login: true })}
+              ></View>
+              <View className="permerter_user_loginFont">
+                登录哒卡乐，捡豆不遗漏
+              </View>
+              <View
+                className="permerter_user_loginbtn"
+                onClick={() => navigateTo("/pages/auth/index")}
+              >
+                登录
+              </View>
+            </View>
+          )}
+        {Taro.getStorageSync("login") === 1 && (
+          <CoverView style={{top:Taro.pxTransform(parseInt(NavHeight())+70)}} className="permerter_user_collcetion">
+            <CoverImage
+              style={{width:'100%',height:'100%'}}
+              src={
+                "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon423.png"
+              }
+            ></CoverImage>
+            <CoverView className='permerter_user_position'>点击“...” 添加到我的小程序,卡豆捡不停 </CoverView>
+          </CoverView>
         )}
       </View>
     );
