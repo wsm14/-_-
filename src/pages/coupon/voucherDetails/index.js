@@ -49,6 +49,7 @@ class Index extends PureComponent {
         useWeek,
         useTime,
         buyDesc,
+        thresholdPrice,
       },
     } = this.state;
     if (Object.keys(userCouponInfo).length > 0) {
@@ -63,17 +64,21 @@ class Index extends PureComponent {
             <View className="shop_toastDec shop_toastDate">有效期：</View>
             <View className="shop_toastText">
               <Text className="shop_toastTextColor">
-                {activeBeginDate + " ～ " + activeEndDate}{" "}
+                {activeBeginDate + " 至 " + activeEndDate}{" "}
               </Text>
               ，请在有效期内使用；
             </View>
-            <View className="shop_toastDec shop_getDate">使用时间：</View>
-            <View className="shop_toastText">
-              <Text className="shop_toastTextColor">
-                {(filterWeek(useWeek) || "全天") + " " + (useTime || "24小时")}
-              </Text>
-              ，具体以门店供应时段为准；
-            </View>
+            {thresholdPrice && (
+              <>
+                <View className="shop_toastDec shop_showNow">使用门槛：</View>
+                <View
+                  style={{ lineHeight: Taro.pxTransform(36) }}
+                  className="shop_toastText"
+                >
+                  满{thresholdPrice}元可用 
+                </View>
+              </>
+            )}
             <View className="shop_toastDec shop_showNow">购买须知：</View>
             <View
               style={{ lineHeight: Taro.pxTransform(36) }}

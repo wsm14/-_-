@@ -126,8 +126,8 @@
   background: #FFFFFF;
 }
 .record_selected{
-  position: absolute;
-  top: 128px;
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -141,17 +141,18 @@
     background: #FFFFFF;
     font-size: 24px;
     position: relative;
-    .record_selectTitleIcon:after{
-      width: 16px;
-      height: 8px;
-      background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon6.png");
-      background-size: 100% 100%;
-      content: '';
-      display: inline-block;
-      left: 85px;
-      top: 38px;
-      position: absolute;
-    }
+   
+  }
+  .record_selectTitle:after{
+    width: 16px;
+    height: 8px;
+    background: url("https://dakale-web.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/index/icon6.png");
+    background-size: 100% 100%;
+    content: '';
+    display: inline-block;
+    top: 38px;
+    position: absolute;
+    margin-left: 8px;
   }
   .record_date{
     height: 94px;

@@ -50,7 +50,7 @@ class Index extends PureComponent {
               有效期：
             </View>
             <View className='shop_toastText'>
-              <Text className='shop_toastTextColor'>{activeBeginDate + ' - ' + activeEndDate} </Text>，请在有效期内使用；
+              <Text className='shop_toastTextColor'>{activeBeginDate + ' 至 ' + activeEndDate} </Text>，请在有效期内使用；
             </View>
             <View className='shop_toastDec shop_getDate'>
               使用时间：

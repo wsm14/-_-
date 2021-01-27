@@ -13,6 +13,7 @@ const shine  =  (index) => {
     case  (1):  return  '3';
     case  (2):  return  '2';
     case  (3):  return  '1';
+    default:  return  index;
   }
 }
 class Index extends PureComponent {
@@ -31,7 +32,7 @@ class Index extends PureComponent {
   getCouponList() {
     const {setting: {current}} = this.state
     getCouponList({
-      couponStatus: shine(current)
+      couponStatus:  String(shine(current))
     }, res => {
       const {nearUseList = [], otherUseList = []} = res
       this.setState({

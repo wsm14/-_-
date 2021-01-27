@@ -102,9 +102,9 @@ export default class Index extends React.Component {
   searchDetails(e) {
     if (this.instance) {
       clearTimeout(this.instance)
-      this.instance = setTimeout(this.search.bind(this, e), 1200)
+      this.instance = setTimeout(this.search.bind(this, e), 300)
     } else {
-      this.instance = setTimeout(this.search.bind(this, e), 1200)
+      this.instance = setTimeout(this.search.bind(this, e), 300)
     }
   }
 
@@ -174,7 +174,7 @@ export default class Index extends React.Component {
               return (
                 <View
                   onClick={() => this.changeClick(item)}
-                  className='shopTag'>{item}</View>
+                  className='shopTag  font_hide'>{item}</View>
               )
             })}
           </View>
@@ -263,7 +263,7 @@ export default class Index extends React.Component {
           <View className='search_shop_inputBox'>
             <Input type={'text'} confirmType={'search'} onConfirm={() => {
               keyword && this.changeClick(keyword)
-            }} value={keyword} onInput={(e) => this.searchDetails(e)} className='search_shop_input'
+            }} value={keyword} onBlur={(e) => this.searchDetails(e)} className='search_shop_input'
                    placeholder={'搜索附近商户/用户以及好玩的话题内容'}></Input>
           </View>
           {hasListObj}

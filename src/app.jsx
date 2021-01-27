@@ -1,33 +1,30 @@
-import React, {Component} from 'react'
-import {Provider} from 'mobx-react'
-import {authUpdateGeography} from '@/common/authority'
-import './assets/css/app.scss'
-import './assets/css/color.scss'
-import './assets/css/font.scss'
-import './assets/css/background.scss'
-import Taro from '@tarojs/taro'
-import Store from './model/index'
+import React, { Component } from "react";
+import { Provider } from "mobx-react";
+import { authUpdateGeography } from "@/common/authority";
+import "./assets/css/app.scss";
+import "./assets/css/color.scss";
+import "./assets/css/font.scss";
+import "./assets/css/background.scss";
+import Taro from "@tarojs/taro";
+import Store from "./model/index";
 
 const store = {
-  ...Store
-}
+  ...Store,
+};
 
 class App extends Component {
   componentDidMount() {
-    this.fetchLocation()
+    this.fetchLocation();
   }
 
   componentDidShow() {
     this.fetchCheckUpdate();
   }
 
-  componentDidHide() {
-  }
+  componentDidHide() {}
 
-  componentDidCatchError() {
-  }
-  componentWillUnmount() {
-  }
+  componentDidCatchError() {}
+  componentWillUnmount() {}
 
   fetchCheckUpdate() {
     // 判断目前微信版本是否支持自动更新
@@ -62,22 +59,20 @@ class App extends Component {
   }
 
   fetchLocation() {
-    authUpdateGeography(this.fetchUpdataLocation.bind(this))
+    authUpdateGeography(this.fetchUpdataLocation.bind(this));
   }
 
   fetchUpdataLocation(res) {
-    const {latitude, longitude} = res
+    const { latitude, longitude } = res;
+    Taro.setStorageSync('lat',latitude);
+    Taro.setStorageSync('lnt',longitude);
     Store.locationStore.setLocation(latitude, longitude);
   }
 
   // this.props.children 就是要渲染的页面
   render() {
-    return (
-      <Provider store={store}>
-        {this.props.children}
-      </Provider>
-    )
+    return <Provider store={store}>{this.props.children}</Provider>;
   }
 }
 
-export default App
+export default App;

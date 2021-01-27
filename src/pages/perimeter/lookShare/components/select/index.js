@@ -146,13 +146,13 @@ export default ({modeFn,selects}) => {
         <View className='select_share_content'>
           <View onClick={() => showSelect(0)}
                 className={classNames('select_tab_box', (type && status === 0) ? 'select_tab_color2' : 'select_tab_color1')}>
-            <View className='select_tab_font'>{categoryId.categorName}</View>
+            <View className='select_tab_font bold'>{categoryId.categorName}</View>
             <View
               className={classNames('select_icon_box', (type && status === 0) ? 'select_icon2' : 'select_icon1')}></View>
           </View>
           <View onClick={() => showSelect(1)}
                 className={classNames('select_tab_box', (type && status === 1) ? 'select_tab_color2' : 'select_tab_color1')}>
-            <View className='select_tab_font'>{limit.label}</View>
+            <View className='select_tab_font bold'>{limit.label}</View>
             <View
               className={classNames('select_icon_box', (type && status === 1) ? 'select_icon2' : 'select_icon1')}></View>
           </View>

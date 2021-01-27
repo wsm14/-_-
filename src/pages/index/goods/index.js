@@ -55,10 +55,11 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    this.getOrder()
+    // this.getOrder()
   }
   componentDidShow() {
     const {store: {goodsStore: {orderList}}} = this.props
+    console.log(orderList.length)
     if(orderList.length === 0){
       this.getOrder()
     }

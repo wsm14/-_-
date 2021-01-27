@@ -4,6 +4,7 @@ import { Button, Image, View } from "@tarojs/components";
 import Tab1 from "./components/userTab";
 import "./index.scss";
 import { getMainPage } from "@/server/user";
+import { getBanner } from "@/server/common";
 import {
   backgroundObj,
   removeLogin,
@@ -12,8 +13,8 @@ import {
 } from "@/common/utils";
 import MakePhone from "@/components/payTelephone";
 import classNames from "classnames";
+import Banner from "@/components/banner";
 import { scanCode } from "@/common/authority";
-
 class Index extends React.Component {
   constructor() {
     super(...arguments);
@@ -56,19 +57,15 @@ class Index extends React.Component {
     };
   }
 
-  // getBanner() {
-  //   const {wechatBanner} = wxapiGet
-  //   const {bannerHttp} = this.state
-  //   httpGet({
-  //     data: bannerHttp,
-  //     url: wechatBanner
-  //   }, res => {
-  //     const {bannerList} = res
-  //     this.setState({
-  //       bannerList
-  //     })
-  //   })
-  // }
+  getBannerList() {
+    const { bannerHttp } = this.state;
+    getBanner(bannerHttp, (res) => {
+      const { bannerList } = res;
+      this.setState({
+        bannerList,
+      });
+    });
+  }
 
   getUserDetails() {
     getMainPage({}, (res) => {
@@ -85,7 +82,7 @@ class Index extends React.Component {
     });
   }
   componentDidMount() {
-    // this.getBanner()
+    // this.getBannerList();
   }
 
   componentDidShow() {
@@ -116,6 +113,7 @@ class Index extends React.Component {
     } = this.state;
     return (
       <View className="page_userBox">
+        <View className='page_userBox_rightLogo'></View>
         {loginStatus === 0 && (
           <View
             className="page_userTop"
@@ -141,7 +139,8 @@ class Index extends React.Component {
             ></View>
             <View className="user_details">
               <View className="users_name color1 bold">{username}</View>
-              <View className="users_status">
+              
+              <View style={realNameStatus==='2'?{}:{visibility:'hidden'}} className="users_status">
                 <View
                   className={classNames(
                     "users_tag_box",
@@ -203,7 +202,13 @@ class Index extends React.Component {
             ></View>
           </View>
           <View className="user_surplus_center">
-            <View className="user_surplus_wallet">
+            <View
+              className="user_surplus_wallet"
+              onClick={(e) => {
+                e.stopPropagation(),
+                  navigateTo("/pages/newUser/rewardDetails/index");
+              }}
+            >
               <View className="color7 font24">明细</View>
               <View className="user_wallet_box user_decIcon"></View>
             </View>
@@ -256,17 +261,6 @@ class Index extends React.Component {
             </View>
           </View>
         </View>
-        {/*<View className='users_banner'>*/}
-        {/*  <Banner*/}
-        {/*    showNear={true}*/}
-        {/*    autoplay={bannerList.length > 1 ? true : false}*/}
-        {/*    imgStyle*/}
-        {/*    data={bannerList}*/}
-        {/*    imgName={'coverImg'}*/}
-        {/*    style={{width: '100%', height: '100%'}}*/}
-        {/*    boxStyle={{width: '100%', height: '100%'}}*/}
-        {/*  ></Banner>*/}
-        {/*</View>*/}
         {telephone && (
           <MakePhone
             data={filterStrList(merchantMobile)}
@@ -275,6 +269,15 @@ class Index extends React.Component {
           ></MakePhone>
         )}
         <View className="users_actives">
+          {/* <Banner
+            showNear={true}
+            autoplay={bannerList.length > 1 ? true : false}
+            imgStyle
+            data={bannerList}
+            imgName={"coverImg"}
+            style={{ width: "100%", height: "100%" }}
+            boxStyle={{ width: "100%", height: "100%" }}
+          ></Banner> */}
           <Image
             onClick={() =>
               navigateTo(
@@ -282,7 +285,7 @@ class Index extends React.Component {
               )
             }
             src={
-              "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon313.png"
+              "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon427.png"
             }
             lazyLoad
             className="users_Images"

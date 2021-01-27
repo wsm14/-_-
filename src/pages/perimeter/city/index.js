@@ -1,155 +1,135 @@
-import React, {Component} from 'react'
-import Taro, {getCurrentInstance} from '@tarojs/taro'
-import {Text, View} from '@tarojs/components'
-import {city} from './common/city'
-import classNames from 'classnames'
-import './index.scss'
-import {toast,getDom,goBack} from "@/common/utils";
-import Toast from '@/components/dakale_toast'
-// const filterCity  = (obj) => {
-//    return Object.keys(obj).map(item  => {
-//      return  {
-//        title: item,
-//        key: item,
-//        items:obj[item]
-//      }
-//   })
-// }
-const marginTags = (list, num, style, components) => {
-  return (list.map((item, index) => {
-      return (
-        <View style={(index + 1) % num !== 0 && style}>
-          {components(item, index)}
-        </View>
-      )
-    })
-  )
-}
-
+import React, { Component } from "react";
+import Taro, { getCurrentInstance } from "@tarojs/taro";
+import { Text, View } from "@tarojs/components";
+import classNames from "classnames";
+import "./index.scss";
+import { listAllLocationCity, getLocationCity } from "@/server/common";
+import { backgroundObj, goBack } from "@/common/utils";
+import Router from "@/common/router";
+import { inject, observer } from "mobx-react";
+@inject("store")
+@observer
 class Index extends Component {
   constructor() {
-    super(...arguments)
+    super(...arguments);
     this.state = {
-      cityJson: city,
-      selectValue: '杭州',
-      scrollTop:0,
-      consent: [
-        {name: '杭州'},
-        {name: '厦门'}
-      ],
-      hot: [
-        {name: '北京'},
-        {name: '上海'},
-        {name: '广州'},
-        {name: '深圳'},
-        {name: '成都'},
-        {name: '重庆'},
-        {name: '天津'},
-        {name: '青岛'},
-        {name: '南京'},
-        {name: '苏州'},
-        {name: '武汉'},
-      ],
-      visible: false
-    }
+      httpData: {
+        status: "1",
+        page: 1,
+        limit: 10,
+      },
+      countStatus: true,
+      locationCityList: [],
+      locationCityInfo: {},
+    };
   }
-
-  setIndex(index) {
-    if(index ==='杭州'){
+  listAllLocationCitys() {
+    const { httpData } = this.state;
+    listAllLocationCity(httpData, (res) => {
+      const { locationCityList = [] } = res;
+      if (locationCityList && locationCityList.length > 0) {
+        this.setState({
+          locationCityList: [
+            ...this.state.locationCityList,
+            ...locationCityList,
+          ],
+        });
+      } else {
+        this.setState({
+          countStatus: false,
+        });
+      }
+    });
+  }
+  getLocationCitys() {
+    const { cityCode } = this.props.store.locationStore;
+    getLocationCity({ cityCode: cityCode }, (res) => {
+      const { locationCityInfo } = res;
       this.setState({
-        selectValue: index,
-      },res => {
-        goBack()
-      })
+        locationCityInfo,
+      });
+    });
+  }
+  componentDidMount() {
+    this.listAllLocationCitys();
+    this.getLocationCitys();
+  }
+  onReachBottom() {
+    const { httpData, countStatus } = this.state;
+    if (countStatus) {
+      this.setState(
+        {
+          httpData: {
+            ...httpData,
+            page: httpData.page + 1,
+          },
+        },
+        (res) => {
+          this.listAllLocationCitys();
+        }
+      );
+    } else {
+      return toast("暂无数据");
     }
-    else {
-      this.setState({
-        visible: true
-      })
-    }
-  }
-  searchSelect(title) {
-    Taro.pageScrollTo({
-      selector: `#${title}`,
-      duration: 300
-    })
-  }
-  tishiDom() {
-    return (
-      <View className='city_toast_box'>
-        <View>自动定位杭州，更多精彩敬请期待
-          详情可咨询客服，联系电话：<Text className='color4'>
-            400 -800-5881</Text></View>
-      </View>
-    )
-  }
+  } //上拉加载
   render() {
-    const tagStyle = {
-      marginRight: Taro.pxTransform(16)
-    }
-    const {consent, hot, selectValue, cityJson,scrollTop,visible} = this.state
+    const {
+      locationCityList,
+      locationCityInfo: { cityDesc = "" },
+    } = this.state;
+    const { cityCode, cityName } = this.props.store.locationStore;
     return (
-      <View className='city_box'>
-        <View className='city_title'>
-          默认城市
+      <View className="city_box">
+        <View className="city_content_box">
+          <View className="city_content_user">
+            <View className="city_content_userIcon"></View>
+            <View className="city_content_userName bold">我在·{cityName}</View>
+            <View className="city_content_desc">{cityDesc}</View>
+          </View>
         </View>
-        <View className='city_tags'>
-          {marginTags(consent, 4, tagStyle, (item, index) => {
+        <View className="city_content_citys">
+          {locationCityList.map((item) => {
+            const {
+              backgroundImg,
+              locationCityIdString,
+              cityCode,
+              cityName,
+              citySpell,
+            } = item;
             return (
-              <View onClick={() => this.setIndex(item.name)}
-                    className={classNames(selectValue === item.name ? 'city_tags_checkedBox' : 'city_tags_box color1')}>
-                {selectValue === item.name ? (<View className='city_tags_checkedBox'>
-                  <View className='city_tags_boxIcon'></View>{item.name}
-                </View>) : item.name}
+              <View
+                className="city_content_cityImage"
+                onClick={() => {
+                  this.props.store.locationStore.setCity(
+                    cityName,
+                    cityCode,
+                    "1"
+                  );
+                  Taro.reLaunch({
+                    url: "/pages/index/perimeter/index",
+                  });
+                }}
+                style={backgroundObj(backgroundImg)}
+              >
+                <View className="city_content_font1  bold">{citySpell}</View>
+                <View className="city_content_font2 bold">{cityName}</View>
               </View>
-            )
+            );
           })}
         </View>
-        <View className='city_title'>
-          热门城市
-        </View>
-        <View className='city_tags'>
-          {marginTags(hot, 4, tagStyle, (item, index) => {
-            return (
-              <View onClick={() => this.setIndex(item.name)}
-                    className={classNames(selectValue === item.name ? 'city_tags_checkedBox' : 'city_tags_box color1')}>
-                {selectValue === item.name ? (<View className='city_tags_checkedBox'>
-                  <View className='city_tags_boxIcon'></View>{item.name}
-                </View>) : item.name}
-              </View>
-            )
-          })}
-        </View>
-        {cityJson.map(item => {
-          const {title, items} = item
-          return (
-            <View className='city_father'>
-              <View id={title} className='city_type_select color1'>
-                {item.title}
-              </View>
-              {items.map(val => {
-                return (
-                  <View onClick={() => this.setIndex(item.name)} className='city_type_selectTab font28 color1'>
-                    {val.name}
-                  </View>
-                )
-              })}
-            </View>
-          )
-        })}
-        <View className='city_right_layer'>
-          {cityJson.map(item => {
-            const {title, items} = item
-            return (
-              <View onClick={() => this.searchSelect(title)} className='city_child_box'>{item.title}</View>
-            )
-          })}
-        </View>
-        {visible && <Toast title={'您的城市即将开通服务'} Components={this.tishiDom.bind(this)}
-                           close={() => this.setState({visible: false},res => {goBack()})}></Toast>}
+
+        <View className="city_content_bottom"></View>
+        <View
+          className="city_content_bottomGO"
+          onClick={() =>
+            Router({
+              routerName: "willCity",
+            })
+          }
+        ></View>
       </View>
-    )
+    );
   }
 }
 
-export default Index
+export default Index;

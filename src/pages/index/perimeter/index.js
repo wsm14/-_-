@@ -1,15 +1,6 @@
 import React, { PureComponent } from "react";
-import Taro, { getCurrentInstance } from "@tarojs/taro";
-import {
-  Input,
-  ScrollView,
-  Swiper,
-  SwiperItem,
-  View,
-  CoverView,
-  CoverImage,
-  Text,
-} from "@tarojs/components";
+import Taro, { getCurrentInstance, pxTransform } from "@tarojs/taro";
+import { ScrollView, View, Image, Text } from "@tarojs/components";
 import Banner from "@/components/banner";
 import { wxapiGet, index, perimeter } from "@/api/api";
 import { httpGet } from "@/api/newRequest";
@@ -37,6 +28,8 @@ import evens from "@/common/evens";
 import { getAddress, getDictionary } from "@/server/common";
 import Toast from "@/components/dakale_toast";
 import Router from "@/common/router";
+import TabCity from "./components/tabCity";
+import ToastCity from "./components/toastCity";
 @inject("store")
 @observer
 class Index extends PureComponent {
@@ -72,6 +65,7 @@ class Index extends PureComponent {
       visible: false,
       result: {},
       login: false,
+      addWx: true,
     };
     this.interceptors = null;
   }
@@ -291,7 +285,7 @@ class Index extends PureComponent {
     let list = kolMomentsList.map((item) => {
       if (item["kolMomentsId"] === obj["kolMomentId"]) {
         obj["kolMomentsId"] = item["kolMomentsId"];
-        return obj;
+        return { ...item, ...obj };
       }
       return item;
     });
@@ -301,50 +295,59 @@ class Index extends PureComponent {
   }
 
   setMap() {
-    const latitude = getLat();
-    const longitude = getLnt();
-    this.setState({
-      lnt: longitude,
-      lat: latitude,
-    });
-    getAddress(
-      {
-        location: `${latitude},${longitude}`,
-        key: mapTx,
-      },
-      (res) => {
-        const { message, result } = res;
-        if (message === "query ok") {
-          const {
-            address_component: { city },
-          } = result;
-          if (city !== "杭州市") {
-            this.setState({
-              result,
-              visible: true,
-            });
-          } else {
-            this.setState({
-              result,
-            });
+    let times = setInterval(() => {
+      const latitude = getLat();
+      const longitude = getLnt();
+      if (latitude && longitude)
+        this.setState(
+          {
+            lnt: longitude,
+            lat: latitude,
+          },
+          (res) => {
+            getAddress(
+              {
+                location: `${latitude},${longitude}`,
+                key: mapTx,
+              },
+              (res) => {
+                clearInterval(times);
+                const { message, result } = res;
+                if (message === "query ok") {
+                  const {
+                    address_component: { city },
+                  } = result;
+                  if (city !== "杭州市") {
+                    this.setState({
+                      result,
+                    });
+                  } else {
+                    this.setState({
+                      result,
+                    });
+                  }
+                } else {
+                  toast(message);
+                }
+              }
+            );
           }
-        } else {
-          toast(message);
-        }
-      }
-    );
+        );
+    }, 1000);
   }
   //获取具体位置信息 设置经纬度
   componentDidMount() {
     const that = this;
     Taro.setStorageSync("login", (Taro.getStorageSync("login") || 0) + 1);
+    if (Taro.getStorageSync("login") === 1) {
+      setTimeout(() => this.setState({ addWx: false }), 10000);
+    }
     toast(Taro.getStorageSync("login").toString());
     const { bannerHttp, specialHttp } = this.state;
     this.getKolList();
     this.setState({
       navHeight: { paddingTop: Taro.pxTransform(parseInt(NavHeight())) },
     });
-    this.setMap();
     this.getSetting();
     this.getBanner(bannerHttp, "bannerList");
     this.getDomain();
@@ -356,6 +359,7 @@ class Index extends PureComponent {
 
   componentDidShow() {
     this.getUserSimpleInfo();
+    this.setMap();
     evens.$on("updateList", this.updateList.bind(this));
   }
 
@@ -391,16 +395,6 @@ class Index extends PureComponent {
       },
     });
   }
-  tishiDom() {
-    return (
-      <View className="perimeter_toast_box">
-        <View>
-          自动定位杭州，更多精彩敬请期待 详情可咨询客服，联系电话：
-          <Text className="color4">400 -800-5881</Text>
-        </View>
-      </View>
-    );
-  }
   render() {
     const {
       bannerList,
@@ -425,76 +419,83 @@ class Index extends PureComponent {
       iconStatus,
       userDetails,
       subKeyValueList,
-      result: { formatted_addresses = {} },
+      result,
+      result: { formatted_addresses = {}, address_component = {} },
       visible,
+      addWx,
     } = this.state;
     const { userInfo } = this.props.store.authStore;
+    const { cityName, cityCode } = this.props.store.locationStore;
     return (
       <View className="perimerter_box">
-        <CoverView style={setBackGround} className="perimerter_fixed">
-          <CoverView style={navHeight} className="perimerter_fixed_title">
-            <CoverView className="perimerter_title">
-              <CoverView className="perimerter_city">
-                <CoverImage
+        <View style={setBackGround} className="perimerter_fixed">
+          <View
+            style={!iconStatus ? { paddingTop: pxTransform(60) } : {}}
+            className="perimerter_fixed_title"
+          >
+            <View className="perimerter_title">
+              <View className="perimerter_city">
+                <Image
                   className="perimerter_city_box"
                   src={
                     iconStatus
                       ? "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon46.png"
                       : "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon40.png"
                   }
-                ></CoverImage>
-                <CoverView
+                ></Image>
+                <View
                   onClick={(e) => {
                     e.stopPropagation();
                     navigateTo("/pages/perimeter/city/index");
                   }}
                   className="perimerter_city_font"
                 >
-                  杭州
-                </CoverView>
-                <CoverImage
+                  {cityName}
+                </View>
+                <Image
                   className="perimerter_city_select"
                   src={
                     iconStatus
                       ? "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon47.png"
                       : "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon41.png"
                   }
-                ></CoverImage>
-              </CoverView>
-              周边
-            </CoverView>
-            <CoverView className="perimerter_search">
-              <CoverView
-                onClick={() => navigateTo("/pages/perimeter/search_shop/index")}
-                placeholderClass={classNames(
-                  iconStatus ? "placeholder_style1" : "placeholder_style2"
-                )}
-                className={classNames(
-                  iconStatus ? "perimerter_input2" : "perimerter_input1"
-                )}
-              >
-                <CoverImage
-                  className="searchs_image"
-                  src={
-                    iconStatus
-                      ? "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon44.png"
-                      : "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/search_icon.png"
+                ></Image>
+              </View>
+              <View className="perimerter_search">
+                <View
+                  onClick={() =>
+                    navigateTo("/pages/perimeter/search_shop/index")
                   }
-                ></CoverImage>
-                搜一下附近玩乐
-              </CoverView>
-              <CoverImage
+                  placeholderClass={classNames(
+                    iconStatus ? "placeholder_style1" : "placeholder_style2"
+                  )}
+                  className={classNames(
+                    iconStatus ? "perimerter_input2" : "perimerter_input1"
+                  )}
+                >
+                  <Image
+                    className="searchs_image"
+                    src={
+                      iconStatus
+                        ? "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon44.png"
+                        : "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon433.png"
+                    }
+                  ></Image>
+                  搜一下附近玩乐
+                </View>
+              </View>
+              <Image
                 className="perimerter_codeBox"
                 onClick={() => scanCode()}
                 src={
                   iconStatus
-                    ? "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon45.png"
-                    : "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon42.png"
+                    ? "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon435.png"
+                    : "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon434.png"
                 }
-              ></CoverImage>
-            </CoverView>
-          </CoverView>
-        </CoverView>
+              ></Image>
+            </View>
+          </View>
+        </View>
         <View className="perimerter_top">
           <Banner
             showNear={true}
@@ -504,6 +505,7 @@ class Index extends PureComponent {
             imgName={"coverImg"}
             style={{ width: "100%", height: "100%" }}
             boxStyle={{ width: "100%", height: "100%" }}
+            bottom={{ bottom: Taro.pxTransform(104) }}
           ></Banner>
         </View>
         {login(userInfo) !== "0" || Object.keys(userDetails).length < 5 ? (
@@ -532,14 +534,16 @@ class Index extends PureComponent {
                 <View className="perimerter_userflow font_hide">
                   {username || "--"}
                 </View>
-                <View
-                  className={classNames(
-                    "user_user_iconBox",
-                    userRealNameStatus === "1"
-                      ? "perimerter_user_icon2"
-                      : "perimerter_user_icon1"
-                  )}
-                ></View>
+                {userRealNameStatus === "2" && (
+                  <View
+                    className={classNames(
+                      "user_user_iconBox",
+                      userRealNameStatus === "1"
+                        ? "perimerter_user_icon2"
+                        : "perimerter_user_icon1"
+                    )}
+                  ></View>
+                )}
               </View>
               <View
                 style={level === "0" ? { visibility: "hidden" } : {}}
@@ -573,37 +577,37 @@ class Index extends PureComponent {
           <View className="perimerter_active">
             <View
               className="perimerter_beanActive"
-              onClick={() => Router({ routerName: "perimeterIndex" })}
+              onClick={() => navigateTo("/pages/perimeter/lookShare/index")}
             >
               <View className="perimerter_dec">
                 <View className="perimerter_title">
-                  {subKeyValueList[0].title}
+                  {subKeyValueList[1].title}
                 </View>
                 <View className="permerter_intertion permerter_interSize1">
-                  {subKeyValueList[0].subtitle}
-                </View>
-                <View className="permerter_active_accress">
-                  <View className="permerter_active_tag">
-                    <View className="permerter_active_cityIcon"></View>
-                    <View className="permerter_active_cityFont font_hide">
-                      {formatted_addresses.recommend || "国泰科技大厦 "}
-                    </View>
-                  </View>
+                  {subKeyValueList[1].subtitle}
                 </View>
               </View>
             </View>
             <View className="permerter_share">
               <View
                 className="permerter_share_look"
-                onClick={() => navigateTo("/pages/perimeter/lookShare/index")}
+                onClick={() => Router({ routerName: "perimeterIndex" })}
               >
                 <View className="perimerter_dec">
                   <View className="perimerter_title">
-                    {subKeyValueList[1].title}
+                    {subKeyValueList[0].title}
                   </View>
-                  <View className="permerter_intertion permerter_interSize2">
+                  <View className="permerter_active_accress">
+                    <View className="permerter_active_tag">
+                      <View className="permerter_active_cityIcon"></View>
+                      <View className="permerter_active_cityFont font_hide">
+                        {address_component.street || "国泰科技大厦 "}
+                      </View>
+                    </View>
+                  </View>
+                  {/* <View className="permerter_intertion permerter_interSize2">
                     {subKeyValueList[1].subtitle}
-                  </View>
+                  </View> */}
                 </View>
               </View>
               <View className="permerter_share_game" onClick={() => goDown()}>
@@ -632,7 +636,7 @@ class Index extends PureComponent {
             onClick={() => navigateTo("/pages/share/shareFriend/index")}
           >
             <View className="permerter_tab_iconBox permerter_tab_icon2"></View>
-            <View className="permerter_tab_font">邀请好友</View>
+            <View className="permerter_tab_font">分享捡豆</View>
           </View>
           <View className="permerter_tab_box">
             <View
@@ -709,13 +713,6 @@ class Index extends PureComponent {
             )}
           </View>
         </View>
-        {visible && (
-          <Toast
-            title={"您的城市即将开通服务"}
-            Components={this.tishiDom.bind(this)}
-            close={() => this.setState({ visible: false })}
-          ></Toast>
-        )}
         {Taro.getStorageSync("login") === 1 &&
           !Taro.getStorageSync("userInfo") &&
           !this.state.login && (
@@ -735,17 +732,27 @@ class Index extends PureComponent {
               </View>
             </View>
           )}
-        {Taro.getStorageSync("login") === 1 && (
-          <CoverView style={{top:Taro.pxTransform(parseInt(NavHeight())+70)}} className="permerter_user_collcetion">
-            <CoverImage
-              style={{width:'100%',height:'100%'}}
+        {Taro.getStorageSync("login") === 1 && addWx && (
+          <View className="permerter_user_collcetion">
+            <Image
+              style={{ width: "100%", height: "100%" }}
               src={
                 "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon423.png"
               }
-            ></CoverImage>
-            <CoverView className='permerter_user_position'>点击“...” 添加到我的小程序,卡豆捡不停 </CoverView>
-          </CoverView>
+            ></Image>
+            <View className="permerter_user_position">
+              <View
+                className="permerter_user_closeTop"
+                onClick={() => this.setState({ addWx: false })}
+              ></View>
+              <View>点击“</View>
+              <View className="permerter_user_solid"></View>
+              <View>”添加到我的小程序，卡豆捡不停</View>
+            </View>
+          </View>
         )}
+        <TabCity store={this.props.store} data={result}></TabCity>
+        <ToastCity store={this.props.store} data={result}></ToastCity>
       </View>
     );
   }

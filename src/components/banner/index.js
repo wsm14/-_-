@@ -13,7 +13,7 @@ import {Swiper, SwiperItem, View, Image} from '@tarojs/components'
 import classNames from 'classnames'
 import './index.scss'
 export default (props) => {
-  const {style, data, showToast, imgName, auto, height, boxStyle, imgStyle, showNear,borderRadius} = props
+  const {style, data, showToast, imgName, auto, height, boxStyle, imgStyle, showNear,borderRadius,bottom  = {}} = props
   const [list, setList] = useState([]);
   const [current, setCurrent] = useState('1')
   useEffect(() => {
@@ -55,7 +55,7 @@ export default (props) => {
       }
 
         {showNear && list.length>1 &&
-         <View  className='show_near'>
+         <View  className='show_near'  style ={{...bottom}}>
            {list.map((item,index) => {
              return (
                <View key={index} className={classNames(index==current-1?'show_near_linerTrue':'show_near_false')}></View>

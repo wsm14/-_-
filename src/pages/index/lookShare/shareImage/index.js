@@ -60,6 +60,7 @@ export default class ShareImage extends Component {
       lookStatus: "1",
       conpouVisible: false,
       couponList: [],
+      shareUserId:getCurrentInstance().router.params.shareUserId||''
     };
   }
   componentDidMount() {
@@ -70,7 +71,6 @@ export default class ShareImage extends Component {
     this.shareDetailsById();
   }
   getAvailable() {
-    const {} = this.state;
     getAvailableCoupon(
       {
         identifyId: getCurrentInstance().router.params.momentId,
@@ -428,6 +428,10 @@ export default class ShareImage extends Component {
       lookStatus,
       couponList,
       conpouVisible,
+      httpData:{
+        momentId
+      },
+      shareUserId
     } = this.state;
     if (objStatus(userMomentsInfo)) {
       return (
@@ -436,14 +440,14 @@ export default class ShareImage extends Component {
             <APPShare
               {...{
                 content: "我在哒卡乐发了一篇有趣的图文",
-                userId: getCurrentInstance().router.params.shareUserId,
+                userId: shareUserId,
                 jumpObj: {
                   jumpUrl: "imageMomentDetailPage",
-                  id: getCurrentInstance().router.params.momentId,
+                  id: momentId,
                   type: "jumpToPage",
                   jumpType: "native",
                   path: "imageMomentDetailPage",
-                  params: { id: getCurrentInstance().router.params.momentId },
+                  params: { id: momentId },
                 },
               }}
             ></APPShare>
@@ -497,7 +501,7 @@ export default class ShareImage extends Component {
               ></View>
             </View>
             {/*//商家详情*/}
-            {(couponList.length>0 && watchStatus  ===  '0') && (
+            {(couponList.length>0 && watchStatus  ===  '0' && beanLimitStatus ==='1') && (
               <View className="shareImage_shop_couponBox">
                 <View className="public_center image_coupon_box">
                   <View className="image_coupon_icon"></View>
@@ -528,7 +532,7 @@ export default class ShareImage extends Component {
                 onClick={() =>
                   this.link_stop(() =>
                     navigateTo(
-                      `/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`
+                      `/pages/newUser/merchantDetails/index?userId=${merchantIdString}`
                     )
                   )
                 }
@@ -553,6 +557,7 @@ export default class ShareImage extends Component {
               }}
             >
               <View
+                 style={{visibility:'hidden'}}
                 onClick={() => this.fallStatus()}
                 className={classNames(
                   "shareImages_icon_size",
@@ -561,7 +566,7 @@ export default class ShareImage extends Component {
                     : "shareImages_zd_icon1"
                 )}
               ></View>
-              <View className="shareImages_icon_num">
+              <View style={{visibility:'hidden'}} className="shareImages_icon_num">
                 {setPeople(likeAmount)}
               </View>
               {

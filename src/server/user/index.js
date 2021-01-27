@@ -95,3 +95,12 @@ export const getUserBeanInfo = (data, fn) => {
   })
 }
 //查询用户收益收支明细
+
+export const getUserMarkTrack = (data, fn) => {
+  httpGet({
+    url: '/user/userMark/listUserMarkTrack',
+    data: data
+  }, res => {
+    return fn(res)
+  })
+}//打卡足迹

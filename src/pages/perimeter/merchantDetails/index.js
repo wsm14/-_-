@@ -72,7 +72,9 @@ class MerchantDetails extends Component {
     this.getMerchantById();
     this.getMerchantDetails();
     this.getGoodList();
-    this.getAvailable();
+    if (getCurrentInstance().router.params.beanAmount) {
+      this.getAvailable();
+    }
   }
   getAvailable() {
     getAvailableCoupon(
@@ -468,7 +470,7 @@ class MerchantDetails extends Component {
       goodsList,
       getBeanStatus,
       conpouVisible,
-      couponList
+      couponList,
     } = this.state;
     if (Object.keys(userMerchantInfo).length > 0) {
       return (
@@ -767,16 +769,16 @@ class MerchantDetails extends Component {
               data={filterStrList(telephone)}
             ></MarkPhone>
           )}
-            {conpouVisible && (
-              <Coupons
-                title={"到店打卡大礼包"}
-                visible={() => {
-                  this.setState({ conpouVisible: false });
-                }}
-                type={"mark"}
-                data={couponList}
-              ></Coupons>
-            )}
+          {conpouVisible && (
+            <Coupons
+              title={"到店打卡大礼包"}
+              visible={() => {
+                this.setState({ conpouVisible: false });
+              }}
+              type={"mark"}
+              data={couponList}
+            ></Coupons>
+          )}
         </View>
       );
     }

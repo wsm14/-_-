@@ -69,7 +69,7 @@ const favourable = (props) => {
       `/pages/perimeter/merchantDetails/index?merchantId=${merchantId}`
     );
   };
-  if (data) {
+  if (data && data.length > 0) {
     const { specialGoods } = activeStatus;
     const SwiperObj = {
       0: (item, index) => {

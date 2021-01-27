@@ -29,11 +29,12 @@ page {
       line-height: 30px;
       background: rgba(16, 133, 136, 0.1);
       border-radius: 4px;
-      vertical-align: text-bottom;
+      vertical-align: middle;
       padding: 0 8px;
       margin-right: 24px;
       color: rgba(16, 133, 136, 1);
       font-size: 20px;
+      font-weight: 400;
     }
 
     .createFall_title {
@@ -124,6 +125,9 @@ page {
   text-align: center;
   color: white;
   line-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .createFall_limit {
   height: 50px;
@@ -153,8 +157,8 @@ page {
     max-width: 265px;
   }
 }
-.createFall_time_image:before {
-  display: inline-block;
+.createFall_time_image::before {
+  display: block;
   content: "";
   width: 24px;
   height: 24px;
@@ -162,13 +166,12 @@ page {
     no-repeat;
   background-size: 100% 100%;
   margin-right: 6px;
-  vertical-align: text-bottom;
 }
 .page_look_center {
   position: relative;
   width: 100%;
   top: 104px;
-  padding: 20px 0;
+  padding: 0px 0 20px;
   overflow: auto;
   .null_list{
     width: 300px;
@@ -221,7 +224,7 @@ page {
     line-height: 30px;
     background: rgba(16, 133, 136, 0.1);
     border-radius: 4px;
-    vertical-align: text-bottom;
+    vertical-align: middle;
     padding: 0 8px;
     margin-right: 24px;
     color: rgba(16, 133, 136, 1);

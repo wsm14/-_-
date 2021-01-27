@@ -21,7 +21,6 @@ export const wxapiGet = {
   wechatUserBanner: '/user/bannerInfo/getBannerList',
   wechatPrepaymentResult: '/user/order/getOrderPrepaymentResult',
   wechatUserByUniqueId: '/user/userInfo/getOtherDetail',//获取分享信息
-  wechatMarkTrack: '/user/userMark/listUserMarkTrack',//打卡足迹
   wechatSearchConditions: '/user/userMerchant/listMerchantBySearchConditions' //获取可打卡列表
 }
 export const wxapiPost = {

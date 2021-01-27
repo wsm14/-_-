@@ -58,7 +58,7 @@ export const createFall = (item, index) => {
   } = item;
   return (
     <View
-      onClick={() => goWatch(contentType, momentId,userIdString)}
+      onClick={() => goWatch(contentType, momentId, userIdString)}
       className="createFall_box"
     >
       <View className="createFall_image dakale_nullImage">
@@ -91,7 +91,10 @@ export const createFall = (item, index) => {
       </View>
       <View className="createFall_details">
         <View className="createFall_title  font_noHide  ">
-          <Text className="createFall_caTags">{categoryName}</Text>
+          <View style={{display:'inline-block'}}>
+            <Text className="createFall_caTags">{categoryName} </Text>
+          </View>
+
           {title}
         </View>
         {/*<View className='createFall_couponBox'>*/}
@@ -120,7 +123,7 @@ export const createFall = (item, index) => {
             ></View>
             <View className="createFall_userName font_hide">{username}</View>
           </View>
-          <View className="createFall_userBox_right">
+          <View style={{visibility:'hidden'}} className="createFall_userBox_right">
             <View
               className={classNames(
                 "createFall_zanIcon",
@@ -158,12 +161,12 @@ export const createFull = (item) => {
     length,
     viewAmount,
     imageLength,
-    userIdString
+    userIdString,
   } = item;
 
   return (
     <View
-      onClick={() => goWatch(contentType, momentId,userIdString)}
+      onClick={() => goWatch(contentType, momentId, userIdString)}
       className="createFull_box"
     >
       <View className="createFull_image">
@@ -199,7 +202,7 @@ export const createFull = (item) => {
           <Text className="createFull_caTags">{categoryName}</Text>
           {title}
         </View>
-        <View className="createFull_right">
+        <View style={{visibility:'hidden'}} className="createFull_right">
           <View
             className={classNames(
               "createFall_zanIcon",

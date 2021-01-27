@@ -52,6 +52,7 @@ class Index extends Component {
       lookStatus: "1",
       conpouVisible: false,
       couponList: [],
+      shareUserId: getCurrentInstance().router.params.shareUserId || "",
     };
   }
 
@@ -429,7 +430,6 @@ class Index extends Component {
         interactionTime,
         merchantCityName,
         length,
-        couponIds,
         beanLimitStatus,
       },
       time,
@@ -439,6 +439,8 @@ class Index extends Component {
       lookStatus,
       couponList,
       conpouVisible,
+      shareUserId,
+      httpData: { momentId },
     } = this.state;
     if (Object.keys(userMomentsInfo).length > 0) {
       return (
@@ -453,14 +455,14 @@ class Index extends Component {
             <APPShare
               {...{
                 content: "我在哒卡乐发了一篇有趣的视频",
-                userId: getCurrentInstance().router.params.shareUserId,
+                userId: shareUserId,
                 jumpObj: {
                   jumpUrl: "videoMomentDetailPage",
-                  id: getUserMomentDetail.momentId,
+                  id: momentId,
                   type: "jumpToPage",
                   jumpType: "native",
                   path: "videoMomentDetailPage",
-                  params: { id: getUserMomentDetail.momentId },
+                  params: { id: momentId },
                 },
               }}
             ></APPShare>
@@ -497,7 +499,7 @@ class Index extends Component {
                   onClick={() =>
                     this.link_stop(() =>
                       navigateTo(
-                        `/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`
+                        `/pages/newUser/merchantDetails/index?userId=${merchantIdString}`
                       )
                     )
                   }
@@ -524,6 +526,7 @@ class Index extends Component {
                 }}
               >
                 <View
+                  style={{ visibility: "hidden" }}
                   onClick={() => this.fallStatus()}
                   className={classNames(
                     "shareVideo_icon_size",
@@ -532,7 +535,7 @@ class Index extends Component {
                       : "shareVideo_zd_icon1"
                   )}
                 ></View>
-                <View className="shareVideo_icon_num">
+                <View  style={{visibility:'hidden'}} className="shareVideo_icon_num">
                   {setPeople(likeAmount)}
                 </View>
 
@@ -553,14 +556,16 @@ class Index extends Component {
               </View>
             </View>
             <View className="bounceInUp animated shareVideo_shop">
-              {(couponList.length>0 && watchStatus  ===  '0') && (
-                <View className="shareVideo_shop_couponBox">
-                  <View className="public_center coupon_index_box">
-                    <View className="coupon_icon"></View>
-                    <View className="coupon_font">看完领券</View>
+              {couponList.length > 0 &&
+                watchStatus === "0" &&
+                beanLimitStatus === "1" && (
+                  <View className="shareVideo_shop_couponBox">
+                    <View className="public_center coupon_index_box">
+                      <View className="coupon_icon"></View>
+                      <View className="coupon_font">看完领券</View>
+                    </View>
                   </View>
-                </View>
-              )}
+                )}
               <View
                 className="sharekol_merchant"
                 onClick={(e) => {

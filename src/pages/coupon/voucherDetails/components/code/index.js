@@ -44,7 +44,16 @@ export default (props) => {
   const setCode = () => {
     return (
       <View className="codeBox public_center">
-        <Swiper current={current} style={{ width: qrwh, height: qrwh }}>
+        <Swiper
+          current={current}
+          onChange={(e) => {
+            const {
+              detail: { current },
+            } = e;
+            setCurrent(current);
+          }}
+          style={{ width: qrwh, height: qrwh }}
+        >
           {list.map((item, index) => {
             const { status } = item;
             const codeObj = {
@@ -64,6 +73,12 @@ export default (props) => {
                 <View
                   style={{ width: qrwh, height: qrwh }}
                   className="code_onloader code_status3  public_center"
+                ></View>
+              ),
+              4: (
+                <View
+                  style={{ width: qrwh, height: qrwh }}
+                  className="code_onloader code_status4  public_center"
                 ></View>
               ),
             }[status];
@@ -170,8 +185,12 @@ export default (props) => {
               className="couponDetails_merchant"
             >
               <View
-                className="couponDetails_profile dakale_nullImage"
-                style={backgroundObj(orderResult.merchantLogo)}
+                className="couponDetails_profile coupon_shop_icon"
+                style={
+                  orderResult.merchantLogo
+                    ? backgroundObj(orderResult.merchantLogo)
+                    : {}
+                }
               ></View>
               <View className="couponDetails_merchantTitle font_hide">
                 {orderResult.merchantName}
@@ -192,8 +211,12 @@ export default (props) => {
               className="couponDetails_merchant"
             >
               <View
-                className="couponDetails_profile dakale_nullImage"
-                style={backgroundObj(orderResult.merchantLogo)}
+                className="couponDetails_profile coupon_shop_icon"
+                style={
+                  orderResult.merchantLogo
+                    ? backgroundObj(orderResult.merchantLogo)
+                    : {}
+                }
               ></View>
               <View className="couponDetails_merchantTitle font_hide">
                 {orderResult.merchantName}
@@ -215,8 +238,10 @@ export default (props) => {
         )}
         <View className="couponDetails_merchantShop">
           <View
-            className="couponDetails_merchantLogo dakale_nullImage"
-            style={backgroundObj(orderResult.couponImg)}
+            className="couponDetails_merchantLogo coupon_big_icon"
+            style={
+              orderResult.couponImg ? backgroundObj(orderResult.couponImg) : {}
+            }
           ></View>
           <View className="couponDetails_shop_details">
             <View className="font_hide font28 couponDetails_shop_name">

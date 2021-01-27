@@ -89,11 +89,11 @@ class Index extends Component {
           const { status, orderSn, orderType, payMonth } = res;
           if (status === "0" || status === "5") {
             redirectTo(
-              `/pages/goods/code_wx_pay/index?payMonth=${payMonth}&orderType=${orderType}&orderSn=${orderSn}`
+              `/pages/goods/code_wx_pay/index?payMonth=${payMonth}&orderType=${orderType}&orderSn=${orderSn}&merchantId=${getCurrentInstance().router.params.merchantId}`
             );
           } else {
             redirectTo(
-              `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}`
+              `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}&merchantId=${getCurrentInstance().router.params.merchantId}`
             );
           }
         }
@@ -144,7 +144,7 @@ class Index extends Component {
             <View className="codePay_inputBox">
               <Text className="codePay_mountAfter color1 font28">¥</Text>
               <Input
-                onBlur={(e) => {
+                onInput={(e) => {
                   this.setState({
                     httpData: {
                       ...this.state.httpData,
@@ -167,8 +167,7 @@ class Index extends Component {
                       Router({
                         routerName: "coupon",
                         args: {
-                          merchantId: getCurrentInstance().router.params
-                            .merchantId,
+                          merchantId: getCurrentInstance().router.params.merchantId,
                           total: totalFee,
                           couponId:userCouponIdString
                         },

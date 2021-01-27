@@ -1,7 +1,6 @@
 import React, {Component, useMemo} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
-import Nav from '@/components/nav'
 import NullStatus from '@/components/nullStatus'
 import {user} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
@@ -326,9 +325,11 @@ class Index extends Component {
       address,
       coverImg,
       coverImage,
+      userIdString,
+      merchantIdString
     } = item
     return (
-      <View className='userDetails_falls_details'>
+      <View className='userDetails_falls_details' onClick={() => {navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`)}}>
         <View className='userDetails_falls_bg' style={{...backgroundObj(coverImg || coverImage)}}>
           {brandName && <View className='userDetails_make'>{brandName}</View>}
         </View>
@@ -627,7 +628,7 @@ class Index extends Component {
               )
             })}
           </View>
-          {publicList.length == 0 && <NullStatus></NullStatus>}
+          {publicList.length == 0 && <NullStatus  type={current}></NullStatus>}
           <View className='userDetails_falls'>
             {current == 0 &&
             <Waterfall

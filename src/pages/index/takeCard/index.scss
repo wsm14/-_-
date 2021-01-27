@@ -15,7 +15,7 @@ page {
     top: 0;
     left: 0;
     right: 0;
-    background: #FFFFFF;
+    background: #ffffff;
     z-index: 10;
     .maps_search {
       margin: 0px 32px 0 32px;
@@ -35,7 +35,9 @@ page {
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
-        background: rgba(245, 245, 245, 1) url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon44.png") no-repeat;
+        background: rgba(245, 245, 245, 1)
+          url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon44.png")
+          no-repeat;
         background-size: 36px 36px;
         background-position: 212px 13px;
       }
@@ -62,38 +64,55 @@ page {
       }
 
       .maps_code1 {
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon42.png") no-repeat;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon42.png")
+          no-repeat;
         background-size: 100% 100%;
       }
 
       .maps_code2 {
         width: 48px;
         height: 48px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon45.png") no-repeat;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon45.png")
+          no-repeat;
         background-size: 100% 100%;
       }
     }
   }
-  .page_merchantList{
+  .page_merchantList {
     position: absolute;
-    top: 370px;
+    bottom: 370px;
     left: 0;
     right: 0;
     z-index: 15;
     width: 750px;
   }
 }
-.silder_btn{
-  width: 400px;
-  height: 80px;
-  background: #EF476F;
-  border-radius: 40px;
-  line-height: 80px;
-  text-align: center;
+.silder_btn {
+  width: 750px;
+  height: 168px;
   position: fixed;
-  bottom: 34px;
+  bottom: 0;
   left: 0;
   right: 0;
-  margin: 0 auto;
   z-index: 160;
+  display: flex;
+  justify-content: center;
+  .silder_btn_image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .silder_btn_style {
+    width: 500px;
+    height: 80px;
+    background: #ef476f;
+    border-radius: 8px;
+    line-height: 80px;
+    text-align: center;
+    margin-top: 34px;
+    position: relative;
+    z-index: 10;
+  }
 }

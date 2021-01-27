@@ -40,15 +40,23 @@ export default (props) => {
       <View className='codeBox public_center'>
         <Swiper
           current={current}
+          onChange={(e) => {
+            const {
+              detail: { current },
+            } = e;
+            setCurrent(current);
+          }}
           style={{width:qrwh,height:qrwh}}
         >
           {
             list.map((item, index) => {
               const {status} = item
+              console.log(item)
               const codeObj = {
                 '1': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status1 public_center'></View>),
                 '2': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status2  public_center'></View>),
-                '3': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status3  public_center'></View>)
+                '3': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status3  public_center'></View>),
+                '4': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status4  public_center'></View>)
               }[status]
               return (
                 <SwiperItem>

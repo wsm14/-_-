@@ -217,7 +217,7 @@ class Index extends Component {
               </View>
               <View className='kolGoods_details_top font24 color2 public_auto kolGoods_details_height'>
                 <View>卡豆抵扣</View>
-                <View className='color1'>{'-' + Number(totalFee) * 100 + '卡豆'} (¥ {totalFee})</View>
+                <View className='color1'>{'-' + (Number(totalFee) * 100).toFixed(0) + '卡豆'} (¥ {Number(totalFee).toFixed(2)})</View>
               </View>
               {/*<View className='kolGoods_details_top font24 color2 public_auto kolGoods_details_height'>*/}
               {/*  <View>优惠券</View>*/}

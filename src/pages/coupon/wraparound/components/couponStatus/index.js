@@ -16,8 +16,7 @@ export default (props) => {
     console.log(item);
     if (couponChannel === "buy") {
       navigateTo(`/pages/coupon/couponDetails/index?id=${userCouponIdString}`);
-    }
-    else {
+    } else {
       navigateTo(`/pages/coupon/voucherDetails/index?id=${userCouponIdString}`);
     }
   };
@@ -28,7 +27,9 @@ export default (props) => {
     onClose(visible);
   }, [visible]);
   let nullImage =
-    "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/morenLogo.png";
+    "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/conpon_shop.png";
+  let nullCoupon =
+    "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_big.png";
   const couponType = {
     0: (item) => {
       const {
@@ -76,7 +77,7 @@ export default (props) => {
                 className="wraparound_couponImg"
                 lazyLoad
                 mode={"aspectFill"}
-                src={couponImg ? couponImg : nullImage}
+                src={couponImg ? couponImg : nullCoupon}
               ></Image>
             </View>
             <View className="wraparound_couponContent">
@@ -137,7 +138,7 @@ export default (props) => {
               className="wraparound_couponImg"
               lazyLoad
               mode={"aspectFill"}
-              src={couponImg ? couponImg : nullImage}
+              src={couponImg ? couponImg : nullCoupon}
             ></Image>
             <View className="wraparound_couponContent">
               <View className="wraparound_couponContent1_title font_hide font28 color2 bold">
@@ -199,7 +200,7 @@ export default (props) => {
               className="wraparound_couponImg"
               lazyLoad
               mode={"aspectFill"}
-              src={couponImg ? couponImg : nullImage}
+              src={couponImg ? couponImg : nullCoupon}
             ></Image>
             <View className="wraparound_couponContent">
               <View className="wraparound_couponContent1_title font_hide font28 color2 bold">
@@ -266,7 +267,7 @@ export default (props) => {
                 className="wraparound_couponImg"
                 lazyLoad
                 mode={"aspectFill"}
-                src={couponImg ? couponImg : nullImage}
+                src={couponImg ? couponImg : nullCoupon}
               ></Image>
             </View>
             <View className="wraparound_couponContent">

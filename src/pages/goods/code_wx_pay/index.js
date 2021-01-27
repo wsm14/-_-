@@ -58,7 +58,7 @@ class Index extends Component {
           AdaPay.doPay(result, (payRes) => {
             if (payRes.result_status == "succeeded") {
               redirectTo(
-                `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}`
+                `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}&merchantId=${getCurrentInstance().router.params.merchantId}`
               );
             }
           });

@@ -100,3 +100,35 @@ export const getTopicDetail = (data,fn) => {
     fn && fn(res)
   })
 }
+//話題詳情
+
+
+export const checkLocation = (data,fn) => {
+  httpGet({
+    data:data,
+    url:'/common/locationCity/checkLocationCityStatus'
+  },res => {
+    fn && fn(res)
+  })
+}
+//查询城市开通状态
+
+export const listAllLocationCity = (data,fn) => {
+  httpGet({
+    data:data,
+    url:'/common/locationCity/listAllLocationCity'
+  },res => {
+    fn && fn(res)
+  })
+}
+//查询所有的开通城市
+
+export const getLocationCity = (data,fn) => {
+  httpGet({
+    data:data,
+    url:'/common/locationCity/getLocationCity'
+  },res => {
+    fn && fn(res)
+  })
+}
+//城市码查询开通城市

@@ -178,7 +178,7 @@ class Index extends Component {
                 取消
               </View>
               <Button openType={'getPhoneNumber'} className='auth_toast_btnBox auth_color2'
-                      onClick={(e) => this.getLayerBtn(e)}>
+                      onGetPhoneNumber={(e) => this.getLayerBtn(e)}>
                 确定
               </Button>
             </View>

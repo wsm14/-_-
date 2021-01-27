@@ -1,7 +1,6 @@
 export default {
-  navigationBarTitleText: '我要推店',
+  navigationBarTitleText: '哒卡乐诚邀商家入驻 ',
   backgroundTextStyle:'dark',
   navigationStyle:'default',
-  navigationBarBackgroundColor:'#07C0C2',
-  navigationBarTextStyle: 'white'
+  navigationBarTextStyle: 'black'
 }

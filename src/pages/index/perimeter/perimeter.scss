@@ -17,10 +17,11 @@ page {
     padding-bottom: 20px;
 
     .perimerter_fixed_title {
+      
       .perimerter_title {
-        height: 40px;
+        height: 64px;
         position: relative;
-        line-height: 40px;
+        line-height: 64px;
         font-size: 36px;
         font-weight: 600;
         text-align: center;
@@ -29,10 +30,9 @@ page {
           position: absolute;
           top: 0;
           left: 32px;
-          height: 40px;
           display: flex;
           align-items: center;
-
+          height: 64rpx;
           .perimerter_city_box {
             width: 40px;
             height: 40px;
@@ -78,15 +78,12 @@ page {
       }
 
       .perimerter_search {
-        padding: 32px 38px 0 32px;
+        width: 434px;
         height: 64px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-
+        margin-left: 204px;
+       
         .perimerter_input1 {
-          width: 606px;
+          width: 100%;
           height: 64px;
           border-radius: 32px;
           text-align: center;
@@ -102,11 +99,11 @@ page {
           width: 36px;
           height: 36px;
           position: absolute;
-          left: 183px;
-          top: 13px;
+          left: 88px;
+          top: 14px;
         }
         .perimerter_input2 {
-          width: 606px;
+          width: 100%;
           height: 64px;
           border-radius: 32px;
           line-height: 64px;
@@ -135,22 +132,26 @@ page {
           color: white !important;
         }
 
-        .perimerter_codeBox {
-          width: 48px;
-          height: 48px;
-        }
-        .perimerter_code1 {
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon42.png")
-            no-repeat;
-          background-size: 100% 100%;
-        }
-        .perimerter_code2 {
-          width: 48px;
-          height: 48px;
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon45.png")
-            no-repeat;
-          background-size: 100% 100%;
-        }
+       
+      }
+      .perimerter_codeBox {
+        width: 48px;
+        height: 48px;
+        position: absolute;
+        top: 8px;
+        right: 32px;
+      }
+      .perimerter_code1 {
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon42.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .perimerter_code2 {
+        width: 48px;
+        height: 48px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon45.png")
+          no-repeat;
+        background-size: 100% 100%;
       }
     }
   }
@@ -159,6 +160,7 @@ page {
     width: 100%;
     height: 570px;
     background: #a5a5a5;
+    position: relative;
   }
 
   .perimerter_noUser {
@@ -371,35 +373,34 @@ page {
     }
   }
   .perimerter_active {
-    height: 460px;
-    width: 706px;
-    margin: 23px auto 0;
+    height: 440px;
+    width: 688px;
+    margin: 32px auto 0;
     display: flex;
     justify-content: space-between;
     .perimerter_beanActive {
-      width: 360px;
-      height: 460px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon23.png")
+      width: 340px;
+      height: 440px;
+      background: url("https://resource-new.dakale.net/common/mainWatchMoment3.png")
         no-repeat;
       background-size: 100% 100%;
     }
     .permerter_share {
-      width: 342px;
-      height: 706px;
+      width: 322px;
       .permerter_share_look {
-        width: 342px;
-        height: 228px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon24.png")
+        width: 322px;
+        height: 208px;
+        background: url("https://resource-new.dakale.net/common/mainStreet2.png")
           no-repeat;
         background-size: 100% 100%;
       }
       .permerter_share_game {
-        width: 342px;
-        height: 228px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon25.png")
+        width: 322px;
+        height: 208px;
+        background: url("https://resource-new.dakale.net/common/mainHealthLife2.png")
           no-repeat;
         background-size: 100% 100%;
-        margin-top: 4px;
+        margin-top: 24px;
       }
     }
     .perimerter_dec {
@@ -454,7 +455,7 @@ page {
             color: rgba(239, 71, 111, 1);
             height: 40px;
             font-size: 20px;
-            max-width: 240px;
+            max-width: 140px;
             line-height: 40px;
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
@@ -601,14 +602,6 @@ page {
 .test {
   background: rgba(255, 255, 255, 0.25);
 }
-.perimeter_toast_box {
-  margin: 32px 40px 0;
-  font-size: 28px;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #666666;
-  line-height: 42px;
-}
 .permerter_user_login {
   position: fixed;
   bottom: 0;
@@ -654,7 +647,8 @@ page {
   width: 686px;
   height: 106px;
   margin: 0 auto;
-  z-index: 1000086;
+  z-index: 1000087;
+  top: 12px;
   .permerter_user_position {
     position: absolute;
     top: 0;
@@ -662,9 +656,29 @@ page {
     right: 0;
     bottom: 0;
     text-align: center;
-    line-height: 126px;
-    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    padding-top: 42px; 
+    font-size: 28px;
     font-weight: 600;
     color: #ffffff;
+    align-items: center;
+    padding-top: 16px;
+    .permerter_user_closeTop{
+      width: 48px;
+      height: 48px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon422.png")
+        no-repeat;
+      background-size: 100% 100%;
+      margin-right: 20px;
+    }
+    .permerter_user_solid{
+      width: 36px;
+      height: 36px;   
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon441.png")
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 0 12px;
+    }
   }
 }

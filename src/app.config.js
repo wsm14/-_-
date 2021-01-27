@@ -18,7 +18,7 @@ export default {
   },
   tabBar: {
     color: "#A5A5A5",
-    selectedColor: "#07C0C2",
+    selectedColor: "#333333",
     backgroundColor: "#fafafa",
     borderStyle: "black",
     list: [
@@ -97,6 +97,7 @@ export default {
     {
       root: "pages/perimeter/",
       pages: [
+        'willCity/index', //即将开通
         "businessSell/index", //商家信息
         "city/index", //城市定位
         "search_shop/index", //商家搜索

@@ -95,6 +95,8 @@ page {
     .shareImage_shop_couponBox{
       display: flex;
       margin: 24px 32px 0;
+      position: relative;
+      z-index: 100;
       .image_coupon_box{
         width: 172px;
         height: 48px;
