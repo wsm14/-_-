@@ -19,6 +19,7 @@ import {
   goBack
 } from '@/common/utils'
 import classNames from 'classnames'
+import Waterfall from '@/components/waterfall'
 import './index.scss'
 
 class Index extends Component {
@@ -122,13 +123,12 @@ class Index extends Component {
       })
   }
 
-  componentDidShow() {
+  componentDidMount() {
     this.getDetails()
     this.getListOther()
   }
 
-  createdShareMerchant = (data) => {
-    return (data.map((item, index) => {
+  createdShareMerchant = (item) => {
       const {
         frontImage,
         frontImageHeight,
@@ -143,10 +143,18 @@ class Index extends Component {
         beanFlag,
         watchStatus,
         beanAmount,
-        couponTitlesJson
+        couponTitlesJson,
+        momentId
       } = item
       return (
-        <View className='merchant_falls_details'>
+        <View onClick={() => {
+          if(contentType === 'image'){
+            navigateTo(`/pages/index/lookShare/shareImage/index?momentId=${momentId}`)
+          }
+          else {
+            navigateTo(`/pages/index/lookShare/shareVideo/index?momentId=${momentId}`)
+          }
+        }} className='merchant_falls_details'>
           <View className='merchant_falls_makebg'
                 style={frontImage ? {
                   ...backgroundObj(frontImage),
@@ -184,7 +192,6 @@ class Index extends Component {
               })}
             </View>
             }
-
             {beanFlag == '1' &&
             <View className='merchant_getBean'>
               {watchStatus == '0' ?
@@ -196,8 +203,6 @@ class Index extends Component {
                 </View>
               }
             </View>}
-
-
             {merchantAddress &&
             <View>
               <View className='merchant_liner'></View>
@@ -215,7 +220,6 @@ class Index extends Component {
           </View>
         </View>
       )
-    }))
   }
 
   onReachBottom() {
@@ -350,10 +354,16 @@ class Index extends Component {
         <View
           className="merchant_content">
           {userMomentsList.length == 0 && <NullStatus></NullStatus>}
-          <View
-            className='merchant_falls'>
-            {this.createdShareMerchant(userMomentsList)}
-          </View>
+          {userMomentsList.length > 0 &&
+          <Waterfall
+            list={userMomentsList}
+            createDom={this.createdShareMerchant.bind(this)}
+            imgHight={'frontImageHeight'}
+            imgWidth={'frontImageWidth'}
+            setWidth={335}
+            style={{width: Taro.pxTransform(335)}}
+          >
+          </Waterfall>}
         </View>
         {visible &&
         <Toast visible={visible} onCancel={this.deleteFollow.bind(this)} onClose={() => {

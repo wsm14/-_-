@@ -1,39 +1,46 @@
-import React,{useState,useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {CoverView, View} from '@tarojs/components'
-import 'taro-ui/dist/style/components/action-sheet.scss'
-import {AtActionSheet ,AtActionSheetItem} from 'taro-ui'
 import Taro from '@tarojs/taro'
 import {toast} from "@/common/utils";
+import './index.scss'
 
-export default (props) =>{
-  const [list,setList] = useState([])
-  const {data , onClose, onCancel} = props
-  useEffect(() =>{
-    if(data){
+export default (props) => {
+  const [list, setList] = useState([])
+  const {data, onClose, onCancel, isOpened = false} = props
+  useEffect(() => {
+    if (data) {
       setList(data)
     }
-  },[data])
+  }, [data])
   return (
-    <CoverView style={{color: '#333333'}}>
-      <AtActionSheet style={{color: 'black'}} onClose = {onClose} onCancel={onCancel} isOpened cancelText='取消' title=''>
-        {list.map((item) => {
-          return (
-            <AtActionSheetItem onClick={() => Taro.makePhoneCall({
-              phoneNumber: item,
-              fail: res => {
-                toast('拨打失败')
-              },
-              complete: res => {
-                onClose();
-              }
-            })}>
-              {item}
-            </AtActionSheetItem>
-          )
-        })}
+    <View catchMove>
+      <CoverView className='pay_telephone_box' onClick={(e) => {
+        e.stopPropagation();
+        onClose()
+      }}>
 
-      </AtActionSheet>
-    </CoverView>
+        <CoverView className='pay_telephone_body' onClick={(e)=> {e.stopPropagation()}}>
+          {list.map((item) => {
+              return (
+                <CoverView className='pay_telephone_btnStyle' onClick={() => Taro.makePhoneCall({
+                  phoneNumber: item,
+                  fail: res => {
+                    toast('拨打失败')
+                  },
+                  complete: res => {
+                    onClose();
+                  }
+                })}>
+                  {item}
+                </CoverView>)
+            }
+          )}
+          <CoverView className='pay_telephone_btnStyle pay_telephone_btnTop' onClick={() => {onCancel()}}>
+            取消
+          </CoverView>
+        </CoverView>
+      </CoverView>
+    </View>
 
   )
 }

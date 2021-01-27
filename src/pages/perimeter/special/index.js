@@ -7,6 +7,7 @@ import classNames from 'classnames'
 import {toast} from "@/common/utils";
 import './index.scss'
 import {kol} from "../../../api/api";
+import {shopDetails} from '@/components/publicShopStyle'
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments)

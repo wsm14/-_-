@@ -1,4 +1,6 @@
+import TerserPlugin from 'terser-webpack-plugin'
 const path = require('path')
+
 const config = {
   projectName: 'dakale-webNew-miniprogram',
   date: '2020-10-9',
@@ -42,7 +44,7 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
-    }
+    },
   },
   h5: {
     publicPath: '/',

@@ -1,11 +1,11 @@
 import React from "react";
 import Taro from '@tarojs/taro'
-import {CoverView, Input, Text, View} from '@tarojs/components'
-import {createMerchants} from '@/components/publicShopStyle'
-import {backgroundObj, GetDistance, getLat, getLnt, navigateTo, toast,removeStorage} from '@/common/utils'
+import {Input, Text, View} from '@tarojs/components'
+import {removeStorage} from '@/common/utils'
 import './index.scss'
 import {getSearchDataStatistic, getSearchRecommend, getSearchConditions} from '@/server/perimeter'
-import Waterfall from '@/components/waterfall'
+import ContentData from './components/selectContent/index'
+import Router from '@/common/router'
 
 export default class Index extends React.Component {
   constructor() {
@@ -15,60 +15,51 @@ export default class Index extends React.Component {
       hotSearchList: [],
       statistic: {
         keyword: '',
-        searchType: 'applets'
       },
+      topicInfo: {},
       searchInfo: {},
       status: '0',
-      shopData: {
-        page: 1,
-        limit: 10,
-        smartSiftType: 'markFlag'
-      },
+      keywords: '',
+      // shopData: {
+      //   page: 1,
+      //   limit: 10,
+      //   smartSiftType: 'markFlag'
+      // },
       userMerchantList: [],
       countStatus: true,
-      storageList:Taro.getStorageSync('storageList')|| []
+      storageList: Taro.getStorageSync('storageList') || [],
+      setting: {
+        tabList: ['商家', '内容', '用户', '话题'],
+        current: 0
+      }
     }
   }
 
   getSearchRecommend() {
     getSearchRecommend({}, res => {
-      const {hotSearchList = []} = res
+      const {hotSearchList = [], topicInfo = {}} = res
       this.setState({
-        hotSearchList
+        hotSearchList,
+        topicInfo
       })
     })
   }
 
   getSearchConditions() {
-    const {shopData, statistic: {keyword},storageList} = this.state
-    if(!storageList.includes(keyword) && storageList.length<10){
+    const {statistic: {keyword}, storageList} = this.state
+    if (!storageList.includes(keyword) && storageList.length < 10) {
       this.setState({
-        storageList:[keyword,...this.state.storageList]
-      },res => {
-        Taro.setStorageSync('storageList',this.state.storageList)
+        storageList: [keyword, ...this.state.storageList]
+      }, res => {
+        Taro.setStorageSync('storageList', this.state.storageList)
+      })
+    } else if (!storageList.includes(keyword) && storageList.length === 10) {
+      this.setState({
+        storageList: [keyword, ...this.state.storageList].slice(0, 9)
+      }, res => {
+        Taro.setStorageSync('storageList', this.state.storageList)
       })
     }
-    else if(!storageList.includes(keyword) && storageList.length===10){
-      this.setState({
-        storageList:[keyword,...this.state.storageList].slice(0,9)
-      },res => {
-        Taro.setStorageSync('storageList',this.state.storageList)
-      })
-    }
-    getSearchConditions({...shopData, keyword}, res => {
-      const {userMerchantList} = res
-      if (userMerchantList && userMerchantList.length > 0) {
-        this.setState({
-          userMerchantList:[...this.state.userMerchantList,...userMerchantList],
-          status: '2',
-        })
-      } else {
-        this.setState({
-          countStatus: false,
-          status: '2',
-        })
-      }
-    })
   }
 
   search(e) {
@@ -87,7 +78,7 @@ export default class Index extends React.Component {
     }, res => {
       if (this.state.statistic.keyword) {
         getSearchDataStatistic(this.state.statistic, res => {
-          const {userMerchantNum, userMerchantNameList =[]} = res
+          const {userMerchantNum, userMerchantNameList = []} = res
           if (userMerchantNum > 0 && userMerchantNameList.length > 0) {
             this.setState({
               searchInfo: res,
@@ -116,40 +107,43 @@ export default class Index extends React.Component {
       this.instance = setTimeout(this.search.bind(this, e), 1200)
     }
   }
+
   cleanList() {
     this.setState({
-      storageList:[]
-    },res => {
+      storageList: []
+    }, res => {
       removeStorage('storageList')
     })
 
   }
+
   changeClick(item) {
     this.setState({
       statistic: {
-        searchType: 'applets',
         keyword: item,
-
       },
-      userMerchantList: [],
     }, res => {
       this.getSearchConditions()
+      this.setState({
+        keywords: item,
+        status: '2',
+      })
     })
   }
 
-  onReachBottom() {
-    const {shopData,countStatus} = this.state
-    if(countStatus){
+  setIndex(index) {
+    const that = this
+    if (index != this.state.setting.current) {
       this.setState({
-        shopData: {
-          ...shopData,
-          page: shopData.page+1
-        }
-      },res => {
-        this.getSearchConditions()
+        setting: {
+          ...this.state.setting,
+          current: index
+        },
       })
     }
+    return
   }
+
 
   componentDidMount() {
     this.getSearchRecommend()
@@ -157,13 +151,21 @@ export default class Index extends React.Component {
 
 
   render() {
-    const {hotSearchList,storageList, statistic: {keyword}, searchInfo: {userMerchantNum = '', userMerchantNameList = []}, status, userMerchantList} = this.state
+    const {
+      topicInfo: {topicIdString, topicName, kolMomentsNum},
+      hotSearchList, storageList,
+      statistic: {keyword},
+      searchInfo,
+      searchInfo: {userMerchantNum = 0, userMerchantNameList = [], userNum = 0, topicNum = 0},
+      status, userMerchantList, keywords
+    }
+      = this.state
     const hasListObj = {
       '0': (
         <>
           <View className='search_shop_orderTags'>
             <View className='search_shop_title color2 font24'>最近搜索</View>
-            <View className='search_shop_close' onClick={() =>this.cleanList()}></View>
+            <View className='search_shop_close' onClick={() => this.cleanList()}></View>
           </View>
           {/*最近搜索*/}
 
@@ -180,6 +182,19 @@ export default class Index extends React.Component {
 
           <View className='search_shop_liner'></View>
           {/*下划线*/}
+          <View onClick={() => Router({
+            routerName: 'tipView',
+            args: {
+              topicId: topicIdString
+            }
+          })}>
+            <View className='search_hot_search color2 font24 public_auto' >
+              <Text>推荐话题</Text>
+              <Text>{kolMomentsNum}篇分享</Text>
+            </View>
+            <View className='search_hot_tipName font28 bold color1'>#{topicName}</View>
+            <View className='search_hot_liner'></View>
+          </View>
           <View className='search_hot_search color2 font24'>
             热门搜索
           </View>
@@ -197,11 +212,35 @@ export default class Index extends React.Component {
           </View>
         </>),
       '1': (
-        <>
+        <View className='fixed_padding'>
           <View className='search_shop_layer' onClick={() => this.changeClick(keyword)}>
             <View className='search_shop_icon'></View>
             <View className='font28 color1 font_hide search_hide'>{keyword}</View>
             <View className='font24 color2 search_shop_right'>约{userMerchantNum || 0}个商户</View>
+          </View>
+          <View className='search_shop_layer' onClick={() =>{this.setState({ setting: {
+              tabList: ['商家', '内容', '用户', '话题'],
+              current: 1
+            }}); this.changeClick(keyword)}}>
+            <View className='search_user_icon'></View>
+            <View className='font28 color1 font_hide search_hide'>{keyword}</View>
+            <View className='font24 color2 search_shop_right'>约{userNum || 0}个用户</View>
+          </View>
+          <View className='search_shop_layer' onClick={() =>{this.setState({ setting: {
+              tabList: ['商家', '内容', '用户', '话题'],
+              current: 2
+            }}); this.changeClick(keyword)}}>
+            <View className='search_share_icon'></View>
+            <View className='font28 color1 font_hide search_hide'>{keyword}</View>
+            <View className='font24 color2 search_shop_right'>约{topicNum || 0}个分享</View>
+          </View>
+          <View className='search_shop_layer' onClick={() =>{this.setState({ setting: {
+              tabList: ['商家', '内容', '用户', '话题'],
+              current: 3
+            }}); this.changeClick(keyword)}}>
+            <View className='search_tip_icon'></View>
+            <View className='font28 color1 font_hide search_hide'>{keyword}</View>
+            <View className='font24 color2 search_shop_right'>约{searchInfo.kolMomentsNum || 0}个话题</View>
           </View>
           {userMerchantNameList.map(item => {
             return (
@@ -211,34 +250,21 @@ export default class Index extends React.Component {
               </View>
             )
           })}
-        </>
+        </View>
       ),
       '2': (
-        <View className='flex_auto'>
-          {userMerchantList.length > 0 ?
-            <View className='search_shopPubu'>
-              <Waterfall
-                list={userMerchantList}
-                createDom={createMerchants}
-                imgHight={240}
-              >
-              </Waterfall>
-            </View>
-            :
-            <View className='search_shopNO'>
-              <View className='search_shopImg'></View>
-              <View className='search_shopImgfont color2 font28'>暂无找到想要的结果，换个关键词试试吧</View>
-            </View>
-          }
-        </View>
+        <ContentData fn={this.setIndex.bind(this)} keyword={keywords} setting={this.state.setting}
+                     userList={userMerchantList}></ContentData>
       )
     }[status]
     return (
       <View className='search_shop_box'>
         <View className='search_shop_padding'>
           <View className='search_shop_inputBox'>
-            <Input type={'text'} confirmType={'search'} onConfirm={() => {keyword && this.changeClick(keyword)}} value={keyword} onInput={(e) => this.searchDetails(e)} className='search_shop_input'
-                   placeholder={'搜索附近商户'}></Input>
+            <Input type={'text'} confirmType={'search'} onConfirm={() => {
+              keyword && this.changeClick(keyword)
+            }} value={keyword} onInput={(e) => this.searchDetails(e)} className='search_shop_input'
+                   placeholder={'搜索附近商户/用户以及好玩的话题内容'}></Input>
           </View>
           {hasListObj}
         </View>

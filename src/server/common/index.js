@@ -76,3 +76,27 @@ export const getDictionary = (data,fn) => {
 }
 
 //通过父节点和子节点获取字典
+export const getListTopic = (data,fn) => {
+  httpGet({
+    data:data,
+    url:'/common/topic/listTopicBySearchContent'
+  },res => {
+    fn && fn(res)
+  })
+}
+/*
+* page: 页数
+* limit: 行数，
+* keyword 话题名称
+* */
+//通过名字搜索话题
+
+
+export const getTopicDetail = (data,fn) => {
+  httpGet({
+    data:data,
+    url:'/common/topic/getTopicDetail'
+  },res => {
+    fn && fn(res)
+  })
+}

@@ -42,7 +42,7 @@ class Index extends React.Component {
       merchantMobile: '400-800-5881',
       telephone: false,
       link: 'https://web-new.dakale.net/product/page/bannerShare/merchantPlaybill.html',
-      link1: 'https://web-new.dakale.net/product/page/policy/cooperation.html',
+      link1: 'https://web-new.dakale.net/product/page/policy/cooperation.html?shareUserId=1&shareUserType=2',
       link2: 'https://web-new.dakale.net/product/page/policy/eQuity.html',
     }
   }

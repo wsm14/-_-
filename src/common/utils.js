@@ -118,11 +118,12 @@ export const filterTime = function (time) {
   } else if (time >= 10 && (time / 60) < 1) {
     return `00:${time}`
   } else {
-    let times = time % 60
+    let times = parseInt(time) % 60
     if ((time - times * 60) < 10) {
-      return `0${times}:0${time - times * 60}`
+      return `0${parseInt(parseInt(time)/60)}:${parseInt(time - parseInt(time)/60)}`
+
     } else if ((time - times * 60) >= 10) {
-      return `0${times}:${time - times * 60}`
+      return `0${parseInt(parseInt(time)/60)}:0${parseInt(time - parseInt(time)/60)}`
     }
 
   }

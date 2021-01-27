@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, useMemo} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
 import Nav from '@/components/nav'
@@ -18,13 +18,14 @@ import {
 } from '@/common/utils'
 import classNames from 'classnames'
 import './index.scss'
-
+import Waterfall from '@/components/waterfall'
+import Router from '@/common/router'
 class Index extends Component {
   constructor() {
     super(...arguments)
     this.state = {
       status: false,
-      current: getCurrentInstance().router.params.count ||0,
+      current: getCurrentInstance().router.params.count || 0,
       ViewTabs: ['分享', '收藏', '关注的店', '打卡足迹'],
       routerId: getCurrentInstance().router.params.userStingId || '',
       type: getCurrentInstance().router.params.type || '',
@@ -36,36 +37,38 @@ class Index extends Component {
       countStatus: true
     }
   }
-  getFollow()  {
+
+  getFollow() {
     let that = this
-    const {userInfo,userInfo: {userIdString,userType}} = this.state
+    const {userInfo, userInfo: {userIdString, userType}} = this.state
     saveFollow({
       followType: userType,
       followUserId: userIdString,
-    },res => {
+    }, res => {
       that.setState({
-        userInfo:{
+        userInfo: {
           ...userInfo,
           userFollowStatus: '1'
         }
-      },res =>{
+      }, res => {
         toast('关注成功')
       })
     })
 
   }
+
   deleteFollow() {
     let that = this
-    const {userInfo,userInfo: {userIdString}} = this.state
+    const {userInfo, userInfo: {userIdString}} = this.state
     deleteFollow({
       followUserId: userIdString,
-    }, () =>{
+    }, () => {
       that.setState({
-        userInfo:{
+        userInfo: {
           ...userInfo,
           userFollowStatus: '0'
         }
-      },res =>{
+      }, res => {
         toast('取消成功')
       })
     })
@@ -106,7 +109,7 @@ class Index extends Component {
   //获取他人详情
   getUsers() {
     const {userDetails: {getOtherUser}} = user
-    if(Object.keys(Taro.getStorageSync('userInfo')).length<5){
+    if (Object.keys(Taro.getStorageSync('userInfo')).length < 5) {
       navigateTo('/pages/auth/index')
       return
     }
@@ -114,7 +117,7 @@ class Index extends Component {
     httpGet({
       url: getOtherUser,
       data: {
-        userId: Taro.getStorageSync('userInfo').userIdString||''
+        userId: Taro.getStorageSync('userInfo').userIdString || ''
       }
     }, res => {
       const {userInfo} = res
@@ -214,138 +217,150 @@ class Index extends Component {
     })
   }
 
-  createdShareMerchant = (data) => {
-    return (data.map((item, index) => {
-      const {
-        frontImage,
-        frontImageHeight,
-        frontImageWidth,
-        merchantName,
-        contentType,
-        length,
-        topicName,
-        title,
-        watchStatus,
-        beanAmount,
-        userProfile,
-        username,
-        likeAmount,
-        imageNum,
-        merchantAddress,
-        distanceRange,
-        userLikeStatus,
-        beanFlag,
-      } = item
-      return (
-        <View className='userDetails_falls_details'>
-          <View className='userDetails_falls_makebg'
-                style={{
-                  ...backgroundObj(frontImage),
-                  height: Taro.pxTransform(computedHeight(frontImageWidth, frontImageHeight, 335))
-                }}>
-            {contentType == 'video' ?
-              <View className='userDetails_share_imgTag'>
-                {filterTime(length)}
-              </View> :
-              <View className='userDetails_share_videoTag'>
-                <View className='userDetails_share_imgIcon'></View>
-                <View className='userDetails_share_imgfont'>{imageNum}</View>
-              </View>
+  createdShareMerchant = (item) => {
+    const {
+      frontImage,
+      frontImageHeight,
+      frontImageWidth,
+      merchantName,
+      contentType,
+      length,
+      topicName,
+      title,
+      watchStatus,
+      beanAmount,
+      userProfile,
+      username,
+      likeAmount,
+      imageNum,
+      merchantAddress,
+      distanceRange,
+      userLikeStatus,
+      beanFlag,
+      kolActivityIdString,
+      kolMomentsId
+    } = item
+    return (
+      <View onClick={() =>{
+        if(contentType === 'image'){
+          Router({
+            routerName:'shareKolImage',
+            args:{
+              kolMomentId: kolMomentsId
             }
-            <View className='userDetails_share_accress'>
-              <View className='userDetails_share_limitIcon'></View>
-              <View className='userDetails_share_limit'>{distanceRange + ' '} {merchantAddress || ''}  </View>
+          })
+        }else {
+          Router({
+            routerName:'shareKolVideo',
+            args:{
+              kolMomentId: kolMomentsId
+            }
+          })
+        }
+      }}  className='userDetails_falls_details'>
+        <View className='userDetails_falls_makebg'
+              style={{
+                ...backgroundObj(frontImage),
+                height: Taro.pxTransform(computedHeight(frontImageWidth, frontImageHeight, 335))
+              }}>
+          {contentType == 'video' ?
+            <View className='userDetails_share_imgTag'>
+              {filterTime(length)}
+            </View> :
+            <View className='userDetails_share_videoTag'>
+              <View className='userDetails_share_imgIcon'></View>
+              <View className='userDetails_share_imgfont'>{imageNum}</View>
             </View>
+          }
+          <View className='userDetails_share_accress'>
+            <View className='userDetails_share_limitIcon'></View>
+            <View className='userDetails_share_limit'>{distanceRange + ' '} {merchantAddress || ''}  </View>
           </View>
-          <View className='userDetails_share_about'>
-            {topicName && <View className='userDetails_share_tip'>{'#'+topicName}</View>}
-            <View className='userDetails_share_title'>{title}</View>
-            {beanFlag == '1' ?
-              watchStatus == '1' ?
-                <View className='userDetails_share_getBean getbeanColor2'>
-                  已捡{beanAmount}豆
-                </View>
-                :
-                <View className='userDetails_share_getBean getbeanColor1'>
-                  观看可捡{beanAmount}豆
-                </View>
-              : null
-            }
-
-            <View className='userDetails_share_aboutUser'>
-              <View className='userDetails_share_userbox'>
-                <View style={{...backgroundObj(userProfile)}} className='userDetails_share_userProfile'>
-
-                </View>
-                <View className='userDetails_share_userName'>
-                  {username}
-                </View>
+        </View>
+        <View className='userDetails_share_about'>
+          {topicName && <View className='userDetails_share_tip'>{'#' + topicName}</View>}
+          <View className='userDetails_share_title'>{title}</View>
+          {beanFlag == '1' ?
+            watchStatus == '1' ?
+              <View className='userDetails_share_getBean getbeanColor2'>
+                已捡{beanAmount}豆
               </View>
-              <View className='userDetails_share_status'>
-                <View
-                  className={classNames(userLikeStatus == '1' ? 'status_box userDetails_share_icon1' : 'status_box userDetails_share_icon2')}>
-                </View>
-                <View className='userDetails_share_nums'>{setPeople(likeAmount)}</View>
+              :
+              <View className='userDetails_share_getBean getbeanColor1'>
+                观看可捡{beanAmount}豆
               </View>
+            : null
+          }
+
+          <View className='userDetails_share_aboutUser'>
+            <View className='userDetails_share_userbox'>
+              <View style={{...backgroundObj(userProfile)}} className='userDetails_share_userProfile'>
+
+              </View>
+              <View className='userDetails_share_userName'>
+                {username}
+              </View>
+            </View>
+            <View className='userDetails_share_status'>
+              <View
+                className={classNames(userLikeStatus == '1' ? 'status_box userDetails_share_icon1' : 'status_box userDetails_share_icon2')}>
+              </View>
+              <View className='userDetails_share_nums'>{setPeople(likeAmount)}</View>
             </View>
           </View>
         </View>
-      )
-    }))
+      </View>
+    )
+
   }
-  createdShopMerchant = (data) => {
+  createdShopMerchant = (item) => {
+    const {
+      brandName,
+      merchantName,
+      businessHub,
+      categoryName,
+      markFlag,
+      markBean,
+      couponTitlesJson,
+      distanceRange,
+      address,
+      coverImg,
+      coverImage,
+    } = item
     return (
-      data.map((item, index) => {
-        const {
-          brandName,
-          merchantName,
-          businessHub,
-          categoryName,
-          markFlag,
-          markBean,
-          couponTitlesJson,
-          distanceRange,
-          address,
-          coverImg,
-          coverImage
-        } = item
-        return (
-          <View key={index} className='userDetails_falls_details'>
-            <View className='userDetails_falls_bg' style={{...backgroundObj(coverImg || coverImage)}}>
-
-              {brandName && <View className='userDetails_make'>{brandName}</View>}
-            </View>
-            <View className='userDetails_falls_desc'>
-              <View className='userDetails_falls_title'>{merchantName || ''}</View>
-              <View className='userDetails_falls_shopType'>
-                {businessHub + '·' || ''}{categoryName || ''}
-              </View>
-              {markFlag == '1' &&
-              <View className='userDetails_falls_getBean'>到店打卡可捡{markBean}</View>
-              }
-              {couponTitlesJson&&
-              <View className='userDetails_falls_coupon'>
-                {couponTitlesJson.map((item, index) => {
-                  return (
-                    <View className='userDetails_coupon_mj userDetails_coupon_box'>{item.couponTitle}</View>
-                  )
-                })}
-              </View>
-              }
-
-              <View className='userDetails_falls_accress'>
-                <View className='userDetails_falls_city'>
-                  <View className='userDetails_falls_cityIcon'></View>
-                  <View className='userDetails_falls_cityName'>
-                    {address}
-                  </View>
-                </View>
-                <View className='userDetails_falls_limit'>距你{distanceRange}</View>
-              </View>
-            </View>
+      <View className='userDetails_falls_details'>
+        <View className='userDetails_falls_bg' style={{...backgroundObj(coverImg || coverImage)}}>
+          {brandName && <View className='userDetails_make'>{brandName}</View>}
+        </View>
+        <View className='userDetails_falls_desc'>
+          <View className='userDetails_falls_title'>{merchantName || ''}</View>
+          <View className='userDetails_falls_shopType'>
+            {businessHub + '·' || ''}{categoryName || ''}
           </View>
-        )
-      })
+          {markFlag == '1' &&
+          <View className='userDetails_falls_getBean'>到店打卡可捡{markBean}</View>
+          }
+          {couponTitlesJson &&
+          <View className='userDetails_falls_coupon'>
+            {couponTitlesJson.map((item, index) => {
+              return (
+                <View className='userDetails_coupon_mj userDetails_coupon_box'>{item.couponTitle}</View>
+              )
+            })}
+          </View>
+          }
+
+          <View className='userDetails_falls_accress'>
+            <View className='userDetails_falls_city'>
+              <View className='userDetails_falls_cityIcon'></View>
+              <View className='userDetails_falls_cityName'>
+                {address}
+              </View>
+            </View>
+            <View className='userDetails_falls_limit'>距你{distanceRange}</View>
+          </View>
+        </View>
+      </View>
     )
   }
 
@@ -424,7 +439,7 @@ class Index extends Component {
   }
 
   //上拉加载
-  componentDidShow() {
+  componentDidMount() {
     this.getUserDetails()
     this.currentTabSwitch(parseInt(this.state.current), [])
   }
@@ -501,7 +516,7 @@ class Index extends Component {
     } = this.state
     return (
       <View className="userDetails_box">
-        <View style={backgroundImg?{...backgroundObj(backgroundImg)}:{
+        <View style={backgroundImg ? {...backgroundObj(backgroundImg)} : {
           background: 'url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/wechatBg.png") no-repeat center/cover'
         }} className='userDetails_bgTop'>
           <View className="userDetails_top">
@@ -581,19 +596,20 @@ class Index extends Component {
                 <View className='userDetails_title'>关注</View>
               </View>
               <View className='userDetails_fans'>
-                <View className='userDetails_num'>{setPeople(likeCollectionNum)||0}</View>
+                <View className='userDetails_num'>{setPeople(likeCollectionNum) || 0}</View>
                 <View className='userDetails_title'>获赞与被收藏</View>
               </View>
               {(type == 'share' && routerId !== adminId) ?
                 (userFollowStatus == '1' ?
-                  <View className='userDetails_editBtn' onClick={() =>this.deleteFollow()}>已关注</View> :
-                  <View className='userDetails_editBtn'  onClick={() =>this.getFollow()}>
+                  <View className='userDetails_editBtn' onClick={() => this.deleteFollow()}>已关注</View> :
+                  <View className='userDetails_editBtn' onClick={() => this.getFollow()}>
                     <View className='userDetails_edit_icon'>
 
                     </View>
                     关注
                   </View>)
-                : <View className='userDetails_editBtn' onClick={() =>navigateTo('/pages/share/download/index')}>编辑资料</View>
+                : <View className='userDetails_editBtn'
+                        onClick={() => navigateTo('/pages/share/download/index')}>编辑资料</View>
               }
             </View>
           </View>
@@ -611,12 +627,41 @@ class Index extends Component {
               )
             })}
           </View>
-          {publicList.length ==0 &&<NullStatus></NullStatus>}
+          {publicList.length == 0 && <NullStatus></NullStatus>}
           <View className='userDetails_falls'>
-            {current == 0 && this.createdShareMerchant(publicList)}
-            {current == 1 && this.createdShareMerchant(publicList)}
-            {current == 2 && this.createdShopMerchant(publicList)}
-            {current == 3 && this.createdShopMerchant(publicList)}
+            {current == 0 &&
+            <Waterfall
+              list={publicList}
+              createDom={this.createdShareMerchant.bind(this)}
+              imgHight={'frontImageHeight'}
+              imgWidth={'frontImageWidth'}
+              setWidth={335}
+              style={{width: Taro.pxTransform(335)}}
+            >
+            </Waterfall>}
+            {current == 1 &&
+            <Waterfall
+              list={publicList}
+              createDom={this.createdShareMerchant.bind(this)}
+              imgHight={'frontImageHeight'}
+              imgWidth={'frontImageWidth'}
+              setWidth={335}
+              style={{width: Taro.pxTransform(335)}}
+            >
+            </Waterfall>}
+            {current == 2 &&
+            <Waterfall
+              list={publicList}
+              createDom={this.createdShopMerchant.bind(this)}
+              imgHight={240}
+            >
+            </Waterfall>}
+            {current == 3 &&
+            <Waterfall
+              list={publicList}
+              createDom={this.createdShopMerchant.bind(this)}
+              imgHight={240}
+            ></Waterfall>}
           </View>
         </View>
       </View>
