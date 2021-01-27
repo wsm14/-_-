@@ -505,7 +505,7 @@ export const filterWeek = (str) => {
     });
     return `每周${string.join("、")}`;
   }
-  return null;
+  return str;
 };
 export const getLat = () => {
   return Taro.getStorageSync("lat");

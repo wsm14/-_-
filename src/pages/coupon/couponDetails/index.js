@@ -39,7 +39,12 @@ class Index extends PureComponent {
   }
 
   render() {
-    const {userCouponInfo, userCouponInfo: {activeBeginDate, activeEndDate, useWeek, useTime, buyDesc}} = this.state
+    let {userCouponInfo, userCouponInfo: {activeBeginDate, activeEndDate, useWeek, useTime, buyDesc}} = this.state
+    if(buyDesc){
+      if(JSON.parse(buyDesc)){
+        buyDesc =JSON.parse(buyDesc).toString()
+      }
+    }
     if (Object.keys(userCouponInfo).length > 0) {
       return (
         <View className='couponDetails_father_box'>
@@ -62,7 +67,7 @@ class Index extends PureComponent {
               购买须知：
             </View>
             <View style={{lineHeight: Taro.pxTransform(36)}} className='shop_toastText'>
-              {buyDesc && JSON.parse(buyDesc) && JSON.parse(buyDesc).toString()}
+              {buyDesc}
             </View>
           </View>
           {/*使用规则*/}

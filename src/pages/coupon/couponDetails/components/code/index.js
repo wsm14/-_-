@@ -51,7 +51,6 @@ export default (props) => {
           {
             list.map((item, index) => {
               const {status} = item
-              console.log(item)
               const codeObj = {
                 '1': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status1 public_center'></View>),
                 '2': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status2  public_center'></View>),
