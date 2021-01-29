@@ -21,7 +21,7 @@ export default (props) => {
     }
   };
   useEffect(() => {
-    setList(data);
+    setList(data.filter(item => {return item.bugFlag!== '1'}));
   }, [data]);
   useEffect(() => {
     onClose(visible);

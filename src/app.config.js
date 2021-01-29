@@ -97,6 +97,7 @@ export default {
     {
       root: "pages/perimeter/",
       pages: [
+        'commodity/index',//橱窗商品详情
         'willCity/index', //即将开通
         "businessSell/index", //商家信息
         "city/index", //城市定位

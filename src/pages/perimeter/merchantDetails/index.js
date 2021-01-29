@@ -586,7 +586,7 @@ class MerchantDetails extends Component {
                 </View>
                 <View className="merchat_city_details">
                   <View className="merchat_city_names font_hide">
-                    {districtName + address}
+                    {address}
                   </View>
                   <View className="merchat_city_limit">
                     距您{GetDistance(getLat(), getLnt(), lat, lnt) + " "}{" "}
@@ -652,7 +652,7 @@ class MerchantDetails extends Component {
               </View>
               <ScrollView scrollX className="merchant_billboard">
                 {goodsList.map((item, index) => {
-                  return billboard(this, item);
+                  return billboard(this, item,userIdString);
                 })}
               </ScrollView>
             </>

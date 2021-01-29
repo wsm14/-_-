@@ -15,20 +15,25 @@ import {
 import Lovely from "@/components/lovely";
 import Coupons from "@/components/coupon";
 import { getAvailableCoupon } from "@/server/coupon";
-const formatTime = date => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
-
-  return month+'月'+day+'日  ' + [hour, minute, second].map(formatNumber).join(':')
-}
-const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : '0' + n
-}
+const formatTime = (date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const second = date.getSeconds();
+  return (
+    month +
+    "月" +
+    day +
+    "日  " +
+    [hour, minute, second].map(formatNumber).join(":")
+  );
+};
+const formatNumber = (n) => {
+  n = n.toString();
+  return n[1] ? n : "0" + n;
+};
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -87,7 +92,13 @@ class Index extends Component {
 
   render() {
     const {
-      orderResult: { payFee, payTitle },
+      orderResult: {
+        payFee,
+        payTitle,
+        totalFee,
+        beanFee,
+        deductFeeObject = [],
+      },
       orderResult,
       orderSn,
       conpouVisible,
@@ -98,11 +109,34 @@ class Index extends Component {
         <View className="code_scanPay_box">
           <View className="code_scanPay_top">
             <View className="code_scanPay_bg"></View>
-            <View className="code_scanPay_payStatus font36">{formatTime(new Date())}</View>
+            <View className="code_scanPay_payStatus font36">
+              {formatTime(new Date())}
+            </View>
             <View className="code_scanPay_payNum">
               <Text className="code_scanPay_icon  font36 bold color1">¥ </Text>
-              <Text className="code_scanPay_font bold  color1">{payFee}</Text>
+              <Text className="code_scanPay_font bold  color1">{' '+totalFee}</Text>
             </View>
+            <View className="code_scanPay_decBox  code_scanPay_decMargin public_auto font24">
+              <View className="color2">实付金额</View>
+              <View className="color1">{'¥  ' +  payFee}</View>
+            </View>
+            {beanFee && (
+              <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
+                <View className="color2">卡豆优惠抵扣</View>
+                <View className="color3">
+                  {beanFee + `(¥ ${(Number(beanFee) * 100).toFixed(2)})`}
+                </View>
+              </View>
+            )}
+
+            {deductFeeObject.length > 0 && (
+              <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
+                <View className="color2">优惠券</View>
+                <View className="color3">deductFeeObject[0].reduceFee</View>
+              </View>
+            )}
+            <View  className='code_scanPay_liner'></View>
+
             <View className="code_scanPay_btnBox">
               <View
                 className="code_scanPay_btn"

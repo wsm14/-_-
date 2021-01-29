@@ -122,11 +122,11 @@ export const shopDetails = (data, obj) => {
   } else return null;
 };
 //商品标签
-export const billboard = (_this, data, obj) => {
+export const billboard = (_this, data, userIdString) => {
   if (data) {
-    const { goodsImg, goodsName } = data;
+    const { goodsImg, goodsName,goodsIdString} = data;
     return (
-      <View className="billboard_box">
+      <View className="billboard_box" onClick={() =>navigateTo(`/pages/perimeter/commodity/index?merchantId=${userIdString}&goodsId=${goodsIdString}`)}>
         <View
           className="billboard_img dakale_nullImage"
           style={goodsImg ? backgroundObj(goodsImg) : {}}
@@ -310,6 +310,8 @@ export const shopCard = (_this, data, obj) => {
       merchantAddress,
       lat,
       lnt,
+      cityName  =  '',
+      districtName= '',
     } = data;
     return (
       <View
@@ -345,7 +347,7 @@ export const shopCard = (_this, data, obj) => {
               })}
             </View>
             <View className="shopCard_right4 font_hide">
-              杭州市萧山区 | {merchantAddress}
+              {cityName+districtName} | {merchantAddress}
             </View>
           </View>
         </View>

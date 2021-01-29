@@ -326,17 +326,18 @@ class Index extends Component {
       coverImg,
       coverImage,
       userIdString,
+      userMerchantIdString = '',
       merchantIdString
     } = item
     return (
-      <View className='userDetails_falls_details' onClick={() => {navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`)}}>
+      <View className='userDetails_falls_details' onClick={() => {navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString||userMerchantIdString}`)}}>
         <View className='userDetails_falls_bg' style={{...backgroundObj(coverImg || coverImage)}}>
           {brandName && <View className='userDetails_make'>{brandName}</View>}
         </View>
         <View className='userDetails_falls_desc'>
           <View className='userDetails_falls_title'>{merchantName || ''}</View>
           <View className='userDetails_falls_shopType'>
-            {businessHub + '·' || ''}{categoryName || ''}
+          {businessHub&&(businessHub + '·' || '')}{categoryName || ''}
           </View>
           {markFlag == '1' &&
           <View className='userDetails_falls_getBean'>到店打卡可捡{markBean}</View>

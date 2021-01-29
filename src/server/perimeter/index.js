@@ -129,3 +129,11 @@ export const getListMomentByType = (data, fn) => {
   }, res => fn(res))
 }
 //首页分享
+
+export const getListGoodsDetail = (data, fn) => {
+  httpGet({
+    url: '/user/goods/listGoodsDetail',
+    data: data
+  }, res => fn(res))
+}
+//橱窗商品详情
