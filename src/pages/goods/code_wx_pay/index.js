@@ -21,8 +21,11 @@ class Index extends Component {
     super(...arguments);
     this.state = {
       httpData: {
-        ...getCurrentInstance().router.params,
+        orderSn:getCurrentInstance().router.params.orderSn,
+        payMonth: getCurrentInstance().router.params.payMonth,
+        orderType: getCurrentInstance().router.params.orderType
       },
+      merchantId:getCurrentInstance().router.params.merchantId,
       orderResult: {},
     };
   }
@@ -49,6 +52,7 @@ class Index extends Component {
   payOrder(res) {
     const {
       httpData: { orderSn, payMonth },
+      merchantId
     } = this.state;
     payOrder(
       { orderSn: orderSn, payMonth, payType: "wx_lite", wechatCode: res },
@@ -58,7 +62,7 @@ class Index extends Component {
           AdaPay.doPay(result, (payRes) => {
             if (payRes.result_status == "succeeded") {
               redirectTo(
-                `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}&merchantId=${getCurrentInstance().router.params.merchantId}`
+                `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}&merchantId=${merchantId}`
               );
             }
           });
@@ -114,7 +118,7 @@ class Index extends Component {
         </View>
         <PayGo
           content={`微信支付¥${payFee}`}
-          click={() => this.payScan()}
+          click={this.payScan.bind(this)}
         ></PayGo>
       </View>
     );

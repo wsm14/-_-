@@ -9,7 +9,7 @@ import React from "react";
 import Taro from '@tarojs/taro'
 import {View} from '@tarojs/components'
 import './index.scss'
-export default ({content ='',click = null}) =>{
+export default ({content ='',click}) =>{
   return (
     <View className='pay_goPay'>
       <View className='pay_goPayBtn' onClick={() =>click()}>
