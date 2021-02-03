@@ -23,7 +23,7 @@ class Index extends Component {
       httpData: {
         merchantId: getCurrentInstance().router.params.merchantId || "",
         totalFee: 0,
-        useBeanStatus: "0",
+        useBeanStatus: "1",
       },
       couponObj: {},
     };

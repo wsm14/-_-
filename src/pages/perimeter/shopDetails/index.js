@@ -147,7 +147,7 @@ class MerchantDetails extends Component {
               </View>
               <View className="shopdetails_bottom public_auto">
                 <View className="shopdetails_setbean">
-                  ({Number(kolPrice) * 100}卡豆）
+                  ({(Number(kolPrice) * 100).toFixed(0)}卡豆）
                 </View>
                 <View className="shopdetails_time">
                   活动截止日期：{activityEndTime || "--"}

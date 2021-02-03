@@ -124,7 +124,7 @@ class Index extends Component {
               <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
                 <View className="color2">卡豆优惠抵扣</View>
                 <View className="color3">
-                  {beanFee + `(¥ ${(Number(beanFee) * 100).toFixed(2)})`}
+                  {beanFee + `(¥ ${(Number(beanFee) / 100).toFixed(2)})`}
                 </View>
               </View>
             ):null}

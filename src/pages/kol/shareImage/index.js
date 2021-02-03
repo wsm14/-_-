@@ -444,7 +444,8 @@ class Index extends Component {
         userLevelImage,
         kolMomentId,
         contentType,
-        topicIdString
+        topicIdString,
+        cityName
       },
       time,
       visible,
@@ -510,8 +511,8 @@ class Index extends Component {
                     {merchantName}
                   </View>
                   <View className="shareImage_shopTag font_hide">
-                    {merchantCityName ||
-                      "杭州" +
+                    {(cityName ||
+                      "") +
                         "·" +
                         merchantCategoryName +
                         " ｜ " +

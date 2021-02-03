@@ -27,7 +27,7 @@ class MerchantDetails extends Component {
       httpData: {
         specialActivityId:
           getCurrentInstance().router.params.specialActivityId || "",
-        merchantId: getCurrentInstance().router.params.merchantId || "",
+         merchantId: getCurrentInstance().router.params.merchantId || "",
       },
       lnt: Taro.getStorageSync("lnt"),
       lat: Taro.getStorageSync("lat"),
@@ -131,7 +131,7 @@ class MerchantDetails extends Component {
                 </View>
                 <View className="shopdetails_bottom public_auto">
                   <View className="shopdetails_setbean">
-                    ({Number(realPrice) * 100}卡豆）
+                    ({(Number(realPrice) * 100).toFixed(0)}卡豆）
                   </View>
                   <View className="shopdetails_time">
                     活动截止日期：{activityEndTime || "--"}

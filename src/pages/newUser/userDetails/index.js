@@ -513,7 +513,8 @@ class Index extends Component {
         level,
         username,
         userFollowStatus,
-        backgroundImg
+        backgroundImg,
+        profile
       }
     } = this.state
     return (
@@ -524,7 +525,7 @@ class Index extends Component {
           <View className="userDetails_top">
             {/*<Nav {...navSetting}></Nav>*/}
             <View className='userDetails_user'>
-              <View className='userDetails_profile'>
+              <View className='userDetails_profile' style={profile ? {...backgroundObj(profile)} : {}}>
 
               </View>
               <View className='userDetails_decBox'>

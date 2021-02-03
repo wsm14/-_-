@@ -418,6 +418,7 @@ export default class ShareImage extends Component {
         length,
         couponIds,
         beanLimitStatus,
+        cityName
       },
       time,
       bannerSetting,
@@ -478,8 +479,8 @@ export default class ShareImage extends Component {
                     {merchantName}
                   </View>
                   <View className="shareImage_shopTag font_hide">
-                    {merchantCityName ||
-                      "杭州" +
+                    {(cityName ||
+                      "杭州") +
                         "·" +
                         merchantCategoryName +
                         " ｜ " +
