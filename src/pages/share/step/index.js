@@ -166,7 +166,6 @@ class Index extends Component {
           >
             {hangleType.text}
           </Button>
-          {/*<View className='step_forWx' onClick={ () => Taro.reLaunch({url:'/pages/index/index'})}>留在小程序</View>*/}
         </View>
         <View className='step_information'>
           <View className='step_informationTitle'>
