@@ -9,7 +9,7 @@ export default (props) => {
   const {
     orderSn,
     payType,
-    payTime
+    payTime,
   } = data
   const filterStyle = (str) => {
     switch (str) {

@@ -12,12 +12,12 @@ export default (props) => {
   },
     {
       style: 'user_tab_icon2',
-      font: '关注',
+      font: '关注店铺',
       fn: () => navigateTo('/pages/newUser/userDetails/index?count=2')
     },
     {
       style: 'user_tab_icon3',
-      font: '收藏',
+      font: '收藏内容',
       fn: () => navigateTo('/pages/newUser/userDetails/index?count=1')
     },
     {

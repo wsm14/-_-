@@ -40,6 +40,12 @@ export default (props) => {
       <View className='codeBox public_center'>
         <Swiper
           current={current}
+          onChange={(e) => {
+            const {
+              detail: { current },
+            } = e;
+            setCurrent(current);
+          }}
           style={{width:qrwh,height:qrwh}}
         >
           {
@@ -48,7 +54,8 @@ export default (props) => {
               const codeObj = {
                 '1': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status1 public_center'></View>),
                 '2': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status2  public_center'></View>),
-                '3': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status3  public_center'></View>)
+                '3': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status3  public_center'></View>),
+                '4': (<View style={{width:qrwh,height:qrwh}} className='code_onloader code_status4  public_center'></View>)
               }[status]
               return (
                 <SwiperItem>
@@ -78,8 +85,8 @@ export default (props) => {
   }
   const orderStatusObj = {
     '0': (<View className='color3 font24 couponDetails_goods_type'> 还有{orderResult.dayNum}天过期 </View>),
-    '1': (<View className='color7 font24 couponDetails_goods_type'> 已使用 </View>),
-    '2': (<View className='color7 font24 couponDetails_goods_type'> 已过期 </View>),
+    '2': (<View className='color7 font24 couponDetails_goods_type'> 已使用 </View>),
+    '1': (<View className='color7 font24 couponDetails_goods_type'> 已过期 </View>),
     '3': (<View className='color7 font24 couponDetails_goods_type'>还有{orderResult.dayNum}天过期</View>),
   }[orderResult.couponStatus]
   const goGoodDetails = (orderSn) => {
@@ -121,7 +128,7 @@ export default (props) => {
               lat: orderResult.lat,
               lnt: orderResult.lnt,
               address: orderResult.merchantAddress,
-              name: orderResult.merchantName
+              merchantName: orderResult.merchantName
             })}></View>
       <View className='couponDetails_box'>
         <View

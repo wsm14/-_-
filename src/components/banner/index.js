@@ -12,8 +12,9 @@ import Taro from '@tarojs/taro'
 import {Swiper, SwiperItem, View, Image} from '@tarojs/components'
 import classNames from 'classnames'
 import './index.scss'
+import { navigateTo } from "@/common/utils";
 export default (props) => {
-  const {style, data, showToast, imgName, auto, height, boxStyle, imgStyle, showNear,borderRadius} = props
+  const {style, data, showToast, imgName, auto, height, boxStyle, imgStyle, showNear,borderRadius,bottom  = {}} = props
   const [list, setList] = useState([]);
   const [current, setCurrent] = useState('1')
   useEffect(() => {
@@ -31,9 +32,12 @@ export default (props) => {
           }}
         >
           {list.map((item, index) => {
+            const {jumpUrl} =  item
             return (
               <SwiperItem style={{width: '100%', height: '100%'}}>
-                <View style={imgStyle ? {
+                <View 
+                // onClick={() =>{if(jumpUrl){navigateTo(`/pages/share/webView/index?link=${jumpUrl}`)}}} 
+                style={imgStyle ? {
                   background: `url(${item[imgName]?item[imgName]:item}) no-repeat`,
                   backgroundSize: '100% 100%'
                 } : {background: `url(${item[imgName]?item[imgName]:item}) no-repeat center center/contain`}} key={index}
@@ -55,7 +59,7 @@ export default (props) => {
       }
 
         {showNear && list.length>1 &&
-         <View  className='show_near'>
+         <View  className='show_near'  style ={{...bottom}}>
            {list.map((item,index) => {
              return (
                <View key={index} className={classNames(index==current-1?'show_near_linerTrue':'show_near_false')}></View>

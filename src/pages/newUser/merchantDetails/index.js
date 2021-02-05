@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {Image, View, ScrollView} from '@tarojs/components'
 import Nav from '@/components/nav'
-import NullStatus from '@/components/nullStatus'
 import {user} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
 import Toast from './../components/modal'
@@ -20,6 +19,7 @@ import {
 } from '@/common/utils'
 import classNames from 'classnames'
 import Waterfall from '@/components/waterfall'
+import NullStatus from '@/components/nullStatus'
 import './index.scss'
 
 class Index extends Component {
@@ -144,15 +144,16 @@ class Index extends Component {
         watchStatus,
         beanAmount,
         couponTitlesJson,
-        momentId
+        momentId,
+        userIdString
       } = item
       return (
         <View onClick={() => {
           if(contentType === 'image'){
-            navigateTo(`/pages/index/lookShare/shareImage/index?momentId=${momentId}`)
+            navigateTo(`/pages/index/lookShare/shareImage/index?momentId=${momentId}&merchantId=${userIdString}`)
           }
           else {
-            navigateTo(`/pages/index/lookShare/shareVideo/index?momentId=${momentId}`)
+            navigateTo(`/pages/index/lookShare/shareVideo/index?momentId=${momentId}&merchantId=${userIdString}`)
           }
         }} className='merchant_falls_details'>
           <View className='merchant_falls_makebg'
@@ -292,7 +293,9 @@ class Index extends Component {
 
     return (
       <View className="merchant_box">
-        <View style={backgroundImg ? {...backgroundObj(backgroundImg)} : {}} className='merchant_topBg'>
+        <View className='merchant_box_bgs' style={{position:'relative'}}>
+          <View className='merchant_filter' style={backgroundImg ? {...backgroundObj(backgroundImg)} : {}}></View>
+          <View className='merchant_topBg'>
           <View className="merchant_top">
             <View className='merchant_topBg'> </View>
             {/*<View className="merchant_nav">*/}
@@ -351,9 +354,11 @@ class Index extends Component {
             </View>
           </View>
         </View>
+        </View>
+      
         <View
           className="merchant_content">
-          {userMomentsList.length == 0 && <NullStatus></NullStatus>}
+          {userMomentsList.length == 0 && <NullStatus type={0}></NullStatus>}
           {userMomentsList.length > 0 &&
           <Waterfall
             list={userMomentsList}

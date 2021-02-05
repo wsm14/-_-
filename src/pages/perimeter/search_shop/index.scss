@@ -185,6 +185,7 @@ page {
     align-items: center;
     display: flex;
     position: relative;
+    z-index: 10;
     .search_user_content{
       display: flex;
       align-items: center;

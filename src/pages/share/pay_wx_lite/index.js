@@ -175,7 +175,7 @@ class Index extends Component {
           <View className='pay_wx_goods'>
             <View className='public_auto pay_wx_goodsDetails'>
               <View className='color1 font28'>收款方</View>
-              <View className='color2 font28 font_hide'>{merchantName}</View>
+              <View className='color2 font28 font_hide pay_wx_maxWidth'>{merchantName}</View>
             </View>
             <View className='public_auto pay_wx_goodsDetails'>
               <View className='color1 font28'>订单编号</View>

@@ -22,7 +22,7 @@ export default (props) =>{
           <View className='page_share_userDetails'>
             <View className= 'page_share_profile' style={{background:`url(${data.profile}) no-repeat center/cover`}}></View>
             <View className= 'page_share_userBox'>
-              <View className='page_share_userName'>{data.username}</View>
+              <View className='page_share_userName font_hide'>{data.username}</View>
               <View className='page_share_userTitle'>{content}</View>
             </View>
           </View>

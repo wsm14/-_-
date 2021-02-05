@@ -16,13 +16,14 @@ class Index extends Component {
     })
   }
   componentDidMount() {
-    this.setTitle()
+    // this.setTitle()
   }
   render () {
     const {link} = this.state
+    console.log(link)
     return (
       <View className='record_box'>
-        <WebView src={link}/>
+        <WebView src={`${link}?shareUserId=12312311&shareUserType=1231232`}/>
       </View>
     )
   }

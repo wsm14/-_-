@@ -53,6 +53,9 @@ page{
     }
     .pay_wx_goodsDetails{
       height: 91px;
+      .pay_wx_maxWidth{
+        max-width: 420px;
+      }
     }
   }
   .page_back_btn{

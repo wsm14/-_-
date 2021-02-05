@@ -15,7 +15,7 @@ class Index extends Component {
         ...getCurrentInstance().router.params,
       },
       merchantId: getCurrentInstance().router.params.merchantId,
-      useBeanStatus: '0',
+      useBeanStatus: '1',
       kolGoodsDTO: {
         id: getCurrentInstance().router.params.kolActivityId,
         goodsCount: 1

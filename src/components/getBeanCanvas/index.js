@@ -9,7 +9,7 @@ const scale = () => {
   return Taro.getSystemInfoSync().windowWidth / 375;
 }
 export default (props) => {
-  const {beanStatus, beanNum, interval, length,lookStatus} = props
+  const {beanStatus, beanNum, interval, length,lookStatus,getBeanStatus} = props
   const [time, setTime] = useState(null)
   const [toast, setToast] = useState(1)
   const [computedTime, setComputedTime] = useState(0)
@@ -24,6 +24,9 @@ export default (props) => {
     , [length])
   useEffect(() => {
       drawProgressbg(scale())
+      if(getBeanStatus ===  '0'  && time == 0){
+         setToast(1)
+      }
     }
     , [time])
   useEffect(() => {
@@ -54,7 +57,7 @@ export default (props) => {
       </View>
       {beanStatus === '0' ?
         <View className={classNames('canvas_tag beanLookToast', toast === 0 && 'animated fadeOut')}>
-           看完可捡{beanNum}卡豆
+           {(getBeanStatus==='0' && time ===0)?'卡豆奖励已到上限':`看完可捡${beanNum}卡豆`}
         </View>:null}
     </View>
   )

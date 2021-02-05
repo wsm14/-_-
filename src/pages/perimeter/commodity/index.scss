@@ -1,0 +1,251 @@
+page{
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+}
+.favourable_Details{
+   width: 100%;
+   padding-bottom: 193px;
+  .shopDetails_banner{
+    width: 750px;
+    height: 530px;
+  }
+  .shopdetails_price{
+    height: 108px;
+    background: #108588;
+    display: flex;
+    align-items: center;
+    .shopdetails_priceBox{
+      padding:0px 32px 0;
+      width: 100%;
+      color: #FFFFFF;
+      .shopdetails_top{
+        height: 40px;
+        .shopdetails_setprice{
+          height: 40px;
+          font-size: 40px;
+          .shopdetails_bigFont{
+            font-size: 20px;
+            margin-right: 10px;
+          }
+          .shopdetails_lineFont{
+            font-size: 24px;
+            font-weight: 400;
+            vertical-align: middle;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: line-through;
+            margin-left: 12px;
+          }
+        }
+        .shopdetails_priceIcon{
+          width: 160px;
+          height: 40px;
+          background: #FFFFFF;
+          border-radius: 8px;
+          font-size: 24px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #108588;
+          line-height: 40px;
+          text-align: center;
+          margin-left: auto;
+        }
+
+      }
+      .shopdetails_bottom{
+        .shopdetails_setbean{
+          margin-top: 8px;
+          height: 24px;
+          font-size: 24px;
+          line-height: 24px;
+        }
+        .shopdetails_time{
+          margin-top: 8px;
+          height: 24px;
+          font-size: 24px;
+        }
+      }
+    }
+  }
+  .shopdetails_getShop{
+    padding:0 32px 32px;
+    background: #FFFFFF;
+    color: #333333;
+    .shopdetails_title{
+      font-size: 32px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 600;
+      line-height: 48px;
+      padding-top: 32px;
+      max-height: 96px;
+      width: 672px;
+    }
+    .shopDetails_tab{
+      display: flex;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      overflow: hidden;
+      align-items: center;
+      margin-top: 24px;
+      .shopDetails_tab_icon{
+        width: 24px;
+        height: 24px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon123.png") no-repeat;
+        background-size: 100% 100%;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+      .shopDetails_tab_font{
+        margin-right: 24px;
+        height: 24px;
+      }
+    }
+  }
+  .shopdetails_getPrice{
+    height: 40px;
+    display: flex;
+    margin-top: 32px;
+    .shopdetails_getPrice_tag{
+      height: 40px;
+      line-height: 40px;
+      background: rgba(239, 71, 111, 0.1);
+      border-radius: 4px;
+      padding:0 12px;
+      color: rgba(241, 88, 125, 1);
+      font-size: 24px;
+    }
+  }
+  .shopdetails_shop_details{
+    margin-top: 12px;
+    background: #FFFFFF;
+    color: rgba(51, 51, 51, 1);
+    .shopdetails_shop_merchantDetails{
+      padding:40px 32px 0;
+      height: 32px;
+      font-size: 32px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 600;
+      color: #333333;
+    }
+    .shopdetails_dec{
+      font-size: 28px;
+      font-weight: 400;
+      color: rgba(102, 102, 102, 1);
+      line-height: 42px;
+      padding: 24px 32px 0;
+    }
+    .shopdetails_Image image{
+      width: 100%;
+      vertical-align: middle;
+    }
+    .shopdetails_Image{
+      margin-top: 24px;
+      width: 100%;
+    }
+  }
+  .shopdetails_shop_player{
+    margin: 24px auto;
+    width: 686px;
+    height: 1036px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    .shopdetails_play_title{
+      padding: 40px 32px 0;
+      height: 32px;
+      font-size: 32px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 600;
+      color: #333333;
+    }
+    .shopdetails_play_img{
+      width: 686px;
+      height: 940px;
+      margin-top: 24px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/player.png") no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .shopdetails_shop_toast{
+    margin: 24px 32px 0;
+    color: #333333;
+    padding: 32px 40px 50px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    .shop_toastDate{
+      margin-top: 24px;
+    }
+    .shop_getDate{
+      margin-top: 40px;
+    }
+    .shop_showNow{
+      margin-top: 40px;
+    }
+    .shop_toastText{
+      margin-top: 16px;
+      min-height: 24px;
+      font-size: 24px;
+      font-weight: 400;
+      color: rgba(102, 102, 102, 1);
+      line-height: 36px;
+    }
+    .shop_toastTextColor{
+      color: rgba(7, 192, 194, 1);
+    }
+    .shop_toastTextHeight{
+      line-height: 36px;
+    }
+  }
+  .shop_toastTitle{
+    font-size: 32px;
+    font-weight: 600;
+  }
+  .shop_toastDec{
+    height: 24px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #666666;
+  }
+  .shopdetails_shop_btn{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 32px 0;
+    height: 128px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.1);
+    .shopdetails_telephone{
+      margin-top: 32px;
+      width: 48px;
+      height: 48px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/kefu.png") no-repeat;
+      background-size: 100% 100%;
+    }
+    .shopdetails_telephone_text{
+      width: 48px;
+      height: 20px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #999999;
+      line-height: 20px;
+      text-align: center;
+      margin-top: 4px;
+    }
+    .shopdetails_shop_goshop{
+      width: 380px;
+      height: 80px;
+      background: #07C0C2;
+      border-radius: 8px;
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      bottom: 24px;
+      font-size: 32px;
+      font-weight: 400;
+      color: #FFFFFF;
+      text-align: center;
+      line-height: 80px;
+    }
+  }
+}

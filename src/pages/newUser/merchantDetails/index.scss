@@ -9,6 +9,20 @@ page{
   width: 100%;
   display: flex;
   flex-direction:column ;
+  line-height: 1;
+ 
+  .merchant_box_bgs{
+    position: relative;
+    z-index: 10;
+  }
+  .merchant_filter{
+    filter: blur(16rpx)  grayscale(25%);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
   .merchant_top {
     border-radius: 3px;
     position: relative;
@@ -17,7 +31,6 @@ page{
     border-radius: 3px;
     position: relative;
     padding-top: 132px;
-    background: linear-gradient(-44deg, rgba(197, 162, 255, 0.4) 0%, rgba(76, 181, 197, 0.4) 99%);
     .merchant_nav{
       width: 100%;
       height: 132px;
@@ -32,7 +45,7 @@ page{
         .merchant_tag{
           width: 55px;
           height: 30px;
-          border: 1px solid #FFD777;
+          border: 2px solid #FFD777;
           border-radius: 5px;
           box-sizing: border-box;
           font-size: 20px;
@@ -69,6 +82,7 @@ page{
       .merchant_bigfile{
         width: 150px;
         height: 150px;
+        border: 2px solid #FFFFFF;
         background: #e6e6e6;
         border-radius: 50%;
       }
@@ -78,10 +92,9 @@ page{
         max-width: 420px;
         .merchant_title_box{
           display: flex;
-          padding-top: 23px;
+          margin-top: 23px;
           align-items: center;
           .merchant_name{
-            height: 35px;
             font-size: 36px;
             font-family: PingFang SC;
             font-weight: 600;
@@ -91,16 +104,16 @@ page{
           .merchant_tag{
             width: 55px;
             height: 30px;
-            border: 1px solid #FFD777;
+            border: 2px solid #FFD777;
             border-radius: 5px;
             box-sizing: border-box;
             font-size: 20px;
-            font-family: PingFang SC;
             font-weight: 600;
             color: #FFD777;
-            text-align: center;
-            line-height: 30px;
             margin-left: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
         }
         .merchant_details{
@@ -150,9 +163,13 @@ page{
     }
   }
   .merchant_topBg{
-    background: rgba(0, 0, 0,0.4);
+    position: relative;
+    background: url('https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon440.png') no-repeat;
+    z-index: 12;
   }
   .merchant_content{
+    position: relative;
+    z-index: 15;
     margin-top: -35px;
     background: #F2F2F2;
     border-radius: 20px;
@@ -222,9 +239,6 @@ page{
   background: #07C0C2;
 }
 .merchant_falls_details{
-  -moz-page-break-inside: avoid;
-  -webkit-column-break-inside: avoid;
-  break-inside: avoid;
   margin-bottom: 20px;
   border-radius: 20px;
   width: 335px;

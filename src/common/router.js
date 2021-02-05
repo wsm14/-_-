@@ -33,6 +33,7 @@ export default ({routerName, type = 'navigateTo', args = {}}) => {
     couponDetails: "/pages/coupon/couponDetails/index",//券包详情
     wraparound: '/pages/coupon/wraparound/index', //券包
     //券包
+    willCity: '/pages/perimeter/willCity/index',//即将开通
     city: '/pages/perimeter/city/index',//城市定位
     search_shop: '/pages/perimeter/search_shop/index',//商家搜索
     search_fav: '/pages/perimeter/search_fav/index',//特价搜索
@@ -48,6 +49,7 @@ export default ({routerName, type = 'navigateTo', args = {}}) => {
     //周边
     kolShopGoods: '/pages/goods/kolShopGoods/index',
     codePay: '/pages/goods/codePay/index',
+    coupon:'/pages/goods/codeCoupon/index',
     //订单  goods
     legal: "/pages/kol/legal/index",//达人等级
     report: "/pages/kol/report/index",//举报
@@ -55,6 +57,7 @@ export default ({routerName, type = 'navigateTo', args = {}}) => {
     shareKolImage: "/pages/kol/shareImage/index",//kol图片详情页,
     follow: "/pages/kol/follow/index",//关注列表,
     fans: "/pages/kol/fans/index",//粉丝列表,
+ 
     //kol
   }[routerName]
   const types = type
@@ -66,7 +69,7 @@ export default ({routerName, type = 'navigateTo', args = {}}) => {
   }
   switch (types) {
     case 'navigateTo':
-      return navigateTo(routerObj + (args ? `?${args}` : ''))
+      return navigateTo(routerObj + (args ? `?${args}`: ''))
     case 'redirectTo':
       return redirectTo(routerObj + (args ? `?${args}` : ''))
     case 'switchTab':

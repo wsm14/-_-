@@ -1,7 +1,6 @@
 import React, {Component, useMemo} from 'react'
 import Taro, {getCurrentInstance} from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
-import Nav from '@/components/nav'
 import NullStatus from '@/components/nullStatus'
 import {user} from '@/api/api'
 import {httpGet} from '@/api/newRequest'
@@ -326,16 +325,19 @@ class Index extends Component {
       address,
       coverImg,
       coverImage,
+      userIdString,
+      userMerchantIdString = '',
+      merchantIdString
     } = item
     return (
-      <View className='userDetails_falls_details'>
+      <View className='userDetails_falls_details' onClick={() => {navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString||userMerchantIdString}`)}}>
         <View className='userDetails_falls_bg' style={{...backgroundObj(coverImg || coverImage)}}>
           {brandName && <View className='userDetails_make'>{brandName}</View>}
         </View>
         <View className='userDetails_falls_desc'>
           <View className='userDetails_falls_title'>{merchantName || ''}</View>
           <View className='userDetails_falls_shopType'>
-            {businessHub + '·' || ''}{categoryName || ''}
+          {businessHub&&(businessHub + '·' || '')}{categoryName || ''}
           </View>
           {markFlag == '1' &&
           <View className='userDetails_falls_getBean'>到店打卡可捡{markBean}</View>
@@ -511,7 +513,8 @@ class Index extends Component {
         level,
         username,
         userFollowStatus,
-        backgroundImg
+        backgroundImg,
+        profile
       }
     } = this.state
     return (
@@ -522,7 +525,7 @@ class Index extends Component {
           <View className="userDetails_top">
             {/*<Nav {...navSetting}></Nav>*/}
             <View className='userDetails_user'>
-              <View className='userDetails_profile'>
+              <View className='userDetails_profile' style={profile ? {...backgroundObj(profile)} : {}}>
 
               </View>
               <View className='userDetails_decBox'>
@@ -627,7 +630,7 @@ class Index extends Component {
               )
             })}
           </View>
-          {publicList.length == 0 && <NullStatus></NullStatus>}
+          {publicList.length == 0 && <NullStatus  type={current}></NullStatus>}
           <View className='userDetails_falls'>
             {current == 0 &&
             <Waterfall

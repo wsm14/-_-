@@ -31,7 +31,7 @@ class Index extends Component {
             lat: merchantLat,
             lnt:  merchantLnt,
             address: merchantAddress,
-            name: merchantName
+            merchantName: merchantName
           })}>去导航</View>
         </View>
       </View>
