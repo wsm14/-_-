@@ -65,9 +65,9 @@ const env =
 
 switch (env) {
   case "development":
-    // baseUrl = "https://devgateway.dakale.net";
+    baseUrl = "https://devgateway.dakale.net";
     // baseUrl = 'https://pregateway.dakale.net'
-    baseUrl = 'https://gateway1.dakale.net'
+    // baseUrl = 'https://gateway1.dakale.net'
     break;
   case "production":
     baseUrl = "https://pregateway.dakale.net";
@@ -79,17 +79,24 @@ switch (env) {
 const httpCondition = {
   header: {
     apptype: "user",
+    device: "weChat",
     "content-type": "application/x-www-form-urlencoded",
   },
   timeout: 10000,
   dataType: "json",
 };
 let requestUrl = [];
+const loadBeadRequest = [
+  "/user/userMoment/listMomentDetailByType",
+  "/common/dictionary/listMomentBarrage",
+];
 export const httpGet = (obj, fn) => {
   const { header = {} } = obj;
-  Taro.showLoading({
-    title: "加载中",
-  });
+  if (!loadBeadRequest.includes(obj.url)) {
+    Taro.showLoading({
+      title: "加载中",
+    });
+  }
   if (
     Taro.getStorageSync("userInfo") &&
     Taro.getStorageSync("userInfo").mobile.length === 11 &&
@@ -110,7 +117,9 @@ export const httpGet = (obj, fn) => {
     data: encrypt(obj.data) || {},
     method: "get",
     success: (res) => {
-      Taro.hideLoading();
+      if (!loadBeadRequest.includes(obj.url)) {
+        Taro.hideLoading();
+      }
       const { data, statusCode } = res;
       if (statusCode === 200 && res.data.success) {
         const { content } = data;

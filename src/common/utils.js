@@ -94,7 +94,7 @@ export const computedHeight = function (width, height, newWidth) {
   if (typeof width == "number" && typeof height == "number") {
     scale = width / height;
   }
-  scale = parseInt(width||0) / parseInt(height||0);
+  scale = parseInt(width || 0) / parseInt(height || 0);
   return parseInt(newWidth / scale);
 };
 //计算图片高度
@@ -142,12 +142,8 @@ export const filterTime = function (time) {
 export const setPeople = function (num) {
   if (typeof num == "string") {
     if (num.length > 4) {
-      let str = (parseInt(num) / 10000).toString().split(".");
-      if (str.length > 1) {
-        return str[0] + "." + str[1][0] + "万";
-      } else {
-        return str[0] + "万";
-      }
+      let str = (parseInt(num) / 10000).toFixed(1) + "万";
+      return str
     }
     return num;
   } else {
@@ -253,7 +249,7 @@ export const deleteFall = function (obj, fn) {
   );
 };
 //删除 点赞
-export const setIntive = function (time, fn) {
+export const setIntive = function (time, fn, limit = 1000) {
   let times;
   if (time <= 0) {
     fn(time);
@@ -265,7 +261,7 @@ export const setIntive = function (time, fn) {
     if (time == 0) {
       clearInterval(times);
     }
-  }, 1000));
+  }, limit));
 };
 
 //定时器
@@ -561,3 +557,7 @@ export const removeStorage = (key) =>
       toast("缓存清理错误");
     },
   });
+export const computedClient = () => {
+  let client = Taro.getMenuButtonBoundingClientRect();
+  return client.top;
+};

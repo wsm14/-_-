@@ -45,6 +45,7 @@ class Index extends Component {
       code: code
     }, res => {
       const {openId, unionId, userInfo} = res
+      console.log(res)
       if (userInfo && userInfo.mobile.length >= 11) {
         Taro.setStorageSync('userInfo', userInfo)
         that.props.store.authStore.setUserInfoStore(userInfo)
@@ -52,7 +53,7 @@ class Index extends Component {
       } else if (userInfo && userInfo.mobile.length == 0) {
         this.setState({
           openId: openId,
-          unionId: userInfo.unionId,
+          unionId: userInfo.unionId||unionId,
           btnStatus: 1
         })
         that.props.store.authStore.setUserInfoStore(userInfo)
@@ -81,7 +82,7 @@ class Index extends Component {
             Taro.setStorageSync('userInfo', res.userInfo)
             this.setState({
               btnStatus: 1,
-              unionId: res.userInfo.unionId,
+              unionId: res.userInfo.unionId||unionId,
               visible: true
             })
           }
@@ -99,6 +100,7 @@ class Index extends Component {
     let that = this
     const {detail: {errMsg}} = e
     const {openId, unionId} = this.state
+    console.log(openId, unionId,this.state)
     if (errMsg === 'getPhoneNumber:ok') {
       //如果用户点击同意授权
       if (openId) {

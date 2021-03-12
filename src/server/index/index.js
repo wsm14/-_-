@@ -53,3 +53,12 @@ export const deleteMomentsLikeAmount = (data,fn) => {
   },res => fn(res))
 }
 //点赞商家 
+
+export const getUserMomentList = (data = {},fn) => {
+  httpGet({
+    url: '/user/userMoment/listMomentDetailByType',
+    data:data
+  },res => fn(res))
+}
+//获取连刷视频动态
+

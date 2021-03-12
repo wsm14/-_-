@@ -20,6 +20,7 @@ class Index extends Component {
         id: getCurrentInstance().router.params.specialActivityId,
         goodsCount: 1
       },
+      shareUserId: getCurrentInstance().router.params.shareUserId,
       specialGoodsInfo: {},
       visible: false
     }
@@ -69,10 +70,11 @@ class Index extends Component {
   }
 
   saveKolGoodsOrder() {
-    const {merchantId, useBeanStatus, specialGoodsDTO} = this.state
+    const {merchantId, useBeanStatus, specialGoodsDTO,shareUserId} = this.state
     const {favourOrder: {saveSpecialGoods}} = goods
     httpPost({
       data: {
+        shareUserId,
         merchantId: merchantId,
         useBeanStatus: useBeanStatus,
         kolMomentsId:getCurrentInstance().router.params.kolMomentsId,

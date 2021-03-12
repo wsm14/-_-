@@ -65,7 +65,7 @@ const toastCity = (props) => {
             <View className="toastCity_font3 font28 color1 bold">
               暂未开通，可前往切换城市
             </View>
-            <View className="toastCity_font4 font32">切换城市</View>
+            <View className="toastCity_font4 font32" onClick={() => {navigateTo('/pages/perimeter/city/index')}}>切换城市</View>
             <View className="toastCity_font5 color2 font28">
               加盟哒卡乐开通当前城市
             </View>

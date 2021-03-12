@@ -1,0 +1,171 @@
+.beanReward_box {
+  width: 100%;
+  min-height: 100%;
+  overflow-y: auto;
+  background: white;
+  line-height: 1;
+  .beanReward_card {
+    width: 100%;
+    height: 418px;
+    margin: 0 auto;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon449.png")
+      no-repeat top/cover;
+    position: relative;
+  }
+  .beanReward_cardBox {
+    padding: 40px 64px 0;
+    .beanReward_titleBox {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .beanReward_title_left {
+        height: 50px;
+        font-size: 28px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+      }
+      .beanReward_title_left::after {
+        display: inline-block;
+        content: "";
+        width: 36px;
+        height: 36px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon452.png")
+          no-repeat;
+        background-size: 100% 100%;
+        margin-left: 8px;
+      }
+      .beanReward_title_right {
+        width: 160px;
+        height: 50px;
+        background: #ffffff;
+        border-radius: 25px;
+        line-height: 50px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        color: #108588;
+      }
+    }
+  }
+  .beanReward_num {
+    padding-top: 23px;
+    line-height: 60px;
+    font-size: 60px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  .beanReward_beanBox {
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .beanReward_bean_left {
+      line-height: 40px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #ffffff;
+    }
+    .beanReward_bean_right {
+      font-size: 36px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 40px;
+      display: flex;
+    }
+    .beanReward_bean_right::after {
+      display: inline-block;
+      content: "";
+      width: 40px;
+      height: 40px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon451.png")
+        no-repeat;
+      background-size: 100% 100%;
+      margin-left: 8px;
+    }
+  }
+  .beanReward_body {
+    padding: 76px 32px 108px;
+    .beanReward_body_title {
+      height: 40px;
+      font-size: 40px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 40px;
+    }
+    .beanReward_body_toast {
+      padding-top: 12px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #cccccc;
+    }
+  }
+  .beanReward_detailBox {
+    padding: 0 32px;
+    .beanReward_detail {
+      padding-top: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px #e5e5e5 solid;
+      .beanReward_detail_top {
+        display: flex;
+        height: 36px;
+        align-items: center;
+        justify-content: space-between;
+        .beanReward_top_left {
+          font-size: 32px;
+          font-weight: 400;
+          color: #333333;
+          line-height: 36px;
+        }
+        .beanReward_top_right {
+          display: flex;
+          height: 36px;
+          font-size: 36px;
+          font-weight: 600;
+          color: #ef476f;
+          align-items: center;
+        }
+        .beanReward_top_right::after {
+          display: inline-block;
+          content: "";
+          width: 36px;
+          height: 36px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon451.png")
+            no-repeat;
+          background-size: 100% 100%;
+          margin-left: 8px;
+        }
+      }
+
+      .beanReward_centerBox {
+        padding-top: 24px;
+        line-height: 28px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #999999;
+      }
+      .beanReward_bottomBox {
+        padding-top: 16px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #cccccc;
+        line-height: 24px;
+      }
+    }
+  }
+  .beanReward_null_status {
+    margin: 48px auto 0;
+    width: 300px;
+    height: 300px;
+  }
+  .beanReward_toast {
+    padding: 16px 40px 0;
+    font-size: 28px;
+    font-weight: 400;
+    color: #666666;
+    line-height: 42px;
+  }
+}

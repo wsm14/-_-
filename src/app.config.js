@@ -6,6 +6,7 @@ export default {
     "pages/index/user/index", //首页个人
     "pages/index/lookShare/shareImage/index", //圖文详情
     "pages/index/lookShare/shareVideo/index", //视频详情
+    "pages/index/home/index", //视频详情
     "pages/payPrice/index", //小程序支付兼容
     "pages/auth/index", //登录
   ],
@@ -29,7 +30,7 @@ export default {
         text: "周边",
       },
       {
-        pagePath: "pages/index/takeCard/index",
+        pagePath: "pages/index/home/index",
         iconPath: "./assets/image/tab-bar/card.png",
         selectedIconPath: "./assets/image/tab-bar/cardTrue.png",
         text: "打卡",
@@ -85,7 +86,8 @@ export default {
     {
       root: "pages/share/",
       pages: [
-        "download/index", ///下载,
+        "invitation/index",//邀请函
+        "download/index", //下载,
         "step/index", //,同步步数
         "shareFriend/index", //分享好友,
         "shareShop/index", //分享家店
@@ -97,6 +99,7 @@ export default {
     {
       root: "pages/perimeter/",
       pages: [
+        'beanReward/index',
         'commodity/index',//橱窗商品详情
         'willCity/index', //即将开通
         "businessSell/index", //商家信息
