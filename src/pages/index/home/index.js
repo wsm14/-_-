@@ -57,7 +57,7 @@ class Index extends React.PureComponent {
       },
       (res) => {
         interval && this.stopInterval(interval);
-        // this.getMomentBarrage();
+        this.getMomentBarrage();
         this.videoPlayerControl();
         this.initInterval();
         if (current >= this.state.userMomentsList.length - 3 && countStatus) {
@@ -80,7 +80,7 @@ class Index extends React.PureComponent {
   }
 
   getMomentBarrage() {
-    getMomentBarrage({ size: 50 }, (res) => {
+    getMomentBarrage({ size: 25 }, (res) => {
       const { momentBarrageList = [] } = res;
       this.setState({
         momentBarrageList,

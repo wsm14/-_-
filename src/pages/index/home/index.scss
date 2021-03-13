@@ -191,7 +191,9 @@ page {
     }
   }
   .home_barrage_item {
-    height: 52px;
+    height: 62px;
+    display: flex;
+    align-items: center;
   }
   .home_bottom_decBox {
     margin-top: 24px;
@@ -271,5 +273,38 @@ page {
     height: 1200px;
     background: #ffffff;
     border-radius: 20px 20px 0px 0px;
+  }
+  .dressing_box {
+    position: absolute;
+    z-index: 1080;
+    background: rgba(0, 0, 0, 0.6);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    .dressing_layer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-radius: 20px 20px 0px 0px;
+      .dressing_layer_title{
+        height: 115px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        border: 1px solid #E5E5E5;;
+        .closeIcon{
+          position: absolute;
+          right: 32px;
+          top: 40px;
+          width: 36px;
+          height: 36px;
+        }
+        
+      }
+    }
   }
 }
