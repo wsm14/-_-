@@ -1,31 +1,60 @@
 import React, { Component } from "react";
+import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Provider } from "mobx-react";
 import { authUpdateGeography } from "@/common/authority";
 import "./assets/css/app.scss";
 import "./assets/css/color.scss";
 import "./assets/css/font.scss";
 import "./assets/css/background.scss";
-import Taro from "@tarojs/taro";
 import Store from "./model/index";
-
+import { getShareParamInfo } from "@/server/common";
 const store = {
   ...Store,
 };
 
 class App extends Component {
+  constructor() {
+    super(...arguments);
+  }
   componentDidMount() {
     this.fetchLocation();
   }
 
   componentDidShow() {
     this.fetchCheckUpdate();
+    this.getShareType();
   }
 
   componentDidHide() {}
 
   componentDidCatchError() {}
   componentWillUnmount() {}
-
+  getShareType() {
+    const {
+      shareUserId,
+      shareUserType,
+      scene,
+    } = getCurrentInstance().router.params;
+    if (scene) {
+      getShareParamInfo({ uniqueKey: scene }, (res) => {
+        const {
+          shareParamInfo: { param },
+        } = res;
+        if (param && JSON.parse(param)) {
+          Store.authStore.setShareType({
+            ...JSON.parse(param),
+          });
+        }
+      });
+    } else if (shareUserId && shareUserType) {
+      Store.authStore.setShareType({
+        shareUserId,
+        shareUserType,
+      });
+    } else {
+      return;
+    }
+  }
   fetchCheckUpdate() {
     // 判断目前微信版本是否支持自动更新
     if (Taro.canIUse("getUpdateManager")) {
@@ -64,8 +93,8 @@ class App extends Component {
 
   fetchUpdataLocation(res) {
     const { latitude, longitude } = res;
-    Taro.setStorageSync('lat',latitude);
-    Taro.setStorageSync('lnt',longitude);
+    Taro.setStorageSync("lat", latitude);
+    Taro.setStorageSync("lnt", longitude);
     Store.locationStore.setLocation(latitude, longitude);
   }
 

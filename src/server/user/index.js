@@ -104,3 +104,12 @@ export const getUserMarkTrack = (data, fn) => {
     return fn(res)
   })
 }//打卡足迹
+
+export const listOtherMomentByType = (data, fn) => {
+  httpGet({
+    url: '/user/userMoment/listOtherMomentByType',
+    data: data
+  }, res => {
+    return fn(res)
+  })
+}//获取商家动态

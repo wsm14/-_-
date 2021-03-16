@@ -436,7 +436,7 @@ class MerchantDetails extends Component {
         }
       );
     } else {
-      return toast("暂无数据");
+      // return toast("暂无数据");
     }
   } //上拉加载
   render() {

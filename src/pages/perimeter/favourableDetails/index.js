@@ -11,15 +11,13 @@ import {
   onShareFriend,
   onTimeline,
 } from "@/common/utils";
-import {
-  shopCard,
-  shopGoodsDetails,
-} from "@/components/publicShopStyle";
+import { shopCard, shopGoodsDetails } from "@/components/publicShopStyle";
 import MakePhone from "@/components/payTelephone";
 import "./index.scss";
 import { loginBtn } from "@/common/authority";
 import { navigateTo } from "../../../common/utils";
-import ActivityStatus from './components/index'
+import ActivityStatus from "./components/index";
+import { getShareParamInfo } from "@/server/common";
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -27,13 +25,41 @@ class MerchantDetails extends Component {
       httpData: {
         specialActivityId:
           getCurrentInstance().router.params.specialActivityId || "",
-         merchantId: getCurrentInstance().router.params.merchantId || "",
+        merchantId: getCurrentInstance().router.params.merchantId || "",
       },
       lnt: Taro.getStorageSync("lnt"),
       lat: Taro.getStorageSync("lat"),
       specialGoodsInfo: {}, //商品详情
       visible: false,
     };
+  }
+  componentWillMount() {
+    const {
+      shareUserId,
+      shareUserType,
+      scene,
+    } = getCurrentInstance().router.params;
+    const { httpData } = this.state;
+    if (shareUserId && shareUserType) {
+      this.setState({
+        ...httpData,
+        shareUserId,
+        shareUserType,
+      });
+    } else if (scene) {
+      getShareParamInfo({ uniqueKey: scene }, (res) => {
+        const {
+          shareParamInfo: { param },
+        } = res;
+        if (param && JSON.parse(param)) {
+          param = JSON.parse(param);
+          this.setState({
+            ...httpData,
+            ...param,
+          });
+        }
+      });
+    }
   }
   componentDidShow() {
     this.getDetailsById();
@@ -98,19 +124,21 @@ class MerchantDetails extends Component {
         merchantIdString,
         allImgs,
         goodsDescImg,
-        status
+        status,
       },
       specialGoodsInfo,
       kolMomentsInfo,
       visible,
     } = this.state;
     if (Object.keys(specialGoodsInfo).length > 0) {
-       if(status !=='0') {
+      if (status !== "0") {
         return (
           <View className="favourable_Details">
             <View className="shopDetails_banner dakale_nullImage">
               <Banner
-                autoplay={filterStrList(allImgs || []).length > 1 ? true : false}
+                autoplay={
+                  filterStrList(allImgs || []).length > 1 ? true : false
+                }
                 imgStyle
                 data={filterStrList(allImgs || [])}
                 style={{ width: "100%", height: "100%" }}
@@ -153,7 +181,7 @@ class MerchantDetails extends Component {
                     <View className="shopDetails_tab_font">免预约</View>
                   </>
                 )}
-  
+
                 {allowRefund === "1" && (
                   <>
                     <View className="shopDetails_tab_icon"></View>
@@ -177,7 +205,7 @@ class MerchantDetails extends Component {
             <View className="shopdetails_shop_details">
               <View className="shopdetails_shop_merchantDetails">使用商家</View>
               {shopCard(this, specialGoodsInfo)}
-  
+
               {packageGoods && shopGoodsDetails(this, packageGoods)}
               {goodsDesc && (
                 <>
@@ -252,11 +280,13 @@ class MerchantDetails extends Component {
               </View>
               <View
                 className="shopdetails_shop_goshop"
-                onClick={() =>loginBtn(() =>
-                  navigateTo(
-                    `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
+                onClick={() =>
+                  loginBtn(() =>
+                    navigateTo(
+                      `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
+                    )
                   )
-                )}
+                }
               >
                 立即购买
               </View>
@@ -270,12 +300,9 @@ class MerchantDetails extends Component {
             )}
           </View>
         );
-       }
-       else {
-         return <ActivityStatus></ActivityStatus>
-       }
-    
-     
+      } else {
+        return <ActivityStatus></ActivityStatus>;
+      }
     } else return null;
   }
 }

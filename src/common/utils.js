@@ -143,7 +143,7 @@ export const setPeople = function (num) {
   if (typeof num == "string") {
     if (num.length > 4) {
       let str = (parseInt(num) / 10000).toFixed(1) + "万";
-      return str
+      return str;
     }
     return num;
   } else {
@@ -559,5 +559,19 @@ export const removeStorage = (key) =>
   });
 export const computedClient = () => {
   let client = Taro.getMenuButtonBoundingClientRect();
-  return client.top;
+  return client;
+};
+
+//tags 排版
+
+export const loginStatus = () => {
+  if (
+    Taro.getStorageSync("userInfo") &&
+    Taro.getStorageSync("userInfo").mobile.length === 11 &&
+    Taro.getStorageSync("userInfo").token
+  ) {
+    return Taro.getStorageSync("userInfo");
+  } else {
+    return false;
+  }
 };

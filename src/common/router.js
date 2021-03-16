@@ -33,6 +33,9 @@ export default ({routerName, type = 'navigateTo', args = {}}) => {
     couponDetails: "/pages/coupon/couponDetails/index",//券包详情
     wraparound: '/pages/coupon/wraparound/index', //券包
     //券包
+
+    merchantVideo:'/pages/perimeter/merchantVideo/index',//商家视频
+    nearVideo:'/pages/perimeter/nearVideo/index',//附近视频
     willCity: '/pages/perimeter/willCity/index',//即将开通
     city: '/pages/perimeter/city/index',//城市定位
     search_shop: '/pages/perimeter/search_shop/index',//商家搜索

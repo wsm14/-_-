@@ -21,6 +21,7 @@ export default (props) => {
     imgWidth,
     setWidth,
     noMargin,
+    store,
   } = props;
   const [leftList, setLeftList] = useState([]);
   const [rightList, setRightList] = useState([]);
@@ -32,28 +33,26 @@ export default (props) => {
     let right = [];
     let leftNum = 0;
     let rightNum = 0;
-    list.forEach((item) => {
+    list.forEach((item, index) => {
       if (leftNum <= rightNum) {
-        left.push(item);
+        left.push({ ...item, momentIndex: index });
         if (item[imgWidth] && item[imgHight] && setWidth) {
-          leftNum += computedHeight(item[imgWidth], item[imgHight], setWidth);
+          leftNum += computedHeight(item[imgWidth], item[imgHight], setWidth)/4;
         } else {
-          if(parseInt(imgHight)){
-            leftNum += parseInt(imgHight);
-          }
-          else {
+          if (parseInt(imgHight)) {
+            leftNum += (parseInt(imgHight)/4);
+          } else {
             leftNum += 400;
           }
         }
       } else {
-        right.push(item);
+        right.push({ ...item, momentIndex: index });
         if (item[imgWidth] && item[imgHight] && setWidth) {
-          rightNum += computedHeight(item[imgWidth], item[imgHight], setWidth);
+          rightNum += computedHeight(item[imgWidth], item[imgHight], setWidth)/4;
         } else {
-          if(parseInt(imgHight)){
-            rightNum += parseInt(imgHight);
-          }
-          else {
+          if (parseInt(imgHight)) {
+            rightNum += parseInt(imgHight)/4;
+          } else {
             rightNum += 400;
           }
         }
@@ -67,12 +66,12 @@ export default (props) => {
       <View style={noMargin ? noMargin : {}} className="page_content">
         <View style={style ? { ...style } : {}} className="page_left">
           {leftList.map((item) => {
-            return createDom(item);
+            return createDom(item, list, store);
           })}
         </View>
         <View style={style ? { ...style } : {}} className="page_right">
           {rightList.map((item) => {
-            return createDom(item);
+            return createDom(item, list, store);
           })}
         </View>
       </View>

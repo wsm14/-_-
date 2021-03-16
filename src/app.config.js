@@ -1,12 +1,12 @@
 export default {
   pages: [
+    "pages/index/home/index", //视频详情
     "pages/index/perimeter/index", //周边打卡
     "pages/index/takeCard/index",
     "pages/index/goods/index",
     "pages/index/user/index", //首页个人
-    "pages/index/lookShare/shareImage/index", //圖文详情
-    "pages/index/lookShare/shareVideo/index", //视频详情
-    "pages/index/home/index", //视频详情
+    
+   
     "pages/payPrice/index", //小程序支付兼容
     "pages/auth/index", //登录
   ],
@@ -24,13 +24,13 @@ export default {
     borderStyle: "black",
     list: [
       {
-        pagePath: "pages/index/perimeter/index",
+        pagePath: "pages/index/home/index",
         iconPath: "./assets/image/tab-bar/perimeter.png",
         selectedIconPath: "./assets/image/tab-bar/perimeterTrue.png",
         text: "周边",
       },
       {
-        pagePath: "pages/index/home/index",
+        pagePath: "pages/index/takeCard/index",
         iconPath: "./assets/image/tab-bar/card.png",
         selectedIconPath: "./assets/image/tab-bar/cardTrue.png",
         text: "打卡",
@@ -60,8 +60,6 @@ export default {
       pages: [
         "legal/index", //达人等级
         "report/index", //举报
-        "shareVideo/index", ///kol视频详情页,
-        "shareImage/index", //kol图片详情页,
         "follow/index", //关注列表,
         "fans/index", //粉丝列表,
       ],
@@ -99,6 +97,8 @@ export default {
     {
       root: "pages/perimeter/",
       pages: [
+        'merchantVideo/index',//商家主页视频
+        'nearVideo/index',//附近主页视频
         'beanReward/index',
         'commodity/index',//橱窗商品详情
         'willCity/index', //即将开通
@@ -114,7 +114,6 @@ export default {
         "repeatStatus/index", //打卡状态： 重复打卡
         "abnormalStatus/index", //打卡状态： 超过距离
         "tipView/index", //打卡状态： 超过距离
-        "lookShare/index", //看视频图文
         'groupMerchant/index',//集团核销列表
         "index", //周边首页
       ],

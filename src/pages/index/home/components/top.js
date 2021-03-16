@@ -4,8 +4,11 @@ import classNames from "classnames";
 import Router from "@/common/router";
 import "./../index.scss";
 export default (props) => {
-  const { onChange } = props;
+  const { onChange, data = "", session } = props;
   const [type, setType] = useState("commend");
+  useEffect(() => {
+    setType(data);
+  }, [data]);
   const [select, setSelect] = useState([
     {
       label: "关注",
@@ -28,7 +31,6 @@ export default (props) => {
             <View
               onClick={() => {
                 if (setType !== type) {
-                  setType(item.val);
                   onChange && onChange(item);
                 }
               }}
@@ -50,7 +52,12 @@ export default (props) => {
   return (
     <View className="home_top">
       <View className="home_right">
-        <View className="home_right_up"></View>
+        <View
+          className="home_right_up"
+          onClick={() => {
+            session();
+          }}
+        ></View>
         <View
           className="home_right_search"
           onClick={() => {

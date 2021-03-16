@@ -1,13 +1,12 @@
 import React from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import TopView from "./components/top";
 import VideoView from "./components/videoView";
 import {
   computedClient,
   toast,
   setIntive,
   saveFollow,
-  loginStatus,
+  goBack,
 } from "@/common/utils";
 import { Button, Image, ScrollView, View } from "@tarojs/components";
 import InterVal from "@/components/setTimeCanvas";
@@ -16,23 +15,14 @@ import {
   saveWatchBean,
   saveMerchantCollection,
   closeMerchantCollection,
-  saveMomentType,
-  getUserMomentDetailById,
 } from "@/server/index";
-import {
-  getMomentBarrage,
-  listParentCategory,
-  getShareParamInfo,
-} from "@/server/common";
+import { getMomentBarrage, listParentCategory } from "@/server/common";
 import "./index.scss";
 import Barrage from "./components/barrage";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
-import { nearList } from "@/components/nearList";
-import Toast from "@/components/beanToast";
-import Waterfall from "@/components/waterfall";
-import Dressing from "./components/dressing";
 import evens from "@/common/evens";
+import { listOtherMomentByType } from "@/server/user";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -45,7 +35,7 @@ class Index extends React.PureComponent {
       circular: false,
       userMomentsInfo: {},
       httpData: {
-        browseType: "commend",
+        userId: getCurrentInstance().router.params.userId || "1",
         page: 1,
         limit: "10",
       },
@@ -53,43 +43,14 @@ class Index extends React.PureComponent {
       time: null,
       interval: null,
       momentBarrageList: [],
-      visible: false,
-      distanceList: [
-        { value: "", description: "全部" },
-        { value: "500", description: "500m" },
-        { value: "1000", description: "1km" },
-        { value: "2000", description: "2km" },
-        { value: "5000", description: "5km" },
-        { value: "10000", description: "10km" },
-        { value: "20000", description: "20km" },
-      ],
-      promotionTypeList: [
-        { value: "", description: "全部" },
-        { value: "special", description: "特价活动" },
-        { value: "reduce", description: "优惠券" },
-      ],
-      categoryList: [],
       toast: false,
     };
   }
-  saveMomentType() {
-    const {
-      userMomentsInfo: { userMomentIdString },
-    } = this.state;
-    saveMomentType({ updateType: "view", id: userMomentIdString }, (res) => {
-      toast("分享成功");
-    });
-  }
 
   onChange(e) {
-    const {
-      countStatus,
-      httpData,
-      userMomentsList,
-      interval,
-      time,
-    } = this.state;
+    const { countStatus, httpData, userMomentsList, interval } = this.state;
     const { current } = e.detail;
+    console.log(current, userMomentsList);
     this.setState(
       {
         current,
@@ -216,8 +177,9 @@ class Index extends React.PureComponent {
 
   getVideoList(fn) {
     const { httpData, current } = this.state;
-    getUserMomentList(httpData, (res) => {
+    listOtherMomentByType(httpData, (res) => {
       let { userMomentsList = [] } = res;
+      console.log(current, this.state.userMomentsList.length, 111);
       if (userMomentsList.length === 0) {
         this.setState({
           countStatus: false,
@@ -271,7 +233,6 @@ class Index extends React.PureComponent {
               }
               return item;
             }),
-            toast: true,
           });
         }
       );
@@ -418,150 +379,44 @@ class Index extends React.PureComponent {
       );
     }
   }
-  listParentCategory() {
-    const { categoryList } = this.state;
-    if (categoryList.length === 0) {
-      listParentCategory({}, (res) => {
-        const { categoryList = [] } = res;
-        this.setState({
-          categoryList: [...categoryList],
-        });
-      });
-    }
-  }
-  componentWillMount() {
-    let params = getCurrentInstance().router.params;
-    if (Object.keys(params).length > 0) {
-      const { momentId, scene } = params;
-      if (scene) {
-        getShareParamInfo({ uniqueKey: scene }, (res) => {
-          const {
-            shareParamInfo: { param },
-          } = res;
-          if (param && JSON.parse(param)) {
-            const { momentId } = JSON.parse(param);
-            this.getUserMomentDetailById(momentId);
-          }
-        });
-      } else if (momentId) {
-        this.getUserMomentDetailById(momentId);
-      } else {
-        return;
-      }
-    } else {
-      this.getVideoList(() => {
-        const { userMomentsList } = this.state;
-        if (userMomentsList.length > 0) {
-          this.setState(
-            {
-              userMomentsInfo: this.state.userMomentsList[0],
-            },
-            (res) => {
-              this.initInterval();
-            }
-          );
-        }
-      });
-    }
-  }
   componentDidHide() {
     const { interval } = this.state;
     if (interval) {
       this.stopInterval(interval);
     }
   }
-  updateList(list) {
-    const { userMomentsList } = this.state;
-    this.setState({
-      userMomentsList: list,
-    });
-  }
   componentDidShow() {
     const { time } = this.state;
-    this.listParentCategory();
-    if (time || time === 0) {
+    if (time === 0 || time) {
       this.initInterval();
     }
   }
   componentDidMount() {
-    this.getMomentBarrage();
-    evens.$on("updateMomentsList", this.updateList.bind(this));
+    this.initInterval();
   }
-  getUserMomentDetailById(momentId) {
-    getUserMomentDetailById(
-      {
-        momentId,
-      },
-      (res) => {
-        const { userMomentsInfo } = res;
-        this.setState(
-          {
-            userMomentsInfo,
-            userMomentsList: [userMomentsInfo],
-          },
-          (res) => {
-            this.getVideoList(() => {
-              const { userMomentsList } = this.state;
-              if (userMomentsList.length > 0) {
-                this.setState(
-                  {
-                    userMomentsInfo: this.state.userMomentsList[0],
-                  },
-                  (res) => {
-                    this.initInterval();
-                  }
-                );
-              }
-            });
-          }
-        );
-      }
-    );
-  }
-  pageUpNear() {
-    const {
-      httpData,
-      httpData: { browseType },
-      countStatus,
-    } = this.state;
-    if (countStatus && browseType === "near") {
-      this.setState(
-        {
-          httpData: {
-            ...httpData,
-            page: httpData.page + 1,
-          },
-        },
-        (res) => {
-          this.getVideoList();
-        }
-      );
+  componentWillMount() {
+    const { selectObj, list, index } = this.props.store.homeStore;
+    console.log(index);
+    if (list.length === 0) {
+      toast("参数异常");
     } else {
-      toast("暂无数据");
-    }
-  } //上拉加载
-  onShareAppMessage(res) {
-    const {
-      userMomentsInfo: { frontImage, title, userMomentIdString },
-    } = this.state;
-    let userInfo = loginStatus() || {};
-    if (loginStatus()) {
-      const { userIdString } = userInfo;
-      if (res.from === "button") {
-        return {
-          title: title,
-          imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
-        };
-      } else {
-        return {
-          title: title,
-          imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
-        };
-      }
+      this.setState({
+        userMomentsList: list,
+        current: index,
+        userMomentsInfo: list[index],
+        httpData: {
+          ...this.state.httpData,
+        },
+      });
+      this.getMomentBarrage();
     }
   }
+  componentWillUnmount() {
+    const { homeStore } = this.props.store.homeStore;
+    homeStore.clearNavitor();
+    evens.$emit("updateMerchantList", this.state.userMomentsList);
+  }
+
   render() {
     const {
       userMomentsList,
@@ -572,101 +427,52 @@ class Index extends React.PureComponent {
       time,
       momentBarrageList,
       httpData: { browseType },
-      visible,
-      distanceList = [],
-      promotionTypeList = [],
-      categoryList = [],
       toast,
     } = this.state;
-    const { selectObj } = this.props.store.homeStore;
-    const { scenesIds, distance, promotionType } = selectObj;
+
     const templateView = () => {
-      if (browseType === "near") {
-        if (userMomentsList.length > 0) {
-          return (
-            <ScrollView
-              scrollY
-              onScrollToLower={() => {
-                this.pageUpNear();
-              }}
-              className="home_Waterfall_box"
-              style={{
-                top: computedClient().top + computedClient().height + 20,
-              }}
+      if (userMomentsList.length > 0) {
+        return (
+          <>
+            <InterVal
+              interval={time}
+              length={length}
+              data={userMomentsInfo}
+            ></InterVal>
+            <VideoView
+              circular={circular}
+              data={userMomentsList}
+              current={current}
+              onChange={this.onChange.bind(this)}
+              follow={this.followStatus.bind(this)}
+              collection={this.collection.bind(this)}
             >
-              <Waterfall
-                list={userMomentsList}
-                createDom={nearList}
-                imgHight={"frontImageHeight"}
-                imgWidth={"frontImageWidth"}
-                setWidth={335}
-                style={{ width: Taro.pxTransform(335) }}
-                store={this.props.store}
-              ></Waterfall>
-            </ScrollView>
-          );
-        } else {
-          return (
-            <View className="home_near_box">
-              <View>
-                <View className="home_near_image"></View>
-                <View className="home_near_font">附近暂无内容</View>
-              </View>
-            </View>
-          );
-        }
+              <Barrage data={momentBarrageList}></Barrage>
+            </VideoView>
+          </>
+        );
       } else {
-        if (userMomentsList.length > 0) {
-          return (
-            <>
-              <InterVal
-                interval={time}
-                length={length}
-                data={userMomentsInfo}
-              ></InterVal>
-              <VideoView
-                circular={circular}
-                data={userMomentsList}
-                current={current}
-                onChange={this.onChange.bind(this)}
-                follow={this.followStatus.bind(this)}
-                collection={this.collection.bind(this)}
-              >
-                <Barrage data={momentBarrageList}></Barrage>
-              </VideoView>
-            </>
-          );
-        } else {
-          return (
-            <View className="home_order_box public_center">
-              <View>
-                <View className="home_order_image home_nullStatus_black"></View>
-                <View className="home_order_font">
-                  {browseType === "commend"
-                    ? "暂无推荐的内容"
-                    : "暂无关注的内容"}
-                </View>
+        return (
+          <View className="home_order_box public_center">
+            <View>
+              <View className="home_order_image home_nullStatus_black"></View>
+              <View className="home_order_font">
+                {browseType === "commend" ? "暂无附近的内容" : "暂无关注的内容"}
               </View>
             </View>
-          );
-        }
+          </View>
+        );
       }
     };
     return (
-      <View
-        className={classNames(
-          "home_box",
-          browseType === "near" ? "home_white" : "home_black"
-        )}
-      >
-        <View style={{ top: computedClient().top }} className="home_wait">
-          <TopView
-            data={browseType}
-            onChange={this.selectList.bind(this)}
-            session={() => this.setState({ visible: true })}
-          ></TopView>
+      <View className={classNames("home_box home_black")}>
+        <View className="home_wait">
+          <View
+            className="backStyle go_back_icon"
+            style={{ top: Taro.pxTransform(computedClient().top) }}
+            onClick={() => goBack()}
+          ></View>
         </View>
-
         <View className="home_video_box">{templateView()}</View>
         {toast && (
           <Toast
@@ -684,24 +490,6 @@ class Index extends React.PureComponent {
               }
             }}
           ></Toast>
-        )}
-        {visible && (
-          <Dressing
-            distanceList={distanceList}
-            promotionTypeList={promotionTypeList}
-            categoryList={categoryList}
-            distance={distance}
-            promotionType={promotionType}
-            categoryIds={scenesIds.split(",")}
-            visible={visible}
-            onClose={() =>
-              this.setState({
-                visible: false,
-              })
-            }
-            onReload={this.setScreen.bind(this)}
-            onConfirm={this.setScreen.bind(this)}
-          ></Dressing>
         )}
       </View>
     );

@@ -172,4 +172,26 @@ export const getMomentBarrage = (data = {}, fn) => {
     (res) => fn(res)
   );
 };
-//获取连刷视频动态
+//获取连刷视频弹幕动态
+
+export const listParentCategory = (data = {}, fn) => {
+  httpGet(
+    {
+      url: "/common/category/listParentCategory",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取品类
+
+export const getShareParamInfo = (data = {}, fn) => {
+  httpGet(
+    {
+      url: "/common/shareParam/getShareParam",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取解密分享码

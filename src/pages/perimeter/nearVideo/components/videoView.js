@@ -1,12 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import {
-  Video,
-  Swiper,
-  SwiperItem,
-  View,
-  Image,
-  Button,
-} from "@tarojs/components";
+import { Video, Swiper, SwiperItem, View, Image } from "@tarojs/components";
 import Taro, { pxTransform, useReady } from "@tarojs/taro";
 import BottomView from "./bottom";
 import { backgroundObj, navigateTo, setPeople } from "@/common/utils";
@@ -34,6 +27,7 @@ export default ({
           <Swiper
             style={{ width: "100%", height: "100%" }}
             vertical
+            current={current}
             onChange={onChange}
             duration={200}
             circular={circular}
@@ -145,11 +139,7 @@ export default ({
                         <View className="collected_font">
                           {setPeople(collectionAmount)}
                         </View>
-
-                        <View className="home_share_wechat">
-                          <Button open-type="share" style={{border:'0px soild white', background: (0, 0, 0, 0),width:'100%',height:'100%' }}></Button>
-                        </View>
-
+                        <View className="home_share_wechat"></View>
                         <View className="collected_font">{shareAmount}</View>
                       </View>
                     </View>
@@ -165,6 +155,6 @@ export default ({
     } else {
       return null;
     }
-  }, [data.length, current, scale]);
+  }, [data, current,scale]);
   return expensive;
 };
