@@ -9,6 +9,7 @@ import { httpGet } from "@/api/newRequest";
 import APPShare from "@/components/shareApp";
 import { scanCode } from "@/common/authority";
 import Toast from "@/components/beanToast";
+import Waterfall from "@/components/waterfall";
 import classNames from "classnames";
 import {
   backgroundObj,
@@ -32,6 +33,7 @@ import "./merchantDetails.scss";
 import evens from "@/common/evens";
 import Coupons from "@/components/coupon";
 import { getAvailableCoupon } from "@/server/coupon";
+
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -55,7 +57,6 @@ class MerchantDetails extends Component {
         limit: 5,
       },
       shareStatus: getCurrentInstance().router.params.type,
-      kolMomentsList: [],
       countStatus: true,
       visible: false,
       specialGoodsList: [],
@@ -116,30 +117,6 @@ class MerchantDetails extends Component {
         const { goodsList } = res;
         this.setState({
           goodsList,
-        });
-      }
-    );
-  }
-
-  getMerchantDetails() {
-    const {
-      merchantDetails: { getMomentByMerchantId },
-    } = perimeter;
-    const { getMerchantDetails, countStatus } = this.state;
-    return httpGet(
-      {
-        data: getMerchantDetails,
-        url: getMomentByMerchantId,
-      },
-      (res) => {
-        const { kolMomentsList } = res;
-        if (kolMomentsList && kolMomentsList.length > 0) {
-          return this.setState({
-            kolMomentsList: [...this.state.kolMomentsList, ...kolMomentsList],
-          });
-        }
-        return this.setState({
-          countStatus: false,
         });
       }
     );
@@ -478,7 +455,7 @@ class MerchantDetails extends Component {
           {shareStatus == "share" && (
             <APPShare
               {...{
-                content: "我在哒卡乐发了一篇有趣的图文",
+                content: "我在哒卡乐发现一家实惠的店铺",
                 userId: getCurrentInstance().router.params.shareUserId,
                 jumpObj: {
                   jumpUrl: "shopDetailPage",
@@ -633,11 +610,14 @@ class MerchantDetails extends Component {
                 </View>
                 <View className="active_go"></View>
               </View>
-              <ScrollView className="merchant_newPrice">
-                {specialGoodsList.map((item) => {
-                  return shopDetails(item);
-                })}
-              </ScrollView>
+              <View className="merchant_newPrice">
+                <Waterfall
+                  list={specialGoodsList}
+                  createDom={shopDetails}
+                  setWidth={335}
+                  style={{ width: Taro.pxTransform(335) }}
+                ></Waterfall>
+              </View>
             </>
           )}
 
@@ -652,23 +632,9 @@ class MerchantDetails extends Component {
               </View>
               <ScrollView scrollX className="merchant_billboard">
                 {goodsList.map((item, index) => {
-                  return billboard(this, item,userIdString);
+                  return billboard(this, item, userIdString);
                 })}
               </ScrollView>
-            </>
-          )}
-          {kolMomentsList && kolMomentsList.length > 0 && (
-            <>
-              <View className="merchant_active">
-                <View className="merchant_active_title">
-                  <View className="merchant_active_iconBox active_icon4"></View>
-                  <View className="merchant_active_biaoti">探店分享</View>
-                </View>
-                <View className="merchant_active_dec">哒人分享 精彩推荐</View>
-              </View>
-              {kolMomentsList.map((item, index) => {
-                return this.exploreShop(item, index);
-              })}
             </>
           )}
           <View className="merchant_layer">
@@ -739,7 +705,7 @@ class MerchantDetails extends Component {
               className="merchant_shop"
               onClick={() => this.setState({ visible: true })}
             >
-              立即预约
+              预约/预定
             </View>
           </View>
           {getBeanStatus && (

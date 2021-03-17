@@ -69,7 +69,7 @@ class Index extends React.PureComponent {
         { value: "reduce", description: "优惠券" },
       ],
       categoryList: [],
-      toast: false,
+      beanflag: false,
     };
   }
   saveMomentType() {
@@ -259,7 +259,6 @@ class Index extends React.PureComponent {
         },
         (res) => {
           this.setState({
-            toast: true,
             time: null,
             userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
             userMomentsList: this.state.userMomentsList.map((item) => {
@@ -440,7 +439,23 @@ class Index extends React.PureComponent {
           } = res;
           if (param && JSON.parse(param)) {
             const { momentId } = JSON.parse(param);
-            this.getUserMomentDetailById(momentId);
+            if (momentId) {
+              this.getUserMomentDetailById(momentId);
+            } else {
+              this.getVideoList(() => {
+                const { userMomentsList } = this.state;
+                if (userMomentsList.length > 0) {
+                  this.setState(
+                    {
+                      userMomentsInfo: this.state.userMomentsList[0],
+                    },
+                    (res) => {
+                      this.initInterval();
+                    }
+                  );
+                }
+              });
+            }
           }
         });
       } else if (momentId) {
@@ -576,7 +591,7 @@ class Index extends React.PureComponent {
       distanceList = [],
       promotionTypeList = [],
       categoryList = [],
-      toast,
+      beanflag,
     } = this.state;
     const { selectObj } = this.props.store.homeStore;
     const { scenesIds, distance, promotionType } = selectObj;
@@ -668,23 +683,7 @@ class Index extends React.PureComponent {
         </View>
 
         <View className="home_video_box">{templateView()}</View>
-        {toast && (
-          <Toast
-            data={userMomentsInfo}
-            visible={() => {
-              if (couponList.length > 0) {
-                this.setState({
-                  toast: false,
-                  conpouVisible: true,
-                });
-              } else {
-                this.setState({
-                  toast: false,
-                });
-              }
-            }}
-          ></Toast>
-        )}
+
         {visible && (
           <Dressing
             distanceList={distanceList}
@@ -702,6 +701,16 @@ class Index extends React.PureComponent {
             onReload={this.setScreen.bind(this)}
             onConfirm={this.setScreen.bind(this)}
           ></Dressing>
+        )}
+        {beanflag && (
+          <Toast
+            data={userMomentsInfo}
+            visible={() => {
+              this.setState({
+                beanflag: false,
+              });
+            }}
+          ></Toast>
         )}
       </View>
     );

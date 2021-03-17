@@ -65,7 +65,7 @@ class Index extends React.PureComponent {
             {
               httpData: {
                 ...httpData,
-                page: parseInt(userMomentsList.length / 10) + 1,
+                page: Math.ceil(userMomentsList.length / 10) + 1,
               },
             },
             (res) => {

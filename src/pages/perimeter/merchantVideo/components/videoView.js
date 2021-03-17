@@ -29,7 +29,7 @@ export default ({
             vertical
             onChange={onChange}
             duration={200}
-            circular={circular}
+            circular={false}
             current={current}
           >
             {data.map((item, index) => {

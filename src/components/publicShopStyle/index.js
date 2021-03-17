@@ -63,9 +63,45 @@ export const shopDetails = (data, obj) => {
       lat,
       lnt,
       merchantIdString,
+      discount,
+      total,
+      remain,
+      status,
+      activityStartTime,
     } = data;
+    const templateBtn = () => {
+      if (status === "0") {
+        return (
+          <View className="shopDetails_btn shopDetails_btnColor3">已结束</View>
+        );
+      } else if (status === "1" && remain === "0") {
+        return (
+          <View className="shopDetails_btn shopDetails_btnColor3">已售罄</View>
+        );
+      } else if (
+        new Date().getTime() <
+        new Date(activityStartTime.replace(/-/g, "/")).getTime()
+      ) {
+        return (
+          <View className="shopDetails_btn shopDetails_btnColor2">
+            即将开抢
+          </View>
+        );
+      } else {
+        return (
+          <View className="shopDetails_btn shopDetails_btnColor1">立即抢</View>
+        );
+      }
+    };
     return (
-      <View className="shopDetails_box">
+      <View
+        className="shopDetails_box"
+        onClick={() =>
+          navigateTo(
+            `/pages/perimeter/favourableDetails/index?merchantId=${merchantIdString}&specialActivityId=${specialActivityIdString}`
+          )
+        }
+      >
         <View className="shopDetails_Img dakale_nullImage">
           <Image
             src={goodsImg}
@@ -73,50 +109,26 @@ export const shopDetails = (data, obj) => {
             lazyLoad
             mode="center"
           ></Image>
-          <View className="shopDetails_city">
-            <View className="shopDetails_city_icon"></View>
-            <View className="shopDetails_city_font">
-              {GetDistance(getLat(), getLnt(), lat, lnt)}
-            </View>
-          </View>
-          <View className="shopDetails_user">
-            <View
-              className="user_profile dakale_profile"
-              style={backgroundObj(merchantLogo)}
-            ></View>
-            <View className="user_name font_hide">{merchantName}</View>
-          </View>
         </View>
         <View className="shopDetails_dec">
           <View className="shopDetails_shopName font_hide">{goodsName}</View>
-          <View className="shopDetails_tag">
-            <View className="shopDetails_tag_box">新鲜爆品</View>
-            <View className="shopDetails_tag_box">新鲜爆品</View>
-          </View>
-          <View className="shopDetails_biaoti">哒卡乐专享价</View>
           <View className="shopDetails_price">
             <View className="shopDetails_left">
               <Text style={{ fontSize: Taro.pxTransform(20) }}>¥</Text>
               {" " + realPrice || ""}
+              <Text className="shopDetails_right">
+                ¥ {" " + oriPrice || ""}
+              </Text>
             </View>
-            <View className="shopDetails_right">¥ {" " + oriPrice || ""}</View>
+            <View className="shop_zhekou font20">{discount}折</View>
           </View>
-          <View className="shopDetails_bean">
-            ({parseInt(realPrice * 100) || ""}卡豆)
+          <View className="shopDetails_btnBox public_auto">
+            <View className="shopDetails_btnTitle font24">
+              {total - remain > 50 ? "50+" : "热卖中"}
+            </View>
+            {templateBtn()}
           </View>
         </View>
-        <View
-          className="shopDetails_btnBox shopDetails_btnColor1"
-          onClick={() =>
-            navigateTo(
-              `/pages/perimeter/favourableDetails/index?merchantId=${merchantIdString}&specialActivityId=${specialActivityIdString}`
-            )
-          }
-        >
-          立即抢购
-        </View>
-        {/*<View className='shopDetails_btnColor2'>*/}
-        {/*</View>*/}
       </View>
     );
   } else return null;
@@ -124,9 +136,16 @@ export const shopDetails = (data, obj) => {
 //商品标签
 export const billboard = (_this, data, userIdString) => {
   if (data) {
-    const { goodsImg, goodsName,goodsIdString} = data;
+    const { goodsImg, goodsName, goodsIdString } = data;
     return (
-      <View className="billboard_box" onClick={() =>navigateTo(`/pages/perimeter/commodity/index?merchantId=${userIdString}&goodsId=${goodsIdString}`)}>
+      <View
+        className="billboard_box"
+        onClick={() =>
+          navigateTo(
+            `/pages/perimeter/commodity/index?merchantId=${userIdString}&goodsId=${goodsIdString}`
+          )
+        }
+      >
         <View
           className="billboard_img dakale_nullImage"
           style={goodsImg ? backgroundObj(goodsImg) : {}}
@@ -310,8 +329,8 @@ export const shopCard = (_this, data, obj) => {
       merchantAddress,
       lat,
       lnt,
-      cityName  =  '',
-      districtName= '',
+      cityName = "",
+      districtName = "",
     } = data;
     return (
       <View
@@ -347,7 +366,7 @@ export const shopCard = (_this, data, obj) => {
               })}
             </View>
             <View className="shopCard_right4 font_hide">
-              {cityName+districtName} | {merchantAddress}
+              {cityName + districtName} | {merchantAddress}
             </View>
           </View>
         </View>
