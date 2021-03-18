@@ -28,6 +28,7 @@ import {
   getLnt,
   filterTime,
   mapGo,
+  loginStatus,
 } from "@/common/utils";
 import "./merchantDetails.scss";
 import evens from "@/common/evens";
@@ -51,11 +52,6 @@ class MerchantDetails extends Component {
       userInfo: {
         userId: getCurrentInstance().router.params.shareUserId,
       },
-      getMerchantDetails: {
-        merchantId: getCurrentInstance().router.params.merchantId,
-        page: 1,
-        limit: 5,
-      },
       shareStatus: getCurrentInstance().router.params.type,
       countStatus: true,
       visible: false,
@@ -68,11 +64,6 @@ class MerchantDetails extends Component {
   }
 
   componentDidMount() {
-    this.getBannerList();
-    this.getListRecommend();
-    this.getMerchantById();
-    this.getMerchantDetails();
-    this.getGoodList();
     if (getCurrentInstance().router.params.beanAmount) {
       this.getAvailable();
     }
@@ -98,19 +89,55 @@ class MerchantDetails extends Component {
         getBeanStatus: true,
       });
     }
+    const { scene } = getCurrentInstance().router.params;
+    const { merchantHttpData, banner,userInfo } = this.state;
+    if (scene) {
+      getShareParamInfo({ uniqueKey: scene }, (res) => {
+        const {
+          shareParamInfo: { param },
+        } = res;
+        if (param && JSON.parse(param)) {
+          param = JSON.parse(param);
+          this.setState(
+            {
+              merchantHttpData: {
+                ...merchantHttpData,
+                ...param,
+              },
+              banner: { ...banner, ...param },
+              userInfo: {
+                userId: param.shareUserId,
+              },
+            },
+            (res) => {
+              this.getBannerList();
+              this.getListRecommend();
+              this.getMerchantById();
+              this.getGoodList();
+            }
+          );
+        }
+      });
+    } else {
+      this.getBannerList();
+      this.getListRecommend();
+      this.getMerchantById();
+      this.getGoodList();
+    }
   }
 
-  componentDidShow() {
-    evens.$on("updateList", this.updateList.bind(this));
-  }
+  componentDidShow() {}
 
   getGoodList() {
     const {
       merchantDetails: { getListMerchant },
     } = perimeter;
+    const {
+      merchantHttpData: { merchantId },
+    } = this.state;
     return httpGet(
       {
-        data: { merchantId: getCurrentInstance().router.params.merchantId },
+        data: { merchantId: merchantId },
         url: getListMerchant,
       },
       (res) => {
@@ -120,20 +147,6 @@ class MerchantDetails extends Component {
         });
       }
     );
-  }
-
-  updateList(obj) {
-    const { kolMomentsList } = this.state;
-    let list = kolMomentsList.map((item) => {
-      if (item["kolMomentsId"] === obj["kolMomentId"]) {
-        obj["kolMomentsId"] = item["kolMomentsId"];
-        return obj;
-      }
-      return item;
-    });
-    this.setState({
-      kolMomentsList: list,
-    });
   }
 
   //获取商家信息
@@ -192,21 +205,43 @@ class MerchantDetails extends Component {
   onShareAppMessage() {
     const {
       userMerchant: { merchantName, merchantCoverImg },
+      merchantHttpData: { merchantId },
     } = this.state;
-    return onShareFriend({
-      title: merchantName,
-      img: merchantCoverImg,
-    });
+    let userInfo = loginStatus() || {};
+    const { userIdString } = userInfo;
+    if (loginStatus()) {
+      return {
+        title: merchantName,
+        imageUrl: merchantCoverImg,
+        path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
+      };
+    } else {
+      return {
+        title: merchantName,
+        imageUrl: merchantCoverImg,
+      };
+    }
   }
 
   onShareTimeline() {
     const {
       userMerchant: { merchantName, merchantCoverImg },
+      merchantHttpData: { merchantId },
     } = this.state;
-    return onTimeline({
-      title: merchantName,
-      img: merchantCoverImg,
-    });
+    let userInfo = loginStatus() || {};
+    const { userIdString } = userInfo;
+    if (loginStatus()) {
+      return {
+        title: merchantName,
+        imageUrl: merchantCoverImg,
+        path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
+      };
+    } else {
+      return {
+        title: merchantName,
+        imageUrl: merchantCoverImg,
+      };
+    }
   }
 
   getMerchantLove() {
@@ -232,190 +267,7 @@ class MerchantDetails extends Component {
     );
   }
 
-  //获取商家猜你喜欢
-  exploreShop(data, index) {
-    const {
-      kolMomentsId,
-      contentType,
-      userId,
-      userIdString,
-      likeAmount,
-      topicName,
-      frontImage,
-      beanAmount,
-      length,
-      title,
-      username,
-      userProfile,
-      imageNum,
-      frontImageWidth,
-      frontImageHeight,
-      watchStatus,
-      merchantLnt,
-      merchantLat,
-      merchantAddress,
-      userLikeStatus,
-      beanFlag,
-      couponList,
-      conpouVisible,
-    } = data;
-    return (
-      <View className="explore_box">
-        <View
-          className="explore_img dakale_nullImage"
-          style={{ ...backgroundObj(frontImage) }}
-          onClick={() => {
-            if (contentType === "video") {
-              navigateTo(
-                `/pages/kol/shareVideo/index?kolMomentId=${kolMomentsId}`
-              );
-            } else {
-              navigateTo(
-                `/pages/kol/shareImage/index?kolMomentId=${kolMomentsId}`
-              );
-            }
-          }}
-        >
-          {contentType == "video" ? (
-            <View className="explore_share_imgTag">
-              {filterTime(length || "0")}
-            </View>
-          ) : (
-            <View className="explore_share_videoTag">
-              <View className="explore_share_imgIcon"></View>
-              <View className="explore_share_imgfont">{imageNum}</View>
-            </View>
-          )}
-          {contentType == "video" && <View className="explore_video"></View>}
-          <View className="explore_share_accress">
-            <View className="explore_share_limitIcon"></View>
-            <View className="explore_share_limit">
-              {""} {merchantAddress || ""}{" "}
-            </View>
-          </View>
-        </View>
-        <View className="explore_message font_noHide">
-          {topicName && (
-            <View className="tip_box">
-              <View className="explore_tip font_hide">{"#" + topicName}</View>
-            </View>
-          )}
-          {title}
-        </View>
-        {beanFlag === "1" && (
-          <View
-            className={classNames(
-              "explore_bean",
-              watchStatus === "1" && "getbeanColor2"
-            )}
-          >
-            <View
-              className={classNames(
-                "explore_lookGet",
-                watchStatus === "0" ? "explore_beanBg1" : "explore_beanBg2"
-              )}
-            ></View>
-            {watchStatus === "1"
-              ? `已捡${beanAmount}卡豆`
-              : `观看可捡${beanAmount}卡豆`}
-          </View>
-        )}
-        <View className="explore_user">
-          <View
-            className="explore_user_left"
-            onClick={() =>
-              navigateTo(
-                `/pages/newUser/userDetails/index?userStingId=${userIdString}&type=share`
-              )
-            }
-          >
-            <View
-              className="explore_user_profile"
-              style={{ ...backgroundObj(userProfile) }}
-            ></View>
-            <View className="explore_user_name font_hide">{username}</View>
-          </View>
-          <View className="explore_user_right">
-            <View
-              className={classNames(
-                "explore_user_zan ",
-                userLikeStatus === "1"
-                  ? "explore_user_zan_bg1"
-                  : "explore_user_zan_bg2"
-              )}
-              onClick={(e) => {
-                e.stopPropagation();
-                const { kolMomentsList } = this.state;
-                if (userLikeStatus === "1") {
-                  deleteFall(
-                    {
-                      kolMomentsId: kolMomentsId,
-                    },
-                    () => {
-                      const kolMomentsInfo = {
-                        ...kolMomentsList[index],
-                        userLikeStatus: "0",
-                        likeAmount: kolMomentsList[index].likeAmount - 1,
-                      };
-                      const list = kolMomentsList.map((item, indexs) => {
-                        if (index === indexs) {
-                          return kolMomentsInfo;
-                        } else return item;
-                      });
-                      this.setState({
-                        kolMomentsList: list,
-                      });
-                    }
-                  );
-                } else {
-                  saveFall(
-                    {
-                      kolMomentsId: kolMomentsId,
-                    },
-                    () => {
-                      const kolMomentsInfo = {
-                        ...kolMomentsList[index],
-                        userLikeStatus: "1",
-                        likeAmount: kolMomentsList[index].likeAmount + 1,
-                      };
-                      const list = kolMomentsList.map((item, indexs) => {
-                        if (index === indexs) {
-                          return kolMomentsInfo;
-                        } else return item;
-                      });
-                      this.setState({
-                        kolMomentsList: list,
-                      });
-                    }
-                  );
-                }
-              }}
-            ></View>
-            <View className="explore_user_number">{likeAmount}</View>
-          </View>
-        </View>
-      </View>
-    );
-  }
-
-  onReachBottom() {
-    const { getMerchantDetails, countStatus } = this.state;
-    if (countStatus) {
-      this.setState(
-        {
-          getMerchantDetails: {
-            ...getMerchantDetails,
-            page: getMerchantDetails.page + 1,
-          },
-        },
-        (res) => {
-          this.getMerchantDetails();
-        }
-      );
-    } else {
-      // return toast("暂无数据");
-    }
-  } //上拉加载
+  //猜你喜欢
   render() {
     const {
       userMerchant,
@@ -441,35 +293,36 @@ class MerchantDetails extends Component {
         tag,
         merchantId,
       },
-      kolMomentsList,
       visible,
       specialGoodsList,
       goodsList,
       getBeanStatus,
       conpouVisible,
       couponList,
+      userInfo: { userId },
     } = this.state;
     if (Object.keys(userMerchantInfo).length > 0) {
       return (
         <View className="merchantBox">
-          {shareStatus == "share" && (
-            <APPShare
-              {...{
-                content: "我在哒卡乐发现一家实惠的店铺",
-                userId: getCurrentInstance().router.params.shareUserId,
-                jumpObj: {
-                  jumpUrl: "shopDetailPage",
-                  id: getCurrentInstance().router.params.merchantId,
-                  type: "jumpToPage",
-                  jumpType: "native",
-                  path: "DKLShopDetailViewController",
-                  params: {
-                    shopId: getCurrentInstance().router.params.merchantId,
+          {shareStatus == "share" ||
+            (userId && (
+              <APPShare
+                {...{
+                  content: "我在哒卡乐发现一家实惠的店铺",
+                  userId: userId,
+                  jumpObj: {
+                    jumpUrl: "shopDetailPage",
+                    id: merchantId,
+                    type: "jumpToPage",
+                    jumpType: "native",
+                    path: "DKLShopDetailViewController",
+                    params: {
+                      shopId: merchantId,
+                    },
                   },
-                },
-              }}
-            ></APPShare>
-          )}
+                }}
+              ></APPShare>
+            ))}
           <Banner
             autoplay={bannerList.length > 1 ? true : false}
             imgStyle

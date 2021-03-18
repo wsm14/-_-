@@ -429,9 +429,8 @@ class Index extends React.PureComponent {
     }
   }
   componentWillMount() {
-    let params = getCurrentInstance().router.params;
-    if (Object.keys(params).length > 0) {
-      const { momentId, scene } = params;
+    const { momentId, scene } = getCurrentInstance().router.params;
+    if (scene || momentId) {
       if (scene) {
         getShareParamInfo({ uniqueKey: scene }, (res) => {
           const {
@@ -573,6 +572,20 @@ class Index extends React.PureComponent {
           title: title,
           imageUrl: frontImage,
           path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+        };
+      }
+    } else {
+      if (res.from === "button") {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+        };
+      } else {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
         };
       }
     }

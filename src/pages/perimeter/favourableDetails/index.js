@@ -5,12 +5,7 @@ import Banner from "@/components/banner";
 import { perimeter } from "@/api/api";
 import { httpGet } from "@/api/newRequest";
 import classNames from "classnames";
-import {
-  filterStrList,
-  filterWeek,
-  onShareFriend,
-  onTimeline,
-} from "@/common/utils";
+import { filterStrList, filterWeek, loginStatus } from "@/common/utils";
 import { shopCard, shopGoodsDetails } from "@/components/publicShopStyle";
 import MakePhone from "@/components/payTelephone";
 import "./index.scss";
@@ -30,43 +25,43 @@ class MerchantDetails extends Component {
       lnt: Taro.getStorageSync("lnt"),
       lat: Taro.getStorageSync("lat"),
       specialGoodsInfo: {}, //商品详情
+      index: 0,
       visible: false,
     };
   }
   componentWillMount() {
-    const {
-      shareUserId,
-      shareUserType,
-      scene,
-    } = getCurrentInstance().router.params;
+    const { scene } = getCurrentInstance().router.params;
     const { httpData } = this.state;
-    if (shareUserId && shareUserType) {
-      this.setState({
-        ...httpData,
-        shareUserId,
-        shareUserType,
-      });
-    } else if (scene) {
+    if (scene) {
       getShareParamInfo({ uniqueKey: scene }, (res) => {
         const {
           shareParamInfo: { param },
         } = res;
         if (param && JSON.parse(param)) {
           param = JSON.parse(param);
-          this.setState({
-            ...httpData,
-            ...param,
-          });
+          this.setState(
+            {
+              httpData: { ...httpData, ...param },
+            },
+            (res) => {
+              this.getDetailsById();
+            }
+          );
         }
       });
+    } else {
+      this.getDetailsById();
     }
   }
   componentDidShow() {
-    this.getDetailsById();
+    const { index } = this.state;
+    if (index !== 0) {
+      this.getDetailsById();
+    }
   }
   getDetailsById() {
     const { getSpecialGoodsDetail } = perimeter;
-    const { httpData } = this.state;
+    const { httpData, index } = this.state;
     httpGet(
       {
         url: getSpecialGoodsDetail,
@@ -76,6 +71,7 @@ class MerchantDetails extends Component {
         const { specialGoodsInfo } = res;
         this.setState({
           specialGoodsInfo,
+          index: index + 1,
         });
       }
     );
@@ -83,21 +79,43 @@ class MerchantDetails extends Component {
   onShareAppMessage() {
     const {
       specialGoodsInfo: { goodsName, allImgs },
+      httpData: { merchantId, specialActivityId },
     } = this.state;
-    return onShareFriend({
-      title: goodsName,
-      img: filterStrList(allImgs)[0],
-    });
+    let userInfo = loginStatus() || {};
+    const { userIdString } = userInfo;
+    if (loginStatus()) {
+      return {
+        title: goodsName,
+        imageUrl: allImgs[0],
+        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+      };
+    } else {
+      return {
+        title: goodsName,
+        imageUrl: allImgs[0],
+      };
+    }
   }
 
   onShareTimeline() {
     const {
       specialGoodsInfo: { goodsName, allImgs },
+      httpData: { merchantId, specialActivityId },
     } = this.state;
-    onTimeline({
-      title: goodsName,
-      img: filterStrList(allImgs)[0],
-    });
+    let userInfo = loginStatus() || {};
+    const { userIdString } = userInfo;
+    if (loginStatus()) {
+      return {
+        title: goodsName,
+        imageUrl: allImgs[0],
+        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+      };
+    } else {
+      return {
+        title: goodsName,
+        imageUrl: allImgs[0],
+      };
+    }
   }
   onReady() {
     // 生命周期函数--监听页面初次渲染完成
