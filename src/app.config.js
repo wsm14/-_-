@@ -139,5 +139,11 @@ export default {
         "voucherDetails/index", //抵扣券详情
       ],
     },
+    {
+      root: "pages/rules/",
+      pages: [
+        "interests/index", //券包
+      ],
+    },
   ],
 };

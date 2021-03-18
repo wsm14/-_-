@@ -19,6 +19,7 @@ import {
   deleteFall,
   getLat,
   getLnt,
+  format,
 } from "@/common/utils";
 import Router from "@/common/router";
 import classNames from "classnames";
@@ -78,10 +79,7 @@ export const shopDetails = (data, obj) => {
         return (
           <View className="shopDetails_btn shopDetails_btnColor3">已售罄</View>
         );
-      } else if (
-        new Date().getTime() <
-        new Date(activityStartTime.replace(/-/g, "/")).getTime()
-      ) {
+      } else if (!format(activityStartTime)) {
         return (
           <View className="shopDetails_btn shopDetails_btnColor2">
             即将开抢
@@ -96,11 +94,14 @@ export const shopDetails = (data, obj) => {
     return (
       <View
         className="shopDetails_box"
-        onClick={() =>
-          navigateTo(
+        onClick={() => {
+          if (status === "0" || (status === "1" && remain === "0")) {
+            return;
+          }
+          return navigateTo(
             `/pages/perimeter/favourableDetails/index?merchantId=${merchantIdString}&specialActivityId=${specialActivityIdString}`
-          )
-        }
+          );
+        }}
       >
         <View className="shopDetails_Img dakale_nullImage">
           <Image
@@ -345,11 +346,7 @@ export const shopCard = (_this, data, obj) => {
           <View
             className="dakale_nullImage shop_card_left"
             style={merchantLogo ? { ...backgroundObj(merchantLogo) } : {}}
-          >
-            <View className="merchant_mit  public_center font20 color6">
-              {GetDistance(getLat(), getLnt(), lat, lnt)}
-            </View>
-          </View>
+          ></View>
           <View className="shop_card_right">
             <View className="shopCard_right1">
               <View className="shopCard_userName font_hide">
@@ -357,16 +354,10 @@ export const shopCard = (_this, data, obj) => {
               </View>
               <View className="shopCard_go"></View>
             </View>
-            <View className="shopCard_right2 font_hide">
-              {`人均￥${perCapitaConsumption || 0}元 | ${businessTime}`}
-            </View>
-            <View className="shopCard_right3">
-              {filterStrList(tag).map((item) => {
-                return <View className="shopCard__right3_tags">{item}</View>;
-              })}
-            </View>
+
             <View className="shopCard_right4 font_hide">
-              {cityName + districtName} | {merchantAddress}
+              {cityName + districtName} |{" "}
+              {GetDistance(getLat(), getLnt(), lat, lnt)} | {merchantAddress}
             </View>
           </View>
         </View>

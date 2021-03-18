@@ -25,8 +25,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    const { shareType } = this.props.store.authStore;
-    console.log(shareType)
+
     authWxLogin(this.getOpenId.bind(this));
   }
 
@@ -117,13 +116,12 @@ class Index extends Component {
     } = e;
     const { openId, unionId } = this.state;
     const { shareType } = this.props.store.authStore;
-    const { shareUserId, shareUserType } = shareType;
     if (errMsg === "getPhoneNumber:ok") {
       //如果用户点击同意授权
       if (openId) {
         const { encryptedData, iv } = e.detail;
         bindTelephone(
-          { openId, unionId, encryptedData, iv, shareUserType, shareUserId },
+          { openId, unionId, encryptedData, iv, ...shareType },
           (res) => {
             const { userInfo } = res;
             Taro.setStorageSync("userInfo", userInfo);

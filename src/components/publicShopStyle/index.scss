@@ -470,39 +470,26 @@
 }
 
 .shopCard_box {
-  width: 686px;
-  height: 236px;
+  width: 100%;
+  height: 168px;
   background: #ffffff;
-  box-shadow: 0px 1px 20px 0px rgba(30, 188, 190, 0.1);
-  border-radius: 20px;
-  margin: 24px auto;
   display: flex;
   align-items: center;
 
   .shop_card_details {
-    height: 174px;
+    height: 104px;
     display: flex;
-    padding: 0 18px 0 32px;
+    padding: 32px;
 
     .shop_card_left {
-      width: 172px;
-      height: 172px;
-      border-radius: 10px;
+      width: 104px;
+      height: 104px;
+      border-radius: 4px;
       position: relative;
-
-      .merchant_mit {
-        height: 34px;
-        background: rgba(25, 109, 138, 0.6);
-        border-radius: 0px 0px 10px 10px;
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
     }
 
     .shop_card_right {
-      margin-left: 20px;
+      margin-left: 24px;
       padding-top: 8px;
 
       .shopCard_right1 {
@@ -510,9 +497,10 @@
         display: flex;
 
         .shopCard_userName {
-          max-width: 380px;
-          height: 36px;
+          max-width: 482px;
+          line-height: 36px;
           font-weight: 600;
+          font-size: 36px;
           color: #333333;
         }
 
@@ -525,44 +513,13 @@
           background-size: 100% 100%;
         }
       }
-
-      .shopCard_right2 {
-        height: 22px;
-        font-size: 20px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #999999;
-        line-height: 22px;
-        margin-top: 16px;
-      }
-
-      .shopCard_right3 {
-        height: 30px;
-        border-radius: 4px;
-        display: flex;
-        margin-top: 20px;
-
-        .shopCard__right3_tags {
-          height: 30px;
-          background: rgba(16, 133, 136, 0.1);
-          border-radius: 4px;
-          padding: 0 8px;
-          line-height: 30px;
-          color: rgba(16, 133, 136, 1);
-          font-size: 20px;
-          margin-right: 12px;
-        }
-      }
-
       .shopCard_right4 {
-        height: 20px;
-        font-size: 20px;
-        font-family: PingFangSC-Regular, PingFang SC;
+        font-size: 28px;
         font-weight: 400;
         color: #999999;
-        line-height: 20px;
-        max-width: 430px;
-        margin-top: 18px;
+        line-height: 28px;
+        max-width: 482px;
+        margin-top: 24px;
       }
     }
   }

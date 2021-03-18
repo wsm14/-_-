@@ -8,6 +8,7 @@ import "./assets/css/app.scss";
 import "./assets/css/color.scss";
 import "./assets/css/font.scss";
 import "./assets/css/background.scss";
+
 const store = {
   ...Store,
 };

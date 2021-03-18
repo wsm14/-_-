@@ -575,3 +575,19 @@ export const loginStatus = () => {
     return false;
   }
 };
+export const format = (time = '') => {
+  if (new Date().getTime() > new Date(time.replace(/-/g, "/")).getTime()) {
+    return true;
+  }
+  return false;
+};
+export const setBuyRule = (val, day, max) => {
+  switch (val) {
+    case "unlimited":
+      return false;
+    case "personLimit":
+      return `每人限购${max}份`;
+    case "dayLimit":
+      return `每天限购${day}份`;
+  }
+};
