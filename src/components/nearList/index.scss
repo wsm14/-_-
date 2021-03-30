@@ -6,8 +6,6 @@
     width: 335px;
     border-radius: 4px;
     position: relative;
-    min-height: 320px;
-    max-height: 680px;
     overflow: hidden;
     .nearList_time {
       position: absolute;
@@ -74,6 +72,7 @@
       font-size: 24px;
       font-weight: 600;
       color: #ef476f;
+      margin-right: 8px;
     }
     .nearList_dakale_bean::before {
       content:'';
@@ -87,43 +86,48 @@
       background-size: 100% 100%;
     }
     .nearList_dakale_coupon {
-      width: 131px;
+      padding: 0px 10px;
       height: 32px;
       text-align: center;
       line-height: 32px;
       font-size: 22px;
       font-weight: 400;
       color: #ef476f;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon463.png")
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon464.png")
         no-repeat;
       background-size: 100% 100%;
+      display: inline-block;
     }
     .nearList_dakale_noCoupon {
-      width: 131px;
+      padding: 0px 10px;
       height: 32px;
       text-align: center;
       line-height: 32px;
       font-size: 22px;
       font-weight: 400;
       color: #999999;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon464.png")
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon463.png")
         no-repeat;
       background-size: 100% 100%;
+      display: inline-block;
     }
     .nearList_dakale_active {
       height: 32px;
       line-height: 32px;
       padding: 0 8px;
-      margin-left: 8px;
       background: rgba(239, 71, 111, 0.1);
       text-align: center;
       color: rgba(239, 71, 111, 1);
       font-size: 22px;
+      display: inline-block;
     }
   }
   .nearList_dakale_noBean {
     font-size: 24px;
     font-weight: 600;
     color: #999999;
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
   }
 }

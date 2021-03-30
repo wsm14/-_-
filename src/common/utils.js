@@ -15,6 +15,7 @@ import Taro from "@tarojs/taro";
 import { user } from "@/api/api";
 import { httpPost } from "@/api/newRequest";
 import { View } from "@tarojs/components";
+import Router from "./router";
 // import moment from 'moment'
 export const navigateTo = (url, events) => {
   Taro.navigateTo({
@@ -95,13 +96,22 @@ export const computedHeight = function (width, height, newWidth) {
     scale = width / height;
   }
   scale = parseInt(width || 0) / parseInt(height || 0);
-  return parseInt(newWidth / scale);
+  if (parseInt(newWidth / scale) > 340) {
+    return 340;
+  } else if (parseInt(newWidth / scale) < 160) {
+    return 160;
+  } else {
+    return parseInt(newWidth / scale);
+  }
 };
 //计算图片高度
 export const backgroundObj = function (url) {
-  return {
-    background: `url(${url}) no-repeat center/cover`,
-  };
+  if (url) {
+    return {
+      background: `url(${url}) no-repeat center/cover`,
+    };
+  }
+  return {};
 };
 //设置背景图片
 export const backgroundover = function (url) {
@@ -479,7 +489,7 @@ export const objStatus = (obj) => {
 export const filterWeek = (str) => {
   let string = [];
   if (str && str.includes("1,2,3,4,5,6,7")) {
-    return "每天";
+    return `每周${["一", "二", "三", "四", "五", "六", "日"].join("、")}`;
   } else if (str) {
     string = str.split(",");
     string = string.map((item) => {
@@ -575,7 +585,7 @@ export const loginStatus = () => {
     return false;
   }
 };
-export const format = (time = '') => {
+export const format = (time = "") => {
   if (new Date().getTime() > new Date(time.replace(/-/g, "/")).getTime()) {
     return true;
   }
@@ -584,10 +594,15 @@ export const format = (time = '') => {
 export const setBuyRule = (val, day, max) => {
   switch (val) {
     case "unlimited":
-      return false;
+      return "每人不限购买数量";
     case "personLimit":
       return `每人限购${max}份`;
     case "dayLimit":
-      return `每天限购${day}份`;
+      return `每人每天限购${day}份`;
   }
 };
+export const computedPrice = (price, scale) => {
+  let size = (price * (scale / 100)).toFixed(3);
+  return size.substring(0, size.length - 1);
+};
+

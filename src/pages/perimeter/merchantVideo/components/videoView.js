@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Video, Swiper, SwiperItem, View, Image } from "@tarojs/components";
+import { Video, Swiper, SwiperItem, View, Image,Button } from "@tarojs/components";
 import Taro, { pxTransform, useReady } from "@tarojs/taro";
 import BottomView from "./bottom";
 import { backgroundObj, navigateTo, setPeople } from "@/common/utils";
@@ -13,8 +13,13 @@ export default ({
   children,
   follow,
   collection,
+  onTransition,
+  stop,
 }) => {
   const [scale, setScale] = useState(0);
+  useEffect(() => {
+    setScale(0);
+  }, [current]);
   const expensive = useMemo(() => {
     if (data.length > 0) {
       return (
@@ -27,10 +32,11 @@ export default ({
           <Swiper
             style={{ width: "100%", height: "100%" }}
             vertical
+            current={current}
             onChange={onChange}
             duration={200}
-            circular={false}
-            current={current}
+            circular={circular}
+            onTransition={onTransition}
           >
             {data.map((item, index) => {
               const {
@@ -62,9 +68,12 @@ export default ({
                     >
                       <View
                         style={{
-                          position: "relative",
                           height: Taro.pxTransform(frontImageHeight),
                           width: "100%",
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          stop();
                         }}
                       >
                         <Video
@@ -106,17 +115,13 @@ export default ({
                           ></View>
                         </View>
                       </View>
-                      <BottomView server={item}>{children}</BottomView>
+                      <BottomView index={index} server={item}>
+                        {children}
+                      </BottomView>
                       <View className="home_stem_layer">
                         <View
                           style={userProfile ? backgroundObj(userProfile) : {}}
                           className="home_stem_userProfile dakale_profile"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigateTo(
-                              `/pages/newUser/merchantDetails/index?userId=${userIdString}`
-                            );
-                          }}
                         >
                           {merchantFollowStatus === "0" && (
                             <View
@@ -139,7 +144,19 @@ export default ({
                         <View className="collected_font">
                           {setPeople(collectionAmount)}
                         </View>
-                        <View className="home_share_wechat"></View>
+
+                        <View className="home_share_wechat">
+                          <Button
+                            open-type="share"
+                            style={{
+                              border: "0px soild white",
+                              background: (0, 0, 0, 0),
+                              width: "100%",
+                              height: "100%",
+                            }}
+                          ></Button>
+                        </View>
+
                         <View className="collected_font">{shareAmount}</View>
                       </View>
                     </View>

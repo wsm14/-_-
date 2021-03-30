@@ -170,13 +170,16 @@ class Index extends Component {
         useWeek,
         activeDays,
         delayDays,
+        activityTimeRule,
       },
       specialGoodsDTO: { goodsCount },
       useBeanStatus,
     } = this.state;
     const templateTime = () => {
-      if (activeDays && delayDays) {
-        return `购买后${delayDays}天生效，有效期${activeDays}天`;
+      if (activeDays) {
+        return `购买后${
+          delayDays === 0 ? "立刻" : delayDays
+        }天生效，有效期${activeDays}天，请在有效期内使用`;
       } else {
         return `${useStartTime}至${useEndTime}`;
       }
@@ -208,7 +211,7 @@ class Index extends Component {
                 style={{ ...backgroundObj(goodsImg) }}
               ></View>
               <View className="order_shopDetails_dec">
-                <View className="order_shopDetails_title font_noHide">
+                <View className="order_shopDetails_title font_hide">
                   {goodsName}
                 </View>
                 <View className="order_price">
@@ -242,7 +245,18 @@ class Index extends Component {
             onClick={() => this.useBean()}
           >
             <View className="order_payType_box">
-              <View className="order_payType_top">卡豆优惠抵扣</View>
+              <View className="order_payType_top">
+                卡豆优惠抵扣
+                <View
+                  className="order_payType_question"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Router({
+                      routerName: "interests",
+                    });
+                  }}
+                ></View>
+              </View>
               <View className="order_pay_font">
                 可用{userBean}卡豆抵扣卡豆{parseInt(userBean) / 100}元
               </View>
@@ -277,7 +291,8 @@ class Index extends Component {
             </View>
             <View className="order_shop_getTime font28 color2">退款原则：</View>
             <View className="order_shop_week color1 font28">
-              不支持随时退、不支持过期自动退
+              {allowExpireRefund === "1" ? "支持" : "不支持"}
+              随时退、{allowRefund === "1" ? "支持" : "不支持"}过期自动退
             </View>
           </View>
         </View>
@@ -328,11 +343,10 @@ class Index extends Component {
             </Text>
           </View>
           <View className="order_beanRmb">
-            共抵扣：¥
+            抵扣：¥
             {useBeanStatus === "1"
               ? this.computedPrice(Number(realPrice) * goodsCount, userBean)
               : "0"}
-            <Text className="order_computed">共{goodsCount}件</Text>
           </View>
           <View className="payBtn" onClick={() => this.saveKolGoodsOrder()}>
             立即支付

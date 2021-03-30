@@ -1,12 +1,12 @@
 export default {
   pages: [
+    "pages/index/home/index", //周边打卡
     "pages/index/perimeter/index", //视频详情
     "pages/index/takeCard/index",
+    "pages/index/lookAround/index", //逛逛
     "pages/index/goods/index",
     "pages/index/user/index", //首页个人
     "pages/auth/index", //登录
-    "pages/payPrice/index", //小程序支付兼容
-    "pages/index/home/index", //周边打卡
   ],
   window: {
     backgroundTextStyle: "light",
@@ -16,33 +16,33 @@ export default {
     navigationStyle: "custom",
   },
   tabBar: {
-    color: "#A5A5A5",
+    color: "#999999",
     selectedColor: "#333333",
     backgroundColor: "#fafafa",
     borderStyle: "black",
     list: [
       {
-        pagePath: "pages/index/perimeter/index",
-        iconPath: "./assets/image/tab-bar/perimeter.png",
-        selectedIconPath: "./assets/image/tab-bar/perimeterTrue.png",
-        text: "周边",
+        pagePath: "pages/index/home/index",
+        iconPath: "./assets/image/tab-bar/home_1.png",
+        selectedIconPath: "./assets/image/tab-bar/home.png",
+        text: "首页",
       },
       {
-        pagePath: "pages/index/takeCard/index",
-        iconPath: "./assets/image/tab-bar/card.png",
-        selectedIconPath: "./assets/image/tab-bar/cardTrue.png",
-        text: "打卡",
+        pagePath: "pages/index/lookAround/index",
+        iconPath: "./assets/image/tab-bar/look_1.png",
+        selectedIconPath: "./assets/image/tab-bar/look.png",
+        text: "逛逛",
       },
       {
         pagePath: "pages/index/goods/index",
-        iconPath: "./assets/image/tab-bar/goods.png",
-        selectedIconPath: "./assets/image/tab-bar/goodsTrue.png",
+        iconPath: "./assets/image/tab-bar/good_1.png",
+        selectedIconPath: "./assets/image/tab-bar/goods.png",
         text: "订单",
       },
       {
         pagePath: "pages/index/user/index",
-        iconPath: "./assets/image/tab-bar/me.png",
-        selectedIconPath: "./assets/image/tab-bar/meTrue.png",
+        iconPath: "./assets/image/tab-bar/me_1.png",
+        selectedIconPath: "./assets/image/tab-bar/me.png",
         text: "我的",
       },
     ],
@@ -75,8 +75,6 @@ export default {
         "record/index", //打卡记录
         "beanRule/index", //卡豆权益
         "userConceal/index", //协议规则
-        "accustomed/expressCard/index", //关爱打卡
-        "accustomed/addExpressCard/index", //配置关爱打卡
       ],
     },
     {
@@ -95,6 +93,8 @@ export default {
     {
       root: "pages/perimeter/",
       pages: [
+        "specialOffer/index", //特惠内层列表
+        "groupList/index", //特惠集团搜索
         "merchantVideo/index", //商家主页视频
         "nearVideo/index", //附近主页视频
         "beanReward/index",

@@ -651,9 +651,10 @@ class Index extends PureComponent {
         )}
         <View className="permerter_tab_kol">
           <ScrollView
-            scrollLeft={selectIndex > 2 ? scroll_left : false}
+            
             scrollX={true}
             scrollWithAnimation={true}
+            scrollLeft={selectIndex > 2 ? scroll_left : false}
             onScroll={this.setScroll}
             className="permerter_tab_tags"
           >

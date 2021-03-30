@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 
 const homeStore = observable({
   selectObj: {
-    scenesIds: "",
+    categoryIds: "",
     distance: "",
     promotionType: "",
   },
@@ -17,7 +17,7 @@ const homeStore = observable({
     } = data;
     this.selectObj = {
       distance: loadDistance,
-      scenesIds: loadCategoryIds.join(","),
+      categoryIds: loadCategoryIds.join(","),
       promotionType: loadPromotionType,
     };
   },

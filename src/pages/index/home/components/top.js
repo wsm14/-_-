@@ -53,17 +53,17 @@ export default (props) => {
     <View className="home_top">
       <View className="home_right">
         <View
-          className="home_right_up"
-          onClick={() => {
-            session();
-          }}
-        ></View>
-        <View
           className="home_right_search"
           onClick={() => {
             Router({
               routerName: "search_shop",
             });
+          }}
+        ></View>
+        <View
+          className="home_right_up"
+          onClick={() => {
+            session();
           }}
         ></View>
       </View>

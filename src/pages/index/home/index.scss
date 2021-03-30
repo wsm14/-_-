@@ -2,19 +2,21 @@ page {
   width: 100%;
   height: 100%;
   line-height: 1;
+  overflow: hidden;
 }
 .home_box {
   width: 100%;
   height: 100%;
   position: relative;
-  button::after{
-    border:none;
-}
-  .video_liner{
+  overflow: hidden;
+  button::after {
+    border: none;
+  }
+  .video_liner {
     background: rgba(255, 255, 255, 0.6);
     height: 6px;
     position: absolute;
-    bottom:0;
+    bottom: 0;
     left: 0;
     right: 0;
   }
@@ -83,24 +85,28 @@ page {
     right: 32px;
     z-index: 10;
     .home_active_box {
-      margin-top: 24px;
-      width: 468px;
-      height: 96px;
-      background: rgba(0, 0, 0, 0.3);
+      position: relative;
+      width: 534px;
+      height: 130px;
       border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      margin-top: 24px;
       display: flex;
       align-items: center;
       .home_active_image {
-        width: 72px;
-        height: 72px;
+        width: 106px;
+        height: 106px;
         border-radius: 4px;
         margin-left: 12px;
+        background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png)
+          no-repeat;
+        background-size: 100% 100%;
       }
       .home_active_details {
-        height: 72px;
+        height: 106px;
         margin-left: 12px;
         .home_active_font1 {
-          max-width: 204px;
+          max-width: 236px;
           font-size: 28px;
           color: #ffffff;
           line-height: 28px;
@@ -108,10 +114,25 @@ page {
         }
         .home_active_font2 {
           padding-top: 8px;
-          max-width: 204px;
+          max-width: 236px;
           line-height: 28px;
           color: rgba(255, 255, 255, 0.8);
           font-size: 22px;
+        }
+        .home_active_price {
+          .home_active_tags {
+            display: inline-block;
+            height: 28px;
+            text-align: center;
+            padding: 0 8px;
+            border-radius: 4px;
+            border: 1px solid #ffeba5;
+            box-sizing: border-box;
+            font-size: 20px;
+            font-weight: 400;
+            color: #ffeba5;
+            line-height: 28px;
+          }
         }
       }
       .home_active_btn {
@@ -138,13 +159,14 @@ page {
       background: #000000;
       border-radius: 26px;
       opacity: 0.2;
-      display: inline-block;
+      display: flex;
       align-items: center;
       .home_barrage_useProfile {
         width: 48px;
         height: 48px;
-        border: 1px solid #ffffff;
+        border: 2px solid #ffffff;
         border-radius: 50%;
+        box-sizing: border-box;
         display: inline-block;
       }
     }
@@ -152,6 +174,7 @@ page {
       padding: 0 24px 0 16px;
       font-size: 24px;
       line-height: 52px;
+      max-width: 240px;
       color: #ffffff;
       display: inline-block;
     }
@@ -182,6 +205,8 @@ page {
     line-height: 42px;
     width: 686px;
     max-height: 168px;
+    position: relative;
+    z-index: 10086;
   }
   .home_bottom_auto {
     overflow-y: auto;
@@ -194,8 +219,24 @@ page {
   }
   .home_desc_city {
     color: rgba(255, 255, 255, 0.8);
-    max-width: 560px;
+    display: flex;
+    align-items: center;
+    .home_city_icon {
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      content: "";
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon503.png")
+        no-repeat;
+      background-size: 100% 100%;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+    .home_desc_text {
+      max-width: 538px;
+    }
   }
+
   .home_video_box {
     width: 100%;
     height: 100%;
@@ -225,9 +266,9 @@ page {
         }
       }
       .collected_box {
-        width: 96px;
-        height: 96px;
-        margin-top: 32px;
+        width: 72px;
+        height: 72px;
+        margin: 32px auto 0;
       }
       .collected_font {
         text-align: center;
@@ -262,13 +303,41 @@ page {
     .home_order_image {
       width: 300px;
       height: 300px;
+      margin: 0 auto;
     }
     .home_order_font {
       margin-top: 32px;
       text-align: center;
       font-size: 28px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .home_order_font1 {
+      height: 24px;
+      font-size: 24px;
+      text-align: center;
       font-weight: 400;
-      color: rgba(153, 153, 153, 1)
+      color: #999999;
+      line-height: 24px;
+      margin-top: 16px;
+    }
+    .home_order_followImg {
+      margin: 192px auto 0;
+      width: 300px;
+      height: 300px;
+    }
+    .home_order_followBtn {
+      width: 200px;
+      height: 70px;
+      border-radius: 8px;
+      border: 2px solid #07c0c2;
+      margin: 80px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 400;
+      color: #07c0c2;
     }
   }
   .home_Select {
@@ -319,6 +388,7 @@ page {
       background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon448.png")
         no-repeat;
       background-size: 100% 100%;
+      visibility: hidden;
     }
   }
 }
@@ -372,6 +442,7 @@ page {
       background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon466.png")
         no-repeat;
       background-size: 100% 100%;
+      visibility: hidden;
     }
   }
 
@@ -384,16 +455,22 @@ page {
     .home_near_image {
       width: 300px;
       height: 300px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon461.png")
-        no-repeat;
-      background-size: 100% 100%;
     }
     .home_near_font {
       margin-top: 32px;
       text-align: center;
       font-size: 28px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .home_near_font2 {
+      height: 24px;
+      font-size: 24px;
+      text-align: center;
       font-weight: 400;
       color: #999999;
+      line-height: 24px;
+      margin-top: 16px;
     }
   }
 }
@@ -499,4 +576,108 @@ page {
       color: #ffffff;
     }
   }
+}
+.guide_Box_father {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10088;
+  background: transparent;
+  .guide_Box {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    top: 158px;
+    left: 12px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 100vh;
+    border-radius: 50%;
+    z-index: 1003;
+  }
+  .guide_boxToast {
+    position: absolute;
+    left: 206px;
+    top: 196px;
+    width: 476px;
+    height: 82px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon478.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .guide_boxNextTip {
+    width: 160px;
+    height: 70px;
+    position: absolute;
+    left: 392px;
+    top: 318px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon479.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .guide_touch {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    .guide_touch_img {
+      width: 400px;
+      height: 480px;
+      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon480.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .guide_touch_btn {
+      width: 160px;
+      height: 70px;
+      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon481.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 40px 120px 0;
+    }
+  }
+  .guide_step2 {
+    position: absolute;
+    width: 574px;
+    height: 170px;
+    left: 12px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 100vh;
+    border-radius: 8px;
+  }
+  .guide_toast2 {
+    width: 554px;
+    height: 55px;
+    position: absolute;
+    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon482.png)
+      no-repeat;
+    background-size: 100% 100%;
+    right: 40px;
+  }
+  .guide_btn3 {
+    width: 160px;
+    height: 70px;
+    position: absolute;
+    right: 0px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon479.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .lookAround_hot_bottom {
+  }
+}
+.player_no {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -56px;
+  margin-left: -62px;
+  z-index: 100;
+  width: 111px;
+  height: 124px;
+  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon510.png")
+    no-repeat;
+  background-size: 100% 100%;
 }

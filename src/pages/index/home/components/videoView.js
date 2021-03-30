@@ -20,8 +20,14 @@ export default ({
   children,
   follow,
   collection,
+  onTransition,
+  stop,
+  userInfo,
 }) => {
   const [scale, setScale] = useState(0);
+  useEffect(() => {
+    setScale(0);
+  }, [current]);
   const expensive = useMemo(() => {
     if (data.length > 0) {
       return (
@@ -36,12 +42,15 @@ export default ({
             vertical
             onChange={onChange}
             duration={200}
+            current={current}
             circular={circular}
+            onTransition={onTransition}
           >
             {data.map((item, index) => {
               const {
                 frontImage,
                 frontImageHeight,
+                frontImageWidth,
                 videoContent,
                 userProfile,
                 merchantFollowStatus,
@@ -50,6 +59,11 @@ export default ({
                 collectionAmount,
                 shareAmount,
               } = item;
+
+              let height =
+                ((Taro.getSystemInfoSync().windowWidth / 375) * 750) /
+                (frontImageWidth / frontImageHeight);
+
               if (
                 index === current ||
                 index === current + 1 ||
@@ -60,17 +74,21 @@ export default ({
                     <View
                       style={{
                         width: "100%",
-                        height: "100%",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        position: "relative",
+                        height: "100%",
                       }}
                     >
                       <View
                         style={{
-                          position: "relative",
-                          height: Taro.pxTransform(frontImageHeight),
+                          height: Taro.pxTransform(height),
                           width: "100%",
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          stop();
                         }}
                       >
                         <Video
@@ -85,34 +103,44 @@ export default ({
                           enableProgressGesture={false}
                           autoplay={index === current ? true : false}
                           showFullscreenBtn={false}
-                          enablePlayGesture={true}
+                          // enablePlayGesture={true}
                           loop={true}
                           showPlayBtn={false}
+                          objectFit="fill"
                           showCenterPlayBtn={false}
-                          objectFit="cover"
                           initialTime="0"
                           onTimeUpdate={(e) => {
-                            const { currentTime, duration } = e.detail;
-                            setScale(
-                              ((currentTime / duration) * 100).toFixed(2)
-                            );
+                            if (index === current) {
+                              const { currentTime, duration } = e.detail;
+                              setScale(
+                                ((currentTime / duration) * 100).toFixed(2)
+                              );
+                            }
                           }}
                           id={`video${index}`}
                           // onPause={onPause}
                           // onPlay={onPlay}
                           muted={false}
                         ></Video>
-                        <View className="video_liner">
-                          <View
-                            style={{
-                              height: "100%",
-                              width: `${scale}%`,
-                              background: "rgba(239, 71, 111, 1)",
-                            }}
-                          ></View>
-                        </View>
+                        {index === current && (
+                          <View className="video_liner">
+                            <View
+                              style={{
+                                height: "100%",
+                                width: `${scale}%`,
+                                background: "rgba(239, 71, 111, 1)",
+                              }}
+                            ></View>
+                          </View>
+                        )}
                       </View>
-                      <BottomView server={item}>{children}</BottomView>
+                      <BottomView
+                        userInfo={userInfo}
+                        index={index}
+                        server={item}
+                      >
+                        {children}
+                      </BottomView>
                       <View className="home_stem_layer">
                         <View
                           style={userProfile ? backgroundObj(userProfile) : {}}
@@ -120,7 +148,7 @@ export default ({
                           onClick={(e) => {
                             e.stopPropagation();
                             navigateTo(
-                              `/pages/newUser/merchantDetails/index?userId=${userIdString}`
+                              `/pages/perimeter/merchantDetails/index?merchantId=${userIdString}`
                             );
                           }}
                         >
@@ -147,7 +175,15 @@ export default ({
                         </View>
 
                         <View className="home_share_wechat">
-                          <Button open-type="share" style={{border:'0px soild white', background: (0, 0, 0, 0),width:'100%',height:'100%' }}></Button>
+                          <Button
+                            open-type="share"
+                            style={{
+                              border: "0px soild white",
+                              background: (0, 0, 0, 0),
+                              width: "100%",
+                              height: "100%",
+                            }}
+                          ></Button>
                         </View>
 
                         <View className="collected_font">{shareAmount}</View>

@@ -7,9 +7,7 @@ import {httpGet} from '@/api/newRequest'
 import classNames from 'classnames'
 import {toast, getDom, GetDistance, getLat, getLnt,backgroundObj,navigateTo} from "@/common/utils";
 import Banner from '@/components/banner'
-
 import {shopDetails} from '@/components/publicShopStyle'
-
 import Waterfall from '@/components/waterfall'
 import './index.scss'
 class Index extends PureComponent {

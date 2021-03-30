@@ -33,7 +33,9 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
     wraparound: "/pages/coupon/wraparound/index", //券包
     //券包
-
+    groupList: "/pages/perimeter/groupList/index", //集团列表
+    specialOffer: "/pages/perimeter/specialOffer/index", //特惠内层列表
+    beanReward: "/pages/perimeter/beanReward/index", //卡豆明细
     merchantVideo: "/pages/perimeter/merchantVideo/index", //商家视频
     nearVideo: "/pages/perimeter/nearVideo/index", //附近视频
     willCity: "/pages/perimeter/willCity/index", //即将开通
@@ -60,9 +62,10 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     shareKolImage: "/pages/kol/shareImage/index", //kol图片详情页,
     follow: "/pages/kol/follow/index", //关注列表,
     fans: "/pages/kol/fans/index", //粉丝列表,
-
     //kol
     interests: "/pages/rules/interests/index",
+    download: "/pages/share/download/index",
+    login: "/pages/auth/index",
     //规则类
   }[routerName];
   const types = type;

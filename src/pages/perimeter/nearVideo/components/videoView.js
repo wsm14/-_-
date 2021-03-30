@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Video, Swiper, SwiperItem, View, Image } from "@tarojs/components";
+import {
+  Video,
+  Swiper,
+  SwiperItem,
+  View,
+  Image,
+  Button,
+} from "@tarojs/components";
 import Taro, { pxTransform, useReady } from "@tarojs/taro";
 import BottomView from "./bottom";
 import { backgroundObj, navigateTo, setPeople } from "@/common/utils";
@@ -13,8 +20,14 @@ export default ({
   children,
   follow,
   collection,
+  onTransition,
+  stop,
+  userInfo,
 }) => {
   const [scale, setScale] = useState(0);
+  useEffect(() => {
+    setScale(0);
+  }, [current]);
   const expensive = useMemo(() => {
     if (data.length > 0) {
       return (
@@ -27,10 +40,11 @@ export default ({
           <Swiper
             style={{ width: "100%", height: "100%" }}
             vertical
-            current={current}
             onChange={onChange}
             duration={200}
+            current={current}
             circular={circular}
+            onTransition={onTransition}
           >
             {data.map((item, index) => {
               const {
@@ -58,13 +72,17 @@ export default ({
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        position: "relative",
                       }}
                     >
                       <View
                         style={{
-                          position: "relative",
                           height: Taro.pxTransform(frontImageHeight),
                           width: "100%",
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          stop();
                         }}
                       >
                         <Video
@@ -79,34 +97,44 @@ export default ({
                           enableProgressGesture={false}
                           autoplay={index === current ? true : false}
                           showFullscreenBtn={false}
-                          enablePlayGesture={true}
+                          // enablePlayGesture={true}
                           loop={true}
                           showPlayBtn={false}
                           showCenterPlayBtn={false}
                           objectFit="cover"
                           initialTime="0"
                           onTimeUpdate={(e) => {
-                            const { currentTime, duration } = e.detail;
-                            setScale(
-                              ((currentTime / duration) * 100).toFixed(2)
-                            );
+                            if (index === current) {
+                              const { currentTime, duration } = e.detail;
+                              setScale(
+                                ((currentTime / duration) * 100).toFixed(2)
+                              );
+                            }
                           }}
                           id={`video${index}`}
                           // onPause={onPause}
                           // onPlay={onPlay}
                           muted={false}
                         ></Video>
-                        <View className="video_liner">
-                          <View
-                            style={{
-                              height: "100%",
-                              width: `${scale}%`,
-                              background: "rgba(239, 71, 111, 1)",
-                            }}
-                          ></View>
-                        </View>
+                        {index === current && (
+                          <View className="video_liner">
+                            <View
+                              style={{
+                                height: "100%",
+                                width: `${scale}%`,
+                                background: "rgba(239, 71, 111, 1)",
+                              }}
+                            ></View>
+                          </View>
+                        )}
                       </View>
-                      <BottomView server={item}>{children}</BottomView>
+                      <BottomView
+                        userInfo={userInfo}
+                        index={index}
+                        server={item}
+                      >
+                        {children}
+                      </BottomView>
                       <View className="home_stem_layer">
                         <View
                           style={userProfile ? backgroundObj(userProfile) : {}}
@@ -114,7 +142,7 @@ export default ({
                           onClick={(e) => {
                             e.stopPropagation();
                             navigateTo(
-                              `/pages/newUser/merchantDetails/index?userId=${userIdString}`
+                              `/pages/perimeter/merchantDetails/index?merchantId=${userIdString}`
                             );
                           }}
                         >
@@ -139,7 +167,19 @@ export default ({
                         <View className="collected_font">
                           {setPeople(collectionAmount)}
                         </View>
-                        <View className="home_share_wechat"></View>
+
+                        <View className="home_share_wechat">
+                          <Button
+                            open-type="share"
+                            style={{
+                              border: "0px soild white",
+                              background: (0, 0, 0, 0),
+                              width: "100%",
+                              height: "100%",
+                            }}
+                          ></Button>
+                        </View>
+
                         <View className="collected_font">{shareAmount}</View>
                       </View>
                     </View>
@@ -155,6 +195,6 @@ export default ({
     } else {
       return null;
     }
-  }, [data, current,scale]);
+  }, [data.length, current, scale]);
   return expensive;
 };

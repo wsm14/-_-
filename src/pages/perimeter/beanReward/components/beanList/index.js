@@ -6,16 +6,16 @@ export default ({ data = [] }) => {
   useEffect(() => {
     setList(data);
   }, [data]);
-  const template = (data = {}) => {
-    const {} = data;
+  const template = (item = {}) => {
+    const { detailTitle, beanAmount, beanTime, detailContent ,description} = item;
     return (
       <View className="beanReward_detail">
         <View className="beanReward_detail_top">
-          <View className="beanReward_top_left">千岛湖渔家</View>
-          <View className="beanReward_top_right">+10</View>
+          <View className="beanReward_top_left font_hide">{detailContent}</View>
+          <View className="beanReward_top_right">+{beanAmount}</View>
         </View>
-        <View className="beanReward_centerBox">吃饭聚餐哪家好，我家最好。</View>
-        <View className="beanReward_bottomBox">2020.01.11 11:08</View>
+        <View className="beanReward_centerBox">{description}</View>
+        <View className="beanReward_bottomBox">{beanTime}</View>
       </View>
     );
   };

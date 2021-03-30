@@ -21,9 +21,9 @@ import classNames from "classnames";
 import Waterfall from "@/components/waterfall";
 import NullStatus from "@/components/nullStatus";
 import "./index.scss";
-import { inject, observer } from "mobx-react";
 import evens from "@/common/evens";
 import Router from "@/common/router";
+import { inject, observer } from "mobx-react";
 @inject("store")
 @observer
 class Index extends Component {
@@ -175,14 +175,8 @@ class Index extends Component {
   componentDidMount() {
     this.getDetails();
     this.getListOther();
-    evens.$on("updateMerchantList", this.updateList.bind(this));
   }
-  updateList(list) {
-    const { userMomentsList } = this.state;
-    this.setState({
-      userMomentsList: list,
-    });
-  }
+
   createdShareMerchant = (item) => {
     const {
       frontImage,

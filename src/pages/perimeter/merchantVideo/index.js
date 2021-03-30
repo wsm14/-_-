@@ -8,21 +8,19 @@ import {
   saveFollow,
   goBack,
 } from "@/common/utils";
-import { Button, Image, ScrollView, View } from "@tarojs/components";
-import InterVal from "@/components/setTimeCanvas";
+import { View } from "@tarojs/components";
 import {
-  getUserMomentList,
-  saveWatchBean,
   saveMerchantCollection,
   closeMerchantCollection,
+  updateUserMomentParam,
 } from "@/server/index";
-import { getMomentBarrage, listParentCategory } from "@/server/common";
+import { listParentCategory } from "@/server/common";
 import "./index.scss";
 import Barrage from "./components/barrage";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import evens from "@/common/evens";
-import { listOtherMomentByType } from "@/server/user";
+import { listOtherMomentByType, listMomentByUserId } from "@/server/user";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -39,29 +37,24 @@ class Index extends React.PureComponent {
         page: 1,
         limit: "10",
       },
+      type: getCurrentInstance().router.params.type,
       countStatus: true,
-      time: null,
-      interval: null,
-      momentBarrageList: [],
-      toast: false,
+      player: true,
     };
   }
 
   onChange(e) {
     const { countStatus, httpData, userMomentsList, interval } = this.state;
     const { current } = e.detail;
-    console.log(current, userMomentsList);
+
     this.setState(
       {
         current,
         userMomentsInfo: userMomentsList[current],
-        time: null,
       },
       (res) => {
-        interval && this.stopInterval(interval);
-        this.getMomentBarrage();
         this.videoPlayerControl();
-        this.initInterval();
+
         if (current >= this.state.userMomentsList.length - 3 && countStatus) {
           this.setState(
             {
@@ -83,21 +76,10 @@ class Index extends React.PureComponent {
     );
   }
 
-  getMomentBarrage() {
-    getMomentBarrage({ size: 25 }, (res) => {
-      const { momentBarrageList = [] } = res;
-      this.setState({
-        momentBarrageList,
-      });
-    });
-  }
-
   selectList(data = {}) {
     const { httpData, interval } = this.state;
     const { val } = data;
-    if (interval) {
-      this.stopInterval(interval);
-    }
+
     this.setState(
       {
         httpData: { ...httpData, page: 1, browseType: val },
@@ -115,160 +97,72 @@ class Index extends React.PureComponent {
               {
                 userMomentsInfo: this.state.userMomentsList[0],
               },
-              (res) => {
-                this.initInterval();
-              }
+              (res) => {}
             );
           }
         });
       }
     );
   }
-
-  screen(data = {}) {
-    const { httpData, interval } = this.state;
-    const {
-      loadDistance = "",
-      loadPromotionType = "",
-      loadCategoryIds = [],
-    } = data;
-    if (interval) {
-      this.stopInterval(interval);
-    }
-    this.setState(
-      {
-        httpData: {
-          ...httpData,
-          page: 1,
-          ...{
-            distance: loadDistance,
-            scenesIds: loadCategoryIds.join(","),
-            promotionType: loadPromotionType,
-          },
-        },
-        current: 0,
-        userMomentsList: [],
-        VideoList: [],
-        circular: false,
-        countStatus: true,
-        time: null,
-      },
-      (res) => {
-        this.getVideoList(() => {
-          if (this.state.userMomentsList.length > 0) {
-            this.setState(
-              {
-                userMomentsInfo: this.state.userMomentsList[0],
-              },
-              (res) => {
-                this.initInterval();
-              }
-            );
-          }
-        });
-      }
-    );
-  }
-  setScreen(data) {
-    const { homeStore } = this.props.store;
-    homeStore.setSelectObj(data);
-    this.screen(data);
-  }
-
   getVideoList(fn) {
-    const { httpData, current } = this.state;
-    listOtherMomentByType(httpData, (res) => {
-      let { userMomentsList = [] } = res;
-      console.log(current, this.state.userMomentsList.length, 111);
-      if (userMomentsList.length === 0) {
-        this.setState({
-          countStatus: false,
-        });
-        return;
-      }
-      this.setState(
-        {
-          userMomentsList: [...this.state.userMomentsList, ...userMomentsList],
-        },
-        (res) => {
-          fn && fn();
-        }
-      );
-    });
-  }
-
-  getBean(time) {
-    this.setState(
-      {
-        time: time,
-      },
-      (res) => {
-        if (time == 0) {
-          this.saveBean();
-        }
-      }
-    );
-  } //设置定时器领取卡豆
-  saveBean() {
-    const {
-      userMomentsInfo: { userMomentIdString, beanLimitStatus },
-      userMomentsInfo,
-    } = this.state;
-    if (beanLimitStatus === "1") {
-      saveWatchBean(
-        {
-          momentId: userMomentIdString,
-        },
-        (res) => {
+    const { httpData, current, type } = this.state;
+    if (type) {
+      listMomentByUserId(httpData, (res) => {
+        let { userMomentsList = [] } = res;
+        if (userMomentsList.length === 0) {
           this.setState({
-            toast: true,
-            time: null,
-            userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
-            userMomentsList: this.state.userMomentsList.map((item) => {
-              if (item.userMomentIdString === userMomentIdString) {
-                return {
-                  ...item,
-                  watchStatus: "1",
-                };
-              }
-              return item;
-            }),
+            countStatus: false,
           });
+          return;
         }
-      );
-    } else {
-    }
-  }
-  //领取卡豆
-  initInterval() {
-    const { userMomentsInfo } = this.state;
-    const { watchStatus, length } = userMomentsInfo;
-    if ((this.state.time || this.state.time === 0) && watchStatus === "0") {
-      this.setState({
-        interval: setIntive(this.state.time, this.getBean.bind(this)),
-      });
-    } else {
-      if (watchStatus === "0" && length) {
         this.setState(
           {
-            time: length,
+            userMomentsList: [
+              ...this.state.userMomentsList,
+              ...userMomentsList,
+            ],
           },
           (res) => {
-            this.setState({
-              interval: setIntive(this.state.time, this.getBean.bind(this)),
-            });
+            fn && fn();
           }
         );
-      }
+      });
+    } else {
+      listOtherMomentByType(httpData, (res) => {
+        let { userMomentsList = [] } = res;
+        if (userMomentsList.length === 0) {
+          this.setState({
+            countStatus: false,
+          });
+          return;
+        }
+        this.setState(
+          {
+            userMomentsList: [
+              ...this.state.userMomentsList,
+              ...userMomentsList,
+            ],
+          },
+          (res) => {
+            fn && fn();
+          }
+        );
+      });
     }
   }
-  //初始化详情数据
-
-  stopInterval(interval) {
-    clearInterval(interval);
-    this.setState({
-      interval: null,
-    });
+  stopVideoPlayerControl() {
+    const { current, interval, player } = this.state;
+    if (player) {
+      this.setState({
+        player: false,
+      });
+      Taro.createVideoContext(`video${current}`).stop();
+    } else {
+      this.setState({
+        player: true,
+      });
+      Taro.createVideoContext(`video${current}`).play();
+    }
   }
   videoPlayerControl() {
     const { current } = this.state;
@@ -379,21 +273,52 @@ class Index extends React.PureComponent {
       );
     }
   }
-  componentDidHide() {
-    const { interval } = this.state;
-    if (interval) {
-      this.stopInterval(interval);
+  onShareAppMessage(res) {
+    const {
+      userMomentsInfo: { frontImage, title, userMomentIdString },
+    } = this.state;
+    updateUserMomentParam(
+      {
+        updateType: "share",
+        id: userMomentIdString,
+      },
+      (res) => {}
+    );
+    let userInfo = loginStatus() || {};
+    if (loginStatus()) {
+      const { userIdString } = userInfo;
+      if (res.from === "button") {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+        };
+      } else {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+        };
+      }
+    } else {
+      if (res.from === "button") {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+        };
+      } else {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+        };
+      }
     }
   }
-  componentDidShow() {
-    const { time } = this.state;
-    if (time === 0 || time) {
-      this.initInterval();
-    }
-  }
-  componentDidMount() {
-    this.initInterval();
-  }
+  componentDidHide() {}
+  componentDidShow() {}
+  componentDidMount() {}
   componentWillMount() {
     const { selectObj, list, index } = this.props.store.homeStore;
     console.log(index);
@@ -408,7 +333,6 @@ class Index extends React.PureComponent {
           ...this.state.httpData,
         },
       });
-      this.getMomentBarrage();
     }
   }
   componentWillUnmount() {
@@ -422,23 +346,14 @@ class Index extends React.PureComponent {
       userMomentsList,
       current,
       circular,
-      userMomentsInfo,
-      userMomentsInfo: { length = "" },
-      time,
-      momentBarrageList,
       httpData: { browseType },
-      toast,
+      player,
     } = this.state;
 
     const templateView = () => {
       if (userMomentsList.length > 0) {
         return (
           <>
-            <InterVal
-              interval={time}
-              length={length}
-              data={userMomentsInfo}
-            ></InterVal>
             <VideoView
               circular={circular}
               data={userMomentsList}
@@ -446,50 +361,28 @@ class Index extends React.PureComponent {
               onChange={this.onChange.bind(this)}
               follow={this.followStatus.bind(this)}
               collection={this.collection.bind(this)}
-            >
-              <Barrage data={momentBarrageList}></Barrage>
-            </VideoView>
+              stop={this.stopVideoPlayerControl.bind(this)}
+            ></VideoView>
           </>
-        );
-      } else {
-        return (
-          <View className="home_order_box public_center">
-            <View>
-              <View className="home_order_image home_nullStatus_black"></View>
-              <View className="home_order_font">
-                {browseType === "commend" ? "暂无附近的内容" : "暂无关注的内容"}
-              </View>
-            </View>
-          </View>
         );
       }
     };
     return (
       <View className={classNames("home_box home_black")}>
         <View className="home_wait">
-          <View
-            className="backStyle go_back_icon"
-            style={{ top: Taro.pxTransform(computedClient().top) }}
-            onClick={() => goBack()}
-          ></View>
+          <View onClick={() => goBack()} className="backStyle_box">
+            <View
+              className="backStyle go_back_icon"
+              style={{ top: Taro.pxTransform(computedClient().top) }}
+            ></View>
+          </View>
         </View>
         <View className="home_video_box">{templateView()}</View>
-        {toast && (
-          <Toast
-            data={userMomentsInfo}
-            visible={() => {
-              if (couponList.length > 0) {
-                this.setState({
-                  toast: false,
-                  conpouVisible: true,
-                });
-              } else {
-                this.setState({
-                  toast: false,
-                });
-              }
-            }}
-          ></Toast>
+        {!player && (
+          <View
+            onClick={() => this.stopVideoPlayerControl()}
+            className="player_no"
+          ></View>
         )}
       </View>
     );

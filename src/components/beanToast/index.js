@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Text, View } from "@tarojs/components";
 import "./index.scss";
 export default (props) => {
-  const { data, visible } = props;
+  const { data, visible, show = false } = props;
 
   return (
     <View
+      style={show?{display:'flex'}:{display:'none'}}
       className="kol_bean public_center"
       onClick={(e) => {
         e.stopPropagation();

@@ -3,40 +3,41 @@ import Taro from "@tarojs/taro";
 import { Button, Canvas, Text, View } from "@tarojs/components";
 import classNames from "classnames";
 import "./index.scss";
-import { values } from "mobx";
+import Router from "@/common/router";
 
 const scale = () => {
   return Taro.getSystemInfoSync().windowWidth / 375;
 };
 export default (props) => {
-  const { data, interval, length } = props;
+  const { data, interval, length, current, beanLimitStatus } = props;
   const [time, setTime] = useState(null);
   const [toast, setToast] = useState(1);
   const [moment, setMoment] = useState({});
   const [timeOut, setTimeOut] = useState(null);
-  const { beanLimitStatus, watchStatus, beanAmount } = moment;
+  const { watchStatus, beanAmount, couponTitlesJson = [] } = moment;
   useEffect(() => {
     setTime(interval);
   }, [interval]);
   useEffect(() => {
     setMoment(data);
+    setToast(1);
+  }, [data]);
+  useEffect(() => {
     if (!timeOut) {
-      let val = setTimeout(() => setToast(0), 2000);
+      let val = setTimeout(() => setToast(0), 5000);
       setTimeOut(val);
     } else {
       clearTimeout(timeOut);
-      let val = setTimeout(() => setToast(0), 2000);
+      let val = setTimeout(() => setToast(0), 5000);
       setTimeOut(val);
     }
-  }, [data]);
-
+  }, [current]);
   useEffect(() => {
     drawProgressbg(scale());
-    if (watchStatus === "0" && time == 0) {
+    if (watchStatus === "0" && beanLimitStatus === "0" && time === 0) {
       setToast(1);
     }
   }, [time]);
-  useEffect(() => {}, []);
 
   const drawProgressbg = (size) => {
     var ctx = Taro.createCanvasContext("animateCanvas");
@@ -59,7 +60,10 @@ export default (props) => {
     ctx.draw();
   };
   return (
-    <View className="canvas_box">
+    <View
+      className="canvas_box"
+      onClick={() => Router({ routerName: "beanReward" })}
+    >
       <View
         className={classNames(
           "canvas_img",
@@ -85,7 +89,13 @@ export default (props) => {
           )}
         >
           <View className="canvas_tag_box"></View>
-          {beanLimitStatus === "1" && ` 看完可捡${beanAmount}卡豆`}
+          {beanLimitStatus === "1"
+            ? ` 看完可捡豆${beanAmount}${
+                couponTitlesJson.length > 0
+                  ? `和${couponTitlesJson[0].couponPrice}元抵扣券`
+                  : ``
+              }`
+            : "今日卡豆领取已达上限"}
         </View>
       ) : null}
     </View>

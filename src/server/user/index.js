@@ -113,3 +113,22 @@ export const listOtherMomentByType = (data, fn) => {
     return fn(res)
   })
 }//获取商家动态
+
+export const listMomentByUserId = (data, fn) => {
+  httpGet({
+    url: '/user/userMoment/listMomentByUserId',
+    data: data
+  }, res => {
+    return fn(res)
+  })
+}//获取他人动态
+
+
+export const getShareInfo = (data, fn) => {
+  httpGet({
+    url: '/user/userInfo/getShareUserInfo',
+    data: data
+  }, res => {
+    return fn(res)
+  })
+}//获取他人动态

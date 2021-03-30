@@ -137,3 +137,14 @@ export const getListGoodsDetail = (data, fn) => {
   }, res => fn(res))
 }
 //橱窗商品详情
+
+
+export const getSpecialGoodsMerchants = (data, fn) => {
+  httpGet({
+    url: '/user/specialGoods/getSpecialGoodsMerchants',
+    data: data
+  }, res => fn(res))
+}
+//集团店铺列表
+
+

@@ -48,7 +48,6 @@ class Index extends Component {
       },
       (res) => {
         const { openId, unionId, userInfo } = res;
-        console.log(res);
         if (userInfo && userInfo.mobile.length >= 11) {
           Taro.setStorageSync("userInfo", userInfo);
           that.props.store.authStore.setUserInfoStore(userInfo);

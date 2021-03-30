@@ -8,28 +8,22 @@ import "./assets/css/app.scss";
 import "./assets/css/color.scss";
 import "./assets/css/font.scss";
 import "./assets/css/background.scss";
-
 const store = {
   ...Store,
 };
-
 class App extends Component {
   constructor() {
     super(...arguments);
   }
   componentDidMount() {
     this.fetchLocation();
+    this.fetchNetwork();
   }
 
   componentDidShow() {
     this.fetchCheckUpdate();
     this.getShareType();
   }
-
-  componentDidHide() {}
-
-  componentDidCatchError() {}
-  componentWillUnmount() {}
   getShareType() {
     const {
       shareUserId,
@@ -99,6 +93,26 @@ class App extends Component {
     Store.locationStore.setLocation(latitude, longitude);
   }
 
+  fetchNetwork() {
+    Taro.onNetworkStatusChange((res) => {
+      const { isConnected, networkType } = res;
+      if (!isConnected) {
+        Taro.showToast({
+          title: "网络信号不稳定,请检查您的网络",
+          duration: 2000,
+          icon:'none'
+        });
+      } else {
+        if (networkType === "2g" || networkType === "3g") {
+          Taro.showToast({
+            title: "当前网络信号差",
+            duration: 2000,
+            icon:'none'
+          });
+        }
+      }
+    });
+  }
   // this.props.children 就是要渲染的页面
   render() {
     return <Provider store={store}>{this.props.children}</Provider>;

@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { ScrollView, Text, View } from "@tarojs/components";
 import Banner from "@/components/banner";
-import { coupons, billboard, shopDetails } from "@/components/publicShopStyle";
+import {
+  goodsCard,
+  billboard,
+  shopDetails,
+} from "@/components/publicShopStyle";
 import MarkPhone from "@/components/payTelephone";
 import { wxapiGet, perimeter } from "@/api/api";
 import { httpGet } from "@/api/newRequest";
@@ -42,17 +46,11 @@ class MerchantDetails extends Component {
       merchantHttpData: {
         merchantId: getCurrentInstance().router.params.merchantId,
       },
-      banner: {
-        bannerType: "merchant",
-        merchantId: getCurrentInstance().router.params.merchantId,
-      },
-      userMerchant: {},
       bannerList: [],
       userMerchantInfo: {},
       userInfo: {
         userId: getCurrentInstance().router.params.shareUserId,
       },
-      shareStatus: getCurrentInstance().router.params.type,
       countStatus: true,
       visible: false,
       specialGoodsList: [],
@@ -90,7 +88,7 @@ class MerchantDetails extends Component {
       });
     }
     const { scene } = getCurrentInstance().router.params;
-    const { merchantHttpData, banner,userInfo } = this.state;
+    const { merchantHttpData, banner, userInfo } = this.state;
     if (scene) {
       getShareParamInfo({ uniqueKey: scene }, (res) => {
         const {
@@ -104,14 +102,11 @@ class MerchantDetails extends Component {
                 ...merchantHttpData,
                 ...param,
               },
-              banner: { ...banner, ...param },
               userInfo: {
                 userId: param.shareUserId,
               },
             },
             (res) => {
-              this.getBannerList();
-              this.getListRecommend();
               this.getMerchantById();
               this.getGoodList();
             }
@@ -119,8 +114,6 @@ class MerchantDetails extends Component {
         }
       });
     } else {
-      this.getBannerList();
-      this.getListRecommend();
       this.getMerchantById();
       this.getGoodList();
     }
@@ -171,40 +164,11 @@ class MerchantDetails extends Component {
     );
   }
 
-  getBannerList() {
-    const { banner } = this.state;
-    httpGet(
-      {
-        data: banner,
-        url: wxapiGet.wechatUserBanner,
-      },
-      (res) => {
-        const { bannerList } = res;
-        this.setState({
-          bannerList,
-        });
-      }
-    );
-  }
-
   //获取商家轮播图
-  getListRecommend() {
-    const { merchantHttpData } = this.state;
-    return httpGet(
-      {
-        data: merchantHttpData,
-        url: wxapiGet.wechatListRecommend,
-      },
-      (res) => {
-        this.setState({
-          userMerchant: res,
-        });
-      }
-    );
-  }
+
   onShareAppMessage() {
     const {
-      userMerchant: { merchantName, merchantCoverImg },
+      userMerchantInfo: { merchantName, coverImg },
       merchantHttpData: { merchantId },
     } = this.state;
     let userInfo = loginStatus() || {};
@@ -212,20 +176,20 @@ class MerchantDetails extends Component {
     if (loginStatus()) {
       return {
         title: merchantName,
-        imageUrl: merchantCoverImg,
+        imageUrl: coverImg,
         path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
       };
     } else {
       return {
         title: merchantName,
-        imageUrl: merchantCoverImg,
+        imageUrl: coverImg,
       };
     }
   }
 
   onShareTimeline() {
     const {
-      userMerchant: { merchantName, merchantCoverImg },
+      userMerchantInfo: { merchantName, coverImg },
       merchantHttpData: { merchantId },
     } = this.state;
     let userInfo = loginStatus() || {};
@@ -233,13 +197,13 @@ class MerchantDetails extends Component {
     if (loginStatus()) {
       return {
         title: merchantName,
-        imageUrl: merchantCoverImg,
+        imageUrl: coverImg,
         path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
       };
     } else {
       return {
         title: merchantName,
-        imageUrl: merchantCoverImg,
+        imageUrl: coverImg,
       };
     }
   }
@@ -270,10 +234,6 @@ class MerchantDetails extends Component {
   //猜你喜欢
   render() {
     const {
-      userMerchant,
-      shareStatus,
-      userMerchant: { merchantCoverImg, merchantName, topCategoryValue },
-      bannerList,
       userMerchantInfo,
       userMerchantInfo: {
         businessHub,
@@ -292,6 +252,8 @@ class MerchantDetails extends Component {
         merchantFollowStatus,
         tag,
         merchantId,
+        headerImg = "",
+        merchantName,
       },
       visible,
       specialGoodsList,
@@ -304,29 +266,28 @@ class MerchantDetails extends Component {
     if (Object.keys(userMerchantInfo).length > 0) {
       return (
         <View className="merchantBox">
-          {shareStatus == "share" ||
-            (userId && (
-              <APPShare
-                {...{
-                  content: "我在哒卡乐发现一家实惠的店铺",
-                  userId: userId,
-                  jumpObj: {
-                    jumpUrl: "shopDetailPage",
-                    id: merchantId,
-                    type: "jumpToPage",
-                    jumpType: "native",
-                    path: "DKLShopDetailViewController",
-                    params: {
-                      shopId: merchantId,
-                    },
+          {userId && (
+            <APPShare
+              {...{
+                content: "我在哒卡乐发现一家实惠的店铺",
+                userId: userId,
+                jumpObj: {
+                  jumpUrl: "shopDetailPage",
+                  id: merchantId,
+                  type: "jumpToPage",
+                  jumpType: "native",
+                  path: "DKLShopDetailViewController",
+                  params: {
+                    shopId: merchantId,
                   },
-                }}
-              ></APPShare>
-            ))}
+                },
+              }}
+            ></APPShare>
+          )}
           <Banner
-            autoplay={bannerList.length > 1 ? true : false}
+            autoplay={headerImg.split(",").length > 1 ? true : false}
             imgStyle
-            data={bannerList}
+            data={headerImg ? headerImg.split(",") : []}
             imgName={"coverImg"}
             style={{ width: "100%", height: Taro.pxTransform(440) }}
             boxStyle={{ width: "100%", height: Taro.pxTransform(440) }}
@@ -464,12 +425,16 @@ class MerchantDetails extends Component {
                 <View className="active_go"></View>
               </View>
               <View className="merchant_newPrice">
-                <Waterfall
-                  list={specialGoodsList}
-                  createDom={shopDetails}
-                  setWidth={335}
-                  style={{ width: Taro.pxTransform(335) }}
-                ></Waterfall>
+                {specialGoodsList.length > 1 ? (
+                  <Waterfall
+                    list={specialGoodsList}
+                    createDom={shopDetails}
+                    setWidth={335}
+                    style={{ width: Taro.pxTransform(335) }}
+                  ></Waterfall>
+                ) : (
+                  goodsCard(specialGoodsList[0])
+                )}
               </View>
             </>
           )}

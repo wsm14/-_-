@@ -1,5 +1,6 @@
 import React from "react";
-import Taro, { getCurrentPages } from "@tarojs/taro";
+import Taro, { getCurrentInstance } from "@tarojs/taro";
+import { Button, Image, ScrollView, View } from "@tarojs/components";
 import VideoView from "./components/videoView";
 import {
   computedClient,
@@ -8,20 +9,22 @@ import {
   saveFollow,
   goBack,
 } from "@/common/utils";
-import { Button, Image, ScrollView, View } from "@tarojs/components";
 import InterVal from "@/components/setTimeCanvas";
 import {
   getUserMomentList,
   saveWatchBean,
   saveMerchantCollection,
   closeMerchantCollection,
+  checkPuzzleBeanLimitStatus,
+  updateUserMomentParam,
+  fetchUserShareCommission,
 } from "@/server/index";
-import { getMomentBarrage, listParentCategory } from "@/server/common";
-import "./index.scss";
-import Barrage from "./components/barrage";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import evens from "@/common/evens";
+import Toast from "@/components/beanToast";
+import Coupon from "@/components/freeCoupon";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -42,8 +45,14 @@ class Index extends React.PureComponent {
       time: null,
       interval: null,
       momentBarrageList: [],
-      toast: false,
+      beanflag: false,
+      couponFlag: false,
+      beanLimitStatus: "1",
+      player: true,
+      configUserLevelInfo: {},
     };
+    this.interReload = null;
+    this.interSwper = null;
   }
 
   onChange(e) {
@@ -54,10 +63,10 @@ class Index extends React.PureComponent {
         current,
         userMomentsInfo: userMomentsList[current],
         time: null,
+        couponFlag: false,
       },
       (res) => {
         interval && this.stopInterval(interval);
-        this.getMomentBarrage();
         this.videoPlayerControl();
         this.initInterval();
         if (current >= this.state.userMomentsList.length - 3 && countStatus) {
@@ -80,49 +89,39 @@ class Index extends React.PureComponent {
       }
     );
   }
-
-  getMomentBarrage() {
-    getMomentBarrage({ size: 25 }, (res) => {
-      const { momentBarrageList = [] } = res;
-      this.setState({
-        momentBarrageList,
-      });
-    });
-  }
-
-  selectList(data = {}) {
-    const { httpData, interval } = this.state;
-    const { val } = data;
-    if (interval) {
-      this.stopInterval(interval);
-    }
-    this.setState(
-      {
-        httpData: { ...httpData, page: 1, browseType: val },
-        current: 0,
-        userMomentsList: [],
-        VideoList: [],
-        circular: false,
-        countStatus: true,
-        time: null,
-      },
-      (res) => {
-        this.getVideoList(() => {
-          if (this.state.userMomentsList.length > 0 && val !== "near") {
-            this.setState(
-              {
-                userMomentsInfo: this.state.userMomentsList[0],
-              },
-              (res) => {
-                this.initInterval();
-              }
-            );
-          }
-        });
+  stopVideoPlayerControl() {
+    const { current, interval, player } = this.state;
+    if (player) {
+      if (interval) {
+        this.stopInterval(interval);
       }
-    );
+      this.setState({
+        player: false,
+      });
+      Taro.createVideoContext(`video${current}`).stop();
+    } else {
+      if (interval) {
+        this.stopInterval(interval);
+      }
+      this.setState({
+        player: true,
+      });
+      this.initInterval();
+      Taro.createVideoContext(`video${current}`).play();
+    }
   }
-
+  onInterSwper(e) {
+    if (!this.interSwper) {
+      this.interSwper = setTimeout(() => {
+        this.onChange(e);
+      }, 200);
+    } else {
+      clearTimeout(this.interSwper);
+      this.interSwper = setTimeout(() => {
+        this.onChange(e);
+      }, 200);
+    }
+  }
   screen(data = {}) {
     const { httpData, interval } = this.state;
     const {
@@ -172,12 +171,83 @@ class Index extends React.PureComponent {
     homeStore.setSelectObj(data);
     this.screen(data);
   }
+  onTransition(e) {
+    const { dy } = e.detail;
+    const { httpData, interval, current } = this.state;
+
+    if (current === 0 && dy < -100) {
+      if (interval) {
+        this.stopInterval(interval);
+      }
+
+      if (this.interReload) {
+        clearTimeout(this.interReload);
+        return (this.interReload = setTimeout(
+          () =>
+            this.setState(
+              {
+                httpData: { ...httpData, page: 1 },
+                current: 0,
+                userMomentsList: [],
+                VideoList: [],
+                circular: false,
+                countStatus: true,
+                time: null,
+              },
+              (res) => {
+                this.getVideoList(() => {
+                  if (this.state.userMomentsList.length > 0) {
+                    this.setState(
+                      {
+                        userMomentsInfo: this.state.userMomentsList[0],
+                      },
+                      (res) => {
+                        this.initInterval();
+                      }
+                    );
+                  }
+                });
+              }
+            ),
+          500
+        ));
+      }
+      return (this.interReload = setTimeout(
+        () =>
+          this.setState(
+            {
+              httpData: { ...httpData, page: 1 },
+              current: 0,
+              userMomentsList: [],
+              VideoList: [],
+              circular: false,
+              countStatus: true,
+              time: null,
+            },
+            (res) => {
+              this.getVideoList(() => {
+                if (this.state.userMomentsList.length > 0) {
+                  this.setState(
+                    {
+                      userMomentsInfo: this.state.userMomentsList[0],
+                    },
+                    (res) => {
+                      this.initInterval();
+                    }
+                  );
+                }
+              });
+            }
+          ),
+        500
+      ));
+    }
+  }
 
   getVideoList(fn) {
     const { httpData, current } = this.state;
     getUserMomentList(httpData, (res) => {
-      let { userMomentsList = [] } = res;
-      console.log(current, this.state.userMomentsList.length, 111);
+      let { userMomentsList = [], beanLimitStatus = "1" } = res;
       if (userMomentsList.length === 0) {
         this.setState({
           countStatus: false,
@@ -187,6 +257,7 @@ class Index extends React.PureComponent {
       this.setState(
         {
           userMomentsList: [...this.state.userMomentsList, ...userMomentsList],
+          beanLimitStatus,
         },
         (res) => {
           fn && fn();
@@ -209,8 +280,9 @@ class Index extends React.PureComponent {
   } //设置定时器领取卡豆
   saveBean() {
     const {
-      userMomentsInfo: { userMomentIdString, beanLimitStatus },
+      userMomentsInfo: { userMomentIdString },
       userMomentsInfo,
+      beanLimitStatus,
     } = this.state;
     if (beanLimitStatus === "1") {
       saveWatchBean(
@@ -218,8 +290,12 @@ class Index extends React.PureComponent {
           momentId: userMomentIdString,
         },
         (res) => {
+          checkPuzzleBeanLimitStatus({}, (res) => {
+            const { beanLimitStatus = "1" } = res;
+            this.setState({ beanLimitStatus });
+          });
           this.setState({
-            toast: true,
+            beanflag: true,
             time: null,
             userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
             userMomentsList: this.state.userMomentsList.map((item) => {
@@ -385,6 +461,7 @@ class Index extends React.PureComponent {
   }
   componentDidShow() {
     const { time } = this.state;
+    this.fetchUserShareCommission();
     if (time === 0 || time) {
       this.initInterval();
     }
@@ -397,7 +474,6 @@ class Index extends React.PureComponent {
     if (list.length === 0) {
       toast("参数异常");
     } else {
-      console.log(index)
       this.setState({
         userMomentsList: list,
         current: index,
@@ -407,15 +483,65 @@ class Index extends React.PureComponent {
           ...selectObj,
         },
       });
-      this.getMomentBarrage();
     }
   }
   componentWillUnmount() {
-    const { homeStore } = this.props.store.homeStore;
+    const { homeStore } = this.props.store;
     homeStore.clearNavitor();
     evens.$emit("updateMomentsList", this.state.userMomentsList);
+    console.log(this.state.userMomentsList);
   }
-
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
+  }
+  onShareAppMessage(res) {
+    const {
+      userMomentsInfo: { frontImage, title, userMomentIdString },
+    } = this.state;
+    updateUserMomentParam(
+      {
+        updateType: "share",
+        id: userMomentIdString,
+      },
+      (res) => {}
+    );
+    let userInfo = loginStatus() || {};
+    if (loginStatus()) {
+      const { userIdString } = userInfo;
+      if (res.from === "button") {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+        };
+      } else {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+        };
+      }
+    } else {
+      if (res.from === "button") {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+        };
+      } else {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+        };
+      }
+    }
+  }
   render() {
     const {
       userMomentsList,
@@ -424,11 +550,13 @@ class Index extends React.PureComponent {
       userMomentsInfo,
       userMomentsInfo: { length = "" },
       time,
-      momentBarrageList,
+      configUserLevelInfo,
       httpData: { browseType },
-      toast,
+      beanflag,
+      couponFlag,
+      beanLimitStatus,
+      player
     } = this.state;
-
     const templateView = () => {
       if (userMomentsList.length > 0) {
         return (
@@ -437,17 +565,19 @@ class Index extends React.PureComponent {
               interval={time}
               length={length}
               data={userMomentsInfo}
+              beanLimitStatus={beanLimitStatus}
             ></InterVal>
             <VideoView
               circular={circular}
               data={userMomentsList}
               current={current}
-              onChange={this.onChange.bind(this)}
+              onChange={this.onInterSwper.bind(this)}
               follow={this.followStatus.bind(this)}
               collection={this.collection.bind(this)}
-            >
-              <Barrage data={momentBarrageList}></Barrage>
-            </VideoView>
+              onTransition={this.onTransition.bind(this)}
+              stop={this.stopVideoPlayerControl.bind(this)}
+              userInfo={configUserLevelInfo}
+            ></VideoView>
           </>
         );
       } else {
@@ -466,29 +596,40 @@ class Index extends React.PureComponent {
     return (
       <View className={classNames("home_box home_black")}>
         <View className="home_wait">
-          <View
-            className="backStyle go_back_icon"
-            style={{ top: Taro.pxTransform(computedClient().top) }}
-            onClick={() => goBack()}
-          ></View>
+          <View onClick={() => goBack()} className="backStyle_box">
+            <View
+              className="backStyle go_back_icon"
+              style={{ top: Taro.pxTransform(computedClient().top) }}
+            ></View>
+          </View>
         </View>
+
         <View className="home_video_box">{templateView()}</View>
-        {toast && (
-          <Toast
-            data={userMomentsInfo}
-            visible={() => {
-              if (couponList.length > 0) {
-                this.setState({
-                  toast: false,
-                  conpouVisible: true,
-                });
-              } else {
-                this.setState({
-                  toast: false,
-                });
-              }
-            }}
-          ></Toast>
+        <Toast
+          data={userMomentsInfo}
+          show={beanflag}
+          visible={() => {
+            this.setState({
+              beanflag: false,
+              couponFlag: true,
+            });
+          }}
+        ></Toast>
+        <Coupon
+          data={userMomentsInfo}
+          show={couponFlag}
+          beanflag={beanflag}
+          visible={() => {
+            this.setState({
+              couponFlag: false,
+            });
+          }}
+        ></Coupon>
+         {!player && (
+          <View
+            onClick={() => this.stopVideoPlayerControl()}
+            className="player_no"
+          ></View>
         )}
       </View>
     );

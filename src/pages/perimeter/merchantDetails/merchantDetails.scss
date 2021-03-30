@@ -9,7 +9,7 @@ page {
 .merchantBox {
   width: 100%;
   color: #333333;
-  padding-bottom: 150px;
+  padding-bottom: 234px;
   background: rgba(255, 255, 255, 1);
   .merchantDetails_shop {
     margin: 0 32px;
@@ -50,7 +50,7 @@ page {
         font-size: 20px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
-        color: #FFFFFF;
+        color: #ffffff;
         line-height: 30px;
         padding: 0 8px;
         margin-right: 12px;
@@ -70,7 +70,7 @@ page {
       .shopImgBox {
         width: 218px;
         height: 180px;
-        background: #D8D8D8;
+        background: #d8d8d8;
         border-radius: 8px;
         margin-right: 16px;
         display: inline-block;
@@ -93,7 +93,8 @@ page {
         width: 48px;
         height: 48px;
         margin-right: 8px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon468.png") no-repeat;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon468.png")
+          no-repeat;
         background-size: 100% 100%;
       }
     }
@@ -130,7 +131,8 @@ page {
           position: absolute;
           right: 0;
           top: 56px;
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon78.png") no-repeat;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon78.png")
+            no-repeat;
           background-size: 100% 100%;
         }
 
@@ -143,7 +145,7 @@ page {
           .merchant_tag_shop {
             line-height: 30px;
             height: 30px;
-            background: #F5F5F5;
+            background: #f5f5f5;
             border-radius: 4px;
             padding: 0 8px;
             font-size: 20px;
@@ -196,7 +198,8 @@ page {
           right: 0;
 
           .merchant_city_icon1 {
-            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon79.png") no-repeat;
+            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon79.png")
+              no-repeat;
             background-size: 100% 100%;
             width: 48px;
             height: 48px;
@@ -211,7 +214,8 @@ page {
           .merchant_city_icon3 {
             width: 48px;
             height: 48px;
-            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon80.png") no-repeat;
+            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon80.png")
+              no-repeat;
             background-size: 100% 100%;
           }
         }
@@ -239,22 +243,25 @@ page {
         margin-right: 12px;
       }
       .active_icon1 {
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon81.png") no-repeat;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon81.png")
+          no-repeat;
         background-size: 100% 100%;
       }
       .active_icon2 {
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon86.png") no-repeat;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon86.png")
+          no-repeat;
         background-size: 100% 100%;
       }
       .active_icon3 {
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon87.png") no-repeat;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon87.png")
+          no-repeat;
         background-size: 100% 100%;
       }
       .active_icon4 {
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon88.png") no-repeat;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon88.png")
+          no-repeat;
         background-size: 100% 100%;
       }
-
     }
     .active_go {
       position: absolute;
@@ -262,10 +269,11 @@ page {
       height: 48px;
       top: 79px;
       right: 1px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon83.png") no-repeat;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon83.png")
+        no-repeat;
       background-size: 100% 100%;
     }
-    .merchant_active_dec{
+    .merchant_active_dec {
       margin-top: 24px;
       height: 28px;
       font-size: 28px;
@@ -276,27 +284,27 @@ page {
       text-align: center;
     }
   }
-  .merchant_newPrice{
+  .merchant_newPrice {
     margin: 0 auto;
   }
-  .merchant_billboard{
+  .merchant_billboard {
     width: 686px;
-    height:300px;
+    height: 300px;
     white-space: nowrap;
     margin: 0 auto;
   }
-  .merchant_layer{
+  .merchant_layer {
     height: 128px;
-    background: #FFFFFF;
-    box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     display: flex;
     align-items: center;
+    border-top: 2px solid #e5e5e5;
   }
-  .merchant_layer_btn{
+  .merchant_layer_btn {
     height: 80px;
     display: flex;
     align-items: center;
@@ -306,58 +314,61 @@ page {
     font-weight: 400;
     color: #999999;
     text-align: center;
-    .merchant_layer_btn1{
+    .merchant_layer_btn1 {
       width: 120px;
-
     }
-    .merchant_layer_btnBox{
+    .merchant_layer_btnBox {
       width: 48px;
       height: 48px;
     }
-    .merchant_layer_btnIcon1{
+    .merchant_layer_btnIcon1 {
       margin-left: 34px;
       margin-top: 6px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/102.png") no-repeat;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/102.png")
+        no-repeat;
       background-size: 100% 100%;
     }
-    .merchant_layer_limit{
+    .merchant_layer_limit {
       width: 2px;
       height: 56px;
-      background: #E5E5E5;
+      background: #e5e5e5;
     }
-    .merchant_layer_btn2{
+    .merchant_layer_btn2 {
       width: 128px;
     }
-    .merchant_layer_btnIcon2{
+    .merchant_layer_btnIcon2 {
       margin-left: 40px;
       margin-top: 6px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/103.png") no-repeat;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/103.png")
+        no-repeat;
       background-size: 100% 100%;
     }
-    .merchant_layer_btnIcon3{
+    .merchant_layer_btnIcon3 {
       margin-left: 40px;
       margin-top: 6px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/104.png") no-repeat;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/104.png")
+        no-repeat;
       background-size: 100% 100%;
     }
-    .merchant_layer_btnIcon4{
+    .merchant_layer_btnIcon4 {
       margin-left: 40px;
       margin-top: 6px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/108.png") no-repeat;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/108.png")
+        no-repeat;
       background-size: 100% 100%;
     }
   }
-  .merchant_shop{
+  .merchant_shop {
     position: absolute;
     top: 24px;
     right: 32px;
     width: 300px;
     height: 80px;
-    background: #07C0C2;
+    background: #07c0c2;
     border-radius: 8px;
     font-size: 32px;
     text-align: center;
     line-height: 80px;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 }

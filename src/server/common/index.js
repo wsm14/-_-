@@ -195,3 +195,37 @@ export const getShareParamInfo = (data = {}, fn) => {
   );
 };
 //获取解密分享码
+
+export const getConfigWindVaneBySize = (data = {}, fn) => {
+  httpGet(
+    {
+      url: "/common/category/scenes/listConfigWindVaneBySize",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取风向标
+
+export const getSpecialGoodsCategory = (data = {}, fn) => {
+  httpGet(
+    {
+      url: "/common/category/listSpecialGoodsCategory",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取解密分享码
+
+export const getShareInfo = (data = {}, fn) => {
+  httpGet(
+    {
+      url: "/common/share/getShareInfo",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取解密分享码
+

@@ -42,7 +42,7 @@ export default ({ data = [] }) => {
                       src={userProfile}
                     />
                   </View>
-                  <View className="home_barrage_font">
+                  <View className="home_barrage_font font_hide">
                     {username + barrageDesc}
                   </View>
                 </View>

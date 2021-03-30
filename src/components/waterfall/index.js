@@ -37,10 +37,10 @@ export default (props) => {
       if (leftNum <= rightNum) {
         left.push({ ...item, momentIndex: index });
         if (item[imgWidth] && item[imgHight] && setWidth) {
-          leftNum += computedHeight(item[imgWidth], item[imgHight], setWidth)/4;
+          leftNum += computedHeight(item[imgWidth], item[imgHight], setWidth);
         } else {
           if (parseInt(imgHight)) {
-            leftNum += (parseInt(imgHight)/4);
+            leftNum += parseInt(imgHight) / 4;
           } else {
             leftNum += 400;
           }
@@ -48,10 +48,10 @@ export default (props) => {
       } else {
         right.push({ ...item, momentIndex: index });
         if (item[imgWidth] && item[imgHight] && setWidth) {
-          rightNum += computedHeight(item[imgWidth], item[imgHight], setWidth)/4;
+          rightNum += computedHeight(item[imgWidth], item[imgHight], setWidth);
         } else {
           if (parseInt(imgHight)) {
-            rightNum += parseInt(imgHight)/4;
+            rightNum += parseInt(imgHight);
           } else {
             rightNum += 400;
           }
@@ -63,13 +63,19 @@ export default (props) => {
   };
   if (list) {
     return (
-      <View style={noMargin ? noMargin : {}} className="page_content">
+      <View
+        style={noMargin ? noMargin : {}}
+        className="page_content animated  fadeIn"
+      >
         <View style={style ? { ...style } : {}} className="page_left">
           {leftList.map((item) => {
             return createDom(item, list, store);
           })}
         </View>
-        <View style={style ? { ...style } : {}} className="page_right">
+        <View
+          style={style ? { ...style } : {}}
+          className="page_right  animated  fadeIn"
+        >
           {rightList.map((item) => {
             return createDom(item, list, store);
           })}
