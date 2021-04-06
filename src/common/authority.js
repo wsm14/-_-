@@ -374,7 +374,7 @@ export const loginBtn = (callback) => {
     Taro.getStorageSync("userInfo").mobile.length === 11 &&
     Taro.getStorageSync("userInfo").token
   ) {
-    callback && callback();
+    callback && callback(Taro.getStorageSync("userInfo"));
   } else {
     navigateTo("/pages/auth/index");
   }

@@ -106,12 +106,12 @@ class Index extends Component {
                     "1"
                   );
                   Taro.reLaunch({
-                    url: "/pages/index/perimeter/index",
+                    url: "/pages/index/lookAround/index",
                   });
                 }}
                 style={backgroundObj(backgroundImg)}
               >
-                <View className="city_content_font1  bold">{citySpell}</View>
+                <View className="city_content_font1 bold">{citySpell}</View>
                 <View className="city_content_font2 bold">{cityName}</View>
               </View>
             );

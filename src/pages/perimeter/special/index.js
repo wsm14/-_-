@@ -59,7 +59,7 @@ class MerchantDetails extends Component {
     );
   }
   // 获取周边特价
-  componentDidShow() {
+  componentDidMount() {
     this.getListSpecialGoods();
   }
 

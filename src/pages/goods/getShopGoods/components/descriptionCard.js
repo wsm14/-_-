@@ -42,7 +42,7 @@ export default (props) => {
           <View className="descriptionCard_discount discount_top">
             <View>卡豆抵扣</View>
             <View className="color1">
-              -{beanFee}(¥ {' '+(beanFee / 100).toFixed(0)})
+              -{beanFee}(¥ {' '+(beanFee / 100).toFixed(2)})
             </View>
           </View>
           {deductFeeObject.length > 0 && (

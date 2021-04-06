@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { View,Text,WebView} from '@tarojs/components'
 import './index.scss'
-import Utils from './../../../utils/utils'
+import {toast} from '@/common/utils'
 class Index extends Component {
   defaultProps = {}
   constructor() {
@@ -12,10 +12,10 @@ class Index extends Component {
     Taro.setClipboardData({
       data: 'https://web-new.dakale.net/product/page/registerDownload/registration.html',
       success: function (res) {
-        Utils.Toast('复制成功请打开浏览器粘贴下载客户端')
+        toast('复制成功请打开浏览器粘贴下载客户端')
       },
       fail: function (res) {
-        Utils.Toast('复制失败')
+        toast('复制失败')
       }
     })
   }

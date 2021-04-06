@@ -1,40 +1,64 @@
 import React, { Component } from "react";
+import Taro, { getCurrentInstance } from "@tarojs/taro";
+import Store from "./model/index";
 import { Provider } from "mobx-react";
 import { authUpdateGeography } from "@/common/authority";
+import { getShareParamInfo } from "@/server/common";
 import "./assets/css/app.scss";
 import "./assets/css/color.scss";
 import "./assets/css/font.scss";
 import "./assets/css/background.scss";
-import Taro from "@tarojs/taro";
-import Store from "./model/index";
-
 const store = {
   ...Store,
 };
-
 class App extends Component {
+  constructor() {
+    super(...arguments);
+  }
   componentDidMount() {
     this.fetchLocation();
+    this.fetchNetwork();
   }
 
   componentDidShow() {
     this.fetchCheckUpdate();
+    this.getShareType();
   }
-
-  componentDidHide() {}
-
-  componentDidCatchError() {}
-  componentWillUnmount() {}
-
+  getShareType() {
+    const {
+      shareUserId,
+      shareUserType,
+      scene,
+    } = getCurrentInstance().router.params;
+    if (scene) {
+      getShareParamInfo({ uniqueKey: scene }, (res) => {
+        const {
+          shareParamInfo: { param },
+        } = res;
+        if (param && JSON.parse(param)) {
+          Store.authStore.setShareType({
+            ...JSON.parse(param),
+          });
+        }
+      });
+    } else if (shareUserId && shareUserType) {
+      Store.authStore.setShareType({
+        shareUserId,
+        shareUserType,
+      });
+    } else {
+      return;
+    }
+  }
   fetchCheckUpdate() {
     // 判断目前微信版本是否支持自动更新
-    if (Taro.canIUse("getUpdateManager")) {
-      const updateManager = Taro.getUpdateManager();
+    if (wx.canIUse("getUpdateManager")) {
+      const updateManager = wx.getUpdateManager();
       updateManager.onCheckForUpdate((res) => {
         //检测是否有新版本
         if (res.hasUpdate) {
           updateManager.onUpdateReady(() => {
-            Taro.showModal({
+            wx.showModal({
               title: "更新提示",
               confirmText: "确定",
               showCancel: false,
@@ -50,7 +74,7 @@ class App extends Component {
         }
       });
     } else {
-      Taro.showModal({
+      wx.showModal({
         title: "提示",
         content:
           "当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。",
@@ -64,11 +88,31 @@ class App extends Component {
 
   fetchUpdataLocation(res) {
     const { latitude, longitude } = res;
-    Taro.setStorageSync('lat',latitude);
-    Taro.setStorageSync('lnt',longitude);
+    Taro.setStorageSync("lat", latitude);
+    Taro.setStorageSync("lnt", longitude);
     Store.locationStore.setLocation(latitude, longitude);
   }
 
+  fetchNetwork() {
+    Taro.onNetworkStatusChange((res) => {
+      const { isConnected, networkType } = res;
+      if (!isConnected) {
+        Taro.showToast({
+          title: "网络信号不稳定,请检查您的网络",
+          duration: 2000,
+          icon:'none'
+        });
+      } else {
+        if (networkType === "2g" || networkType === "3g") {
+          Taro.showToast({
+            title: "当前网络信号差",
+            duration: 2000,
+            icon:'none'
+          });
+        }
+      }
+    });
+  }
   // this.props.children 就是要渲染的页面
   render() {
     return <Provider store={store}>{this.props.children}</Provider>;

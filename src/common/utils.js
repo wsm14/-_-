@@ -15,6 +15,7 @@ import Taro from "@tarojs/taro";
 import { user } from "@/api/api";
 import { httpPost } from "@/api/newRequest";
 import { View } from "@tarojs/components";
+import Router from "./router";
 // import moment from 'moment'
 export const navigateTo = (url, events) => {
   Taro.navigateTo({
@@ -94,14 +95,23 @@ export const computedHeight = function (width, height, newWidth) {
   if (typeof width == "number" && typeof height == "number") {
     scale = width / height;
   }
-  scale = parseInt(width||0) / parseInt(height||0);
-  return parseInt(newWidth / scale);
+  scale = parseInt(width || 0) / parseInt(height || 0);
+  if (parseInt(newWidth / scale) > 340) {
+    return 340;
+  } else if (parseInt(newWidth / scale) < 160) {
+    return 160;
+  } else {
+    return parseInt(newWidth / scale);
+  }
 };
 //计算图片高度
 export const backgroundObj = function (url) {
-  return {
-    background: `url(${url}) no-repeat center/cover`,
-  };
+  if (url) {
+    return {
+      background: `url(${url}) no-repeat center/cover`,
+    };
+  }
+  return {};
 };
 //设置背景图片
 export const backgroundover = function (url) {
@@ -142,12 +152,8 @@ export const filterTime = function (time) {
 export const setPeople = function (num) {
   if (typeof num == "string") {
     if (num.length > 4) {
-      let str = (parseInt(num) / 10000).toString().split(".");
-      if (str.length > 1) {
-        return str[0] + "." + str[1][0] + "万";
-      } else {
-        return str[0] + "万";
-      }
+      let str = (parseInt(num) / 10000).toFixed(1) + "万";
+      return str;
     }
     return num;
   } else {
@@ -253,7 +259,7 @@ export const deleteFall = function (obj, fn) {
   );
 };
 //删除 点赞
-export const setIntive = function (time, fn) {
+export const setIntive = function (time, fn, limit = 1000) {
   let times;
   if (time <= 0) {
     fn(time);
@@ -265,7 +271,7 @@ export const setIntive = function (time, fn) {
     if (time == 0) {
       clearInterval(times);
     }
-  }, 1000));
+  }, limit));
 };
 
 //定时器
@@ -483,7 +489,7 @@ export const objStatus = (obj) => {
 export const filterWeek = (str) => {
   let string = [];
   if (str && str.includes("1,2,3,4,5,6,7")) {
-    return "每天";
+    return `每周${["一", "二", "三", "四", "五", "六", "日"].join("、")}`;
   } else if (str) {
     string = str.split(",");
     string = string.map((item) => {
@@ -561,3 +567,42 @@ export const removeStorage = (key) =>
       toast("缓存清理错误");
     },
   });
+export const computedClient = () => {
+  let client = Taro.getMenuButtonBoundingClientRect();
+  return client;
+};
+
+//tags 排版
+
+export const loginStatus = () => {
+  if (
+    Taro.getStorageSync("userInfo") &&
+    Taro.getStorageSync("userInfo").mobile.length === 11 &&
+    Taro.getStorageSync("userInfo").token
+  ) {
+    return Taro.getStorageSync("userInfo");
+  } else {
+    return false;
+  }
+};
+export const format = (time = "") => {
+  if (new Date().getTime() > new Date(time.replace(/-/g, "/")).getTime()) {
+    return true;
+  }
+  return false;
+};
+export const setBuyRule = (val, day, max) => {
+  switch (val) {
+    case "unlimited":
+      return "每人不限购买数量";
+    case "personLimit":
+      return `每人限购${max}份`;
+    case "dayLimit":
+      return `每人每天限购${day}份`;
+  }
+};
+export const computedPrice = (price, scale) => {
+  let size = (price * (scale / 100)).toFixed(3);
+  return size.substring(0, size.length - 1);
+};
+

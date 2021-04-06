@@ -12,7 +12,6 @@ import Goods from './components/goods'
 import {goodsNullStatus} from '@/components/publicShopStyle'
 import './index.scss'
 import {inject, observer} from "mobx-react";
-
 @inject('store')
 @observer
 class Index extends Component {

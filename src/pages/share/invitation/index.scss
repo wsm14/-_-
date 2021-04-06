@@ -1,0 +1,172 @@
+page {
+  width: 100%;
+  height: 100%;
+  background: #f5f5f5;
+}
+
+.invitation_box {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  line-height: 1;
+  .invitation_content_box {
+    margin: 0px 75px;
+    padding: 100px 40px 40px;
+    background: white;
+    position: relative;
+    .invitation_cover {
+      position: absolute;
+      width: 190px;
+      height: 68px;
+      top: 0;
+      left: 205px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon446.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .invitation_content_title {
+      max-width: 480px;
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .invitation_content_toast {
+      padding-top: 16px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #ef476f;
+    }
+    .invitation_coverImage {
+      width: 520px;
+      height: 300px;
+      background: #d8d8d8;
+      border-radius: 8px;
+      margin: 32px auto 0;
+      position: relative;
+      .invitation_coverLayer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 84px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 0 0 8px 8px;
+        padding: 0 33px;
+      }
+      .invitation_merchant {
+        padding-top: 12px;
+        max-width: 454px;
+        font-size: 28px;
+        font-weight: 600;
+        color: #ffffff;
+      }
+      .invitation_limit {
+        padding-top: 8px;
+        max-width: 454px;
+        font-size: 24px;
+        font-weight: 600;
+        color: #ffffff;
+      }
+    }
+    .invitation_goodsName {
+      max-width: 520px;
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+      margin-top: 24px;
+    }
+    .invitation_desc {
+      width: 520px;
+      font-size: 26px;
+      font-weight: 400;
+      color: #666666;
+      padding-top: 16px;
+    }
+    .invitation_price {
+      padding-top: 24px;
+      vertical-align: text-bottom;
+      .invitation_price_style1 {
+        color: rgba(239, 71, 111, 1);
+        font-size: 24px;
+        font-weight: 600;
+      }
+      .invitation_price_style2 {
+        color: rgba(239, 71, 111, 1);
+        font-size: 40px;
+        font-weight: 600;
+      }
+      .invitation_price_style3 {
+        color: rgba(153, 153, 153, 1);
+        font-size: 28px;
+        text-decoration: line-through;
+      }
+    }
+    .invitation_btnBox {
+      height: 80px;
+      margin: 40px auto 0;
+      .invitation_btnStyle {
+        width: 248px;
+        height: 80px;
+        border-radius: 8px;
+        line-height: 80px;
+        text-align: center;
+        font-size: 32px;
+      }
+      .invitation_btn1 {
+        color: #ef476f;
+        border: 2px solid #ef476f;
+      }
+      .invitation_btn2 {
+        background: #ef476f;
+        color: white;
+      }
+    }
+    .invitation_gl {
+      margin: 40px auto 0;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 600;
+      color: #666666;
+    }
+    .invitation_liner {
+      color: rgba(102, 102, 102, 0.2);
+    }
+    .invitation_descText {
+      margin-top: 16px;
+      font-size: 24px;
+      font-weight: 600;
+      color: rgba(102, 102, 102, 1);
+      line-height: 36px;
+    }
+    .invitation_descText1 {
+      line-height: 36px;
+      margin-top: 10px;
+      font-size: 24px;
+      font-weight: 600;
+      color: rgba(102, 102, 102, 1);
+    }
+
+    .invitation_success_pay {
+      margin: 40px auto 0;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 600;
+      color: #df4267;
+    }
+    .invitation_success_btn {
+      width: 420px;
+      height: 80px;
+      background: #ef476f;
+      border-radius: 8px;
+      line-height: 80px;
+      text-align: center;
+      color: white;
+      font-size: 32px;
+      margin: 24px auto 0;
+    }
+  }
+}

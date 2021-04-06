@@ -7,13 +7,15 @@ const getHeader = {
   'apptype':'user',
   'content-type': 'application/x-www-form-urlencoded',
    'lnt': Taro.getStorageSync('lnt'),
-   'lat': Taro.getStorageSync('lat')
+   'lat': Taro.getStorageSync('lat'),
+   device: "weChat",
 }//get请求头设置
 const PostHeader = {
   'apptype':'user',
   'content-type': 'application/json',
   'lnt': Taro.getStorageSync('lnt'),
   'lat': Taro.getStorageSync('lat'),
+  device: "weChat",
 }
 if(Taro.getStorageSync('lnt') && Taro.getStorageSync('lat')){
   getHeader.lnt = Taro.getStorageSync('lnt')
@@ -27,15 +29,15 @@ const env = process.env.NODE_ENV === 'development' ? 'development' : 'production
 switch (env) {
   case 'development':
     // baseUrl = 'https://devgateway.dakale.net'
-    // baseUrl = 'https://pregateway.dakale.net'
-    baseUrl = 'https://gateway1.dakale.net'
+    baseUrl = 'https://pregateway.dakale.net'
+    // baseUrl = 'https://gateway1.dakale.net'
     break
   case 'test':
     baseUrl = 'https://pregateway.dakale.net'
     break
   case 'production':
     baseUrl = 'https://pregateway.dakale.net'
-    // baseUrl = 'https://gateway1.dakale.net'
+    // baseUrl = 'https://gateway1.dakale.net'  
     break
 }
 function request(obj,type) {

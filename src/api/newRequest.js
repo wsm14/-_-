@@ -66,8 +66,8 @@ const env =
 switch (env) {
   case "development":
     // baseUrl = "https://devgateway.dakale.net";
-    // baseUrl = 'https://pregateway.dakale.net'
-    baseUrl = 'https://gateway1.dakale.net'
+    baseUrl = "https://pregateway.dakale.net";
+    // baseUrl = 'https://gateway1.dakale.net'
     break;
   case "production":
     baseUrl = "https://pregateway.dakale.net";
@@ -79,17 +79,25 @@ switch (env) {
 const httpCondition = {
   header: {
     apptype: "user",
+    device: "weChat",
     "content-type": "application/x-www-form-urlencoded",
   },
-  timeout: 10000,
+  timeout: 60000,
   dataType: "json",
 };
 let requestUrl = [];
+const loadBeadRequest = [
+  "/user/userMoment/listMomentDetailByType",
+  "/common/dictionary/listMomentBarrage",
+  "/user/specialGoods/getPromotionInfo",
+];
 export const httpGet = (obj, fn) => {
   const { header = {} } = obj;
-  Taro.showLoading({
-    title: "加载中",
-  });
+  if (!loadBeadRequest.includes(obj.url)) {
+    Taro.showLoading({
+      title: "加载中",
+    });
+  }
   if (
     Taro.getStorageSync("userInfo") &&
     Taro.getStorageSync("userInfo").mobile.length === 11 &&
@@ -97,44 +105,51 @@ export const httpGet = (obj, fn) => {
   ) {
     obj.data.token = Taro.getStorageSync("userInfo").token;
   }
-  Taro.request({
-    ...httpCondition,
-    header: {
-      ...httpCondition.header,
-      lnt: Taro.getStorageSync("lnt"),
-      lat: Taro.getStorageSync("lat"),
-      "city-code": Taro.getStorageSync("city").cityCode || "3301",
-      ...header,
-    },
-    url: baseUrl + obj.url,
-    data: encrypt(obj.data) || {},
-    method: "get",
-    success: (res) => {
-      Taro.hideLoading();
-      const { data, statusCode } = res;
-      if (statusCode === 200 && res.data.success) {
-        const { content } = data;
-        fn && fn(content);
-      } else {
-        if (statusCode !== 200) {
-          toast("服务路径不存在");
-        } else if (!data.success) {
-          const { resultDesc, resultCode } = data;
-          if (resultOperate[resultCode]) {
-            toast(resultDesc);
-            resultOperate[resultCode].fn();
-            return navigateTo(resultOperate[resultCode].link);
-          }
-          return toast(resultDesc);
+  return new Promise((resolve, reject) => {
+    Taro.request({
+      ...httpCondition,
+      header: {
+        ...httpCondition.header,
+        lnt: Taro.getStorageSync("lnt"),
+        lat: Taro.getStorageSync("lat"),
+        "city-code": Taro.getStorageSync("city").cityCode || "3301",
+        ...header,
+      },
+      url: baseUrl + obj.url,
+      data: encrypt(obj.data) || {},
+      method: "get",
+      success: (res) => {
+        if (!loadBeadRequest.includes(obj.url)) {
+          Taro.hideLoading();
         }
-      }
-    },
-    fail: (res) => {
-      Taro.hideLoading();
-      const { errMsg } = res;
-      toast(filterHttpStatus(errMsg));
-    },
-    complete: () => {},
+        const { data, statusCode } = res;
+        if (statusCode === 200 && res.data.success) {
+          const { content } = data;
+          fn && fn(content);
+          return resolve(content);
+        } else {
+          if (statusCode !== 200) {
+            toast("服务路径不存在");
+          } else if (!data.success) {
+            const { resultDesc, resultCode } = data;
+            if (resultOperate[resultCode]) {
+              toast(resultDesc);
+              resultOperate[resultCode].fn();
+              return navigateTo(resultOperate[resultCode].link);
+            }
+            reject(res.data.content);
+            return toast(resultDesc);
+          }
+        }
+      },
+      fail: (res) => {
+        Taro.hideLoading();
+        const { errMsg } = res;
+        reject(errMsg);
+        toast(filterHttpStatus(errMsg));
+      },
+      complete: () => {},
+    });
   });
 };
 
@@ -170,7 +185,6 @@ export const httpPost = (obj, fn) => {
       method: "post",
       success: (res) => {
         Taro.hideLoading();
-        console.log(res);
         const { data, statusCode } = res;
         if (statusCode === 200 && res.data.success) {
           const { content } = data;

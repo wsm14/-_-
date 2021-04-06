@@ -1,0 +1,106 @@
+.specialOffer_shop {
+  width: 688px;
+  height: 264px;
+  margin: 0 auto 32px;
+  display: flex;
+  position: relative;
+}
+.specialOffer_bottom_btn {
+  width: 120px;
+  height: 52px;
+  background: #ef476f;
+  border-radius: 26px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.specialOffer_shopImg {
+  width: 264px;
+  height: 264px;
+  background: #d8d8d8;
+  border-radius: 8px;
+}
+.specialOffer_desc {
+  margin-left: 24px;
+  height: 264px;
+  .specialOffer_title {
+    width: 380px;
+    height: 80px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 40px;
+    padding-top: 4px;
+  }
+  .specialOffer_userDetails {
+    margin-top: 16px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+    line-height: 30px;
+    .specialOffer_userprofile {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+    .specialOffer_username {
+      margin-left: 8px;
+      max-width: 240px;
+    }
+  }
+
+  .specialOffer_date_price {
+    margin-top: 24px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 32px;
+  }
+  .specialOffer_date_rel {
+    padding-top: 8px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #cccccc;
+    line-height: 20px;
+    text-decoration: line-through;
+  }
+  .specialOffer_price_text {
+    font-size: 20px;
+    vertical-align: text-bottom;
+  }
+  .specialOffer_bean_box {
+    height: 32px;
+    padding: 0px 6px;
+    line-height: 32px;
+    font-size: 22px;
+    font-weight: 400;
+    color: #ef476f;
+    display: inline-block;
+    border-radius: 4px;
+  }
+  .specialOffer_price_text {
+    font-size: 20px;
+    vertical-align: text-bottom;
+  }
+  .specialOffer_share_text {
+    display: inline-block;
+    margin-left: 4px;
+    vertical-align: bottom;
+    font-size: 22px;
+    font-weight: 500;
+    color: #ef476f;
+    line-height: 22px;
+  }
+}
+.specialOffer_bean_border {
+  margin-top: 8px;
+}
