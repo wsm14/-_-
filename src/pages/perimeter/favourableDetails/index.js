@@ -109,6 +109,7 @@ class MerchantDetails extends Component {
         address,
         goodsName,
         cityName,
+        merchantLogo,
       },
     } = this.state;
     const { profile, username } = Taro.getStorageSync("userInfo");
@@ -118,13 +119,13 @@ class MerchantDetails extends Component {
         shareId: specialActivityIdString,
       },
       (res) => {
-        const { body, image, oriPrice, title, realPrice, qcodeUrl } = res;
+        const { body, oriPrice, title, realPrice, qcodeUrl } = res;
         this.setState({
           cavansObj: {
             start: true,
             data: rssConfigData({
               merchantName,
-              time: activityEndTime,
+              time: activityEndTime||'长期有效',
               oldPrice: oriPrice,
               price: realPrice,
               wxCode: qcodeUrl,
@@ -133,7 +134,7 @@ class MerchantDetails extends Component {
               name: goodsName,
               address,
               city: cityName,
-              merchantLogo: image,
+              merchantLogo: merchantLogo,
             }),
           },
         });
@@ -318,6 +319,9 @@ class MerchantDetails extends Component {
     };
     if (Object.keys(specialGoodsInfo).length > 0) {
       if (status !== "0") {
+        {
+          console.log(cavansObj);
+        }
         return (
           <View className="favourable_Details">
             <TaroShareDrawer

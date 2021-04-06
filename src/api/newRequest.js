@@ -66,8 +66,8 @@ const env =
 switch (env) {
   case "development":
     // baseUrl = "https://devgateway.dakale.net";
-    baseUrl = "https://pregateway.dakale.net";
-    // baseUrl = 'https://gateway1.dakale.net'
+    // baseUrl = "https://pregateway.dakale.net";
+    baseUrl = 'https://gateway1.dakale.net'
     break;
   case "production":
     baseUrl = "https://pregateway.dakale.net";
@@ -100,10 +100,12 @@ export const httpGet = (obj, fn) => {
   }
   if (
     Taro.getStorageSync("userInfo") &&
+    Taro.getStorageSync("userInfo").mobile &&
     Taro.getStorageSync("userInfo").mobile.length === 11 &&
     Taro.getStorageSync("userInfo").token
   ) {
     obj.data.token = Taro.getStorageSync("userInfo").token;
+    console.log(Taro.getStorageSync("userInfo").token)
   }
   return new Promise((resolve, reject) => {
     Taro.request({
@@ -161,6 +163,7 @@ export const httpPost = (obj, fn) => {
   });
   if (
     Taro.getStorageSync("userInfo") &&
+    Taro.getStorageSync("userInfo").mobile &&
     Taro.getStorageSync("userInfo").mobile.length === 11 &&
     Taro.getStorageSync("userInfo").token
   ) {

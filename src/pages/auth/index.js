@@ -54,14 +54,15 @@ class Index extends Component {
         } else if (userInfo && userInfo.mobile.length == 0) {
           this.setState({
             openId: openId,
-            unionId: userInfo.unionId || unionId,
+            unionId: unionId,
             btnStatus: 1,
           });
+          Taro.setStorageSync("userInfo", userInfo);
           that.props.store.authStore.setUserInfoStore(userInfo);
         } else {
           this.setState({
             openId: openId,
-            unionId: userInfo.unionId || unionId,
+            unionId: unionId,
           });
         }
       }
@@ -92,7 +93,7 @@ class Index extends Component {
             } else {
               let oldObj = Taro.getStorageSync("userInfo") || {};
               Object.keys(userInfo).forEach((item) => {
-                if (!userInfo[item]) {
+                if (!userInfo[item] || userInfo[item] === "") {
                   delete userInfo[item];
                 }
               });
@@ -128,9 +129,18 @@ class Index extends Component {
         bindTelephone(
           { openId, unionId, encryptedData, iv, ...shareType },
           (res) => {
-            const { userInfo } = res;
-            Taro.setStorageSync("userInfo", userInfo);
-            that.props.store.authStore.setUserInfoStore(userInfo);
+            let { userInfo = {} } = res;
+            let oldObj = Taro.getStorageSync("userInfo") || {};
+            Object.keys(userInfo).forEach((item) => {
+              if (!userInfo[item] || userInfo[item] === "") {
+                console.log(item, userInfo[item]);
+                delete userInfo[item];
+              }
+            });
+            console.log(oldObj, userInfo, 111);
+            let obj = { ...oldObj, ...userInfo };
+            Taro.setStorageSync("userInfo", obj);
+            that.props.store.authStore.setUserInfoStore(obj);
             goBack(() => toast("登录成功"));
           }
         );
