@@ -46,7 +46,6 @@ export const user = {
      updateKol: '/user/kolMoments/updateKolMomentsLikeAmount',
      deleteKolMoments:'/user/kolMoments/deleteKolMomentsLikeAmount',//取消点赞
      getOtherUser:'/user/userInfo/getOtherUserDetail',//获取他人详情
-     getUserDetailInfo: '/user/userInfo/getUserDetailInfo',
      getOtherShare: '/user/kolMoments/listKolMomentByUserId',//获取他人分享
      getUserShare: '/user/userMoment/listMomentByUserId',//获取自己分享
      getUserCollection:'/user/userCollection/listOtherCollectionMomentByUserId',//获取收藏

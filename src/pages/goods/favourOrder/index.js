@@ -17,6 +17,7 @@ import {
 import PayBean from "@/components/stopBean";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
+import ButtonView from "@/components/Button";
 import Router from "@/common/router";
 @inject("store")
 @observer
@@ -337,9 +338,11 @@ class Index extends Component {
               ? this.computedPrice(Number(realPrice) * goodsCount, userBean)
               : "0"}
           </View>
-          <View className="payBtn" onClick={() => this.saveCancel()}>
-            立即支付
-          </View>
+          <ButtonView>
+            <View className="payBtn" onClick={() => this.saveCancel()}>
+              立即支付
+            </View>
+          </ButtonView>
         </View>
         {visible && (
           <PayBean
@@ -348,6 +351,7 @@ class Index extends Component {
                 visible: false,
               })
             }
+            visible={visible}
             canfirm={() => this.saveKolGoodsOrder()}
             content={`是否确认使用${userBean}卡豆支付？`}
             canfirmText="再想想"

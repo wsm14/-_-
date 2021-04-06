@@ -8,6 +8,7 @@ import {
   getLat,
   backgroundObj,
 } from "@/common/utils";
+import ButtonView from "@/components/Button";
 import "./index.scss";
 export const template = (item, configUserLevelInfo) => {
   const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
@@ -67,7 +68,7 @@ export const template = (item, configUserLevelInfo) => {
           {realPrice}
           {shareCommission !== 0 && (
             <View className="specialOffer_share_text">
-              /赚¥  
+              /赚¥
               {((realPrice - merchantPrice) * (shareCommission / 100)).toFixed(
                 2
               )}
@@ -84,7 +85,9 @@ export const template = (item, configUserLevelInfo) => {
           </View>
         </View>
       </View>
-      <View className="specialOffer_bottom_btn">抢购</View>
+      <ButtonView>
+        <View className="specialOffer_bottom_btn">抢购</View>
+      </ButtonView>
     </View>
   );
 };

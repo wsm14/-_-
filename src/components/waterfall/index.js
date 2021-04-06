@@ -50,8 +50,8 @@ export default (props) => {
         if (item[imgWidth] && item[imgHight] && setWidth) {
           rightNum += computedHeight(item[imgWidth], item[imgHight], setWidth);
         } else {
-          if (parseInt(imgHight)) {
-            rightNum += parseInt(imgHight);
+          if (parseInt(imgHight)) { 
+            rightNum += parseInt(imgHight)/4;
           } else {
             rightNum += 400;
           }

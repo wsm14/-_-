@@ -21,6 +21,7 @@ import { fetchUserShareCommission } from "@/server/index";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import Router from "@/common/router";
 import { rssConfigData } from "./components/data";
+import ButtonView from "@/components/Button";
 import classNames from "classnames";
 class MerchantDetails extends Component {
   constructor() {
@@ -224,7 +225,7 @@ class MerchantDetails extends Component {
         activeDays,
         delayDays,
         merchantCount,
-        merchantPrice
+        merchantPrice,
       },
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
       specialGoodsInfo,
@@ -245,57 +246,73 @@ class MerchantDetails extends Component {
     const payBtn = () => {
       if (!format(activityStartTime) && activityTimeRule === "fixed") {
         return (
-          <View className="shopdetails_shop_goshop shopdetails_shop_option">
-            即将开抢
-          </View>
+          <ButtonView>
+            <View className="shopdetails_shop_goshop shopdetails_shop_option">
+              即将开抢
+            </View>
+          </ButtonView>
         );
       } else if (shareCommission !== 0) {
         return (
           <View className="shopdetails_kol_goshop">
-            <View className="shopdetails_kol_btnBox shopdetails_kol_btnColor1">
-              <View
-                className="shopdetails_kol_font1"
-                onClick={() =>
-                  loginBtn(() =>
-                    navigateTo(
-                      `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
+            <ButtonView>
+              <View className="shopdetails_kol_btnBox shopdetails_kol_btnColor1">
+                <View
+                  className="shopdetails_kol_font1"
+                  onClick={() =>
+                    loginBtn(() =>
+                      navigateTo(
+                        `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
+                      )
                     )
-                  )
-                }
+                  }
+                >
+                  自购返
+                </View>
+                <View className="shopdetails_kol_font2">
+                  {" "}
+                  省¥
+                  {(
+                    (realPrice - merchantPrice) *
+                    (shareCommission / 100)
+                  ).toFixed(2)}
+                </View>
+              </View>
+            </ButtonView>
+            <ButtonView>
+              <View
+                className="shopdetails_kol_btnBox shopdetails_kol_btnColor2"
+                onClick={() => loginBtn(() => this.getShareInfo())}
               >
-                自购返
+                <View className="shopdetails_kol_font1">分享赚</View>
+                <View className="shopdetails_kol_font2">
+                  {" "}
+                  赚¥
+                  {(
+                    (realPrice - merchantPrice) *
+                    (shareCommission / 100)
+                  ).toFixed(2)}
+                </View>
               </View>
-              <View className="shopdetails_kol_font2">
-                {" "}
-                省¥{((realPrice-merchantPrice) * (shareCommission / 100)).toFixed(2)}
-              </View>
-            </View>
-            <View
-              className="shopdetails_kol_btnBox shopdetails_kol_btnColor2"
-              onClick={() => loginBtn(() => this.getShareInfo())}
-            >
-              <View className="shopdetails_kol_font1">分享赚</View>
-              <View className="shopdetails_kol_font2">
-                {" "}
-                赚¥{((realPrice-merchantPrice) * (shareCommission / 100)).toFixed(2)}
-              </View>
-            </View>
+            </ButtonView>
           </View>
         );
       } else {
         return (
-          <View
-            className="shopdetails_shop_goshop"
-            onClick={() =>
-              loginBtn(() =>
-                navigateTo(
-                  `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
+          <ButtonView>
+            <View
+              className="shopdetails_shop_goshop"
+              onClick={() =>
+                loginBtn(() =>
+                  navigateTo(
+                    `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
+                  )
                 )
-              )
-            }
-          >
-            立即抢购
-          </View>
+              }
+            >
+              立即抢购
+            </View>
+          </ButtonView>
         );
       }
     };
