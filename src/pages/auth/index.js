@@ -61,7 +61,7 @@ class Index extends Component {
         } else {
           this.setState({
             openId: openId,
-            unionId: unionId,
+            unionId: userInfo.unionId || unionId,
           });
         }
       }
@@ -92,7 +92,6 @@ class Index extends Component {
               Taro.setStorageSync("userInfo", res.userInfo);
               this.setState({
                 btnStatus: 1,
-                unionId: res.userInfo.unionId || unionId,
                 visible: true,
               });
             }
