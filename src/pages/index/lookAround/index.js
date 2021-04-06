@@ -364,16 +364,21 @@ class Index extends Component {
             boxStyle={bannerContentStyle}
             showNear
           ></Banner>
-          <HotSpecal
-            linkTo={this.saveRouter.bind(this)}
-            userInfo={configUserLevelInfo}
-            data={hotList}
-          ></HotSpecal>
-          <DateSpecal
-            userInfo={configUserLevelInfo}
-            data={dateList}
-            linkTo={this.saveRouter.bind(this)}
-          ></DateSpecal>
+          {hotList.length > 0 && (
+            <HotSpecal
+              linkTo={this.saveRouter.bind(this)}
+              userInfo={configUserLevelInfo}
+              data={hotList}
+            ></HotSpecal>
+          )}
+          {dateList.length > 0 && (
+            <DateSpecal
+              userInfo={configUserLevelInfo}
+              data={dateList}
+              linkTo={this.saveRouter.bind(this)}
+            ></DateSpecal>
+          )}
+
           <View className="lookAround_category_linder"></View>
           <View
             style={
@@ -419,7 +424,6 @@ class Index extends Component {
               })}
             </ScrollView>
           </View>
-
           <SelectSpecal
             userInfo={configUserLevelInfo}
             data={kolGoodsList}

@@ -15,11 +15,15 @@ export const rssConfigData = (data = {}) => {
     merchantLogo,
     tag = "https://wechat-config.dakale.net/miniprogram/image/icon496.png",
   } = data;
+
   if (
     !userProfile.includes("resource-new.dakale.net") ||
     !userProfile.includes("wechat-config.dakale.net")
   ) {
     userProfile = "https://resource-new.dakale.net/common/default_profile.png";
+  }
+  if (time && time === ""){
+     time =  '长期有效'
   }
   const priceLength = price.toString().length * 35.18552780151367;
   return {
