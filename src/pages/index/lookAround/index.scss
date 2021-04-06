@@ -356,7 +356,6 @@ page {
   }
   .lookAround_bean_box {
     height: 32px;
-
     align-items: center;
     justify-content: center;
     padding: 0px 6px;
@@ -365,6 +364,7 @@ page {
     color: #ef476f;
     display: flex;
     box-sizing: border-box;
+    border-radius: 4px;
   }
   .lookAround_active_scroll {
     width: 688px;

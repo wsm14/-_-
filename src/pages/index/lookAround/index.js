@@ -169,7 +169,7 @@ class Index extends Component {
       });
     } else {
       this.setState({
-        left: parseInt((scrollLeft / box) * 100) - 35,
+        left: parseInt((scrollLeft / box) * 100) - 32,
       });
     }
   };
@@ -316,6 +316,7 @@ class Index extends Component {
             boxStyle={bannerStyle}
             showNear
           ></Banner>
+
           <ScrollView
             onScroll={this.setSlider.bind(this)}
             className="lookAround_category_scroll"

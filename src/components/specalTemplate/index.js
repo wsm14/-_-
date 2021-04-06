@@ -81,7 +81,7 @@ export const template = (item, configUserLevelInfo) => {
             className="specialOffer_bean_box"
             style={{ border: "1px solid #ef476f" }}
           >
-            卡豆可抵¥ {(realPrice * (payBeanCommission / 100)).toFixed(2)}
+            卡豆可抵 ¥{(realPrice * (payBeanCommission / 100)).toFixed(2)}
           </View>
         </View>
       </View>
