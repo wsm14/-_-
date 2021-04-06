@@ -35,6 +35,12 @@ export default (props) => {
         <View className="null_margin">{title || "还没有任何打卡足迹哦"}</View>
       </View>
     ),
+    4: (
+      <View className="null_box">
+        <View className="null_img5"></View>
+        <View className="null_margin">{title || "还没有任何打卡足迹哦"}</View>
+      </View>
+    ),
   };
   if (type || type === 0) {
     return template[type];

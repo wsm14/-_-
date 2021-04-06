@@ -93,7 +93,8 @@ export default {
     {
       root: "pages/perimeter/",
       pages: [
-        "specialOffer/index", //特惠内层列表
+        "benchmark/index", //逛逛风向标列表
+        "specialOffer/index", //逛逛内层列表
         "groupList/index", //特惠集团搜索
         "merchantVideo/index", //商家主页视频
         "nearVideo/index", //附近主页视频

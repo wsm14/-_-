@@ -63,21 +63,24 @@ export const template = (item, configUserLevelInfo) => {
         </View>
         <View className="specialOffer_date_price">
           {" "}
-          <Text className="specialOffer_price_text">¥</Text>
+          <Text className="specialOffer_price_text">¥ </Text>
           {realPrice}
           {shareCommission !== 0 && (
             <View className="specialOffer_share_text">
-              /赚¥
+              /赚¥  
               {((realPrice - merchantPrice) * (shareCommission / 100)).toFixed(
                 2
               )}
             </View>
           )}
         </View>
-        <View className="specialOffer_date_rel">¥{oriPrice}</View>
+        <View className="specialOffer_date_rel">¥ {oriPrice}</View>
         <View className="specialOffer_bean_border">
-          <View className="specialOffer_bean_box">
-            卡豆可抵¥{(realPrice * (payBeanCommission / 100)).toFixed(2)}
+          <View
+            className="specialOffer_bean_box"
+            style={{ border: "1px solid #ef476f" }}
+          >
+            卡豆可抵¥ {(realPrice * (payBeanCommission / 100)).toFixed(2)}
           </View>
         </View>
       </View>

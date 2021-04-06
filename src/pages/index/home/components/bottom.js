@@ -116,7 +116,7 @@ export default (props) => {
               <Text className={"font28 color3 bold"}>{promotionBuyPrice} </Text>
             </View>
             <View className="home_active_price">
-              <View className="home_active_tags">
+              <View className="home_active_tags" style={{  border: '1px solid #ffeba5'}}>
                 卡豆可抵 ￥{computedPrice(promotionPrice, payBeanCommission)}
               </View>
             </View>

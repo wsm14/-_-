@@ -6,9 +6,8 @@ import { template } from "@/components/specalTemplate";
 import "./../index.scss";
 import Router from "@/common/router";
 export default ({ data = [], userInfo = {}, linkTo }) => {
+  const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
   const memo = useMemo(() => {
-    const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
-
     // const template = (item) => {
     //   const {
     //     goodsId,
@@ -54,11 +53,11 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
     //         <View className="lookAround_date_title font_hide">{goodsName}</View>
     //         <View className="lookAround_date_price">
     //           {" "}
-    //           <Text className="lookAround_price_text">¥</Text>
+    //           <Text className="lookAround_price_text">¥ </Text>
     //           {realPrice}
     //           {shareCommission !== 0 && (
     //             <View className="lookAround_share_text">
-    //               /赚¥
+    //               /赚¥ 
     //               {(
     //                 (realPrice - merchantPrice) *
     //                 (shareCommission / 100)
@@ -66,10 +65,10 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
     //             </View>
     //           )}
     //         </View>
-    //         <View className="lookAround_date_rel">¥{oriPrice}</View>
+    //         <View className="lookAround_date_rel">¥ {oriPrice}</View>
     //         <View className="lookAround_bean_border">
     //           <View className="lookAround_bean_box">
-    //             卡豆可抵¥{(realPrice * (payBeanCommission / 100)).toFixed(2)}
+    //             卡豆可抵¥ {(realPrice * (payBeanCommission / 100)).toFixed(2)}
     //           </View>
     //         </View>
     //       </View>
@@ -103,6 +102,6 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
         </View>
       </View>
     );
-  }, [data, userInfo]);
+  }, [data, payBeanCommission,shareCommission]);
   return memo;
 };

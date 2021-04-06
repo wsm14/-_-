@@ -39,11 +39,11 @@ class Index extends Component {
     this.fetchUserShareCommission();
     if (type === "hot") {
       Taro.setNavigationBarTitle({
-        title: "热销特惠 ",
+        title: "限时抢购 ",
       });
     } else {
       Taro.setNavigationBarTitle({
-        title: "每日特惠 ",
+        title: "爆品福利 ",
       });
     }
     this.setState(

@@ -45,7 +45,6 @@ class Index extends Component {
         categoryIds: "",
       },
       configUserLevelInfo: {},
-
       hotList: [],
       dateList: [],
       kolGoodsList: [],
@@ -113,16 +112,22 @@ class Index extends Component {
     const {
       detail: { scrollLeft, scrollWidth },
     } = val;
+    console.log(val);
     let box = scrollWidth - 335;
     if (parseInt((scrollLeft / box) * 100) < 50) {
       this.setState({
         left: 0,
       });
       return;
+    } else if (box === scrollLeft || scrollLeft > box) {
+      this.setState({
+        left: 65,
+      });
+    } else {
+      this.setState({
+        left: parseInt((scrollLeft / box) * 100) - 35,
+      });
     }
-    this.setState({
-      left: parseInt((scrollLeft / box) * 100) - 50,
-    });
   };
 
   getSpecialGoodsCategory() {
@@ -131,10 +136,18 @@ class Index extends Component {
       if (categoryList.length > 0) {
         this.setState(
           {
-            categoryList,
+            categoryList: [
+              {
+                categoryIdString: "",
+                categoryIds: "",
+                categoryName: "周边特惠",
+                showCopy: "周边特惠",
+                subtitle: "猜你喜欢",
+              },
+              ...categoryList,
+            ],
             specialHttp: {
               ...this.state.specialHttp,
-              categoryIds: categoryList[0].categoryIdString,
             },
           },
           (res) => {
@@ -203,6 +216,7 @@ class Index extends Component {
       configUserLevelInfo,
       hotList,
       categoryList = [],
+      dateList = [],
       kolGoodsList = [],
       flagDom,
       specialHttp: { categoryIds },
@@ -263,9 +277,20 @@ class Index extends Component {
             scrollX
           >
             {configWindVaneList.map((item) => {
-              const { name, image, bubbleFlag, bubbleContent } = item;
+              const { name, image, bubbleFlag, bubbleContent, scenesId } = item;
               return (
-                <View className="lookAround_category_view animated  fadeIn">
+                <View
+                  className="lookAround_category_view animated  fadeIn"
+                  onClick={() =>
+                    Router({
+                      routerName: "benchmark",
+                      args: {
+                        scenesId,
+                        name,
+                      },
+                    })
+                  }
+                >
                   <View
                     className="lookAround_category_image  dakale_nullImage"
                     style={backgroundObj(image)}
@@ -300,7 +325,7 @@ class Index extends Component {
           ></HotSpecal>
           <DateSpecal
             userInfo={configUserLevelInfo}
-            data={hotList}
+            data={dateList}
             linkTo={this.saveRouter.bind(this)}
           ></DateSpecal>
           <View className="lookAround_category_linder"></View>

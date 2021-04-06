@@ -33,8 +33,10 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
     wraparound: "/pages/coupon/wraparound/index", //券包
     //券包
+
+    benchmark: "/pages/perimeter/benchmark/index",//逛逛风向标列表
     groupList: "/pages/perimeter/groupList/index", //集团列表
-    specialOffer: "/pages/perimeter/specialOffer/index", //特惠内层列表
+    specialOffer: "/pages/perimeter/specialOffer/index", //逛逛内层列表
     beanReward: "/pages/perimeter/beanReward/index", //卡豆明细
     merchantVideo: "/pages/perimeter/merchantVideo/index", //商家视频
     nearVideo: "/pages/perimeter/nearVideo/index", //附近视频

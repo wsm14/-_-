@@ -89,44 +89,45 @@ page {
       width: 670px;
       white-space: nowrap;
       overflow: hidden;
-      margin: 0 auto;
-    }
-    .lookAround_category_view {
-      padding-top: 20px;
-      width: 96px;
-      display: inline-block;
-      margin-right: 48px;
-      position: relative;
-      .lookAround_category_image {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto;
-      }
-      .lookAround_category_font {
+      margin: 24px auto 0;
+      .lookAround_category_view {
+        padding-top: 20px;
         width: 96px;
-        text-align: center;
-        margin-top: 12px;
-        font-size: 24px;
-        font-weight: 600;
-        color: #333333;
-        line-height: 24px;
+        display: inline-block;
+        margin-right: 48px;
+        position: relative;
+        .lookAround_category_image {
+          width: 80px;
+          height: 80px;
+          margin: 0 auto;
+        }
+        .lookAround_category_font {
+          width: 96px;
+          text-align: center;
+          margin-top: 12px;
+          font-size: 24px;
+          font-weight: 600;
+          color: #333333;
+          line-height: 24px;
+        }
+        .lookAround_category_bubble {
+          position: absolute;
+          top: 20px;
+          right: -8px;
+          background: #ef476f;
+          border-radius: 15px;
+          font-size: 20px;
+          font-weight: 400;
+          color: #ffffff;
+          padding: 0px 8px;
+          line-height: 30px;
+        }
       }
-      .lookAround_category_bubble {
-        position: absolute;
-        top: 20px;
-        right: -8px;
-        background: #ef476f;
-        border-radius: 15px;
-        font-size: 20px;
-        font-weight: 400;
-        color: #ffffff;
-        padding: 0px 8px;
-        line-height: 30px;
+      .lookAround_category_view:last-child {
+        margin-right: 0;
       }
     }
-    .lookAround_category_view :last-child {
-      margin-right: 0;
-    }
+
     .lookAround_category_liner {
       width: 48px;
       height: 6px;
@@ -317,8 +318,8 @@ page {
     }
 
     .lookAround_bean_border {
-      padding-top: 8px;
-      display: flex;
+      margin-top: 8px;
+      display: inline-block;
     }
   }
   .lookAround_active_limit {
@@ -351,17 +352,19 @@ page {
   }
   .lookAround_price_text {
     font-size: 20px;
-    vertical-align: text-bottom;
+  line-height: 22px;
   }
   .lookAround_bean_box {
     height: 32px;
-    border: 1px solid #ef476f;
+
+    align-items: center;
+    justify-content: center;
     padding: 0px 6px;
-    line-height: 32px;
     font-size: 22px;
     font-weight: 400;
     color: #ef476f;
-    display: inline-block;
+    display: flex;
+    box-sizing: border-box;
   }
   .lookAround_active_scroll {
     width: 688px;
@@ -370,8 +373,9 @@ page {
     overflow: hidden;
   }
   .lookAround_selectSpecal_box {
-    background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
-    background-size: 100% 100%;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon520.png")
+      no-repeat top #f5f5f5;
+    background-size: 100% 462px;
     min-height: 1190px;
     .lookAround_selectSpecal {
       width: 335px;
@@ -398,7 +402,7 @@ page {
         font-weight: 400;
         color: #333333;
         line-height: 44px;
-        font-weight: 600;
+        font-weight: 400;
         color: #333333;
       }
       .lookAround_bean_relbox {
@@ -430,9 +434,10 @@ page {
           font-size: 22px;
           font-weight: 600;
           color: #ffffff;
-          margin-left: -1px;
+          margin-left: -2px;
           display: flex;
           align-items: center;
+          box-sizing: border-box;
         }
       }
       .lookAround_bean_box {
@@ -440,11 +445,12 @@ page {
         display: flex;
         align-items: center;
         margin-top: 24px;
+        border-radius: 4px;
       }
     }
     .lookAround_pay_price {
       font-size: 32px;
-      font-weight: 500;
+      font-weight: 600;
       color: #333333;
       line-height: 32px;
       margin-top: 5px;
@@ -551,7 +557,7 @@ page {
     margin-left: 4px;
     vertical-align: bottom;
     font-size: 22px;
-    font-weight: 500;
+    font-weight: 600;
     color: #ef476f;
     line-height: 22px;
   }
@@ -571,4 +577,5 @@ page {
   font-weight: 400;
   color: #333333;
   line-height: 42px;
+  margin-top: 12px;
 }

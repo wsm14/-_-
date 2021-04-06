@@ -65,8 +65,8 @@ const env =
 
 switch (env) {
   case "development":
-    baseUrl = "https://devgateway.dakale.net";
-    // baseUrl = 'https://pregateway.dakale.net'
+    // baseUrl = "https://devgateway.dakale.net";
+    baseUrl = 'https://pregateway.dakale.net'
     // baseUrl = 'https://gateway1.dakale.net'
     break;
   case "production":
@@ -82,14 +82,14 @@ const httpCondition = {
     device: "weChat",
     "content-type": "application/x-www-form-urlencoded",
   },
-  timeout: 10000,
+  timeout: 60000,
   dataType: "json",
 };
 let requestUrl = [];
 const loadBeadRequest = [
   "/user/userMoment/listMomentDetailByType",
   "/common/dictionary/listMomentBarrage",
-  "/user/specialGoods/getPromotionInfo"
+  "/user/specialGoods/getPromotionInfo",
 ];
 export const httpGet = (obj, fn) => {
   const { header = {} } = obj;
@@ -179,7 +179,7 @@ export const httpPost = (obj, fn) => {
       data: encrypt(obj.data) || {},
       method: "post",
       success: (res) => {
-        console.log(res);
+        Taro.hideLoading();
         const { data, statusCode } = res;
         if (statusCode === 200 && res.data.success) {
           const { content } = data;
@@ -201,12 +201,12 @@ export const httpPost = (obj, fn) => {
         }
       },
       fail: (res) => {
+        Taro.hideLoading();
         const { errMsg } = res;
         toast(filterHttpStatus(errMsg));
       },
       complete: () => {
         requestUrl = requestUrl.filter((item) => {
-          Taro.hideLoading();
           return item !== obj.url;
         });
       },

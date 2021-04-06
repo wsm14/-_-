@@ -25,7 +25,6 @@ class Index extends Component {
   }
 
   componentDidMount() {
-
     authWxLogin(this.getOpenId.bind(this));
   }
 

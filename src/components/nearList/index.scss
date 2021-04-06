@@ -73,6 +73,7 @@
       font-weight: 600;
       color: #ef476f;
       margin-right: 8px;
+      margin-bottom: 4rpx;
     }
     .nearList_dakale_bean::before {
       content:'';
@@ -97,6 +98,7 @@
         no-repeat;
       background-size: 100% 100%;
       display: inline-block;
+      margin-bottom: 4rpx;
     }
     .nearList_dakale_noCoupon {
       padding: 0px 10px;
@@ -110,6 +112,7 @@
         no-repeat;
       background-size: 100% 100%;
       display: inline-block;
+      margin-bottom: 4rpx;
     }
     .nearList_dakale_active {
       height: 32px;
@@ -129,5 +132,6 @@
     margin-right: 8px;
     display: inline-block;
     vertical-align: middle;
+    margin-bottom: 4rpx;
   }
 }

@@ -14,7 +14,7 @@ import {
   filterStrList,
   filterWeek,
 } from "@/common/utils";
-import MakePhone from "@/components/payTelephone";
+import PayBean from "@/components/stopBean";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import Router from "@/common/router";
@@ -110,6 +110,9 @@ class Index extends Component {
       },
       (res) => {
         const { orderSn, status, orderType } = res;
+        this.setState({
+          visible: false,
+        });
         if (status === "1") {
           return redirectTo(
             `/pages/goods/paySuccess/index?orderSn=${orderSn}&orderType=${orderType}`
@@ -121,6 +124,20 @@ class Index extends Component {
         }
       }
     );
+  }
+
+  saveCancel() {
+    const {
+      specialGoodsInfo: { userBean },
+      useBeanStatus,
+    } = this.state;
+    if (userBean > 0 && useBeanStatus === "1") {
+      this.setState({
+        visible: true,
+      });
+    } else {
+      this.saveKolGoodsOrder();
+    }
   }
 
   useBean() {
@@ -296,34 +313,6 @@ class Index extends Component {
             </View>
           </View>
         </View>
-        {/* <View className="order_shop_time">
-            使用有效期:
-            <View
-              style={{
-                color: "rgba(239, 71, 111, 1)",
-                marginTop: Taro.pxTransform(20),
-              }}
-            >
-              
-            </View>
-            {useTime && (
-              <View className="order_shop_after">
-                到店核销时段：
-                <View
-                  style={{
-                    color: "rgba(239, 71, 111, 1)",
-                    marginTop: Taro.pxTransform(20),
-                  }}
-                >
-                  {filterWeek(useWeek)}
-                  {"  " + useTime}
-                </View>
-              </View>
-            )}
-          </View> */}
-        {/* <View className="order_shopDetails_active">
-              {filterActive([needOrder, allowExpireRefund, allowRefund])}
-            </View> */}
         <View className="order_details_sumbit">
           <View className="order_rmb">
             实付：
@@ -348,10 +337,23 @@ class Index extends Component {
               ? this.computedPrice(Number(realPrice) * goodsCount, userBean)
               : "0"}
           </View>
-          <View className="payBtn" onClick={() => this.saveKolGoodsOrder()}>
+          <View className="payBtn" onClick={() => this.saveCancel()}>
             立即支付
           </View>
         </View>
+        {visible && (
+          <PayBean
+            cancel={() =>
+              this.setState({
+                visible: false,
+              })
+            }
+            canfirm={() => this.saveKolGoodsOrder()}
+            content={`是否确认使用${userBean}卡豆支付？`}
+            canfirmText="再想想"
+            cancelText="确定"
+          ></PayBean>
+        )}
       </View>
     );
   }

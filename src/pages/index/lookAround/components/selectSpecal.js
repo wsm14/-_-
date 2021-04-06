@@ -48,21 +48,21 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
             <View className="lookAround_title  font_noHide">{goodsName}</View>
             <View className="lookAround_bean_relbox">
               <View className="lookAround_bean_left">
-                卡豆可抵¥{(realPrice * (payBeanCommission / 100)).toFixed(2)}
+                卡豆可抵 ¥{(realPrice * (payBeanCommission / 100)).toFixed(2)}
               </View>
               {shareCommission !== 0 && (
                 <View className="lookAround_bean_right">
-                  赚¥{((realPrice-merchantPrice) * (shareCommission / 100)).toFixed(2)}
+                  赚¥ {((realPrice-merchantPrice) * (shareCommission / 100)).toFixed(2)}
                 </View>
               )}
             </View>
-            <View className="lookAround_pay_price">
-              <Text className="lookAround_price_text">¥</Text>
+            <View className="lookAround_pay_price bold">
+              <Text className="lookAround_price_text">¥ </Text>
               {realPrice}
             </View>
 
             <View className="lookAround_pay_bottom">
-              <View className="lookAround_bottom_left">¥{oriPrice}</View>
+              <View className="lookAround_bottom_left">¥ {oriPrice}</View>
               <View className="lookAround_bottom_right">热卖中</View>
             </View>
           </View>
