@@ -85,11 +85,19 @@ class Index extends Component {
           { avatarUrl, gender, nickName, encryptedData, iv, openId, unionId },
           (res) => {
             const { mobile } = res.userInfo;
+            const { userInfo = {} } = res;
             if (mobile && mobile.length === 11) {
               Taro.setStorageSync("userInfo", res.userInfo);
               return goBack(() => toast("登录成功"));
             } else {
-              Taro.setStorageSync("userInfo", res.userInfo);
+              let oldObj = Taro.getStorageSync("userInfo") || {};
+              Object.keys(userInfo).forEach((item) => {
+                if (!userInfo[item]) {
+                  delete userInfo[item];
+                }
+              });
+              let obj = { ...oldObj, ...userInfo };
+              Taro.setStorageSync("userInfo", obj);
               this.setState({
                 btnStatus: 1,
                 visible: true,
