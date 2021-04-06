@@ -6,17 +6,21 @@ import HotSpecal from "./components/hotSpecal";
 import DateSpecal from "./components/dateSpecal";
 import SelectSpecal from "./components/selectSpecal";
 import Banner from "@/components/banner";
-import { backgroundObj, toast, getDom } from "@/common/utils";
+import { backgroundObj, toast, getDom, getLat, getLnt } from "@/common/utils";
 import {
   getBanner,
   getConfigWindVaneBySize,
   getSpecialGoodsCategory,
+  getAddress,
 } from "@/server/common";
+import { mapTx } from "@/common/authority";
 import classNames from "classnames";
 import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
 import "./index.scss";
 import { inject, observer } from "mobx-react";
 import Router from "@/common/router";
+import TabCity from "./components/tabCity";
+import ToastCity from "./components/toastCity";
 @inject("store")
 @observer
 class Index extends Component {
@@ -50,11 +54,13 @@ class Index extends Component {
       kolGoodsList: [],
       categoryList: [],
       flagDom: false,
+      result: {},
     };
   }
 
   componentDidMount() {
     const { hotHttp, dateHttp } = this.state;
+    this.setMap();
     this.topBanner();
     this.getConfigWindVaneBySize();
     this.contentBanner();
@@ -65,7 +71,45 @@ class Index extends Component {
   componentDidShow() {
     this.fetchUserShareCommission();
   }
-
+  setMap() {
+    const latitude = getLat();
+    const longitude = getLnt();
+    console.log(latitude, longitude);
+    if (latitude && longitude)
+      this.setState(
+        {
+          lnt: longitude,
+          lat: latitude,
+        },
+        (res) => {
+          getAddress(
+            {
+              location: `${latitude},${longitude}`,
+              key: mapTx,
+            },
+            (res) => {
+              const { message, result } = res;
+              if (message === "query ok") {
+                const {
+                  address_component: { city },
+                } = result;
+                if (city !== "杭州市") {
+                  this.setState({
+                    result,
+                  });
+                } else {
+                  this.setState({
+                    result,
+                  });
+                }
+              } else {
+                toast(message);
+              }
+            }
+          );
+        }
+      );
+  }
   getshopList(data, key = "kolGoodsList") {
     fetchSpecialGoods(data, (res) => {
       const { specialGoodsList = [] } = res;
@@ -220,6 +264,7 @@ class Index extends Component {
       kolGoodsList = [],
       flagDom,
       specialHttp: { categoryIds },
+      result = {},
     } = this.state;
     const { cityName, cityCode } = this.props.store.locationStore;
     const bannerStyle = {
@@ -422,6 +467,8 @@ class Index extends Component {
             </ScrollView>
           </View>
         }
+        <TabCity store={this.props.store} data={result}></TabCity>
+        <ToastCity store={this.props.store} data={result}></ToastCity>
       </View>
     );
   }
