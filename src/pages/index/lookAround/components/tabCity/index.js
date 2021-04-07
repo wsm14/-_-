@@ -44,7 +44,7 @@ const tabCity = (props) => {
         if (
           ((!cityData && obj.cityCode !== "3301") ||
             (cityData.cityCode !== obj.cityCode && cityData)) &&
-          cityData.type !== "1"
+            cityData.type !== "1"
         ) {
           setCity({
             cityCode: obj.cityCode,

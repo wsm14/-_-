@@ -105,7 +105,6 @@ export const httpGet = (obj, fn) => {
     Taro.getStorageSync("userInfo").token
   ) {
     obj.data.token = Taro.getStorageSync("userInfo").token;
-    console.log(Taro.getStorageSync("userInfo").token)
   }
   return new Promise((resolve, reject) => {
     Taro.request({

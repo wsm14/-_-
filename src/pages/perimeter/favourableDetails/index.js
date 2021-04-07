@@ -45,11 +45,11 @@ class MerchantDetails extends Component {
     };
   }
   componentWillMount() {
-    const { scene } = getCurrentInstance().router.params;
-    const { httpData } = this.state;
+    let { scene } = getCurrentInstance().router.params;
+    let { httpData } = this.state;
     if (scene) {
       getShareParamInfo({ uniqueKey: scene }, (res) => {
-        const {
+        let {
           shareParamInfo: { param },
         } = res;
         if (param && JSON.parse(param)) {
