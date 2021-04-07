@@ -128,7 +128,6 @@ class Index extends React.PureComponent {
         couponFlag: false,
       },
       (res) => {
-        interval && this.stopInterval(interval);
         this.videoPlayerControl();
         this.initInterval();
         if (current >= this.state.userMomentsList.length - 3 && countStatus) {
@@ -321,8 +320,9 @@ class Index extends React.PureComponent {
   }
   //领取卡豆
   initInterval() {
-    const { userMomentsInfo } = this.state;
+    const { userMomentsInfo, interval } = this.state;
     const { watchStatus, length } = userMomentsInfo;
+    interval && clearInterval(interval);
     if ((this.state.time || this.state.time === 0) && watchStatus === "0") {
       this.setState({
         interval: setIntive(this.state.time, this.getBean.bind(this)),

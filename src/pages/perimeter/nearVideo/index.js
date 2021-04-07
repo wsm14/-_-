@@ -56,17 +56,22 @@ class Index extends React.PureComponent {
   }
 
   onChange(e) {
-    const { countStatus, httpData, userMomentsList, interval } = this.state;
-    const { current } = e.detail;
+    const {
+      countStatus,
+      httpData,
+      userMomentsList,
+      interval,
+    } = this.state;
+    let { current } = e.detail;
     this.setState(
       {
+        player: true,
         current,
         userMomentsInfo: userMomentsList[current],
         time: null,
         couponFlag: false,
       },
       (res) => {
-        interval && this.stopInterval(interval);
         this.videoPlayerControl();
         this.initInterval();
         if (current >= this.state.userMomentsList.length - 3 && countStatus) {
@@ -121,55 +126,6 @@ class Index extends React.PureComponent {
         this.onChange(e);
       }, 200);
     }
-  }
-  screen(data = {}) {
-    const { httpData, interval } = this.state;
-    const {
-      loadDistance = "",
-      loadPromotionType = "",
-      loadCategoryIds = [],
-    } = data;
-    if (interval) {
-      this.stopInterval(interval);
-    }
-    this.setState(
-      {
-        httpData: {
-          ...httpData,
-          page: 1,
-          ...{
-            distance: loadDistance,
-            scenesIds: loadCategoryIds.join(","),
-            promotionType: loadPromotionType,
-          },
-        },
-        current: 0,
-        userMomentsList: [],
-        VideoList: [],
-        circular: false,
-        countStatus: true,
-        time: null,
-      },
-      (res) => {
-        this.getVideoList(() => {
-          if (this.state.userMomentsList.length > 0) {
-            this.setState(
-              {
-                userMomentsInfo: this.state.userMomentsList[0],
-              },
-              (res) => {
-                this.initInterval();
-              }
-            );
-          }
-        });
-      }
-    );
-  }
-  setScreen(data) {
-    const { homeStore } = this.props.store;
-    homeStore.setSelectObj(data);
-    this.screen(data);
   }
   onTransition(e) {
     const { dy } = e.detail;
@@ -315,8 +271,9 @@ class Index extends React.PureComponent {
   }
   //领取卡豆
   initInterval() {
-    const { userMomentsInfo } = this.state;
+    const { userMomentsInfo,interval } = this.state;
     const { watchStatus, length } = userMomentsInfo;
+    interval  && clearInterval(interval)
     if ((this.state.time || this.state.time === 0) && watchStatus === "0") {
       this.setState({
         interval: setIntive(this.state.time, this.getBean.bind(this)),
@@ -339,6 +296,7 @@ class Index extends React.PureComponent {
   //初始化详情数据
 
   stopInterval(interval) {
+    console.log("清理成功");
     clearInterval(interval);
     this.setState({
       interval: null,
@@ -555,10 +513,11 @@ class Index extends React.PureComponent {
       beanflag,
       couponFlag,
       beanLimitStatus,
-      player
+      player,
     } = this.state;
     const templateView = () => {
       if (userMomentsList.length > 0) {
+        console.log(time);
         return (
           <>
             <InterVal
@@ -625,7 +584,7 @@ class Index extends React.PureComponent {
             });
           }}
         ></Coupon>
-         {!player && (
+        {!player && (
           <View
             onClick={() => this.stopVideoPlayerControl()}
             className="player_no"

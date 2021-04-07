@@ -14,6 +14,7 @@ import APPShare from "@/components/shareApp";
 import { scanCode } from "@/common/authority";
 import Toast from "@/components/beanToast";
 import Waterfall from "@/components/waterfall";
+import { getShareParamInfo } from "@/server/common";
 import classNames from "classnames";
 import {
   backgroundObj,
@@ -87,11 +88,11 @@ class MerchantDetails extends Component {
         getBeanStatus: true,
       });
     }
-    const { scene } = getCurrentInstance().router.params;
-    const { merchantHttpData, banner, userInfo } = this.state;
+    let { scene } = getCurrentInstance().router.params;
+    let { merchantHttpData, banner, userInfo } = this.state;
     if (scene) {
       getShareParamInfo({ uniqueKey: scene }, (res) => {
-        const {
+        let {
           shareParamInfo: { param },
         } = res;
         if (param && JSON.parse(param)) {
