@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Taro from "@tarojs/taro";
-import { Button, Canvas, Text, View } from "@tarojs/components";
+import { Button, Text, View ,Canvas} from "@tarojs/components";
 import classNames from "classnames";
 import "./index.scss";
 import Router from "@/common/router";
@@ -72,13 +72,14 @@ export default (props) => {
       >
         {watchStatus !== "1" && (
           <Canvas
+            onTouchEnd={() => Router({ routerName: "beanReward" })}
             id="animateCanvas"
             canvasId="animateCanvas"
             className="animateCanvas"
           ></Canvas>
         )}
         {watchStatus !== "1" && (
-          <View className="getBean_toast">{beanAmount}</View>
+          <View className="getBean_toast">{time}</View>
         )}
       </View>
       {watchStatus === "0" && time != 0 ? (
@@ -90,7 +91,7 @@ export default (props) => {
         >
           <View className="canvas_tag_box"></View>
           {beanLimitStatus === "1"
-            ? ` 看完可捡豆${beanAmount}${
+            ? ` 看完可捡${beanAmount+'卡豆'}${
                 couponTitlesJson.length > 0
                   ? `和${couponTitlesJson[0].couponPrice}元抵扣券`
                   : ``

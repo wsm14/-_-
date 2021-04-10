@@ -65,13 +65,12 @@ export default {
     {
       root: "pages/newUser/",
       pages: [
+        "circle/index", //协议规则
         "incomeDetails/index", //收益明细
         "rewardDetails/index", //奖励 明细
         "wallet/index", //钱包
         "merchantDetails/index", ///商家主页,
-        "shopFamily/index", //,我的家店
         "userDetails/index", //个人主页,
-        "userFamily/index", //我的家人,
         "record/index", //打卡记录
         "beanRule/index", //卡豆权益
         "userConceal/index", //协议规则

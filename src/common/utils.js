@@ -18,6 +18,7 @@ import { View } from "@tarojs/components";
 import Router from "./router";
 // import moment from 'moment'
 export const navigateTo = (url, events) => {
+  console.log(url)
   Taro.navigateTo({
     url: url,
     events: events || {},

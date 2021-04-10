@@ -146,12 +146,12 @@ class index extends Component {
           >
             <View
               style={backgroundObj(logoImg)}
-              className="template_userprofile dakale_nullImage"
+              className="template_userprofile coupon_shop_icon"
             ></View>
             {brandFlag === "1" && <View className="template_pingpai"></View>}
           </View>
           <View className="template_content">
-            <View className="template_title font_hide">1231321</View>
+            <View className="template_title font_hide">{merchantName}</View>
             <View className="list_font_type  font_hide">
               {GetDistance(getLat(), getLnt(), lat, lnt)}｜{businessHub}｜
               {categoryName}｜人均￥{perCapitaConsumption}
@@ -168,7 +168,7 @@ class index extends Component {
               {markFlag === "1" && (
                 <View className="template_bean">打卡捡豆{markBean}</View>
               )}
-              {specialGoodsFlag === "1" && (
+              {specialGoodsFlag === "1" && specialGoodsAmount != 0 && (
                 <View className="template_specal">
                   <View className="template_icon1 public_center">
                     <View className="template_hui"></View>
@@ -263,7 +263,7 @@ class index extends Component {
             })}
           </ScrollView>
         ) : (
-          <View className='merchant_list'>
+          <View className="merchant_list">
             <NullStatus
               type="4"
               title="暂无店铺信息，切换筛选条件试试"

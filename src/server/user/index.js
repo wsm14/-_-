@@ -168,3 +168,23 @@ export const getShareInfo = (data, fn) => {
     }
   );
 }; //获取他人动态
+export const getUserSub = (data = {}, fn) => {
+  httpGet(
+    {
+      url: "/user/order/subCommission/userSubCommissionInfo",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//哒人/豆长主页团队相关
+export const getLevel = (data = {}, fn) => {
+  httpGet(
+    {
+      url: "/user/user/level/nextLevelTarget",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取达人等级相关
