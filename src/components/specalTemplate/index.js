@@ -7,6 +7,7 @@ import {
   getLnt,
   getLat,
   backgroundObj,
+  computedPrice,
 } from "@/common/utils";
 import ButtonView from "@/components/Button";
 import "./index.scss";
@@ -69,9 +70,7 @@ export const template = (item, configUserLevelInfo) => {
           {shareCommission !== 0 && (
             <View className="specialOffer_share_text">
               /赚¥
-              {((realPrice - merchantPrice) * (shareCommission / 100)).toFixed(
-                2
-              )}
+              {computedPrice(realPrice - merchantPrice, shareCommission)}
             </View>
           )}
         </View>

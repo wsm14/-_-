@@ -4,6 +4,9 @@ import './index.scss'
 import {toast, backgroundObj} from '@/common/utils'
 import {getUserBeanInfo} from '@/server/user'
 import {navigateTo} from "../../../common/utils";
+import {
+  fetchUserShareCommission,
+} from "@/server/index";
 import Toast from '@/components/dakale_toast'
 
 class Index extends Component {
@@ -11,12 +14,14 @@ class Index extends Component {
     super(...arguments);
     this.state = {
       userInfo: {},
-      visible: false
+      visible: false,
+      configUserLevelInfo: {}
     }
   }
 
   componentDidShow() {
     this.getUserInfo()
+    this.fetchUserShareCommission()
   }
 
   getUserInfo() {
@@ -27,7 +32,14 @@ class Index extends Component {
       })
     })
   }
-
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
+  }
   tishiDom() {
     return (
       <View className='point_box'>
@@ -41,9 +53,10 @@ class Index extends Component {
 
   errorToast(e) {
   }
-
   render() {
-    const {userInfo: {bean, rewardBean, bankName, incomeBean, level, bankBindStatus, bankIcon, bankBackgroundImg, bankHideNumber}, visible} = this.state
+    const {userInfo: {bean, rewardBean, bankName, incomeBean, bankBindStatus, bankIcon, bankBackgroundImg, bankHideNumber}, visible,configUserLevelInfo: {
+      level
+    }} = this.state
     return (
       <View className='page_wallet'>
         {(level && level !=='0')&&

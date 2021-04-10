@@ -8,6 +8,7 @@ import {
   setIntive,
   saveFollow,
   goBack,
+  loginStatus
 } from "@/common/utils";
 import InterVal from "@/components/setTimeCanvas";
 import {

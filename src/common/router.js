@@ -34,7 +34,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     wraparound: "/pages/coupon/wraparound/index", //券包
     //券包
 
-    benchmark: "/pages/perimeter/benchmark/index",//逛逛风向标列表
+    benchmark: "/pages/perimeter/benchmark/index", //逛逛风向标列表
     groupList: "/pages/perimeter/groupList/index", //集团列表
     specialOffer: "/pages/perimeter/specialOffer/index", //逛逛内层列表
     beanReward: "/pages/perimeter/beanReward/index", //卡豆明细
@@ -63,8 +63,11 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     shareKolVideo: "/pages/kol/shareVideo/index", //kol视频详情页,
     shareKolImage: "/pages/kol/shareImage/index", //kol图片详情页,
     follow: "/pages/kol/follow/index", //关注列表,
-    fans: "/pages/kol/fans/index", //粉丝列表,
+    fans: "/pages/kol/fans/index", //粉丝列表
     //kol
+    wallet: "/pages/newUser/wallet/index",
+    //newUser
+
     interests: "/pages/rules/interests/index",
     download: "/pages/share/download/index",
     login: "/pages/auth/index",

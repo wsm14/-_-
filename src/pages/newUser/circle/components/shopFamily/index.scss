@@ -8,7 +8,7 @@ page{
     padding-top: 32px;
   }
   .family_details{
-    margin: 12px 32px 0px;
+    margin: 12px 32px 0;
     height: 32px;
     display: flex;
     justify-content: space-between;
@@ -28,18 +28,20 @@ page{
       color: #999999;
     }
 
-
-  }
-  .list_countStatus{
-    margin-top: 12px;
-    height: 33px;
-    font-size: 24px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: #CCCCCC;
-    line-height: 33px;
-    text-align: center;
-    padding-bottom: 20px;
   }
 }
 
+.list_countStatus{
+  margin-top: 12px;
+  height: 33px;
+  font-size: 24px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #CCCCCC;
+  line-height: 33px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+.test{
+  position: relative;
+}

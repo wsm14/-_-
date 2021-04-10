@@ -16,7 +16,7 @@ class Index extends Component {
     })
   }
   componentDidMount() {
-    // this.setTitle()
+    this.setTitle()
   }
   render () {
     const {link} = this.state

@@ -7,6 +7,7 @@ import {
   setIntive,
   saveFollow,
   goBack,
+  loginStatus
 } from "@/common/utils";
 import { View } from "@tarojs/components";
 import {
