@@ -25,7 +25,7 @@ export default {
         pagePath: "pages/index/home/index",
         iconPath: "./assets/image/tab-bar/home_1.png",
         selectedIconPath: "./assets/image/tab-bar/home.png",
-        text: "首页",
+        text: "捡豆",
       },
       {
         pagePath: "pages/index/lookAround/index",
