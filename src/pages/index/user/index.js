@@ -83,10 +83,16 @@ class Index extends React.Component {
         });
         return;
       } else {
-        this.setState({
-          loginStatus: 1,
-          userInfo,
-        });
+        this.setState(
+          {
+            loginStatus: 1,
+            userInfo,
+          },
+          (res) => {
+            this.getLevel();
+            this.getUserSub();
+          }
+        );
       }
     });
   }
@@ -104,8 +110,6 @@ class Index extends React.Component {
 
   componentDidShow() {
     this.getUserDetails();
-    this.getUserSub();
-    this.getLevel();
   }
 
   render() {

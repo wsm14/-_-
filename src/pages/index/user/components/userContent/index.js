@@ -13,6 +13,7 @@ export default (props) => {
     nextLevelInfo,
     monthIncome = 0,
     monthToIncome = 0,
+    totalIncome = 0,
   } = levelDetails;
   const { levelProgress = {}, processInfo } = nextLevel;
   const { normal } = levelProgress;
@@ -75,7 +76,7 @@ export default (props) => {
               </View>
             </View>
 
-            {teamUserCount != 0 && (
+            {(teamUserCount != 0 && status === 1) && (
               <React.Fragment>
                 <View className="user_content_toast">
                   <View className="user_content_toastLiner">
@@ -109,15 +110,19 @@ export default (props) => {
               <View>你已累计赚取</View>
             </View>
             <View className="user_parent_money">
-              {(monthIncome / 100 + monthToIncome / 100).toFixed(2)}
+              {(totalIncome / 100).toFixed(2)}
             </View>
             <View className="user_parent_mx">
               <View className="user_mx_left">
-                <View className="user_mx_top">{(monthIncome/100).toFixed(2)}</View>
+                <View className="user_mx_top">
+                  {(monthIncome / 100).toFixed(2)}
+                </View>
                 <View className="user_mx_center">本月累计分佣/元</View>
               </View>
               <View className="user_mx_right">
-                <View className="user_mx_top">{(monthToIncome / 100).toFixed(2)}</View>
+                <View className="user_mx_top">
+                  {(monthToIncome / 100).toFixed(2)}
+                </View>
                 <View className="user_mx_center">本月待分佣/元</View>
               </View>
               <View className="user_max_liner"></View>
