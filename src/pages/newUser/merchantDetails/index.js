@@ -242,19 +242,6 @@ class Index extends Component {
               })}
             </View>
           )}
-          {beanFlag == "1" && (
-            <View className="merchant_getBean">
-              {watchStatus == "0" ? (
-                <View className="merchantBean_style1 merchant_bean_icon">
-                  观看可捡{beanAmount}
-                </View>
-              ) : (
-                <View className="merchantBean_style2 merchant_bean_icon">
-                  已捡{beanAmount}
-                </View>
-              )}
-            </View>
-          )}
           {merchantAddress && (
             <View>
               <View className="merchant_liner"></View>
