@@ -14,7 +14,7 @@ export default ({ list = [] }) => {
     {
       style: "users_setting_icon2",
       font: "意见反馈",
-      fn: () => toast("暂无反馈"),
+      fn: () => navigateTo('/pages/share/download/index'),
     },
     {
       style: "users_setting_icon3",
