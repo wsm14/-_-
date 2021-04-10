@@ -10,6 +10,7 @@ import {
   backgroundObj,
   loginStatus,
   mapGo,
+  navigateTo,
 } from "@/common/utils";
 import { getSearchConditions } from "@/server/perimeter";
 import { scanCode } from "@/common/authority";
@@ -117,6 +118,7 @@ class index extends Component {
       };
     }
   }
+
   render() {
     const { userMerchantList, visible, httpData } = this.state;
     const template = (item, index) => {
@@ -137,9 +139,17 @@ class index extends Component {
         lnt,
         merchantName,
         address,
+        userMerchantIdString,
       } = item;
       return (
-        <View className="benchMark_template">
+        <View
+          className="benchMark_template"
+          onClick={() =>
+            navigateTo(
+              `/pages/perimeter/merchantDetails/index?merchantId=${userMerchantIdString}`
+            )
+          }
+        >
           <View
             style={backgroundObj(coverImg)}
             className="template_filterImage dakale_nullImage"
@@ -190,7 +200,7 @@ class index extends Component {
               )}
             </View>
           </View>
-          <View className="template_share">
+          <View className="template_share" onClick={(e) =>{e.stopPropagation()}}>
             {loginStatus() ? (
               <Button
                 style={{ width: "100%", height: "100%", background: "none" }}
@@ -202,7 +212,7 @@ class index extends Component {
             ) : (
               <View
                 style={{ width: "100%", height: "100%", background: "none" }}
-                onClick={() => {
+                onClick={(e) => {
                   Router({ routerName: "login" });
                 }}
               >
@@ -212,18 +222,20 @@ class index extends Component {
           </View>
           <View
             className="template_go"
-            onClick={() =>
+            onClick={(e) => {
+              e.stopPropagation();
               mapGo({
                 lat: lat,
                 lnt: lnt,
                 address: address,
                 merchantName: merchantName,
-              })
-            }
+              });
+            }}
           ></View>
           <View
             className="template_btn"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               scanCode();
             }}
           >
