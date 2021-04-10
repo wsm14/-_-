@@ -357,13 +357,13 @@ class Index extends Component {
               className="slider-inside .slider-inside-location"
             ></View>
           </View>
-          <Banner
+          {/* <Banner
             imgName="coverImg"
             data={[...specialShopping]}
             bottom={bottomContent}
             boxStyle={bannerContentStyle}
             showNear
-          ></Banner>
+          ></Banner> */}
           {hotList.length > 0 && (
             <HotSpecal
               linkTo={this.saveRouter.bind(this)}
