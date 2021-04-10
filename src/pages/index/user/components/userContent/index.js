@@ -109,15 +109,15 @@ export default (props) => {
               <View>你已累计赚取</View>
             </View>
             <View className="user_parent_money">
-              {(Number(monthIncome/100) + Number(monthToIncome/100)).toFixed(2)}
+              {(monthIncome / 100 + monthToIncome / 100).toFixed(2)}
             </View>
             <View className="user_parent_mx">
               <View className="user_mx_left">
-                <View className="user_mx_top">{Number(monthIncome).toFixed(2)||'0'.toFixed(2)}</View>
+                <View className="user_mx_top">{(monthIncome/100).toFixed(2)}</View>
                 <View className="user_mx_center">本月累计分佣/元</View>
               </View>
               <View className="user_mx_right">
-                <View className="user_mx_top">{(Number(monthToIncome)/100)||'0'.toFixed(2)}</View>
+                <View className="user_mx_top">{(monthToIncome / 100).toFixed(2)}</View>
                 <View className="user_mx_center">本月待分佣/元</View>
               </View>
               <View className="user_max_liner"></View>
