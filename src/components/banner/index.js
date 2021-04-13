@@ -56,13 +56,12 @@ export default (props) => {
                         ? {
                             background: `url(${
                               item[imgName] ? item[imgName] : item
-                            }) no-repeat`,
-                            backgroundSize: "100% 100%",
+                            }) no-repeat center/cover`,
                           }
                         : {
                             background: `url(${
                               item[imgName] ? item[imgName] : item
-                            }) no-repeat center center/contain`,
+                            }) no-repeat  center/cover`,
                           }
                     }
                     key={index}
@@ -88,7 +87,7 @@ export default (props) => {
                           }) no-repeat center/cover`,
                         }
                       : {
-                          background: `url(${list[0][imgName]}) no-repeat center center/contain`,
+                          background: `url(${list[0][imgName]}) no-repeat  center/cover`,
                         }
                     : {}
                 }
