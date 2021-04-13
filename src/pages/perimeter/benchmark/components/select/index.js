@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 import { getBusinessHub } from "@/server/common";
 import { Image, View, ScrollView } from "@tarojs/components";
-
 import classNames from "classnames";
 import "./index.scss";
 const marginTags = (list = [], num, style, components) => {

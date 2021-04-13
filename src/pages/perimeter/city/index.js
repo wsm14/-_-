@@ -4,7 +4,7 @@ import { Text, View } from "@tarojs/components";
 import classNames from "classnames";
 import "./index.scss";
 import { listAllLocationCity, getLocationCity } from "@/server/common";
-import { backgroundObj, goBack } from "@/common/utils";
+import { backgroundObj, goBack,toast } from "@/common/utils";
 import Router from "@/common/router";
 import { inject, observer } from "mobx-react";
 @inject("store")

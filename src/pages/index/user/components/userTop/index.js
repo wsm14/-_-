@@ -5,11 +5,11 @@ import { View } from "@tarojs/components";
 import { backgroundObj, loginStatus, navigateTo } from "@/common/utils";
 import Router from "@/common/router";
 import classnames from "classnames";
+import Skeleton from "taro-skeleton";
 import "./../../index.scss";
 
 export default (props) => {
   const { data, status } = props;
-  console.log(status, loginStatus());
   const {
     profile,
     username,

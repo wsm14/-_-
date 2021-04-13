@@ -69,8 +69,55 @@ class Index extends Component {
     );
   }
 
+  bindUser() {
+    const { btnStatus } = this.state;
+    if (btnStatus === 0 && wx.getUserProfile) {
+      wx.getUserProfile({
+        desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+        success: (res) => {
+          const { errMsg, userInfo } = res;
+          if (errMsg === "getUserProfile:ok") {
+            const { openId, unionId } = this.state;
+            getUserInfo(
+              {
+                openId,
+                unionId,
+                ...userInfo,
+              },
+              (res) => {
+                const { mobile } = res.userInfo;
+                const { userInfo = {} } = res;
+                if (mobile && mobile.length === 11) {
+                  Taro.setStorageSync("userInfo", res.userInfo);
+                  return goBack(() => toast("登录成功"));
+                } else {
+                  let oldObj = Taro.getStorageSync("userInfo") || {};
+                  Object.keys(userInfo).forEach((item) => {
+                    if (!userInfo[item] || userInfo[item] === "") {
+                      delete userInfo[item];
+                    }
+                  });
+                  let obj = { ...oldObj, ...userInfo };
+                  Taro.setStorageSync("userInfo", obj);
+                  this.setState({
+                    btnStatus: 1,
+                    visible: true,
+                  });
+                }
+              }
+            );
+          } else {
+            console.log(errMsg);
+            toast("获取失败");
+          }
+        },
+      });
+    }
+  }
+
   async getUserInfo(e) {
     const { openId, unionId } = this.state;
+    console.log(e);
     if (openId) {
       const {
         detail: { errMsg },
@@ -137,7 +184,6 @@ class Index extends Component {
                 delete userInfo[item];
               }
             });
-            console.log(oldObj, userInfo, 111);
             let obj = { ...oldObj, ...userInfo };
             Taro.setStorageSync("userInfo", obj);
             that.props.store.authStore.setUserInfoStore(obj);
@@ -159,7 +205,10 @@ class Index extends Component {
   filterType() {
     const { btnStatus } = this.state;
     if (btnStatus === 0) {
-      return "getUserInfo";
+      if (!wx.getUserProfile) {
+        return "getUserInfo";
+      }
+      return null;
     } else if (btnStatus === 1) {
       return "getPhoneNumber";
     } else {
@@ -188,8 +237,9 @@ class Index extends Component {
         </View>
         <Button
           openType={this.filterType()}
-          onGetUserInfo={(e) => this.getUserInfo(e)}
+          onClick={this.bindUser.bind(this)}
           onGetPhoneNumber={(e) => this.getTelephone(e)}
+          onGetUserInfo={(e) => this.getUserInfo(e)}
           className="auth_btn"
         >
           {btnStatus === 0 ? "微信授权一键登录" : "请授权手机号"}

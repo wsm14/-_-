@@ -17,7 +17,6 @@ export default (props) => {
   } = levelDetails;
   const { levelProgress = {}, processInfo } = nextLevel;
   const { normal } = levelProgress;
-  console.log(levelDetails, nextLevel);
   const list = [
     {
       style: "user_tab_icon1",
