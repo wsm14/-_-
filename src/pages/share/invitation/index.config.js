@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: '邀请函',
+  navigationBarTitleText: '哒卡 元气满满',
   navigationStyle: 'default'
 }

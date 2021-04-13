@@ -284,70 +284,81 @@ export const scanCode = (data) => {
     Taro.scanCode({
       onlyFromCamera: false,
       success: (results) => {
-        const {path, scanType, result} = results
-        if (scanType === 'QR_CODE') {
-          let data = qs.parse(result.split('?')[1])
-          if (result.includes('https://www.dakale.net') && data.action === 'pay' && data.merchantId) {
+        const { path, scanType, result } = results;
+        if (scanType === "QR_CODE") {
+          let data = qs.parse(result.split("?")[1]);
+          if (
+            result.includes("https://www.dakale.net") &&
+            data.action === "pay" &&
+            data.merchantId
+          ) {
             return router({
-              routerName: 'codePay',
+              routerName: "codePay",
               args: {
                 merchantId: data.merchantId,
-              }
-            })
-          } else if (result.includes('https://www.dakale.net') && data.action === 'mark' && data.merchantId) {
-            return saveMarkBean({merchantId: data.merchantId}, res => {
+              },
+            });
+          } else if (
+            result.includes("https://www.dakale.net") &&
+            data.action === "mark" &&
+            data.merchantId
+          ) {
+            return saveMarkBean({ merchantId: data.merchantId }, (res) => {
               const {
                 resultCode,
                 merchantLnt,
                 merchantLat,
                 merchantAddress,
                 beanAmount,
-                merchantName = ''
-              } = res
-              console.log(resultCode,
+                merchantName = "",
+              } = res;
+              console.log(
+                resultCode,
                 merchantLnt,
                 merchantLat,
                 merchantAddress,
-                beanAmount,)
+                beanAmount
+              );
               if (resultCode) {
                 const resultCodeObj = {
-                  "3018": () => router({
-                    routerName: 'abnormalStatus',
-                    args: {
-                      merchantLnt,
-                      merchantLat,
-                      merchantAddress,
-                      beanAmount,
-                      merchantName
-                    }
-                  }),
-                  "4003": () => router({
-                    routerName: 'repeatStatus',
-                  }),
-                  "5019": () => {
+                  3018: () =>
+                    router({
+                      routerName: "abnormalStatus",
+                      args: {
+                        merchantLnt,
+                        merchantLat,
+                        merchantAddress,
+                        beanAmount,
+                        merchantName,
+                      },
+                    }),
+                  4003: () =>
+                    router({
+                      routerName: "repeatStatus",
+                    }),
+                  5019: () => {
                     Taro.showModal({
                       showCancel: "false",
                       content: "商家不允许打卡，请到指定打卡商家哦",
-                    })
+                    });
                   },
-
-                }[resultCode]()
+                }[resultCode]();
               } else {
                 router({
-                  routerName: 'merchantDetails',
+                  routerName: "merchantDetails",
                   args: {
                     merchantId: data.merchantId,
-                    beanAmount
-                  }
-                })
+                    beanAmount,
+                  },
+                });
               }
-            })
+            });
           } else {
             Taro.showModal({
               showCancel: "false",
               content: "二维码错误或参数缺失",
-            })
-            return
+            });
+            return;
           }
         }
         Taro.showModal({
@@ -369,11 +380,8 @@ export const scanCode = (data) => {
 };
 
 export const loginBtn = (callback) => {
-  if (
-    Taro.getStorageSync("userInfo") &&
-    Taro.getStorageSync("userInfo").mobile.length === 11 &&
-    Taro.getStorageSync("userInfo").token
-  ) {
+  const { token = "", mobile = "" } = Taro.getStorageSync("userInfo") || {};
+  if (mobile.length === 11 && token) {
     callback && callback(Taro.getStorageSync("userInfo"));
   } else {
     navigateTo("/pages/auth/index");

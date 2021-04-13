@@ -54,6 +54,7 @@ const config = {
         },
       },
     },
+   
   },
   alias: {
     "@/api": path.resolve(__dirname, "..", "src/api"),

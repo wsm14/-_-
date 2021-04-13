@@ -1,7 +1,6 @@
 import React from "react";
 import Taro, { getCurrentPages } from "@tarojs/taro";
 import { Button, Image, View } from "@tarojs/components";
-
 import UserTitle from "./components/userTop";
 import UserContent from "./components/userContent";
 import UserBottom from "./components/userBottom";
@@ -13,10 +12,6 @@ import {
   navigateTo,
   filterStrList,
 } from "@/common/utils";
-import MakePhone from "@/components/payTelephone";
-import classNames from "classnames";
-import Banner from "@/components/banner";
-import { scanCode } from "@/common/authority";
 import "./index.scss";
 class Index extends React.Component {
   constructor() {
@@ -124,6 +119,7 @@ class Index extends React.Component {
     return (
       <View className="page_userBox">
         <UserTitle status={loginStatus} data={userInfo}></UserTitle>
+
         <View className="page_user_liner"></View>
         <UserContent
           levelDetails={levelDetails}
