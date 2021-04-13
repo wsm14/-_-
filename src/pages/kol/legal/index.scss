@@ -1,0 +1,360 @@
+page {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  line-height: 1;
+}
+
+.legal_father_box {
+  width: 100%;
+  background: #F5F5F5;
+  padding-bottom: 130px;
+}
+
+.legal_box {
+  width: 100%;
+  background: #F5F5F5;
+}
+
+.legal_tablefont {
+  margin: 40px 32px 0;
+  color: #333333;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.legal_box .legal_tableList {
+  margin: 32px 32px 0;
+  border: 1px solid #CDF2F3;
+  box-sizing: border-box;
+  background: #FFFFFF;
+
+}
+
+.legal_box .legal_tableList .tableList_type1 {
+  height: 88px;
+  display: flex;
+  border-bottom: 1px solid #CDF2F3;
+}
+
+.legal_box .legal_tableList .tableList_type1 .legal_left {
+  background: #F0FBFB;
+  width: 176px;
+  height: 88px;
+  border-bottom: 1px solid #CDF2F3;
+
+}
+
+.legal_box .legal_tableList .tableList_type1 .legal_right {
+  flex: 1;
+  height: 88px;
+}
+
+.legal_box .legal_tableList .tableList_type1 .legal_right .legal_right_font {
+  padding: 32px 0px 32px 32px;
+  font-size: 24px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #666666;
+  line-height: 24px;
+}
+
+.legal_box .legal_tableList .tableList_type2 {
+  height: 120px;
+  display: flex;
+  border-bottom: 1px solid #CDF2F3;
+}
+
+.legal_box .legal_tableList .tableList_type2 .legal_left {
+  background: #F0FBFB;
+  width: 176px;
+  height: 120px;
+  border-bottom: 1px solid #CDF2F3;
+}
+
+.legal_box .legal_tableList .tableList_type2 .legal_right {
+  height: 120px;
+  flex: 1;
+}
+
+.legal_box .legal_tableList .tableList_type2 .legal_right .legal_right_font {
+  padding: 24px 32px;
+  font-size: 24px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #666666;
+  line-height: 36px;
+}
+
+.legal_box .legal_tableList .tableList_type3 {
+  height: 88px;
+  display: flex;
+  border-bottom: 1px solid #E5E5E5;
+  color: #CCCCCC;
+
+}
+
+.tableList_type3 .legal_left {
+  background: #F5F5F5;
+  width: 176px;
+  height: 88px;
+  text-align: center;
+  border-bottom: 1px solid #E5E5E5;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.tableList_type3 .legal_left .legal_left_child1 {
+  padding-top: 16px;
+}
+
+.tableList_type3 .legal_right {
+  flex: 1;
+  height: 88px;
+}
+
+.legal_box .legal_tableList .tableList_type3 .legal_right .legal_right_font {
+  padding: 32px 0px 32px 32px;
+  font-size: 24px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.tableList_type4 {
+  height: 120px;
+  display: flex;
+  border-bottom: 1px solid #E5E5E5;
+  color: #CCCCCC;
+}
+
+.tableList_type4 .legal_left {
+  background: #F5F5F5;
+  width: 176px;
+  height: 120px;
+  text-align: center;
+  border-bottom: 1px solid #E5E5E5;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.tableList_type4 .legal_left .legal_left_child1 {
+  padding-top: 30px;
+}
+
+.legal_box .legal_tableList .tableList_type4 .legal_right {
+  height: 120px;
+  flex: 1;
+}
+
+.legal_box .legal_tableList .tableList_type4 .legal_right .legal_right_font {
+  padding: 24px 32px;
+  font-size: 24px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  line-height: 36px;
+}
+
+.legal_box_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.legal_box_leftFont {
+  height: 24px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333333;
+  line-height: 24px;
+}
+
+.legal_tableList .tableList_type1:last-child {
+  border-bottom: 0px;
+}
+
+.legal_tableList .tableList_type2:last-child {
+  border-bottom: 0px;
+}
+
+.legal_tableList .tableList_type3:last-child {
+  border-bottom: 0px;
+}
+
+.legal_tableList .tableList_type4:last-child {
+  border-bottom: 0px;
+}
+
+.legal_tableList .tableList_type1:last-child {
+  border-bottom: 0px;
+}
+
+.legal_tableList .tableList_type2:last-child {
+  border-bottom: 0px;
+}
+
+.legal_tableList .tableList_type3:last-child {
+  border-bottom: 0px;
+}
+
+.legal_title {
+  padding: 32px 40px;
+  background: #FFFFFF;
+
+  .legal_title_banner {
+    width: 686px;
+    background: #108588;
+    border-radius: 8px;
+
+    .legal_title_topBox {
+      height: 184px;
+      position: relative;
+    }
+
+    .legal_title_topImg {
+      position: absolute;
+      width: 140px;
+      height:140px;
+      top: 18px;
+      right: 24px;
+    }
+
+    .legal_title_font {
+      padding: 40px 32px 0;
+      color: #FFFFFF;
+
+      .legal_title_font1 {
+        height: 56px;
+        font-size: 40px;
+        font-weight: bold;
+        color: #FFFFFF;
+        line-height: 40px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        display: inline-block;
+      }
+
+      .legal_title_font2 {
+        color: rgba(255, 255, 255, 0.2);
+        font-size: 24px;
+        margin-top: 16px;
+      }
+    }
+  }
+
+  .legal_title_content {
+    width: 100%;
+    min-height: 188px;
+    //max-height: 336px;
+    background: rgba(255, 255, 255, 0.12);
+
+    .legal_title_iconNoMargin {
+      display: flex;
+      max-height: 356px;
+      flex-flow: column wrap;
+      justify-content: space-between;
+    }
+
+    .legal_title_iconDetails {
+      padding: 20px 36px;
+      display: flex;
+      max-height: 336px;
+      justify-content: space-between;
+    }
+
+    .legal_title_iconScroll {
+      padding: 20px 36px 40px;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll_style {
+      white-space: nowrap;
+    }
+
+    .legal_title_iconBox {
+      height: 128px;
+      width: 104px;
+      margin-bottom: 20px;
+
+      .legal_title_icon {
+        width: 104px;
+        height: 104px;
+      }
+
+      .legal_title_iconFont {
+        width: 104px;
+        height: 24px;
+        font-size: 24px;
+        color: #FFFFFF;
+      }
+    }
+
+    .legal_title_margin {
+      margin-right: 66px;
+    }
+  }
+}
+
+.second-module-allicon {
+  background: #ffffff;
+  border-radius: 8px;
+  position: relative;
+  height: 380px;
+  overflow: hidden;
+}
+
+/* 去除滚动条 */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.slider {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.slider-inside {
+  transform: translateX(-100%);
+  width: 30px;
+  height: 100%;
+  border-radius: 3px;
+  background: #FFFFFF;
+}
+
+/* 滑块滑动模拟 */
+.slider-inside-location {
+  position: absolute;
+  left: 50%;
+}
+
+.legal_goDown {
+  margin-top: 48px;
+  height: 24px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #999999;
+  line-height: 24px;
+  text-align: center;
+}
+
+.legal_button {
+  width: 331px;
+  height: 80px;
+  background: #07C0C2;
+  border-radius: 12px;
+  margin: 40px auto 0px;
+  font-size: 32px;
+  line-height: 80px;
+  text-align: center;
+  color: #ffffff;
+}

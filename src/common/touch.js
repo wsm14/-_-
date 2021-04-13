@@ -38,6 +38,7 @@ const touch = {
     }
   },
   longTap: function(e) {
+    console.log(e)
     wx.showModal({
       title: '提示',
       content: '长按事件被触发',

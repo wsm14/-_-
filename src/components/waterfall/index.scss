@@ -1,0 +1,13 @@
+.page_content{
+  margin: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  .page_left{
+    width: 331px;
+  }
+  .page_right{
+    width: 331px;
+  }
+}
+

@@ -1,0 +1,46 @@
+page {
+  width: 100%;
+  height: 100%;
+  background: #F5F5F5;
+}
+
+
+.search_fav_box {
+  width: 100%;
+  line-height: 1;
+  .fixed_tab {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+  }
+
+  .search_center {
+    padding-top: 208px;
+  }
+
+  .search_input_box {
+    padding: 11px 32px 0;
+    background: #FFFFFF;
+  }
+
+  .search_input {
+    //width: 100%;
+    height: 64px;
+    border-radius: 40px;
+    background: #F5F5F5 url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/searchs.png") no-repeat;
+    background-size: 36px 36px;
+    background-position: 32px 14px;
+    display: block;
+    padding-left: 76px;
+    font-size: 24px;
+  }
+
+  .search_inTab {
+    padding-top: 10px;
+    background: #FFFFFF;
+    border-radius: 0px 0px 20px 20px;
+  }
+}
+

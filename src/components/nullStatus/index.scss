@@ -1,13 +1,53 @@
-.null_box{
+.null_box {
   text-align: center;
-  .null_img{
+  .null_img {
     width: 400px;
     height: 400px;
     margin: 0 auto;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/null.png") no-repeat;
-    background-size: 100%  100%;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/null.png")
+      no-repeat;
+    background-size: 100% 100%;
   }
-  .null_font1{
+  .null_img1 {
+    width: 300px;
+    height: 300px;
+    margin: 24px auto 0;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon436.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .null_img2 {
+    width: 300px;
+    height: 300px;
+    margin: 24px auto 0;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon437.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .null_img3 {
+    width: 300px;
+    height: 300px;
+    margin: 24px auto 0;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon438.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .null_img4 {
+    width: 300px;
+    height: 300px;
+    margin: 24px auto 0;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon439.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .null_margin {
+    margin-top: 32px;
+
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+  }
+  .null_font1 {
     margin-top: 48px;
     height: 36px;
     font-size: 36px;
@@ -16,7 +56,7 @@
     color: #333333;
     line-height: 36px;
   }
-  .null_font2{
+  .null_font2 {
     margin-top: 16px;
     height: 37px;
     font-size: 26px;
@@ -25,5 +65,12 @@
     color: #999999;
     line-height: 26px;
   }
+  .null_img5 {
+    width: 300px;
+    height: 300px;
+    margin: 24px auto 0;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon521.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
 }
-

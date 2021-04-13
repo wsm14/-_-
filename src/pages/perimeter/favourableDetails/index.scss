@@ -1,0 +1,357 @@
+page {
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+}
+.favourable_Details {
+  width: 100%;
+  padding-bottom: 193px;
+  .shopDetails_banner {
+    width: 750px;
+    height: 530px;
+  }
+  .shopdetails_price {
+    height: 128px;
+    background: #108588;
+    .shopdetails_priceBox {
+      padding: 24px 32px 0;
+      color: #ffffff;
+      .shopdetails_top {
+        height: 28px;
+        width: 100%;
+        .shopdetails_priceIcon {
+          font-size: 24px;
+          line-height: 28px;
+        }
+        .shopdetails_time {
+          line-height: 28px;
+          font-size: 28px;
+        }
+      }
+      .shopdetails_bottom {
+        margin-top: 12px;
+        width: 100%;
+        .shopdetails_setprice {
+          margin-top: 6px;
+          height: 40px;
+          font-size: 40px;
+          .shopdetails_bigFont {
+            font-size: 20px;
+            margin-right: 10px;
+          }
+          .shopdetails_lineFont {
+            font-size: 24px;
+            font-weight: 400;
+            vertical-align: middle;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: line-through;
+            margin-left: 12px;
+          }
+        }
+        .shopdetails_setbean {
+          padding: 0 20px;
+          height: 40px;
+          background: #ffffff;
+          border-radius: 8px;
+          text-align: center;
+          line-height: 40px;
+          font-size: 24px;
+          font-weight: 400;
+          color: #108588;
+        }
+      }
+    }
+  }
+  .shopdetails_getShop {
+    padding: 0 32px 32px;
+    background: #ffffff;
+    color: #333333;
+    .shopdetails_title {
+      font-size: 32px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 600;
+      line-height: 48px;
+      padding-top: 32px;
+      max-height: 96px;
+      width: 672px;
+    }
+    .shopDetails_tab {
+      display: flex;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      overflow: hidden;
+      align-items: center;
+      margin-top: 24px;
+      .shopDetails_tab_icon {
+        width: 24px;
+        height: 24px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon123.png")
+          no-repeat;
+        background-size: 100% 100%;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+      .shop_question {
+        width: 36px;
+        height: 36px;
+      }
+      .shopDetails_tab_font {
+        margin-right: 24px;
+        height: 24px;
+      }
+    }
+  }
+  .shopdetails_getPrice {
+    height: 40px;
+    display: flex;
+    margin-top: 32px;
+    .shopdetails_getPrice_tag {
+      height: 40px;
+      line-height: 40px;
+      background: rgba(239, 71, 111, 0.1);
+      border-radius: 4px;
+      padding: 0 12px;
+      color: rgba(241, 88, 125, 1);
+      font-size: 24px;
+      margin-right: 16px;
+    }
+  }
+
+  .shopdetails_shop_merchantShop {
+    margin-top: 24px;
+    .shopdetails_group {
+      padding: 8px 0 40px;
+      text-align: center;
+      color: #07c0c2;
+      background: #ffffff;
+    }
+  }
+  .shopdetails_shop_packageGroup {
+    padding: 40px 32px;
+    background: white;
+    margin-top: 24px;
+    .shopdetails_shop_groupTitle {
+      font-size: 32px;
+      line-height: 32px;
+      font-weight: 600;
+      color: #333333;
+      padding-bottom: 8px;
+    }
+    .shopdetails_shop_package {
+      margin-top: 32px;
+      .shopdetails_package_title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333333;
+        line-height: 32px;
+        max-width: 420px;
+      }
+      .shopdetails_package_goods {
+        padding: 0 23px 0 32px;
+        margin-top: 24px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #666666;
+        line-height: 28px;
+      }
+      .shopdetails_package_width{
+        max-width:330px;
+        display: inline-block
+      }
+    }
+  }
+  .shopdetails_shop_details {
+    margin-top: 24px;
+    background: #ffffff;
+    color: rgba(51, 51, 51, 1);
+    .shopdetails_shop_merchantDetails {
+      padding: 40px 32px 0;
+      height: 32px;
+      font-size: 32px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 600;
+      color: #333333;
+    }
+    .shopdetails_dec {
+      font-size: 28px;
+      font-weight: 400;
+      color: rgba(102, 102, 102, 1);
+      line-height: 42px;
+      padding: 24px 32px 0;
+    }
+    .shopdetails_Image image {
+      width: 100%;
+      vertical-align: middle;
+    }
+    .shopdetails_Image {
+      margin-top: 24px;
+      width: 100%;
+    }
+  }
+  .shopdetails_shop_player {
+    margin: 24px auto;
+    width: 686px;
+    height: 1036px;
+    background: #ffffff;
+    border-radius: 20px;
+    .shopdetails_play_title {
+      padding: 40px 32px 0;
+      height: 32px;
+      font-size: 32px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 600;
+      color: #333333;
+    }
+    .shopdetails_play_img {
+      width: 686px;
+      height: 940px;
+      margin-top: 24px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon469.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .shopdetails_shop_toast {
+    margin: 24px 32px 0;
+    color: #333333;
+    padding: 32px 40px 50px;
+    background: #ffffff;
+    border-radius: 20px;
+    .shop_toastDate {
+      margin-top: 24px;
+    }
+    .shop_getDate {
+      margin-top: 40px;
+    }
+    .shop_showNow {
+      margin-top: 40px;
+    }
+    .shop_toastText {
+      margin-top: 16px;
+      min-height: 24px;
+      font-size: 24px;
+      font-weight: 400;
+      color: rgba(102, 102, 102, 1);
+      line-height: 36px;
+    }
+    .shop_toastTextColor {
+      color: rgba(7, 192, 194, 1);
+    }
+    .shop_toastTextHeight {
+      line-height: 36px;
+    }
+  }
+  .shop_toastTitle {
+    font-size: 32px;
+    font-weight: 600;
+  }
+  .shop_toastDec {
+    height: 24px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #666666;
+  }
+  .shopdetails_shop_btn {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 32px 0;
+    height: 128px;
+    background: #ffffff;
+    box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    .shopdetails_shop_price {
+      .shopdetails_shop_priceTop {
+        color: rgba(239, 71, 111, 1);
+        font-size: 52px;
+        padding-top: 22px;
+      }
+    }
+    .shopdetails_shop_real {
+      .shopdetails_shop_realStatus1 {
+        line-height: 28px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+        text-decoration: line-through;
+        display: inline-block;
+      }
+      .shopdetails_shop_realStatus2 {
+        height: 28px;
+        background: rgba(239, 71, 111, 0.1);
+        border-radius: 4px;
+        line-height: 28px;
+        text-align: center;
+        padding: 0 6px;
+        font-size: 20px;
+        font-weight: 400;
+        color: #ef476f;
+        margin-left: 8px;
+        display: inline-block;
+      }
+    }
+    .shopdetails_shop_option {
+      opacity: 0.5;
+    }
+    .shopdetails_shop_goshop {
+      width: 380px;
+      height: 80px;
+      background: #07c0c2;
+      border-radius: 8px;
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      bottom: 24px;
+      font-size: 32px;
+      font-weight: 400;
+      color: #ffffff;
+      text-align: center;
+      line-height: 80px;
+    }
+    .shopdetails_kol_goshop {
+      height: 90px;
+      border-radius: 8px;
+      position: absolute;
+      top: 19px;
+      right: 32px;
+      bottom: 19px;
+      font-size: 32px;
+      font-weight: 400;
+      color: #ffffff;
+      text-align: center;
+      display: flex;
+    }
+    .shopdetails_kol_btnBox {
+      width: 192px;
+      height: 90px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .shopdetails_kol_btnColor1 {
+      background: #07c0c2;
+    }
+    .shopdetails_kol_btnColor2 {
+      background: #ef476f;
+    }
+    .shopdetails_kol_btnBox:first-child {
+      margin-right: 24px;
+    }
+    .shopdetails_kol_font1 {
+      padding-top: 7px;
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 44px;
+    }
+    .shopdetails_kol_font2 {
+      padding-top: 4px;
+      font-size: 28px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 28px;
+    }
+  }
+}

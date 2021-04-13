@@ -1,0 +1,300 @@
+page {
+  width: 100%;
+  height: 100%;
+  background: white;
+}
+.page_lookShare {
+  width: 100%;
+  min-height: 100%;
+  background: white;
+}
+
+.createFall_box {
+  line-height: 1;
+  width: 335px;
+  margin-bottom: 32px;
+
+  .createFall_image {
+    width: 335px;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .createFall_details {
+    margin-top: 20px;
+
+    .createFall_caTags {
+      display: inline-block;
+      height: 30px;
+      line-height: 30px;
+      background: rgba(16, 133, 136, 0.1);
+      border-radius: 4px;
+      vertical-align: middle;
+      padding: 0 8px;
+      margin-right: 24px;
+      color: rgba(16, 133, 136, 1);
+      font-size: 20px;
+      font-weight: 400;
+    }
+
+    .createFall_title {
+      min-height: 42px;
+      max-height: 84px;
+      font-size: 28px;
+      color: #333333;
+      font-weight: bold;
+      line-height: 42px;
+      position: relative;
+    }
+  }
+
+  .createFall_couponBox {
+    margin: 8px 0;
+    height: 32px;
+    display: flex;
+    align-items: center;
+
+    .createFall_coupon {
+      height: 32px;
+      line-height: 32px;
+      font-size: 20px;
+      text-align: center;
+      padding: 0 8px;
+      color: rgba(239, 71, 111, 1);
+      border-radius: 4px;
+      border: 1px solid #ef476f;
+      margin-right: 8px;
+    }
+
+    .createFall_coupon:last-child {
+      margin-right: 0px;
+    }
+  }
+
+  .createFall_beanBox {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 24px;
+    padding-top: 8px;
+  }
+
+  .createFall_beanColor1 {
+    color: rgba(239, 71, 111, 1);
+  }
+
+  .createFall_beanColor2 {
+    color: #999999;
+  }
+
+  .createFall_userBox {
+    margin-top: 20px;
+    height: 40px;
+
+    .createFall_userBox_left,
+    .createFall_userBox_right {
+      height: 40px;
+      align-items: center;
+      display: flex;
+
+      .createFall_userProfile {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 16px;
+      }
+
+      .createFall_userName {
+        height: 40px;
+        font-size: 24px;
+        color: #999999;
+        line-height: 40px;
+        max-width: 180px;
+      }
+    }
+  }
+}
+.createFall_time {
+  width: 68px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  text-align: center;
+  color: white;
+  line-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.createFall_limit {
+  height: 50px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 0px 0px 4px 4px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding-left: 14px;
+
+  .createFall_address_icon {
+    width: 28px;
+    height: 28px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon409.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .createFall_address_font {
+    height: 28px;
+    line-height: 28px;
+    color: white;
+    font-size: 24px;
+    max-width: 265px;
+  }
+}
+.createFall_time_image::before {
+  display: block;
+  content: "";
+  width: 24px;
+  height: 24px;
+  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon408.png")
+    no-repeat;
+  background-size: 100% 100%;
+  margin-right: 6px;
+}
+.page_look_center {
+  position: relative;
+  width: 100%;
+  top: 104px;
+  padding: 0px 0 20px;
+  overflow: auto;
+  .null_list{
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    background: url('https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon413.png') no-repeat;
+    background-size: 100% 100%;
+  }
+  .null_font{
+    text-align: center;
+    height: 28px;
+    font-size: 28px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #999999;
+    margin-top: 32px;
+  }
+}
+.createFull_box {
+  width: 686px;
+  margin: 0 32px 32px;
+  .createFull_image {
+    width: 686px;
+    height: 380px;
+    border-radius: 8px;
+    position: relative;
+  }
+  .createFull_video {
+    position: absolute;
+    width: 96px;
+    height: 96px;
+    top: 142px;
+    left: 295px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon412.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .createFull_title {
+    height: 42px;
+    width: 562px;
+    font-size: 28px;
+    color: #333333;
+    font-weight: bold;
+    line-height: 42px;
+    position: relative;
+  }
+  .createFull_caTags {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    background: rgba(16, 133, 136, 0.1);
+    border-radius: 4px;
+    vertical-align: middle;
+    padding: 0 8px;
+    margin-right: 24px;
+    color: rgba(16, 133, 136, 1);
+    font-size: 20px;
+  }
+  .createFull_userDetails_box {
+    margin-top: 20px;
+  }
+  .createFull_userBox {
+    height: 40px;
+    margin-top: 16px;
+  }
+  .createFull_userBox_left {
+    display: flex;
+    height: 40px;
+    align-items: center;
+    .createFull_userBox_profile {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    .createFull_userBox_userName {
+      height: 40px;
+      line-height: 40px;
+      margin-left: 16px;
+      max-width: 520px;
+      color: #999999;
+      font-size: 24px;
+    }
+  }
+  .createFull_userBox_right {
+    display: flex;
+    height: 40px;
+    line-height: 40px;
+  }
+}
+.createFall_zanIcon {
+  width: 36px;
+  height: 36px;
+  margin-right: 4px;
+}
+
+.createFall_icon1 {
+  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon411.png")
+    no-repeat;
+  background-size: 100% 100%;
+}
+
+.createFall_icon2 {
+  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon410.png")
+    no-repeat;
+  background-size: 100% 100%;
+}
+.createFall_zanName {
+  height: 36px;
+  line-height: 36px;
+  font-size: 24px;
+}
+
+.createFall_zanColor1 {
+  color: rgba(153, 153, 153, 1);
+}
+
+.createFall_zanColor2 {
+  color: rgba(239, 71, 111, 1);
+}
+.createFull_right {
+  height: 40px;
+  align-items: center;
+  display: flex;
+  font-size: 24px;
+  line-height: 40px;
+}

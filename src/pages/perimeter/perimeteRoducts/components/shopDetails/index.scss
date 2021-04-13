@@ -1,0 +1,115 @@
+.favour_shopBox{
+  width: 686px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  margin: 0 auto;
+  position: relative;
+  line-height: 1;
+  .favour_title{
+    width: 686px;
+    height: 163px;
+    position: relative;
+    background: #108588;
+    border-radius: 20px 20px 0px 0px;
+    .favour_top{
+      padding: 39px 0 0 32px;
+      height: 36px;
+      max-width: 480px;
+    }
+    .favour_accress{
+      height: 36px;
+      display: flex;
+      align-items: center;
+      margin-top: 19px;
+      margin-left: 32px;
+      .favour_accressIcon{
+        width: 36px;
+        height: 36px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon10.png") no-repeat;
+        background-size: 100% 100%;
+      }
+      .favour_font{
+        height: 36px;
+        line-height: 36px;
+        font-size: 28px;
+        max-width: 376px;
+      }
+    }
+    .favour_daohang_icon{
+      width: 48px;
+      height: 48px;
+      right: 32px;
+      top: 56px;
+      position: absolute;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/goAccressIcon.png") no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .favour_body{
+    padding: 25px 32px 40px;
+    .favour_shopCenter{
+      display: flex;
+      height: 200px;
+      width: 622px;
+      position: relative;
+      .favourImg{
+        width: 200px;
+        height: 200px;
+      }
+      .favour_content{
+        margin-left: 24px;
+        .favour_content_title{
+          padding-top: 15px;
+          height: 28px;
+          width: 320px;
+        }
+        .favour_content_tag{
+          margin-top: 19px;
+          display: flex;
+          height: 28px;
+          .favour_content_tagBox{
+            height: 28px;
+            line-height: 28px;
+            padding: 0 4px;
+            margin-right: 12px;
+            background: #F5F5F5;
+            color: #999999;
+          }
+        }
+        .favour_content_bean{
+          height: 32px;
+          margin-top: 41px;
+          .line_font{
+            color: rgba(153, 153, 153, 1);
+            margin-left: 8px;
+          }
+        }
+      }
+      .favour_price{
+        margin-top: 12px;
+        height: 20px;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 20px;
+      }
+      .old_place{
+        text-decoration: line-through;
+        margin-left: 11px;
+        color: #CCCCCC;
+        display: inline-block;
+        height: 20px;
+      }
+      .favour_btn{
+        width: 160px;
+        height: 50px;
+        background: #07C0C2;
+        border-radius: 8px;
+        position: absolute;
+        bottom: 12px;
+        right: 0;
+        line-height: 50px;
+        text-align: center;
+      }
+    }
+  }
+}

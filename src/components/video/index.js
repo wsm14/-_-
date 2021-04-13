@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from "react";
 import Taro from '@tarojs/taro'
 import {Video,View} from '@tarojs/components'
-import classNames from 'classnames'
 import './index.scss'
 export default (props) =>{
   const { kolMomentsInfo,onPause , onPlay,oneClick} = props
@@ -16,7 +15,7 @@ export default (props) =>{
         poster={videoSetting.frontImage}
         style={{height:Taro.pxTransform(videoSetting.frontImageHeight),width:'100%'}}
         controls={false}
-        enableProgressGesture={true}
+        enableProgressGesture={false}
         autoplay={true}
         showFullscreenBtn={false}
         enablePlayGesture={true}
@@ -28,7 +27,6 @@ export default (props) =>{
         onPause={onPause}
         onPlay={onPlay}
         muted={false}
-        // onClick={() =>oneClick()}
       >
       </Video>
   )

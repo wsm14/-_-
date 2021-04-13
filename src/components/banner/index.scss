@@ -1,7 +1,10 @@
 .banner_box{
   width:100%;
-  height: 100%;background: no-repeat;
+  height: 100%;
   position: relative;
+}
+.bordersRadius{
+  border-radius: 20px;
 }
 .banner_toast{
   position: absolute;
@@ -30,23 +33,24 @@
 .show_near{
   position: absolute;
   height: 6px;
-  top: 460px;
   left: 0;
   right: 0;
+  bottom: 24px;
   display: flex;
   justify-content: center;
   .show_near_linerTrue{
-    width: 30px;
+    width: 24px;
     height: 6px;
-    background: #FFFFFF;
+    background: rgba(16, 133, 136, 1);
     border-radius: 3px;
     margin-right: 8px;
   }
   .show_near_false{
-    width: 20px;
+    width: 16px;
     height: 6px;
-    background: #FFFFFF;
+    background: rgba(229, 229, 229, 1);
     border-radius: 3px;
     margin-right: 8px;
+    
   }
 }
