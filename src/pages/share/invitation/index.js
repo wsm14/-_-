@@ -27,7 +27,7 @@ class Index extends Component {
   getWechatKefuAccount() {
     getWechatKefuAccount({}, (res) => {
       const { wechatAccount = "" } = res;
-      console.log(wechatAccount)
+      console.log(wechatAccount);
       this.setState({
         wechatAccount,
       });
@@ -69,7 +69,7 @@ class Index extends Component {
   setClipboard() {
     const { wechatAccount } = this.state;
     Taro.setClipboardData({
-      data: getWechatKefuAccount,
+      data: wechatAccount,
       success: function (res) {
         toast("已复制哒卡乐官方微信，打开微信添加好友吧");
       },
@@ -114,7 +114,11 @@ class Index extends Component {
           <ButtonView>
             <View
               className="shareFriend_btn"
-              onClick={() => this.getShareInfo()}
+              onClick={() => {
+                loginStatus()
+                  ? this.setState({ visible: true })
+                  : navigateTo("/pages/auth/index");
+              }}
             ></View>
           </ButtonView>
         </View>
@@ -123,16 +127,12 @@ class Index extends Component {
             className="invitation_img_style"
             lazyLoad
             src={
-              "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_2_1.png"
+              "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_4_15.png"
             }
           />
           <View
             className="getShop_btn"
-            onClick={() => {
-              loginStatus()
-                ? this.setState({ visible: true })
-                : navigateTo("/pages/auth/index");
-            }}
+            onClick={() => this.getShareInfo()}
           ></View>
         </View>
         <View className="invitation_img3">
@@ -144,6 +144,10 @@ class Index extends Component {
             }
           />
         </View>
+        <View
+          onClick={() => this.getShareInfo()}
+          className="invitation_img4"
+        ></View>
         {visible && (
           <View
             catchMove
