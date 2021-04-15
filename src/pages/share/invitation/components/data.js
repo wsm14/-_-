@@ -6,8 +6,9 @@ export const rssConfigData = (data = {}) => {
     wxCode = "https://wechat-config.dakale.net/miniprogram/image/invitation_8.png", ///
     username = "",
   } = data;
+  console.log(userProfile);
   if (
-    !userProfile.includes("resource-new.dakale.net") ||
+    !userProfile.includes("resource-new.dakale.net") &&
     !userProfile.includes("wechat-config.dakale.net")
   ) {
     userProfile = "https://resource-new.dakale.net/common/default_profile.png";

@@ -18,7 +18,7 @@ import { View } from "@tarojs/components";
 import Router from "./router";
 // import moment from 'moment'
 export const navigateTo = (url, events) => {
-  console.log(url)
+  console.log(url);
   Taro.navigateTo({
     url: url,
     events: events || {},
@@ -389,9 +389,9 @@ export const goDown = () => {
 };
 export const filterSetting = (str) => {
   if (str.includes("km") && parseInt(str) > 5) {
-    return `驾车约${parseInt(str)}分钟`;
+    return `驾车约${parseInt(parseInt(str) * 2)}分钟`;
   } else if (str.includes("km") && parseInt(str) >= 1 && parseInt(str) <= 5) {
-    return `骑车约${parseInt(str) * 4}分钟`;
+    return `骑车约${parseInt(str) * 8}分钟`;
   } else {
     return `骑车约${parseInt(str) / 100}分钟`;
   }
@@ -606,4 +606,3 @@ export const computedPrice = (price, scale) => {
   let size = (price * (scale / 100)).toFixed(3);
   return size.substring(0, size.length - 1);
 };
-

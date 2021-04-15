@@ -14,8 +14,9 @@ import APPShare from "@/components/shareApp";
 import { scanCode } from "@/common/authority";
 import Toast from "@/components/beanToast";
 import Waterfall from "@/components/waterfall";
+import ButtonView from "@/components/Button";
 import { getShareParamInfo } from "@/server/common";
-import classNames from "classnames";
+import { getUserCoupon } from "@/server/perimeter";
 import {
   backgroundObj,
   saveFollow,
@@ -36,10 +37,10 @@ import {
   loginStatus,
 } from "@/common/utils";
 import "./merchantDetails.scss";
-import evens from "@/common/evens";
 import Coupons from "@/components/coupon";
+import { coupon } from "@/components/componentView/CouponView";
 import { getAvailableCoupon } from "@/server/coupon";
-
+import classNames from "classnames";
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -59,6 +60,7 @@ class MerchantDetails extends Component {
       getBeanStatus: false,
       conpouVisible: false,
       couponList: [],
+      priceCoupon: [],
     };
   }
 
@@ -110,6 +112,7 @@ class MerchantDetails extends Component {
             (res) => {
               this.getMerchantById();
               this.getGoodList();
+              this.getUserCoupon();
             }
           );
         }
@@ -117,10 +120,21 @@ class MerchantDetails extends Component {
     } else {
       this.getMerchantById();
       this.getGoodList();
+      this.getUserCoupon();
     }
   }
 
   componentDidShow() {}
+
+  getUserCoupon() {
+    const { merchantHttpData } = this.state;
+    getUserCoupon({ ...merchantHttpData, page: 1, limit: 3 }, (res) => {
+      const { couponList } = res;
+      this.setState({
+        priceCoupon: couponList,
+      });
+    });
+  }
 
   getGoodList() {
     const {
@@ -231,7 +245,6 @@ class MerchantDetails extends Component {
       }
     );
   }
-
   //猜你喜欢
   render() {
     const {
@@ -262,6 +275,7 @@ class MerchantDetails extends Component {
       getBeanStatus,
       conpouVisible,
       couponList,
+      priceCoupon = [],
       userInfo: { userId },
     } = this.state;
     if (Object.keys(userMerchantInfo).length > 0) {
@@ -315,17 +329,74 @@ class MerchantDetails extends Component {
                 );
               })}
             </ScrollView>
-            <View
-              className="share_btn public_center"
-              onClick={() =>
-                navigateTo(
-                  `/pages/newUser/merchantDetails/index?userId=${userIdString}`
-                )
-              }
-            >
-              <View className="share_icon"></View>
-              <View>看商家分享捡豆</View>
+            <View className="share_btn public_auto">
+              <ButtonView>
+                {" "}
+                <View
+                  className="share_goMerchant_btn"
+                  onClick={() =>
+                    navigateTo(
+                      `/pages/newUser/merchantDetails/index?userId=${userIdString}`
+                    )
+                  }
+                >
+                  去主页
+                </View>
+              </ButtonView>
+              <ButtonView>
+                {" "}
+                {merchantFollowStatus === "0" ? (
+                  <View
+                    className="share_saveColleton_btn"
+                    onClick={() =>
+                      saveFollow(
+                        {
+                          followType: "merchant",
+                          followUserId: userIdString,
+                        },
+                        (res) => {
+                          this.setState(
+                            {
+                              userMerchantInfo: {
+                                ...this.state.userMerchantInfo,
+                                merchantFollowStatus: "1",
+                              },
+                            },
+                            () => {
+                              toast("关注成功");
+                            }
+                          );
+                        }
+                      )
+                    }
+                  >
+                    关注
+                  </View>
+                ) : (
+                  <View
+                    className="share_updateColleton_btn"
+                    onClick={() =>
+                      deleteFollow({ followUserId: userIdString }, (res) => {
+                        this.setState(
+                          {
+                            userMerchantInfo: {
+                              ...this.state.userMerchantInfo,
+                              merchantFollowStatus: "0",
+                            },
+                          },
+                          () => {
+                            toast("取消成功");
+                          }
+                        );
+                      })
+                    }
+                  >
+                    已关注
+                  </View>
+                )}
+              </ButtonView>
             </View>
+
             <View className="merchant_shop_details">
               <View
                 className="merchat_time"
@@ -388,24 +459,21 @@ class MerchantDetails extends Component {
               </View>
             </View>
           </View>
-          {/*<View className='merchant_active'>*/}
-          {/*  <View className='merchant_active_title'>*/}
-          {/*    <View className='merchant_active_iconBox active_icon1'>*/}
+          {priceCoupon.length > 0 && (
+            <React.Fragment>
+              <View className="merchant_active">
+                <View className="merchant_active_title">
+                  <View className="merchant_active_iconBox active_icon1"></View>
+                  <View className="merchant_active_biaoti">到店优惠</View>
+                </View>
+                <View className="merchant_active_dec">
+                  店铺超级优惠权益 到店消费直接抵扣
+                </View>
+                <View className="active_go"></View>
+              </View>
+            </React.Fragment>
+          )}
 
-          {/*    </View>*/}
-          {/*    <View className='merchant_active_biaoti'>*/}
-          {/*      到店优惠*/}
-          {/*    </View>*/}
-
-          {/*  </View>*/}
-          {/*  <View className='merchant_active_dec'>*/}
-          {/*    店铺超级优惠权益 到店消费直接抵扣*/}
-          {/*  </View>*/}
-          {/*  <View className='active_go'></View>*/}
-          {/*</View>*/}
-          {/*{coupons()}*/}
-          {/*{coupons()}*/}
-          {/*{coupons()}*/}
           {specialGoodsList.length > 0 && (
             <>
               <View
@@ -462,63 +530,10 @@ class MerchantDetails extends Component {
                 <View className="merchant_layer_btnBox merchant_layer_btnIcon1"></View>
                 <View>买单</View>
               </View>
-              <View className="merchant_layer_limit"></View>
               <View className="merchant_layer_btn2" onClick={() => scanCode()}>
                 <View className="merchant_layer_btnBox merchant_layer_btnIcon3"></View>
                 <View>到店打卡</View>
               </View>
-              <View className="merchant_layer_limit"></View>
-              {merchantFollowStatus === "0" ? (
-                <View
-                  className="merchant_layer_btn2"
-                  onClick={() =>
-                    saveFollow(
-                      {
-                        followType: "merchant",
-                        followUserId: userIdString,
-                      },
-                      (res) => {
-                        this.setState(
-                          {
-                            userMerchantInfo: {
-                              ...this.state.userMerchantInfo,
-                              merchantFollowStatus: "1",
-                            },
-                          },
-                          () => {
-                            toast("关注成功");
-                          }
-                        );
-                      }
-                    )
-                  }
-                >
-                  <View className="merchant_layer_btnBox merchant_layer_btnIcon2"></View>
-                  <View>关注</View>
-                </View>
-              ) : (
-                <View
-                  className="merchant_layer_btn2"
-                  onClick={() =>
-                    deleteFollow({ followUserId: userIdString }, (res) => {
-                      this.setState(
-                        {
-                          userMerchantInfo: {
-                            ...this.state.userMerchantInfo,
-                            merchantFollowStatus: "0",
-                          },
-                        },
-                        () => {
-                          toast("取消成功");
-                        }
-                      );
-                    })
-                  }
-                >
-                  <View className="merchant_layer_btnBox merchant_layer_btnIcon4"></View>
-                  <View>已关注</View>
-                </View>
-              )}
             </View>
             <View
               className="merchant_shop"

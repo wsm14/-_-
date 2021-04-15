@@ -148,3 +148,13 @@ export const getSpecialGoodsMerchants = (data, fn) => {
 //集团店铺列表
 
 
+export const getUserCoupon = (data = {}, fn) => {
+  httpGet(
+    {
+      url: "/user/merchantMainCoupon/listMerchantMainCoupon",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取商家有价券列表

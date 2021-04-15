@@ -57,7 +57,6 @@ class Index extends Component {
   }
   onShareAppMessage(res) {
     let userInfo = loginStatus() || {};
-    let img = specialGoodsInfo.activityGoodsImg.split(",")[0];
     const { userIdString } = userInfo;
     if (res.from === "button") {
       return {
@@ -69,7 +68,7 @@ class Index extends Component {
   setClipboard() {
     const { wechatAccount } = this.state;
     Taro.setClipboardData({
-      data: getWechatKefuAccount,
+      data: wechatAccount,
       success: function (res) {
         toast("已复制哒卡乐官方微信，打开微信添加好友吧");
       },

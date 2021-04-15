@@ -4,7 +4,6 @@ import Taro, { useReachBottom } from "@tarojs/taro";
 import { toast, GetDistance, getLat, getLnt } from "@/common/utils";
 import classNames from "classnames";
 import { acquireCoupon, getAvailableCoupon } from "@/server/coupon";
-
 import "./index.scss";
 export default (props) => {
   const { data, visible, show = false, beanflag } = props;
