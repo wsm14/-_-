@@ -576,11 +576,8 @@ export const computedClient = () => {
 //tags 排版
 
 export const loginStatus = () => {
-  if (
-    Taro.getStorageSync("userInfo") &&
-    Taro.getStorageSync("userInfo").mobile.length === 11 &&
-    Taro.getStorageSync("userInfo").token
-  ) {
+  const { token = "", mobile = "" } = Taro.getStorageSync("userInfo") || {};
+  if (mobile.length === 11 && token) {
     return Taro.getStorageSync("userInfo");
   } else {
     return false;

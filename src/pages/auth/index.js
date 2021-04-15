@@ -180,7 +180,6 @@ class Index extends Component {
             let oldObj = Taro.getStorageSync("userInfo") || {};
             Object.keys(userInfo).forEach((item) => {
               if (!userInfo[item] || userInfo[item] === "") {
-                console.log(item, userInfo[item]);
                 delete userInfo[item];
               }
             });
