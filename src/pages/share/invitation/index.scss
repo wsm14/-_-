@@ -24,7 +24,7 @@ page {
       width: 360px;
       height: 90px;
       position: absolute;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_4.png")
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_4_15_2.png")
         no-repeat;
       background-size: 100% 100%;
       bottom: 24px;
@@ -41,7 +41,7 @@ page {
       width: 480px;
       height: 100px;
       position: absolute;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_5.png")
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_4_15_3.png")
         no-repeat;
       background-size: 100% 100%;
       bottom: 69px;
@@ -127,5 +127,16 @@ page {
         no-repeat;
       background-size: 100% 100%;
     }
+  }
+  .invitation_img4 {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    top: 85%;
+    margin-top: -50px;
+    right: 10px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_4_15_1.png")
+      no-repeat;
+    background-size: 100% 100%;
   }
 }

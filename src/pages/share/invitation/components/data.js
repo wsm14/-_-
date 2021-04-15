@@ -7,7 +7,7 @@ export const rssConfigData = (data = {}) => {
     username = "",
   } = data;
   if (
-    !userProfile.includes("resource-new.dakale.net") ||
+    !userProfile.includes("resource-new.dakale.net") &&
     !userProfile.includes("wechat-config.dakale.net")
   ) {
     userProfile = "https://resource-new.dakale.net/common/default_profile.png";
