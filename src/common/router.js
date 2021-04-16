@@ -53,6 +53,8 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     repeatStatus: "/pages/perimeter/repeatStatus/index", //打卡状态： 重复打卡
     abnormalStatus: "/pages/perimeter/abnormalStatus/index", //打卡状态： 超过距离
     tipView: "/pages/perimeter/tipView/index",
+    payCouponDetails: "/pages/perimeter/coupon/index", //有价券详情 
+    payCouponList: "/pages/perimeter/couponList/index", //有价券列表
     //周边
     kolShopGoods: "/pages/goods/kolShopGoods/index",
     codePay: "/pages/goods/codePay/index",

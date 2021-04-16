@@ -128,7 +128,7 @@ class MerchantDetails extends Component {
 
   getUserCoupon() {
     const { merchantHttpData } = this.state;
-    getUserCoupon({ ...merchantHttpData, page: 1, limit: 3 }, (res) => {
+    getUserCoupon({ ...merchantHttpData, page: 1, limit: 6 }, (res) => {
       const { couponList } = res;
       this.setState({
         priceCoupon: couponList,
@@ -471,6 +471,10 @@ class MerchantDetails extends Component {
                 </View>
                 <View className="active_go"></View>
               </View>
+
+              {priceCoupon.map((item) => {
+                return coupon(item);
+              })}
             </React.Fragment>
           )}
 
