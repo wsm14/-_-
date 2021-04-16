@@ -533,6 +533,7 @@ class MerchantDetails extends Component {
                 beanAmount:
                   getCurrentInstance().router.params.beanAmount || "0",
               }}
+              show={getBeanStatus}
               visible={() => {
                 if (couponList.length > 0) {
                   this.setState({
