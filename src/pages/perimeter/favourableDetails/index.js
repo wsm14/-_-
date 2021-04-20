@@ -6,12 +6,11 @@ import { perimeter } from "@/api/api";
 import { httpGet } from "@/api/newRequest";
 import {
   filterStrList,
-  filterWeek,
   loginStatus,
   format,
   setBuyRule,
 } from "@/common/utils";
-import { shopCard } from "@/components/publicShopStyle";
+
 import "./index.scss";
 import { loginBtn } from "@/common/authority";
 import { navigateTo } from "../../../common/utils";
@@ -22,7 +21,12 @@ import TaroShareDrawer from "./components/TaroShareDrawer";
 import Router from "@/common/router";
 import { rssConfigData } from "./components/data";
 import ButtonView from "@/components/Button";
-import classNames from "classnames";
+import { payNeed } from "@/components/componentView/NeedPay";
+import { knowPay } from "@/components/componentView/KnowPay";
+import {
+  Instruction,
+  merchantSet,
+} from "@/components/componentView/Instruction";
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -125,7 +129,7 @@ class MerchantDetails extends Component {
             start: true,
             data: rssConfigData({
               merchantName,
-              time: activityEndTime||'长期有效',
+              time: activityEndTime || "长期有效",
               oldPrice: oriPrice,
               price: realPrice,
               wxCode: qcodeUrl,
@@ -204,12 +208,7 @@ class MerchantDetails extends Component {
         allowExpireRefund,
         allowRefund,
         needOrder,
-        useStartTime,
-        useEndTime,
-        useWeek,
-        useTime,
         goodsDesc,
-        buyDesc = "",
         specialActivityIdString,
         merchantIdString,
         goodsDescImg,
@@ -223,27 +222,14 @@ class MerchantDetails extends Component {
         activityTimeRule,
         activityGoodsImg,
         packageGroupObjects = [],
-        activeDays,
-        delayDays,
         merchantCount,
         merchantPrice,
       },
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
       specialGoodsInfo,
-      kolMomentsInfo,
-      visible,
       cavansObj,
       // https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon469.png
     } = this.state;
-    const templateTime = () => {
-      if (activeDays) {
-        return `购买后${
-          delayDays === 0 ? "立刻" : delayDays
-        }天生效，有效期${activeDays}天，请在有效期内使用`;
-      } else {
-        return `${useStartTime}至${useEndTime}`;
-      }
-    };
     const payBtn = () => {
       if (!format(activityStartTime) && activityTimeRule === "fixed") {
         return (
@@ -375,8 +361,6 @@ class MerchantDetails extends Component {
                 {goodsName || "--"}
               </View>
               <View className="shopDetails_tab">
-                {/*<View className='shopDetails_tab_icon'></View>*/}
-                {/*<View className='shopDetails_tab_font'>可叠加3张使用</View>*/}
                 {needOrder === "0" && (
                   <>
                     <View className="shopDetails_tab_icon"></View>
@@ -426,25 +410,8 @@ class MerchantDetails extends Component {
               </View>
             </View>
 
-            <View className="shopdetails_shop_merchantShop">
-              {shopCard(this, specialGoodsInfo)}
-              {ownerType === "group" && (
-                <View
-                  className="shopdetails_group"
-                  onClick={() =>
-                    Router({
-                      routerName: "groupList",
-                      args: {
-                        specialActivityId: specialActivityIdString,
-                      },
-                    })
-                  }
-                >
-                  查看全部{merchantCount}家适用商家{" >"}
-                </View>
-              )}
-            </View>
-
+            {merchantSet(specialGoodsInfo)}
+            {/* 商品详情 */}
             {goodsType === "package" && (
               <View className="shopdetails_shop_packageGroup">
                 <View className="shopdetails_shop_groupTitle">套餐详情</View>
@@ -499,54 +466,13 @@ class MerchantDetails extends Component {
                 </View>
               </View>
             )}
-            {/*使用方法*/}
-            <View className="shopdetails_shop_player">
-              <View className="shopdetails_play_title">使用方法</View>
-              <View className="shopdetails_play_img"></View>
-            </View>
-            {/*使用须知*/}
-            <View className="shopdetails_shop_toast">
-              <View className="shop_toastTitle">使用须知</View>
-              <View className="shop_toastDec shop_toastDate">有效期：</View>
-              <View className="shop_toastText">
-                <Text className="shop_toastTextColor">{templateTime()}</Text>
-              </View>
-              <View className="shop_toastDec shop_getDate">使用时间：</View>
-              <View className="shop_toastText">
-                <Text className="shop_toastTextColor">
-                  {filterWeek(useWeek) + " " + useTime}
-                </Text>
-                ，具体以门店供应时段为准；
-              </View>
-              {buyDesc.length > 0 && (
-                <>
-                  <View className="shop_toastDec shop_showNow">购买须知：</View>
-                  <View
-                    style={{ lineHeight: Taro.pxTransform(36) }}
-                    className="shop_toastText"
-                  >
-                    {buyDesc.slice(2, buyDesc.length - 3)}
-                  </View>
-                </>
-              )}
-            </View>
-            {/*使用规则*/}
-            <View className="shopdetails_shop_toast">
-              <View className="shop_toastTitle">购买须知</View>
 
-              <View className="shop_toastText shop_toastTextHeight">
-                本券不可拆分使用，不支持外卖点餐、电商订购等；不可转让、转售、转发、截图，也不能兑换现金；不可伪造，伪造无效。
-              </View>
-              <View className="shop_toastText shop_toastTextHeight">
-                本券一经核销即为使用，卡券详情可查看存根信息；
-              </View>
-              <View className="shop_toastText shop_toastTextHeight">
-                如对订单有疑问，请到商家咨询，或者拨打哒卡乐官方客服电话：400-800-5881进行咨询。
-              </View>
-              <View className="shop_toastText shop_toastTextHeight">
-                *最终解释权归杭州哒卡乐智能科技有限公司所有
-              </View>
-            </View>
+            {/*使用须知*/}
+            {knowPay(specialGoodsInfo)}
+            {/*使用方法*/}
+            {Instruction()}
+            {/*使用规则*/}
+            {payNeed()}
             <View className="shopdetails_shop_btn">
               <View className="shopdetails_shop_price">
                 <View className="shopdetails_shop_priceTop">

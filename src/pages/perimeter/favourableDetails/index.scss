@@ -118,15 +118,7 @@ page {
     }
   }
 
-  .shopdetails_shop_merchantShop {
-    margin-top: 24px;
-    .shopdetails_group {
-      padding: 8px 0 40px;
-      text-align: center;
-      color: #07c0c2;
-      background: #ffffff;
-    }
-  }
+
   .shopdetails_shop_packageGroup {
     padding: 40px 32px;
     background: white;
@@ -211,46 +203,6 @@ page {
         no-repeat;
       background-size: 100% 100%;
     }
-  }
-  .shopdetails_shop_toast {
-    margin: 24px 32px 0;
-    color: #333333;
-    padding: 32px 40px 50px;
-    background: #ffffff;
-    border-radius: 20px;
-    .shop_toastDate {
-      margin-top: 24px;
-    }
-    .shop_getDate {
-      margin-top: 40px;
-    }
-    .shop_showNow {
-      margin-top: 40px;
-    }
-    .shop_toastText {
-      margin-top: 16px;
-      min-height: 24px;
-      font-size: 24px;
-      font-weight: 400;
-      color: rgba(102, 102, 102, 1);
-      line-height: 36px;
-    }
-    .shop_toastTextColor {
-      color: rgba(7, 192, 194, 1);
-    }
-    .shop_toastTextHeight {
-      line-height: 36px;
-    }
-  }
-  .shop_toastTitle {
-    font-size: 32px;
-    font-weight: 600;
-  }
-  .shop_toastDec {
-    height: 24px;
-    font-size: 24px;
-    font-weight: 600;
-    color: #666666;
   }
   .shopdetails_shop_btn {
     position: fixed;

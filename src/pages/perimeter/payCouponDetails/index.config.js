@@ -1,7 +1,7 @@
 export default {
   "navigationBarBackgroundColor": "#FFFFFF",
   "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "城市定位",
+  "navigationBarTitleText": "优惠券详情",
   "backgroundColor": "#FFFFFF",
   "backgroundTextStyle": "light",
   "navigationStyle": "default",

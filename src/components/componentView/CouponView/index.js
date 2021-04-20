@@ -19,7 +19,7 @@ export const coupon = (data) => {
     personLimit = 0,
     merchantIdString,
     ownerIdString,
-    
+    ownerCouponIdString,
   } = data;
   const { couponPrice = 0, thresholdPrice, remain } = reduceObject;
   let a = 0;
@@ -57,10 +57,10 @@ export const coupon = (data) => {
       Router({
         routerName: "payCouponDetails",
         args: {
-          ownerCouponId,
-          ownerId,
-          merchantId
-        }
+          ownerCouponId: ownerCouponIdString,
+          ownerId: ownerIdString,
+          merchantId: merchantIdString,
+        },
       });
     }
   };
