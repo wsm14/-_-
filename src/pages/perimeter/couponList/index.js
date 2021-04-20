@@ -3,18 +3,20 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
 import "./index.scss";
 import { getUserCoupon } from "@/server/perimeter";
+import { coupon } from "@/components/componentView/CouponView";
 import { toast } from "@/common/utils";
 class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
       httpData: {
-        merchantId: getCurrentInstance().router.params,
+        merchantId: getCurrentInstance().router.params.merchantId,
         page: 1,
         limit: 10,
       },
       countStatus: true,
       index: 0,
+      couponList: [],
     };
   }
   getUserCoupon() {
@@ -58,60 +60,12 @@ class Index extends Component {
     }
   } //上拉加载
   render() {
-    const {
-      locationCityList,
-      locationCityInfo: { cityDesc = "" },
-    } = this.state;
-    const { cityCode, cityName } = this.props.store.locationStore;
+    const { couponList } = this.state;
     return (
-      <View className="city_box">
-        <View className="city_content_box">
-          <View className="city_content_user">
-            <View className="city_content_userIcon"></View>
-            <View className="city_content_userName bold">我在·{cityName}</View>
-            <View className="city_content_desc">{cityDesc}</View>
-          </View>
-        </View>
-        <View className="city_content_citys">
-          {locationCityList.map((item) => {
-            const {
-              backgroundImg,
-              locationCityIdString,
-              cityCode,
-              cityName,
-              citySpell,
-            } = item;
-            return (
-              <View
-                className="city_content_cityImage"
-                onClick={() => {
-                  this.props.store.locationStore.setCity(
-                    cityName,
-                    cityCode,
-                    "1"
-                  );
-                  Taro.reLaunch({
-                    url: "/pages/index/lookAround/index",
-                  });
-                }}
-                style={backgroundObj(backgroundImg)}
-              >
-                <View className="city_content_font1 bold">{citySpell}</View>
-                <View className="city_content_font2 bold">{cityName}</View>
-              </View>
-            );
-          })}
-        </View>
-
-        <View className="city_content_bottom"></View>
-        <View
-          className="city_content_bottomGO"
-          onClick={() =>
-            Router({
-              routerName: "willCity",
-            })
-          }
-        ></View>
+      <View className="couponList_box">
+        {couponList.map((item) => {
+          return coupon(item);
+        })}
       </View>
     );
   }

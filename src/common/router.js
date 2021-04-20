@@ -33,7 +33,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
     wraparound: "/pages/coupon/wraparound/index", //券包
     //券包
-
+    payCouponDetails:'/pages/perimeter/payCouponDetails/index',
     benchmark: "/pages/perimeter/benchmark/index", //逛逛风向标列表
     groupList: "/pages/perimeter/groupList/index", //集团列表
     specialOffer: "/pages/perimeter/specialOffer/index", //逛逛内层列表
@@ -53,7 +53,6 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     repeatStatus: "/pages/perimeter/repeatStatus/index", //打卡状态： 重复打卡
     abnormalStatus: "/pages/perimeter/abnormalStatus/index", //打卡状态： 超过距离
     tipView: "/pages/perimeter/tipView/index",
-    payCouponDetails: "/pages/perimeter/coupon/index", //有价券详情 
     payCouponList: "/pages/perimeter/couponList/index", //有价券列表
     //周边
     kolShopGoods: "/pages/goods/kolShopGoods/index",

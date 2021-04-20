@@ -40,6 +40,7 @@ import "./merchantDetails.scss";
 import Coupons from "@/components/coupon";
 import { coupon } from "@/components/componentView/CouponView";
 import { getAvailableCoupon } from "@/server/coupon";
+import Router from "@/common/router";
 import classNames from "classnames";
 class MerchantDetails extends Component {
   constructor() {
@@ -461,7 +462,17 @@ class MerchantDetails extends Component {
           </View>
           {priceCoupon.length > 0 && (
             <React.Fragment>
-              <View className="merchant_active">
+              <View
+                onClick={() =>
+                  Router({
+                    routerName: "payCouponList",
+                    args: {
+                      merchantId: merchantId,
+                    },
+                  })
+                }
+                className="merchant_active"
+              >
                 <View className="merchant_active_title">
                   <View className="merchant_active_iconBox active_icon1"></View>
                   <View className="merchant_active_biaoti">到店优惠</View>
