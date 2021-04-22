@@ -132,7 +132,7 @@ class Index extends Component {
             {deductFeeObject.length > 0 ? (
               <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
                 <View className="color2">优惠券</View>
-                <View className="color3">deductFeeObject[0].reduceFee</View>
+                <View className="color3">{deductFeeObject[0].reduceFee}</View>
               </View>
             ):null}
             <View  className='code_scanPay_liner'></View>

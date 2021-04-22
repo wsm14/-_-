@@ -53,6 +53,7 @@ export default (props) => {
     merchantLat,
     username,
     promotionPrice,
+    userMomentIdString
   } = server;
   const getPromotion = (item) => {
     const { promotionType, promotionIdString, userIdString } = item;
@@ -85,10 +86,19 @@ export default (props) => {
           args: {
             specialActivityId: promotionIdString,
             merchantId: userIdString,
+            momentId:userMomentIdString
           },
         });
       } else {
-        Router({ routerName: "download" });
+        const { ownerIdString, promotionIdString } = couponInfo;
+        Router({
+          routerName: "payCouponDetails",
+          args: {
+            merchantId: userIdString,
+            ownerId: ownerIdString,
+            ownerCouponId: promotionIdString,
+          },
+        });
       }
     };
     if (Object.keys(couponInfo).length > 0) {
@@ -116,7 +126,10 @@ export default (props) => {
               <Text className={"font28 color3 bold"}>{promotionBuyPrice} </Text>
             </View>
             <View className="home_active_price">
-              <View className="home_active_tags" style={{  border: '1px solid #ffeba5'}}>
+              <View
+                className="home_active_tags"
+                style={{ border: "1px solid #ffeba5" }}
+              >
                 卡豆可抵 ￥{computedPrice(promotionPrice, payBeanCommission)}
               </View>
             </View>

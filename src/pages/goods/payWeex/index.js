@@ -69,12 +69,30 @@ class Index extends Component {
   }
   render() {
     const {
-      orderResult: { totalFee, beanFee, payFee, createTime, expiredTime },
+      orderResult: {
+        totalFee,
+        beanFee,
+        payFee,
+        createTime,
+        expiredTime,
+        merchantName,
+      },
     } = this.state;
     return (
       <View className="pay_week">
         <View className="pay_week_price">
-          <View className="pay_title">实付款</View>
+          <View className="pay_title">
+            支付剩余时间
+            {createTime && (
+              <InterTime
+                mint={expiredTime}
+                times={createTime}
+                fn={() => {
+                  goBack();
+                }}
+              ></InterTime>
+            )}
+          </View>
           <View className="pay_price">
             <Text
               style={{
@@ -86,19 +104,7 @@ class Index extends Component {
             </Text>
             {payFee}
           </View>
-          <View className="pay_time">
-            支付剩余时间
-            {createTime && (
-              <InterTime
-                mint={expiredTime}
-                times={createTime}
-                fn={() => {
-                  goBack();
-                }}
-              ></InterTime>
-            )}
-            {/**/}
-          </View>
+          <View className="pay_time font_hide">{merchantName}</View>
         </View>
         <View
           className="pay_week_btn public_center"

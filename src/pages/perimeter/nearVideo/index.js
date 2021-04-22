@@ -8,7 +8,7 @@ import {
   setIntive,
   saveFollow,
   goBack,
-  loginStatus
+  loginStatus,
 } from "@/common/utils";
 import InterVal from "@/components/setTimeCanvas";
 import {
@@ -57,12 +57,7 @@ class Index extends React.PureComponent {
   }
 
   onChange(e) {
-    const {
-      countStatus,
-      httpData,
-      userMomentsList,
-      interval,
-    } = this.state;
+    const { countStatus, httpData, userMomentsList, interval } = this.state;
     let { current } = e.detail;
     this.setState(
       {
@@ -272,9 +267,9 @@ class Index extends React.PureComponent {
   }
   //领取卡豆
   initInterval() {
-    const { userMomentsInfo,interval } = this.state;
+    const { userMomentsInfo, interval } = this.state;
     const { watchStatus, length } = userMomentsInfo;
-    interval  && clearInterval(interval)
+    interval && clearInterval(interval);
     if ((this.state.time || this.state.time === 0) && watchStatus === "0") {
       this.setState({
         interval: setIntive(this.state.time, this.getBean.bind(this)),
@@ -559,7 +554,7 @@ class Index extends React.PureComponent {
           <View onClick={() => goBack()} className="backStyle_box">
             <View
               className="backStyle go_back_icon"
-              style={{ top: Taro.pxTransform(computedClient().top) }}
+              style={{ top: computedClient().top }}
             ></View>
           </View>
         </View>

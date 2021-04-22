@@ -32,7 +32,7 @@ export default ({ data, configUserLevelInfo }) => {
       }
     }
   };
-  const { payBeanCommission } = configUserLevelInfo;
+  const { payBeanCommission = 50 } = configUserLevelInfo;
   return (
     <View className="coupon_bg">
       <View className="coupon_top_bg">

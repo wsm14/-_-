@@ -9,16 +9,16 @@ import {
   loginStatus,
   format,
   setBuyRule,
+  computedPrice,
 } from "@/common/utils";
-
 import "./index.scss";
 import { loginBtn } from "@/common/authority";
 import { navigateTo } from "../../../common/utils";
 import ActivityStatus from "./components/index";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
 import { fetchUserShareCommission } from "@/server/index";
-import TaroShareDrawer from "./components/TaroShareDrawer";
 import Router from "@/common/router";
+import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import ButtonView from "@/components/Button";
 import { payNeed } from "@/components/componentView/NeedPay";
@@ -259,10 +259,7 @@ class MerchantDetails extends Component {
                 <View className="shopdetails_kol_font2">
                   {" "}
                   省¥
-                  {(
-                    (realPrice - merchantPrice) *
-                    (shareCommission / 100)
-                  ).toFixed(2)}
+                  {computedPrice(realPrice - merchantPrice, shareCommission)}
                 </View>
               </View>
             </ButtonView>
@@ -275,10 +272,7 @@ class MerchantDetails extends Component {
                 <View className="shopdetails_kol_font2">
                   {" "}
                   赚¥
-                  {(
-                    (realPrice - merchantPrice) *
-                    (shareCommission / 100)
-                  ).toFixed(2)}
+                  {computedPrice(realPrice - merchantPrice, shareCommission)}
                 </View>
               </View>
             </ButtonView>

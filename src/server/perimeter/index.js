@@ -200,3 +200,25 @@ export const getOwnerCouponDetail = (data = {}, fn) => {
   );
 };
 //获取商家有价券列表
+
+export const getUserMerchantSimpleDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/getUserMerchantSimpleDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//查询商家简单信息
+
+export const getListMayLikeCoupon = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/merchantMainCoupon/listMayLikeCoupon",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//猜你喜欢有价券

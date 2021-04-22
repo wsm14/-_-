@@ -1,40 +1,41 @@
-page{
+page {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background: #F5F5F5;
+  background: #f5f5f5;
   line-height: 1;
 }
-.pay_details_payDetails{
+.pay_details_payDetails {
   width: 100%;
-  color: #FFFFFF;
+  color: #f5f5f5;
   padding-bottom: 39px;
-  .payTitle_top{
-    padding:0 32px;
-    height: 232px;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon258.png") center/cover;
-    .payTitle_status{
-       height: 60px;
-       display: flex;
-       align-items: center;
-       padding-top: 52px;
-      .payTitle_iconBox{
+  .payTitle_top {
+    height: 168px;
+    background: #ffffff;
+    .payTitle_status {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 52px 32px 0;
+      .payTitle_iconBox {
         width: 60px;
-        height:60px;
+        height: 60px;
       }
-      .payTitle_icon1{
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon259.png") no-repeat;
+      .payTitle_icon1 {
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon539.png")
+          no-repeat;
         background-size: 100% 100%;
       }
-      .payTitle_font{
+      .payTitle_font {
         height: 60px;
         line-height: 60px;
         font-size: 48px;
         margin-left: 16px;
         font-weight: 600;
+        color: #333333;
       }
     }
-    .payTitle_dec{
+    .payTitle_dec {
       margin-top: 16px;
       height: 24px;
       font-size: 24px;
@@ -42,26 +43,26 @@ page{
       font-weight: 400;
       line-height: 24px;
       margin-left: 76px;
-   }
+    }
   }
-  .descriptionCard_title{
+  .descriptionCard_title {
     width: 686px;
-    margin: -74px auto 0;
-    background: #FFFFFF;
+    margin: 24px auto 0;
+    background: #ffffff;
     border-radius: 12px;
-    .descriptionCard_box{
+    .descriptionCard_box {
       padding: 24px 32px 8px;
       font-size: 24px;
-      .descriptionCard_merchant{
+      .descriptionCard_merchant {
         height: 64px;
         display: flex;
         align-items: center;
-        .descriptionCard_profile{
+        .descriptionCard_profile {
           width: 64px;
           height: 64px;
           border-radius: 50%;
         }
-        .descriptionCard_merchantTitle{
+        .descriptionCard_merchantTitle {
           max-width: 280px;
           height: 42px;
           font-size: 28px;
@@ -71,56 +72,57 @@ page{
           line-height: 42px;
           margin-left: 29px;
         }
-        .descriptionCard_goIcon{
+        .descriptionCard_goIcon {
           width: 36px;
           height: 36px;
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon260.png") no-repeat;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon260.png")
+            no-repeat;
           background-size: 100% 100%;
           margin-left: 16px;
         }
       }
-      .descriptionCard_merchantShop{
+      .descriptionCard_merchantShop {
         height: 120px;
         margin-top: 32px;
         display: flex;
-        .descriptionCard_merchantLogo{
+        .descriptionCard_merchantLogo {
           width: 120px;
           height: 120px;
           border-radius: 8px;
         }
-        .descriptionCard_shop_details{
+        .descriptionCard_shop_details {
           margin-left: 24px;
-          .descriptionCard_goods_name{
+          .descriptionCard_goods_name {
             width: 280px;
             max-height: 84px;
             line-height: 42px;
           }
-          .descriptionCard_goods_num{
+          .descriptionCard_goods_num {
             height: 24px;
             padding-top: 8px;
           }
         }
       }
-      .descriptionCard_shop_price{
+      .descriptionCard_shop_price {
         height: 32px;
         margin-top: 5px;
         margin-left: auto;
       }
-      .descriptionCard_goods_liner{
+      .descriptionCard_goods_liner {
         width: 622px;
         height: 1px;
-        background: #E5E5E5;
-        margin: 31px auto 0 ;
+        background: #e5e5e5;
+        margin: 31px auto 0;
       }
-      .descriptionCard_goods_tags{
+      .descriptionCard_goods_tags {
         height: 84px;
-        .kolTagBox{
+        .kolTagBox {
           height: 36px;
-          .kolTagIcons{
+          .kolTagIcons {
             width: 36px;
             height: 36px;
           }
-          .kolTag_font{
+          .kolTag_font {
             height: 36px;
             line-height: 36px;
             margin-left: 4px;
@@ -128,84 +130,120 @@ page{
           }
         }
       }
-      .codeBox{
-        position: relative;
-        height: 304px;
-        .code_swiper{
-          width: 304px;
-          height: 304px;
-          position: relative;
-        }
-        .code_left{
-          position: absolute;
-          top: 137px;
-          left: 0;
-        }
-        .code_right{
-          position: absolute;
-        }
-        .codePosition{
-          width: 36px;
-          height: 36px;
-          top: 137px;
-          right: 0;
-        }
-      }
     }
   }
-  .pay_goGoods{
-    margin: 24px 32px 0;
+  .pay_goLiner {
+    margin-top: 39px;
+    width: 100%;
+    height: 2px;
+    background: #e5e5e5;
+    border-radius: 1px;
+  }
+  .pay_goGoods {
     padding: 0 32px;
-    height: 124px;
-    background: #FFFFFF;
+    height: 140px;
+    background: #ffffff;
     border-radius: 12px;
-    .pay_goGoods_box{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .pay_goGoods_box {
       height: 60px;
-      width: 622px;
     }
-    .pay_goods_btn{
+    .pay_goods_btn {
       width: 192px;
       height: 60px;
-      background: #07C0C2;
+      background: #07c0c2;
       border-radius: 8px;
       text-align: center;
       line-height: 60px;
     }
   }
-  .maybe_love{
+  .maybe_love {
     margin-top: 64px;
   }
 }
-.tests{
+.tests {
   width: 304px;
   height: 304px;
 }
-.code_count{
-   margin-top: 16px;
-   height: 24px;
-   text-align: center;
-}
-.code_num{
+.code_count {
+  margin-top: 16px;
   height: 24px;
+  text-align: center;
+}
+.code_num {
   position: relative;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 24px;
 }
-.code_onRead{
+.code_onRead {
   height: 36px;
   margin-top: 32px;
 
-  .onReadly_iconBox{
+  .onReadly_iconBox {
     width: 36px;
     height: 36px;
     margin-right: 8px;
   }
 }
-.pay_dec{
+.pay_dec {
   margin-top: 80px;
   padding-bottom: 32px;
 }
-.pay_dec_margin{
+.pay_dec_margin {
   margin-top: 20px;
 }
-
+.paySuccess_box {
+  width: 100%;
+  padding-top: 32px;
+  background: #ffffff;
+  margin: 24px auto 0;
+  .paySuccess_cover {
+    width: 100px;
+    height: 100px;
+    margin: 0px auto 0;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .paySuccess_goodName {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    max-width: 480px;
+    margin: 30px auto 0;
+    text-align: center;
+  }
+  .paySuccess_count {
+    max-width: 480px;
+    margin: 16px auto 0;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    text-align: center;
+  }
+  .codeBox {
+    position: relative;
+    height: 304px;
+    margin: 48px 80px 0;
+    .code_swiper {
+      width: 304px;
+      height: 304px;
+      position: relative;
+    }
+    .code_left {
+      position: absolute;
+      top: 137px;
+      left: 0;
+    }
+    .code_right {
+      position: absolute;
+    }
+    .codePosition {
+      width: 36px;
+      height: 36px;
+      top: 137px;
+      right: 0;
+    }
+  }
+}

@@ -18,6 +18,8 @@ import PayBean from "@/components/stopBean";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import ButtonView from "@/components/Button";
+import { fetchUserShareCommission } from "@/server/index";
+import SelectBean from "@/components/componentView/selectBean";
 import Router from "@/common/router";
 @inject("store")
 @observer
@@ -26,15 +28,15 @@ class Index extends Component {
     super(...arguments);
     this.state = {
       httpData: {
-        ...getCurrentInstance().router.params,
-      },
-      merchantId: getCurrentInstance().router.params.merchantId,
-      useBeanStatus: "1",
-      specialGoodsDTO: {
-        id: getCurrentInstance().router.params.specialActivityId,
+        merchantId: getCurrentInstance().router.params.merchantId,
+        specialActivityId: getCurrentInstance().router.params.specialActivityId,
         goodsCount: 1,
       },
+      useBeanStatus: "1",
+      useBeanType: "reward",
+      momentId: getCurrentInstance().router.params.momentId,
       specialGoodsInfo: {},
+      configUserLevelInfo: {},
       visible: false,
     };
   }
@@ -49,31 +51,49 @@ class Index extends Component {
 
   componentDidShow() {
     this.getKolGoodsOrder();
+    this.fetchUserShareCommission();
+  }
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
   }
   computedCount(type) {
     const {
-      specialGoodsDTO,
-      specialGoodsDTO: { goodsCount },
+      httpData,
+      httpData: { goodsCount },
     } = this.state;
     if (type === "add") {
-      this.setState({
-        specialGoodsDTO: {
-          ...specialGoodsDTO,
-          goodsCount: goodsCount + 1,
+      this.setState(
+        {
+          httpData: {
+            ...httpData,
+            goodsCount: goodsCount + 1,
+          },
         },
-      });
+        (res) => {
+          this.getKolGoodsOrder();
+        }
+      );
     } else {
       if (goodsCount > 1) {
-        this.setState({
-          specialGoodsDTO: {
-            ...specialGoodsDTO,
-            goodsCount: goodsCount - 1,
+        this.setState(
+          {
+            httpData: {
+              ...httpData,
+              goodsCount: goodsCount - 1,
+            },
           },
-        });
+          (res) => {
+            this.getKolGoodsOrder();
+          }
+        );
       } else return toast("购买数量不能为0");
     }
   }
-
   getKolGoodsOrder() {
     const { httpData } = this.state;
     const {
@@ -94,18 +114,30 @@ class Index extends Component {
   }
 
   saveKolGoodsOrder() {
-    const { merchantId, useBeanStatus, specialGoodsDTO } = this.state;
+    const {
+      useBeanStatus,
+      useBeanType,
+      momentId,
+      httpData: { merchantId, specialActivityId, goodsCount },
+    } = this.state;
     const { shareType } = this.props.store.authStore;
+    const { shareUserId, shareUserType } = shareType;
     const {
       favourOrder: { saveSpecialGoods },
     } = goods;
     httpPost(
       {
         data: {
-          merchantId: merchantId,
-          useBeanStatus: useBeanStatus,
-          specialGoodsDTO,
-          ...shareType,
+          merchantId,
+          useBeanStatus,
+          useBeanType,
+          momentId,
+          specialGoodsDTO: {
+            id: specialActivityId,
+            goodsCount,
+          },
+          shareUserId,
+          shareUserType,
         },
         url: saveSpecialGoods,
       },
@@ -141,24 +173,10 @@ class Index extends Component {
     }
   }
 
-  useBean() {
-    const {
-      specialGoodsInfo: { userBean },
-      useBeanStatus,
-    } = this.state;
-    if (userBean == "0") {
-      return toast("卡豆为0");
-    } else {
-      if (useBeanStatus === "0") {
-        return this.setState({
-          useBeanStatus: "1",
-        });
-      } else {
-        return this.setState({
-          useBeanStatus: "0",
-        });
-      }
-    }
+  useBean(val) {
+    this.setState({
+      ...val,
+    });
   }
   computedPrice(price, bean) {
     if (Number(bean) > price * 100) {
@@ -188,16 +206,18 @@ class Index extends Component {
         useWeek,
         activeDays,
         delayDays,
-        activityTimeRule,
+        userIncomeBean,
       },
-      specialGoodsDTO: { goodsCount },
+      httpData: { goodsCount },
+      useBeanType,
       useBeanStatus,
+      configUserLevelInfo,
     } = this.state;
     const templateTime = () => {
       if (activeDays) {
         return `购买后${
-          delayDays === 0 ? "立刻" : delayDays
-        }天生效，有效期${activeDays}天，请在有效期内使用`;
+          delayDays === 0 ? "立刻" : delayDays + "天"
+        }生效，有效期${activeDays}天，请在有效期内使用`;
       } else {
         return `${useStartTime}至${useEndTime}`;
       }
@@ -257,37 +277,13 @@ class Index extends Component {
             </View>
           </View>
         </View>
-        {userBean ? (
-          <View
-            className="order_details_payType"
-            onClick={() => this.useBean()}
-          >
-            <View className="order_payType_box">
-              <View className="order_payType_top">
-                卡豆优惠抵扣
-                <View
-                  className="order_payType_question"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    Router({
-                      routerName: "interests",
-                    });
-                  }}
-                ></View>
-              </View>
-              <View className="order_pay_font">
-                可用{userBean}卡豆抵扣卡豆{parseInt(userBean) / 100}元
-              </View>
-              <View
-                className={classNames(
-                  "order_pay_iconBox",
-                  useBeanStatus === "1" ? "order_pay_icon2" : "order_pay_icon1"
-                )}
-              ></View>
-            </View>
-          </View>
-        ) : null}
-
+        <SelectBean
+          fn={this.useBean.bind(this)}
+          useBeanType={useBeanType}
+          data={specialGoodsInfo}
+          configUserLevelInfo={configUserLevelInfo}
+          useBeanStatus={useBeanStatus}
+        ></SelectBean>
         <View className="order_shop_desc">
           <View className="order_shop_descBox">
             <View className="order_shop_descTitle">购买须知</View>
@@ -353,7 +349,9 @@ class Index extends Component {
             }
             visible={visible}
             canfirm={() => this.saveKolGoodsOrder()}
-            content={`是否确认使用${userBean}卡豆支付？`}
+            content={`是否确认使用${
+              useBeanType === "reward" ? userBean : userIncomeBean
+            }卡豆支付？`}
             canfirmText="再想想"
             cancelText="确定"
           ></PayBean>

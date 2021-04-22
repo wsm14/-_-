@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
-import classNames from "classnames";
 import Coupon from "./components/couponTop";
 import { getOwnerCouponDetail } from "@/server/perimeter";
-import { getShareParamInfo } from "@/server/common";
+import { getShareParamInfo, getShareInfo } from "@/server/common";
 import { fetchUserShareCommission } from "@/server/index";
 import ButtonView from "@/components/Button";
 import { payNeed } from "@/components/componentView/NeedPay";
@@ -13,9 +12,13 @@ import {
   Instruction,
   merchantSet,
 } from "@/components/componentView/Instruction";
-import { format } from "@/common/utils";
+import { format, loginStatus, computedPrice } from "@/common/utils";
 import Router from "@/common/router";
+import { loginBtn } from "@/common/authority";
+import NullStatus from "./components/nullStatus";
 import { inject, observer } from "mobx-react";
+import TaroShareDrawer from "./components/TaroShareDrawer";
+import { rssConfigData } from "./components/data";
 import "./index.scss";
 @inject("store")
 @observer
@@ -29,7 +32,35 @@ class Index extends Component {
       couponDetail: {},
       index: 0,
       configUserLevelInfo: {},
+      cavansObj: {
+        data: null,
+        start: false,
+      },
     };
+  }
+  componentWillMount() {
+    let { scene } = getCurrentInstance().router.params;
+    let { httpData } = this.state;
+    if (scene) {
+      getShareParamInfo({ uniqueKey: scene }, (res) => {
+        let {
+          shareParamInfo: { param },
+        } = res;
+        if (param && JSON.parse(param)) {
+          param = JSON.parse(param);
+          this.setState(
+            {
+              httpData: { ...httpData, ...param },
+            },
+            (res) => {
+              this.fetchCouponDetail();
+            }
+          );
+        }
+      });
+    } else {
+      this.fetchCouponDetail();
+    }
   }
   fetchCouponDetail() {
     const { httpData } = this.state;
@@ -49,27 +80,116 @@ class Index extends Component {
       });
     });
   }
+  getShareInfo() {
+    const {
+      couponDetail: {
+        ownerCouponIdString,
+        merchantName,
+        activityEndTime = "",
+        address,
+        couponName,
+        cityName,
+        merchantLogo,
+      },
+    } = this.state;
+
+    const { profile, username } = Taro.getStorageSync("userInfo");
+    getShareInfo(
+      {
+        shareType: "reduceCoupon",
+        shareId: ownerCouponIdString,
+      },
+      (res) => {
+        console.log(res);
+        const { oriPrice, realPrice, qcodeUrl } = res;
+        this.setState(
+          {
+            cavansObj: {
+              start: true,
+              data: rssConfigData({
+                merchantName,
+                time: activityEndTime || "长期有效",
+                oldPrice: oriPrice,
+                price: realPrice,
+                wxCode: qcodeUrl,
+                username,
+                userProfile: profile,
+                name: couponName,
+                address,
+                city: cityName,
+                merchantLogo: merchantLogo,
+              }),
+            },
+          },
+          (res) => {
+            console.log(this.state.cavansObj);
+          }
+        );
+      }
+    );
+  }
+
+  onShareAppMessage(res) {
+    const {
+      couponDetail: { couponName, merchantLogo },
+      httpData: { merchantId, ownerId, ownerCouponId },
+    } = this.state;
+    let userInfo = loginStatus() || {};
+    const { userIdString } = userInfo;
+    if (res.from === "button") {
+      return {
+        title: couponName,
+        imageUrl: merchantLogo,
+        path: `/pages/perimeter/payCouponDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&ownerId=${ownerId}&ownerCouponId=${ownerCouponId}`,
+      };
+    }
+    if (loginStatus()) {
+      return {
+        title: couponName,
+        imageUrl: merchantLogo,
+        path: `/pages/perimeter/payCouponDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&ownerId=${ownerId}&ownerCouponId=${ownerCouponId}`,
+      };
+    } else {
+      return {
+        title: couponName,
+        imageUrl: merchantLogo,
+      };
+    }
+  }
+  saveCouponOrder() {
+    const {
+      couponDetail: { merchantIdString, ownerIdString, ownerCouponIdString },
+    } = this.state;
+    Router({
+      routerName: "couponOrder",
+      args: {
+        merchantId: merchantIdString,
+        ownerId: ownerIdString,
+        ownerCouponId: ownerCouponIdString,
+      },
+    });
+  }
   componentDidShow() {
     const { index } = this.state;
     if (index !== 0) {
-      this.getDetailsById();
+      this.fetchCouponDetail();
     }
     this.fetchUserShareCommission();
   }
-  componentDidMount() {
-    this.fetchCouponDetail();
-  }
+  componentDidMount() {}
   render() {
     const {
       couponDetail,
       configUserLevelInfo,
       configUserLevelInfo: { shareCommission },
+      cavansObj,
       couponDetail: {
         couponPrice,
         buyPrice,
         activityStartTime,
         activityTimeRule,
         merchantPrice,
+        merchantCouponStatus = "1",
       },
     } = this.state;
     const payBtn = () => {
@@ -85,26 +205,15 @@ class Index extends Component {
         return (
           <View className="shopdetails_kol_goshop">
             <ButtonView>
-              <View className="shopdetails_kol_btnBox shopdetails_kol_btnColor1">
-                <View
-                  className="shopdetails_kol_font1"
-                  // onClick={() =>
-                  //   loginBtn(() =>
-                  //     navigateTo(
-                  //       `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
-                  //     )
-                  //   )
-                  // }
-                >
-                  自购返
-                </View>
+              <View
+                onClick={() => loginBtn(() => this.saveCouponOrder())}
+                className="shopdetails_kol_btnBox shopdetails_kol_btnColor1"
+              >
+                <View className="shopdetails_kol_font1">自购返</View>
                 <View className="shopdetails_kol_font2">
                   {" "}
                   省¥
-                  {(
-                    (buyPrice - merchantPrice) *
-                    (shareCommission / 100)
-                  ).toFixed(2)}
+                  {computedPrice(buyPrice - merchantPrice, shareCommission)}
                 </View>
               </View>
             </ButtonView>
@@ -117,10 +226,7 @@ class Index extends Component {
                 <View className="shopdetails_kol_font2">
                   {" "}
                   赚¥
-                  {(
-                    (buyPrice - merchantPrice) *
-                    (shareCommission / 100)
-                  ).toFixed(2)}
+                  {computedPrice(buyPrice - merchantPrice, shareCommission)}
                 </View>
               </View>
             </ButtonView>
@@ -131,13 +237,7 @@ class Index extends Component {
           <ButtonView>
             <View
               className="shopdetails_shop_goshop"
-              onClick={() =>
-                loginBtn(() =>
-                  navigateTo(
-                    `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
-                  )
-                )
-              }
+              onClick={() => loginBtn(() => this.saveCouponOrder())}
             >
               立即抢购
             </View>
@@ -145,39 +245,49 @@ class Index extends Component {
         );
       }
     };
-    return (
-      <View className="payCoupon_box">
-        <Coupon
-          configUserLevelInfo={configUserLevelInfo}
-          data={couponDetail}
-        ></Coupon>
-        {merchantSet(couponDetail)}
-        {/*使用须知*/}
-        {knowPay(couponDetail, "coupon")}
-        {/*使用方法*/}
-        {Instruction()}
-        {/*使用规则*/}
-        {payNeed()}
-        <View className="shopdetails_shop_btn">
-          <View className="shopdetails_shop_price">
-            <View className="shopdetails_shop_priceTop">
-              <Text className="font20">¥</Text>
-              {buyPrice}
+    if (merchantCouponStatus === "1") {
+      return (
+        <View className="payCoupon_box">
+          <TaroShareDrawer
+            {...cavansObj}
+            onSave={() => console.log("点击保存")}
+            onClose={() =>
+              this.setState({ cavansObj: { start: false, data: null } })
+            }
+          ></TaroShareDrawer>
+          <Coupon
+            configUserLevelInfo={configUserLevelInfo}
+            data={couponDetail}
+          ></Coupon>
+          {merchantSet(couponDetail)}
+          {/*使用须知*/}
+          {knowPay(couponDetail, "coupon")}
+          {/*使用方法*/}
+          {Instruction()}
+          {/*使用规则*/}
+          {payNeed()}
+          <View className="shopdetails_shop_btn">
+            <View className="shopdetails_shop_price">
+              <View className="shopdetails_shop_priceTop">
+                <Text className="font20">¥</Text>
+                {buyPrice}
+              </View>
+              <View className="shopdetails_shop_real">
+                <Text className="shopdetails_shop_realStatus1">
+                  ¥ {couponPrice}
+                </Text>
+                <Text className="shopdetails_shop_realStatus2">
+                  {((Number(buyPrice) / Number(couponPrice)) * 10).toFixed(1)}折
+                </Text>
+              </View>
             </View>
-            <View className="shopdetails_shop_real">
-              <Text className="shopdetails_shop_realStatus1">
-                ¥ {couponPrice}
-              </Text>
-              <Text className="shopdetails_shop_realStatus2">
-                {((Number(couponPrice) / Number(buyPrice)) * 10).toFixed(1)}折
-              </Text>
-            </View>
+            {payBtn()}
           </View>
-          {payBtn()}
         </View>
-      </View>
-    );
+      );
+    } else {
+      return <NullStatus></NullStatus>;
+    }
   }
 }
-
 export default Index;

@@ -327,6 +327,7 @@ export const shopCard = (_this, data, obj) => {
       businessTime,
       tag,
       merchantAddress,
+      address,
       lat,
       lnt,
       cityName = "",
@@ -356,7 +357,8 @@ export const shopCard = (_this, data, obj) => {
 
             <View className="shopCard_right4 font_hide">
               {cityName + districtName} |{" "}
-              {GetDistance(getLat(), getLnt(), lat, lnt)} | {merchantAddress}
+              {GetDistance(getLat(), getLnt(), lat, lnt)} |{" "}
+              {merchantAddress || address}
             </View>
           </View>
         </View>

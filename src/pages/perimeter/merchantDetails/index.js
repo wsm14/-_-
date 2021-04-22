@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { ScrollView, Text, View } from "@tarojs/components";
+import { ScrollView, Text, View, Video } from "@tarojs/components";
 import Banner from "@/components/banner";
 import {
   goodsCard,
@@ -267,8 +267,8 @@ class MerchantDetails extends Component {
         merchantFollowStatus,
         tag,
         merchantId,
-        headerImg = "",
         merchantName,
+        headerContentObject = {},
       },
       visible,
       specialGoodsList,
@@ -279,6 +279,34 @@ class MerchantDetails extends Component {
       priceCoupon = [],
       userInfo: { userId },
     } = this.state;
+    const {
+      headerType = "image",
+      imageUrl = "",
+      mp4Url = "",
+    } = headerContentObject;
+    const templateTitle = () => {
+      if (headerType === "image") {
+        return (
+          <Banner
+            autoplay={imageUrl.split(",").length > 1 ? true : false}
+            imgStyle
+            data={imageUrl ? imageUrl.split(",") : []}
+            imgName={"coverImg"}
+            style={{ width: "100%", height: Taro.pxTransform(440) }}
+            boxStyle={{ width: "100%", height: Taro.pxTransform(440) }}
+          ></Banner>
+        );
+      } else {
+        return (
+          <Video
+            style={{ width: "100%", height: Taro.pxTransform(440) }}
+            autoplay
+            showMuteBtn
+            src={mp4Url}
+          ></Video>
+        );
+      }
+    };
     if (Object.keys(userMerchantInfo).length > 0) {
       return (
         <View className="merchantBox">
@@ -300,14 +328,7 @@ class MerchantDetails extends Component {
               }}
             ></APPShare>
           )}
-          <Banner
-            autoplay={headerImg.split(",").length > 1 ? true : false}
-            imgStyle
-            data={headerImg ? headerImg.split(",") : []}
-            imgName={"coverImg"}
-            style={{ width: "100%", height: Taro.pxTransform(440) }}
-            boxStyle={{ width: "100%", height: Taro.pxTransform(440) }}
-          ></Banner>
+          {templateTitle()}
           <View className="merchantDetails_shop">
             <View className="merchant_name font_noHide">{merchantName}</View>
             <View className="merchant_desc">
@@ -402,9 +423,12 @@ class MerchantDetails extends Component {
               <View
                 className="merchat_time"
                 onClick={() =>
-                  navigateTo(
-                    `/pages/perimeter/businessSell/index?services=${services}&businessStatus=${businessStatus}&businessTime=${businessTime}`
-                  )
+                  Router({
+                    routerName: "businessSell",
+                    args: {
+                      merchantId,
+                    },
+                  })
                 }
               >
                 <View className="merchant_time_go"></View>

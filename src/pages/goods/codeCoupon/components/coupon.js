@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Text, View } from "@tarojs/components";
 import { backgroundObj } from "@/common/utils";
 import "./../index.scss";
-export default ({ list = [], callback,couponIdInit  =  null }) => {
+export default ({ list = [], callback, couponIdInit = null }) => {
   const [data, setData] = useState([]);
   const [couponId, setCouponId] = useState(couponIdInit);
   useEffect(() => {
@@ -32,6 +32,7 @@ export default ({ list = [], callback,couponIdInit  =  null }) => {
       couponType,
       thresholdPrice,
       userCouponIdString,
+      unavailableReason,
     } = item;
     return (
       <View
@@ -49,14 +50,21 @@ export default ({ list = [], callback,couponIdInit  =  null }) => {
           <View className="coupon_list_couponFont">
             <View className="coupon_list_couponFont1">{couponName}</View>
             <View className="coupon_list_couponFont2">
-              有效期：{activeBeginDate}～{activeEndDate}
+              面值{couponPrice}元
+              {thresholdPrice && `｜满${thresholdPrice}元可用`}
+            </View>
+            <View className="coupon_list_couponFont3">
+              有效期：{activeBeginDate}至{activeEndDate}
             </View>
           </View>
         </View>
-        <View className="coupon_list_liner"></View>
-        <View className="coupon_list_bottom">
-          使用规则：仅限到店扫码消费{thresholdPrice&& `，满${thresholdPrice}元可用`}
-        </View>
+
+        {availableFlag === "0" && (
+          <>
+            <View className="coupon_list_liner"></View>
+            <View className="coupon_list_bottom">{unavailableReason}</View>
+          </>
+        )}
         <View
           className={classNames(
             "coupon_list_iconBox",

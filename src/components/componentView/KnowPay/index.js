@@ -23,8 +23,8 @@ export const knowPay = (data, type = "good") => {
   const templateTime = () => {
     if (activeDays) {
       return `购买后${
-        delayDays === 0 ? "立刻" : delayDays
-      }天生效，有效期${activeDays}天，请在有效期内使用`;
+        delayDays === 0 ? "立刻" : delayDays + "天"
+      }生效，有效期${activeDays}天，请在有效期内使用`;
     } else if (activeDate) {
       return `${activeDate}至${endDate}`;
     } else {
@@ -45,7 +45,7 @@ export const knowPay = (data, type = "good") => {
         </Text>
         ，具体以门店供应时段为准；
       </View>
-      {type === "coupon" && thresholdPrice !== "0" && (
+      {type === "coupon" && thresholdPrice !== "0" && thresholdPrice !== "" && (
         <>
           <View className="shop_toastDec shop_getDate">使用门槛：</View>
           <View className="shop_toastText">满{thresholdPrice}元可用；</View>

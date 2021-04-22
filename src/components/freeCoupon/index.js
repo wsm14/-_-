@@ -50,7 +50,7 @@ export default (props) => {
         if (delayDays) {
           return `领取后${delayDays}天内生效，有效期${activeDays}天`;
         } else {
-          return `购买后即刻天生效，有效期${activeDays}天,请在有效期内使用`;
+          return `购买后即刻生效，有效期${activeDays}天,请在有效期内使用`;
         }
       } else {
         return `${activeDate}至${endDate}`;

@@ -529,19 +529,10 @@ export const getDom = (id, fn) => {
     .exec();
 };
 export const filterGoods = (data) => {
-  let { orderDesc } = data;
+  let { orderDesc = {}, orderType } = data;
   orderDesc = JSON.parse(orderDesc);
-  let { kolGoods, specialGoods } = orderDesc;
-  if (!kolGoods && !specialGoods) {
-    return data;
-  } else if (!kolGoods) {
-    orderDesc.kolGoods = orderDesc.specialGoods;
-    orderDesc = JSON.stringify(orderDesc);
-    return {
-      ...data,
-      orderDesc: orderDesc,
-    };
-  } else return data;
+  const { reduceCoupon = {}, specialGoods = {} } = orderDesc;
+  return { ...data, ...reduceCoupon, ...specialGoods, ...orderDesc };
 };
 export const removeLogin = () =>
   Taro.removeStorage({
@@ -569,7 +560,7 @@ export const removeStorage = (key) =>
     },
   });
 export const computedClient = () => {
-  let client = Taro.getMenuButtonBoundingClientRect();
+  let client = Taro.getMenuButtonBoundingClientRect() || {};
   return client;
 };
 

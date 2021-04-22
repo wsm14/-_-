@@ -12,16 +12,20 @@ export default (props) => {
     );
   };
   const goCouponDetails = (item) => {
-    const { couponChannel, userCouponIdString } = item;
+    const { couponType, userCouponIdString } = item;
     console.log(item);
-    if (couponChannel === "buy") {
+    if (couponType !== "reduce") {
       navigateTo(`/pages/coupon/couponDetails/index?id=${userCouponIdString}`);
     } else {
       navigateTo(`/pages/coupon/voucherDetails/index?id=${userCouponIdString}`);
     }
   };
   useEffect(() => {
-    setList(data.filter(item => {return item.bugFlag!== '1'}));
+    setList(
+      data.filter((item) => {
+        return item.bugFlag !== "1";
+      })
+    );
   }, [data]);
   useEffect(() => {
     onClose(visible);
