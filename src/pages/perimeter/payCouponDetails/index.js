@@ -19,6 +19,7 @@ import NullStatus from "./components/nullStatus";
 import { inject, observer } from "mobx-react";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
+import Toast from "@/components/dakale_toast";
 import "./index.scss";
 @inject("store")
 @observer
@@ -36,6 +37,7 @@ class Index extends Component {
         data: null,
         start: false,
       },
+      visible: false,
     };
   }
   componentWillMount() {
@@ -158,8 +160,27 @@ class Index extends Component {
   }
   saveCouponOrder() {
     const {
-      couponDetail: { merchantIdString, ownerIdString, ownerCouponIdString },
+      couponDetail: {
+        merchantIdString,
+        ownerIdString,
+        ownerCouponIdString,
+        personLimit,
+        dayMaxBuyAmount,
+        boughtCouponNum,
+        buyRule,
+      },
     } = this.state;
+    if (buyRule === "dayLimit" && dayMaxBuyAmount === boughtCouponNum) {
+      this.setState({
+        visible: true,
+      });
+      return;
+    } else if (buyRule === "personLimit" && personLimit === boughtCouponNum) {
+      this.setState({
+        visible: true,
+      });
+      return;
+    }
     Router({
       routerName: "couponOrder",
       args: {
@@ -181,27 +202,30 @@ class Index extends Component {
     const {
       couponDetail,
       configUserLevelInfo,
-      configUserLevelInfo: { shareCommission },
+      configUserLevelInfo: { shareCommission = 0 },
       cavansObj,
       couponDetail: {
         couponPrice,
         buyPrice,
-        activityStartTime,
-        activityTimeRule,
         merchantPrice,
         merchantCouponStatus = "1",
+        remain,
+        buyRule,
+        dayMaxBuyAmount,
+        personLimit,
       },
+      visible,
     } = this.state;
     const payBtn = () => {
-      if (!format(activityStartTime) && activityTimeRule === "fixed") {
+      if (remain === 0) {
         return (
           <ButtonView>
             <View className="shopdetails_shop_goshop shopdetails_shop_option">
-              即将开抢
+              已售罄
             </View>
           </ButtonView>
         );
-      } else if (shareCommission !== 0) {
+      } else if (shareCommission) {
         return (
           <View className="shopdetails_kol_goshop">
             <ButtonView>
@@ -283,6 +307,25 @@ class Index extends Component {
             </View>
             {payBtn()}
           </View>
+          {visible && (
+            <Toast
+              title={"哒卡乐温馨提示"}
+              close={() => this.setState({ visible: false })}
+            >
+              <View className="shop_dakale_content">
+                {buyRule === "dayLimit" ? (
+                  <>
+                    <View>
+                      每人每天限购{dayMaxBuyAmount}
+                      份，您今天已享受本次优惠，请明天再来
+                    </View>
+                  </>
+                ) : (
+                  <View>每人限购{personLimit}份，您已享受本次优惠</View>
+                )}
+              </View>
+            </Toast>
+          )}
         </View>
       );
     } else {

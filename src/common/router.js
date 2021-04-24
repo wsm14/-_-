@@ -60,6 +60,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     codePay: "/pages/goods/codePay/index",
     coupon: "/pages/goods/codeCoupon/index",
     couponOrder: "/pages/goods/couponOrder/index",
+    favourableOrder: "/pages/goods/favourOrder/index",
     pay: "/pages/goods/payWeex/index", //支付页
 
     //订单  goods

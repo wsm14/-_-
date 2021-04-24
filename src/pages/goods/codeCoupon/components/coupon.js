@@ -44,7 +44,7 @@ export default ({ list = [], callback, couponIdInit = null }) => {
       >
         <View className="coupon_list_top">
           <View
-            className="coupon_list_coverImage dakale_nullImage"
+            className="coupon_list_coverImage coupon_big_icon"
             style={couponImg ? backgroundObj(couponImg) : {}}
           ></View>
           <View className="coupon_list_couponFont">
@@ -54,7 +54,7 @@ export default ({ list = [], callback, couponIdInit = null }) => {
               {thresholdPrice && `｜满${thresholdPrice}元可用`}
             </View>
             <View className="coupon_list_couponFont3">
-              有效期：{activeBeginDate}至{activeEndDate}
+              {activeBeginDate}至{activeEndDate}
             </View>
           </View>
         </View>
@@ -62,7 +62,9 @@ export default ({ list = [], callback, couponIdInit = null }) => {
         {availableFlag === "0" && (
           <>
             <View className="coupon_list_liner"></View>
-            <View className="coupon_list_bottom">{unavailableReason}</View>
+            <View className="coupon_list_bottom">
+              不可用: {unavailableReason}
+            </View>
           </>
         )}
         <View

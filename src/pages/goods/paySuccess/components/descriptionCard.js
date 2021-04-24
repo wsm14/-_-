@@ -105,12 +105,10 @@ export default (props) => {
 
   return (
     <View className="paySuccess_box">
-      <View className="paySuccess_cover">
-        <Image
-          style={{ width: "100%", height: "100%" }}
-          src={merchantImg}
-        ></Image>
-      </View>
+      <View
+        className="paySuccess_cover"
+        style={backgroundObj(merchantImg)}
+      ></View>
       <View className="paySuccess_goodName">{goodsName}</View>
       <View className="paySuccess_count">数量:{list.length}</View>
       {setCode()}
@@ -123,7 +121,7 @@ export default (props) => {
           }
           className={classNames("color1 font24 code_num")}
         >
-         券码：{list[current]["verificationCode"]}
+          券码：{list[current]["verificationCode"]}
         </View>
       )}
       <View className="public_center color1 font24 code_count">
@@ -136,7 +134,7 @@ export default (props) => {
         <View className="onReadly_icon onReadly_iconBox"></View>
         如果券码不显示，点这里刷新
       </View>
-      <View className='pay_goLiner'></View>
+      <View className="pay_goLiner"></View>
     </View>
   );
 };

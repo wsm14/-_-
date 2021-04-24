@@ -23,15 +23,15 @@ export const coupon = (data) => {
   const { couponPrice = 0, thresholdPrice, remain } = reduceObject;
   let a = 0;
   const templateThreshold = () => {
-    if (thresholdPrice) {
-      return `满${thresholdPrice}元可用`;
+    if (thresholdPrice && thresholdPrice.length > 0) {
+      return `满${thresholdPrice}元可用｜`;
     } else {
-      return "无门槛 ";
+      return "";
     }
   };
   const templateSelect = () => {
     if (buyRule === "unlimited") {
-      return `不限购`;
+      return `每人不限购数量`;
     } else {
       if (buyStatus === "1") {
         return `购买数量已达上限`;
@@ -75,7 +75,7 @@ export const coupon = (data) => {
               {couponName}
             </View>
             <View className="coupon_view_content color2">
-              {templateThreshold()}｜{templateSelect()}
+              {templateThreshold()}{templateSelect()}
             </View>
             <View className="coupon_view_bottom">
               <Text className="coupon_view_priceIcon color3">¥ </Text>
@@ -93,7 +93,7 @@ export const coupon = (data) => {
             <View className="coupon_view_title font_hide">{couponName}</View>
             <View className="coupon_view_content">
               {" "}
-              {templateThreshold()}｜{templateSelect()}
+              {templateThreshold()}{templateSelect()}
             </View>
             <View className="coupon_view_bottom">
               <Text className="coupon_view_priceIcon">¥ </Text>
@@ -125,15 +125,15 @@ export const couponLovely = (data) => {
   const { couponPrice = 0, thresholdPrice, remain } = reduceObject;
   let a = 0;
   const templateThreshold = () => {
-    if (thresholdPrice) {
-      return `满${thresholdPrice}元可用`;
+    if (thresholdPrice && thresholdPrice.length > 0) {
+      return `满${thresholdPrice}元可用｜`;
     } else {
-      return "无门槛 ";
+      return "";
     }
   };
   const templateSelect = () => {
     if (buyRule === "unlimited") {
-      return `不限购`;
+      return `每人不限购数量`;
     } else {
       if (buyStatus === "1") {
         return `购买数量已达上限`;
@@ -167,7 +167,8 @@ export const couponLovely = (data) => {
             {couponName}
           </View>
           <View className="coupon_view_content color2">
-            {templateThreshold()}｜{templateSelect()}
+            {templateThreshold()}
+            {templateSelect()}
           </View>
           <View className="coupon_view_bottom">
             <Text className="coupon_view_priceIcon color3">¥ </Text>

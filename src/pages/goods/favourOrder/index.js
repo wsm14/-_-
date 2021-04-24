@@ -217,7 +217,7 @@ class Index extends Component {
       if (activeDays) {
         return `购买后${
           delayDays === 0 ? "立刻" : delayDays + "天"
-        }生效，有效期${activeDays}天，请在有效期内使用`;
+        }生效，有效期${activeDays}天`;
       } else {
         return `${useStartTime}至${useEndTime}`;
       }

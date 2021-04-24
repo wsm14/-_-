@@ -187,7 +187,7 @@ class Index extends Component {
         couponImg,
         thresholdPrice = "0",
         couponPrice,
-        userIncomeBean
+        userIncomeBean,
       },
       httpData: { couponCount },
       useBeanStatus,
@@ -198,7 +198,7 @@ class Index extends Component {
       if (activeDays) {
         return `购买后${
           delayDays === 0 ? "立刻" : delayDays + "天"
-        }生效，有效期${activeDays}天，请在有效期内使用`;
+        }生效，有效期${activeDays}天`;
       } else if (activeDate) {
         return `${activeDate}至${endDate}`;
       } else {
@@ -237,10 +237,8 @@ class Index extends Component {
                   {couponName}
                 </View>
                 <View className="order_price">
-                  面值{couponPrice}元｜{" "}
-                  {thresholdPrice !== "0"
-                    ? `满${thresholdPrice}元可用`
-                    : "无门槛"}
+                  面值{couponPrice}元{" "}
+                  {thresholdPrice ? `｜满${thresholdPrice}元可用` : ""}
                 </View>
                 <View className="order_toast">购买数量</View>
               </View>

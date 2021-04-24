@@ -74,7 +74,7 @@ export default (props) => {
     setData(list);
   }, [list]);
   const createShopTop = (item, merchant) => {
-    const { status, orderType } = item;
+    const { status, orderType, closeType } = item;
     console.log(merchant);
     return (
       <View

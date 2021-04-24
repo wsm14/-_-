@@ -45,7 +45,7 @@ export default (props) => {
     return (
       <View className="lovely_box">
         <View className="color1 font28 lovely_title">
-          - {title || "你可能还喜欢"} -
+          - {title || "小伙伴们还喜欢"} -
         </View>
         <View className="love_shop">
           {data.map((item) => {

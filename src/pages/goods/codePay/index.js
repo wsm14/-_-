@@ -11,11 +11,16 @@ import SelectBean from "@/components/componentView/selectBean";
 import Evens from "@/common/evens";
 import Router from "@/common/router";
 const computedScan = (value, couponPrice, scale, bean) => {
-  let setBean = (value - couponPrice) * 100 * scale;
-  if (setBean > 0) {
-    if (setBean > bean) {
-      return bean;
-    } else return setBean;
+  let setBean = (Number(value) - Number(couponPrice)) * 100 * scale;
+  console.log(Number(value) - Number(couponPrice));
+  if (Number(value) - Number(couponPrice) > 0) {
+    if (setBean > 0) {
+      if (setBean > bean) {
+        return bean;
+      } else return setBean;
+    } else {
+      return "0";
+    }
   } else {
     return "0";
   }
@@ -38,11 +43,12 @@ class Index extends Component {
   }
 
   componentDidMount() {
+    this.getUserDetails();
     Evens.$on("payCode", this.payCode.bind(this));
   }
 
   componentDidShow() {
-    this.getUserDetails();
+  
     this.fetchUserShareCommission();
   }
   payCode(obj) {
@@ -53,8 +59,12 @@ class Index extends Component {
       (res) => {
         const {
           reserveOrderResult: { userRewardBean, userIncomeBean },
+          reserveOrderResult,
+          configUserLevelInfo: { payBeanCommission },
+          couponObj: { couponPrice = 0 },
           httpData: { totalFee },
         } = this.state;
+        console.log(totalFee);
         if (totalFee > 0) {
           this.setState({
             reserveOrderResult: {
@@ -68,7 +78,7 @@ class Index extends Component {
               userIncomeBean: computedScan(
                 totalFee,
                 couponPrice,
-                payBeanCommission + "%",
+                payBeanCommission / 100,
                 userIncomeBean
               ),
             },
@@ -217,7 +227,7 @@ class Index extends Component {
                             userIncomeBean: computedScan(
                               value,
                               couponPrice,
-                              payBeanCommission + "%",
+                              payBeanCommission / 100,
                               userIncomeBean
                             ),
                           },

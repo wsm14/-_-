@@ -21,6 +21,8 @@ export default ({ data, configUserLevelInfo }) => {
     couponPrice,
     personLimit,
   } = data;
+  const { payBeanCommission = 50 } = configUserLevelInfo;
+  console.log(configUserLevelInfo );
   const templateSelect = () => {
     if (buyRule === "unlimited") {
       return `不限购`;
@@ -32,7 +34,7 @@ export default ({ data, configUserLevelInfo }) => {
       }
     }
   };
-  const { payBeanCommission = 50 } = configUserLevelInfo;
+
   return (
     <View className="coupon_bg">
       <View className="coupon_top_bg">

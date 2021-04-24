@@ -17,12 +17,12 @@ import { navigateTo } from "../../../common/utils";
 import ActivityStatus from "./components/index";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
 import { fetchUserShareCommission } from "@/server/index";
-import Router from "@/common/router";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import ButtonView from "@/components/Button";
 import { payNeed } from "@/components/componentView/NeedPay";
 import { knowPay } from "@/components/componentView/KnowPay";
+import Router from "@/common/router";
 import {
   Instruction,
   merchantSet,
@@ -154,7 +154,6 @@ class MerchantDetails extends Component {
     let userInfo = loginStatus() || {};
     let img = specialGoodsInfo.activityGoodsImg.split(",")[0];
     const { userIdString } = userInfo;
-    console.log(goodsName);
     if (res.from === "button") {
       return {
         title: goodsName,
@@ -195,6 +194,41 @@ class MerchantDetails extends Component {
       };
     }
   }
+
+  saveGoodsOrder() {
+    const {
+      specialGoodsInfo: {
+        merchantIdString,
+        personLimit,
+        dayMaxBuyAmount,
+        boughtActivityGoodsNum,
+        buyRule,
+        specialActivityIdString,
+      },
+    } = this.state;
+    if (buyRule === "dayLimit" && dayMaxBuyAmount === boughtActivityGoodsNum) {
+      this.setState({
+        visible: true,
+      });
+      return;
+    } else if (
+      buyRule === "personLimit" &&
+      personLimit === boughtActivityGoodsNum
+    ) {
+      this.setState({
+        visible: true,
+      });
+      return;
+    }
+    Router({
+      routerName: "favourableOrder",
+      args: {
+        merchantId: merchantIdString,
+        specialActivityId: specialActivityIdString,
+      },
+    });
+  }
+
   onReady() {
     // 生命周期函数--监听页面初次渲染完成
   }
@@ -224,6 +258,9 @@ class MerchantDetails extends Component {
         packageGroupObjects = [],
         merchantCount,
         merchantPrice,
+        remain,
+        visible,
+        personLimit,
       },
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
       specialGoodsInfo,
@@ -239,6 +276,14 @@ class MerchantDetails extends Component {
             </View>
           </ButtonView>
         );
+      } else if (remain === 0) {
+        return (
+          <ButtonView>
+            <View className="shopdetails_shop_goshop shopdetails_shop_option">
+              已售罄
+            </View>
+          </ButtonView>
+        );
       } else if (shareCommission !== 0) {
         return (
           <View className="shopdetails_kol_goshop">
@@ -246,13 +291,7 @@ class MerchantDetails extends Component {
               <View className="shopdetails_kol_btnBox shopdetails_kol_btnColor1">
                 <View
                   className="shopdetails_kol_font1"
-                  onClick={() =>
-                    loginBtn(() =>
-                      navigateTo(
-                        `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
-                      )
-                    )
-                  }
+                  onClick={() => loginBtn(() => this.saveGoodsOrder())}
                 >
                   自购返
                 </View>
@@ -283,13 +322,7 @@ class MerchantDetails extends Component {
           <ButtonView>
             <View
               className="shopdetails_shop_goshop"
-              onClick={() =>
-                loginBtn(() =>
-                  navigateTo(
-                    `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
-                  )
-                )
-              }
+              onClick={() => loginBtn(() => this.saveGoodsOrder())}
             >
               立即抢购
             </View>
@@ -401,6 +434,9 @@ class MerchantDetails extends Component {
                     {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount)}
                   </View>
                 )}
+                {remain === 0 && (
+                  <View className="shopdetails_getPrice_tag">已售罄</View>
+                )}
               </View>
             </View>
 
@@ -484,6 +520,25 @@ class MerchantDetails extends Component {
               </View>
               {payBtn()}
             </View>
+            {visible && (
+              <Toast
+                title={"哒卡乐温馨提示"}
+                close={() => this.setState({ visible: false })}
+              >
+                <View className="shop_dakale_content">
+                  {buyRule === "dayLimit" ? (
+                    <>
+                      <View>
+                        每人每天限购{dayMaxBuyAmount}
+                        份，您今天已享受本次优惠，请明天再来
+                      </View>
+                    </>
+                  ) : (
+                    <View>每人限购{personLimit}份，您已享受本次优惠</View>
+                  )}
+                </View>
+              </Toast>
+            )}
           </View>
         );
       } else {

@@ -78,7 +78,7 @@ export const shopDetails = (data, obj) => {
         return (
           <View className="shopDetails_btn shopDetails_btnColor3">已结束</View>
         );
-      } else if (status === "1" && remain === "0") {
+      } else if (status === "1" && remain === 0) {
         return (
           <View className="shopDetails_btn shopDetails_btnColor3">已售罄</View>
         );
@@ -98,7 +98,7 @@ export const shopDetails = (data, obj) => {
       <View
         className="shopDetails_box"
         onClick={() => {
-          if (status === "0" || (status === "1" && remain === "0")) {
+          if (status === "0" || (status === "1" && remain === 0)) {
             return;
           }
           return navigateTo(
@@ -344,7 +344,7 @@ export const shopCard = (_this, data, obj) => {
       >
         <View className="shop_card_details">
           <View
-            className="dakale_nullImage shop_card_left"
+            className="coupon_shop_icon shop_card_left"
             style={merchantLogo ? { ...backgroundObj(merchantLogo) } : {}}
           ></View>
           <View className="shop_card_right">

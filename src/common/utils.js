@@ -426,7 +426,7 @@ export const filterPayStatus = (string) => {
       return "待付款";
     case "1":
       return "待使用";
-    case "2":
+    case "2": 
       return "已关闭";
     case "3":
       return "已完成";

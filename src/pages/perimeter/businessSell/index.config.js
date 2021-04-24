@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: '商家信息',
+  navigationBarTitleText: '商户信息',
   navigationStyle: 'default',
 }

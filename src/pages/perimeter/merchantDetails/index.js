@@ -129,7 +129,7 @@ class MerchantDetails extends Component {
 
   getUserCoupon() {
     const { merchantHttpData } = this.state;
-    getUserCoupon({ ...merchantHttpData, page: 1, limit: 6 }, (res) => {
+    getUserCoupon({ ...merchantHttpData, page: 1, limit: 3 }, (res) => {
       const { couponList } = res;
       this.setState({
         priceCoupon: couponList,
@@ -269,6 +269,7 @@ class MerchantDetails extends Component {
         merchantId,
         merchantName,
         headerContentObject = {},
+        scenesNames = "",
       },
       visible,
       specialGoodsList,
@@ -337,7 +338,7 @@ class MerchantDetails extends Component {
               {perCapitaConsumption && "人均" + perCapitaConsumption + "元"}」
             </View>
             <View className="merchant_tag">
-              {filterStrList(tag).map((item) => {
+              {filterStrList(scenesNames).map((item) => {
                 return <View className="merchat_tag_box">{item}</View>;
               })}
             </View>
@@ -442,14 +443,13 @@ class MerchantDetails extends Component {
                     </Text>
                   </View>
                   <View className="merchant_time_tags">
-                    {services &&
-                      services.map((item, index) => {
-                        if (index < 5) {
-                          return (
-                            <View className={"merchant_tag_shop"}>{item}</View>
-                          );
-                        }
-                      })}
+                    {[filterStrList(tag), ...services].map((item, index) => {
+                      if (index < 5) {
+                        return (
+                          <View className={"merchant_tag_shop"}>{item}</View>
+                        );
+                      }
+                    })}
                   </View>
                 </View>
               </View>
@@ -587,6 +587,7 @@ class MerchantDetails extends Component {
                 beanAmount:
                   getCurrentInstance().router.params.beanAmount || "0",
               }}
+              show={getBeanStatus}
               visible={() => {
                 if (couponList.length > 0) {
                   this.setState({

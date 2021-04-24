@@ -53,14 +53,13 @@ class businessSell extends Component {
             </View>
           </View>
         </View>
-        <View className="businessSell_liner"></View>
         <View className="businessSell_tagsBox">
           <View className="businessSell_tagsType color1">
             {businessStatus === "0" ? "休息中" : "营业中"}
           </View>
           <View className="businessSell_tagsData">{businessTime}</View>
         </View>
-        {services !== "undefined" && services.length > 0 && (
+        {[...specialServices, ...services].length > 0 && (
           <>
             <View className="businessSell_top businessSell_title">
               <View className="businessSell_title_box">
@@ -70,10 +69,9 @@ class businessSell extends Component {
                 </View>
               </View>
             </View>
-            <View className="businessSell_liner"></View>
             <View className="businessSell_tagsBox">
               <View className="businessSell_tags"></View>
-              {services.map((item) => {
+              {[...specialServices, ...services].map((item) => {
                 return <View className="businessSell_tag_server">{item}</View>;
               })}
             </View>

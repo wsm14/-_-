@@ -62,7 +62,7 @@ class Index extends Component {
             <ShopDetails data={orderInfo}></ShopDetails>
           </View>
           <View className='goods_details_margins'>
-            <Lovely title={'你可能还喜欢'}></Lovely>
+            <Lovely title={'小伙伴们还喜欢'}></Lovely>
           </View>
           <BtnLayer remove={() => this.setState({visible: true})}></BtnLayer>
           {visible &&
