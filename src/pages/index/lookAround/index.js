@@ -81,7 +81,7 @@ class Index extends Component {
     this.getSpecialGoodsCategory();
   }
   componentDidShow() {
-    this.fetchUserShareCommission();
+    this.fetchUserShare();
   }
   setMap() {
     const latitude = getLat();
@@ -156,7 +156,7 @@ class Index extends Component {
     });
   }
 
-  fetchUserShareCommission() {
+  fetchUserShare() {
     fetchUserShareCommission({}, (res) => {
       const { configUserLevelInfo = {} } = res;
       this.setState({

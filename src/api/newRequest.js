@@ -67,7 +67,7 @@ switch (env) {
   case "development":
     // baseUrl = "https://devgateway.dakale.net";
     // baseUrl = "https://pregateway.dakale.net";
-    baseUrl = 'https://gateway1.dakale.net'
+    baseUrl = "https://gateway1.dakale.net";
     break;
   case "production":
     baseUrl = "https://pregateway.dakale.net";
@@ -90,6 +90,7 @@ const loadBeadRequest = [
   "/user/userMoment/listMomentDetailByType",
   "/common/dictionary/listMomentBarrage",
   "/user/specialGoods/getPromotionInfo",
+  "/user/userInfo/getUserShareCommission",
 ];
 export const httpGet = (obj, fn) => {
   const { header = {} } = obj;
