@@ -45,7 +45,6 @@ const goSpeGoods = (descDate, orderType) => {
     ownerCouponIdString,
   } = descDate;
   const { activityIdString } = specialGoods;
-  console.log(descDate);
   if (orderType === "specialGoods") {
     Router({
       routerName: "favourableDetails",
@@ -75,7 +74,6 @@ export default (props) => {
   }, [list]);
   const createShopTop = (item, merchant) => {
     const { status, orderType, closeType } = item;
-    console.log(merchant);
     return (
       <View
         className="createGood_title"
@@ -283,7 +281,6 @@ export default (props) => {
       buyPrice,
       thresholdPrice,
     } = orderDesc;
-    console.log(thresholdPrice);
     const orderTypeObj = {
       specialGoods: (
         <View

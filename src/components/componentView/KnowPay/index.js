@@ -36,14 +36,12 @@ export const knowPay = (data, type = "good") => {
     let str = "";
     if (val && val.length && JSON.parse(val)) {
       str = JSON.parse(val);
-      console.log(str);
       return str.map((item) => {
         return <View>{item}</View>;
       });
     }
     return [];
   };
-  console.log(buyDesc);
   return (
     <View className="shopdetails_shop_toast">
       <View className="shop_toastTitle">使用须知</View>

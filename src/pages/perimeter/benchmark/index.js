@@ -76,7 +76,6 @@ class index extends Component {
         visible: false,
       },
       (res) => {
-        console.log(1123);
         this.getSearchConditionsList(true);
       }
     );

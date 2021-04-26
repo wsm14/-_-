@@ -93,16 +93,41 @@ class Index extends Component {
     const { httpData } = this.state;
     getOwnerCouponInfo(httpData).then((val) => {
       const { ownerCouponInfo = {} } = val;
-      const { reduceObject = {} } = ownerCouponInfo;
-      this.setState({
-        ownerCouponInfo: {
-          ...ownerCouponInfo,
-          ...reduceObject,
-        },
-      });
+      const { reduceObject = {}, userBean, userIncomeBean } = ownerCouponInfo;
+      if (!userBean && userIncomeBean) {
+        this.setState({
+          ownerCouponInfo: {
+            ...ownerCouponInfo,
+            ...reduceObject,
+          },
+          useBeanType: "income",
+        });
+      } else {
+        this.setState({
+          ownerCouponInfo: {
+            ...ownerCouponInfo,
+            ...reduceObject,
+          },
+        });
+      }
     });
   }
-
+  showBean() {
+    const {
+      useBeanType,
+      useBeanStatus,
+      ownerCouponInfo: { userIncomeBean = 0, userBean = 0 },
+    } = this.state;
+    if (useBeanStatus === "0") {
+      return "0.00";
+    } else {
+      if (useBeanType === "reward") {
+        return (userBean / 100).toFixed(2);
+      } else {
+        return (userIncomeBean / 100).toFixed(2);
+      }
+    }
+  }
   saveKolGoodsOrder() {
     const {
       httpData,
@@ -205,131 +230,138 @@ class Index extends Component {
       }
     };
 
-    return (
-      <View className="couponOrder_box">
-        <View className="order_details_box">
-          <View className="order_details_merchant">
-            <View
-              className="order_merchant_details"
-              onClick={() =>
-                navigateTo(
-                  `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
-                )
-              }
-            >
+    if (Object.keys(ownerCouponInfo).length > 0) {
+      return (
+        <View className="couponOrder_box">
+          <View className="order_details_box">
+            <View className="order_details_merchant">
               <View
-                className="order_merchant_userProfile coupon_shop_icon"
-                style={{ ...backgroundObj(merchantLogo) }}
-              ></View>
-              <View className="order_name font_hide">{merchantName || ""}</View>
-              <View className="order_merchant_go"></View>
-            </View>
-          </View>
-          <View className="order_shopDetails">
-            <View className="order_shopDetails_box">
-              <View
-                className="order_shopDetails_Img coupon_big_icon"
-                style={{ ...backgroundObj(couponImg) }}
-              ></View>
-              <View className="order_shopDetails_dec">
-                <View className="order_shopDetails_title font_hide">
-                  {couponName}
-                </View>
-                <View className="order_price">
-                  面值{couponPrice}元{" "}
-                  {thresholdPrice ? `｜满${thresholdPrice}元可用` : ""}
-                </View>
-                <View className="order_toast">购买数量</View>
-              </View>
-              <View className="order_shopDetails_price">
-                <View
-                  className="order_shop_btnBox order_shop_btn1"
-                  onClick={() => this.computedCount()}
-                ></View>
-                <View className="order_shop_num">{couponCount}</View>
-                <View
-                  className="order_shop_btnBox order_shop_btn2"
-                  onClick={() => this.computedCount("add")}
-                ></View>
-              </View>
-            </View>
-          </View>
-        </View>
-        <SelectBean
-          fn={this.useBean.bind(this)}
-          useBeanType={useBeanType}
-          data={ownerCouponInfo}
-          configUserLevelInfo={configUserLevelInfo}
-          useBeanStatus={useBeanStatus}
-        ></SelectBean>
-        <View className="order_shop_desc">
-          <View className="order_shop_descBox">
-            <View className="order_shop_descTitle">购买须知</View>
-            <View className="order_shop_getTime font28 color2">
-              使用有效期：
-            </View>
-            <View className="order_shop_timeDesc font28">
-              <Text>{templateTime()}</Text>
-            </View>
-            <View className="order_shop_getTime font28 color2">使用门槛</View>
-            <View className="order_shop_week color1 font28">
-              {thresholdPrice !== "0" && thresholdPrice !== ""
-                ? `满${thresholdPrice}元可用`
-                : "无门槛"}
-            </View>
-            <View className="order_shop_getTime font28 color2">退款原则：</View>
-            <View className="order_shop_week color1 font28">
-              {anytimeRefund === "1" ? "支持" : "不支持"}
-              随时退、{expireRefund === "1" ? "支持" : "不支持"}过期自动退
-            </View>
-          </View>
-        </View>
-        <View className="order_details_sumbit">
-          <View className="order_rmb">
-            实付：
-            <Text style={{ fontSize: Taro.pxTransform(20) }}>
-              ¥
-              <Text
-                style={{ fontSize: Taro.pxTransform(32), fontWeight: "bold" }}
+                className="order_merchant_details"
+                onClick={() =>
+                  navigateTo(
+                    `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
+                  )
+                }
               >
-                {useBeanStatus === "1"
-                  ? Number(buyPrice) * couponCount - userBean / 100 > 0
-                    ? (Number(buyPrice) * couponCount - userBean / 100).toFixed(
-                        2
-                      )
-                    : 0
-                  : (Number(buyPrice) * couponCount).toFixed(2)}
-              </Text>
-            </Text>
-          </View>
-          <View className="order_beanRmb">
-            抵扣：¥
-            {useBeanStatus === "1" ? (userBean / 100).toFixed(2) : "0"}
-          </View>
-          <ButtonView>
-            <View className="payBtn" onClick={() => this.saveCancel()}>
-              立即支付
+                <View
+                  className="order_merchant_userProfile coupon_shop_icon"
+                  style={{ ...backgroundObj(merchantLogo) }}
+                ></View>
+                <View className="order_name font_hide">
+                  {merchantName || ""}
+                </View>
+                <View className="order_merchant_go"></View>
+              </View>
             </View>
-          </ButtonView>
+            <View className="order_shopDetails">
+              <View className="order_shopDetails_box">
+                <View
+                  className="order_shopDetails_Img coupon_big_icon"
+                  style={{ ...backgroundObj(couponImg) }}
+                ></View>
+                <View className="order_shopDetails_dec">
+                  <View className="order_shopDetails_title font_hide">
+                    {couponName}
+                  </View>
+                  <View className="order_price">
+                    面值{couponPrice}元{" "}
+                    {thresholdPrice ? `｜满${thresholdPrice}元可用` : ""}
+                  </View>
+                  <View className="order_toast">购买数量</View>
+                </View>
+                <View className="order_shopDetails_price">
+                  <View
+                    className="order_shop_btnBox order_shop_btn1"
+                    onClick={() => this.computedCount()}
+                  ></View>
+                  <View className="order_shop_num">{couponCount}</View>
+                  <View
+                    className="order_shop_btnBox order_shop_btn2"
+                    onClick={() => this.computedCount("add")}
+                  ></View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <SelectBean
+            fn={this.useBean.bind(this)}
+            useBeanType={useBeanType}
+            data={ownerCouponInfo}
+            configUserLevelInfo={configUserLevelInfo}
+            useBeanStatus={useBeanStatus}
+          ></SelectBean>
+          <View className="order_shop_desc">
+            <View className="order_shop_descBox">
+              <View className="order_shop_descTitle">购买须知</View>
+              <View className="order_shop_getTime font28 color2">
+                使用有效期：
+              </View>
+              <View className="order_shop_timeDesc font28">
+                <Text>{templateTime()}</Text>
+              </View>
+              <View className="order_shop_getTime font28 color2">使用门槛</View>
+              <View className="order_shop_week color1 font28">
+                {thresholdPrice !== "0" && thresholdPrice !== ""
+                  ? `满${thresholdPrice}元可用`
+                  : "无门槛"}
+              </View>
+              <View className="order_shop_getTime font28 color2">
+                退款原则：
+              </View>
+              <View className="order_shop_week color1 font28">
+                {anytimeRefund === "1" ? "支持" : "不支持"}
+                随时退、{expireRefund === "1" ? "支持" : "不支持"}过期自动退
+              </View>
+            </View>
+          </View>
+          <View className="order_details_sumbit">
+            <View className="order_rmb">
+              实付：
+              <Text style={{ fontSize: Taro.pxTransform(20) }}>
+                ¥
+                <Text
+                  style={{ fontSize: Taro.pxTransform(32), fontWeight: "bold" }}
+                >
+                  {useBeanStatus === "1"
+                    ? Number(buyPrice) * couponCount - userBean / 100 > 0
+                      ? (
+                          Number(buyPrice) * couponCount -
+                          userBean / 100
+                        ).toFixed(2)
+                      : 0
+                    : (Number(buyPrice) * couponCount).toFixed(2)}
+                </Text>
+              </Text>
+            </View>
+            <View className="order_beanRmb">
+              抵扣：¥
+              {this.showBean()}
+            </View>
+            <ButtonView>
+              <View className="payBtn" onClick={() => this.saveCancel()}>
+                立即支付
+              </View>
+            </ButtonView>
+          </View>
+          {visible && (
+            <PayBean
+              cancel={() =>
+                this.setState({
+                  visible: false,
+                })
+              }
+              visible={visible}
+              canfirm={() => this.saveKolGoodsOrder()}
+              content={`是否确认使用${
+                useBeanType === "reward" ? userBean : userIncomeBean
+              }卡豆支付？`}
+              canfirmText="再想想"
+              cancelText="确定"
+            ></PayBean>
+          )}
         </View>
-        {visible && (
-          <PayBean
-            cancel={() =>
-              this.setState({
-                visible: false,
-              })
-            }
-            visible={visible}
-            canfirm={() => this.saveKolGoodsOrder()}
-            content={`是否确认使用${
-              useBeanType === "reward" ? userBean : userIncomeBean
-            }卡豆支付？`}
-            canfirmText="再想想"
-            cancelText="确定"
-          ></PayBean>
-        )}
-      </View>
-    );
+      );
+    } else return null;
   }
 }
 
