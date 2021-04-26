@@ -22,9 +22,8 @@ class Index extends Component {
     };
   }
   componentWillUnmount() {
-    var url = getCurrentPages()[getCurrentPages().length - 2].route;
-    if (url && url === "pages/index/home/index") {
-      console.log(111);
+    var url = getCurrentPages()[getCurrentPages().length - 2].route || "";
+    if (url && url.includes("pages/index/home/index")) {
       evens.$emit("reload");
     }
   }

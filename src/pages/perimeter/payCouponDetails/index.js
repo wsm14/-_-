@@ -65,12 +65,13 @@ class Index extends Component {
     }
   }
   fetchCouponDetail() {
-    const { httpData } = this.state;
+    const { httpData, index } = this.state;
     getOwnerCouponDetail(httpData, (res) => {
       const { couponDetail } = res;
       const { reduceObject = {} } = couponDetail;
       this.setState({
         couponDetail: { ...couponDetail, ...reduceObject },
+        index: index + 1,
       });
     });
   }

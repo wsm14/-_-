@@ -38,7 +38,13 @@ export const switchTab = (url) => {
   });
   //跳转主页
 };
-//頁面重定向
+
+export const reLaunch = (url) => {
+  Taro.reLaunch({
+    url: url,
+  });
+};
+//关闭其他打开tab
 export const NavHeight = () => {
   let menu = wx.getMenuButtonBoundingClientRect();
   let res = Taro.getSystemInfoSync();

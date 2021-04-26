@@ -100,6 +100,7 @@ export default (props) => {
     0: (
       <View
         className="kol_bean_box happyBean"
+        catchMove
         animation={animate}
         onClick={(e) => {
           e.stopPropagation();
@@ -124,6 +125,7 @@ export default (props) => {
     1: (
       <View
         animation={animate}
+        catchMove
         onClick={(e) => {
           e.stopPropagation();
         }}
