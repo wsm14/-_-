@@ -16,7 +16,6 @@ import { inject, observer } from "mobx-react";
 import { getOwnerCouponInfo, saveCouponOrder } from "@/server/goods";
 import { fetchUserShareCommission } from "@/server/index";
 import ButtonView from "@/components/Button";
-
 @inject("store")
 @observer
 class Index extends Component {
