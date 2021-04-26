@@ -11,7 +11,7 @@ export const getMerchantLat = (data, fn) => {
 //通过地图搜索附近商家
 
 export const getUserMomentDetailById = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/userMoment/getUserMomentDetailById",
       data: data,
@@ -172,4 +172,3 @@ export const updateUserMomentParam = (data = {}, fn) => {
   );
 };
 //添加分享数量
-

@@ -17,13 +17,13 @@ export const rssConfigData = (data = {}) => {
   } = data;
 
   if (
-    !userProfile.includes("resource-new.dakale.net") ||
+    !userProfile.includes("resource-new.dakale.net") &&
     !userProfile.includes("wechat-config.dakale.net")
   ) {
     userProfile = "https://resource-new.dakale.net/common/default_profile.png";
   }
-  if (time && time === ""){
-     time =  '长期有效'
+  if (time && time === "") {
+    time = "长期有效";
   }
   const priceLength = price.toString().length * 35.18552780151367;
   return {

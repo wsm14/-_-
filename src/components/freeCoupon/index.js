@@ -4,7 +4,6 @@ import Taro, { useReachBottom } from "@tarojs/taro";
 import { toast, GetDistance, getLat, getLnt } from "@/common/utils";
 import classNames from "classnames";
 import { acquireCoupon, getAvailableCoupon } from "@/server/coupon";
-
 import "./index.scss";
 export default (props) => {
   const { data, visible, show = false, beanflag } = props;
@@ -51,7 +50,7 @@ export default (props) => {
         if (delayDays) {
           return `领取后${delayDays}天内生效，有效期${activeDays}天`;
         } else {
-          return `购买后即刻天生效，有效期${activeDays}天,请在有效期内使用`;
+          return `购买后即刻生效，有效期${activeDays}天,请在有效期内使用`;
         }
       } else {
         return `${activeDate}至${endDate}`;

@@ -12,16 +12,20 @@ export default (props) => {
     );
   };
   const goCouponDetails = (item) => {
-    const { couponChannel, userCouponIdString } = item;
+    const { couponType, userCouponIdString } = item;
     console.log(item);
-    if (couponChannel === "buy") {
+    if (couponType !== "reduce") {
       navigateTo(`/pages/coupon/couponDetails/index?id=${userCouponIdString}`);
     } else {
       navigateTo(`/pages/coupon/voucherDetails/index?id=${userCouponIdString}`);
     }
   };
   useEffect(() => {
-    setList(data.filter(item => {return item.bugFlag!== '1'}));
+    setList(
+      data.filter((item) => {
+        return item.bugFlag !== "1";
+      })
+    );
   }, [data]);
   useEffect(() => {
     onClose(visible);
@@ -42,6 +46,7 @@ export default (props) => {
         merchantIdString,
         userCouponIdString,
         couponChannel,
+        thresholdPrice = "",
       } = item;
       return (
         <View
@@ -87,7 +92,11 @@ export default (props) => {
               <View className="wraparound_couponContent_details font_hide font24 color2">
                 {couponChannel === "buy"
                   ? "凭券领取:" + couponTitle
-                  : "仅限线下到店扫码消费使用"}
+                  : `${
+                      thresholdPrice &&
+                      thresholdPrice.length !== 0 &&
+                      `满${thresholdPrice}可用|`
+                    }    仅限线下到店扫码消费使用`}
               </View>
             </View>
           </View>
@@ -169,6 +178,7 @@ export default (props) => {
         couponName,
         activeEndDate,
         userCouponIdString,
+        verificationTime,
         couponChannel,
       } = item;
       return (
@@ -212,7 +222,7 @@ export default (props) => {
                   : "仅限线下到店扫码消费使用"}
               </View>
               <View className="wraparound_couponContent1_details font_hide font24 color2">
-                过期时间：{activeEndDate}
+                使用时间：{verificationTime}
               </View>
             </View>
           </View>
@@ -277,7 +287,11 @@ export default (props) => {
               <View className="wraparound_couponContent_details font_hide font24 color2">
                 {couponChannel === "buy"
                   ? "凭券领取:" + couponTitle
-                  : "仅限线下到店扫码消费使用"}
+                  : `${
+                      thresholdPrice &&
+                      thresholdPrice.length !== 0 &&
+                      `满${thresholdPrice}可用|`
+                    }    仅限线下到店扫码消费使用`}
               </View>
             </View>
           </View>

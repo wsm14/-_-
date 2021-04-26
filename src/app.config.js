@@ -92,6 +92,8 @@ export default {
     {
       root: "pages/perimeter/",
       pages: [
+        "couponList/index", //有价券列表
+        "payCouponDetails/index", //有价券详情
         "benchmark/index", //逛逛风向标列表
         "specialOffer/index", //逛逛内层列表
         "groupList/index", //特惠集团搜索
@@ -119,9 +121,9 @@ export default {
     {
       root: "pages/goods/",
       pages: [
-        "payWeex/index", //kol支付
-        "configOrder/index", //kol下单
+        "payWeex/index", //支付
         "favourOrder/index", //特价下单
+        "couponOrder/index", //有价券下单
         "kolShopGoods/index", //普通商品详情
         "getShopGoods/index", //扫码订单详情
         "paySuccess/index", //kol支付成功

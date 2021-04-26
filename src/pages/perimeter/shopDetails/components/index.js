@@ -11,7 +11,7 @@ export default () => {
       <View className="specialActivity_nullImage"></View>
       <View className="specialActivity_nullfont">商品已下架，下次早点来呀</View>
       <View className="specialActivity_lovely">
-        <Lovely title={"你可能还喜欢"}></Lovely>
+        <Lovely title={"小伙伴们还喜欢"}></Lovely>
       </View>
     </View>
   );

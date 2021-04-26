@@ -93,9 +93,9 @@ function setString(randomFlag, min, max) {
 
 // 数据ASCII 排序
 function sort(obj) {
-  obj = JSON.parse(JSON.stringify(obj))
+  obj = JSON.parse(JSON.stringify(obj));
   for (let key in obj) {
-    if (obj[key] === "" || obj[key] === null) {
+    if (obj[key] === "" || obj[key] === null || obj[key] === "undefined") {
       delete obj[key];
     }
   }

@@ -1,5 +1,5 @@
-.dakale_toasts{
-  .dakale_layer{
+.dakale_toasts {
+  .dakale_layer {
     position: fixed;
     background: rgba(0, 0, 0, 0.8);
     top: 0;
@@ -11,28 +11,34 @@
     justify-content: center;
     z-index: 10000001;
   }
-  .dakale_layer_toast{
+  .dakale_layer_toast {
     width: 500px;
-    padding-bottom:32px;
-    background: #FFFFFF;
+    padding-bottom: 32px;
+    background: #ffffff;
     border-radius: 12px;
-    .dakale_layer_title{
+    .dakale_layer_title {
       height: 90px;
       line-height: 90px;
-      border-bottom:1px solid #E5E5E5;
+      border-bottom: 1px solid #e5e5e5;
       text-align: center;
     }
-    .dakale_layer_content{
+    .dakale_layer_content {
       margin: 32px 40px 0;
       font-size: 28px;
       font-weight: 400;
       color: #666666;
       line-height: 42px;
     }
-    .dakale_layer_btn{
+    .dakale_layer_top {
+      padding-bottom: 16px;
+    }
+    .dakale_layer_top:last-child {
+      padding-bottom: 0px;
+    }
+    .dakale_layer_btn {
       width: 420px;
       height: 70px;
-      background: #07C0C2;
+      background: #07c0c2;
       border-radius: 8px;
       line-height: 70px;
       margin: 32px auto 0;

@@ -1,0 +1,138 @@
+.order_details_payType {
+  width: 686px;
+  background: #ffffff;
+  border-radius: 12px;
+  margin: 24px auto 0;
+  position: relative;
+  .order_payType_box {
+    padding: 34px 32px;
+
+    //.order_pay_line{
+    //  border-bottom: rgba(229, 229, 229, 1) 1px solid;
+    //}
+  }
+  .order_payTypeBug_box {
+    padding: 34px 32px 0px;
+
+    //.order_pay_line{
+    //  border-bottom: rgba(229, 229, 229, 1) 1px solid;
+    //}
+  }
+  .order_paybug_box {
+    padding: 0px 32px 34px;
+  }
+  .order_payType_top {
+    height: 36px;
+    line-height: 36px;
+    padding-left: 44px;
+    position: relative;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    .order_payType_six {
+      height: 30px;
+      border-radius: 4px;
+      display: inline-block;
+      width: 65px;
+      margin-left: 8px;
+      line-height: 30px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      color: #ef476f;
+      box-sizing: border-box;
+    }
+  }
+  .order_payType_top::before {
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    display: inline-block;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon473.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .order_payType_question {
+    width: 28px;
+    height: 28px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon472.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin-left: 8px;
+  }
+
+  .order_pay_font {
+    font-size: 24px;
+    font-weight: 400;
+    color: rgba(239, 71, 111, 1);
+    padding: 16px 44px 0;
+  }
+  .order_pay_iconBox {
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 46px;
+    right: 32px;
+  }
+  .order_pay_icon1 {
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon256.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .order_pay_icon2 {
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon257.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .order_pay_icon3 {
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon541.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .order_select_box {
+    height: 48px;
+  }
+  .order_select_top1 {
+    padding-top: 32px;
+    position: relative;
+  }
+  .order_select_top2 {
+    padding-top: 16px;
+  }
+  .order_select_left {
+    display: flex;
+    align-items: center;
+  }
+  .order_select_right {
+    width: 48px;
+    height: 48px;
+  }
+  .order_select_title {
+    width: 112px;
+    height: 36px;
+    background: #ef476f;
+    border-radius: 4px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+  .order_select_title2 {
+    font-size: 24px;
+    height: 36px;
+    font-weight: 400;
+    color: #333333;
+    margin-left: 16px;
+  }
+  .order_select_title3 {
+    font-size: 24px;
+    height: 36px;
+    font-weight: 400;
+    color: #cccccc;
+    margin-left: 16px;
+  }
+}

@@ -8,16 +8,8 @@ import {
   setIntive,
   saveFollow,
   loginStatus,
-  login,
 } from "@/common/utils";
-import {
-  Button,
-  Image,
-  ScrollView,
-  View,
-  SwiperItem,
-  Swiper,
-} from "@tarojs/components";
+import { ScrollView, View } from "@tarojs/components";
 import InterVal from "@/components/setTimeCanvas";
 import {
   getUserMomentList,
@@ -30,11 +22,7 @@ import {
   updateUserMomentParam,
   fetchUserShareCommission,
 } from "@/server/index";
-import {
-  getMomentBarrage,
-  listParentCategory,
-  getShareParamInfo,
-} from "@/server/common";
+import { listParentCategory, getShareParamInfo } from "@/server/common";
 import "./index.scss";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
@@ -61,6 +49,7 @@ class Index extends React.PureComponent {
         browseType: "commend",
         page: 1,
         limit: "10",
+        newDeviceFlag: Taro.getStorageSync("newDeviceFlag") || "1",
       },
       countStatus: true,
       time: null,
@@ -111,13 +100,7 @@ class Index extends React.PureComponent {
     }
   }
   onChange(e) {
-    const {
-      countStatus,
-      httpData,
-      userMomentsList,
-      interval,
-      time,
-    } = this.state;
+    const { countStatus, httpData, userMomentsList } = this.state;
     let { current } = e.detail;
     this.setState(
       {
@@ -162,6 +145,7 @@ class Index extends React.PureComponent {
     }
   }
   selectList(data = {}) {
+    console.log(data);
     const { httpData, interval } = this.state;
     const { val } = data;
     const obj = {};
@@ -269,7 +253,6 @@ class Index extends React.PureComponent {
       );
     });
   }
-
   getBean(time) {
     this.setState(
       {
@@ -284,7 +267,7 @@ class Index extends React.PureComponent {
   } //设置定时器领取卡豆
   saveBean() {
     const {
-      userMomentsInfo: { userMomentIdString },
+      userMomentsInfo: { userMomentIdString, guideMomentFlag },
       userMomentsInfo,
       beanLimitStatus,
     } = this.state;
@@ -294,24 +277,51 @@ class Index extends React.PureComponent {
           momentId: userMomentIdString,
         },
         (res) => {
-          checkPuzzleBeanLimitStatus({}, (res) => {
-            const { beanLimitStatus = "1" } = res;
-            this.setState({ beanLimitStatus });
-          });
-          this.setState({
-            time: null,
-            userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
-            userMomentsList: this.state.userMomentsList.map((item) => {
-              if (item.userMomentIdString === userMomentIdString) {
-                return {
-                  ...item,
-                  watchStatus: "1",
-                };
-              }
-              return item;
-            }),
-            beanflag: true,
-          });
+          const {
+            specialGoodsList = [{}],
+            otherBeanAmount = "",
+            otherRealPrice = "",
+          } = res;
+          if (guideMomentFlag === "1") {
+            Taro.setStorageSync("newDeviceFlag", "0");
+          }
+          this.setState(
+            {
+              time: null,
+              userMomentsInfo: {
+                ...userMomentsInfo,
+                watchStatus: "1",
+                ...specialGoodsList[0],
+                otherBeanAmount,
+                otherRealPrice,
+              },
+              userMomentsList: this.state.userMomentsList.map((item) => {
+                if (item.userMomentIdString === userMomentIdString) {
+                  return {
+                    ...item,
+                    watchStatus: "1",
+                    ...specialGoodsList[0],
+                    otherBeanAmount,
+                    otherRealPrice,
+                  };
+                }
+                return item;
+              }),
+            },
+            (res) => {
+              this.setState(
+                {
+                  beanflag: true,
+                },
+                (res) => {
+                  checkPuzzleBeanLimitStatus({}, (res) => {
+                    const { beanLimitStatus = "1" } = res;
+                    this.setState({ beanLimitStatus });
+                  });
+                }
+              );
+            }
+          );
         }
       );
     } else {
@@ -343,7 +353,6 @@ class Index extends React.PureComponent {
     }
   }
   //初始化详情数据
-
   stopInterval(interval) {
     clearInterval(interval);
     this.setState({
@@ -554,6 +563,11 @@ class Index extends React.PureComponent {
       userMomentsList: list,
     });
   }
+  reload() {
+    let data = {
+    };
+    this.selectList(data);
+  }
   componentDidShow() {
     const { time } = this.state;
     // this.listParentCategory();
@@ -564,6 +578,7 @@ class Index extends React.PureComponent {
   }
   componentDidMount() {
     evens.$on("updateMomentsList", this.updateList.bind(this));
+    evens.$on("reload", this.reload.bind(this));
   }
   getUserMomentDetailById(momentId) {
     getUserMomentDetailById(
@@ -594,7 +609,21 @@ class Index extends React.PureComponent {
           }
         );
       }
-    );
+    ).catch((val) => {
+      this.getVideoList(() => {
+        const { userMomentsList } = this.state;
+        if (userMomentsList.length > 0) {
+          this.setState(
+            {
+              userMomentsInfo: this.state.userMomentsList[0],
+            },
+            (res) => {
+              this.initInterval();
+            }
+          );
+        }
+      });
+    });
   }
 
   fetchUserShareCommission() {
@@ -863,7 +892,7 @@ class Index extends React.PureComponent {
             });
           }}
         ></Coupon>
-        <GuideView current={current} data={userMomentsInfo}></GuideView>
+        {/* <GuideView current={current} data={userMomentsInfo}></GuideView> */}
         {!player && (
           <View
             onClick={() => this.stopVideoPlayerControl()}

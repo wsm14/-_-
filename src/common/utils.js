@@ -38,7 +38,13 @@ export const switchTab = (url) => {
   });
   //跳转主页
 };
-//頁面重定向
+
+export const reLaunch = (url) => {
+  Taro.reLaunch({
+    url: url,
+  });
+};
+//关闭其他打开tab
 export const NavHeight = () => {
   let menu = wx.getMenuButtonBoundingClientRect();
   let res = Taro.getSystemInfoSync();
@@ -389,9 +395,9 @@ export const goDown = () => {
 };
 export const filterSetting = (str) => {
   if (str.includes("km") && parseInt(str) > 5) {
-    return `驾车约${parseInt(str)}分钟`;
+    return `驾车约${parseInt(parseInt(str) * 2)}分钟`;
   } else if (str.includes("km") && parseInt(str) >= 1 && parseInt(str) <= 5) {
-    return `骑车约${parseInt(str) * 4}分钟`;
+    return `骑车约${parseInt(str) * 8}分钟`;
   } else {
     return `骑车约${parseInt(str) / 100}分钟`;
   }
@@ -420,22 +426,28 @@ export const filterActive = (type) => {
   return list;
 };
 //过滤活动标签
-export const filterPayStatus = (string) => {
-  switch (string) {
-    case "0":
-      return "待付款";
-    case "1":
-      return "待使用";
-    case "2":
-      return "已关闭";
-    case "3":
-      return "已完成";
-    case "4":
-      return "已确认";
-    case "5":
-      return "预支付";
-    case "6":
-      return "申请退款中";
+export const filterPayStatus = (string, type = "") => {
+  if (type === "expiredRefund") {
+    return "订单已过期";
+  } else if (type === "manualRefund") {
+    return "已退款成功";
+  } else {
+    switch (string) {
+      case "0":
+        return "待付款";
+      case "1":
+        return "待使用";
+      case "2":
+        return "已关闭";
+      case "3":
+        return "已完成";
+      case "4":
+        return "已确认";
+      case "5":
+        return "预支付";
+      case "6":
+        return "申请退款中";
+    }
   }
 };
 export const filterPayfont = (string) => {
@@ -529,19 +541,10 @@ export const getDom = (id, fn) => {
     .exec();
 };
 export const filterGoods = (data) => {
-  let { orderDesc } = data;
+  let { orderDesc = {}, orderType } = data;
   orderDesc = JSON.parse(orderDesc);
-  let { kolGoods, specialGoods } = orderDesc;
-  if (!kolGoods && !specialGoods) {
-    return data;
-  } else if (!kolGoods) {
-    orderDesc.kolGoods = orderDesc.specialGoods;
-    orderDesc = JSON.stringify(orderDesc);
-    return {
-      ...data,
-      orderDesc: orderDesc,
-    };
-  } else return data;
+  const { reduceCoupon = {}, specialGoods = {} } = orderDesc;
+  return { ...data, ...reduceCoupon, ...specialGoods, ...orderDesc };
 };
 export const removeLogin = () =>
   Taro.removeStorage({
@@ -569,7 +572,7 @@ export const removeStorage = (key) =>
     },
   });
 export const computedClient = () => {
-  let client = Taro.getMenuButtonBoundingClientRect();
+  let client = Taro.getMenuButtonBoundingClientRect() || {};
   return client;
 };
 

@@ -30,13 +30,13 @@ class App extends Component {
       shareUserType,
       scene,
     } = getCurrentInstance().router.params;
-     console.log(getCurrentInstance().router.params)
-    if (scene) {  
+    if (scene) {
       getShareParamInfo({ uniqueKey: scene }, (res) => {
         const {
           shareParamInfo: { param },
         } = res;
         if (param && JSON.parse(param)) {
+          console.log(param);
           Store.authStore.setShareType({
             ...JSON.parse(param),
           });
@@ -101,14 +101,14 @@ class App extends Component {
         Taro.showToast({
           title: "网络信号不稳定,请检查您的网络",
           duration: 2000,
-          icon:'none'
+          icon: "none",
         });
       } else {
         if (networkType === "2g" || networkType === "3g") {
           Taro.showToast({
             title: "当前网络信号差",
             duration: 2000,
-            icon:'none'
+            icon: "none",
           });
         }
       }
