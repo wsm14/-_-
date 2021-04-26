@@ -7,6 +7,8 @@ import { authWxLogin } from "@/common/authority";
 import { getOpenId, getUserInfo, bindTelephone } from "@/server/auth";
 import "./index.scss";
 import { goBack, toast } from "../../common/utils";
+import evens from "@/common/evens";
+import Router from "@/common/router";
 @inject("store")
 @observer
 class Index extends Component {
@@ -18,6 +20,13 @@ class Index extends Component {
       unionId: "",
       visible: false,
     };
+  }
+  componentWillUnmount() {
+    var url = getCurrentPages()[getCurrentPages().length - 2].route;
+    if (url && url === "pages/index/home/index") {
+      console.log(111);
+      evens.$emit("reload");
+    }
   }
 
   componentWillMount() {

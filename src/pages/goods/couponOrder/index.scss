@@ -26,7 +26,7 @@ page {
         .order_merchant_userProfile {
           width: 50px;
           height: 50px;
-          background: #e6e6e6;
+          border-radius: 50%;
         }
         .order_name {
           max-width: 560px;
@@ -139,14 +139,14 @@ page {
         color: #333333;
         line-height: 32px;
       }
-      .order_shop_getTime{
+      .order_shop_getTime {
         margin-top: 24px;
       }
-      .order_shop_timeDesc{
+      .order_shop_timeDesc {
         margin-top: 16px;
         color: rgba(7, 192, 194, 1);
       }
-      .order_shop_week{
+      .order_shop_week {
         margin-top: 16px;
       }
     }
@@ -174,7 +174,7 @@ page {
       font-size: 20px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
-      color:rgba(239, 71, 111, 1);
+      color: rgba(239, 71, 111, 1);
       line-height: 29px;
       .order_computed {
         display: inline-block;

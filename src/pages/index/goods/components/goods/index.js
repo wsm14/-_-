@@ -97,7 +97,7 @@ export default (props) => {
           <View
             className={classNames("createGood_status", filterPayColor(status))}
           >
-            {filterPayStatus(status)}
+            {filterPayStatus(status, closeType)}
           </View>
         </View>
       </View>

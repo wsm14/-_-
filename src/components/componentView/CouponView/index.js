@@ -30,7 +30,7 @@ export const coupon = (data) => {
     }
   };
   const templateSelect = () => {
-    if (buyRule === "unlimited") {
+    if (buyRule === "unlimited" || buyRule === "") {
       return `每人不限购数量`;
     } else {
       if (buyStatus === "1") {
@@ -43,7 +43,7 @@ export const coupon = (data) => {
     }
   };
   const templateBtn = () => {
-    if (remain == 0) {
+    if (remain === 0) {
       return <View className="coupon_view_btn coupon_btn_style3">已售罄</View>;
     } else if (buyStatus === "1") {
       return <View className="coupon_view_btn coupon_btn_style2">已购</View>;
@@ -64,7 +64,7 @@ export const coupon = (data) => {
     }
   };
   const template = () => {
-    if (remain != 0) {
+    if (remain !== 0) {
       return (
         <View
           className="coupon_view_box coupon_view_checkColor"
@@ -75,7 +75,8 @@ export const coupon = (data) => {
               {couponName}
             </View>
             <View className="coupon_view_content color2">
-              {templateThreshold()}{templateSelect()}
+              {templateThreshold()}
+              {templateSelect()}
             </View>
             <View className="coupon_view_bottom">
               <Text className="coupon_view_priceIcon color3">¥ </Text>
@@ -93,7 +94,8 @@ export const coupon = (data) => {
             <View className="coupon_view_title font_hide">{couponName}</View>
             <View className="coupon_view_content">
               {" "}
-              {templateThreshold()}{templateSelect()}
+              {templateThreshold()}
+              {templateSelect()}
             </View>
             <View className="coupon_view_bottom">
               <Text className="coupon_view_priceIcon">¥ </Text>

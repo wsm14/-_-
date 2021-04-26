@@ -330,9 +330,7 @@ class Index extends Component {
           </View>
           <View className="order_beanRmb">
             抵扣：¥
-            {useBeanStatus === "1"
-              ? this.computedPrice(Number(realPrice) * goodsCount, userBean)
-              : "0"}
+            {useBeanStatus === "1" ? (userBean / 100).toFixed(2) : "0"}
           </View>
           <ButtonView>
             <View className="payBtn" onClick={() => this.saveCancel()}>

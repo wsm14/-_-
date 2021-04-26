@@ -145,6 +145,7 @@ class Index extends React.PureComponent {
     }
   }
   selectList(data = {}) {
+    console.log(data);
     const { httpData, interval } = this.state;
     const { val } = data;
     const obj = {};
@@ -252,7 +253,6 @@ class Index extends React.PureComponent {
       );
     });
   }
-
   getBean(time) {
     this.setState(
       {
@@ -277,7 +277,11 @@ class Index extends React.PureComponent {
           momentId: userMomentIdString,
         },
         (res) => {
-          const { specialGoodsList = [{}], otherBeanAmount = "" } = res;
+          const {
+            specialGoodsList = [{}],
+            otherBeanAmount = "",
+            otherRealPrice = "",
+          } = res;
           if (guideMomentFlag === "1") {
             Taro.setStorageSync("newDeviceFlag", "0");
           }
@@ -289,6 +293,7 @@ class Index extends React.PureComponent {
                 watchStatus: "1",
                 ...specialGoodsList[0],
                 otherBeanAmount,
+                otherRealPrice,
               },
               userMomentsList: this.state.userMomentsList.map((item) => {
                 if (item.userMomentIdString === userMomentIdString) {
@@ -297,6 +302,7 @@ class Index extends React.PureComponent {
                     watchStatus: "1",
                     ...specialGoodsList[0],
                     otherBeanAmount,
+                    otherRealPrice,
                   };
                 }
                 return item;
@@ -347,7 +353,6 @@ class Index extends React.PureComponent {
     }
   }
   //初始化详情数据
-
   stopInterval(interval) {
     clearInterval(interval);
     this.setState({
@@ -558,6 +563,11 @@ class Index extends React.PureComponent {
       userMomentsList: list,
     });
   }
+  reload() {
+    let data = {
+    };
+    this.selectList(data);
+  }
   componentDidShow() {
     const { time } = this.state;
     // this.listParentCategory();
@@ -568,6 +578,7 @@ class Index extends React.PureComponent {
   }
   componentDidMount() {
     evens.$on("updateMomentsList", this.updateList.bind(this));
+    evens.$on("reload", this.reload.bind(this));
   }
   getUserMomentDetailById(momentId) {
     getUserMomentDetailById(
@@ -598,7 +609,21 @@ class Index extends React.PureComponent {
           }
         );
       }
-    );
+    ).catch((val) => {
+      this.getVideoList(() => {
+        const { userMomentsList } = this.state;
+        if (userMomentsList.length > 0) {
+          this.setState(
+            {
+              userMomentsInfo: this.state.userMomentsList[0],
+            },
+            (res) => {
+              this.initInterval();
+            }
+          );
+        }
+      });
+    });
   }
 
   fetchUserShareCommission() {

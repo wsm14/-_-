@@ -420,22 +420,28 @@ export const filterActive = (type) => {
   return list;
 };
 //过滤活动标签
-export const filterPayStatus = (string) => {
-  switch (string) {
-    case "0":
-      return "待付款";
-    case "1":
-      return "待使用";
-    case "2": 
-      return "已关闭";
-    case "3":
-      return "已完成";
-    case "4":
-      return "已确认";
-    case "5":
-      return "预支付";
-    case "6":
-      return "申请退款中";
+export const filterPayStatus = (string, type = "") => {
+  if (type === "expiredRefund") {
+    return "订单已过期";
+  } else if (type === "manualRefund") {
+    return "已退款成功";
+  } else {
+    switch (string) {
+      case "0":
+        return "待付款";
+      case "1":
+        return "待使用";
+      case "2":
+        return "已关闭";
+      case "3":
+        return "已完成";
+      case "4":
+        return "已确认";
+      case "5":
+        return "预支付";
+      case "6":
+        return "申请退款中";
+    }
   }
 };
 export const filterPayfont = (string) => {

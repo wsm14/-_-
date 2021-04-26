@@ -19,6 +19,7 @@ export default (props) => {
     otherBeanAmount = "",
     merchantIdString,
     specialActivityIdString,
+    otherRealPrice = "",
   } = data;
 
   const animated = () => {
@@ -135,7 +136,7 @@ export default (props) => {
         </View>
         <View className="specal_layer_title font24">
           <Text className="color6">再领{otherBeanAmount}卡豆</Text>
-          <Text className="color10"> {realPrice}元买</Text>
+          <Text className="color10"> 可超值购买</Text>
         </View>
         <View onClick={() => linkToPay()} className="specal_layer_card">
           <View
@@ -147,7 +148,7 @@ export default (props) => {
             <View className="specal_getBeanPrice">卡豆抵扣到手价</View>
             <View className="specal_orice">
               <Text className="color1 font24 bold">¥</Text>{" "}
-              <Text className="color1 font28  bold"> {realPrice}</Text>{" "}
+              <Text className="color1 font28 bold"> {otherRealPrice}</Text>{" "}
               <Text className="specal_rice_font">¥{oriPrice}</Text>
             </View>
           </View>

@@ -12,19 +12,23 @@ export const rssConfigData = (data = {}) => {
     wxCode,
     background = "https://wechat-config.dakale.net/miniprogram/image/icon495.png",
     username,
-    merchantLogo,
+    merchantLogo = "",
     tag = "https://wechat-config.dakale.net/miniprogram/image/icon496.png",
   } = data;
-
   if (
-    !userProfile.includes("resource-new.dakale.net") ||
+    !userProfile.includes("resource-new.dakale.net") &&
     !userProfile.includes("wechat-config.dakale.net")
   ) {
     userProfile = "https://resource-new.dakale.net/common/default_profile.png";
   }
-  if (time && time === ""){
-     time =  '长期有效'
+  if (time && time === "") {
+    time = "长期有效";
   }
+  if (!merchantLogo && merchantLogo === "") {
+    merchantLogo =
+      "https://wechat-config.dakale.net/miniprogram/image/conpon_shop.png";
+  }
+  console.log(merchantLogo);
   const priceLength = price.toString().length * 35.18552780151367;
   return {
     width: 750, // 画布宽度
@@ -68,7 +72,7 @@ export const rssConfigData = (data = {}) => {
       {
         x: 61,
         y: 674 + 15,
-        text: `${time}结束`, // 结束时间
+        text: `${time}`, // 结束时间
         fontSize: 24,
         color: "#999999",
         lineNum: 1,

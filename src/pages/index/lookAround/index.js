@@ -34,12 +34,7 @@ class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      specialHeadList: [
-        {
-          coverImg:
-            "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_banner.png",
-        },
-      ], //头部轮播图
+      specialHeadList: [], //头部轮播图
       configWindVaneList: [], //类目筛序
       specialShopping: [], //中间轮播图
       left: 0,
@@ -73,7 +68,7 @@ class Index extends Component {
   componentDidMount() {
     const { hotHttp, dateHttp } = this.state;
     this.setMap();
-    // this.topBanner();
+    this.topBanner();
     this.getConfigWindVaneBySize();
     this.contentBanner();
     this.getshopList(hotHttp, "hotList");
@@ -86,7 +81,6 @@ class Index extends Component {
   setMap() {
     const latitude = getLat();
     const longitude = getLnt();
-    console.log(latitude, longitude);
     if (latitude && longitude)
       this.setState(
         {
@@ -131,14 +125,14 @@ class Index extends Component {
       });
     });
   }
-  // topBanner() {
-  //   getBanner({ bannerType: "wanderAroundMainBanner" }, (res) => {
-  //     const { bannerList } = res;
-  //     this.setState({
-  //       specialHeadList: bannerList,
-  //     });
-  //   });
-  // }
+  topBanner() {
+    getBanner({ bannerType: "wanderAroundMainBanner" }, (res) => {
+      const { bannerList } = res;
+      this.setState({
+        specialHeadList: bannerList,
+      });
+    });
+  }
   contentBanner() {
     getBanner({ bannerType: "wanderAroundCapsule" }, (res) => {
       const { bannerList = [] } = res;
@@ -323,7 +317,7 @@ class Index extends Component {
             });
           }}
         >
-          <View onClick={() => navigateTo("/pages/share/invitation/index")}>
+          <View>
             <Banner
               imgName="coverImg"
               data={[...specialHeadList]}

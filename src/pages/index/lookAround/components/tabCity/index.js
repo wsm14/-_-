@@ -99,7 +99,7 @@ const tabCity = (props) => {
                   );
                   setVisible(false);
                   Taro.reLaunch({
-                    url: "/pages/index/perimeter/index",
+                    url: "/pages/index/lookAround/index",
                   });
                 }}
               >

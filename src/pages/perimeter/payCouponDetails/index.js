@@ -110,7 +110,8 @@ class Index extends Component {
               start: true,
               data: rssConfigData({
                 merchantName,
-                time: activityEndTime || "长期有效",
+                time:
+                  (activityEndTime && activityEndTime + "结束") || "长期有效",
                 oldPrice: oriPrice,
                 price: realPrice,
                 wxCode: qcodeUrl,
