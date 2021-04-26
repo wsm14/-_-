@@ -21,11 +21,11 @@ class Index extends Component {
     super(...arguments);
     this.state = {
       httpData: {
-        orderSn:getCurrentInstance().router.params.orderSn,
+        orderSn: getCurrentInstance().router.params.orderSn,
         payMonth: getCurrentInstance().router.params.payMonth,
-        orderType: getCurrentInstance().router.params.orderType
+        orderType: getCurrentInstance().router.params.orderType,
       },
-      merchantId:getCurrentInstance().router.params.merchantId,
+      merchantId: getCurrentInstance().router.params.merchantId,
       orderResult: {},
     };
   }
@@ -52,7 +52,7 @@ class Index extends Component {
   payOrder(res) {
     const {
       httpData: { orderSn, payMonth },
-      merchantId
+      merchantId,
     } = this.state;
     payOrder(
       { orderSn: orderSn, payMonth, payType: "wx_lite", wechatCode: res },
@@ -84,7 +84,7 @@ class Index extends Component {
 
   render() {
     const {
-      orderResult: { payFee, totalFee, beanFee, deductFeeObject = [] },
+      orderResult: { payFee, totalFee, beanFee = 0, deductFeeObject = [] },
     } = this.state;
     return (
       <View className="code_wx_box">
@@ -103,14 +103,16 @@ class Index extends Component {
             <View className="public_auto font24 payWx_detail_top2">
               <View className="color2">卡豆抵扣</View>
               <View className="color1">
-                -{beanFee}(¥ {parseInt(beanFee) / 100}.00)
+                -{beanFee}(¥ {(parseInt(beanFee) / 100).toFixed(2)})
               </View>
             </View>
             {deductFeeObject.length > 0 && (
               <View className="public_auto font24 payWx_detail_top2">
                 <View className="color2">优惠券</View>
                 <View className="color1">
-                  {deductFeeObject[0].reduceFee.split('.').length ===1?`- ¥${deductFeeObject[0].reduceFee}.00`:`- ¥${deductFeeObject[0].reduceFee}`}
+                  {deductFeeObject[0].reduceFee.split(".").length === 1
+                    ? `- ¥${deductFeeObject[0].reduceFee}.00`
+                    : `- ¥${deductFeeObject[0].reduceFee}`}
                 </View>
               </View>
             )}

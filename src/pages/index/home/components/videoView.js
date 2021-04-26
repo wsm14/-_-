@@ -58,6 +58,7 @@ export default ({
                 merchantCollectionStatus,
                 collectionAmount,
                 shareAmount,
+                guideMomentFlag = "0",
               } = item;
 
               let height =
@@ -161,19 +162,22 @@ export default ({
                             ></View>
                           )}
                         </View>
-                        <View
-                          onClick={() => collection()}
-                          className={classNames(
-                            "collected_box",
-                            merchantCollectionStatus === "0"
-                              ? "share_shoucang_icon1"
-                              : "share_shoucang_icon2"
-                          )}
-                        ></View>
-                        <View className="collected_font">
-                          {setPeople(collectionAmount)}
-                        </View>
-
+                        {guideMomentFlag === "0" && (
+                          <>
+                            <View
+                              onClick={() => collection()}
+                              className={classNames(
+                                "collected_box",
+                                merchantCollectionStatus === "0"
+                                  ? "share_shoucang_icon1"
+                                  : "share_shoucang_icon2"
+                              )}
+                            ></View>
+                            <View className="collected_font">
+                              {setPeople(collectionAmount)}
+                            </View>
+                          </>
+                        )}
                         <View className="home_share_wechat">
                           <Button
                             open-type="share"
