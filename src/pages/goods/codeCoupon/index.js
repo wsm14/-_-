@@ -5,7 +5,7 @@ import { getScanAvailableCoupon } from "@/server/goods";
 import CouponList from "./components/coupon";
 import "./index.scss";
 import { toast, goBack } from "@/common/utils";
-import Evens from  '@/common/evens'
+import Evens from "@/common/evens";
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -16,7 +16,7 @@ class Index extends Component {
       },
       userCouponList: [],
       userCouponObj: {},
-      backObj: {}
+      backObj: {},
     };
   }
   componentWillUnmount() {
@@ -30,57 +30,70 @@ class Index extends Component {
   }
   getScanAvailableList() {
     const { httpData } = this.state;
-    getScanAvailableCoupon(httpData,res => {
-      const {userCouponList} = res
-      this.setState({
-        userCouponList
-      },res  => {
-        if(getCurrentInstance().router.params.couponId){
-          let list  = userCouponList.filter(item  =>  {
-            if(item.userCouponIdString  === getCurrentInstance().router.params.couponId){
-              return true
-            }
-          })
-          this.setState({
-            backObj: list[0]
-          })
+    getScanAvailableCoupon(httpData, (res) => {
+      const { userCouponList } = res;
+      this.setState(
+        {
+          userCouponList,
+        },
+        (res) => {
+          if (getCurrentInstance().router.params.couponId) {
+            let list = userCouponList.filter((item) => {
+              if (
+                item.userCouponIdString ===
+                getCurrentInstance().router.params.couponId
+              ) {
+                return true;
+              }
+            });
+            this.setState({
+              backObj: list[0],
+            });
+          }
         }
-      })
+      );
     });
   }
   componentDidMount() {
-    this.getScanAvailableList()
+    this.getScanAvailableList();
   }
   setUserCouponId(obj) {
     this.setState({
-      userCouponObj:obj
-    })
+      userCouponObj: obj,
+    });
   }
   setCouponPay() {
-    const {userCouponObj} = this.state
-    if(userCouponObj){
-      this.setState({backObj:userCouponObj},res => {goBack()})
+    const { userCouponObj } = this.state;
+    if (userCouponObj) {
+      this.setState({ backObj: userCouponObj }, (res) => {
+        goBack();
+      });
+    } else {
+      toast("请选择您要使用的优惠券");
     }
-    else  {
-      toast('请选择您要使用的优惠券')
-  }
   }
   componentDidShow() {}
   componentWillUnmount() {
-    const {backObj} =  this.state
-    Evens.$emit('payCode',backObj)
+    const { backObj = {} } = this.state;
+    Evens.$emit("payCode", backObj);
   }
   render() {
-    const {userCouponList} = this.state
+    const { userCouponList } = this.state;
     return (
       <View className="codeCoupon_box">
         <View className="codeCoupon_content">
-          <CouponList couponIdInit={getCurrentInstance().router.params.couponId} callback={this.setUserCouponId.bind(this)} list={userCouponList}></CouponList>
+          <CouponList
+            couponIdInit={getCurrentInstance().router.params.couponId}
+            callback={this.setUserCouponId.bind(this)}
+            list={userCouponList}
+          ></CouponList>
         </View>
-        <View className='codeCoupon_bottom'>
-          <View className='codeCoupon_btn' onClick={() => this.setCouponPay()}>完成</View>
+        <View className="codeCoupon_bottom">
+          <View className="codeCoupon_btn" onClick={() => this.setCouponPay()}>
+            完成
+          </View>
         </View>
-     </View>
+      </View>
     );
   }
 }

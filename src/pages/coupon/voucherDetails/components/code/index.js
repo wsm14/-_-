@@ -135,42 +135,9 @@ export default (props) => {
       </View>
     ),
   }[orderResult.couponStatus];
-  const goGoodDetails = (orderSn) => {
-    goLink({
-      routerName: "kolShopGoods",
-      args: {
-        orderSn: orderSn,
-      },
-    });
-  };
-  const goShopGoods = () => {
-    const {
-      merchantIdString,
-      activityIdString,
-      kolMomentsIdString,
-    } = orderResult;
-    if (orderResult.orderType === "kolGoods") {
-      goLink({
-        routerName: "shopDetails",
-        args: {
-          merchantId: merchantIdString,
-          kolActivityIdString: activityIdString,
-          kolMomentsId: kolMomentsIdString,
-        },
-      });
-    } else {
-      goLink({
-        routerName: "favourableDetails",
-        args: {
-          merchantId: merchantIdString,
-          specialActivityId: activityIdString,
-        },
-      });
-    }
-  };
-  //商品详情
+
   console.log(orderResult);
-  const { ownerType } = orderResult;
+  const { ownerType, thresholdPrice = "" } = orderResult;
   return (
     <View className="couponDetails_title" style={style ? style : {}}>
       <View className="couponDetails_box">
@@ -246,6 +213,9 @@ export default (props) => {
           <View className="couponDetails_shop_details">
             <View className="font_hide font28 couponDetails_shop_name">
               {orderResult.couponName}
+            </View>
+            <View className="couponDetails_shop_content font24 color2">
+              {thresholdPrice.length > 0 ? `满${thresholdPrice}可用` : "无门槛"}
             </View>
             {orderStatusObj}
           </View>

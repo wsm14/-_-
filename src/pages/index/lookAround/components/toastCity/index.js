@@ -35,7 +35,6 @@ const toastCity = (props) => {
         address_component: { city },
       } = result;
       city_code = city_code.slice(3, 7);
-      // city_code = 3302;
       checkLocations({ cityCode: city_code, city });
     }
   }, [result]);
@@ -44,7 +43,7 @@ const toastCity = (props) => {
       const { cityStatus, cityName } = res;
       if (cityStatus === "0") {
         let cityData = Taro.getStorageSync("city");
-        if (!cityData || cityData.cityCode !== obj.cityCode) {
+        if (!cityData) {
           setVisible(true);
         }
       }

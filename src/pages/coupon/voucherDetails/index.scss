@@ -60,10 +60,13 @@ page {
           .couponDetails_shop_name {
             width: 280px;
             line-height: 42px;
-            padding-top: 20px;
+            padding-top: 8px;
+          }
+          .couponDetails_shop_content {
+            padding-top: 8px;
           }
           .couponDetails_goods_type {
-            padding-top: 8px;
+            padding-top: 16px;
           }
         }
       }
@@ -142,14 +145,15 @@ page {
         line-height: 36px;
       }
     }
-    .groupGo::after{
-       display: block;
-       content: '';
-       width: 36px;
-       height: 36px;
-       margin-left: 4px;
-       background: url('https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon424.png') no-repeat;
-       background-size: 100%  100%;
+    .groupGo::after {
+      display: block;
+      content: "";
+      width: 36px;
+      height: 36px;
+      margin-left: 4px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon424.png")
+        no-repeat;
+      background-size: 100% 100%;
     }
     .goMap {
       width: 48px;

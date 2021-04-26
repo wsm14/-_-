@@ -33,8 +33,9 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
     wraparound: "/pages/coupon/wraparound/index", //券包
     //券包
-
+    payCouponDetails: "/pages/perimeter/payCouponDetails/index",
     benchmark: "/pages/perimeter/benchmark/index", //逛逛风向标列表
+    businessSell: "/pages/perimeter/businessSell/index", //商家简单信息
     groupList: "/pages/perimeter/groupList/index", //集团列表
     specialOffer: "/pages/perimeter/specialOffer/index", //逛逛内层列表
     beanReward: "/pages/perimeter/beanReward/index", //卡豆明细
@@ -53,10 +54,15 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     repeatStatus: "/pages/perimeter/repeatStatus/index", //打卡状态： 重复打卡
     abnormalStatus: "/pages/perimeter/abnormalStatus/index", //打卡状态： 超过距离
     tipView: "/pages/perimeter/tipView/index",
+    payCouponList: "/pages/perimeter/couponList/index", //有价券列表
     //周边
     kolShopGoods: "/pages/goods/kolShopGoods/index",
     codePay: "/pages/goods/codePay/index",
     coupon: "/pages/goods/codeCoupon/index",
+    couponOrder: "/pages/goods/couponOrder/index",
+    favourableOrder: "/pages/goods/favourOrder/index",
+    pay: "/pages/goods/payWeex/index", //支付页
+
     //订单  goods
     legal: "/pages/kol/legal/index", //达人等级
     report: "/pages/kol/report/index", //举报

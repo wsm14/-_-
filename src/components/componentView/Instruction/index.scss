@@ -1,0 +1,32 @@
+.shopdetails_shop_player {
+  margin: 24px auto;
+  width: 686px;
+  height: 1036px;
+  background: #ffffff;
+  border-radius: 20px;
+  .shopdetails_play_title {
+    padding: 40px 32px 0;
+    height: 32px;
+    font-size: 32px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 600;
+    color: #333333;
+  }
+  .shopdetails_play_img {
+    width: 686px;
+    height: 940px;
+    margin-top: 24px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/player.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+}
+.shopdetails_shop_merchantShop {
+  margin-top: 24px;
+  .shopdetails_group {
+    padding: 8px 0 40px;
+    text-align: center;
+    color: #07c0c2;
+    background: #ffffff;
+  }
+}

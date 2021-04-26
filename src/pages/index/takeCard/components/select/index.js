@@ -23,7 +23,6 @@ export default (props) => {
               className={checkedStyle.distance === distance ? 'select_checked_dataStyle' : 'select_one_dataStyle'}
               onClick={(e) => {
                 e.stopPropagation()
-                console.log(checkedStyle.distance, value)
                 setCheckedStyle({
                   ...checkedStyle,
                   distance: distance

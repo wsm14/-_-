@@ -12,7 +12,7 @@ import {
 import drawQrcode from "weapp-qrcode";
 import "./../index.scss";
 import classNames from "classnames";
-
+import Router from "@/common/router";
 import {
   backgroundObj,
   filterWeek,
@@ -27,18 +27,10 @@ export default (props) => {
   const [orderResult, setOrderResult] = useState({});
   const [current, setCurrent] = useState(0);
   const [list, setList] = useState([]);
-  const [orderDescs, setOrderDescs] = useState({});
-  const [kolGoods, setKolGoods] = useState({});
   const qrwh = (304 / 750) * Taro.getSystemInfoSync().windowWidth;
   useEffect(() => {
-    const { orderGoodsVerifications, orderDesc } = data;
+    const { orderGoodsVerifications } = data;
     setOrderResult(data);
-    if (orderDesc) {
-      setOrderDescs(JSON.parse(orderDesc));
-    }
-    if (orderDesc) {
-      setKolGoods(JSON.parse(orderDesc).kolGoods);
-    }
     if (orderGoodsVerifications && Array.isArray(orderGoodsVerifications)) {
       setList(orderGoodsVerifications);
     }
@@ -59,14 +51,63 @@ export default (props) => {
       });
     }, 500);
   }, [list]);
+  const {
+    merchantIdString,
+    merchantImg,
+    merchantName,
+    goodsImg,
+    goodsName,
+    goodsCount,
+    totalFee,
+    status,
+    needOrder,
+    allowRefund,
+    allowExpireRefund,
+    merchantLat,
+    merchantLnt,
+    merchantAddress,
+    orderType,
+    thresholdPrice,
+    couponPrice,
+    useEndTime,
+  } = orderResult;
+  const goSpeGoods = () => {
+    const {
+      ownerIdString,
+      ownerCouponIdString,
+      merchantIdString,
+      activityIdString,
+      orderType,
+    } = orderResult;
+    if (orderType === "specialGoods") {
+      Router({
+        routerName: "favourableDetails",
+        args: {
+          merchantId: merchantIdString,
+          specialActivityId: activityIdString,
+        },
+      });
+    } else {
+      Router({
+        routerName: "payCouponDetails",
+        args: {
+          merchantId: merchantIdString,
+          ownerId: ownerIdString,
+          ownerCouponId: ownerCouponIdString,
+        },
+      });
+    }
+  };
   const setCode = () => {
     return (
       <View className="codeBox public_center">
         <Swiper
           current={current}
           onChange={(e) => {
-            const  {detail:{current}} = e
-            setCurrent(current)
+            const {
+              detail: { current },
+            } = e;
+            setCurrent(current);
           }}
           style={{ width: qrwh, height: qrwh }}
         >
@@ -134,7 +175,7 @@ export default (props) => {
     } else return null;
   };
   const filterCode = () => {
-    if (orderResult.status === "3" || orderResult.status === "1") {
+    if (status === "3" || status === "1") {
       return true;
     }
     return false;
@@ -145,51 +186,70 @@ export default (props) => {
         <View
           onClick={() =>
             navigateTo(
-              `/pages/perimeter/merchantDetails/index?merchantId=${orderDescs.merchantIdString}`
+              `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
             )
           }
           className="descriptionCard_merchant"
         >
           <View
             className="descriptionCard_profile dakale_nullImage"
-            style={backgroundObj(orderDescs.merchantImg)}
+            style={backgroundObj(merchantImg)}
           ></View>
           <View className="descriptionCard_merchantTitle font_hide">
-            {orderDescs.merchantName}
+            {merchantName}
           </View>
           <View className="descriptionCard_goIcon"></View>
         </View>
         <View className="descriptionCard_merchantShop">
           <View
-            className="descriptionCard_merchantLogo dakale_nullImage"
-            style={backgroundObj(kolGoods.goodsImg)}
+            className={classNames(
+              "descriptionCard_merchantLogo",
+              orderType === "reduceCoupon"
+                ? "coupon_big_icon"
+                : "dakale_nullImage"
+            )}
+            style={backgroundObj(goodsImg)}
           ></View>
           <View className="descriptionCard_shop_details">
-            <View className="descriptionCard_goods_name color1 font28 font_noHide">
-              {kolGoods.goodsName}
+            <View className="descriptionCard_goods_name color1 font28 font_hide">
+              {goodsName}
             </View>
-            <View className="font24 color2 descriptionCard_goods_num">
-              数量：{kolGoods.goodsCount}
+
+            {orderType === "reduceCoupon" ? (
+              <View className="font24 color2 descriptionCard_goods_num font_hide">
+                面值{couponPrice} |{" "}
+                {!thresholdPrice ? "无门槛" : `满${thresholdPrice}元可用`} |
+                数量:
+                {goodsCount}
+              </View>
+            ) : (
+              <View className="font24 color2 descriptionCard_goods_num">
+                数量:
+                {goodsCount}
+              </View>
+            )}
+            <View className="font24 color3 descriptionCard_goods_time">
+              有效期至：{useEndTime}
             </View>
           </View>
-          {filterPrice(orderResult.totalFee)}
+          {filterPrice(totalFee)}
         </View>
         <View className="descriptionCard_goods_liner"></View>
         <View className="descriptionCard_goods_tags public_center">
           <View className="kolTagBox public_center">
-            {kolGoods.needOrder === "0" && (
+            {needOrder === "0" && (
               <View className="public_center">
                 <View className="kolTag kolTagIcons"></View>
                 <View className="font24 color2 kolTag_font">免预约</View>
               </View>
             )}
-            {kolGoods.allowRefund === "1" && (
+            {allowRefund === "1" && (
               <View className="public_center">
                 <View className="kolTag kolTagIcons"></View>
                 <View className="font24 color2 kolTag_font">随时退</View>
               </View>
             )}
-            {kolGoods.allowExpireRefund === "1" && (
+            {allowExpireRefund === "1" && (
               <View className="public_center">
                 <View className="kolTag kolTagIcons"></View>
                 <View className="font24 color2 kolTag_font">过期退</View>
@@ -227,16 +287,25 @@ export default (props) => {
                 className="kolgoods_go_left public_center"
                 onClick={() =>
                   mapGo({
-                    lat: data.merchantLat,
-                    lnt: data.merchantLnt,
-                    address: data.merchantAddress,
-                    name: orderResult.merchantName,
+                    lat: merchantLat,
+                    lnt: merchantLnt,
+                    address: merchantAddress,
+                    merchantName: merchantName,
                   })
                 }
               >
                 <View className="kolgoods_go_leftBox public_center">
                   <View className="kolgoods_goIcon_box kol_radius"></View>
                   到这里去
+                </View>
+              </View>
+              <View
+                className="kolgoods_go_center public_center"
+                onClick={() => goSpeGoods()}
+              >
+                <View className="kolgoods_go_leftBox public_center">
+                  <View className="kolgoods_goIcon_box kol_shop_icon"></View>
+                  商品详情
                 </View>
               </View>
               <View

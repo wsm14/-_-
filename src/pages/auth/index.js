@@ -7,6 +7,8 @@ import { authWxLogin } from "@/common/authority";
 import { getOpenId, getUserInfo, bindTelephone } from "@/server/auth";
 import "./index.scss";
 import { goBack, toast } from "../../common/utils";
+import evens from "@/common/evens";
+import Router from "@/common/router";
 @inject("store")
 @observer
 class Index extends Component {
@@ -18,6 +20,12 @@ class Index extends Component {
       unionId: "",
       visible: false,
     };
+  }
+  componentWillUnmount() {
+    var url = getCurrentPages()[getCurrentPages().length - 2].route || "";
+    if (url && url.includes("pages/index/home/index")) {
+      evens.$emit("reload");
+    }
   }
 
   componentWillMount() {
@@ -70,48 +78,52 @@ class Index extends Component {
   }
 
   bindUser() {
-    const { btnStatus } = this.state;
-    if (btnStatus === 0 && wx.getUserProfile) {
-      wx.getUserProfile({
-        desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-        success: (res) => {
-          const { errMsg, userInfo } = res;
-          if (errMsg === "getUserProfile:ok") {
-            const { openId, unionId } = this.state;
-            getUserInfo(
-              {
-                openId,
-                unionId,
-                ...userInfo,
-              },
-              (res) => {
-                const { mobile } = res.userInfo;
-                const { userInfo = {} } = res;
-                if (mobile && mobile.length === 11) {
-                  Taro.setStorageSync("userInfo", res.userInfo);
-                  return goBack(() => toast("登录成功"));
-                } else {
-                  let oldObj = Taro.getStorageSync("userInfo") || {};
-                  Object.keys(userInfo).forEach((item) => {
-                    if (!userInfo[item] || userInfo[item] === "") {
-                      delete userInfo[item];
-                    }
-                  });
-                  let obj = { ...oldObj, ...userInfo };
-                  Taro.setStorageSync("userInfo", obj);
-                  this.setState({
-                    btnStatus: 1,
-                    visible: true,
-                  });
+    const { btnStatus, openId, unionId } = this.state;
+    if (openId && unionId) {
+      if (btnStatus === 0 && wx.getUserProfile) {
+        wx.getUserProfile({
+          desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+          success: (res) => {
+            const { errMsg, userInfo } = res;
+            if (errMsg === "getUserProfile:ok") {
+              getUserInfo(
+                {
+                  openId,
+                  unionId,
+                  ...userInfo,
+                },
+                (res) => {
+                  const { mobile } = res.userInfo;
+                  const { userInfo = {} } = res;
+                  if (mobile && mobile.length === 11) {
+                    Taro.setStorageSync("userInfo", res.userInfo);
+                    return goBack(() => toast("登录成功"));
+                  } else {
+                    let oldObj = Taro.getStorageSync("userInfo") || {};
+                    Object.keys(userInfo).forEach((item) => {
+                      if (!userInfo[item] || userInfo[item] === "") {
+                        delete userInfo[item];
+                      }
+                    });
+                    let obj = { ...oldObj, ...userInfo };
+                    Taro.setStorageSync("userInfo", obj);
+                    this.setState({
+                      btnStatus: 1,
+                      visible: true,
+                    });
+                  }
                 }
-              }
-            );
-          } else {
-            console.log(errMsg);
-            toast("获取失败");
-          }
-        },
-      });
+              );
+            } else {
+              console.log(errMsg);
+              toast("获取失败");
+            }
+          },
+        });
+      }
+    } else {
+      authWxLogin(this.getOpenId.bind(this));
+      toast("获取OpenId失败，请重试");
     }
   }
 
@@ -180,7 +192,6 @@ class Index extends Component {
             let oldObj = Taro.getStorageSync("userInfo") || {};
             Object.keys(userInfo).forEach((item) => {
               if (!userInfo[item] || userInfo[item] === "") {
-                console.log(item, userInfo[item]);
                 delete userInfo[item];
               }
             });

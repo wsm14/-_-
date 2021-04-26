@@ -17,7 +17,7 @@ export default (props) => {
         }}
       >
         <View className="lookAround_nation_cityIcon"></View>
-        <View className="lookAround_nation_city">{city}</View>
+        <View className="lookAround_nation_city font_hide">{city}</View>
         <View className="lookAround_nation_citySelect"></View>
       </View>
       <View

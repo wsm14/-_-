@@ -78,24 +78,71 @@ page {
     }
 
     .share_btn {
-      width: 400px;
-      height: 80px;
-      border-radius: 8px;
-      border: 1px solid #333333;
       margin: 40px auto 0;
-      text-align: center;
-      line-height: 80px;
       font-size: 32px;
-      font-family: PingFangSC-Regular, PingFang SC;
+      width: 425px;
       font-weight: 400;
-
-      .share_icon {
+      .share_goMerchant_btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 80px;
+        border-radius: 8px;
+        border: 2px solid #333333;
+        margin-right: 10px;
+      }
+      .share_goMerchant_btn::before {
         width: 48px;
         height: 48px;
-        margin-right: 8px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon468.png")
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon535.png")
           no-repeat;
         background-size: 100% 100%;
+        display: block;
+        content: "";
+        margin-right: 8px;
+      }
+      .share_saveColleton_btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 80px;
+        border-radius: 8px;
+        border: 2px solid #333333;
+        margin-left: 10px;
+      }
+      .share_saveColleton_btn::before {
+        width: 48px;
+        height: 48px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon534.png")
+          no-repeat;
+        background-size: 100% 100%;
+        display: block;
+        content: "";
+        margin-right: 8px;
+      }
+
+      .share_updateColleton_btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 80px;
+        border-radius: 8px;
+        border: 2px solid #333333;
+        margin-left: 10px;
+        color: #F0597D;
+      }
+      .share_updateColleton_btn::before {
+        width: 48px;
+        height: 48px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon536.png")
+          no-repeat;
+        background-size: 100% 100%;
+        display: block;
+        content: "";
+        margin-right: 8px;
       }
     }
 
@@ -362,7 +409,7 @@ page {
     position: absolute;
     top: 24px;
     right: 32px;
-    width: 300px;
+    width: 380px;
     height: 80px;
     background: #07c0c2;
     border-radius: 8px;

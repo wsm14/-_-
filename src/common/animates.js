@@ -14,7 +14,7 @@ const animates = (obj) => {
     delay = 0,
     transformOrigin = "50% 50% 0",
   } = obj;
-  console.log(obj);
+
   const animate = Taro.createAnimation({
     duration,
     timingFunction,

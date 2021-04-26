@@ -57,7 +57,6 @@ class Index extends Component {
   }
   onShareAppMessage(res) {
     let userInfo = loginStatus() || {};
-    let img = specialGoodsInfo.activityGoodsImg.split(",")[0];
     const { userIdString } = userInfo;
     if (res.from === "button") {
       return {
