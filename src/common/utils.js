@@ -607,3 +607,12 @@ export const computedPrice = (price, scale) => {
   let size = (price * (scale / 100)).toFixed(3);
   return size.substring(0, size.length - 1);
 };
+
+export const computedVideoSize = (width = 0, height = 0) => {
+  let widthScale = (width * 16) / 9;
+  if (widthScale === height || widthScale <= (height * 9) / 16) {
+    return true;
+  } else {
+    return false;
+  }
+};

@@ -9,7 +9,12 @@ import {
 } from "@tarojs/components";
 import Taro, { pxTransform, useReady } from "@tarojs/taro";
 import BottomView from "./bottom";
-import { backgroundObj, navigateTo, setPeople } from "@/common/utils";
+import {
+  backgroundObj,
+  navigateTo,
+  setPeople,
+  computedVideoSize,
+} from "@/common/utils";
 import classNames from "classnames";
 import "./../index.scss";
 export default ({
@@ -57,6 +62,7 @@ export default ({
                 merchantCollectionStatus,
                 collectionAmount,
                 shareAmount,
+                frontImageWidth,
               } = item;
               if (
                 index === current ||
@@ -77,7 +83,7 @@ export default ({
                     >
                       <View
                         style={{
-                          height: Taro.pxTransform(frontImageHeight),
+                          height: "100%",
                           width: "100%",
                         }}
                         onClick={(e) => {
@@ -101,7 +107,11 @@ export default ({
                           loop={true}
                           showPlayBtn={false}
                           showCenterPlayBtn={false}
-                          objectFit="cover"
+                          objectFit={
+                            computedVideoSize(frontImageWidth, frontImageHeight)
+                              ? "fill"
+                              : "cover"
+                          }
                           initialTime="0"
                           onTimeUpdate={(e) => {
                             if (index === current) {

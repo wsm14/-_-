@@ -75,6 +75,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     //newUser
 
     interests: "/pages/rules/interests/index",
+    shareActive:'/pages/share/invitation/index',
     download: "/pages/share/download/index",
     login: "/pages/auth/index",
     //规则类

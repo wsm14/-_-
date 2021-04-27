@@ -9,7 +9,12 @@ import {
 } from "@tarojs/components";
 import Taro, { pxTransform, useReady } from "@tarojs/taro";
 import BottomView from "./bottom";
-import { backgroundObj, navigateTo, setPeople } from "@/common/utils";
+import {
+  backgroundObj,
+  navigateTo,
+  setPeople,
+  computedVideoSize,
+} from "@/common/utils";
 import classNames from "classnames";
 import "./../index.scss";
 export default ({
@@ -60,11 +65,6 @@ export default ({
                 shareAmount,
                 guideMomentFlag = "0",
               } = item;
-
-              let height =
-                ((Taro.getSystemInfoSync().windowWidth / 375) * 750) /
-                (frontImageWidth / frontImageHeight);
-
               if (
                 index === current ||
                 index === current + 1 ||
@@ -84,7 +84,7 @@ export default ({
                     >
                       <View
                         style={{
-                          height: Taro.pxTransform(height),
+                          height: "100%",
                           width: "100%",
                         }}
                         onClick={(e) => {
@@ -107,7 +107,11 @@ export default ({
                           // enablePlayGesture={true}
                           loop={true}
                           showPlayBtn={false}
-                          objectFit="fill"
+                          objectFit={
+                            computedVideoSize(frontImageWidth, frontImageHeight)
+                              ? "fill"
+                              : "cover"
+                          }
                           showCenterPlayBtn={false}
                           initialTime="0"
                           onTimeUpdate={(e) => {

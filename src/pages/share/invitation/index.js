@@ -1,13 +1,22 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { View, Image } from "@tarojs/components";
+import { View, Image, Text } from "@tarojs/components";
 import { rssConfigData } from "./components/data";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
 import ButtonView from "@/components/Button";
-import { loginStatus, mapGo, navigateTo, toast } from "@/common/utils";
-import { getWechatKefuAccount } from "@/server/share";
+import {
+  loginStatus,
+  mapGo,
+  navigateTo,
+  reLaunch,
+  backgroundObj,
+} from "@/common/utils";
+import { getWechatActivityData } from "@/server/share";
+import Waterfall from "@/components/waterfall";
+import { fetchUserShareCommission } from "@/server/index";
 import "./index.scss";
+import Router from "@/common/router";
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -17,28 +26,95 @@ class Index extends Component {
         start: false,
       },
       visible: false,
-      wechatAccount: "",
+      httpData: {
+        activityType: getCurrentInstance().router.params.activityType || "",
+      },
+      lat: 0,
+      lnt: 0,
+      specialGoodsDTOList: [],
+      configUserLevelInfo: {},
+      address: "",
+      merchantName: "",
+      coverImg: "",
+      type: "",
+      path: "",
+      index: 0,
     };
   }
-  componentWillUnmount() {}
-  componentDidMount() {
-    this.getWechatKefuAccount();
+  componentWillMount() {
+    const { scene } = getCurrentInstance().router.params;
+    if (scene) {
+      getShareParamInfo({ uniqueKey: scene }, (res) => {
+        const {
+          shareParamInfo: { param },
+        } = res;
+        if (param && JSON.parse(param)) {
+          this.setState(
+            {
+              httpData: { ...param },
+            },
+            (res) => {
+              this.fetchActivity();
+            }
+          );
+        }
+      });
+    } else {
+      this.fetchActivity();
+    }
   }
-  getWechatKefuAccount() {
-    getWechatKefuAccount({}, (res) => {
-      const { wechatAccount = "" } = res;
-      console.log(wechatAccount);
+  componentDidShow() {
+    const { index } = this.state;
+    if (index !== 0) {
+      this.fetchActivity();
+    }
+    this.fetchUserShare();
+  }
+  fetchUserShare() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
       this.setState({
-        wechatAccount,
+        configUserLevelInfo,
+      });
+    });
+  }
+  fetchActivity() {
+    const { httpData, index } = this.state;
+    getWechatActivityData(httpData, (res) => {
+      const {
+        lat = 0,
+        lnt = 0,
+        specialGoodsDTOList = [],
+
+        coverImg = "",
+        type = "",
+        path = "",
+        address = "",
+        merchantName = "",
+      } = res;
+      this.setState({
+        specialGoodsDTOList,
+        lnt,
+        lat,
+        address,
+        merchantName,
+        coverImg,
+        type,
+        path,
+        index: index + 1,
       });
     });
   }
   getShareInfo() {
     const { profile, username } = Taro.getStorageSync("userInfo") || {};
+    const {
+      httpData: { activityType },
+      coverImg = "",
+    } = this.state;
     getShareInfo(
       {
         shareType: "activity",
-        subType: "baolongActivity20210417",
+        subType: activityType,
       },
       (res) => {
         const { qcodeUrl } = res;
@@ -49,37 +125,93 @@ class Index extends Component {
               wxCode: qcodeUrl,
               username,
               userProfile: profile,
+              background: coverImg,
             }),
           },
         });
       }
     );
   }
+  getSelectType() {
+    const { type = "switchTab", path = "/pages/index/home/index" } = this.state;
+    if (!loginStatus()) {
+      Router({
+        routerName: "login",
+      });
+    } else {
+      if (type === "switchTab") {
+        reLaunch(path);
+      } else {
+        navigateTo(path);
+      }
+    }
+  }
   onShareAppMessage(res) {
     let userInfo = loginStatus() || {};
     const { userIdString } = userInfo;
+    const {
+      httpData: { activityType },
+    } = this.state;
     if (res.from === "button") {
       return {
         title: "邀请函",
-        path: `/pages/share/invitation/index?shareUserId=${userIdString}&shareUserType=user`,
+        path: `/pages/share/invitation/index?shareUserId=${userIdString}&shareUserType=user&activityType=${activityType}`,
       };
     }
   }
-  setClipboard() {
-    const { wechatAccount } = this.state;
-    Taro.setClipboardData({
-      data: wechatAccount,
-      success: function (res) {
-        toast("已复制哒卡乐官方微信，打开微信添加好友吧");
-      },
-      fail: function (res) {
-        toast("复制失败");
-      },
-    });
-  }
-  render() {
-    const { cavansObj, visible } = this.state;
 
+  render() {
+    const {
+      cavansObj,
+      specialGoodsDTOList,
+      lat,
+      lnt,
+      address,
+      merchantName,
+      configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
+    } = this.state;
+    const shopView = (item) => {
+      console.log(item);
+      const {
+        goodsImg,
+        goodsName,
+        realPrice,
+        oriPrice,
+        merchantIdStr,
+        specialGoodsId,
+      } = item;
+      return (
+        <View
+          className="invitation_shop_initBox"
+          onClick={() =>
+            Router({
+              routerName: "favourableDetails",
+              args: {
+                merchantId: merchantIdStr,
+                specialActivityId: specialGoodsId,
+              },
+            })
+          }
+        >
+          <View
+            style={backgroundObj(goodsImg)}
+            className="invitation_shop_imageBox"
+          ></View>
+          <View className="invitation_shop_title font_noHide">{goodsName}</View>
+          <View className="invitation_bean_title">卡豆抵扣到手价</View>
+          <View className="invitation_bean_font">
+            <Text className="font24">¥</Text>
+            <Text className="font28">
+              {" " + (realPrice * (payBeanCommission / 100)).toFixed(2)}
+            </Text>
+          </View>
+          <View className="invitation_oldPrice_font font_hide">
+            原价¥{oriPrice}
+          </View>
+          <View className="invitation_go_buy"></View>
+        </View>
+      );
+    };
     return (
       <View className="invitation_box">
         <TaroShareDrawer
@@ -91,123 +223,71 @@ class Index extends Component {
         ></TaroShareDrawer>
         <View className="invitation_img1">
           <Image
-            className="invitation_img_style"
+            className="invitation_img_title1"
             lazyLoad
-            src={
-              "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_1_1.png"
-            }
+            src={"https://wechat-config.dakale.net/miniprogram/image/5_1_2.png"}
           />
           <ButtonView>
             <View
               className="goMap_btn"
               onClick={() =>
                 mapGo({
-                  lat: 30.312431,
-                  lnt: 120.382048,
-                  address: "下沙宝龙广场",
-                  merchantName: "永辉超市入口处",
+                  lat,
+                  lnt,
+                  address: address,
+                  merchantName: merchantName,
                 })
               }
             ></View>
           </ButtonView>
-          <ButtonView>
-            <View
-              className="shareFriend_btn"
-              onClick={() => {
-                loginStatus()
-                  ? this.setState({ visible: true })
-                  : navigateTo("/pages/auth/index");
-              }}
-            ></View>
-          </ButtonView>
         </View>
         <View className="invitation_img2">
-          <Image
-            className="invitation_img_style"
-            lazyLoad
-            src={
-              "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_4_15.png"
-            }
-          />
-          <View
-            className="getShop_btn"
-            onClick={() => this.getShareInfo()}
-          ></View>
+          <View className="invitation_shop_image">
+            <Image
+              className="invitation_img_title2"
+              lazyLoad
+              src={
+                "https://wechat-config.dakale.net/miniprogram/image/5_1_3.png"
+              }
+            />
+          </View>
+          <View className="invitation_shop_specail_title"></View>
+          <View className="invitation_shop_box">
+            <Waterfall
+              list={specialGoodsDTOList}
+              createDom={shopView}
+              noMargin={{ margin: "0" }}
+              style={{ width: Taro.pxTransform(300) }}
+            ></Waterfall>
+          </View>
+          <View className="invitation_shop_card">
+            <Image
+              className="invitation_img_style"
+              lazyLoad
+              src={
+                "https://wechat-config.dakale.net/miniprogram/image/5_1_8.png"
+              }
+            />
+          </View>
         </View>
         <View className="invitation_img3">
           <Image
             className="invitation_img_style"
             lazyLoad
-            src={
-              "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_3_1.png"
-            }
+            src={"https://wechat-config.dakale.net/miniprogram/image/5_1_5.png"}
           />
         </View>
         <View
           onClick={() => this.getShareInfo()}
           className="invitation_img4"
         ></View>
-        {visible && (
-          <View
-            catchMove
-            className="invitation_active"
-            onClick={(e) => {
-              e.stopPropagation();
-              this.setState({ visible: false });
-            }}
-          >
-            <View
-              className="invitation_childRenBox"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              <View
-                className="invitation_closeBox"
-                onClick={(e) => {
-                  this.setState({ visible: false });
-                }}
-              ></View>
-              <View className="invitation_active_title"></View>
-              <ButtonView>
-                <View
-                  className="invitation_active_btn"
-                  onClick={() => {
-                    this.setState(
-                      {
-                        visible: false,
-                      },
-                      (res) => {
-                        mapGo({
-                          lat: 30.312431,
-                          lnt: 120.382048,
-                          address: "下沙宝龙广场",
-                          merchantName: "永辉超市入口处",
-                        });
-                      }
-                    );
-                  }}
-                ></View>
-              </ButtonView>
-              <View className="invitation_active_bottom">
-                活动地点：下沙宝龙广场永辉超市入口处
-              </View>
-              <View className="invitation_active_bottomFont">
-                复制活动官方微信了解活动详情
-              </View>
-              <ButtonView>
-                <View
-                  className="invitation_active_bottomBtn"
-                  onClick={() => {
-                    this.setState({ visible: false }, (res) => {
-                      this.setClipboard();
-                    });
-                  }}
-                ></View>
-              </ButtonView>
-            </View>
-          </View>
-        )}
+        <View className="invitation_btn" onClick={() => this.getSelectType()}>
+          <Image
+            className="invitation_img_btn"
+            lazyLoad
+            src={"https://wechat-config.dakale.net/miniprogram/image/5_1_6.png"}
+          />
+        </View>
       </View>
     );
   }

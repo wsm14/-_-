@@ -3,7 +3,7 @@ export const rssConfigData = (data = {}) => {
   let {
     userProfile = "",
     background = "https://wechat-config.dakale.net/miniprogram/image/invitation_8.png",
-    wxCode = "https://wechat-config.dakale.net/miniprogram/image/invitation_8.png", ///
+    wxCode = "", ///
     username = "",
   } = data;
   console.log(userProfile);
