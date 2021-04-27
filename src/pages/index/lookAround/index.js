@@ -317,13 +317,7 @@ class Index extends Component {
             });
           }}
         >
-          <View
-            onClick={() =>
-              Router({
-                routerName: "shareActive",
-              })
-            }
-          >
+          <View>
             <Banner
               imgName="coverImg"
               data={[...specialHeadList]}
