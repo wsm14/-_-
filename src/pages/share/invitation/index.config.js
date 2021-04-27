@@ -1,5 +1,5 @@
 export default {
-  navigationBarTitleText: '哒卡 元气满满',
+  navigationBarTitleText: '哒卡乐活动',
   navigationStyle: 'default',
   "enableShareAppMessage": true,
   "enableShareTimeline": true

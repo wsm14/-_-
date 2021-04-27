@@ -48,7 +48,6 @@ class Index extends Component {
   }
 
   componentDidShow() {
-  
     this.fetchUserShareCommission();
   }
   payCode(obj) {
@@ -129,14 +128,14 @@ class Index extends Component {
   }
   saveScanCodeOrder() {
     const {
-      totalFee,
       httpData,
+      httpData: { totalFee },
       couponObj: { userCouponIdString = "" },
       useBeanType,
       useBeanStatus,
     } = this.state;
 
-    if (totalFee !== 0) {
+    if (totalFee != 0) {
       saveScanCodeOrder(
         {
           ...httpData,

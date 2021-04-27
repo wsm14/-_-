@@ -41,14 +41,19 @@ const tabCity = (props) => {
       const { cityStatus, cityName } = res;
       if (cityStatus === "1") {
         let cityData = Taro.getStorageSync("city");
-        if (
+        if (!cityData) {
+          store.locationStore.setCity(cityName, obj.cityCode, 1);
+          Taro.reLaunch({
+            url: "/pages/index/lookAround/index",
+          });
+        } else if (
           ((!cityData && obj.cityCode !== "3301") ||
             (cityData.cityCode !== obj.cityCode && cityData)) &&
-            cityData.type !== "1"
+          cityData.type !== "1"
         ) {
           setCity({
             cityCode: obj.cityCode,
-            cityName: obj.city.slice(0, obj.city.length - 1),
+            cityName: cityName,
             type: "1",
           });
 

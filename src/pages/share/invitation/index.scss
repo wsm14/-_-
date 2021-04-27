@@ -6,53 +6,75 @@ page {
 
 .invitation_box {
   line-height: 1;
+  background: #e1f2f2;
   .invitation_img1 {
     width: 100%;
-    height: 1110px;
+    height: 865px;
     position: relative;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/5_1_16.png")
+      no-repeat;
+    background-size: 100% 100%;
     .goMap_btn {
       position: absolute;
-      right: 34px;
-      bottom: 205px;
-      width: 147px;
-      height: 44px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_6.png")
+      right: 52px;
+      width: 87px;
+      height: 85px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/5_1_4.png")
         no-repeat;
       background-size: 100% 100%;
+      bottom: 240px;
+      z-index: 101;
     }
-    .shareFriend_btn {
-      width: 360px;
-      height: 90px;
-      position: absolute;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_4_15_2.png")
-        no-repeat;
-      background-size: 100% 100%;
-      bottom: 24px;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
+    .invitation_img_title1 {
+      width: 100%;
+      height: 640rpx;
+      z-index: 100;
+      position: relative;
+      display: block;
     }
   }
-  .invitation_img2 {
+  .invitation_img_title2 {
+    position: absolute;
+    left: 0;
+    right: 0;
     width: 100%;
-    height: 1380px;
+    height: 460px;
+    z-index: 10;
+  }
+  .invitation_img2 {
+    background: #108588;
+    margin: -289px 15px 0;
+    padding: 63px 24px 40px;
+    border-radius: 40px;
     position: relative;
-    .getShop_btn {
-      width: 480px;
-      height: 100px;
-      position: absolute;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_4_15_3.png")
-        no-repeat;
-      background-size: 100% 100%;
-      bottom: 69px;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
+    z-index: 10;
+    .invitation_shop_image {
+      height: 460px;
+      width: 100%;
     }
+    .invitation_shop_box {
+      margin-top: 32px;
+      border-radius: 20px;
+      padding: 32px 24px;
+      background: #ffffff;
+    }
+    .invitation_shop_card {
+      width: 672px;
+      height: 134px;
+      margin: 24px auto 0;
+    }
+  }
+  .invitation_shop_specail_title {
+    width: 232px;
+    height: 48px;
+    margin: 17px auto 0;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/5_1_9.png")
+      no-repeat;
+    background-size: 100% 100%;
   }
   .invitation_img3 {
     width: 100%;
-    height: 739px;
+    height: 1081px;
     position: relative;
   }
   .invitation_img_style {
@@ -138,5 +160,74 @@ page {
     background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_4_15_1.png")
       no-repeat;
     background-size: 100% 100%;
+    z-index: 100;
+  }
+  .invitation_shop_initBox {
+    width: 300px;
+    position: relative;
+  }
+  .invitation_shop_imageBox {
+    width: 300px;
+    height: 225px;
+    background: #d8d8d8;
+    border-radius: 8px;
+  }
+  .invitation_shop_title {
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 40px;
+    max-height: 80px;
+    padding-top: 16px;
+    max-width: 300px;
+  }
+  .invitation_bean_title {
+    font-size: 24px;
+    font-weight: 500;
+    color: #ef476f;
+    line-height: 24px;
+  }
+
+  .invitation_bean_font {
+    margin-top: 12px;
+    display: flex;
+    align-items: baseline;
+    color: rgba(239, 71, 111, 1);
+  }
+  .invitation_oldPrice_font {
+    margin-top: 4px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    text-decoration: line-through;
+    max-width: 200px;
+  }
+  .invitation_go_buy {
+    width: 104px;
+    height: 54px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/5_1_7.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .invitation_btn {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(16, 133, 136, 1);
+    border-top:2px solid black;
+    z-index: 100;
+  }
+  .invitation_img_btn {
+    width: 520px;
+    height: 78px;
   }
 }

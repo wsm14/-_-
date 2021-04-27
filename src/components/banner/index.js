@@ -11,8 +11,9 @@ import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { Swiper, SwiperItem, View, Image } from "@tarojs/components";
 import classNames from "classnames";
+import Router from "@/common/router";
 import "./index.scss";
-import { navigateTo } from "@/common/utils";
+
 export default (props) => {
   const {
     style = {
@@ -33,6 +34,22 @@ export default (props) => {
   useEffect(() => {
     data && setList(data);
   }, [data]);
+  const linkTo = (item) => {
+    if (typeof item === "object") {
+      let { jumpUrlType, param = "", jumpUrlNew } = item;
+      param = JSON.parse(param) || {};
+      jumpUrlNew = JSON.parse(jumpUrlNew) || {};
+      const { weChatUrl = "" } = jumpUrlNew;
+      if (jumpUrlType === "native" && weChatUrl) {
+        Router({
+          routerName: weChatUrl,
+          args: {
+            ...param,
+          },
+        });
+      } else return;
+    }
+  };
   if (list.length > 0) {
     return (
       <View style={!boxStyle ? { position: "relative" } : { ...boxStyle }}>
@@ -46,11 +63,10 @@ export default (props) => {
             }}
           >
             {list.map((item, index) => {
-              const { jumpUrl } = item;
               return (
                 <SwiperItem style={{ width: "100%", height: "100%" }}>
                   <View
-                    // onClick={() =>{if(jumpUrl){navigateTo(`/pages/share/webView/index?link=${jumpUrl}`)}}}
+                    onClick={() => linkTo(item)}
                     style={
                       imgStyle
                         ? {
@@ -78,6 +94,7 @@ export default (props) => {
           <View style={style}>
             <View style={{ width: "100%", height: "100%" }}>
               <View
+                onClick={() => linkTo(list[0])}
                 style={
                   list.length > 0
                     ? imgStyle
