@@ -65,7 +65,7 @@ const env =
 
 switch (env) {
   case "development":
-    baseUrl = "https://devgateway.dakale.net";
+    baseUrl = "http://36l08135o7.wicp.vip";
     // baseUrl = "https://pregateway.dakale.net";
     // baseUrl = "https://gateway1.dakale.net";
     break;

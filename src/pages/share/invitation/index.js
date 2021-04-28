@@ -45,16 +45,18 @@ class Index extends Component {
     const { scene } = getCurrentInstance().router.params;
     if (scene) {
       getShareParamInfo({ uniqueKey: scene }, (res) => {
-        const {
+        let {
           shareParamInfo: { param },
         } = res;
         if (param && JSON.parse(param)) {
+          param = JSON.parse(param);
+          const { activityType } = param;
           this.setState(
             {
-              httpData: { ...param },
+              httpData: { activityType: activityType },
             },
             (res) => {
-              this.fetchActivity();
+              this.fetchActivity()
             }
           );
         }
@@ -80,12 +82,11 @@ class Index extends Component {
   }
   fetchActivity() {
     const { httpData, index } = this.state;
-    getWechatActivityData(httpData, (res) => {
+    getWechatActivityData({ ...httpData }, (res) => {
       const {
         lat = 0,
         lnt = 0,
         specialGoodsDTOList = [],
-
         coverImg = "",
         type = "",
         path = "",
@@ -171,7 +172,6 @@ class Index extends Component {
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
     } = this.state;
     const shopView = (item) => {
-      console.log(item);
       const {
         goodsImg,
         goodsName,
