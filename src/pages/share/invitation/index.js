@@ -155,7 +155,7 @@ class Index extends Component {
     } = this.state;
     if (res.from === "button") {
       return {
-        title: "邀请函",
+        title: "哒卡乐活动",
         path: `/pages/share/invitation/index?shareUserId=${userIdString}&shareUserType=user&activityType=${activityType}`,
       };
     }

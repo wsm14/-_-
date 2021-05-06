@@ -30,7 +30,7 @@ page {
       }
       .lookAround_nation_city {
         font-size: 28px;
-        font-weight: 600; 
+        font-weight: 600;
         max-width: 100px;
         color: #333333;
         margin-left: 8px;
@@ -353,7 +353,7 @@ page {
   }
   .lookAround_price_text {
     font-size: 20px;
-  line-height: 22px;
+    line-height: 22px;
   }
   .lookAround_bean_box {
     height: 32px;
@@ -579,4 +579,22 @@ page {
   color: #333333;
   line-height: 42px;
   margin-top: 12px;
+}
+.lookAround_hot_user {
+  display: flex;
+  height: 30px;
+  margin-top: 16px;
+  font-size: 24px;
+  font-weight: 400;
+  color: #999999;
+  align-items: center;
+  .lookAround_hot_userProfile {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  .lookAround_hot_merchantName {
+    margin-left: 8px;
+    max-width: 154px;
+  }
 }

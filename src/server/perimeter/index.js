@@ -222,3 +222,14 @@ export const getListMayLikeCoupon = (data = {}, fn) => {
   );
 };
 //猜你喜欢有价券
+
+export const getListSpecialByPeriod = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/specialGoods/listSpecialByPeriodType",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//猜你喜欢有价券

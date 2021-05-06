@@ -22,6 +22,8 @@ import { rssConfigData } from "./components/data";
 import ButtonView from "@/components/Button";
 import { payNeed } from "@/components/componentView/NeedPay";
 import { knowPay } from "@/components/componentView/KnowPay";
+import Card from "./components/wechant_card";
+import VideoBean from "./components/getVideoBean";
 import Router from "@/common/router";
 import {
   Instruction,
@@ -288,13 +290,11 @@ class MerchantDetails extends Component {
         return (
           <View className="shopdetails_kol_goshop">
             <ButtonView>
-              <View className="shopdetails_kol_btnBox shopdetails_kol_btnColor1">
-                <View
-                  className="shopdetails_kol_font1"
-                  onClick={() => loginBtn(() => this.saveGoodsOrder())}
-                >
-                  自购返
-                </View>
+              <View
+                className="shopdetails_kol_btnBox shopdetails_kol_btnColor1"
+                onClick={() => loginBtn(() => this.saveGoodsOrder())}
+              >
+                <View className="shopdetails_kol_font1">自购返</View>
                 <View className="shopdetails_kol_font2">
                   {" "}
                   省¥
@@ -410,7 +410,10 @@ class MerchantDetails extends Component {
 
                 <>
                   <View className="shopDetails_tab_icon"></View>
-                  <View className="shopDetails_tab_font">卡豆抵扣</View>
+                  <View className="shopDetails_tab_questionRight">
+                    卡豆抵扣
+                    <Text className="color11">{payBeanCommission + "%"}</Text>
+                  </View>
                 </>
                 <View
                   onClick={() => Router({ routerName: "interests" })}
@@ -439,7 +442,18 @@ class MerchantDetails extends Component {
                 )}
               </View>
             </View>
-
+            <View
+              className="shopdetails_share_info public_auto color11"
+              onClick={() =>
+                Router({
+                  routerName: "download",
+                })
+              }
+            >
+              <View>{"升级哒人，立享好友消费佣金 & 更高卡豆抵扣比例"}</View>
+              <View>{">"}</View>
+            </View>
+            <Card></Card>
             {merchantSet(specialGoodsInfo)}
             {/* 商品详情 */}
             {goodsType === "package" && (
@@ -518,6 +532,15 @@ class MerchantDetails extends Component {
                   </Text>
                 </View>
               </View>
+              <VideoBean
+                price={(realPrice * (payBeanCommission / 100))
+                  .toFixed(3)
+                  .substring(
+                    0,
+                    (realPrice * (payBeanCommission / 100)).toFixed(3).length -
+                      1
+                  )}
+              ></VideoBean>
               {payBtn()}
             </View>
             {visible && (

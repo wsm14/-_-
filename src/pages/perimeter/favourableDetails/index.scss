@@ -5,7 +5,7 @@ page {
 }
 .favourable_Details {
   width: 100%;
-  padding-bottom: 193px;
+  padding-bottom: 214px;
   .shopDetails_banner {
     width: 750px;
     height: 530px;
@@ -100,6 +100,10 @@ page {
         margin-right: 24px;
         height: 24px;
       }
+      .shopDetails_tab_questionRight {
+        margin-right: 8px;
+        height: 24px;
+      }
     }
   }
   .shopdetails_getPrice {
@@ -117,7 +121,6 @@ page {
       margin-right: 16px;
     }
   }
-
 
   .shopdetails_shop_packageGroup {
     padding: 40px 32px;
@@ -147,9 +150,9 @@ page {
         color: #666666;
         line-height: 28px;
       }
-      .shopdetails_package_width{
-        max-width:330px;
-        display: inline-block
+      .shopdetails_package_width {
+        max-width: 330px;
+        display: inline-block;
       }
     }
   }
@@ -305,5 +308,11 @@ page {
       color: #ffffff;
       line-height: 28px;
     }
+  }
+  .shopdetails_share_info {
+    height: 76px;
+    background: #fdecf0;
+    padding: 0 32px;
+    font-size: 24px;
   }
 }

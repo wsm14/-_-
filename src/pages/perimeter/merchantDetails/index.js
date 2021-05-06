@@ -443,7 +443,7 @@ class MerchantDetails extends Component {
                     </Text>
                   </View>
                   <View className="merchant_time_tags">
-                    {[filterStrList(tag), ...services].map((item, index) => {
+                    {[...filterStrList(tag), ...services].map((item, index) => {
                       if (index < 5) {
                         return (
                           <View className={"merchant_tag_shop"}>{item}</View>

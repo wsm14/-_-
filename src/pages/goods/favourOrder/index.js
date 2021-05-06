@@ -20,6 +20,7 @@ import { inject, observer } from "mobx-react";
 import ButtonView from "@/components/Button";
 import { fetchUserShareCommission } from "@/server/index";
 import SelectBean from "@/components/componentView/selectBean";
+import ShareView from "@/components/componentView/shareView";
 import Router from "@/common/router";
 @inject("store")
 @observer
@@ -209,6 +210,26 @@ class Index extends Component {
     } else return (Number(bean) / 100).toFixed(2);
   }
 
+  computedPayPrice() {
+    const {
+      useBeanType,
+      specialGoodsInfo: { userIncomeBean, userBean, realPrice },
+      httpData: { goodsCount },
+      useBeanStatus,
+    } = this.state;
+    if (useBeanStatus === "1") {
+      if (useBeanType === "reward") {
+        return (Number(realPrice) * goodsCount - userBean / 100).toFixed(2);
+      } else {
+        return (Number(realPrice) * goodsCount - userIncomeBean / 100).toFixed(
+          2
+        );
+      }
+    } else {
+      return (Number(realPrice) * goodsCount).toFixed(2);
+    }
+  }
+
   render() {
     const {
       specialGoodsInfo,
@@ -348,16 +369,7 @@ class Index extends Component {
                 <Text
                   style={{ fontSize: Taro.pxTransform(32), fontWeight: "bold" }}
                 >
-                  {useBeanStatus === "1"
-                    ? Number(realPrice) * goodsCount -
-                        (userBean || userIncomeBean) / 100 >
-                      0
-                      ? (
-                          Number(realPrice) * goodsCount -
-                          (userBean || userIncomeBean) / 100
-                        ).toFixed(2)
-                      : 0
-                    : (Number(realPrice) * goodsCount).toFixed(2)}
+                  {this.computedPayPrice()}
                 </Text>
               </Text>
             </View>
@@ -371,6 +383,7 @@ class Index extends Component {
               </View>
             </ButtonView>
           </View>
+          <ShareView></ShareView>
           {visible && (
             <PayBean
               cancel={() =>

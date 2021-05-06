@@ -50,8 +50,8 @@ export default (props) => {
         if (item[imgWidth] && item[imgHight] && setWidth) {
           rightNum += computedHeight(item[imgWidth], item[imgHight], setWidth);
         } else {
-          if (parseInt(imgHight)) { 
-            rightNum += parseInt(imgHight)/4;
+          if (parseInt(imgHight)) {
+            rightNum += parseInt(imgHight) / 4;
           } else {
             rightNum += 400;
           }
@@ -63,19 +63,13 @@ export default (props) => {
   };
   if (list) {
     return (
-      <View
-        style={noMargin ? noMargin : {}}
-        className="page_content animated  fadeIn"
-      >
+      <View style={noMargin ? noMargin : {}} className="page_content">
         <View style={style ? { ...style } : {}} className="page_left">
           {leftList.map((item) => {
             return createDom(item, list, store);
           })}
         </View>
-        <View
-          style={style ? { ...style } : {}}
-          className="page_right  animated  fadeIn"
-        >
+        <View style={style ? { ...style } : {}} className="page_right">
           {rightList.map((item) => {
             return createDom(item, list, store);
           })}

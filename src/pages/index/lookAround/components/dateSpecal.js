@@ -81,7 +81,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
           className="lookAround_active_title"
           onClick={() =>
             Router({
-              routerName: "specialOffer",
+              routerName: "speciaMaterial",
               args: {
                 type: "today",
               },

@@ -1,29 +1,22 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
-import {
-  toast,
-  GetDistance,
-  getLnt,
-  getLat,
-  backgroundObj,
-} from "@/common/utils";
-
+import { toast } from "@/common/utils";
 import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
-import { getListSpecialByPeriod } from "@/server/perimeter";
+import { getBanner } from "@/server/common";
+import Banner from "@/components/banner";
 import { childTemplate } from "@/components/specalTemplate";
-import { specailGoods } from "@/components/componentView/specail";
 import "./index.scss";
 class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
       kolGoodsList: [],
-      specialGoodsList: [],
+      bannerList: [],
       httpData: {
         page: 1,
         limit: 10,
-        specialFilterType: "hot",
+        specialFilterType: "today",
       },
       configUserLevelInfo: {},
       countStatus: true,
@@ -41,7 +34,15 @@ class Index extends Component {
   componentDidMount() {
     this.fetchUserShareCommission();
     this.getshopList();
-    this.featchAcitivity();
+    this.getBanner();
+  }
+  getBanner() {
+    getBanner({ bannerType: "hotWeal" }, (res) => {
+      const { bannerList } = res;
+      this.setState({
+        bannerList,
+      });
+    });
   }
   getshopList(key = "kolGoodsList") {
     fetchSpecialGoods(this.state.httpData, (res) => {
@@ -57,19 +58,7 @@ class Index extends Component {
       }
     });
   }
-  featchAcitivity() {
-    getListSpecialByPeriod(
-      {
-        periodType: "thisPeriod",
-      },
-      (res) => {
-        const { specialGoodsList = [] } = res;
-        this.setState({
-          specialGoodsList,
-        });
-      }
-    );
-  }
+
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
       const { configUserLevelInfo = {} } = res;
@@ -79,7 +68,6 @@ class Index extends Component {
     });
   }
   onReachBottom() {
-    console.log(11111);
     const { httpData, countStatus } = this.state;
     if (countStatus) {
       this.setState(
@@ -98,27 +86,28 @@ class Index extends Component {
     }
   } //上拉加载
   render() {
-    const { kolGoodsList, configUserLevelInfo, specialGoodsList } = this.state;
-    console.log(specialGoodsList);
+    const {
+      kolGoodsList,
+      configUserLevelInfo,
+      specialGoodsList,
+      bannerList,
+    } = this.state;
+    console.log(specialGoodsList, bannerList);
+
     return (
-      <View className="specialOffer_box">
-        {specialGoodsList.length > 0 && (
-          <View className="specialOffer_novite">
-            <View className="specialOffer_novite_content">
-              <View className="specialOffer_novite_title">本期必抢</View>
-              <View className="specialOffer_novite_liner"></View>
-              <View className="specialOffer_novite_scroll">
-                {specialGoodsList.map((item) => {
-                  return specailGoods(item, configUserLevelInfo);
-                })}
-              </View>
-            </View>
+      <View className="speciaMaterial_box">
+        {bannerList.length > 0 && (
+          <View className="speciaMaterial_banner_style">
+            <Banner
+              boxStyle={{ width: "100%", height: "100%" }}
+              imgName="coverImg"
+              data={bannerList}
+            ></Banner>
           </View>
         )}
-        <View className="specialOffer_content_pay">抢购列表</View>
-        <View className="specialOffer_content">
+        <View className="speciaMaterial_content">
           {kolGoodsList.map((item) => {
-            return childTemplate(item, configUserLevelInfo);
+            return childTemplate(item, configUserLevelInfo, "today");
           })}
         </View>
       </View>

@@ -95,11 +95,12 @@ export default {
         "couponList/index", //有价券列表
         "payCouponDetails/index", //有价券详情
         "benchmark/index", //逛逛风向标列表
-        "specialOffer/index", //逛逛内层列表
+        "specialOffer/index", //逛逛限时秒杀内层列表
+        "speciaMaterial/index", //逛逛爆品福利内层列表
         "groupList/index", //特惠集团搜索
         "merchantVideo/index", //商家主页视频
         "nearVideo/index", //附近主页视频
-        "beanReward/index",
+        "beanReward/index", //卡豆明细
         "commodity/index", //橱窗商品详情
         "willCity/index", //即将开通
         "businessSell/index", //商家信息

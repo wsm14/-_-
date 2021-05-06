@@ -7,8 +7,46 @@ page {
   background: #ffffff;
   overflow-x: hidden;
   overflow-y: auto;
+  .specialOffer_novite {
+    height: 680px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ef476f;
+    .specialOffer_novite_content {
+      margin: 0 16px;
+      width: 718px;
+      height: 612px;
+      background: #ffffff;
+      border-radius: 20px;
+      .specialOffer_novite_title {
+        padding: 32px 0 0;
+        font-size: 32px;
+        font-weight: normal;
+        color: #ef476f;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .specialOffer_novite_liner {
+        margin: 16px auto 0;
+        width: 40px;
+        height: 4px;
+        background: #ef476f;
+        border-radius: 2px;
+      }
+      .specialOffer_novite_scroll {
+        margin: 24px 16px 0;
+      }
+    }
+  }
+  .specialOffer_content_pay {
+    font-size: 36px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 36px;
+    padding: 40px 32px 0;
+  }
   .specialOffer_content {
     padding: 32px 32px 0;
   }
- 
 }

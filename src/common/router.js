@@ -38,6 +38,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     businessSell: "/pages/perimeter/businessSell/index", //商家简单信息
     groupList: "/pages/perimeter/groupList/index", //集团列表
     specialOffer: "/pages/perimeter/specialOffer/index", //逛逛内层列表
+    speciaMaterial: "/pages/perimeter/speciaMaterial/index", //逛逛内层爆品列表
     beanReward: "/pages/perimeter/beanReward/index", //卡豆明细
     merchantVideo: "/pages/perimeter/merchantVideo/index", //商家视频
     nearVideo: "/pages/perimeter/nearVideo/index", //附近视频
@@ -75,7 +76,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     //newUser
 
     interests: "/pages/rules/interests/index",
-    shareActive:'/pages/share/invitation/index',
+    shareActive: "/pages/share/invitation/index",
     download: "/pages/share/download/index",
     login: "/pages/auth/index",
     //规则类

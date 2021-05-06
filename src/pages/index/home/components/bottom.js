@@ -13,7 +13,7 @@ import {
 import Taro from "@tarojs/taro";
 import { getPromotionInfo } from "@/server/index";
 import Router from "@/common/router";
-import Barrage from "./barrage";
+// import Barrage from "./barrage";
 import { getMomentBarrage } from "@/server/common";
 import { mapGo } from "@/common/utils";
 import "./../index.scss";
@@ -30,16 +30,16 @@ export default (props) => {
     getPromotion(server);
     setTimeout(() => computedFont(), 1);
   }, []);
-  useEffect(() => {
-    const { promotionId, couponTitlesJson = [] } = server;
-    if (couponTitlesJson.length > 0 && promotionId) {
-      getMomentBarrages({});
-    } else if (promotionId) {
-      getMomentBarrages({ freeCouponStatus: "1" });
-    } else {
-      setList([]);
-    }
-  }, [server]);
+  // useEffect(() => {
+  //   const { promotionId, couponTitlesJson = [] } = server;
+  //   if (couponTitlesJson.length > 0 && promotionId) {
+  //     getMomentBarrages({});
+  //   } else if (promotionId) {
+  //     getMomentBarrages({ freeCouponStatus: "1" });
+  //   } else {
+  //     setList([]);
+  //   }
+  // }, [server]);
   const { flagType, boolean } = flag;
   const {
     message,
@@ -53,7 +53,7 @@ export default (props) => {
     merchantLat,
     username,
     promotionPrice,
-    userMomentIdString
+    userMomentIdString,
   } = server;
   const getPromotion = (item) => {
     const { promotionType, promotionIdString, userIdString } = item;
@@ -78,6 +78,8 @@ export default (props) => {
       promotionName,
       promotionBuyPrice,
       promotionIdString,
+      promotionOriPrice,
+      promotionMerchantPrice,
     } = couponInfo;
     const linkTo = () => {
       if (promotionType === "special") {
@@ -86,7 +88,7 @@ export default (props) => {
           args: {
             specialActivityId: promotionIdString,
             merchantId: userIdString,
-            momentId:userMomentIdString
+            momentId: userMomentIdString,
           },
         });
       } else {
@@ -102,41 +104,93 @@ export default (props) => {
       }
     };
     if (Object.keys(couponInfo).length > 0) {
-      return (
-        <View
-          onClick={() => linkTo()}
-          className={classNames("home_active_box", `home_active_box${index}`)}
-        >
-          <View className="home_active_image">
-            <View
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: Taro.pxTransform(4),
-                ...backgroundObj(promotionImg),
-              }}
-            />
-          </View>
-          <View className="home_active_details">
-            <View className="home_active_font1  font_hide">
-              {promotionName}
-            </View>
-            <View className="home_active_font2 font_hide">
-              专享特价 <Text className={"font20 color3"}>¥ </Text>{" "}
-              <Text className={"font28 color3 bold"}>{promotionBuyPrice} </Text>
-            </View>
-            <View className="home_active_price">
+      if (shareCommission === 0) {
+        return (
+          <View
+            onClick={() => linkTo()}
+            className={classNames("home_active_box", `home_active_box${index}`)}
+          >
+            <View className="home_active_image">
               <View
-                className="home_active_tags"
-                style={{ border: "1px solid #ffeba5" }}
-              >
-                卡豆可抵 ￥{computedPrice(promotionPrice, payBeanCommission)}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: Taro.pxTransform(4),
+                  ...backgroundObj(promotionImg),
+                }}
+              />
+            </View>
+            <View className="home_active_details">
+              <View className="home_active_font1  font_hide">
+                {promotionName}
+              </View>
+              <View className="home_active_font2 font_hide">
+                卡豆抵扣到手价
+              </View>
+              <View className="home_active_price">
+                <View className="color10 font20">¥ </View>
+                <View className="color10 font28">
+                  {" " + promotionBuyPrice}
+                </View>
+                <View className="home_active_specal">
+                  {"¥ " + promotionOriPrice}
+                </View>
+              </View>
+            </View>
+            <View className={classNames("home_active_btn")}>立即抢购</View>
+          </View>
+        );
+      } else {
+        return (
+          <View
+            onClick={() => linkTo()}
+            className={"home_active_shareCommission"}
+          >
+            <View className="home_shareCommission_image">
+              <View
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: Taro.pxTransform(4),
+                  ...backgroundObj(promotionImg),
+                }}
+              />
+            </View>
+            <View className="home_shareCommission_details">
+              <View className="home_shareCommission_font1  font_hide">
+                {promotionName}
+              </View>
+              <View className="home_shareCommission_font2 font_hide">
+                <View className="home_shareCommission_title font20">
+                  卡豆抵扣到手价
+                </View>
+                <View className="color10  font24">¥ </View>
+                <View className="color10  font28">{promotionBuyPrice}</View>
+                <View className="home_shareCommission_specal">
+                  {"¥" + promotionOriPrice}
+                </View>
+              </View>
+              <View className="home_shareCommission_tag">
+                <View className="home_shareCommission_tagBox home_shareCommission_tagColor1">
+                  {"自购省¥" +
+                    computedPrice(
+                      promotionBuyPrice - promotionMerchantPrice,
+                      shareCommission
+                    )}
+                </View>
+
+                <View className="home_shareCommission_tagBox home_shareCommission_tagColor2">
+                  {"分享赚¥" +
+                    computedPrice(
+                      promotionBuyPrice - promotionMerchantPrice,
+                      shareCommission
+                    )}
+                </View>
               </View>
             </View>
           </View>
-          <View className={classNames("home_active_btn")}>立即抢购</View>
-        </View>
-      );
+        );
+      }
     } else {
       return;
     }
@@ -201,7 +255,7 @@ export default (props) => {
   };
   return (
     <View className="home_bottom">
-      {list.length > 0 && <Barrage data={list}></Barrage>}
+      {/* {list.length > 0 && <Barrage data={list}></Barrage>} */}
       {children}
       {activeView()}
       {descView()}

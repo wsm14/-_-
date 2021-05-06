@@ -29,9 +29,8 @@ import { inject, observer } from "mobx-react";
 import { nearList } from "@/components/nearList";
 import Toast from "@/components/beanToast";
 import Waterfall from "@/components/waterfall";
-import Dressing from "./components/dressing";
-import GuideView from "./components/guide";
 import Coupon from "@/components/freeCoupon";
+import Lead from "@/components/lead";
 import evens from "@/common/evens";
 import Router from "@/common/router";
 @inject("store")
@@ -564,8 +563,7 @@ class Index extends React.PureComponent {
     });
   }
   reload() {
-    let data = {
-    };
+    let data = {};
     this.selectList(data);
   }
   componentDidShow() {
@@ -755,8 +753,11 @@ class Index extends React.PureComponent {
                 createDom={nearList}
                 imgHight={"frontImageHeight"}
                 imgWidth={"frontImageWidth"}
-                setWidth={335}
-                style={{ width: Taro.pxTransform(335) }}
+                setWidth={372}
+                noMargin={{
+                  margin: "0",
+                }}
+                style={{ width: Taro.pxTransform(372) }}
                 store={this.props.store}
               ></Waterfall>
             </ScrollView>
@@ -892,6 +893,7 @@ class Index extends React.PureComponent {
             });
           }}
         ></Coupon>
+        <Lead beanLimitStatus={beanLimitStatus}></Lead>
         {/* <GuideView current={current} data={userMomentsInfo}></GuideView> */}
         {!player && (
           <View

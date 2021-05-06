@@ -34,6 +34,7 @@ export default ({
     setScale(0);
   }, [current]);
   const expensive = useMemo(() => {
+    const { shareCommission = 0 } = userInfo;
     if (data.length > 0) {
       return (
         <View
@@ -178,7 +179,13 @@ export default ({
                           {setPeople(collectionAmount)}
                         </View>
 
-                        <View className="home_share_wechat">
+                        <View
+                          className={classNames(
+                            shareCommission > 0
+                              ? "home_share_animate"
+                              : "home_share_wechat"
+                          )}
+                        >
                           <Button
                             open-type="share"
                             style={{
