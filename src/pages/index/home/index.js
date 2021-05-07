@@ -268,64 +268,61 @@ class Index extends React.PureComponent {
     const {
       userMomentsInfo: { userMomentIdString, guideMomentFlag },
       userMomentsInfo,
-      beanLimitStatus,
     } = this.state;
-    if (beanLimitStatus === "1") {
-      saveWatchBean(
-        {
-          momentId: userMomentIdString,
-        },
-        (res) => {
-          const {
-            specialGoodsList = [{}],
-            otherBeanAmount = "",
-            otherRealPrice = "",
-          } = res;
-          if (guideMomentFlag === "1") {
-            Taro.setStorageSync("newDeviceFlag", "0");
-          }
-          this.setState(
+    checkPuzzleBeanLimitStatus({}, (res) => {
+      const { beanLimitStatus = "1" } = res;
+      this.setState({ beanLimitStatus }, (res) => {
+        if (beanLimitStatus === "1") {
+          saveWatchBean(
             {
-              time: null,
-              userMomentsInfo: {
-                ...userMomentsInfo,
-                watchStatus: "1",
-                ...specialGoodsList[0],
-                otherBeanAmount,
-                otherRealPrice,
-              },
-              userMomentsList: this.state.userMomentsList.map((item) => {
-                if (item.userMomentIdString === userMomentIdString) {
-                  return {
-                    ...item,
+              momentId: userMomentIdString,
+            },
+            (res) => {
+              const {
+                specialGoodsList = [{}],
+                otherBeanAmount = "",
+                otherRealPrice = "",
+              } = res;
+              if (guideMomentFlag === "1") {
+                Taro.setStorageSync("newDeviceFlag", "0");
+              }
+              this.setState(
+                {
+                  time: null,
+                  userMomentsInfo: {
+                    ...userMomentsInfo,
                     watchStatus: "1",
                     ...specialGoodsList[0],
                     otherBeanAmount,
                     otherRealPrice,
-                  };
-                }
-                return item;
-              }),
-            },
-            (res) => {
-              this.setState(
-                {
-                  beanflag: true,
+                  },
+                  userMomentsList: this.state.userMomentsList.map((item) => {
+                    if (item.userMomentIdString === userMomentIdString) {
+                      return {
+                        ...item,
+                        watchStatus: "1",
+                        ...specialGoodsList[0],
+                        otherBeanAmount,
+                        otherRealPrice,
+                      };
+                    }
+                    return item;
+                  }),
                 },
                 (res) => {
-                  checkPuzzleBeanLimitStatus({}, (res) => {
-                    const { beanLimitStatus = "1" } = res;
-                    this.setState({ beanLimitStatus });
+                  this.setState({
+                    beanflag: true,
+                    beanLimitStatus,
                   });
                 }
               );
             }
           );
+        } else {
+          return;
         }
-      );
-    } else {
-      return;
-    }
+      });
+    });
   }
   //领取卡豆
   initInterval() {

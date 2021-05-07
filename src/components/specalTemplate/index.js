@@ -147,19 +147,19 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
     ),
   }[type];
   return (
-    <View className="specialOffer_shop_box">
-      <View
-        className="specialOffer_shop_child animated fadeIn"
-        onClick={() =>
-          Router({
-            routerName: "favourableDetails",
-            args: {
-              specialActivityId: specialActivityIdString,
-              merchantId: merchantIdString,
-            },
-          })
-        }
-      >
+    <View
+      className="specialOffer_shop_box"
+      onClick={() =>
+        Router({
+          routerName: "favourableDetails",
+          args: {
+            specialActivityId: specialActivityIdString,
+            merchantId: merchantIdString,
+          },
+        })
+      }
+    >
+      <View className="specialOffer_shop_child animated fadeIn">
         <View
           style={backgroundObj(goodsImg)}
           className="specialOffer_shopImg"

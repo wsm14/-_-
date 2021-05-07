@@ -563,6 +563,7 @@ export const mapGo = (item) => {
     name: item.merchantName || "",
   });
 };
+//打开腾讯地图
 export const removeStorage = (key) =>
   Taro.removeStorage({
     key: key,
@@ -571,6 +572,7 @@ export const removeStorage = (key) =>
       toast("缓存清理错误");
     },
   });
+//清理缓存
 export const computedClient = () => {
   let client = Taro.getMenuButtonBoundingClientRect() || {};
   return client;
@@ -586,13 +588,14 @@ export const loginStatus = () => {
     return false;
   }
 };
-
+//用户是否登录
 export const format = (time = "") => {
   if (new Date().getTime() > new Date(time.replace(/-/g, "/")).getTime()) {
     return true;
   }
   return false;
 };
+//商品判断是否开始售卖
 export const setBuyRule = (val, day, max) => {
   switch (val) {
     case "unlimited":
@@ -603,11 +606,12 @@ export const setBuyRule = (val, day, max) => {
       return `每人每天限购${day}份`;
   }
 };
+//商品规则对应文案
 export const computedPrice = (price, scale) => {
   let size = (price * (scale / 100)).toFixed(3);
   return size.substring(0, size.length - 1);
 };
-
+//换算价格计算
 export const computedVideoSize = (width = 0, height = 0) => {
   let widthScale = (width * 16) / 9;
   if (widthScale === height || widthScale <= (height * 9) / 16) {
@@ -616,3 +620,6 @@ export const computedVideoSize = (width = 0, height = 0) => {
     return false;
   }
 };
+//首页视频计算比例
+export const resiApiKey = "f390f1e2b0faa95710d00a0801384c41";
+//高德key

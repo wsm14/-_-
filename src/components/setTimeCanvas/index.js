@@ -80,7 +80,8 @@ export default (props) => {
         )}
         {watchStatus !== "1" && <View className="getBean_toast">{time}</View>}
       </View>
-      {(watchStatus === "0" && time != 0) || toast === 1 ? (
+      {(watchStatus === "0" && time != 0) ||
+      (watchStatus === "0" && toast === 1) ? (
         <View
           className={classNames(
             "canvas_tag",

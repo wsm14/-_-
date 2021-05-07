@@ -49,7 +49,25 @@ class Index extends React.Component {
       levelDetails: {},
     };
   }
-
+  onPullDownRefresh() {
+    this.setState(
+      {
+        bannerList: [],
+        loginStatus: 0,
+        userInfo: {},
+        nextLevel: {},
+        levelDetails: {},
+      },
+      (res) => {
+        let time = setTimeout(() => {
+          Taro.stopPullDownRefresh();
+          clearTimeout(time);
+        }, 500);
+        this.getBannerList();
+        this.getUserDetails();
+      }
+    );
+  }
   getBannerList() {
     const { bannerHttp } = this.state;
     getBanner(bannerHttp, (res) => {

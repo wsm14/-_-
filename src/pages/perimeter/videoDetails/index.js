@@ -12,37 +12,27 @@ import {
 } from "@/common/utils";
 import InterVal from "@/components/setTimeCanvas";
 import {
-  getUserMomentList,
   saveWatchBean,
   saveMerchantCollection,
   closeMerchantCollection,
   checkPuzzleBeanLimitStatus,
   updateUserMomentParam,
   fetchUserShareCommission,
+  getUserMomentDetailById,
 } from "@/server/index";
-import classNames from "classnames";
 import { inject, observer } from "mobx-react";
-import evens from "@/common/evens";
+import "./index.scss";
+import classNames from "classnames";
 import Toast from "@/components/beanToast";
 import Coupon from "@/components/freeCoupon";
-import Lead from "@/components/lead";
-import "./index.scss";
+
 @inject("store")
 @observer
 class Index extends React.PureComponent {
   constructor() {
     super(...arguments);
     this.state = {
-      current: 0,
-      userMomentsList: [],
-      VideoList: [],
-      circular: false,
       userMomentsInfo: {},
-      httpData: {
-        browseType: "commend",
-        page: 1,
-        limit: "10",
-      },
       countStatus: true,
       time: null,
       interval: null,
@@ -57,40 +47,6 @@ class Index extends React.PureComponent {
     this.interSwper = null;
   }
 
-  onChange(e) {
-    const { countStatus, httpData, userMomentsList, interval } = this.state;
-    let { current } = e.detail;
-    this.setState(
-      {
-        player: true,
-        current,
-        userMomentsInfo: userMomentsList[current],
-        time: null,
-        couponFlag: false,
-      },
-      (res) => {
-        this.videoPlayerControl();
-        this.initInterval();
-        if (current >= this.state.userMomentsList.length - 3 && countStatus) {
-          this.setState(
-            {
-              httpData: {
-                ...httpData,
-                page: Math.ceil(userMomentsList.length / 10) + 1,
-              },
-            },
-            (res) => {
-              this.getVideoList();
-            }
-          );
-        } else {
-          if (current === this.state.userMomentsList.length - 1) {
-            return toast("暂无数据");
-          }
-        }
-      }
-    );
-  }
   stopVideoPlayerControl() {
     const { current, interval, player } = this.state;
     if (player) {
@@ -100,7 +56,7 @@ class Index extends React.PureComponent {
       this.setState({
         player: false,
       });
-      Taro.createVideoContext(`video${current}`).stop();
+      Taro.createVideoContext(`details1`).stop();
     } else {
       if (interval) {
         this.stopInterval(interval);
@@ -109,114 +65,8 @@ class Index extends React.PureComponent {
         player: true,
       });
       this.initInterval();
-      Taro.createVideoContext(`video${current}`).play();
+      Taro.createVideoContext(`details1`).play();
     }
-  }
-  onInterSwper(e) {
-    if (!this.interSwper) {
-      this.interSwper = setTimeout(() => {
-        this.onChange(e);
-      }, 200);
-    } else {
-      clearTimeout(this.interSwper);
-      this.interSwper = setTimeout(() => {
-        this.onChange(e);
-      }, 200);
-    }
-  }
-  onTransition(e) {
-    const { dy } = e.detail;
-    const { httpData, interval, current } = this.state;
-
-    if (current === 0 && dy < -100) {
-      if (interval) {
-        this.stopInterval(interval);
-      }
-
-      if (this.interReload) {
-        clearTimeout(this.interReload);
-        return (this.interReload = setTimeout(
-          () =>
-            this.setState(
-              {
-                httpData: { ...httpData, page: 1 },
-                current: 0,
-                userMomentsList: [],
-                VideoList: [],
-                circular: false,
-                countStatus: true,
-                time: null,
-              },
-              (res) => {
-                this.getVideoList(() => {
-                  if (this.state.userMomentsList.length > 0) {
-                    this.setState(
-                      {
-                        userMomentsInfo: this.state.userMomentsList[0],
-                      },
-                      (res) => {
-                        this.initInterval();
-                      }
-                    );
-                  }
-                });
-              }
-            ),
-          500
-        ));
-      }
-      return (this.interReload = setTimeout(
-        () =>
-          this.setState(
-            {
-              httpData: { ...httpData, page: 1 },
-              current: 0,
-              userMomentsList: [],
-              VideoList: [],
-              circular: false,
-              countStatus: true,
-              time: null,
-            },
-            (res) => {
-              this.getVideoList(() => {
-                if (this.state.userMomentsList.length > 0) {
-                  this.setState(
-                    {
-                      userMomentsInfo: this.state.userMomentsList[0],
-                    },
-                    (res) => {
-                      this.initInterval();
-                    }
-                  );
-                }
-              });
-            }
-          ),
-        500
-      ));
-    }
-  }
-
-  getVideoList(fn) {
-    const { httpData, current } = this.state;
-    getUserMomentList(httpData, (res) => {
-      let { userMomentsList = [], beanLimitStatus = "1" } = res;
-      if (userMomentsList.length === 0) {
-        this.setState({
-          countStatus: false,
-        });
-        return;
-      }
-      this.setState(
-        {
-          userMomentsList: [...this.state.userMomentsList, ...userMomentsList],
-          beanLimitStatus,
-        },
-        (res) => {
-          fn && fn();
-        }
-      );
-    });
   }
 
   getBean(time) {
@@ -231,46 +81,24 @@ class Index extends React.PureComponent {
       }
     );
   } //设置定时器领取卡豆
-
   saveBean() {
     const {
-      userMomentsInfo: { userMomentIdString, guideMomentFlag },
+      userMomentsInfo: { userMomentIdString },
       userMomentsInfo,
     } = this.state;
-    checkPuzzleBeanLimitStatus({}, (res) => {
-      const { beanLimitStatus = "1" } = res;
-      this.setState({ beanLimitStatus }, (res) => {
-        if (beanLimitStatus === "1") {
-          saveWatchBean(
-            {
-              momentId: userMomentIdString,
-            },
-            (res) => {
-              this.setState({
-                beanflag: true,
-                time: null,
-                userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
-                userMomentsList: this.state.userMomentsList.map((item) => {
-                  if (item.userMomentIdString === userMomentIdString) {
-                    return {
-                      ...item,
-                      watchStatus: "1",
-                    };
-                  }
-                  return item;
-                }),
-              });
-            }
-          );
-        } else {
-          this.setState({
-            beanflag: true,
-          });
-        }
-      });
-    });
+    saveWatchBean(
+      {
+        momentId: userMomentIdString,
+      },
+      (res) => {
+        this.setState({
+          beanflag: true,
+          time: null,
+          userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
+        });
+      }
+    );
   }
-
   //领取卡豆
   initInterval() {
     const { userMomentsInfo, interval } = this.state;
@@ -426,66 +254,51 @@ class Index extends React.PureComponent {
       this.initInterval();
     }
   }
-  componentDidMount() {}
-  componentWillMount() {
-    const { selectObj, list, index } = this.props.store.homeStore;
-    if (
-      list.length === 0 &&
-      getCurrentInstance().router.params.type !== "goods"
-    ) {
-      toast("参数异常");
-    } else {
-      if (getCurrentInstance().router.params.type === "goods") {
+
+  getUserMomentDetailById(momentId) {
+    getUserMomentDetailById(
+      {
+        momentId,
+      },
+      (res) => {
+        const { userMomentsInfo } = res;
         this.setState(
           {
-            httpData: {
-              browseType: "commend",
-              page: 1,
-              limit: "10",
-            },
-          },
-          (res) => {
-            this.getVideoList(() => {
-              const { userMomentsList } = this.state;
-              if (userMomentsList.length > 0) {
-                this.setState(
-                  {
-                    userMomentsInfo: this.state.userMomentsList[0],
-                  },
-                  (res) => {
-                    this.initInterval();
-                  }
-                );
-              }
-            });
-          }
-        );
-      } else {
-        this.setState(
-          {
-            userMomentsList: list,
-            current: index,
-            userMomentsInfo: list[index],
-            httpData: {
-              ...this.state.httpData,
-              ...selectObj,
-            },
+            userMomentsInfo,
           },
           (res) => {
             this.initInterval();
           }
         );
       }
+    );
+  }
+
+  componentWillMount() {
+    const { momentId, scene } = getCurrentInstance().router.params;
+    if (scene || momentId) {
+      if (scene) {
+        getShareParamInfo({ uniqueKey: scene }, (res) => {
+          const {
+            shareParamInfo: { param },
+          } = res;
+          if (param && JSON.parse(param)) {
+            const { momentId } = JSON.parse(param);
+            if (momentId) {
+              this.getUserMomentDetailById(momentId);
+            }
+          }
+        });
+      } else if (momentId) {
+        this.getUserMomentDetailById(momentId);
+      } else {
+        return;
+      }
+    } else {
+      toast("参数异常");
     }
   }
-  componentWillUnmount() {
-    const { homeStore } = this.props.store;
-    if (!getCurrentInstance().router.params.type) {
-      homeStore.clearNavitor();
-      evens.$emit("updateMomentsList", this.state.userMomentsList);
-      console.log(this.state.userMomentsList);
-    }
-  }
+  componentWillUnmount() {}
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
       const { configUserLevelInfo = {} } = res;
@@ -512,13 +325,13 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
         };
       } else {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
         };
       }
     } else {
@@ -526,36 +339,32 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
         };
       } else {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
         };
       }
     }
   }
   render() {
     const {
-      userMomentsList,
-      current,
-      circular,
       userMomentsInfo,
       userMomentsInfo: { length = "" },
       time,
       configUserLevelInfo,
-      httpData: { browseType },
       beanflag,
       couponFlag,
       beanLimitStatus,
       player,
     } = this.state;
-    const templateView = () => {
-      if (userMomentsList.length > 0) {
-        console.log(time);
-        return (
+
+    return (
+      <View className={classNames("home_box home_black")}>
+        <View className="home_video_box">
           <>
             <InterVal
               interval={time}
@@ -564,43 +373,14 @@ class Index extends React.PureComponent {
               beanLimitStatus={beanLimitStatus}
             ></InterVal>
             <VideoView
-              circular={circular}
-              data={userMomentsList}
-              current={current}
-              onChange={this.onInterSwper.bind(this)}
+              data={userMomentsInfo}
               follow={this.followStatus.bind(this)}
               collection={this.collection.bind(this)}
-              onTransition={this.onTransition.bind(this)}
               stop={this.stopVideoPlayerControl.bind(this)}
               userInfo={configUserLevelInfo}
             ></VideoView>
           </>
-        );
-      } else {
-        return (
-          <View className="home_order_box public_center">
-            <View>
-              <View className="home_order_image home_nullStatus_black"></View>
-              <View className="home_order_font">
-                {browseType === "commend" ? "暂无推荐的内容" : "暂无附近的内容"}
-              </View>
-            </View>
-          </View>
-        );
-      }
-    };
-    return (
-      <View className={classNames("home_box home_black")}>
-        <View className="home_wait">
-          <View onClick={() => goBack()} className="backStyle_box">
-            <View
-              className="backStyle go_back_icon"
-              style={{ top: computedClient().top }}
-            ></View>
-          </View>
         </View>
-
-        <View className="home_video_box">{templateView()}</View>
         <Toast
           data={userMomentsInfo}
           show={beanflag}
@@ -621,7 +401,6 @@ class Index extends React.PureComponent {
             });
           }}
         ></Coupon>
-        <Lead beanLimitStatus={beanLimitStatus}></Lead>
         {!player && (
           <View
             onClick={() => this.stopVideoPlayerControl()}

@@ -92,6 +92,7 @@ export default {
     {
       root: "pages/perimeter/",
       pages: [
+        "videoDetails/index",
         "couponList/index", //有价券列表
         "payCouponDetails/index", //有价券详情
         "benchmark/index", //逛逛风向标列表

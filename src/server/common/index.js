@@ -35,6 +35,22 @@ export const getAddress = (data, fn) => {
 };
 //获取城市定位信息
 
+export const getRestapiAddress = (data, fn) => {
+  httpOtherGet(
+    {
+      data: data,
+      url: "https://restapi.amap.com/v3/geocode/regeo/",
+    },
+    (res) => {
+      return fn(res);
+    }
+  );
+};
+//获取高德城市定位信息
+
+
+location=109.739735,28.314296
+
 export const getCategory = (data, fn) => {
   httpGet(
     {

@@ -13,8 +13,8 @@ export default (props) => {
         Router({
           routerName: "nearVideo",
           args: {
-            
-          }
+            type: "goods",
+          },
         })
       }
     >

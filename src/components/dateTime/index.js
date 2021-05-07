@@ -1,7 +1,12 @@
+/*按天倒计时组件
+  fn 时间停止的回调
+  times 需要 对比当前时间 计算的时间
+  type  外部控制样式
+ */
 import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import { toast } from "../../common/utils";
-
+import classNames from "classnames";
 function getSeconds(s) {
   var sTime = parseInt(s); // 秒
   var mTime = 0; // 分
@@ -22,9 +27,9 @@ function getSeconds(s) {
     }
     if (hTime > 24) {
       //获取小时，获取分钟除以60，得到整数小时
-      hDate = parseInt(mTime / 60);
+      hDate = parseInt(mTime / 24);
       //获取小时后取佘的分，获取分钟除以60取佘的分
-      hTime = parseInt(mTime % 60);
+      hTime = parseInt(mTime % 24);
     }
   }
   var result = "";
@@ -53,7 +58,7 @@ function getSeconds(s) {
 }
 
 export default (props) => {
-  const { times, fn, mint } = props;
+  const { times, fn, mint, type } = props;
   let time =
     parseInt(new Date(times.replace(/-/g, "/")).getTime() / 1000) -
     parseInt(new Date().getTime() / 1000);
@@ -85,7 +90,9 @@ export default (props) => {
       ) : (
         <>
           <Text>抢购倒计时</Text>
-          <Text className="color3  bold">{"  " + getSeconds(interVal)}</Text>
+          <Text className={classNames(!type ? "color3 bold" : "")}>
+            {"  " + getSeconds(interVal)}
+          </Text>
         </>
       )}
     </>

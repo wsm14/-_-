@@ -1,3 +1,8 @@
+/*到店打卡领豆视频领豆组件
+ * show 显示或隐藏组件
+ * data 外部导入数据
+ * visible 外部关闭方法
+ */
 import React, { useEffect, useState } from "react";
 import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
@@ -21,7 +26,7 @@ export default (props) => {
     specialActivityIdString,
     otherRealPrice = "",
   } = data;
-
+  /* guideMomentFlag  为1时显示另外一套特殊携带商品样式，默认为0不管 */
   const animated = () => {
     let animateTem = Taro.createAnimation({
       duration: 10,
@@ -42,6 +47,8 @@ export default (props) => {
       setAnimated(animateTem1);
     }, 300);
   };
+
+  /* 显示隐藏动画  */
   const onClose = () => {
     let animateTem2 = Taro.createAnimation({
       duration: 300,
@@ -55,6 +62,8 @@ export default (props) => {
       visible();
     }, 300);
   };
+
+  /* 关闭弹框  */
   const linkToGuang = () => {
     let animateTem2 = Taro.createAnimation({
       duration: 300,
@@ -69,7 +78,7 @@ export default (props) => {
       switchTab("/pages/index/lookAround/index");
     }, 300);
   };
-
+  /* 跳转主页逛逛页面  */
   const linkToPay = () => {
     let animateTem2 = Taro.createAnimation({
       duration: 300,
@@ -90,7 +99,7 @@ export default (props) => {
       });
     }, 300);
   };
-
+  /* 跳转订单详情页面  */
   useEffect(() => {
     if (show) {
       animated();

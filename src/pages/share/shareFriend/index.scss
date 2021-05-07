@@ -7,37 +7,28 @@ page {
 .share_box {
   width: 100%;
   height: 100%;
-  .img_layer {
-    position: fixed;
-    top: 9999px;
-  }
-  .share_img_box {
-    width: 500px;
+  .share_swiper_box {
+    width: 100%;
     height: 890px;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/shareFriend1.png")
-      no-repeat center/cover;
-    margin: 30px auto 0;
-    border-radius: 20px;
-    position: relative;
-    .share_Canvas {
-      width: 150px;
-      height: 150px;
-      background: #ffffff;
-      margin: 0 auto ;
-      position: relative;
-    }
-    .share_Canvas_padding{
-      padding-top: 680px;
-    }
-    .share_font {
-      position: absolute;
-      bottom: 20px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 24px;
-      line-height: 24px;
-      color: #ffffff;
+    display: flex;
+    padding-top: 32px;
+    .share_swiperItem_box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .share_swiperItem {
+        width: 500px;
+        height: 890px;
+        border-radius: 12px;
+        .share_swiperItem_code{
+          position: absolute;
+          left: 174px;
+          right: 174px;
+          bottom: 60px;
+
+        }
+      }
     }
   }
   .share_wx {
@@ -56,7 +47,6 @@ page {
       text-align: center;
       height: 23px;
       font-size: 24px;
-      font-family: PingFang SC;
       font-weight: 400;
       color: #333333;
     }

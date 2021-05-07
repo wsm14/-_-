@@ -1,11 +1,12 @@
 /*
- * style 轮播图框样式,
  * data, 轮播图数据
  * showToast 是否显示当前张数,
  * imgName 图片参数名称
  * list 图片数组
  * current 图片当前张数
- *
+ * boxStyle 轮播图外边框样式
+ * imgStyle 自定义轮播图 样式
+ * bottom 底部描点样式
  * */
 import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";

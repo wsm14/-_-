@@ -10,10 +10,10 @@ import {
   format,
   setBuyRule,
   computedPrice,
+  backgroundObj,
 } from "@/common/utils";
 import "./index.scss";
 import { loginBtn } from "@/common/authority";
-import { navigateTo } from "../../../common/utils";
 import ActivityStatus from "./components/index";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
 import { fetchUserShareCommission } from "@/server/index";
@@ -25,10 +25,12 @@ import { knowPay } from "@/components/componentView/KnowPay";
 import Card from "./components/wechant_card";
 import VideoBean from "./components/getVideoBean";
 import Router from "@/common/router";
+import Date from "@/components/dateTime";
 import {
   Instruction,
   merchantSet,
 } from "@/components/componentView/Instruction";
+import { render } from "react-dom";
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -178,21 +180,22 @@ class MerchantDetails extends Component {
   }
   onShareTimeline() {
     const {
-      specialGoodsInfo: { goodsName, allImgs },
+      specialGoodsInfo: { goodsName, },
       httpData: { merchantId, specialActivityId },
     } = this.state;
     let userInfo = loginStatus() || {};
+    let img = specialGoodsInfo.activityGoodsImg.split(",")[0];
     const { userIdString } = userInfo;
     if (loginStatus()) {
       return {
         title: goodsName,
-        imageUrl: allImgs[0],
+        imageUrl: img,
         path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     } else {
       return {
         title: goodsName,
-        imageUrl: allImgs[0],
+        imageUrl: img,
       };
     }
   }
@@ -263,6 +266,7 @@ class MerchantDetails extends Component {
         remain,
         visible,
         personLimit,
+        buyUserImageList,
       },
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
       specialGoodsInfo,
@@ -330,6 +334,45 @@ class MerchantDetails extends Component {
         );
       }
     };
+    const template = () => {
+      if (!format(activityStartTime) && activityTimeRule === "fixed") {
+        return (
+          <View className="shopdetails_null_status public_center">
+            即将开始
+          </View>
+        );
+      } else {
+        return (
+          <View className="shopdetails_pay_status">
+            {activityTimeRule !== "infinite" ? (
+              <Date type={true} times={activityEndTime} fn={() => {}}></Date>
+            ) : (
+              <View className="font28">长期有效</View>
+            )}
+            <View className="shopdetails_pay_logo">
+              {buyUserImageList.map((item, index) => {
+                if (index === 0) {
+                  return (
+                    <View
+                      className="shopdetail_profile_box dakale_profile"
+                      style={backgroundObj(item)}
+                    ></View>
+                  );
+                } else {
+                  return (
+                    <View
+                      className="shopdetail_profile_box dakale_profile shopdetail_profile_left"
+                      style={backgroundObj(item)}
+                    ></View>
+                  );
+                }
+              })}
+              <View className="shopdetail_left_pay">抢购中</View>
+            </View>
+          </View>
+        );
+      }
+    };
     if (Object.keys(specialGoodsInfo).length > 0) {
       if (status !== "0") {
         {
@@ -356,17 +399,9 @@ class MerchantDetails extends Component {
               ></Banner>
             </View>
             <View className="shopdetails_price">
-              <View className="shopdetails_priceBox">
-                <View className="shopdetails_top public_auto">
+              <View className="shopdetails_priceBox public_auto">
+                <View className="shopdetails_left">
                   <View className="shopdetails_priceIcon">哒卡乐专享价</View>
-                  <View className="shopdetails_time">
-                    活动截止日期：
-                    {activityTimeRule === "fixed"
-                      ? activityEndTime
-                      : "长期有效"}
-                  </View>
-                </View>
-                <View className="shopdetails_bottom public_auto">
                   <View className="shopdetails_setprice">
                     <Text className="shopdetails_bigFont">¥</Text>
                     {realPrice || "--"}
@@ -374,12 +409,8 @@ class MerchantDetails extends Component {
                       ¥ {oriPrice || "--"}
                     </Text>
                   </View>
-                  <View className="shopdetails_setbean">
-                    {format(activityStartTime) || activityTimeRule !== "fixed"
-                      ? "门店抢购中"
-                      : "即将开抢"}
-                  </View>
                 </View>
+                <View className="shopdetails_right">{template()}</View>
               </View>
             </View>
             {/*使用商家*/}

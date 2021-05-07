@@ -15,11 +15,7 @@ import { checkLocation } from "@/server/common";
 const tabCity = (props) => {
   const { data, store } = props;
   const [visible, setVisible] = useState(false);
-  const [result, setResult] = useState({
-    ad_info: {},
-    address: {},
-    address_component: {},
-  });
+  const [result, setResult] = useState({});
   const [citys, setCity] = useState({});
   useEffect(() => {
     if (Object.keys(data).length > 0) {
@@ -28,11 +24,8 @@ const tabCity = (props) => {
   }, [data]);
   useEffect(() => {
     if (Object.keys(result).length > 3) {
-      let {
-        ad_info: { city_code, nation_code },
-        address_component: { city },
-      } = result;
-      city_code = city_code.slice(3, 7);
+      const { city, adcode } = result;
+      const city_code = adcode.slice(0, 4);
       checkLocations({ cityCode: city_code, city });
     }
   }, [result]);
@@ -47,29 +40,22 @@ const tabCity = (props) => {
             url: "/pages/index/lookAround/index",
           });
         } else if (
-          ((!cityData && obj.cityCode !== "3301") ||
-            (cityData.cityCode !== obj.cityCode && cityData)) &&
+          cityData.cityCode !== obj.cityCode &&
           cityData.type !== "1"
         ) {
+          console.log(3232131232);
           setCity({
             cityCode: obj.cityCode,
             cityName: cityName,
-            type: "1",
+            type: 1,
           });
-
-          // Taro.setStorageSync("city", {
-          //   cityCode: obj.cityCode,
-          //   cityName: obj.city,
-          // });
           setVisible(true);
         }
       }
     });
   };
   if (visible) {
-    const {
-      address_component: { city },
-    } = result;
+    const { city } = result;
     return (
       <View catchMove className="tabCity_layer">
         <View className="tabCity_box">

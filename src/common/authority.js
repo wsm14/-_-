@@ -170,15 +170,21 @@ export const authUpdateGeography = (fn) => {
                         startLocationUpdate(fn);
                       } else {
                         toast("授权失败,已配置默认定位");
-                        Taro.setStorageSync("lnt", 120.255384);
-                        Taro.setStorageSync("lat", 30.229271);
+                        fn &&
+                          fn({
+                            latitude: 30.229271,
+                            longitude: 120.255384,
+                          });
                       }
                     },
                   });
                 } else if (res.cancel) {
                   toast("授权失败,已配置默认定位");
-                  Taro.setStorageSync("lnt", 120.255384);
-                  Taro.setStorageSync("lat", 30.229271);
+                  fn &&
+                    fn({
+                      latitude: 30.229271,
+                      longitude: 120.255384,
+                    });
                 }
               },
             });
@@ -278,6 +284,7 @@ export const internet = (obj, fn) => {
 export const scanCode = (data) => {
   if (
     Taro.getStorageSync("userInfo") &&
+    Taro.getStorageSync("userInfo").mobile &&
     Taro.getStorageSync("userInfo").mobile.length === 11 &&
     Taro.getStorageSync("userInfo").token
   ) {

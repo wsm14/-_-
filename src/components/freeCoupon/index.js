@@ -1,3 +1,8 @@
+/*视频领券组件
+  data 外部数据
+  show 控制 是否显示
+  beanflag  显示条件
+ */
 import React, { useState, useRef, useEffect } from "react";
 import { ScrollView, View, Text } from "@tarojs/components";
 import Taro, { useReachBottom } from "@tarojs/taro";

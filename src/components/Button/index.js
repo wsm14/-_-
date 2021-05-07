@@ -1,3 +1,6 @@
+/*按钮动画组件
+  children 按钮内部携带的子元素
+*/
 import React, { useState } from "react";
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";

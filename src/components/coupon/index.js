@@ -3,11 +3,6 @@
  * title：标题
  * visible：子集调用父级回调用于关闭弹窗
  * data：数组用于渲染的数据
- *
- *
- *
- *
- *
  */
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "@tarojs/components";

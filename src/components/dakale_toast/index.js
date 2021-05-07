@@ -1,3 +1,9 @@
+/*通用单按钮样式弹框
+  btn 按钮名称
+  close 外面传入的关闭方法
+  width 内弹框宽度
+  children Components 子组件或函数
+ */
 import { Text, View } from "@tarojs/components";
 import React from "react";
 import Taro from "@tarojs/taro";

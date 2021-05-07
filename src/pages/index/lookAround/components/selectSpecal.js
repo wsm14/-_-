@@ -46,13 +46,29 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
           ></View>
           <View className="lookAround_content">
             <View className="lookAround_title  font_noHide">{goodsName}</View>
+            <View className="lookAround_select_user">
+              <View
+                className="lookAround_select_userProfile"
+                style={backgroundObj(merchantLogo)}
+              ></View>
+              <View className="lookAround_select_merchantName font_hide">
+                {merchantName}
+              </View>
+              <View className="lookAround_hot_limit">
+                {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
+              </View>
+            </View>
             <View className="lookAround_bean_relbox">
               <View className="lookAround_bean_left">
                 卡豆可抵 ¥{(realPrice * (payBeanCommission / 100)).toFixed(2)}
               </View>
               {shareCommission !== 0 && (
                 <View className="lookAround_bean_right">
-                  赚¥ {((realPrice-merchantPrice) * (shareCommission / 100)).toFixed(2)}
+                  赚¥{" "}
+                  {(
+                    (realPrice - merchantPrice) *
+                    (shareCommission / 100)
+                  ).toFixed(2)}
                 </View>
               )}
             </View>

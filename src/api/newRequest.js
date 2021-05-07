@@ -72,7 +72,7 @@ switch (env) {
   case "production":
     // baseUrl = "https://pregateway.dakale.net";
     // baseUrl = 'https://devgateway.dakale.net'
-    baseUrl = 'https://gateway1.dakale.net'
+    baseUrl = "https://gateway1.dakale.net";
     break;
 }
 
@@ -114,6 +114,7 @@ export const httpGet = (obj, fn) => {
         ...httpCondition.header,
         lnt: Taro.getStorageSync("lnt"),
         lat: Taro.getStorageSync("lat"),
+        "district-code": Taro.getStorageSync("district-code") || null,
         "city-code": Taro.getStorageSync("city").cityCode || "3301",
         ...header,
       },

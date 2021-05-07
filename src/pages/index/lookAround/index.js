@@ -13,14 +13,14 @@ import {
   getLat,
   getLnt,
   navigateTo,
+  resiApiKey,
 } from "@/common/utils";
 import {
   getBanner,
   getConfigWindVaneBySize,
   getSpecialGoodsCategory,
-  getAddress,
+  getRestapiAddress,
 } from "@/server/common";
-import { mapTx } from "@/common/authority";
 import classNames from "classnames";
 import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
 import "./index.scss";
@@ -64,7 +64,57 @@ class Index extends Component {
       result: {},
     };
   }
+  //上拉刷新
+  onReload() {
+    this.setState(
+      {
+        specialHeadList: [], //头部轮播图
+        configWindVaneList: [], //类目筛序
+        specialShopping: [], //中间轮播图
+        left: 0,
+        hotHttp: {
+          page: 1,
+          limit: 5,
+          specialFilterType: "hot",
+        },
+        dateHttp: {
+          page: 1,
+          limit: 6,
+          specialFilterType: "today",
+        },
 
+        specialHttp: {
+          page: 1,
+          limit: 10,
+          specialFilterType: "recommend",
+          categoryIds: "",
+        },
+        configUserLevelInfo: {},
+        hotList: [],
+        dateList: [],
+        kolGoodsList: [],
+        categoryList: [],
+        triggered: true,
+        flagDom: false,
+      },
+      (res) => {
+        let time = setTimeout(() => {
+          this.setState({
+            triggered: false,
+          });
+          clearTimeout(time);
+        }, 500);
+        const { hotHttp, dateHttp } = this.state;
+        this.topBanner();
+        this.getConfigWindVaneBySize();
+        this.contentBanner();
+        this.getshopList(hotHttp, "hotList");
+        this.getshopList(dateHttp, "dateList");
+        this.getSpecialGoodsCategory();
+        this.fetchUserShare();
+      }
+    );
+  }
   componentDidMount() {
     const { hotHttp, dateHttp } = this.state;
     this.setMap();
@@ -88,28 +138,20 @@ class Index extends Component {
           lat: latitude,
         },
         (res) => {
-          getAddress(
+          getRestapiAddress(
             {
-              location: `${latitude},${longitude}`,
-              key: mapTx,
+              location: `${longitude},${latitude}`,
+              key: resiApiKey,
             },
             (res) => {
-              const { message, result } = res;
-              if (message === "query ok") {
-                const {
-                  address_component: { city },
-                } = result;
-                if (city !== "杭州市") {
-                  this.setState({
-                    result,
-                  });
-                } else {
-                  this.setState({
-                    result,
-                  });
-                }
+              const { info, regeocode = {} } = res;
+              if (info === "OK") {
+                const { addressComponent = {} } = regeocode;
+                this.setState({
+                  result: addressComponent,
+                });
               } else {
-                toast(message);
+                toast(info);
               }
             }
           );
@@ -269,6 +311,7 @@ class Index extends Component {
       dateList = [],
       kolGoodsList = [],
       flagDom,
+      triggered,
       specialHttp: { categoryIds },
       result = {},
     } = this.state;
@@ -299,6 +342,9 @@ class Index extends Component {
         <ScrollView
           scrollY
           onScrollToLower={this.getReachBottom.bind(this)}
+          refresherEnabled
+          onRefresherRefresh={this.onReload.bind(this)}
+          refresherTriggered={triggered}
           className="lookAround_category_box"
           onScroll={(e) => {
             getDom(".lookAround_categorys_box", (res) => {

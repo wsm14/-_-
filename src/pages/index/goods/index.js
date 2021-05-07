@@ -107,7 +107,6 @@ class Index extends Component {
     },res => {
       this.getOrder()
     })
-
   }
 
   onReachBottom() {
