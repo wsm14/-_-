@@ -21,34 +21,74 @@ page {
         width: 500px;
         height: 890px;
         border-radius: 12px;
-        .share_swiperItem_code{
+        position: relative;
+        .share_swiperItem_code {
           position: absolute;
+          width: 152px;
+          height: 152px;
           left: 174px;
           right: 174px;
           bottom: 60px;
-
+        }
+        .share_user {
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          left: 0px;
+          right: 0px;
+          bottom: 20px;
+          color: #ffffff;
+          .share_user_margin {
+            margin-right: 8px;
+          }
         }
       }
+      .share_bg_style {
+        width: 100%;
+        height: 760px;
+      }
+    }
+  }
+  .share_slider_box {
+    margin-top: 24px;
+    .share_slider_select {
+      width: 30px;
+      height: 6px;
+      background: #07c0c2;
+      border-radius: 3px;
+      margin-right: 8px;
+    }
+    .share_slider_noSelect {
+      width: 20px;
+      height: 6px;
+      background: #07c0c2;
+      border-radius: 3px;
+      opacity: 0.2;
+      margin-right: 8px;
     }
   }
   .share_wx {
     margin-top: 70px;
-    .share_wx_icon {
-      width: 74px;
-      height: 62px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/wxIcon.png")
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .share_friend {
+      width: 250px;
+      height: 76px;
+      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_9.png)
         no-repeat;
       background-size: 100% 100%;
-      margin: 0 auto;
+      margin-right: 12px;
     }
-    .share_wx_font {
-      width: 100%;
-      margin-top: 10px;
-      text-align: center;
-      height: 23px;
-      font-size: 24px;
-      font-weight: 400;
-      color: #333333;
+    .share_image {
+      width: 250px;
+      height: 76px;
+      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/invitation_10.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin-left: 12px;
     }
   }
 }

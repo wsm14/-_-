@@ -82,22 +82,20 @@ export default (props) => {
         </View>
       </View>
 
-    
-        {list && list.length > 0 ? (
-          <ScrollView
-            scrollY
-            onScrollToLower={() => setReachBottom()}
-            className="consent_family"
-          >
-            <List list={list}></List>
-            {!countStatus && (
-              <View className="list_countStatus">- 暂无更多 -</View>
-            )}
-          </ScrollView>
-        ) : (
-          <Consent></Consent>
-        )}
-     
+      {list && list.length > 0 ? (
+        <ScrollView
+          scrollY
+          onScrollToLower={() => setReachBottom()}
+          className="consent_family"
+        >
+          <List list={list}></List>
+          {!countStatus && (
+            <View className="list_countStatus">- 暂无更多 -</View>
+          )}
+        </ScrollView>
+      ) : (
+        <Consent type={"shopFamily"}></Consent>
+      )}
     </View>
   );
 };

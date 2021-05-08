@@ -38,8 +38,8 @@ export default (props) => {
   const linkTo = (item) => {
     if (typeof item === "object") {
       let { jumpUrlType, param = "", jumpUrlNew } = item;
-      param = JSON.parse(param) || {};
-      jumpUrlNew = JSON.parse(jumpUrlNew) || {};
+      param = (param && JSON.parse(param)) || {};
+      jumpUrlNew = (jumpUrlNew && JSON.parse(jumpUrlNew)) || {};
       const { weChatUrl = "" } = jumpUrlNew;
       if (jumpUrlType === "native" && weChatUrl) {
         Router({

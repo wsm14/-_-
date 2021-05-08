@@ -349,7 +349,7 @@ class Index extends Component {
           onScroll={(e) => {
             getDom(".lookAround_categorys_box", (res) => {
               const { top } = res[0];
-              if (res[0]) {
+              if (top) {
                 if (top < 40) {
                   this.setState({
                     flagDom: true,
