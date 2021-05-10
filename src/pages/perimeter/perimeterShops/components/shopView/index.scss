@@ -1,0 +1,96 @@
+.shopView_box {
+  padding: 32px 32px 0;
+  .shopView_title {
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    .shopView_title_style {
+      height: 40px;
+      margin-right: 40px;
+    }
+    .shopView_liner {
+      width: 24px;
+      height: 4px;
+      background: #108588;
+      border-radius: 2px;
+      margin: 8px auto 0;
+    }
+  }
+  .shopView_template_inline {
+    display: inline-block;
+    width: 624px;
+    margin-right: 24px;
+  }
+  .shopView_template_inline:last-child {
+    margin-right: 0px;
+  }
+  .shopView_template {
+    position: relative;
+    width: 624px;
+    margin: 32px auto 12px;
+    white-space: nowrap;
+
+    overflow: hidden;
+    .shopView_template_box {
+      display: flex;
+      align-items: center;
+      position: relative;
+      .shopView_template_cover {
+        width: 168px;
+        height: 168px;
+        background: #eef7f8;
+        border-radius: 4px;
+      }
+      .shopView_template_right {
+        margin-left: 16px;
+        max-width: 438px;
+        overflow: hidden;
+        .shopView_template_name {
+          max-width: 438px;
+          font-size: 28px;
+          font-weight: 400;
+          color: #333333;
+          padding-top: 4px;
+        }
+        .shopView_template_bean {
+          font-size: 20px;
+          font-weight: 600;
+          color: #ef476f;
+          margin-top: 28px;
+        }
+        .shopView_template_price {
+          margin-top: 8px;
+          display: flex;
+          align-items: baseline;
+          line-height: 32px;
+        }
+        .real_price {
+          margin-left: 8px;
+          text-decoration: line-through;
+        }
+        .shopView_template_earn {
+          margin-top: 8px;
+          .shopView_earn_box {
+            display: inline-block;
+            padding: 4px 8px;
+            font-size: 24px;
+            font-weight: 400;
+            color: #ef476f;
+          }
+        }
+      }
+      .shopView_template_btn {
+        width: 160px;
+        height: 52px;
+        background: #ef476f;
+        border-radius: 26px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #ffffff;
+        position: absolute;
+        right: 0px;
+        bottom: 0;
+      }
+    }
+  }
+}

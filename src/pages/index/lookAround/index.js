@@ -378,33 +378,67 @@ class Index extends Component {
             className="lookAround_category_scroll"
             scrollX
           >
-            {configWindVaneList.map((item) => {
+            {[
+              {
+                image:
+                  "https://wechat-config.dakale.net/miniprogram/image/icon567.png",
+                name: "周边好店",
+                bubbleFlag: "0",
+                bubbleContent: "",
+                scenesId: "",
+              },
+              ...configWindVaneList,
+            ].map((item, index) => {
               const { name, image, bubbleFlag, bubbleContent, scenesId } = item;
-              return (
-                <View
-                  className="lookAround_category_view animated  fadeIn"
-                  onClick={() =>
-                    Router({
-                      routerName: "benchmark",
-                      args: {
-                        scenesId,
-                        name,
-                      },
-                    })
-                  }
-                >
+              if (index === 0) {
+                return (
                   <View
-                    className="lookAround_category_image  dakale_nullImage"
-                    style={backgroundObj(image)}
-                  ></View>
-                  <View className="lookAround_category_font">{name}</View>
-                  {bubbleFlag === "1" && (
-                    <View className="lookAround_category_bubble">
-                      {bubbleContent}
-                    </View>
-                  )}
-                </View>
-              );
+                    className="lookAround_category_view animated  fadeIn"
+                    onClick={() =>
+                      Router({
+                        routerName: "perimeterShops",
+                      })
+                    }
+                  >
+                    <View
+                      className="lookAround_category_image  dakale_nullImage"
+                      style={backgroundObj(image)}
+                    ></View>
+                    <View className="lookAround_category_font">{name}</View>
+                    {bubbleFlag === "1" && (
+                      <View className="lookAround_category_bubble">
+                        {bubbleContent}
+                      </View>
+                    )}
+                  </View>
+                );
+              } else {
+                return (
+                  <View
+                    className="lookAround_category_view animated  fadeIn"
+                    onClick={() =>
+                      Router({
+                        routerName: "benchmark",
+                        args: {
+                          scenesId,
+                          name,
+                        },
+                      })
+                    }
+                  >
+                    <View
+                      className="lookAround_category_image  dakale_nullImage"
+                      style={backgroundObj(image)}
+                    ></View>
+                    <View className="lookAround_category_font">{name}</View>
+                    {bubbleFlag === "1" && (
+                      <View className="lookAround_category_bubble">
+                        {bubbleContent}
+                      </View>
+                    )}
+                  </View>
+                );
+              }
             })}
           </ScrollView>
           <View className="lookAround_category_liner">

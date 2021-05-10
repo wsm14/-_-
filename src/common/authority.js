@@ -386,6 +386,86 @@ export const scanCode = (data) => {
   }
 };
 
+export const scanCard = () => {
+  return loginBtn(() => {
+    Taro.scanCode({
+      onlyFromCamera: false,
+      success: (results) => {
+        const { path, scanType, result } = results;
+        if (scanType === "QR_CODE") {
+          let data = qs.parse(result.split("?")[1]);
+          if (
+            result.includes("https://www.dakale.net") &&
+            data.action === "mark" &&
+            data.merchantId
+          ) {
+            return saveMarkBean({ merchantId: data.merchantId }, (res) => {
+              const {
+                resultCode,
+                merchantLnt,
+                merchantLat,
+                merchantAddress,
+                beanAmount,
+                merchantName = "",
+              } = res;
+              if (resultCode) {
+                const resultCodeObj = {
+                  3018: () =>
+                    router({
+                      routerName: "abnormalStatus",
+                      args: {
+                        merchantLnt,
+                        merchantLat,
+                        merchantAddress,
+                        beanAmount,
+                        merchantName,
+                      },
+                    }),
+                  4003: () =>
+                    router({
+                      routerName: "repeatStatus",
+                    }),
+                  5019: () => {
+                    Taro.showModal({
+                      showCancel: "false",
+                      content: "商家不允许打卡，请到指定打卡商家哦",
+                    });
+                  },
+                }[resultCode]();
+              } else {
+                router({
+                  routerName: "merchantDetails",
+                  args: {
+                    merchantId: data.merchantId,
+                    beanAmount,
+                  },
+                });
+              }
+            });
+          } else {
+            Taro.showModal({
+              showCancel: "false",
+              content: "二维码错误或参数缺失",
+            });
+            return;
+          }
+        }
+        Taro.showModal({
+          showCancel: "false",
+          content: "扫码类型错误",
+        });
+        // return
+      },
+      fail: (res) => {
+        Taro.showModal({
+          showCancel: "false",
+          content: "扫码失败",
+        });
+      },
+    });
+  });
+};
+
 export const loginBtn = (callback) => {
   const { token = "", mobile = "" } = Taro.getStorageSync("userInfo") || {};
   if (mobile.length === 11 && token) {

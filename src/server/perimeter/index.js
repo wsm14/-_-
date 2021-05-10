@@ -233,3 +233,14 @@ export const getListSpecialByPeriod = (data = {}, fn) => {
   );
 };
 //猜你喜欢有价券
+
+export const fetchMainMerchantList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/mainRecommendMerchantList",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//周边好店列表

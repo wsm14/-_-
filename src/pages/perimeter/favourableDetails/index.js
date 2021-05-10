@@ -30,7 +30,7 @@ import {
   Instruction,
   merchantSet,
 } from "@/components/componentView/Instruction";
-import { render } from "react-dom";
+import Toast from "@/components/dakale_toast";
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -220,6 +220,7 @@ class MerchantDetails extends Component {
       buyRule === "personLimit" &&
       personLimit === boughtActivityGoodsNum
     ) {
+      console.log(222)
       this.setState({
         visible: true,
       });
@@ -264,10 +265,11 @@ class MerchantDetails extends Component {
         merchantCount,
         merchantPrice,
         remain,
-        visible,
+     
         personLimit,
         buyUserImageList,
       },
+      visible,
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
       specialGoodsInfo,
       cavansObj,
