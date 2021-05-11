@@ -11,7 +11,7 @@ import Router from "@/common/router";
 import ButtonView from "@/components/Button";
 import "./index.scss";
 export default (props) => {
-  const { data, visible, show = false } = props;
+  const { data, visible, show = false, } = props;
   const [animate, setAnimated] = useState(null);
   const {
     guideMomentFlag = "0",
@@ -199,6 +199,7 @@ export default (props) => {
       }}
     >
       {templateBean}
+
     </View>
   );
 };

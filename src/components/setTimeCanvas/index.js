@@ -9,7 +9,14 @@ const scale = () => {
   return Taro.getSystemInfoSync().windowWidth / 375;
 };
 export default (props) => {
-  const { data, interval, length, current, beanLimitStatus } = props;
+  const {
+    data,
+    interval,
+    length,
+    current,
+    beanLimitStatus,
+    show = true,
+  } = props;
   const [time, setTime] = useState(null);
   const [toast, setToast] = useState(1);
   const [moment, setMoment] = useState({});
@@ -62,6 +69,7 @@ export default (props) => {
   return (
     <View
       className="canvas_box"
+      style={show ? {} : { display: "none" }}
       onClick={() => Router({ routerName: "beanReward" })}
     >
       <View

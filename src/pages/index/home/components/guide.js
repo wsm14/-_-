@@ -1,70 +1,113 @@
 import React, { useEffect, useState } from "react";
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import classNames from "classnames";
-import { getDom } from "@/common/utils";
+import Router from "@/common/router";
 import "./../index.scss";
 export default (props) => {
-  const { data, current } = props;
+  const { data, current, interval, videoPlayer, videoStop, init } = props;
   const [showStatus, setShowStatus] = useState(0);
-  const [style, setStyle] = useState(0);
-  const { promotionIdString } = data;
-  const step1 = () => {
-    if (promotionIdString) {
-      setShowStatus(1);
-      couputedBox();
-    } else {
-      setShowStatus(2);
+  const [animate, setAnimated] = useState(null);
+  const { beanAmount } = data;
+  useEffect(() => {
+    if (!Taro.getStorageSync("login") && showStatus !== null) {
+      videoStop();
+      if (interval) {
+        animated();
+      }
     }
-  };
-  const couputedBox = () => {
-    getDom(`.home_active_box${current}`, (res) => {
-      console.log(res);
-      const { top } = res[0];
-      setStyle(top - 10);
+  }, [interval]);
+  const onClose = () => {
+    let animateTem2 = Taro.createAnimation({
+      duration: 300,
+      timingFunction: "linear",
+      delay: 0,
+      transformOrigin: "50% 50%",
     });
+    animateTem2.scale(0, 0).step();
+    setAnimated(animateTem2);
+    setTimeout(() => {
+      setShowStatus(null);
+      Taro.setStorageSync("login", true);
+      videoPlayer();
+    }, 300);
   };
-  const template = {
-    0: (
-      <View className="guide_Box_father">
-        <View className="guide_Box"></View>
-        <View className="guide_boxToast"></View>
-        <View
-          className="guide_boxNextTip"
-          onClick={() => step1()}
-        ></View>
-      </View>
-    ),
-    1: (
-      <View className="guide_Box_father">
-        <View style={{ top: style }} className="guide_step2"></View>
-        <View
-          style={{ top: style - 40 }}
-          className="guide_toast2"
-        ></View>
-        <View onClick={() => {setShowStatus(2)}} style={{ top: style }} className="guide_btn3"></View>
-      </View>
-    ),
-    2: (
-      <View className="guide_Box_father">
-        <View className="guide_touch">
-          <View>
-            <View className="guide_touch_img"></View>
+  const animated = () => {
+    let animateTem = Taro.createAnimation({
+      duration: 10,
+      timingFunction: "linear",
+      delay: 0,
+      transformOrigin: "50% 50%",
+    });
+    let animateTem1 = Taro.createAnimation({
+      duration: 300,
+      timingFunction: "linear",
+      delay: 0,
+      transformOrigin: "50% 50%",
+    });
+    animateTem.scale(0, 0).step();
+    setAnimated(animateTem.export());
+    setTimeout(() => {
+      animateTem1.scale(1, 1).step();
+      setAnimated(animateTem1);
+    }, 300);
+  };
+  const login = () => {
+    let animateTem2 = Taro.createAnimation({
+      duration: 300,
+      timingFunction: "linear",
+      delay: 0,
+      transformOrigin: "50% 50%",
+    });
+    animateTem2.scale(0, 0).step();
+    setAnimated(animateTem2);
+    setTimeout(() => {
+      setShowStatus(null);
+      Taro.setStorageSync("login", true);
+      videoPlayer();
+      Router({
+        routerName: "login",
+      });
+    }, 300);
+  };
+
+  /* 显示隐藏动画  */
+
+  const template = () => {
+    return (
+      <View
+        animation={animate}
+        className="guide_Box_father"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+      >
+        <View className="guide_Box">
+          <View className="guide_image">
+            <View className="guide_font1"></View>
+            <View className="guide_font2 public_center">
+              <View className="guide_bean_icon"></View>
+              <View className="guide_num_icon"></View>
+              <View className="guide_num">{beanAmount}</View>
+            </View>
+            <View className="guide_font3">等你领取</View>
             <View
-              className="guide_touch_btn"
+              className="guide_font4 public_center"
               onClick={() => {
-                Taro.setStorageSync("login", "1");
-                setShowStatus(null);
+                login();
               }}
-            ></View>
+            >
+              立即领取
+            </View>
           </View>
+          <View className="guide_Box_close"></View>
         </View>
       </View>
-    ),
-  }[showStatus];
-  if (Taro.getStorageSync("login") || showStatus === null) {
+    );
+  };
+  if (Taro.getStorageSync("login") || showStatus === null || animate === null) {
     return null;
   } else {
-    return template;
+    return template();
   }
 };

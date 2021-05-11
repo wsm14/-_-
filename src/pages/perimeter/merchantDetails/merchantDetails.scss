@@ -79,8 +79,8 @@ page {
 
     .share_btn {
       margin: 40px auto 0;
+      padding: 0 19px;
       font-size: 32px;
-      width: 425px;
       font-weight: 400;
       .share_goMerchant_btn {
         display: flex;
@@ -90,7 +90,6 @@ page {
         height: 80px;
         border-radius: 8px;
         border: 2px solid #333333;
-        margin-right: 10px;
       }
       .share_goMerchant_btn::before {
         width: 48px;
@@ -110,12 +109,31 @@ page {
         height: 80px;
         border-radius: 8px;
         border: 2px solid #333333;
-        margin-left: 10px;
       }
       .share_saveColleton_btn::before {
         width: 48px;
         height: 48px;
         background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon534.png")
+          no-repeat;
+        background-size: 100% 100%;
+        display: block;
+        content: "";
+        margin-right: 8px;
+      }
+
+      .share_image_btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px;
+        height: 80px;
+        border-radius: 8px;
+        border: 2px solid #333333;
+      }
+      .share_image_btn::before {
+        width: 48px;
+        height: 48px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon575.png")
           no-repeat;
         background-size: 100% 100%;
         display: block;
@@ -132,7 +150,7 @@ page {
         border-radius: 8px;
         border: 2px solid #333333;
         margin-left: 10px;
-        color: #F0597D;
+        color: #f0597d;
       }
       .share_updateColleton_btn::before {
         width: 48px;

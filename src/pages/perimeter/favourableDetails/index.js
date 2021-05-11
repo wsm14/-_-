@@ -31,6 +31,7 @@ import {
   merchantSet,
 } from "@/components/componentView/Instruction";
 import Toast from "@/components/dakale_toast";
+
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -180,7 +181,7 @@ class MerchantDetails extends Component {
   }
   onShareTimeline() {
     const {
-      specialGoodsInfo: { goodsName, },
+      specialGoodsInfo: { goodsName },
       httpData: { merchantId, specialActivityId },
     } = this.state;
     let userInfo = loginStatus() || {};
@@ -220,7 +221,7 @@ class MerchantDetails extends Component {
       buyRule === "personLimit" &&
       personLimit === boughtActivityGoodsNum
     ) {
-      console.log(222)
+      console.log(222);
       this.setState({
         visible: true,
       });
@@ -265,7 +266,7 @@ class MerchantDetails extends Component {
         merchantCount,
         merchantPrice,
         remain,
-     
+
         personLimit,
         buyUserImageList,
       },

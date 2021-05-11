@@ -28,6 +28,7 @@ export default ({
   onTransition,
   stop,
   userInfo,
+  shareInfo,
 }) => {
   const [scale, setScale] = useState(0);
   useEffect(() => {
@@ -184,22 +185,13 @@ export default ({
                           </>
                         )}
                         <View
+                          onClick={() => shareInfo()}
                           className={classNames(
                             shareCommission > 0
                               ? "home_share_animate"
                               : "home_share_wechat"
                           )}
-                        >
-                          <Button
-                            open-type="share"
-                            style={{
-                              border: "0px soild white",
-                              background: (0, 0, 0, 0),
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          ></Button>
-                        </View>
+                        ></View>
 
                         <View className="collected_font">{shareAmount}</View>
                       </View>

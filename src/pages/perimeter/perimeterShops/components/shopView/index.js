@@ -24,6 +24,7 @@ export default (props) => {
       } else return;
     } else return;
   };
+  console.log(111);
   if (specialGoodsFlag === "1" || couponFlag === "1") {
     return (
       <View
