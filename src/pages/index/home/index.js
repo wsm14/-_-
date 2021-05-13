@@ -9,7 +9,7 @@ import {
   saveFollow,
   loginStatus,
 } from "@/common/utils";
-import { ScrollView, View } from "@tarojs/components";
+import { ScrollView, View, Image } from "@tarojs/components";
 import InterVal from "@/components/setTimeCanvas";
 import {
   getUserMomentList,
@@ -37,6 +37,7 @@ import Coupon from "@/components/freeCoupon";
 import Lead from "@/components/lead";
 import evens from "@/common/evens";
 import Router from "@/common/router";
+import { scanCode } from "@/common/authority";
 import GuideView from "./components/guide";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
@@ -85,6 +86,7 @@ class Index extends React.PureComponent {
         data: null,
         start: false,
       },
+      triggered: false,
     };
     this.interReload = null;
     this.interSwper = null;
@@ -154,6 +156,24 @@ class Index extends React.PureComponent {
       return (this.interReload = setTimeout(() => this.selectList(), 300));
     }
   }
+
+  onReload() {
+    const { httpData, interval } = this.state;
+    this.setState(
+      {
+        triggered: true,
+        httpData: { ...httpData, page: 1 },
+      },
+      (res) => {
+        this.getVideoList(() =>
+          this.setState({
+            triggered: false,
+          })
+        );
+      }
+    );
+  }
+
   selectList(data = {}) {
     console.log(data);
     const { httpData, interval } = this.state;
@@ -254,7 +274,6 @@ class Index extends React.PureComponent {
       this.setState(
         {
           userMomentsList: [...this.state.userMomentsList, ...userMomentsList],
-          beanLimitStatus: beanLimitStatus,
         },
         (res) => {
           fn && fn();
@@ -664,7 +683,6 @@ class Index extends React.PureComponent {
     const {
       userMomentsInfo: {
         userMomentIdString,
-        frontImage,
         message,
         username,
         cityName,
@@ -686,6 +704,7 @@ class Index extends React.PureComponent {
           oriPrice,
           realPrice,
           qcodeUrl,
+          image,
         } = res;
         if (player) {
           this.stopVideoPlayerControl();
@@ -697,7 +716,7 @@ class Index extends React.PureComponent {
             start: true,
             data: rssConfigData({
               hasGoods,
-              frontImage,
+              frontImage: image,
               message,
               merchantName: username,
               cityName: cityName + districtName,
@@ -705,6 +724,10 @@ class Index extends React.PureComponent {
               username: userInfo.username,
               userProfile: userInfo.profile,
               wxCode: qcodeUrl,
+              goodsImg,
+              goodsName,
+              oriPrice,
+              realPrice,
             }),
           },
         });
@@ -790,6 +813,7 @@ class Index extends React.PureComponent {
       player,
       interval,
       cavansObj,
+      triggered,
     } = this.state;
     const { selectObj } = this.props.store.homeStore;
     const { categoryIds, distance, promotionType } = selectObj;
@@ -802,6 +826,9 @@ class Index extends React.PureComponent {
               onScrollToLower={() => {
                 this.pageUpNear();
               }}
+              refresherEnabled
+              onRefresherRefresh={this.onReload.bind(this)}
+              refresherTriggered={triggered}
               className="home_Waterfall_box"
               style={{
                 top: computedClient().top + computedClient().height + 20,
@@ -912,9 +939,7 @@ class Index extends React.PureComponent {
             session={() => this.setState({ visible: true })}
           ></TopView>
         </View>
-
         <View className="home_video_box">{templateView()}</View>
-
         {/* {visible && (
           <Dressing
             distanceList={distanceList}
@@ -933,6 +958,16 @@ class Index extends React.PureComponent {
             onConfirm={this.setScreen.bind(this)}
           ></Dressing>
         )} */}
+        {browseType === "commend" && (
+          <View className="home_scan" onClick={() => scanCode()}>
+            <Image
+              style={{ width: "100%", height: "100%" }}
+              src={
+                "https://wechat-config.dakale.net/miniprogram/image/icon583.png"
+              }
+            ></Image>
+          </View>
+        )}
 
         <Toast
           data={userMomentsInfo}

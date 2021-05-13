@@ -11,6 +11,9 @@ import {
   setBuyRule,
   computedPrice,
   backgroundObj,
+  saveCollection,
+  deleteCollection,
+  toast,
 } from "@/common/utils";
 import "./index.scss";
 import { loginBtn } from "@/common/authority";
@@ -31,7 +34,7 @@ import {
   merchantSet,
 } from "@/components/componentView/Instruction";
 import Toast from "@/components/dakale_toast";
-
+import classNames from "classnames";
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -94,6 +97,7 @@ class MerchantDetails extends Component {
       },
       (res) => {
         const { specialGoodsInfo } = res;
+        Taro.stopPullDownRefresh();
         this.setState({
           specialGoodsInfo,
           index: index + 1,
@@ -170,7 +174,7 @@ class MerchantDetails extends Component {
       return {
         title: goodsName,
         imageUrl: img,
-        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+        path: `/pages/perimeter/favourableDetails/index?sh  areUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     } else {
       return {
@@ -179,6 +183,55 @@ class MerchantDetails extends Component {
       };
     }
   }
+
+  setCollection() {
+    const {
+      specialGoodsInfo: { userCollectionStatus = "0", specialActivityIdString },
+      specialGoodsInfo,
+    } = this.state;
+    if (userCollectionStatus === "0") {
+      saveCollection(
+        {
+          collectionType: "special",
+          collectionId: specialActivityIdString,
+        },
+        (res) => {
+          this.setState(
+            {
+              specialGoodsInfo: {
+                ...specialGoodsInfo,
+                userCollectionStatus: "1",
+              },
+            },
+            (res) => {
+              toast("收藏成功");
+            }
+          );
+        }
+      );
+    } else {
+      deleteCollection(
+        {
+          collectionType: "special",
+          collectionId: specialActivityIdString,
+        },
+        (res) => {
+          this.setState(
+            {
+              specialGoodsInfo: {
+                ...specialGoodsInfo,
+                userCollectionStatus: "0",
+              },
+            },
+            (res) => {
+              toast("取消成功");
+            }
+          );
+        }
+      );
+    }
+  }
+
   onShareTimeline() {
     const {
       specialGoodsInfo: { goodsName },
@@ -235,7 +288,11 @@ class MerchantDetails extends Component {
       },
     });
   }
-
+  onPullDownRefresh() {
+    Taro.stopPullDownRefresh();
+    this.getDetailsById();
+    this.fetchUserShareCommission();
+  }
   onReady() {
     // 生命周期函数--监听页面初次渲染完成
   }
@@ -266,7 +323,7 @@ class MerchantDetails extends Component {
         merchantCount,
         merchantPrice,
         remain,
-
+        userCollectionStatus,
         personLimit,
         buyUserImageList,
       },
@@ -274,7 +331,6 @@ class MerchantDetails extends Component {
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
       specialGoodsInfo,
       cavansObj,
-      // https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon469.png
     } = this.state;
     const payBtn = () => {
       if (!format(activityStartTime) && activityTimeRule === "fixed") {
@@ -378,9 +434,6 @@ class MerchantDetails extends Component {
     };
     if (Object.keys(specialGoodsInfo).length > 0) {
       if (status !== "0") {
-        {
-          console.log(cavansObj);
-        }
         return (
           <View className="favourable_Details">
             <TaroShareDrawer
@@ -474,6 +527,28 @@ class MerchantDetails extends Component {
                 {remain === 0 && (
                   <View className="shopdetails_getPrice_tag">已售罄</View>
                 )}
+              </View>
+              <View className="shopdetails_setting public_auto">
+                <ButtonView>
+                  <View
+                    onClick={() => this.setCollection()}
+                    className={classNames(
+                      userCollectionStatus === "1"
+                        ? "shopdetails_isCollect"
+                        : "shopdetails_collect"
+                    )}
+                  >
+                    收藏
+                  </View>
+                </ButtonView>
+                <ButtonView>
+                  <View
+                    onClick={() => this.getShareInfo()}
+                    className="shopdetails_share"
+                  >
+                    分享
+                  </View>
+                </ButtonView>
               </View>
             </View>
             <View

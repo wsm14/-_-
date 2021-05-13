@@ -11,7 +11,7 @@ class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      kolGoodsList: [],
+      specialGoodsList: [],
       bannerList: [],
       httpData: {
         page: 1,
@@ -44,13 +44,23 @@ class Index extends Component {
       });
     });
   }
-  getshopList(key = "kolGoodsList") {
+  getshopList(init) {
     fetchSpecialGoods(this.state.httpData, (res) => {
+      Taro.stopPullDownRefresh();
       const { specialGoodsList = [] } = res;
       if (specialGoodsList.length > 0) {
-        this.setState({
-          [key]: [...this.state[key], ...specialGoodsList],
-        });
+        if (init) {
+          this.setState({
+            specialGoodsList,
+          });
+        } else {
+          this.setState({
+            specialGoodsList: [
+              ...this.state.specialGoodsList,
+              ...specialGoodsList,
+            ],
+          });
+        }
       } else {
         this.setState({
           countStatus: false,
@@ -66,6 +76,24 @@ class Index extends Component {
         configUserLevelInfo,
       });
     });
+  }
+
+  onPullDownRefresh() {
+    const { httpData } = this.state;
+    let that = this;
+    Taro.stopPullDownRefresh();
+    this.setState(
+      {
+        httpData: {
+          ...httpData,
+          page: 1,
+        },
+        countStatus: true,
+      },
+      (res) => {
+        this.getshopList(true);
+      }
+    );
   }
   onReachBottom() {
     const { httpData, countStatus } = this.state;
@@ -86,12 +114,7 @@ class Index extends Component {
     }
   } //上拉加载
   render() {
-    const {
-      kolGoodsList,
-      configUserLevelInfo,
-      specialGoodsList,
-      bannerList,
-    } = this.state;
+    const { specialGoodsList, configUserLevelInfo, bannerList } = this.state;
     console.log(specialGoodsList, bannerList);
 
     return (
@@ -106,7 +129,7 @@ class Index extends Component {
           </View>
         )}
         <View className="speciaMaterial_content">
-          {kolGoodsList.map((item) => {
+          {specialGoodsList.map((item) => {
             return childTemplate(item, configUserLevelInfo, "today");
           })}
         </View>

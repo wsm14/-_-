@@ -169,6 +169,7 @@ class MerchantDetails extends Component {
         url: wxapiGet.wechatGetUserMerchant,
       },
       (res) => {
+        Taro.stopPullDownRefresh();
         const { userMerchant } = res;
         this.setState(
           {
@@ -283,6 +284,32 @@ class MerchantDetails extends Component {
         this.setState({
           specialGoodsList: specialGoodsList,
         });
+      }
+    );
+  }
+
+  onPullDownRefresh() {
+    Taro.stopPullDownRefresh();
+    this.setState(
+      {
+        bannerList: [],
+        userMerchantInfo: {},
+        countStatus: true,
+        visible: false,
+        specialGoodsList: [],
+        goodsList: [],
+        conpouVisible: false,
+        couponList: [],
+        priceCoupon: [],
+        cavansObj: {
+          data: null,
+          start: false,
+        },
+      },
+      (res) => {
+        this.getMerchantById();
+        this.getGoodList();
+        this.getUserCoupon();
       }
     );
   }

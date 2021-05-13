@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: '',
+  navigationBarTitleText: '哒卡乐下载',
   navigationStyle: 'default'
 }

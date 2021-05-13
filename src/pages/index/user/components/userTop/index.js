@@ -25,7 +25,7 @@ export default (props) => {
   };
   const goUser = () => {
     if (status === 1 && loginStatus()) {
-      navigateTo("/pages/newUser/userDetails/index");
+      navigateTo("/pages/share/download/index");
     } else {
       login();
     }

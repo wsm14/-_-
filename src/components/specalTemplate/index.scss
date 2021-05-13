@@ -74,6 +74,8 @@
     font-weight: 600;
     color: #333333;
     line-height: 32px;
+    display: flex;
+    align-items: baseline;
   }
   .specialOffer_date_rel {
     padding-top: 8px;
@@ -108,7 +110,6 @@
     font-size: 22px;
     font-weight: 500;
     color: #ef476f;
-    line-height: 22px;
   }
 }
 .specialOffer_bean_border {

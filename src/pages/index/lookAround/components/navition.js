@@ -29,7 +29,7 @@ export default (props) => {
       <View className="lookAround_navition_right">
         <View
           className="lookAround_navition_lookCard"
-          onClick={() => navigateTo("/pages/index/takeCard/index")}
+          onClick={() => navigateTo("/pages/share/download/index")}
         ></View>
         <View
           className="lookAround_navition_scanCode"

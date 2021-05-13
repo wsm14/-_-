@@ -12,6 +12,7 @@ import {
   navigateTo,
   filterStrList,
 } from "@/common/utils";
+import Router from "@/common/router";
 import "./index.scss";
 class Index extends React.Component {
   constructor() {
@@ -21,28 +22,6 @@ class Index extends React.Component {
       bannerHttp: {
         bannerType: "person",
       },
-      list: [
-        {
-          style: "users_setting_icon1",
-          font: "客服中心",
-          fn: () =>
-            this.setState({
-              telephone: true,
-            }),
-        },
-        {
-          style: "users_setting_icon2",
-          font: "意见反馈",
-        },
-        {
-          style: "users_setting_icon3",
-          font: "我要合作",
-          fn: () =>
-            navigateTo(
-              `/pages/share/webView/index?link=${this.state.link1}&title=我要合作`
-            ),
-        },
-      ],
       loginStatus: 0,
       userInfo: {},
       nextLevel: {},

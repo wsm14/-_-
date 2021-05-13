@@ -380,6 +380,14 @@ page {
       }
     }
   }
+  .home_scan {
+    position: fixed;
+    width: 124px;
+    height: 124px;
+    top: 349px;
+    left: 30px;
+    z-index: 10000;
+  }
   .home_select_box {
     width: 100%;
     height: 1200px;

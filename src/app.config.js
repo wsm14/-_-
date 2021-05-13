@@ -9,7 +9,7 @@ export default {
     "pages/auth/index", //登录
   ],
   window: {
-    backgroundTextStyle: "light",
+    backgroundTextStyle: "dark",
     navigationBarBackgroundColor: "#ffffff",
     navigationBarTitleText: "WeChat",
     navigationBarTextStyle: "black",
@@ -54,7 +54,7 @@ export default {
   },
   subPackages: [
     {
-      root: "pages/kol/",
+      root: "pages/kol",
       pages: [
         "legal/index", //达人等级
         "report/index", //举报
@@ -63,7 +63,7 @@ export default {
       ],
     },
     {
-      root: "pages/newUser/",
+      root: "pages/newUser",
       pages: [
         "circle/index", //协议规则
         "incomeDetails/index", //收益明细
@@ -77,7 +77,7 @@ export default {
       ],
     },
     {
-      root: "pages/share/",
+      root: "pages/share",
       pages: [
         "invitation/index", //邀请函
         "download/index", //下载,
@@ -90,7 +90,7 @@ export default {
       ],
     },
     {
-      root: "pages/perimeter/",
+      root: "pages/perimeter",
       pages: [
         "perimeterShops/index", //周边好店
         "videoDetails/index", //视频详情
@@ -122,7 +122,7 @@ export default {
       ],
     },
     {
-      root: "pages/goods/",
+      root: "pages/goods",
       pages: [
         "payWeex/index", //支付
         "favourOrder/index", //特价下单
@@ -137,7 +137,7 @@ export default {
       ],
     },
     {
-      root: "pages/coupon/",
+      root: "pages/coupon",
       pages: [
         "wraparound/index", //券包
         "couponDetails/index", //券包详情
@@ -145,7 +145,7 @@ export default {
       ],
     },
     {
-      root: "pages/rules/",
+      root: "pages/rules",
       pages: [
         "interests/index", //券包
       ],

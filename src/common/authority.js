@@ -375,10 +375,10 @@ export const scanCode = (data) => {
         // return
       },
       fail: (res) => {
-        Taro.showModal({
-          showCancel: "false",
-          content: "扫码失败",
-        });
+        // Taro.showModal({
+        //   showCancel: "false",
+        //   content: "扫码失败",
+        // });
       },
     });
   } else {

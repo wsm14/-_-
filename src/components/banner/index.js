@@ -37,7 +37,7 @@ export default (props) => {
   }, [data]);
   const linkTo = (item) => {
     if (typeof item === "object") {
-      let { jumpUrlType, param = "", jumpUrlNew } = item;
+      let { param = "", jumpUrlNew, jumpUrlType = "", jumpUrl = "" } = item;
       param = (param && JSON.parse(param)) || {};
       jumpUrlNew = (jumpUrlNew && JSON.parse(jumpUrlNew)) || {};
       const { weChatUrl = "" } = jumpUrlNew;
@@ -46,6 +46,14 @@ export default (props) => {
           routerName: weChatUrl,
           args: {
             ...param,
+          },
+        });
+      } else if (jumpUrlType === "h5" && jumpUrl) {
+        Router({
+          routerName: "webView",
+          args: {
+            link: jumpUrl.split("?")[0],
+            url: jumpUrl.split("?")[1] || "",
           },
         });
       } else return;

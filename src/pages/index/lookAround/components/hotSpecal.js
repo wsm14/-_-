@@ -43,7 +43,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
               {merchantName}
             </View>
             <View className="lookAround_hot_limit">
-              {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
+              {"|" + GetDistance(getLat(), getLnt(), lat, lnt)}
             </View>
           </View>
           <View className="lookAround_hot_price">

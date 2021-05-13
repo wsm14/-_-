@@ -69,10 +69,10 @@ export default (props) => {
   return (
     <View
       className="canvas_box"
-      style={show ? {} : { display: "none" }}
       onClick={() => Router({ routerName: "beanReward" })}
     >
       <View
+        style={show ? {} : { display: "none" }}
         className={classNames(
           "canvas_img",
           watchStatus !== "1" ? "beanTime" : "beanTime1"

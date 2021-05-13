@@ -10,6 +10,73 @@ page {
   .coupon_bg {
     background: #ffffff;
     padding-top: 32px;
+    .coupon_setting {
+      width: 424px;
+      margin: 0px auto;
+      padding-bottom: 32px;
+    }
+    .coupon_collect {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      height: 80px;
+      border-radius: 8px;
+      border: 2px solid #333333;
+      font-size: 32px;
+    }
+    .coupon_collect::before {
+      width: 48px;
+      height: 48px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon574.png")
+        no-repeat;
+      background-size: 100% 100%;
+      display: block;
+      content: "";
+      margin-right: 8px;
+    }
+
+    .coupon_isCollect {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      height: 80px;
+      border-radius: 8px;
+      border: 2px solid #333333;
+      font-size: 32px;
+      color: "rgba(239, 71, 111, 1)";
+    }
+    .coupon_isCollect::before {
+      width: 48px;
+      height: 48px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon584.png")
+        no-repeat;
+      background-size: 100% 100%;
+      display: block;
+      content: "";
+      margin-right: 8px;
+    }
+    .coupon_share {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 200px;
+      height: 80px;
+      border-radius: 8px;
+      border: 2px solid #333333;
+      font-size: 32px;
+    }
+    .coupon_share::before {
+      width: 48px;
+      height: 48px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon575.png")
+        no-repeat;
+      background-size: 100% 100%;
+      display: block;
+      content: "";
+      margin-right: 8px;
+    }
   }
   .coupon_top_price {
     height: 104px;

@@ -142,6 +142,72 @@ page {
       margin-right: 16px;
     }
   }
+  .shopdetails_setting {
+    width: 424px;
+    margin: 32px auto 0;
+  }
+  .shopdetails_collect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 80px;
+    border-radius: 8px;
+    border: 2px solid #333333;
+    font-size: 32px;
+  }
+  .shopdetails_collect::before {
+    width: 48px;
+    height: 48px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon574.png")
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+    margin-right: 8px;
+  }
+
+  .shopdetails_isCollect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 80px;
+    border-radius: 8px;
+    border: 2px solid #333333;
+    font-size: 32px;
+    color: "rgba(239, 71, 111, 1)";
+  }
+  .shopdetails_isCollect::before {
+    width: 48px;
+    height: 48px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon584.png")
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+    margin-right: 8px;
+  }
+  .shopdetails_share {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 80px;
+    border-radius: 8px;
+    border: 2px solid #333333;
+    font-size: 32px;
+  }
+  .shopdetails_share::before {
+    width: 48px;
+    height: 48px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon575.png")
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+    margin-right: 8px;
+  }
 
   .shopdetails_shop_packageGroup {
     padding: 40px 32px;

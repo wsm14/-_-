@@ -80,6 +80,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     shareActive: "/pages/share/invitation/index",
     download: "/pages/share/download/index",
     login: "/pages/auth/index",
+    webView: "/pages/share/webView/index",
     //规则类
   }[routerName];
   const types = type;

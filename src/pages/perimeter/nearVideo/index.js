@@ -26,7 +26,10 @@ import evens from "@/common/evens";
 import Toast from "@/components/beanToast";
 import Coupon from "@/components/freeCoupon";
 import Lead from "@/components/lead";
+import { getShareInfo } from "@/server/common";
 import "./index.scss";
+import TaroShareDrawer from "./components/TaroShareDrawer";
+import { rssConfigData } from "./components/data";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -52,6 +55,10 @@ class Index extends React.PureComponent {
       beanLimitStatus: "1",
       player: true,
       configUserLevelInfo: {},
+      cavansObj: {
+        data: null,
+        start: false,
+      },
     };
     this.interReload = null;
     this.interSwper = null;
@@ -210,7 +217,6 @@ class Index extends React.PureComponent {
       this.setState(
         {
           userMomentsList: [...this.state.userMomentsList, ...userMomentsList],
-          beanLimitStatus,
         },
         (res) => {
           fn && fn();
@@ -263,9 +269,7 @@ class Index extends React.PureComponent {
             }
           );
         } else {
-          this.setState({
-            beanflag: true,
-          });
+          return;
         }
       });
     });
@@ -420,9 +424,10 @@ class Index extends React.PureComponent {
     }
   }
   componentDidShow() {
-    const { time } = this.state;
+    const { time, player } = this.state;
+    // this.listParentCategory();
     this.fetchUserShareCommission();
-    if (time === 0 || time) {
+    if ((time || time === 0) && player) {
       this.initInterval();
     }
   }
@@ -494,6 +499,61 @@ class Index extends React.PureComponent {
       });
     });
   }
+  shareImageInfo() {
+    const {
+      userMomentsInfo: {
+        userMomentIdString,
+        message,
+        username,
+        cityName,
+        districtName,
+        merchantAddress,
+      },
+      player,
+    } = this.state;
+    getShareInfo(
+      {
+        shareType: "video",
+        shareId: userMomentIdString,
+      },
+      (res) => {
+        const {
+          goodsImg,
+          goodsName,
+          hasGoods,
+          oriPrice,
+          realPrice,
+          qcodeUrl,
+          image,
+        } = res;
+        if (player) {
+          this.stopVideoPlayerControl();
+        }
+        let userInfo = Taro.getStorageSync("userInfo");
+        console.log(userInfo);
+        this.setState({
+          cavansObj: {
+            start: true,
+            data: rssConfigData({
+              hasGoods,
+              frontImage: image,
+              message,
+              merchantName: username,
+              cityName: cityName + districtName,
+              address: merchantAddress,
+              username: userInfo.username,
+              userProfile: userInfo.profile,
+              wxCode: qcodeUrl,
+              goodsImg,
+              goodsName,
+              oriPrice,
+              realPrice,
+            }),
+          },
+        });
+      }
+    );
+  }
   onShareAppMessage(res) {
     const {
       userMomentsInfo: { frontImage, title, userMomentIdString },
@@ -551,6 +611,7 @@ class Index extends React.PureComponent {
       couponFlag,
       beanLimitStatus,
       player,
+      cavansObj,
     } = this.state;
     const templateView = () => {
       if (userMomentsList.length > 0) {
@@ -562,6 +623,7 @@ class Index extends React.PureComponent {
               length={length}
               data={userMomentsInfo}
               beanLimitStatus={beanLimitStatus}
+              show={!cavansObj.start}
             ></InterVal>
             <VideoView
               circular={circular}
@@ -573,6 +635,7 @@ class Index extends React.PureComponent {
               onTransition={this.onTransition.bind(this)}
               stop={this.stopVideoPlayerControl.bind(this)}
               userInfo={configUserLevelInfo}
+              shareInfo={this.shareImageInfo.bind(this)}
             ></VideoView>
           </>
         );
@@ -628,6 +691,13 @@ class Index extends React.PureComponent {
             className="player_no"
           ></View>
         )}
+        <TaroShareDrawer
+          {...cavansObj}
+          onSave={() => console.log("点击保存")}
+          onClose={() =>
+            this.setState({ cavansObj: { start: false, data: null } })
+          }
+        ></TaroShareDrawer>
       </View>
     );
   }

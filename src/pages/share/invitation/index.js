@@ -56,7 +56,7 @@ class Index extends Component {
               httpData: { activityType: activityType },
             },
             (res) => {
-              this.fetchActivity()
+              this.fetchActivity();
             }
           );
         }
@@ -197,18 +197,22 @@ class Index extends Component {
             style={backgroundObj(goodsImg)}
             className="invitation_shop_imageBox"
           ></View>
-          <View className="invitation_shop_title font_noHide">{goodsName}</View>
-          <View className="invitation_bean_title">卡豆抵扣到手价</View>
-          <View className="invitation_bean_font">
-            <Text className="font24">¥</Text>
-            <Text className="font28">
-              {" " + (realPrice * (payBeanCommission / 100)).toFixed(2)}
-            </Text>
+          <View className="invitation_shop_padding">
+            <View className="invitation_shop_title font_noHide">
+              {goodsName}
+            </View>
+            <View className="invitation_bean_title">卡豆抵扣到手价</View>
+            <View className="invitation_bean_font bold">
+              <Text className="font24">¥</Text>
+              <Text className="font40">
+                {" " + (realPrice * (payBeanCommission / 100)).toFixed(2)}
+              </Text>
+            </View>
+            <View className="invitation_oldPrice_font font_hide">
+              原价¥{oriPrice}
+            </View>
+            <View className="invitation_go_buy"></View>
           </View>
-          <View className="invitation_oldPrice_font font_hide">
-            原价¥{oriPrice}
-          </View>
-          <View className="invitation_go_buy"></View>
         </View>
       );
     };
@@ -223,60 +227,72 @@ class Index extends Component {
         ></TaroShareDrawer>
         <View className="invitation_img1">
           <Image
-            className="invitation_img_title1"
+            src={
+              "https://wechat-config.dakale.net/miniprogram/image/share_active1.png"
+            }
             lazyLoad
-            src={"https://wechat-config.dakale.net/miniprogram/image/5_1_2.png"}
-          />
-          <ButtonView>
-            <View
-              className="goMap_btn"
-              onClick={() =>
-                mapGo({
-                  lat,
-                  lnt,
-                  address: address,
-                  merchantName: merchantName,
-                })
-              }
-            ></View>
-          </ButtonView>
+            className="invitation_image"
+          ></Image>
         </View>
-        <View className="invitation_img2">
-          <View className="invitation_shop_image">
+
+        <View
+          className="invitation_img2"
+          onClick={() =>
+            mapGo({
+              lat,
+              lnt,
+              address: address,
+              merchantName: merchantName,
+            })
+          }
+        >
+          <Image
+            className="invitation_image"
+            src={
+              "https://wechat-config.dakale.net/miniprogram/image/share_active2.png"
+            }
+            lazyLoad
+          ></Image>
+        </View>
+
+        <View className="invitation_img6">
+          <Image
+            src={
+              "https://wechat-config.dakale.net/miniprogram/image/share_active4.png"
+            }
+            lazyLoad
+            className="invitation_image"
+          ></Image>
+        </View>
+        <View className="invitation_img3">
+          <View className="invitation_title">
             <Image
-              className="invitation_img_title2"
-              lazyLoad
+              className="invitation_image"
               src={
-                "https://wechat-config.dakale.net/miniprogram/image/5_1_3.png"
+                "https://wechat-config.dakale.net/miniprogram/image/share_active3.png"
               }
-            />
+              lazyLoad
+            ></Image>
           </View>
-          <View className="invitation_shop_specail_title"></View>
-          <View className="invitation_shop_box">
+          <View className="invitation_waterfall_box">
             <Waterfall
               list={specialGoodsDTOList}
               createDom={shopView}
               noMargin={{ margin: "0" }}
-              style={{ width: Taro.pxTransform(300) }}
+              style={{ width: Taro.pxTransform(324) }}
             ></Waterfall>
           </View>
-          <View className="invitation_shop_card">
-            <Image
-              className="invitation_img_style"
-              lazyLoad
-              src={
-                "https://wechat-config.dakale.net/miniprogram/image/5_1_8.png"
-              }
-            />
-          </View>
         </View>
-        <View className="invitation_img3">
+        <View className="invitation_img5">
           <Image
-            className="invitation_img_style"
+            className="invitation_image"
+            src={
+              "https://wechat-config.dakale.net/miniprogram/image/share_active5.png"
+            }
             lazyLoad
-            src={"https://wechat-config.dakale.net/miniprogram/image/5_1_5.png"}
-          />
+          ></Image>
         </View>
+
         <View
           onClick={() => this.getShareInfo()}
           className="invitation_img4"

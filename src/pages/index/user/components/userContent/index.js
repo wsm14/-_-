@@ -20,36 +20,40 @@ export default (props) => {
   const list = [
     {
       style: "user_tab_icon1",
-      font: "卡券",
+      font: "我的券包",
       fn: () => navigateTo("/pages/coupon/wraparound/index"),
     },
     {
       style: "user_tab_icon2",
       font: "关注店铺",
-      fn: () => navigateTo("/pages/newUser/userDetails/index?count=2"),
+      fn: () =>
+        Router({
+          routerName: "download",
+        }),
     },
     {
       style: "user_tab_icon3",
-      font: "收藏内容",
-      fn: () => navigateTo("/pages/newUser/userDetails/index?count=1"),
+      font: "商品收藏",
+      fn: () =>
+        Router({
+          routerName: "download",
+        }),
     },
     {
       style: "user_tab_icon4",
       font: "打卡足迹",
-      fn: () => navigateTo("/pages/newUser/record/index"),
+      fn: () =>
+        Router({
+          routerName: "download",
+        }),
     },
     {
       style: "user_tab_icon5",
       font: "我的圈层",
-      fn: () => {
-        if (loginStatus() && status) {
-          navigateTo("/pages/newUser/circle/index");
-        } else {
-          Router({
-            routerName: "login",
-          });
-        }
-      },
+      fn: () =>
+        Router({
+          routerName: "download",
+        }),
     },
   ];
   const templateKol = () => {
@@ -75,7 +79,7 @@ export default (props) => {
               </View>
             </View>
 
-            {(teamUserCount != 0 && status === 1) && (
+            {teamUserCount != 0 && status === 1 && (
               <React.Fragment>
                 <View className="user_content_toast">
                   <View className="user_content_toastLiner">

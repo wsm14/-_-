@@ -3,6 +3,7 @@ export default {
   navigationBarBackgroundColor: "#EF476F",
   navigationBarTextStyle: "white",
   backgroundColor: "#ffffff",
-  backgroundTextStyle: "light",
+  backgroundTextStyle: "dark",
   navigationStyle: "default",
+  enablePullDownRefresh: true,
 };

@@ -30,7 +30,7 @@ export const specailGoods = (item, val = {}) => {
       ></View>
       <View className="specail_hot_font font_noHide">{goodsName}</View>
       <View className="specail_hot_limit">
-        {GetDistance(getLat(), getLnt(), lat, lnt)}
+        距您 {GetDistance(getLat(), getLnt(), lat, lnt)}
       </View>
       <View className="specail_hot_price">
         <Text className="specail_price_text">¥ </Text>
