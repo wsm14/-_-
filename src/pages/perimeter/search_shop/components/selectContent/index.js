@@ -2,26 +2,33 @@ import React, { useEffect, useState } from "react";
 import Tabs from "@/components/tabs";
 import Taro from "@tarojs/taro";
 import MerchantView from "./merchant/index";
-import KolView from "./kol/index";
+import KolView from "./watchVideo/index";
 import UserView from "./user/index";
-import TipView from "./tip/index";
-export default ({ userList = [], setting, fn, keyword }) => {
+import ShopView from "./shop/index";
+export default ({
+  userList = [],
+  setting,
+  fn,
+  keyword,
+  configUserLevelInfo,
+  store,
+}) => {
   const [list, setList] = useState([]);
   const [keywords, setKeyword] = useState("");
   const [count, setCount] = useState(0);
   const tabStyle = {
-    height: Taro.pxTransform(88),
-    borderRadius: "0px 0px 20px 20px",
+    height: Taro.pxTransform(96),
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     background: "#FFFFFF",
-    padding: `0 ${Taro.pxTransform(173)}`,
+    padding: `0 ${Taro.pxTransform(97)}`,
     position: "fixed",
     left: 0,
     right: 0,
     zIndex: 100,
     top: Taro.pxTransform(88),
+    borderBottom: "1px  solid #E5E5E5;",
   };
   useEffect(() => {
     setList(userList);
@@ -32,14 +39,31 @@ export default ({ userList = [], setting, fn, keyword }) => {
   useEffect(() => {
     setCount(setting.current);
   }, [setting.current]);
-  console.log(setting);
   return (
     <>
-      <Tabs fn={(e) => fn(e)} style={tabStyle} {...setting}></Tabs>
+      <Tabs
+        fn={(e) => fn(e)}
+        lineStyle={{
+          background: "#108588",
+          width: Taro.pxTransform(40),
+          height: Taro.pxTransform(4),
+          borderRadius: Taro.pxTransform(2),
+        }}
+        fontStyle={{ color: "#108588", fontSize: Taro.pxTransform(32) }}
+        sizeStyle={{ fontSize: Taro.pxTransform(32) }}
+        style={tabStyle}
+        {...setting}
+      ></Tabs>
       {<MerchantView current={count} keyword={keywords}></MerchantView>}
-      {<KolView current={count} keyword={keywords}></KolView>}
+      {<KolView store={store} current={count} keyword={keywords}></KolView>}
+      {
+        <ShopView
+          current={count}
+          configUserLevelInfo={configUserLevelInfo}
+          keyword={keywords}
+        ></ShopView>
+      }
       {<UserView current={count} keyword={keywords}></UserView>}
-      {<TipView current={count} keyword={keywords}></TipView>}
     </>
   );
 };

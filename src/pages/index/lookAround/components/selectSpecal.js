@@ -9,83 +9,15 @@ import {
   getLat,
   backgroundObj,
   setPeople,
+  format,
 } from "@/common/utils";
-
+import { selectShop } from "@/components/componentView/selectShop";
 import "./../index.scss";
 export default ({ data = [], userInfo = {}, linkTo }) => {
   const memo = useMemo(() => {
-    const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
     const template = (item) => {
-      const {
-        goodsId,
-        goodsName,
-        goodsImg,
-        oriPrice,
-        realPrice,
-        lnt,
-        lat,
-        status,
-        goodsType,
-        merchantAddress,
-        merchantName,
-        merchantLogo,
-        merchantId,
-        specialActivityIdString,
-        merchantPrice,
-        discount,
-        merchantIdString,
-      } = item;
-      return (
-        <View
-          className="lookAround_selectSpecal animated  fadeIn"
-          onClick={() => linkTo(specialActivityIdString, merchantIdString)}
-        >
-          <View
-            style={backgroundObj(goodsImg)}
-            className="lookAround_image_box"
-          ></View>
-          <View className="lookAround_content">
-            <View className="lookAround_title  font_noHide">{goodsName}</View>
-            <View className="lookAround_select_user">
-              <View
-                className="lookAround_select_userProfile"
-                style={backgroundObj(merchantLogo)}
-              ></View>
-              <View className="lookAround_select_merchantName font_hide">
-                {merchantName}
-              </View>
-              <View className="lookAround_hot_limit">
-                {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
-              </View>
-            </View>
-            <View className="lookAround_bean_relbox">
-              <View className="lookAround_bean_left">
-                卡豆可抵 ¥{(realPrice * (payBeanCommission / 100)).toFixed(2)}
-              </View>
-              {shareCommission !== 0 && (
-                <View className="lookAround_bean_right">
-                  赚¥{" "}
-                  {(
-                    (realPrice - merchantPrice) *
-                    (shareCommission / 100)
-                  ).toFixed(2)}
-                </View>
-              )}
-            </View>
-            <View className="lookAround_pay_price bold">
-              <Text className="lookAround_price_text">¥ </Text>
-              {realPrice}
-            </View>
-
-            <View className="lookAround_pay_bottom">
-              <View className="lookAround_bottom_left">¥ {oriPrice}</View>
-              <View className="lookAround_bottom_right">热卖中</View>
-            </View>
-          </View>
-        </View>
-      );
+      return selectShop(item, userInfo, linkTo);
     };
-
     return (
       <View className="lookAround_selectSpecal_box">
         {data.length > 0 ? (

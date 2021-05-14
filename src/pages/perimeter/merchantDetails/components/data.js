@@ -163,23 +163,23 @@ export const rssConfigData = (data = {}) => {
     blocks: [
       {
         y: 160,
-        x: 0,
-        width: 686,
-        paddingLeft: 32,
-        paddingRight: 32,
         height: 45,
+        textAlign: "center",
         zIndex: 998,
+        width: 686,
+        lineNum: 1,
+        x: 32,
         text: {
           lineHeight: 56,
           text: merchantName, // 商家名称
           fontSize: 40,
-          width: 686,
-          paddingLeft: 32,
-          paddingRight: 32,
           color: "#333333",
           zIndex: 999,
           textAlign: "center",
           baseLine: "middle",
+
+          x: 32,
+          lineNum: 1,
         },
       },
       ...filterScenesList(),
