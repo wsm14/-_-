@@ -572,13 +572,13 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
         };
       } else {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
         };
       }
     } else {
@@ -586,13 +586,13 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
         };
       } else {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
         };
       }
     }

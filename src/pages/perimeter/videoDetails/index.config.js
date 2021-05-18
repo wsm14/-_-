@@ -1,4 +1,5 @@
 export default {
-  navigationBarTitleText: '视频连刷',
+  navigationBarTitleText: "视频详情",
+  navigationStyle: "default",
   enableShareAppMessage: true,
-}
+};

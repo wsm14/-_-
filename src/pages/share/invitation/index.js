@@ -39,6 +39,11 @@ class Index extends Component {
       type: "",
       path: "",
       index: 0,
+      activeImg: "",
+      mapImg: "",
+      goodBill: "",
+      activeRuleImg: "",
+      btnImg: "",
     };
   }
   componentWillMount() {
@@ -88,10 +93,15 @@ class Index extends Component {
         lnt = 0,
         specialGoodsDTOList = [],
         coverImg = "",
-        type = "",
-        path = "",
+        type = "switchTab",
+        path = "/pages/index/home/index",
         address = "",
         merchantName = "",
+        activeImg = "https://wechat-config.dakale.net/miniprogram/image/share_active1.png",
+        mapImg = "https://wechat-config.dakale.net/miniprogram/image/share_active2.png",
+        goodBill = "https://wechat-config.dakale.net/miniprogram/image/share_active4.png",
+        activeRuleImg = "https://wechat-config.dakale.net/miniprogram/image/share_active5.png",
+        btnImg = "https://wechat-config.dakale.net/miniprogram/image/5_1_6.png",
       } = res;
       this.setState({
         specialGoodsDTOList,
@@ -103,6 +113,11 @@ class Index extends Component {
         type,
         path,
         index: index + 1,
+        activeImg,
+        mapImg,
+        goodBill,
+        activeRuleImg,
+        btnImg,
       });
     });
   }
@@ -134,7 +149,7 @@ class Index extends Component {
     );
   }
   getSelectType() {
-    const { type = "switchTab", path = "/pages/index/home/index" } = this.state;
+    const { type, path } = this.state;
     if (!loginStatus()) {
       Router({
         routerName: "login",
@@ -169,6 +184,11 @@ class Index extends Component {
       lnt,
       address,
       merchantName,
+      activeImg = "",
+      mapImg = "",
+      goodBill = "",
+      activeRuleImg = "",
+      btnImg = "",
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
     } = this.state;
     const shopView = (item) => {
@@ -226,13 +246,7 @@ class Index extends Component {
           }
         ></TaroShareDrawer>
         <View className="invitation_img1">
-          <Image
-            src={
-              "https://wechat-config.dakale.net/miniprogram/image/share_active1.png"
-            }
-            lazyLoad
-            className="invitation_image"
-          ></Image>
+          <Image src={activeImg} lazyLoad className="invitation_image"></Image>
         </View>
 
         <View
@@ -246,63 +260,49 @@ class Index extends Component {
             })
           }
         >
-          <Image
-            className="invitation_image"
-            src={
-              "https://wechat-config.dakale.net/miniprogram/image/share_active2.png"
-            }
-            lazyLoad
-          ></Image>
+          <Image className="invitation_image" src={mapImg} lazyLoad></Image>
         </View>
 
-        <View className="invitation_img6">
-          <Image
-            src={
-              "https://wechat-config.dakale.net/miniprogram/image/share_active4.png"
-            }
-            lazyLoad
-            className="invitation_image"
-          ></Image>
-        </View>
-        <View className="invitation_img3">
-          <View className="invitation_title">
-            <Image
-              className="invitation_image"
-              src={
-                "https://wechat-config.dakale.net/miniprogram/image/share_active3.png"
-              }
-              lazyLoad
-            ></Image>
+        {goodBill && (
+          <View className="invitation_img6">
+            <Image src={goodBill} lazyLoad className="invitation_image"></Image>
           </View>
-          <View className="invitation_waterfall_box">
-            <Waterfall
-              list={specialGoodsDTOList}
-              createDom={shopView}
-              noMargin={{ margin: "0" }}
-              style={{ width: Taro.pxTransform(324) }}
-            ></Waterfall>
+        )}
+        {specialGoodsDTOList.length > 0 && (
+          <View className="invitation_img3">
+            <View className="invitation_title">
+              <Image
+                className="invitation_image"
+                src={
+                  "https://wechat-config.dakale.net/miniprogram/image/share_active3.png"
+                }
+                lazyLoad
+              ></Image>
+            </View>
+            <View className="invitation_waterfall_box">
+              <Waterfall
+                list={specialGoodsDTOList}
+                createDom={shopView}
+                noMargin={{ margin: "0" }}
+                style={{ width: Taro.pxTransform(324) }}
+              ></Waterfall>
+            </View>
           </View>
-        </View>
+        )}
+
         <View className="invitation_img5">
           <Image
             className="invitation_image"
-            src={
-              "https://wechat-config.dakale.net/miniprogram/image/share_active5.png"
-            }
+            src={activeRuleImg}
             lazyLoad
           ></Image>
         </View>
-
         <View
           onClick={() => this.getShareInfo()}
           className="invitation_img4"
         ></View>
         <View className="invitation_btn" onClick={() => this.getSelectType()}>
-          <Image
-            className="invitation_img_btn"
-            lazyLoad
-            src={"https://wechat-config.dakale.net/miniprogram/image/5_1_6.png"}
-          />
+          <Image className="invitation_img_btn" lazyLoad src={btnImg} />
         </View>
       </View>
     );

@@ -14,6 +14,7 @@ import {
   getLnt,
   navigateTo,
   resiApiKey,
+  computedClient,
 } from "@/common/utils";
 import {
   getBanner,
@@ -62,6 +63,7 @@ class Index extends Component {
       categoryList: [],
       flagDom: false,
       result: {},
+      num: Taro.getStorageSync("toast") || 0,
     };
   }
   //上拉刷新
@@ -116,7 +118,8 @@ class Index extends Component {
     );
   }
   componentDidMount() {
-    const { hotHttp, dateHttp } = this.state;
+    const { hotHttp, dateHttp, num } = this.state;
+    Taro.setStorageSync("toast", num + 1);
     this.setMap();
     this.topBanner();
     this.getConfigWindVaneBySize();
@@ -314,6 +317,7 @@ class Index extends Component {
       triggered,
       specialHttp: { categoryIds },
       result = {},
+      num,
     } = this.state;
     const { cityName, cityCode } = this.props.store.locationStore;
     const bannerStyle = {
@@ -339,6 +343,16 @@ class Index extends Component {
     return (
       <View className="lookAround_box">
         <Navition city={cityName}></Navition>
+        {num === 0 && (
+          <View
+            style={{
+              top: Taro.pxTransform(computedClient().top),
+            }}
+            className="wechant_init color6 font28"
+          >
+            “添加到我的小程序”，更多优惠抢不停
+          </View>
+        )}{" "}
         <ScrollView
           scrollY
           onScrollToLower={this.getReachBottom.bind(this)}
@@ -562,7 +576,11 @@ class Index extends Component {
             </ScrollView>
           </View>
         }
-        <TabCity store={this.props.store} data={result}></TabCity>
+        <TabCity
+          reload={this.onReload.bind(this)}
+          store={this.props.store}
+          data={result}
+        ></TabCity>
         <ToastCity store={this.props.store} data={result}></ToastCity>
       </View>
     );

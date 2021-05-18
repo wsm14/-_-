@@ -13,7 +13,7 @@ import {
 import classNames from "classnames";
 import { checkLocation } from "@/server/common";
 const tabCity = (props) => {
-  const { data, store } = props;
+  const { data, store, reload } = props;
   const [visible, setVisible] = useState(false);
   const [result, setResult] = useState({});
   const [citys, setCity] = useState({});
@@ -36,9 +36,7 @@ const tabCity = (props) => {
         let cityData = Taro.getStorageSync("city");
         if (!cityData) {
           store.locationStore.setCity(cityName, obj.cityCode, 1);
-          Taro.reLaunch({
-            url: "/pages/index/lookAround/index",
-          });
+          reload();
         } else if (
           cityData.cityCode !== obj.cityCode &&
           cityData.type !== "1"
@@ -89,9 +87,7 @@ const tabCity = (props) => {
                     citys.type
                   );
                   setVisible(false);
-                  Taro.reLaunch({
-                    url: "/pages/index/lookAround/index",
-                  });
+                  reload();
                 }}
               >
                 确定

@@ -164,15 +164,6 @@ class Index extends React.PureComponent {
                 ...userMomentsInfo,
                 merchantFollowStatus: "1",
               },
-              userMomentsList: this.state.userMomentsList.map((item) => {
-                if (item.userIdString === userIdString) {
-                  return {
-                    ...item,
-                    merchantFollowStatus: "1",
-                  };
-                }
-                return item;
-              }),
             },
             (res) => {
               toast("关注成功");
@@ -199,17 +190,6 @@ class Index extends React.PureComponent {
               merchantCollectionStatus: "0",
               collectionAmount: parseInt(userMomentsInfo.collectionAmount) - 1,
             },
-            userMomentsList: this.state.userMomentsList.map((item) => {
-              if (item.userMomentIdString === userMomentIdString) {
-                return {
-                  ...userMomentsInfo,
-                  merchantCollectionStatus: "0",
-                  collectionAmount:
-                    parseInt(userMomentsInfo.collectionAmount) - 1,
-                };
-              }
-              return item;
-            }),
           });
         }
       );
@@ -225,17 +205,6 @@ class Index extends React.PureComponent {
               merchantCollectionStatus: "1",
               collectionAmount: parseInt(userMomentsInfo.collectionAmount) + 1,
             },
-            userMomentsList: this.state.userMomentsList.map((item) => {
-              if (item.userMomentIdString === userMomentIdString) {
-                return {
-                  ...userMomentsInfo,
-                  merchantCollectionStatus: "1",
-                  collectionAmount:
-                    parseInt(userMomentsInfo.collectionAmount) + 1,
-                };
-              }
-              return item;
-            }),
           });
         }
       );

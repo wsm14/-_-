@@ -268,6 +268,7 @@ export const deleteFall = function (obj, fn) {
 //删除 点赞
 export const setIntive = function (time, fn, limit = 1000) {
   let times;
+  time = parseInt(time);
   if (time <= 0) {
     fn(time);
     return;
@@ -275,7 +276,7 @@ export const setIntive = function (time, fn, limit = 1000) {
   return (times = setInterval(() => {
     time--;
     fn(time);
-    if (time == 0) {
+    if (time <= 0) {
       clearInterval(times);
     }
   }, limit));
@@ -486,7 +487,7 @@ export const filterGoodsStatus = (status) => {
     case 2:
       return "1";
     case 3:
-      return "6";
+      return "6,2";
     // case '4': return '已确认';
     // case '5': return '预支付';
     // case '6': return '申请退款中'

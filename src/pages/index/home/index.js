@@ -378,6 +378,7 @@ class Index extends React.PureComponent {
     }
   }
   //初始化详情数据
+
   stopInterval(interval) {
     clearInterval(interval);
     this.setState({
@@ -752,7 +753,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -762,7 +763,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -774,7 +775,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -784,7 +785,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");

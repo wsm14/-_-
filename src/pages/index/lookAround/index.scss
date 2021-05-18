@@ -10,6 +10,33 @@ page {
   line-height: 1;
   position: relative;
   overflow: hidden;
+  .wechant_init {
+    width: 530px;
+    height: 92px;
+    line-height: 108px;
+    position: fixed;
+    z-index: 1000001;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon599.png")
+      no-repeat;
+    background-size: 100% 100%;
+    right: 32px;
+    animation-name: wechant_animate;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+  @keyframes wechant_animate {
+    from {
+      opacity: 1;
+      transform: scale(1) !important;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
   .lookAround_navition_box {
     height: 64px;
     display: flex;
@@ -379,7 +406,6 @@ page {
       no-repeat top #f5f5f5;
     background-size: 100% 462px;
     min-height: 1190px;
-
   }
   .lookAround_category_linder {
     width: 100%;

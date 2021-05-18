@@ -32,6 +32,10 @@ class Index extends Component {
     const that = this;
     if (index != this.state.setting.current) {
       that.props.store.goodsStore.setNullList();
+      let closeType = "";
+      if (index === 3) {
+        closeType = "expiredRefund,manualRefund";
+      }
       this.setState(
         {
           setting: {
@@ -42,6 +46,7 @@ class Index extends Component {
             ...this.state.httpData,
             page: 1,
             orderStatus: filterGoodsStatus(index),
+            closeType,
           },
           countStatus: true,
         },

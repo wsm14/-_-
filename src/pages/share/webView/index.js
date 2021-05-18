@@ -21,9 +21,12 @@ class Index extends Component {
   }
   filterUrl() {
     const { url = "" } = this.state;
+    const { token = "" } = Taro.getStorageSync("userInfo") || {};
+
     let str = "";
     str = url.replace(/\|/g, "=");
     str = str.replace(/\+/g, "&");
+    str = str + "&" + "token=" + token;
     return str;
   }
 
@@ -33,7 +36,6 @@ class Index extends Component {
   }
   render() {
     const { link } = this.state;
-    console.log();
     return (
       <View className="record_box">
         <WebView src={`${link}?${this.filterUrl()}`} />

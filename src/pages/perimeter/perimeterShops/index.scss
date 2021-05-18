@@ -141,6 +141,8 @@
         line-height: 24px;
         max-width: 622px;
         color: #999999;
+        display: flex;
+        align-items: center;
       }
       .list_font_type::before {
         width: 24px;

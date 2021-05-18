@@ -158,10 +158,10 @@ class index extends PureComponent {
               <View className="scan_font">打卡捡豆</View>
             </View>
           </View>
-          <ShopView
+          {/* <ShopView
             data={item}
             configUserLevelInfo={configUserLevelInfo}
-          ></ShopView>
+          ></ShopView> */}
           <View className="template_liner"></View>
           <View className="template_liner_address public_auto">
             <View className="template_address_left font_hide">
