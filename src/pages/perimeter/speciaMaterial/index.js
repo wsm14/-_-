@@ -66,6 +66,8 @@ class Index extends Component {
           countStatus: false,
         });
       }
+    }).catch((e) => {
+      Taro.stopPullDownRefresh();
     });
   }
 

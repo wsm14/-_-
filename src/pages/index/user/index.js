@@ -115,7 +115,11 @@ class Index extends React.Component {
     } = this.state;
     return (
       <View className="page_userBox">
-        <UserTitle status={loginStatus} data={userInfo}></UserTitle>
+        <UserTitle
+          reload={this.getUserDetails.bind(this)}
+          status={loginStatus}
+          data={userInfo}
+        ></UserTitle>
         <View className="page_user_liner"></View>
         <UserContent
           levelDetails={levelDetails}

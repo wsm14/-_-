@@ -1,5 +1,6 @@
 {
   "miniprogramRoot": "dist/",
+  "cloudfunctionRoot":"cloud/",
   "projectname": "dakale-webNew-miniprogram",
   "description": "哒卡乐小程序",
   "appid": "wx8ae1f2a6ba930dbd",

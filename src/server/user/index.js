@@ -189,4 +189,14 @@ export const getLevel = (data = {}, fn) => {
 };
 //获取达人等级相关
 
+export const saveUpdateLoginUserInfo = (data = {}, fn) => {
+  httpPost(
+    {
+      url: "/user/userInfo/updateLoginUserInfo",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取达人等级相关
 

@@ -163,7 +163,7 @@ class MerchantDetails extends Component {
   //获取商家信息
   getMerchantById() {
     const { merchantHttpData } = this.state;
-    return httpGet(
+    httpGet(
       {
         data: merchantHttpData,
         url: wxapiGet.wechatGetUserMerchant,
@@ -180,7 +180,9 @@ class MerchantDetails extends Component {
           }
         );
       }
-    );
+    ).catch((e) => {
+      Taro.stopPullDownRefresh();
+    });
   }
   fetchShareInfo() {
     const {

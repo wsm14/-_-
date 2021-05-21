@@ -96,14 +96,28 @@ class MerchantDetails extends Component {
         data: httpData,
       },
       (res) => {
-        const { specialGoodsInfo } = res;
-        Taro.stopPullDownRefresh();
-        this.setState({
+        const {
           specialGoodsInfo,
-          index: index + 1,
-        });
+          specialGoodsInfo: { status },
+        } = res;
+        Taro.stopPullDownRefresh();
+        if (status) {
+          this.setState({
+            specialGoodsInfo,
+            index: index + 1,
+          });
+        } else {
+          this.setState({
+            specialGoodsInfo: {
+              status: "0",
+            },
+            index: index + 1,
+          });
+        }
       }
-    );
+    ).catch((e) => {
+      Taro.stopPullDownRefresh();
+    });
   }
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
@@ -649,6 +663,7 @@ class MerchantDetails extends Component {
                     (realPrice * (payBeanCommission / 100)).toFixed(3).length -
                       1
                   )}
+                data={specialGoodsInfo}
               ></VideoBean>
               {payBtn()}
             </View>

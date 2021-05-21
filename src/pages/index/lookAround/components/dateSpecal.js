@@ -3,8 +3,8 @@ import { View, Text, Image, ScrollView } from "@tarojs/components";
 import { GetDistance, getLnt, getLat, backgroundObj } from "@/common/utils";
 import Taro from "@tarojs/taro";
 import { template } from "@/components/specalTemplate";
-import "./../index.scss";
 import Router from "@/common/router";
+import "./../index.scss";
 export default ({ data = [], userInfo = {}, linkTo }) => {
   const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
   const memo = useMemo(() => {
@@ -57,7 +57,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
     //           {realPrice}
     //           {shareCommission !== 0 && (
     //             <View className="lookAround_share_text">
-    //               /赚¥ 
+    //               /赚¥
     //               {(
     //                 (realPrice - merchantPrice) *
     //                 (shareCommission / 100)
@@ -102,6 +102,6 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
         </View>
       </View>
     );
-  }, [data, payBeanCommission,shareCommission]);
+  }, [data, payBeanCommission, shareCommission]);
   return memo;
 };

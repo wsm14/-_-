@@ -79,7 +79,6 @@ class Index extends React.PureComponent {
       categoryList: [],
       beanflag: false,
       couponFlag: false,
-      beanLimitStatus: "1",
       player: true,
       configUserLevelInfo: {},
       cavansObj: {
@@ -279,6 +278,10 @@ class Index extends React.PureComponent {
           fn && fn();
         }
       );
+    }).catch((e) => {
+      this.setState({
+        triggered: false,
+      });
     });
   }
   getBean(time) {
@@ -298,59 +301,58 @@ class Index extends React.PureComponent {
       userMomentsInfo: { userMomentIdString, guideMomentFlag },
       userMomentsInfo,
     } = this.state;
+    const { homeStore } = this.props.store;
     checkPuzzleBeanLimitStatus({}, (res) => {
       const { beanLimitStatus = "1" } = res;
-      this.setState({ beanLimitStatus }, (res) => {
-        if (beanLimitStatus === "1") {
-          saveWatchBean(
-            {
-              momentId: userMomentIdString,
-            },
-            (res) => {
-              const {
-                specialGoodsList = [{}],
-                otherBeanAmount = "",
-                otherRealPrice = "",
-              } = res;
-              if (guideMomentFlag === "1") {
-                Taro.setStorageSync("newDeviceFlag", "0");
-              }
-              this.setState(
-                {
-                  time: null,
-                  userMomentsInfo: {
-                    ...userMomentsInfo,
-                    watchStatus: "1",
-                    ...specialGoodsList[0],
-                    otherBeanAmount,
-                    otherRealPrice,
-                  },
-                  userMomentsList: this.state.userMomentsList.map((item) => {
-                    if (item.userMomentIdString === userMomentIdString) {
-                      return {
-                        ...item,
-                        watchStatus: "1",
-                        ...specialGoodsList[0],
-                        otherBeanAmount,
-                        otherRealPrice,
-                      };
-                    }
-                    return item;
-                  }),
-                },
-                (res) => {
-                  this.setState({
-                    beanflag: true,
-                    beanLimitStatus,
-                  });
-                }
-              );
+      if (beanLimitStatus === "1") {
+        saveWatchBean(
+          {
+            momentId: userMomentIdString,
+          },
+          (res) => {
+            const {
+              specialGoodsList = [{}],
+              otherBeanAmount = "",
+              otherRealPrice = "",
+            } = res;
+            if (guideMomentFlag === "1") {
+              Taro.setStorageSync("newDeviceFlag", "0");
             }
-          );
-        } else {
-          return;
-        }
-      });
+            this.setState(
+              {
+                time: null,
+                userMomentsInfo: {
+                  ...userMomentsInfo,
+                  watchStatus: "1",
+                  ...specialGoodsList[0],
+                  otherBeanAmount,
+                  otherRealPrice,
+                },
+                userMomentsList: this.state.userMomentsList.map((item) => {
+                  if (item.userMomentIdString === userMomentIdString) {
+                    return {
+                      ...item,
+                      watchStatus: "1",
+                      ...specialGoodsList[0],
+                      otherBeanAmount,
+                      otherRealPrice,
+                    };
+                  }
+                  return item;
+                }),
+              },
+              (res) => {
+                this.setState({
+                  beanflag: true,
+                  beanLimitStatus,
+                });
+              }
+            );
+          }
+        );
+      } else {
+        homeStore.setBeanLimitStatus(beanLimitStatus);
+      }
     });
   }
   //领取卡豆
@@ -809,14 +811,13 @@ class Index extends React.PureComponent {
       categoryList = [],
       beanflag,
       couponFlag,
-      beanLimitStatus,
       configUserLevelInfo,
       player,
       interval,
       cavansObj,
       triggered,
     } = this.state;
-    const { selectObj } = this.props.store.homeStore;
+    const { selectObj, beanLimitStatus } = this.props.store.homeStore;
     const { categoryIds, distance, promotionType } = selectObj;
     const templateView = () => {
       if (browseType === "near") {

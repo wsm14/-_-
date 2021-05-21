@@ -29,17 +29,17 @@ const env =
   process.env.NODE_ENV === "development" ? "development" : "production";
 switch (env) {
   case "development":
-    // baseUrl = 'https://devgateway.dakale.net'
+    baseUrl = 'https://devgateway.dakale.net'
     // baseUrl = 'https://pregateway.dakale.net'
-    baseUrl = "https://gateway1.dakale.net";
+    // baseUrl = "https://gateway1.dakale.net";
     break;
   case "test":
     baseUrl = "https://pregateway.dakale.net";
     break;
   case "production":
+    baseUrl = "https://devgateway.dakale.net";
     // baseUrl = 'https://pregateway.dakale.net'
-    baseUrl = "https://gateway1.dakale.net";
-
+    // baseUrl = "https://gateway1.dakale.net";
     break;
 }
 function request(obj, type) {

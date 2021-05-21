@@ -35,8 +35,8 @@ const toastCity = (props) => {
     checkLocation(obj, (res) => {
       const { cityStatus, cityName } = res;
       if (cityStatus === "0") {
-        let cityData = Taro.getStorageSync("city");
-        if (!cityData || cityData.type !== "1") {
+        let relData = Taro.getStorageSync("relCity") || {};
+        if (obj.cityCode !== relData.cityCode) {
           setVisible(true);
         }
       }
@@ -58,7 +58,7 @@ const toastCity = (props) => {
             <View
               className="toastCity_font4 font32"
               onClick={() => {
-                navigateTo("/pages/perimeter/city/index");
+                navigateTo(`/pages/perimeter/city/index?type=nullStatus&cityCode=${result.adcode.slice(0,4)}`);
               }}
             >
               切换城市

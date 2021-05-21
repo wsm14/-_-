@@ -5,21 +5,24 @@ import Router from "@/common/router";
 import "./index.scss";
 
 export default (props) => {
-  const { price } = props;
-  return (
-    <View
-      className="videoBean_box public_auto"
-      onClick={() =>
-        Router({
-          routerName: "nearVideo",
-          args: {
-            type: "goods",
-          },
-        })
-      }
-    >
-      <View>卡豆不足？刷视频捡豆最高可抵¥{price}</View>
-      <View>{">"}</View>
-    </View>
-  );
+  const { price, data } = props;
+  const { userBean, userIncomeBean } = data;
+  if (Number(price) > userBean && Number(price) > userIncomeBean) {
+    return (
+      <View
+        className="videoBean_box public_auto"
+        onClick={() =>
+          Router({
+            routerName: "nearVideo",
+            args: {
+              type: "goods",
+            },
+          })
+        }
+      >
+        <View>卡豆不足？刷视频捡豆最高可抵¥{price}</View>
+        <View>{">"}</View>
+      </View>
+    );
+  } else return null;
 };

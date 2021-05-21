@@ -3,12 +3,13 @@ import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { index } from "@/api/api";
 import { httpGet } from "@/api/newRequest";
-import { toast, filterGoodsStatus } from "@/common/utils";
+import { toast, filterGoodsStatus, loginStatus } from "@/common/utils";
 import Tabs from "@/components/tabs";
 import Goods from "./components/goods";
 import { goodsNullStatus } from "@/components/publicShopStyle";
 import "./index.scss";
 import { inject, observer } from "mobx-react";
+import Router from "@/common/router";
 @inject("store")
 @observer
 class Index extends Component {
@@ -68,7 +69,7 @@ class Index extends Component {
       },
     } = this.props;
     console.log(orderList.length);
-    if (orderList.length === 0) {
+    if (orderList.length === 0 && loginStatus()) {
       this.getOrder();
     }
   }
@@ -99,7 +100,9 @@ class Index extends Component {
           );
         }
       }
-    );
+    ).catch((e) => {
+      Taro.stopPullDownRefresh();
+    });
   }
 
   errorToast(e) {
@@ -115,19 +118,25 @@ class Index extends Component {
   onPullDownRefresh() {
     let that = this;
     const { httpData } = this.state;
-    Taro.stopPullDownRefresh();
-    that.props.store.goodsStore.setNullList();
-    this.setState(
-      {
-        httpData: {
-          ...httpData,
-          page: 1,
+    if (loginStatus()) {
+      Taro.stopPullDownRefresh();
+      that.props.store.goodsStore.setNullList();
+      this.setState(
+        {
+          httpData: {
+            ...httpData,
+            page: 1,
+          },
         },
-      },
-      (res) => {
-        this.getOrder();
-      }
-    );
+        (res) => {
+          this.getOrder();
+        }
+      );
+    } else {
+      Router({
+        routerName: "login",
+      });
+    }
   }
 
   onReachBottom() {

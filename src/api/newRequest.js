@@ -8,7 +8,6 @@
  * requestUrl 请求去重
  */
 import Taro, { getCurrentPages } from "@tarojs/taro";
-
 import encrypt from "./keys";
 
 import {
@@ -59,20 +58,19 @@ const resultOperate = {
 };
 
 let baseUrl = "";
-
 const env =
   process.env.NODE_ENV === "development" ? "development" : "production";
 
 switch (env) {
   case "development":
-    baseUrl = "https://devgateway.dakale.net";
+    // baseUrl = "https://devgateway.dakale.net";
     // baseUrl = "https://pregateway.dakale.net";
-    // baseUrl = "https://gateway1.dakale.net";
+    baseUrl = "https://gateway1.dakale.net";
     break;
   case "production":
     // baseUrl = "https://pregateway.dakale.net";
-    // baseUrl = 'https://devgateway.dakale.net'
-    baseUrl = "https://gateway1.dakale.net";
+    baseUrl = "https://devgateway.dakale.net";
+    // baseUrl = "https://gateway1.dakale.net";
     break;
 }
 
@@ -107,7 +105,7 @@ export const httpGet = (obj, fn) => {
   ) {
     obj.data.token = Taro.getStorageSync("userInfo").token;
   }
-  
+
   return new Promise((resolve, reject) => {
     Taro.request({
       ...httpCondition,

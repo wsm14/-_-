@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
 import { ScrollView, View } from "@tarojs/components";
-import Navition from "./components/navition";
-import HotSpecal from "./components/hotSpecal";
-import DateSpecal from "./components/dateSpecal";
-import SelectSpecal from "./components/selectSpecal";
 import Banner from "@/components/banner";
 import {
   backgroundObj,
@@ -24,11 +20,15 @@ import {
 } from "@/server/common";
 import classNames from "classnames";
 import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
-import "./index.scss";
 import { inject, observer } from "mobx-react";
 import Router from "@/common/router";
 import TabCity from "./components/tabCity";
 import ToastCity from "./components/toastCity";
+import Navition from "./components/navition";
+import HotSpecal from "./components/hotSpecal";
+import DateSpecal from "./components/dateSpecal";
+import SelectSpecal from "./components/selectSpecal";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends Component {
@@ -100,12 +100,6 @@ class Index extends Component {
         flagDom: false,
       },
       (res) => {
-        let time = setTimeout(() => {
-          this.setState({
-            triggered: false,
-          });
-          clearTimeout(time);
-        }, 500);
         const { hotHttp, dateHttp } = this.state;
         this.topBanner();
         this.getConfigWindVaneBySize();
@@ -200,6 +194,11 @@ class Index extends Component {
       const { configUserLevelInfo = {} } = res;
       this.setState({
         configUserLevelInfo,
+        triggered: false,
+      });
+    }).catch((e) => {
+      this.setState({
+        triggered: false,
       });
     });
   }

@@ -14,6 +14,7 @@ import {
   navigateTo,
   setPeople,
   computedVideoSize,
+  loginStatus,
 } from "@/common/utils";
 import classNames from "classnames";
 import "./../index.scss";
@@ -28,7 +29,6 @@ export default ({
   onTransition,
   stop,
   userInfo,
-  shareInfo,
 }) => {
   const [scale, setScale] = useState(0);
   useEffect(() => {
@@ -185,13 +185,24 @@ export default ({
                           </>
                         )}
                         <View
-                          onClick={() => shareInfo()}
                           className={classNames(
                             shareCommission > 0
                               ? "home_share_animate"
                               : "home_share_wechat"
                           )}
-                        ></View>
+                        >
+                          {loginStatus() ? (
+                            <Button
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                border: "none",
+                                background: 'none'
+                              }}
+                              openType={"share"}
+                            ></Button>
+                          ) : null}
+                        </View>
 
                         <View className="collected_font">{shareAmount}</View>
                       </View>

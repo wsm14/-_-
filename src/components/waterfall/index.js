@@ -10,8 +10,8 @@
 import React, { useEffect, useState } from "react";
 import { View } from "@tarojs/components";
 import { getDom, computedHeight } from "@/common/utils";
-import "./index.scss";
 import Taro from "@tarojs/taro";
+import "./index.scss";
 export default (props) => {
   const {
     style,

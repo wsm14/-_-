@@ -52,7 +52,6 @@ class Index extends React.PureComponent {
       momentBarrageList: [],
       beanflag: false,
       couponFlag: false,
-      beanLimitStatus: "1",
       player: true,
       configUserLevelInfo: {},
       cavansObj: {
@@ -243,35 +242,34 @@ class Index extends React.PureComponent {
       userMomentsInfo: { userMomentIdString, guideMomentFlag },
       userMomentsInfo,
     } = this.state;
+    const { homeStore } = this.props.store;
     checkPuzzleBeanLimitStatus({}, (res) => {
-      const { beanLimitStatus = "1" } = res;
-      this.setState({ beanLimitStatus }, (res) => {
-        if (beanLimitStatus === "1") {
-          saveWatchBean(
-            {
-              momentId: userMomentIdString,
-            },
-            (res) => {
-              this.setState({
-                beanflag: true,
-                time: null,
-                userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
-                userMomentsList: this.state.userMomentsList.map((item) => {
-                  if (item.userMomentIdString === userMomentIdString) {
-                    return {
-                      ...item,
-                      watchStatus: "1",
-                    };
-                  }
-                  return item;
-                }),
-              });
-            }
-          );
-        } else {
-          return;
-        }
-      });
+      const { beanLimitStatus } = res;
+      if (beanLimitStatus === "1") {
+        saveWatchBean(
+          {
+            momentId: userMomentIdString,
+          },
+          (res) => {
+            this.setState({
+              beanflag: true,
+              time: null,
+              userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
+              userMomentsList: this.state.userMomentsList.map((item) => {
+                if (item.userMomentIdString === userMomentIdString) {
+                  return {
+                    ...item,
+                    watchStatus: "1",
+                  };
+                }
+                return item;
+              }),
+            });
+          }
+        );
+      } else {
+        homeStore.setBeanLimitStatus(beanLimitStatus);
+      }
     });
   }
 
@@ -609,10 +607,10 @@ class Index extends React.PureComponent {
       httpData: { browseType },
       beanflag,
       couponFlag,
-      beanLimitStatus,
       player,
       cavansObj,
     } = this.state;
+    const { beanLimitStatus } = this.props.store.homeStore;
     const templateView = () => {
       if (userMomentsList.length > 0) {
         console.log(time);

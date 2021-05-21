@@ -34,14 +34,19 @@ const tabCity = (props) => {
       const { cityStatus, cityName } = res;
       if (cityStatus === "1") {
         let cityData = Taro.getStorageSync("city");
+        let relData = Taro.getStorageSync("relCity");
         if (!cityData) {
           store.locationStore.setCity(cityName, obj.cityCode, 1);
+          Taro.setStorageSync("relCity", {
+            cityCode: obj.cityCode,
+            cityName: cityName,
+          });
           reload();
-        } else if (
-          cityData.cityCode !== obj.cityCode &&
-          cityData.type !== "1"
-        ) {
-          console.log(3232131232);
+        } else if (relData.cityCode !== obj.cityCode && relData) {
+          Taro.setStorageSync("relCity", {
+            cityCode: obj.cityCode,
+            cityName: cityName,
+          });
           setCity({
             cityCode: obj.cityCode,
             cityName: cityName,

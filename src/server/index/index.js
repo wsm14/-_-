@@ -75,7 +75,7 @@ export const deleteMomentsLikeAmount = (data, fn) => {
 //点赞商家
 
 export const getUserMomentList = (data = {}, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/userMoment/listMomentDetailByType",
       data: data,
@@ -141,7 +141,7 @@ export const checkPuzzleBeanLimitStatus = (data = {}, fn) => {
 //获取卡豆状态
 
 export const fetchSpecialGoods = (data = {}, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/specialGoods/listSpecialGoodsByFilterType",
       data: data,
@@ -152,7 +152,7 @@ export const fetchSpecialGoods = (data = {}, fn) => {
 //获取特惠列表
 
 export const fetchUserShareCommission = (data = {}, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/userInfo/getUserShareCommission",
       data: data,

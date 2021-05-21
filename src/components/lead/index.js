@@ -9,7 +9,7 @@ export default (props) => {
   const { beanLimitStatus } = props;
   const [animate, setAnimated] = useState(null);
   const [visible, setVisible] = useState(false);
-  const [type, setType] = useState(0);
+  const [type, setType] = useState(null);
 
   const animated = () => {
     let animateTem = Taro.createAnimation({
@@ -67,11 +67,13 @@ export default (props) => {
     }
   }, [visible]);
   useEffect(() => {
-    if (type === 0 && beanLimitStatus === "0") {
-      setVisible(true);
-      setType(1);
+    if (type === "1" && beanLimitStatus === "0") {
+        setVisible(true)
+    } else {
+      setType(beanLimitStatus);
     }
   }, [beanLimitStatus]);
+
   return (
     <View
       style={visible ? { display: "flex" } : { display: "none" }}

@@ -3,6 +3,7 @@ import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import "./../../index.scss";
 import { navigateTo, loginStatus } from "@/common/utils";
+import { loginBtn } from "@/common/authority";
 import Router from "@/common/router";
 export default (props) => {
   const { status, data = {}, levelDetails = {}, nextLevel = {} } = props;
@@ -159,8 +160,10 @@ export default (props) => {
       </View>
       <View
         onClick={() => {
-          Router({
-            routerName: "wallet",
+          loginBtn(() => {
+            Router({
+              routerName: "wallet",
+            });
           });
         }}
         className="user_content_card"
