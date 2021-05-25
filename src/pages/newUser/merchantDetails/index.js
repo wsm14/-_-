@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Image, View, ScrollView } from "@tarojs/components";
-import Nav from "@/components/nav";
 import { user } from "@/api/api";
 import { httpGet } from "@/api/newRequest";
 import Toast from "./../components/modal";
@@ -18,12 +17,12 @@ import {
   goBack,
 } from "@/common/utils";
 import classNames from "classnames";
-import Waterfall from "@/components/waterfall";
 import NullStatus from "@/components/nullStatus";
-import "./index.scss";
+import Waterfall from "@/components/waterfall";
 import evens from "@/common/evens";
 import Router from "@/common/router";
 import { inject, observer } from "mobx-react";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends Component {

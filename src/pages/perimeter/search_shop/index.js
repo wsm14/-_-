@@ -114,17 +114,10 @@ export default class Index extends React.Component {
         (res) => {
           if (this.state.statistic.keyword) {
             getSearchDataStatistic(this.state.statistic, (res) => {
-              const { userMerchantNum, userMerchantNameList = [] } = res;
-              if (userMerchantNum > 0 && userMerchantNameList.length > 0) {
-                this.setState({
-                  searchInfo: res,
-                  status: "1",
-                });
-              } else {
-                this.setState({
-                  status: "1",
-                });
-              }
+              this.setState({
+                searchInfo: res,
+                status: "1",
+              });
             });
           } else {
             this.setState({
@@ -196,7 +189,7 @@ export default class Index extends React.Component {
     const {
       topicInfo: { topicIdString, topicName, kolMomentsNum },
       hotSearchList,
-      storageList,
+      storageList = [],
       statistic: { keyword },
       searchInfo,
       searchInfo: {
@@ -215,27 +208,35 @@ export default class Index extends React.Component {
     const hasListObj = {
       0: (
         <>
-          <View className="search_shop_orderTags">
-            <View className="search_shop_title color1 font32 bold">最近搜索</View>
-            <View
-              className="search_shop_close"
-              onClick={() => this.cleanList()}
-            ></View>
-          </View>
-          {/*最近搜索*/}
-
-          <View className="search_shopTags font24">
-            {storageList.map((item) => {
-              return (
-                <View
-                  onClick={() => this.changeClick(item)}
-                  className="shopTag  font_hide"
-                >
-                  {item}
+          <View className="search_searchPadding"></View>
+          {storageList.length > 0 && (
+            <>
+              <View className="search_shop_orderTags">
+                <View className="search_shop_title color1 font32 bold">
+                  最近搜索
                 </View>
-              );
-            })}
-          </View>
+                <View
+                  className="search_shop_close"
+                  onClick={() => this.cleanList()}
+                ></View>
+              </View>
+              {/*最近搜索*/}
+
+              <View className="search_shopTags font24">
+                {storageList.map((item) => {
+                  return (
+                    <View
+                      onClick={() => this.changeClick(item)}
+                      className="shopTag  font_hide"
+                    >
+                      {item}
+                    </View>
+                  );
+                })}
+              </View>
+            </>
+          )}
+
           {/*标签*/}
           <View className="search_hot_search color1 font32 bold">热门搜索</View>
           {/*热门搜索*/}
@@ -274,7 +275,7 @@ export default class Index extends React.Component {
               {keyword}
             </View>
             <View className="font24 color2 search_shop_right">
-              约{userMerchantNum || 0}个商家
+              约{userMerchantNum}个商家
             </View>
           </View>
           <View
@@ -294,7 +295,7 @@ export default class Index extends React.Component {
               {keyword}
             </View>
             <View className="font24 color2 search_shop_right">
-              约{userMomentNum || 0}个视频
+              约{userMomentNum}个视频
             </View>
           </View>
           <View
@@ -314,7 +315,7 @@ export default class Index extends React.Component {
               {keyword}
             </View>
             <View className="font24 color2 search_shop_right">
-              约{specialGoodsNum || 0}个商品
+              约{specialGoodsNum}个商品
             </View>
           </View>
           <View
@@ -334,7 +335,7 @@ export default class Index extends React.Component {
               {keyword}
             </View>
             <View className="font24 color2 search_shop_right">
-              约{searchInfo.kolMomentsNum || 0}个用户
+              约{searchInfo.userNum}个用户
             </View>
           </View>
           {userMerchantNameList.map((item) => {

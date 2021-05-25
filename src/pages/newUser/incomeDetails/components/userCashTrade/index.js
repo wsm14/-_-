@@ -226,7 +226,7 @@ export default function expenses({list, showStatus}) {
                                          src={detailImg}></Image>}
                   </View>
                   <View className='rewardDetails_bean_detailsBox'>
-                    <View className='rewardDetails_bean_details'>
+                    <View className='rewardDetails_bean_details font_noHide'>
                       {detailTitle + `(${detailContent})`}
                     </View>
                     <View className='rewardDetails_bean_detailsTime'>

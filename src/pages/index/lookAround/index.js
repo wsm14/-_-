@@ -344,9 +344,7 @@ class Index extends Component {
         <Navition city={cityName}></Navition>
         {num === 0 && (
           <View
-            style={{
-              top: Taro.pxTransform(computedClient().top),
-            }}
+          
             className="wechant_init color6 font28"
           >
             “添加到我的小程序”，更多优惠抢不停

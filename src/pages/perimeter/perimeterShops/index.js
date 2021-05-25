@@ -1,4 +1,4 @@
-import React, { Component,PureComponent } from "react";
+import React, { Component, PureComponent } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { ScrollView, View, Text, Button } from "@tarojs/components";
 import {
@@ -15,6 +15,7 @@ import { fetchMainMerchantList } from "@/server/perimeter";
 import { scanCard } from "@/common/authority";
 import ShopView from "./components/shopView";
 import { fetchUserShareCommission } from "@/server/index";
+import {getBanner} from  '@/server/common'
 import "./index.scss";
 
 class index extends PureComponent {
@@ -28,15 +29,25 @@ class index extends PureComponent {
       countStatus: true,
       userMerchantList: [],
       visible: false,
+      bannerList: [],
       configUserLevelInfo: {},
     };
   }
 
   componentDidMount() {
     this.fetchList();
+    this.getBanner();
   }
   componentDidShow() {
     this.fetchUserShare();
+  }
+  getBanner() {
+    getBanner({ bannerType: "wanderAroundGoodMerchant" }, (res) => {
+      const { bannerList } = res;
+      this.setState({
+        bannerList,
+      });
+    });
   }
   fetchUserShare() {
     fetchUserShareCommission({}, (res) => {
@@ -94,6 +105,7 @@ class index extends PureComponent {
       visible,
       httpData,
       configUserLevelInfo,
+      bannerList,
     } = this.state;
     const template = (item, index) => {
       const {
@@ -185,6 +197,15 @@ class index extends PureComponent {
     };
     return (
       <View className="perimeter_shop_box">
+        {bannerList.length > 0 && (
+          <View className="perimeter_banner_style">
+            <Banner
+              boxStyle={{ width: "100%", height: "100%" }}
+              imgName="coverImg"
+              data={bannerList}
+            ></Banner>
+          </View>
+        )}
         {userMerchantList.map((item, index) => {
           return template(item, index);
         })}

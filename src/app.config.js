@@ -81,9 +81,7 @@ export default {
       pages: [
         "invitation/index", //邀请函
         "download/index", //下载,
-        "step/index", //,同步步数
         "shareFriend/index", //分享好友,
-        "shareShop/index", //分享家店
         "pay_wx_lite/index", //微信支付
         "webView/index", //webView页面
         "mPay_wx_lite/index", //商家端支付页面

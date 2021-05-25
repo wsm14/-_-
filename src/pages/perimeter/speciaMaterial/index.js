@@ -117,8 +117,6 @@ class Index extends Component {
   } //上拉加载
   render() {
     const { specialGoodsList, configUserLevelInfo, bannerList } = this.state;
-    console.log(specialGoodsList, bannerList);
-
     return (
       <View className="speciaMaterial_box">
         {bannerList.length > 0 && (

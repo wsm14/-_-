@@ -48,9 +48,6 @@ export const getRestapiAddress = (data, fn) => {
 };
 //获取高德城市定位信息
 
-
-location=109.739735,28.314296
-
 export const getCategory = (data, fn) => {
   httpGet(
     {

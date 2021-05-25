@@ -7,7 +7,10 @@ import "./index.scss";
 export default (props) => {
   const { price, data } = props;
   const { userBean, userIncomeBean } = data;
-  if (Number(price) > userBean && Number(price) > userIncomeBean) {
+  console.log(price,userBean,userIncomeBean)
+  if ((price*100) < userBean ||(price*100) < userIncomeBean) {
+    return null;
+  } else
     return (
       <View
         className="videoBean_box public_auto"
@@ -24,5 +27,4 @@ export default (props) => {
         <View>{">"}</View>
       </View>
     );
-  } else return null;
 };

@@ -8,48 +8,49 @@ import { View, Text } from "@tarojs/components";
 import { toast } from "../../common/utils";
 import classNames from "classnames";
 function getSeconds(s) {
-  var sTime = parseInt(s); // 秒
-  var mTime = 0; // 分
-  var hTime = 0; // 时
-  var hDate = 0; // 天
-  if (sTime > 60) {
+  let second = parseInt(s); // 秒
+  let minute = 0;
+  let house = 0;
+  let date = 0;
+
+  if (second > 60) {
     //如果秒数大于60，将秒数转换成整数
     //获取分钟，除以60取整数，得到整数分钟
-    mTime = parseInt(sTime / 60);
+    minute = parseInt(second / 60);
     //获取秒数，秒数取佘，得到整数秒数
-    sTime = parseInt(sTime % 60);
-    //如果分钟大于60，将分钟转换成小时
-    if (mTime > 60) {
+    second = parseInt(second % 60);
+    //秒数
+    if (minute > 60) {
       //获取小时，获取分钟除以60，得到整数小时
-      hTime = parseInt(mTime / 60);
+      house = parseInt(minute / 60);
       //获取小时后取佘的分，获取分钟除以60取佘的分
-      mTime = parseInt(mTime % 60);
+      minute = parseInt(minute % 60);
     }
-    if (hTime > 24) {
-      //获取小时，获取分钟除以60，得到整数小时
-      hDate = parseInt(mTime / 24);
+    if (house > 24) {
+      //获取小时，获取分钟除以24，得到整数小时
+      date = parseInt(house / 24);
       //获取小时后取佘的分，获取分钟除以60取佘的分
-      hTime = parseInt(mTime % 24);
+      house = parseInt(house % 24);
     }
   }
   var result = "";
-  if (sTime >= 0 && sTime < 10) {
-    result = "0" + parseInt(sTime) + "";
+  if (second >= 0 && second < 10) {
+    result = "0" + parseInt(second) + "";
   } else {
-    result = "" + parseInt(sTime) + "";
+    result = "" + parseInt(second) + "";
   }
-  if (mTime >= 0 && mTime < 10) {
-    result = "0" + parseInt(mTime) + ":" + result;
+  if (minute >= 0 && minute < 10) {
+    result = "0" + parseInt(minute) + ":" + result;
   } else {
-    result = "" + parseInt(mTime) + ":" + result;
+    result = "" + parseInt(minute) + ":" + result;
   }
-  if (hTime >= 0 && hTime < 10) {
-    result = "0" + parseInt(hTime) + ":" + result;
+  if (house >= 0 && house < 10) {
+    result = "0" + parseInt(house) + ":" + result;
   } else {
-    result = "" + parseInt(hTime) + ":" + result;
+    result = "" + parseInt(house) + ":" + result;
   }
-  if (hDate > 0) {
-    result = parseInt(hDate) + "天" + result;
+  if (date > 0) {
+    result = parseInt(date) + "天" + result;
   }
   if (s > 0) {
     console.log(result);
@@ -60,7 +61,7 @@ function getSeconds(s) {
 export default (props) => {
   const { times, fn, mint, type } = props;
   let time =
-    parseInt(new Date(times.replace(/-/g, "/")).getTime() / 1000) -
+    parseInt(new Date(times.replace(/-/g, "/")).getTime() / 1000)+86399 -
     parseInt(new Date().getTime() / 1000);
 
   const [interVal, setIntervals] = useState(0);
