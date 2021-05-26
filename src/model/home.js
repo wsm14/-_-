@@ -1,6 +1,5 @@
-import { observable } from "mobx";
 import Taro from "@tarojs/taro";
-
+import { observable } from "mobx";
 const homeStore = observable({
   selectObj: {
     categoryIds: "",

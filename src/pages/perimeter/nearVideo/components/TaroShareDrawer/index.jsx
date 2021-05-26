@@ -19,6 +19,8 @@ const shareImg = ({ start = false, data = [], onClose, onSave }) => {
   useEffect(() => {
     if (start) {
       canvasDrawFunc();
+    } else {
+      setShareImage(null);
     }
   }, [start]);
 

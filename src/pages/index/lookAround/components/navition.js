@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { navigateTo } from "@/common/utils";
-import { login, authGeography, scanCode, mapTx } from "@/common/authority";
+import { login, scanCode, mapTx } from "@/common/authority";
 import "./../index.scss";
 export default (props) => {
   const { city } = props;

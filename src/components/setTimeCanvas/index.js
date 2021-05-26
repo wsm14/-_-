@@ -45,7 +45,6 @@ export default (props) => {
       setToast(1);
     }
   }, [time]);
-
   const drawProgressbg = (size) => {
     var ctx = Taro.createCanvasContext("animateCanvas");
     var ring = ctx.createLinearGradient(0, 60, 60, 0);
@@ -66,13 +65,13 @@ export default (props) => {
     ctx.stroke(); //对当前路径进行描边
     ctx.draw();
   };
+  console.log(show);
   return (
     <View
       className="canvas_box"
       onClick={() => Router({ routerName: "beanReward" })}
     >
       <View
-        style={show ? {} : { display: "none" }}
         className={classNames(
           "canvas_img",
           watchStatus !== "1" ? "beanTime" : "beanTime1"
@@ -83,7 +82,7 @@ export default (props) => {
             onTouchEnd={() => Router({ routerName: "beanReward" })}
             id="animateCanvas"
             canvasId="animateCanvas"
-            className="animateCanvas"
+            className={classNames('animateCanvas', !show && 'animateCanvas_opacity')}
           ></Canvas>
         )}
         {watchStatus !== "1" && <View className="getBean_toast">{time}</View>}

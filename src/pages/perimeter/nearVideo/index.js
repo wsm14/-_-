@@ -506,6 +506,7 @@ class Index extends React.PureComponent {
         cityName,
         districtName,
         merchantAddress,
+        frontImage,
       },
       player,
     } = this.state;
@@ -534,7 +535,7 @@ class Index extends React.PureComponent {
             start: true,
             data: rssConfigData({
               hasGoods,
-              frontImage: image,
+              frontImage: frontImage,
               message,
               merchantName: username,
               cityName: cityName + districtName,

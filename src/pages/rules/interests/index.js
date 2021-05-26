@@ -55,7 +55,7 @@ class Index extends Component {
           <Image
             lazyLoad
             className="desc_img"
-            src="https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon471.png"
+            src="https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon600.png"
           ></Image>
         </View>
         <View className="interests_title">

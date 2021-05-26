@@ -77,69 +77,6 @@ export const login = (obj) => {
     return "2";
   }
 };
-
-export const authGeography = (fn, type) => {
-  Taro.getSetting({
-    success: (res) => {
-      if (!res.authSetting["scope.userLocation"]) {
-        Taro.authorize({
-          scope: "scope.userLocation",
-          success: (res) => {
-            if (type) {
-              return setMap(fn);
-            }
-            setLocation(fn);
-          },
-          fail: (res) => {
-            Taro.showModal({
-              title: "获取位置失败",
-              content: "请允许「哒卡乐」使用你的定位，为你推荐更多周边店铺",
-              success: function (res) {
-                if (res.confirm) {
-                  Taro.openSetting({
-                    success: (dataAu) => {
-                      if (dataAu.authSetting["scope.userLocation"] == true) {
-                        toast("授权成功");
-                        //再次授权，调用wx.getLocation的API
-                        if (type) {
-                          return setMap(fn);
-                        }
-                        setLocation(fn);
-                      } else {
-                        toast("授权失败");
-                      }
-                    },
-                  });
-                } else if (res.cancel) {
-                  toast("授权失败,已配置默认定位");
-                  Taro.setStorageSync("lnt", 120.26457);
-                  Taro.setStorageSync("lat", 30.18534);
-                  fn &&
-                    setTimeout(
-                      () =>
-                        fn({
-                          latitude: 30.18534,
-                          longitude: 120.26457,
-                        }),
-                      500
-                    );
-                }
-              },
-            });
-          },
-        });
-      } else {
-        if (type) {
-          return setMap(fn);
-        }
-        setLocation(fn);
-      }
-    },
-    fail: (res) => {
-      toast("授权接口调用失败，请检查网络");
-    },
-  });
-};
 //获取定位
 /*
  *

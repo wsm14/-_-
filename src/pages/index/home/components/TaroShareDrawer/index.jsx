@@ -20,6 +20,9 @@ const shareImg = ({ start = false, data = [], onClose, onSave }) => {
     if (start) {
       canvasDrawFunc();
     }
+    else {
+      setShareImage(null)
+    }
   }, [start]);
 
   // 调用绘画 => canvasStatus 置为true、同时设置config

@@ -2,7 +2,7 @@ import React from "react";
 import Taro from "@tarojs/taro";
 import { CoverImage, CoverView, Map, View } from "@tarojs/components";
 import MapView from "@/components/map";
-import { authGeography, scanCode } from "@/common/authority";
+import { scanCode } from "@/common/authority";
 import { getMerchantLat } from "@/server/index";
 import Router from "@/common/router";
 import classNames from "classnames";

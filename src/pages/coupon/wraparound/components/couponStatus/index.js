@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Image, View } from "@tarojs/components";
 import { navigateTo } from "@/common/utils";
 import CouponView from "./../couponView";
-
 export default (props) => {
   const { data = [], visible = true, type } = props;
   const [close, onClose] = useState(true);
