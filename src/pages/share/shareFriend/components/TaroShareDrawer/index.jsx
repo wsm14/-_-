@@ -33,12 +33,12 @@ const shareImg = ({ start = false, data = [], type, onClose, onSave }) => {
     if (errMsg === "canvasToTempFilePath:ok") {
       if (type && type === "friend") {
         previewImage(tempFilePath);
-        console.log(333);
+      
       } else if (type && type === "image") {
         saveToAlbum(tempFilePath);
-        console.log(222);
+      
       } else {
-        console.log(111);
+      
       }
     } else {
       onCreateFail();
@@ -49,7 +49,7 @@ const shareImg = ({ start = false, data = [], type, onClose, onSave }) => {
 
   // 绘制失败回调函数 （必须实现）=> 接收绘制错误信息、重置 TaroCanvasDrawer 状态
   const onCreateFail = () => {
-    console.log(222);
+ 
     Taro.hideLoading();
     // 重置 TaroCanvasDrawer 状态，方便下一次调用
     onClose && onClose(); //重置 TaroCanvasDrawer 状态，方便下一次调用
@@ -120,7 +120,6 @@ const shareImg = ({ start = false, data = [], type, onClose, onSave }) => {
     onClose && onClose(); //重置 TaroCanvasDrawer 状态，方便下一次调用
   };
   const saveImage = async (path) => {
-    console.log(path);
     Taro.saveImageToPhotosAlbum({
       filePath: path,
       success: (res) => {

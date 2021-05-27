@@ -117,8 +117,8 @@ export const searchList = (item = {}, list = [], store) => {
     promotionPrice,
     promotionType,
     keyword,
+    promotionExtraParam = "",
   } = item;
-  console.log(keyword)
   const linkTo = () => {
     store.homeStore.setNavitory(list, momentIndex);
     Router({
@@ -130,6 +130,11 @@ export const searchList = (item = {}, list = [], store) => {
     });
   };
   const activeTemplate = () => {
+    let obj = {};
+    if (promotionExtraParam.length > 0) {
+      obj = JSON.parse(promotionExtraParam);
+    }
+    const {buyPrice = ''} = obj;
     const template = {
       special: (
         <View className="nearList_dakale_active">
@@ -137,7 +142,9 @@ export const searchList = (item = {}, list = [], store) => {
         </View>
       ),
       reduce: (
-        <View className="nearList_dakale_active">{promotionPrice}元抵扣券</View>
+        <View className="nearList_dakale_active">
+          ¥{buyPrice}代{promotionPrice}元抵扣券
+        </View>
       ),
     }[promotionType];
 

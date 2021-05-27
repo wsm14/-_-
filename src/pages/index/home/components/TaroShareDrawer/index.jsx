@@ -15,7 +15,6 @@ import "./index.scss";
  */
 const shareImg = ({ start = false, data = [], onClose, onSave }) => {
   const [shareImage, setShareImage] = useState(null); // 绘制的图片url
-
   useEffect(() => {
     if (start) {
       canvasDrawFunc();

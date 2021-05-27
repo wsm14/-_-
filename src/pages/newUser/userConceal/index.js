@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { View,Text,PickerView,WebView} from '@tarojs/components'
-import Nav from '../../../layout/layoutNav'
 class Record extends Component {
   defaultProps = {}
   config = {

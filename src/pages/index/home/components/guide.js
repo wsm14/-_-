@@ -9,7 +9,11 @@ export default (props) => {
   const [animate, setAnimated] = useState(null);
   const { beanAmount } = data;
   useEffect(() => {
-    if (!Taro.getStorageSync("login") && showStatus !== null) {
+    if (
+      !Taro.getStorageSync("login") &&
+      showStatus !== null &&
+      !Taro.getStorageSync("userInfo")
+    ) {
       videoStop();
       if (interval) {
         animated();
@@ -105,7 +109,12 @@ export default (props) => {
       </View>
     );
   };
-  if (Taro.getStorageSync("login") || showStatus === null || animate === null) {
+  if (
+    Taro.getStorageSync("login") ||
+    showStatus === null ||
+    animate === null ||
+    Taro.getStorageSync("userInfo")
+  ) {
     return null;
   } else {
     return template();

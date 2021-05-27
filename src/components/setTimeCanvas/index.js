@@ -65,24 +65,30 @@ export default (props) => {
     ctx.stroke(); //对当前路径进行描边
     ctx.draw();
   };
-  console.log(show);
   return (
-    <View
-      className="canvas_box"
-      onClick={() => Router({ routerName: "beanReward" })}
-    >
+    <View className="canvas_box">
       <View
         className={classNames(
           "canvas_img",
           watchStatus !== "1" ? "beanTime" : "beanTime1"
         )}
+        onClick={(e) => {
+          e.stopPropagation();
+          watchStatus === "1" && Router({ routerName: "beanReward" });
+        }}
       >
         {watchStatus !== "1" && (
           <Canvas
-            onTouchEnd={() => Router({ routerName: "beanReward" })}
+            onTouchEnd={(e) => {
+              e.stopPropagation();
+              watchStatus !== "1" && Router({ routerName: "beanReward" });
+            }}
             id="animateCanvas"
             canvasId="animateCanvas"
-            className={classNames('animateCanvas', !show && 'animateCanvas_opacity')}
+            className={classNames(
+              "animateCanvas",
+              !show && "animateCanvas_opacity"
+            )}
           ></Canvas>
         )}
         {watchStatus !== "1" && <View className="getBean_toast">{time}</View>}

@@ -92,7 +92,7 @@ export default ({ keyword, current }) => {
               ｜人均￥{perCapitaConsumption}
             </View>
             <View className="search_merchantCard_time">
-              营业时间 {businessTime}
+              {businessTime ? `营业时间 ${businessTime.split(',')[0]}` : ""}
             </View>
           </View>
         </View>

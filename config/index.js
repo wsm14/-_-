@@ -67,11 +67,11 @@ const config = {
     "@/layout": path.resolve(__dirname, "..", "src/layout"),
     "@/server": path.resolve(__dirname, "..", "src/server"),
   },
-  // copy: {
-  //   patterns: [
-  //     { from: "cloud", to: "dist/cloud" }, // 指定需要 copy 的目录
-  //   ],
-  // },
+  copy: {
+    patterns: [
+      { from: "cloud", to: "dist/cloud" }, // 指定需要 copy 的目录
+    ],
+  },
 };
 
 module.exports = function (merge) {

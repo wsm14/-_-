@@ -178,7 +178,7 @@ export const rssConfigData = (data = {}) => {
           height: 450,
           y: 128,
           x: 45,
-          zIndex: 5,
+          zIndex: 10,
         },
         {
           url: "https://wechat-config.dakale.net/miniprogram/image/icon581.png", // 播放按钮图片
@@ -186,7 +186,7 @@ export const rssConfigData = (data = {}) => {
           height: 80,
           y: 313,
           x: 328,
-          zIndex: 10,
+          zIndex: 15,
         },
         {
           url: goodsImg, // 播放按钮图片
@@ -330,7 +330,7 @@ export const rssConfigData = (data = {}) => {
           height: 450,
           y: 128,
           x: 45,
-          zIndex: 5,
+          zIndex: 10,
         },
         {
           url: "https://wechat-config.dakale.net/miniprogram/image/icon581.png", // 播放按钮图片
@@ -338,7 +338,7 @@ export const rssConfigData = (data = {}) => {
           height: 80,
           y: 313,
           x: 328,
-          zIndex: 10,
+          zIndex: 15,
         },
         {
           url: wxCode, // 小程序码
