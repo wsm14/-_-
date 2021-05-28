@@ -10,6 +10,7 @@ import { fetchUserShareCommission } from "@/server/index";
 import SelectBean from "@/components/componentView/selectBean";
 import Evens from "@/common/evens";
 import Router from "@/common/router";
+import ShareView from "@/components/componentView/shareView";
 const computedScan = (value, couponPrice, scale, bean) => {
   let setBean = (Number(value) - Number(couponPrice)) * 100 * scale;
   console.log(Number(value) - Number(couponPrice));
@@ -17,7 +18,7 @@ const computedScan = (value, couponPrice, scale, bean) => {
     if (setBean > 0) {
       if (setBean > bean) {
         return bean;
-      } else return setBean;
+      } else return setBean.toFixed(2);
     } else {
       return "0";
     }
@@ -164,7 +165,6 @@ class Index extends Component {
       toast("输入金额不能为0");
     }
   }
-
   errorToast(e) {}
 
   render() {
@@ -304,7 +304,7 @@ class Index extends Component {
               payType={"scan"}
             ></SelectBean>
           </View>
-
+          <ShareView></ShareView>
           <PayGo
             content={"确认支付"}
             click={() => this.saveScanCodeOrder()}

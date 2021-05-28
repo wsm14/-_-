@@ -1,0 +1,17 @@
+page {
+  width: 100%;
+  height: 100%;
+}
+.speciaMaterial_box {
+  width: 100%;
+  background: #ffffff;
+  min-height: 100%;
+  overflow: auto;
+  .speciaMaterial_banner_style {
+    width: 100%;
+    height: 480px;
+  }
+  .speciaMaterial_content {
+    padding: 40px 32px 0;
+  }
+}

@@ -12,7 +12,14 @@ import {
   Instruction,
   merchantSet,
 } from "@/components/componentView/Instruction";
-import { format, loginStatus, computedPrice } from "@/common/utils";
+import {
+  format,
+  loginStatus,
+  computedPrice,
+  saveCollection,
+  deleteCollection,
+  toast,
+} from "@/common/utils";
 import Router from "@/common/router";
 import { loginBtn } from "@/common/authority";
 import NullStatus from "./components/nullStatus";
@@ -104,7 +111,7 @@ class Index extends Component {
       },
       (res) => {
         console.log(res);
-        const { oriPrice, realPrice, qcodeUrl } = res;
+        const { oriPrice, realPrice, qcodeUrl, image } = res;
         this.setState(
           {
             cavansObj: {
@@ -121,7 +128,7 @@ class Index extends Component {
                 name: couponName,
                 address,
                 city: cityName,
-                merchantLogo: merchantLogo,
+                merchantLogo: image,
               }),
             },
           },
@@ -192,6 +199,55 @@ class Index extends Component {
       },
     });
   }
+
+  setCollection() {
+    const {
+      couponDetail: { userCollectionStatus = "0", ownerCouponIdString },
+      couponDetail,
+    } = this.state;
+    if (userCollectionStatus === "0") {
+      saveCollection(
+        {
+          collectionType: "reduce",
+          collectionId: ownerCouponIdString,
+        },
+        (res) => {
+          this.setState(
+            {
+              couponDetail: {
+                ...couponDetail,
+                userCollectionStatus: "1",
+              },
+            },
+            (res) => {
+              toast("收藏成功");
+            }
+          );
+        }
+      );
+    } else {
+      deleteCollection(
+        {
+          collectionType: "reduce",
+          collectionId: ownerCouponIdString,
+        },
+        (res) => {
+          this.setState(
+            {
+              couponDetail: {
+                ...couponDetail,
+                userCollectionStatus: "0",
+              },
+            },
+            (res) => {
+              toast("取消成功");
+            }
+          );
+        }
+      );
+    }
+  }
+
   componentDidShow() {
     const { index } = this.state;
     if (index !== 0) {
@@ -215,6 +271,7 @@ class Index extends Component {
         buyRule,
         dayMaxBuyAmount,
         personLimit,
+        userCollectionStatus,
       },
       visible,
     } = this.state;
@@ -284,6 +341,8 @@ class Index extends Component {
           <Coupon
             configUserLevelInfo={configUserLevelInfo}
             data={couponDetail}
+            setCollection={this.setCollection.bind(this)}
+            getShareInfo={this.getShareInfo.bind(this)}
           ></Coupon>
           {merchantSet(couponDetail)}
           {/*使用须知*/}

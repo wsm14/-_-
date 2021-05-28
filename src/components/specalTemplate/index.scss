@@ -5,6 +5,16 @@
   display: flex;
   position: relative;
 }
+.specialOffer_shop_box {
+  width: 688px;
+  margin: 0 auto 32px;
+}
+.specialOffer_shop_child {
+  width: 688px;
+  height: 264px;
+  display: flex;
+  position: relative;
+}
 .specialOffer_bottom_btn {
   width: 120px;
   height: 52px;
@@ -54,7 +64,7 @@
     }
     .specialOffer_username {
       margin-left: 8px;
-      max-width: 240px;
+      max-width: 210px;
     }
   }
 
@@ -64,6 +74,8 @@
     font-weight: 600;
     color: #333333;
     line-height: 32px;
+    display: flex;
+    align-items: baseline;
   }
   .specialOffer_date_rel {
     padding-top: 8px;
@@ -98,9 +110,74 @@
     font-size: 22px;
     font-weight: 500;
     color: #ef476f;
-    line-height: 22px;
   }
 }
 .specialOffer_bean_border {
   margin-top: 8px;
+}
+.specialOffer_shop_bottom {
+  height: 52px;
+  margin-top: 24px;
+}
+.specialOffer_shop_btn {
+  width: 176px;
+  height: 52px;
+  background: #ef476f;
+  border-radius: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.specialOffer_shop_text {
+  font-size: 28px;
+  font-weight: 400;
+  color: #333333;
+  display: flex;
+  align-items: center;
+}
+.specialOffer_profile {
+  display: flex;
+  align-items: center;
+  .specialOffer_profile_box {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #ffffff;
+  }
+  .specialOffer_profile_left {
+    margin-left: -8px;
+  }
+  .specialOffer_left_pay {
+    margin-left: 12px;
+    font-size: 24px;
+    color: #333333;
+  }
+}
+@keyframes loadAnimate {
+  from {
+    transform: rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+.specialOffer_shop_text::before {
+  display: block;
+  position: relative;
+  width: 32px;
+  height: 32px;
+  content: "";
+  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon548.png")
+    no-repeat;
+  background-size: 100% 100%;
+  margin-right: 16px;
+  animation-name: loadAnimate;
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
 }

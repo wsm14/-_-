@@ -16,6 +16,7 @@ import { inject, observer } from "mobx-react";
 import { getOwnerCouponInfo, saveCouponOrder } from "@/server/goods";
 import { fetchUserShareCommission } from "@/server/index";
 import ButtonView from "@/components/Button";
+import ShareView from "@/components/componentView/shareView";
 @inject("store")
 @observer
 class Index extends Component {
@@ -188,6 +189,25 @@ class Index extends Component {
       return price.toFixed(2);
     } else return (Number(bean) / 100).toFixed(2);
   }
+  computedPayPrice() {
+    const {
+      useBeanType,
+      ownerCouponInfo: { userIncomeBean, userBean, buyPrice },
+      httpData: { couponCount },
+      useBeanStatus,
+    } = this.state;
+    if (useBeanStatus === "1") {
+      if (useBeanType === "reward") {
+        return (Number(buyPrice) * couponCount - userBean / 100).toFixed(2);
+      } else {
+        return (Number(buyPrice) * couponCount - userIncomeBean / 100).toFixed(
+          2
+        );
+      }
+    } else {
+      return (Number(buyPrice) * couponCount).toFixed(2);
+    }
+  }
 
   render() {
     const {
@@ -322,14 +342,7 @@ class Index extends Component {
                 <Text
                   style={{ fontSize: Taro.pxTransform(32), fontWeight: "bold" }}
                 >
-                  {useBeanStatus === "1"
-                    ? Number(buyPrice) * couponCount - userBean / 100 > 0
-                      ? (
-                          Number(buyPrice) * couponCount -
-                          userBean / 100
-                        ).toFixed(2)
-                      : 0
-                    : (Number(buyPrice) * couponCount).toFixed(2)}
+                  {this.computedPayPrice()}
                 </Text>
               </Text>
             </View>
@@ -343,6 +356,7 @@ class Index extends Component {
               </View>
             </ButtonView>
           </View>
+          <ShareView></ShareView>
           {visible && (
             <PayBean
               cancel={() =>

@@ -4,7 +4,7 @@ import { Text, View } from "@tarojs/components";
 import classNames from "classnames";
 import "./index.scss";
 import { listAllLocationCity, getLocationCity } from "@/server/common";
-import { backgroundObj, goBack,toast } from "@/common/utils";
+import { backgroundObj, goBack, toast } from "@/common/utils";
 import Router from "@/common/router";
 import { inject, observer } from "mobx-react";
 @inject("store")
@@ -21,6 +21,8 @@ class Index extends Component {
       countStatus: true,
       locationCityList: [],
       locationCityInfo: {},
+      type: getCurrentInstance().router.params.type,
+      cityCode: getCurrentInstance().router.params.cityCode,
     };
   }
   listAllLocationCitys() {
@@ -100,6 +102,11 @@ class Index extends Component {
               <View
                 className="city_content_cityImage"
                 onClick={() => {
+                  if (this.state.type && this.state.cityCode) {
+                    Taro.setStorageSync("relCity", {
+                      cityCode: this.state.cityCode,
+                    });
+                  }
                   this.props.store.locationStore.setCity(
                     cityName,
                     cityCode,

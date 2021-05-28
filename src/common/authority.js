@@ -77,69 +77,6 @@ export const login = (obj) => {
     return "2";
   }
 };
-
-export const authGeography = (fn, type) => {
-  Taro.getSetting({
-    success: (res) => {
-      if (!res.authSetting["scope.userLocation"]) {
-        Taro.authorize({
-          scope: "scope.userLocation",
-          success: (res) => {
-            if (type) {
-              return setMap(fn);
-            }
-            setLocation(fn);
-          },
-          fail: (res) => {
-            Taro.showModal({
-              title: "获取位置失败",
-              content: "请允许「哒卡乐」使用你的定位，为你推荐更多周边店铺",
-              success: function (res) {
-                if (res.confirm) {
-                  Taro.openSetting({
-                    success: (dataAu) => {
-                      if (dataAu.authSetting["scope.userLocation"] == true) {
-                        toast("授权成功");
-                        //再次授权，调用wx.getLocation的API
-                        if (type) {
-                          return setMap(fn);
-                        }
-                        setLocation(fn);
-                      } else {
-                        toast("授权失败");
-                      }
-                    },
-                  });
-                } else if (res.cancel) {
-                  toast("授权失败,已配置默认定位");
-                  Taro.setStorageSync("lnt", 120.26457);
-                  Taro.setStorageSync("lat", 30.18534);
-                  fn &&
-                    setTimeout(
-                      () =>
-                        fn({
-                          latitude: 30.18534,
-                          longitude: 120.26457,
-                        }),
-                      500
-                    );
-                }
-              },
-            });
-          },
-        });
-      } else {
-        if (type) {
-          return setMap(fn);
-        }
-        setLocation(fn);
-      }
-    },
-    fail: (res) => {
-      toast("授权接口调用失败，请检查网络");
-    },
-  });
-};
 //获取定位
 /*
  *
@@ -170,15 +107,21 @@ export const authUpdateGeography = (fn) => {
                         startLocationUpdate(fn);
                       } else {
                         toast("授权失败,已配置默认定位");
-                        Taro.setStorageSync("lnt", 120.255384);
-                        Taro.setStorageSync("lat", 30.229271);
+                        fn &&
+                          fn({
+                            latitude: 30.229271,
+                            longitude: 120.255384,
+                          });
                       }
                     },
                   });
                 } else if (res.cancel) {
                   toast("授权失败,已配置默认定位");
-                  Taro.setStorageSync("lnt", 120.255384);
-                  Taro.setStorageSync("lat", 30.229271);
+                  fn &&
+                    fn({
+                      latitude: 30.229271,
+                      longitude: 120.255384,
+                    });
                 }
               },
             });
@@ -278,6 +221,7 @@ export const internet = (obj, fn) => {
 export const scanCode = (data) => {
   if (
     Taro.getStorageSync("userInfo") &&
+    Taro.getStorageSync("userInfo").mobile &&
     Taro.getStorageSync("userInfo").mobile.length === 11 &&
     Taro.getStorageSync("userInfo").token
   ) {
@@ -368,15 +312,95 @@ export const scanCode = (data) => {
         // return
       },
       fail: (res) => {
+        // Taro.showModal({
+        //   showCancel: "false",
+        //   content: "扫码失败",
+        // });
+      },
+    });
+  } else {
+    navigateTo("/pages/auth/index");
+  }
+};
+
+export const scanCard = () => {
+  return loginBtn(() => {
+    Taro.scanCode({
+      onlyFromCamera: false,
+      success: (results) => {
+        const { path, scanType, result } = results;
+        if (scanType === "QR_CODE") {
+          let data = qs.parse(result.split("?")[1]);
+          if (
+            result.includes("https://www.dakale.net") &&
+            data.action === "mark" &&
+            data.merchantId
+          ) {
+            return saveMarkBean({ merchantId: data.merchantId }, (res) => {
+              const {
+                resultCode,
+                merchantLnt,
+                merchantLat,
+                merchantAddress,
+                beanAmount,
+                merchantName = "",
+              } = res;
+              if (resultCode) {
+                const resultCodeObj = {
+                  3018: () =>
+                    router({
+                      routerName: "abnormalStatus",
+                      args: {
+                        merchantLnt,
+                        merchantLat,
+                        merchantAddress,
+                        beanAmount,
+                        merchantName,
+                      },
+                    }),
+                  4003: () =>
+                    router({
+                      routerName: "repeatStatus",
+                    }),
+                  5019: () => {
+                    Taro.showModal({
+                      showCancel: "false",
+                      content: "商家不允许打卡，请到指定打卡商家哦",
+                    });
+                  },
+                }[resultCode]();
+              } else {
+                router({
+                  routerName: "merchantDetails",
+                  args: {
+                    merchantId: data.merchantId,
+                    beanAmount,
+                  },
+                });
+              }
+            });
+          } else {
+            Taro.showModal({
+              showCancel: "false",
+              content: "二维码错误或参数缺失",
+            });
+            return;
+          }
+        }
+        Taro.showModal({
+          showCancel: "false",
+          content: "扫码类型错误",
+        });
+        // return
+      },
+      fail: (res) => {
         Taro.showModal({
           showCancel: "false",
           content: "扫码失败",
         });
       },
     });
-  } else {
-    navigateTo("/pages/auth/index");
-  }
+  });
 };
 
 export const loginBtn = (callback) => {

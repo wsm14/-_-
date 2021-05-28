@@ -1,6 +1,5 @@
-import { observable } from "mobx";
 import Taro from "@tarojs/taro";
-
+import { observable } from "mobx";
 const homeStore = observable({
   selectObj: {
     categoryIds: "",
@@ -9,6 +8,7 @@ const homeStore = observable({
   },
   list: [],
   index: 0,
+  beanLimitStatus: "1",
   setSelectObj(data) {
     const {
       loadDistance = "",
@@ -28,6 +28,9 @@ const homeStore = observable({
   clearNavitor() {
     this.list = [];
     this.index = 0;
+  },
+  setBeanLimitStatus(val) {
+    this.beanLimitStatus = val;
   },
 });
 export default homeStore;

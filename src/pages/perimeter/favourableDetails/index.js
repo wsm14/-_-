@@ -10,10 +10,13 @@ import {
   format,
   setBuyRule,
   computedPrice,
+  backgroundObj,
+  saveCollection,
+  deleteCollection,
+  toast,
 } from "@/common/utils";
 import "./index.scss";
 import { loginBtn } from "@/common/authority";
-import { navigateTo } from "../../../common/utils";
 import ActivityStatus from "./components/index";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
 import { fetchUserShareCommission } from "@/server/index";
@@ -22,11 +25,16 @@ import { rssConfigData } from "./components/data";
 import ButtonView from "@/components/Button";
 import { payNeed } from "@/components/componentView/NeedPay";
 import { knowPay } from "@/components/componentView/KnowPay";
+import Card from "./components/wechant_card";
+import VideoBean from "./components/getVideoBean";
 import Router from "@/common/router";
+import Date from "@/components/dateTime";
 import {
   Instruction,
   merchantSet,
 } from "@/components/componentView/Instruction";
+import Toast from "@/components/dakale_toast";
+import classNames from "classnames";
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -88,13 +96,28 @@ class MerchantDetails extends Component {
         data: httpData,
       },
       (res) => {
-        const { specialGoodsInfo } = res;
-        this.setState({
+        const {
           specialGoodsInfo,
-          index: index + 1,
-        });
+          specialGoodsInfo: { status },
+        } = res;
+        Taro.stopPullDownRefresh();
+        if (status) {
+          this.setState({
+            specialGoodsInfo,
+            index: index + 1,
+          });
+        } else {
+          this.setState({
+            specialGoodsInfo: {
+              status: "0",
+            },
+            index: index + 1,
+          });
+        }
       }
-    );
+    ).catch((e) => {
+      Taro.stopPullDownRefresh();
+    });
   }
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
@@ -165,7 +188,7 @@ class MerchantDetails extends Component {
       return {
         title: goodsName,
         imageUrl: img,
-        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+        path: `/pages/perimeter/favourableDetails/index?sh  areUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     } else {
       return {
@@ -174,23 +197,73 @@ class MerchantDetails extends Component {
       };
     }
   }
+
+  setCollection() {
+    const {
+      specialGoodsInfo: { userCollectionStatus = "0", specialActivityIdString },
+      specialGoodsInfo,
+    } = this.state;
+    if (userCollectionStatus === "0") {
+      saveCollection(
+        {
+          collectionType: "special",
+          collectionId: specialActivityIdString,
+        },
+        (res) => {
+          this.setState(
+            {
+              specialGoodsInfo: {
+                ...specialGoodsInfo,
+                userCollectionStatus: "1",
+              },
+            },
+            (res) => {
+              toast("收藏成功");
+            }
+          );
+        }
+      );
+    } else {
+      deleteCollection(
+        {
+          collectionType: "special",
+          collectionId: specialActivityIdString,
+        },
+        (res) => {
+          this.setState(
+            {
+              specialGoodsInfo: {
+                ...specialGoodsInfo,
+                userCollectionStatus: "0",
+              },
+            },
+            (res) => {
+              toast("取消成功");
+            }
+          );
+        }
+      );
+    }
+  }
+
   onShareTimeline() {
     const {
-      specialGoodsInfo: { goodsName, allImgs },
+      specialGoodsInfo: { goodsName },
       httpData: { merchantId, specialActivityId },
     } = this.state;
     let userInfo = loginStatus() || {};
+    let img = specialGoodsInfo.activityGoodsImg.split(",")[0];
     const { userIdString } = userInfo;
     if (loginStatus()) {
       return {
         title: goodsName,
-        imageUrl: allImgs[0],
+        imageUrl: img,
         path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     } else {
       return {
         title: goodsName,
-        imageUrl: allImgs[0],
+        imageUrl: img,
       };
     }
   }
@@ -215,6 +288,7 @@ class MerchantDetails extends Component {
       buyRule === "personLimit" &&
       personLimit === boughtActivityGoodsNum
     ) {
+      console.log(222);
       this.setState({
         visible: true,
       });
@@ -228,7 +302,11 @@ class MerchantDetails extends Component {
       },
     });
   }
-
+  onPullDownRefresh() {
+    Taro.stopPullDownRefresh();
+    this.getDetailsById();
+    this.fetchUserShareCommission();
+  }
   onReady() {
     // 生命周期函数--监听页面初次渲染完成
   }
@@ -259,13 +337,14 @@ class MerchantDetails extends Component {
         merchantCount,
         merchantPrice,
         remain,
-        visible,
+        userCollectionStatus,
         personLimit,
+        buyUserImageList,
       },
+      visible,
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
       specialGoodsInfo,
       cavansObj,
-      // https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon469.png
     } = this.state;
     const payBtn = () => {
       if (!format(activityStartTime) && activityTimeRule === "fixed") {
@@ -288,13 +367,11 @@ class MerchantDetails extends Component {
         return (
           <View className="shopdetails_kol_goshop">
             <ButtonView>
-              <View className="shopdetails_kol_btnBox shopdetails_kol_btnColor1">
-                <View
-                  className="shopdetails_kol_font1"
-                  onClick={() => loginBtn(() => this.saveGoodsOrder())}
-                >
-                  自购返
-                </View>
+              <View
+                className="shopdetails_kol_btnBox shopdetails_kol_btnColor1"
+                onClick={() => loginBtn(() => this.saveGoodsOrder())}
+              >
+                <View className="shopdetails_kol_font1">自购返</View>
                 <View className="shopdetails_kol_font2">
                   {" "}
                   省¥
@@ -330,11 +407,47 @@ class MerchantDetails extends Component {
         );
       }
     };
+    const template = () => {
+      if (!format(activityStartTime) && activityTimeRule === "fixed") {
+        return (
+          <View className="shopdetails_null_status public_center">
+            即将开始
+          </View>
+        );
+      } else {
+        return (
+          <View className="shopdetails_pay_status">
+            {activityTimeRule !== "infinite" ? (
+              <Date type={true} times={activityEndTime} fn={() => {}}></Date>
+            ) : (
+              <View className="font28">长期有效</View>
+            )}
+            <View className="shopdetails_pay_logo">
+              {buyUserImageList.map((item, index) => {
+                if (index === 0) {
+                  return (
+                    <View
+                      className="shopdetail_profile_box dakale_profile"
+                      style={backgroundObj(item)}
+                    ></View>
+                  );
+                } else {
+                  return (
+                    <View
+                      className="shopdetail_profile_box dakale_profile shopdetail_profile_left"
+                      style={backgroundObj(item)}
+                    ></View>
+                  );
+                }
+              })}
+              <View className="shopdetail_left_pay">抢购中</View>
+            </View>
+          </View>
+        );
+      }
+    };
     if (Object.keys(specialGoodsInfo).length > 0) {
       if (status !== "0") {
-        {
-          console.log(cavansObj);
-        }
         return (
           <View className="favourable_Details">
             <TaroShareDrawer
@@ -356,17 +469,9 @@ class MerchantDetails extends Component {
               ></Banner>
             </View>
             <View className="shopdetails_price">
-              <View className="shopdetails_priceBox">
-                <View className="shopdetails_top public_auto">
+              <View className="shopdetails_priceBox public_auto">
+                <View className="shopdetails_left">
                   <View className="shopdetails_priceIcon">哒卡乐专享价</View>
-                  <View className="shopdetails_time">
-                    活动截止日期：
-                    {activityTimeRule === "fixed"
-                      ? activityEndTime
-                      : "长期有效"}
-                  </View>
-                </View>
-                <View className="shopdetails_bottom public_auto">
                   <View className="shopdetails_setprice">
                     <Text className="shopdetails_bigFont">¥</Text>
                     {realPrice || "--"}
@@ -374,12 +479,8 @@ class MerchantDetails extends Component {
                       ¥ {oriPrice || "--"}
                     </Text>
                   </View>
-                  <View className="shopdetails_setbean">
-                    {format(activityStartTime) || activityTimeRule !== "fixed"
-                      ? "门店抢购中"
-                      : "即将开抢"}
-                  </View>
                 </View>
+                <View className="shopdetails_right">{template()}</View>
               </View>
             </View>
             {/*使用商家*/}
@@ -410,7 +511,10 @@ class MerchantDetails extends Component {
 
                 <>
                   <View className="shopDetails_tab_icon"></View>
-                  <View className="shopDetails_tab_font">卡豆抵扣</View>
+                  <View className="shopDetails_tab_questionRight">
+                    卡豆抵扣
+                    <Text className="color11">{payBeanCommission + "%"}</Text>
+                  </View>
                 </>
                 <View
                   onClick={() => Router({ routerName: "interests" })}
@@ -438,8 +542,41 @@ class MerchantDetails extends Component {
                   <View className="shopdetails_getPrice_tag">已售罄</View>
                 )}
               </View>
+              <View className="shopdetails_setting public_auto">
+                <ButtonView>
+                  <View
+                    onClick={() => this.setCollection()}
+                    className={classNames(
+                      userCollectionStatus === "1"
+                        ? "shopdetails_isCollect"
+                        : "shopdetails_collect"
+                    )}
+                  >
+                    { userCollectionStatus === "1"?'已收藏':'收藏'}
+                  </View>
+                </ButtonView>
+                <ButtonView>
+                  <View
+                    onClick={() => this.getShareInfo()}
+                    className="shopdetails_share"
+                  >
+                    分享
+                  </View>
+                </ButtonView>
+              </View>
             </View>
-
+            <View
+              className="shopdetails_share_info public_auto color11"
+              onClick={() =>
+                Router({
+                  routerName: "download",
+                })
+              }
+            >
+              <View>{"升级哒人，立享好友消费佣金 & 更高卡豆抵扣比例"}</View>
+              <View>{">"}</View>
+            </View>
+            <Card></Card>
             {merchantSet(specialGoodsInfo)}
             {/* 商品详情 */}
             {goodsType === "package" && (
@@ -518,6 +655,16 @@ class MerchantDetails extends Component {
                   </Text>
                 </View>
               </View>
+              <VideoBean
+                price={(realPrice * (payBeanCommission / 100))
+                  .toFixed(3)
+                  .substring(
+                    0,
+                    (realPrice * (payBeanCommission / 100)).toFixed(3).length -
+                      1
+                  )}
+                data={specialGoodsInfo}
+              ></VideoBean>
               {payBtn()}
             </View>
             {visible && (

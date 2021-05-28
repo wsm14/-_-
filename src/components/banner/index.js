@@ -1,11 +1,12 @@
 /*
- * style 轮播图框样式,
  * data, 轮播图数据
  * showToast 是否显示当前张数,
  * imgName 图片参数名称
  * list 图片数组
  * current 图片当前张数
- *
+ * boxStyle 轮播图外边框样式
+ * imgStyle 自定义轮播图 样式
+ * bottom 底部描点样式
  * */
 import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
@@ -36,15 +37,23 @@ export default (props) => {
   }, [data]);
   const linkTo = (item) => {
     if (typeof item === "object") {
-      let { jumpUrlType, param = "", jumpUrlNew } = item;
-      param = JSON.parse(param) || {};
-      jumpUrlNew = JSON.parse(jumpUrlNew) || {};
+      let { param = "", jumpUrlNew, jumpUrlType = "", jumpUrl = "" } = item;
+      param = (param && JSON.parse(param)) || {};
+      jumpUrlNew = (jumpUrlNew && JSON.parse(jumpUrlNew)) || {};
       const { weChatUrl = "" } = jumpUrlNew;
       if (jumpUrlType === "native" && weChatUrl) {
         Router({
           routerName: weChatUrl,
           args: {
             ...param,
+          },
+        });
+      } else if (jumpUrlType === "h5" && jumpUrl) {
+        Router({
+          routerName: "webView",
+          args: {
+            link: jumpUrl.split("?")[0],
+            url: jumpUrl.split("?")[1] || "",
           },
         });
       } else return;

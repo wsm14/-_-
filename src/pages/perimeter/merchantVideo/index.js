@@ -7,13 +7,14 @@ import {
   setIntive,
   saveFollow,
   goBack,
-  loginStatus
+  loginStatus,
 } from "@/common/utils";
 import { View } from "@tarojs/components";
 import {
   saveMerchantCollection,
   closeMerchantCollection,
   updateUserMomentParam,
+  fetchUserShareCommission,
 } from "@/server/index";
 import { listParentCategory } from "@/server/common";
 import "./index.scss";
@@ -22,6 +23,7 @@ import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import evens from "@/common/evens";
 import { listOtherMomentByType, listMomentByUserId } from "@/server/user";
+import { getListUserMomentBySearch } from "@/server/perimeter";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -34,20 +36,22 @@ class Index extends React.PureComponent {
       circular: false,
       userMomentsInfo: {},
       httpData: {
-        userId: getCurrentInstance().router.params.userId || "1",
+        userId: getCurrentInstance().router.params.userId || "",
         page: 1,
         limit: "10",
       },
       type: getCurrentInstance().router.params.type,
       countStatus: true,
       player: true,
+      configUserLevelInfo: {},
+      keyword: getCurrentInstance().router.params.keyword,
     };
   }
 
   onChange(e) {
-    const { countStatus, httpData, userMomentsList, interval } = this.state;
+    const { countStatus, httpData, userMomentsList, interval, type } =
+      this.state;
     const { current } = e.detail;
-
     this.setState(
       {
         current,
@@ -55,7 +59,6 @@ class Index extends React.PureComponent {
       },
       (res) => {
         this.videoPlayerControl();
-
         if (current >= this.state.userMomentsList.length - 3 && countStatus) {
           this.setState(
             {
@@ -76,38 +79,11 @@ class Index extends React.PureComponent {
       }
     );
   }
-
-  selectList(data = {}) {
-    const { httpData, interval } = this.state;
-    const { val } = data;
-
-    this.setState(
-      {
-        httpData: { ...httpData, page: 1, browseType: val },
-        current: 0,
-        userMomentsList: [],
-        VideoList: [],
-        circular: false,
-        countStatus: true,
-        time: null,
-      },
-      (res) => {
-        this.getVideoList(() => {
-          if (this.state.userMomentsList.length > 0 && val !== "near") {
-            this.setState(
-              {
-                userMomentsInfo: this.state.userMomentsList[0],
-              },
-              (res) => {}
-            );
-          }
-        });
-      }
-    );
-  }
   getVideoList(fn) {
     const { httpData, current, type } = this.state;
-    if (type) {
+    if (type && type === "search") {
+      this.getSearchList();
+    } else if (type) {
       listMomentByUserId(httpData, (res) => {
         let { userMomentsList = [] } = res;
         if (userMomentsList.length === 0) {
@@ -150,6 +126,27 @@ class Index extends React.PureComponent {
         );
       });
     }
+  }
+
+  getSearchList() {
+    const { httpData, keyword } = this.state;
+    getListUserMomentBySearch({ ...httpData, keyword }, (res) => {
+      let { userMomentsList = [] } = res;
+      if (userMomentsList.length === 0) {
+        this.setState({
+          countStatus: false,
+        });
+        return;
+      }
+      this.setState(
+        {
+          userMomentsList: [...this.state.userMomentsList, ...userMomentsList],
+        },
+        (res) => {
+          fn && fn();
+        }
+      );
+    });
   }
   stopVideoPlayerControl() {
     const { current, interval, player } = this.state;
@@ -292,13 +289,13 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
         };
       } else {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
         };
       }
     } else {
@@ -306,16 +303,24 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
         };
       } else {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
         };
       }
     }
+  }
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
   }
   componentDidHide() {}
   componentDidShow() {}
@@ -349,6 +354,7 @@ class Index extends React.PureComponent {
       circular,
       httpData: { browseType },
       player,
+      configUserLevelInfo,
     } = this.state;
 
     const templateView = () => {
@@ -363,6 +369,7 @@ class Index extends React.PureComponent {
               follow={this.followStatus.bind(this)}
               collection={this.collection.bind(this)}
               stop={this.stopVideoPlayerControl.bind(this)}
+              userInfo={configUserLevelInfo}
             ></VideoView>
           </>
         );
@@ -374,7 +381,7 @@ class Index extends React.PureComponent {
           <View onClick={() => goBack()} className="backStyle_box">
             <View
               className="backStyle go_back_icon"
-              style={{ top: Taro.pxTransform(computedClient().top) }}
+              style={{ top: computedClient().top }}
             ></View>
           </View>
         </View>

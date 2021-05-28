@@ -3,6 +3,7 @@ import Taro from "@tarojs/taro";
 import { View, Button } from "@tarojs/components";
 import Banner from "@/components/banner";
 import { navigateTo, toast } from "@/common/utils";
+import Router from "@/common/router";
 import "./../../index.scss";
 
 export default ({ list = [] }) => {
@@ -14,22 +15,34 @@ export default ({ list = [] }) => {
     {
       style: "users_setting_icon2",
       font: "意见反馈",
-      fn: () => navigateTo('/pages/share/download/index'),
+      fn: () => navigateTo("/pages/share/download/index"),
     },
     {
       style: "users_setting_icon3",
       font: "我要合作",
       fn: () =>
-        navigateTo(
-          `/pages/share/webView/index?link=${"https://web-new.dakale.net/product/page/policy/cooperation.html?shareUserId=1&shareUserType=2"}&title=我要合作`
-        ),
+        Router({
+          routerName: "webView",
+          args: {
+            title: "我要合作",
+            url: "shareUserId|1+shareUserType|2",
+            link: "https://web-new.dakale.net/product/page/policy/cooperation.html",
+          },
+        }),
     },
   ];
   return (
     <View className="user_bottom_box">
       <View className="user_bottom_title public_auto">
         <View className="user_bottom_titleLeft">玩赚卡豆</View>
-        <View className="user_bottom_titleRight" onClick={() =>navigateTo(`/pages/share/webView/index?link=${"https://web-new.dakale.net/product/page/policy/eQuity.html"}&title=卡豆攻略`)}>
+        <View
+          className="user_bottom_titleRight"
+          onClick={() =>
+            navigateTo(
+              `/pages/share/webView/index?link=${"https://web-new.dakale.net/product/page/policy/eQuity.html"}&title=卡豆攻略`
+            )
+          }
+        >
           <View>卡豆攻略</View>
         </View>
       </View>
@@ -55,18 +68,21 @@ export default ({ list = [] }) => {
           <View className="share_link public_center">去推店</View>
         </View>
       </View>
-      <View className="banner_view">
-        <Banner
-          showNear={true}
-          autoplay={list.length > 1 ? true : false}
-          imgStyle
-          data={list}
-          imgName={"coverImg"}
-          style={{ width: "100%", height: "100%" }}
-          boxStyle={{ width: "100%", height: "100%" }}
-          bottom={{ bottom: Taro.pxTransform(104) }}
-        ></Banner>
-      </View>
+      {list.length > 0 && (
+        <View className="banner_view">
+          <Banner
+            showNear={true}
+            autoplay={list.length > 1 ? true : false}
+            imgStyle
+            data={list}
+            imgName={"coverImg"}
+            style={{ width: "100%", height: "100%" }}
+            boxStyle={{ width: "100%", height: "100%" }}
+            bottom={{ bottom: Taro.pxTransform(104) }}
+          ></Banner>
+        </View>
+      )}
+
       <View className="users_ourSetting">
         <View className="users_ourSetting_title font40 color1 bold">
           更多功能

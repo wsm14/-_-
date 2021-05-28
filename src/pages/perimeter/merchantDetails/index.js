@@ -15,7 +15,7 @@ import { scanCode } from "@/common/authority";
 import Toast from "@/components/beanToast";
 import Waterfall from "@/components/waterfall";
 import ButtonView from "@/components/Button";
-import { getShareParamInfo } from "@/server/common";
+import { getShareParamInfo, getShareInfo } from "@/server/common";
 import { getUserCoupon } from "@/server/perimeter";
 import {
   backgroundObj,
@@ -41,7 +41,8 @@ import Coupons from "@/components/coupon";
 import { coupon } from "@/components/componentView/CouponView";
 import { getAvailableCoupon } from "@/server/coupon";
 import Router from "@/common/router";
-import classNames from "classnames";
+import { rssConfigData } from "./components/data";
+import TaroShareDrawer from "./components/TaroShareDrawer";
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -62,6 +63,10 @@ class MerchantDetails extends Component {
       conpouVisible: false,
       couponList: [],
       priceCoupon: [],
+      cavansObj: {
+        data: null,
+        start: false,
+      },
     };
   }
 
@@ -125,8 +130,6 @@ class MerchantDetails extends Component {
     }
   }
 
-  componentDidShow() {}
-
   getUserCoupon() {
     const { merchantHttpData } = this.state;
     getUserCoupon({ ...merchantHttpData, page: 1, limit: 3 }, (res) => {
@@ -157,16 +160,16 @@ class MerchantDetails extends Component {
       }
     );
   }
-
   //获取商家信息
   getMerchantById() {
     const { merchantHttpData } = this.state;
-    return httpGet(
+    httpGet(
       {
         data: merchantHttpData,
         url: wxapiGet.wechatGetUserMerchant,
       },
       (res) => {
+        Taro.stopPullDownRefresh();
         const { userMerchant } = res;
         this.setState(
           {
@@ -177,11 +180,52 @@ class MerchantDetails extends Component {
           }
         );
       }
+    ).catch((e) => {
+      Taro.stopPullDownRefresh();
+    });
+  }
+  fetchShareInfo() {
+    const {
+      userMerchantInfo: {
+        merchantName,
+        scenesNames,
+        coverImg,
+        address,
+        businessTime,
+        telephone,
+        tag,
+        merchantId,
+      },
+    } = this.state;
+    getShareInfo(
+      {
+        shareType: "merchant",
+        shareId: merchantId,
+      },
+      (res) => {
+        const { qcodeUrl } = res;
+        const { profile, username } = Taro.getStorageSync("userInfo");
+        this.setState({
+          cavansObj: {
+            start: true,
+            data: rssConfigData({
+              merchantName,
+              scenesList: filterStrList(scenesNames),
+              merchantLogo: coverImg,
+              address,
+              businessTime,
+              username,
+              userProfile: profile,
+              telephone,
+              tag: filterStrList(tag).join(" | "),
+              wxCode: qcodeUrl,
+            }),
+          },
+        });
+      }
     );
   }
-
   //获取商家轮播图
-
   onShareAppMessage() {
     const {
       userMerchantInfo: { merchantName, coverImg },
@@ -223,7 +267,6 @@ class MerchantDetails extends Component {
       };
     }
   }
-
   getMerchantLove() {
     const {
       userMerchantInfo: { merchantId },
@@ -243,6 +286,32 @@ class MerchantDetails extends Component {
         this.setState({
           specialGoodsList: specialGoodsList,
         });
+      }
+    );
+  }
+
+  onPullDownRefresh() {
+    Taro.stopPullDownRefresh();
+    this.setState(
+      {
+        bannerList: [],
+        userMerchantInfo: {},
+        countStatus: true,
+        visible: false,
+        specialGoodsList: [],
+        goodsList: [],
+        conpouVisible: false,
+        couponList: [],
+        priceCoupon: [],
+        cavansObj: {
+          data: null,
+          start: false,
+        },
+      },
+      (res) => {
+        this.getMerchantById();
+        this.getGoodList();
+        this.getUserCoupon();
       }
     );
   }
@@ -279,6 +348,7 @@ class MerchantDetails extends Component {
       couponList,
       priceCoupon = [],
       userInfo: { userId },
+      cavansObj,
     } = this.state;
     const {
       headerType = "image",
@@ -329,6 +399,13 @@ class MerchantDetails extends Component {
               }}
             ></APPShare>
           )}
+          <TaroShareDrawer
+            {...cavansObj}
+            onSave={() => console.log("点击保存")}
+            onClose={() =>
+              this.setState({ cavansObj: { start: false, data: null } })
+            }
+          ></TaroShareDrawer>
           {templateTitle()}
           <View className="merchantDetails_shop">
             <View className="merchant_name font_noHide">{merchantName}</View>
@@ -418,6 +495,17 @@ class MerchantDetails extends Component {
                   </View>
                 )}
               </ButtonView>
+              <ButtonView>
+                {" "}
+                <View
+                  className="share_image_btn"
+                  onClick={() => {
+                    this.fetchShareInfo();
+                  }}
+                >
+                  分享
+                </View>
+              </ButtonView>
             </View>
 
             <View className="merchant_shop_details">
@@ -443,7 +531,7 @@ class MerchantDetails extends Component {
                     </Text>
                   </View>
                   <View className="merchant_time_tags">
-                    {[filterStrList(tag), ...services].map((item, index) => {
+                    {[...filterStrList(tag), ...services].map((item, index) => {
                       if (index < 5) {
                         return (
                           <View className={"merchant_tag_shop"}>{item}</View>
@@ -515,14 +603,7 @@ class MerchantDetails extends Component {
 
           {specialGoodsList.length > 0 && (
             <>
-              <View
-                className="merchant_active"
-                onClick={() =>
-                  navigateTo(
-                    `/pages/perimeter/special/index?merchantId=${merchantId}`
-                  )
-                }
-              >
+              <View className="merchant_active">
                 <View className="merchant_active_title">
                   <View className="merchant_active_iconBox active_icon2"></View>
                   <View className="merchant_active_biaoti">特价活动</View>
@@ -530,7 +611,16 @@ class MerchantDetails extends Component {
                 <View className="merchant_active_dec">
                   店铺超限时特价活动 限时限量
                 </View>
-                <View className="active_go"></View>
+                {specialGoodsList.length === 6 && (
+                  <View
+                    className="active_go"
+                    onClick={() =>
+                      navigateTo(
+                        `/pages/perimeter/special/index?merchantId=${merchantId}`
+                      )
+                    }
+                  ></View>
+                )}
               </View>
               <View className="merchant_newPrice">
                 {specialGoodsList.length > 1 ? (

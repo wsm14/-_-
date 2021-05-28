@@ -12,6 +12,7 @@ import {
   navigateTo,
   filterStrList,
 } from "@/common/utils";
+import Router from "@/common/router";
 import "./index.scss";
 class Index extends React.Component {
   constructor() {
@@ -21,35 +22,31 @@ class Index extends React.Component {
       bannerHttp: {
         bannerType: "person",
       },
-      list: [
-        {
-          style: "users_setting_icon1",
-          font: "客服中心",
-          fn: () =>
-            this.setState({
-              telephone: true,
-            }),
-        },
-        {
-          style: "users_setting_icon2",
-          font: "意见反馈",
-        },
-        {
-          style: "users_setting_icon3",
-          font: "我要合作",
-          fn: () =>
-            navigateTo(
-              `/pages/share/webView/index?link=${this.state.link1}&title=我要合作`
-            ),
-        },
-      ],
       loginStatus: 0,
       userInfo: {},
       nextLevel: {},
       levelDetails: {},
     };
   }
-
+  onPullDownRefresh() {
+    this.setState(
+      {
+        bannerList: [],
+        loginStatus: 0,
+        userInfo: {},
+        nextLevel: {},
+        levelDetails: {},
+      },
+      (res) => {
+        let time = setTimeout(() => {
+          Taro.stopPullDownRefresh();
+          clearTimeout(time);
+        }, 500);
+        this.getBannerList();
+        this.getUserDetails();
+      }
+    );
+  }
   getBannerList() {
     const { bannerHttp } = this.state;
     getBanner(bannerHttp, (res) => {
@@ -118,8 +115,11 @@ class Index extends React.Component {
     } = this.state;
     return (
       <View className="page_userBox">
-        <UserTitle status={loginStatus} data={userInfo}></UserTitle>
-
+        <UserTitle
+          reload={this.getUserDetails.bind(this)}
+          status={loginStatus}
+          data={userInfo}
+        ></UserTitle>
         <View className="page_user_liner"></View>
         <UserContent
           levelDetails={levelDetails}

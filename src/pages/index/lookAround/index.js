@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
 import { ScrollView, View } from "@tarojs/components";
-import Navition from "./components/navition";
-import HotSpecal from "./components/hotSpecal";
-import DateSpecal from "./components/dateSpecal";
-import SelectSpecal from "./components/selectSpecal";
 import Banner from "@/components/banner";
 import {
   backgroundObj,
@@ -13,21 +9,26 @@ import {
   getLat,
   getLnt,
   navigateTo,
+  resiApiKey,
+  computedClient,
 } from "@/common/utils";
 import {
   getBanner,
   getConfigWindVaneBySize,
   getSpecialGoodsCategory,
-  getAddress,
+  getRestapiAddress,
 } from "@/server/common";
-import { mapTx } from "@/common/authority";
 import classNames from "classnames";
 import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
-import "./index.scss";
 import { inject, observer } from "mobx-react";
 import Router from "@/common/router";
 import TabCity from "./components/tabCity";
 import ToastCity from "./components/toastCity";
+import Navition from "./components/navition";
+import HotSpecal from "./components/hotSpecal";
+import DateSpecal from "./components/dateSpecal";
+import SelectSpecal from "./components/selectSpecal";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends Component {
@@ -62,11 +63,57 @@ class Index extends Component {
       categoryList: [],
       flagDom: false,
       result: {},
+      num: Taro.getStorageSync("toast") || 0,
     };
   }
+  //上拉刷新
+  onReload() {
+    this.setState(
+      {
+        specialHeadList: [], //头部轮播图
+        configWindVaneList: [], //类目筛序
+        specialShopping: [], //中间轮播图
+        left: 0,
+        hotHttp: {
+          page: 1,
+          limit: 5,
+          specialFilterType: "hot",
+        },
+        dateHttp: {
+          page: 1,
+          limit: 6,
+          specialFilterType: "today",
+        },
 
+        specialHttp: {
+          page: 1,
+          limit: 10,
+          specialFilterType: "recommend",
+          categoryIds: "",
+        },
+        configUserLevelInfo: {},
+        hotList: [],
+        dateList: [],
+        kolGoodsList: [],
+        categoryList: [],
+        triggered: true,
+        flagDom: false,
+      },
+      (res) => {
+        const { hotHttp, dateHttp } = this.state;
+        this.topBanner();
+        this.getConfigWindVaneBySize();
+        this.contentBanner();
+        this.getshopList(hotHttp, "hotList");
+        this.getshopList(dateHttp, "dateList");
+        this.getSpecialGoodsCategory();
+        this.fetchUserShare();
+      }
+    );
+  }
   componentDidMount() {
-    const { hotHttp, dateHttp } = this.state;
+    const { hotHttp, dateHttp, num } = this.state;
+    Taro.setStorageSync("toast", num + 1);
     this.setMap();
     this.topBanner();
     this.getConfigWindVaneBySize();
@@ -88,28 +135,20 @@ class Index extends Component {
           lat: latitude,
         },
         (res) => {
-          getAddress(
+          getRestapiAddress(
             {
-              location: `${latitude},${longitude}`,
-              key: mapTx,
+              location: `${longitude},${latitude}`,
+              key: resiApiKey,
             },
             (res) => {
-              const { message, result } = res;
-              if (message === "query ok") {
-                const {
-                  address_component: { city },
-                } = result;
-                if (city !== "杭州市") {
-                  this.setState({
-                    result,
-                  });
-                } else {
-                  this.setState({
-                    result,
-                  });
-                }
+              const { info, regeocode = {} } = res;
+              if (info === "OK") {
+                const { addressComponent = {} } = regeocode;
+                this.setState({
+                  result: addressComponent,
+                });
               } else {
-                toast(message);
+                toast(info);
               }
             }
           );
@@ -155,6 +194,11 @@ class Index extends Component {
       const { configUserLevelInfo = {} } = res;
       this.setState({
         configUserLevelInfo,
+        triggered: false,
+      });
+    }).catch((e) => {
+      this.setState({
+        triggered: false,
       });
     });
   }
@@ -162,7 +206,6 @@ class Index extends Component {
     const {
       detail: { scrollLeft, scrollWidth },
     } = val;
-    console.log(val);
     let box = scrollWidth - 335;
     if (parseInt((scrollLeft / box) * 100) < 50) {
       this.setState({
@@ -269,8 +312,10 @@ class Index extends Component {
       dateList = [],
       kolGoodsList = [],
       flagDom,
+      triggered,
       specialHttp: { categoryIds },
       result = {},
+      num,
     } = this.state;
     const { cityName, cityCode } = this.props.store.locationStore;
     const bannerStyle = {
@@ -296,14 +341,22 @@ class Index extends Component {
     return (
       <View className="lookAround_box">
         <Navition city={cityName}></Navition>
+        {num === 0 && (
+          <View className="wechant_init color6 font28">
+            “添加到我的小程序”，更多优惠抢不停
+          </View>
+        )}{" "}
         <ScrollView
           scrollY
           onScrollToLower={this.getReachBottom.bind(this)}
+          refresherEnabled
+          onRefresherRefresh={this.onReload.bind(this)}
+          refresherTriggered={triggered}
           className="lookAround_category_box"
           onScroll={(e) => {
             getDom(".lookAround_categorys_box", (res) => {
               const { top } = res[0];
-              if (res[0]) {
+              if (top) {
                 if (top < 40) {
                   this.setState({
                     flagDom: true,
@@ -326,39 +379,72 @@ class Index extends Component {
               showNear
             ></Banner>
           </View>
-
           <ScrollView
             onScroll={this.setSlider.bind(this)}
             className="lookAround_category_scroll"
             scrollX
           >
-            {configWindVaneList.map((item) => {
+            {[
+              {
+                image:
+                  "https://wechat-config.dakale.net/miniprogram/image/icon567.png",
+                name: "周边好店",
+                bubbleFlag: "0",
+                bubbleContent: "",
+                scenesId: "",
+              },
+              ...configWindVaneList,
+            ].map((item, index) => {
               const { name, image, bubbleFlag, bubbleContent, scenesId } = item;
-              return (
-                <View
-                  className="lookAround_category_view animated  fadeIn"
-                  onClick={() =>
-                    Router({
-                      routerName: "benchmark",
-                      args: {
-                        scenesId,
-                        name,
-                      },
-                    })
-                  }
-                >
+              if (index === 0) {
+                return (
                   <View
-                    className="lookAround_category_image  dakale_nullImage"
-                    style={backgroundObj(image)}
-                  ></View>
-                  <View className="lookAround_category_font">{name}</View>
-                  {bubbleFlag === "1" && (
-                    <View className="lookAround_category_bubble">
-                      {bubbleContent}
-                    </View>
-                  )}
-                </View>
-              );
+                    className="lookAround_category_view animated  fadeIn"
+                    onClick={() =>
+                      Router({
+                        routerName: "perimeterShops",
+                      })
+                    }
+                  >
+                    <View
+                      className="lookAround_category_image  dakale_nullImage"
+                      style={backgroundObj(image)}
+                    ></View>
+                    <View className="lookAround_category_font">{name}</View>
+                    {bubbleFlag === "1" && (
+                      <View className="lookAround_category_bubble">
+                        {bubbleContent}
+                      </View>
+                    )}
+                  </View>
+                );
+              } else {
+                return (
+                  <View
+                    className="lookAround_category_view animated  fadeIn"
+                    onClick={() =>
+                      Router({
+                        routerName: "benchmark",
+                        args: {
+                          scenesId,
+                          name,
+                        },
+                      })
+                    }
+                  >
+                    <View
+                      className="lookAround_category_image  dakale_nullImage"
+                      style={backgroundObj(image)}
+                    ></View>
+                    <View className="lookAround_category_font">{name}</View>
+                    {bubbleFlag === "1" && (
+                      <View className="lookAround_category_bubble">
+                        {bubbleContent}
+                      </View>
+                    )}
+                  </View>
+                );
+              }
             })}
           </ScrollView>
           <View className="lookAround_category_liner">
@@ -367,13 +453,13 @@ class Index extends Component {
               className="slider-inside .slider-inside-location"
             ></View>
           </View>
-          {/* <Banner
+          <Banner
             imgName="coverImg"
             data={[...specialShopping]}
             bottom={bottomContent}
             boxStyle={bannerContentStyle}
             showNear
-          ></Banner> */}
+          ></Banner>
           {hotList.length > 0 && (
             <HotSpecal
               linkTo={this.saveRouter.bind(this)}
@@ -482,7 +568,11 @@ class Index extends Component {
             </ScrollView>
           </View>
         }
-        <TabCity store={this.props.store} data={result}></TabCity>
+        <TabCity
+          reload={this.onReload.bind(this)}
+          store={this.props.store}
+          data={result}
+        ></TabCity>
         <ToastCity store={this.props.store} data={result}></ToastCity>
       </View>
     );

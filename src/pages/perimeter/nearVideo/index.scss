@@ -4,6 +4,15 @@ page {
   line-height: 1;
   overflow: hidden;
 }
+.home_username {
+  font-size: 32px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 32px;
+  margin-top: 16px;
+}
+
+
 .home_box {
   width: 100%;
   height: 100%;
@@ -19,6 +28,7 @@ page {
     left: 0;
     right: 0;
   }
+
   .home_Waterfall_box {
     position: absolute;
     background: white;
@@ -86,24 +96,21 @@ page {
           padding-top: 4px;
         }
         .home_active_font2 {
-          padding-top: 8px;
+          padding-top: 16px;
           max-width: 236px;
-          line-height: 28px;
-          color: rgba(255, 255, 255, 0.8);
-          font-size: 22px;
+          color: #ffeba5;
+          font-size: 20px;
+          line-height: 20px;
         }
         .home_active_price {
-          .home_active_tags {
-            display: inline-block;
-            height: 28px;
-            text-align: center;
-            padding: 0 8px;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 20px;
-            font-weight: 400;
-            color: #ffeba5;
-            line-height: 28px;
+          padding-top: 6px;
+          display: flex;
+          align-items: baseline;
+          .home_active_specal {
+            margin-left: 8px;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: line-through;
           }
         }
       }
@@ -119,6 +126,73 @@ page {
         line-height: 48px;
         color: #ffffff;
         font-size: 24px;
+      }
+    }
+    .home_active_shareCommission {
+      position: relative;
+      width: 534px;
+      height: 145px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      .home_shareCommission_image {
+        width: 121px;
+        height: 121px;
+        border-radius: 4px;
+        margin-left: 12px;
+        background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png)
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .home_shareCommission_details {
+        height: 121px;
+        margin-left: 12px;
+        .home_shareCommission_font1 {
+          max-width: 365px;
+          font-size: 28px;
+          color: #ffffff;
+          line-height: 28px;
+          padding-top: 4px;
+        }
+        .home_shareCommission_font2 {
+          padding-top: 8px;
+          display: flex;
+          align-items: baseline;
+          .home_shareCommission_title {
+            color: rgba(255, 235, 165, 1);
+            margin-right: 8px;
+          }
+          .home_shareCommission_specal {
+            margin-left: 8px;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: line-through;
+          }
+        }
+        .home_shareCommission_tag {
+          margin-top: 12px;
+          display: flex;
+          .home_shareCommission_tagBox {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
+            font-size: 24px;
+            font-weight: 400;
+            color: #ffffff;
+            border-radius: 4px;
+          }
+          .home_shareCommission_tagColor1 {
+            background: #07c0c2;
+          }
+          .home_shareCommission_tagColor2 {
+            background: #ef476f;
+            margin-left: 16px;
+          }
+        }
       }
     }
   }
@@ -261,9 +335,37 @@ page {
           no-repeat;
         background-size: 100% 100%;
       }
+      @keyframes slace {
+        25% {
+          transform: rotateZ(-15deg);
+        }
+        50% {
+          transform: rotateZ(15deg);
+        }
+        75% {
+          transform: rotateZ(-15deg);
+        }
+        100% {
+          transform: rotateZ(15deg);
+        }
+      }
+      .home_share_animate {
+        width: 80px;
+        height: 80px;
+        margin: 32px auto 0;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon549.png")
+          no-repeat;
+        background-size: 100% 100%;
+        animation-name: slace;
+        animation-duration: 2s;
+        animation-timing-function: ease;
+        animation-iteration-count: infinite;
+        animation-fill-mode: both;
+      }
     }
   }
 }
+
 .home_black {
   background: black;
   .home_order_box {

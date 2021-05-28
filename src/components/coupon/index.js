@@ -3,11 +3,6 @@
  * title：标题
  * visible：子集调用父级回调用于关闭弹窗
  * data：数组用于渲染的数据
- *
- *
- *
- *
- *
  */
 import React, { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "@tarojs/components";
@@ -232,29 +227,53 @@ export default (props) => {
             visible();
           }}
         >
-          <View
-            className="dakale_gift"
-            catchMove={false}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <View className="dakale_gift_top">
-              {title}
-              <View
-                className="dakale_gift_closeIcon"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  visible();
-                }}
-              ></View>
+          <View>
+            <View
+              className="dakale_gift"
+              catchMove={false}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              {list.length === 1 ? (
+                <View className="dakale_gift_ownLength">
+                  <View className="dakale_gift_top">{title}</View>
+                  <View className="dakale_gift_contentMax dakale_gift_content">
+                    {list.map((item) => {
+                      return template(item);
+                    })}
+                  </View>
+                  <View
+                    className="dakale_gift_btn public_center"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      visible();
+                    }}
+                  >
+                    知道了
+                  </View>
+                </View>
+              ) : (
+                <View className="dakale_gift_twoLength">
+                  <View className="dakale_gift_top">{title}</View>
+                  <ScrollView scrollY className="dakale_gift_content">
+                    {list.map((item) => {
+                      return template(item);
+                    })}
+                  </ScrollView>
+                  <View
+                    className="dakale_close_btn public_center"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      visible();
+                    }}
+                  >
+                    知道了
+                  </View>
+                </View>
+              )}
             </View>
-            <View className="dakale_gift_liner"></View>
-            <ScrollView scrollY className="dakale_gift_content">
-              {list.map((item) => {
-                return template(item);
-              })}
-            </ScrollView>
+            <View className="dakale_layer_close"></View>
           </View>
         </View>
       </View>

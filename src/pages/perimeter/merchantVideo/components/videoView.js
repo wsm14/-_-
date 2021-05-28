@@ -14,6 +14,7 @@ import {
   navigateTo,
   setPeople,
   computedVideoSize,
+  loginStatus,
 } from "@/common/utils";
 import classNames from "classnames";
 import "./../index.scss";
@@ -27,12 +28,14 @@ export default ({
   collection,
   onTransition,
   stop,
+  userInfo,
 }) => {
   const [scale, setScale] = useState(0);
   useEffect(() => {
     setScale(0);
   }, [current]);
   const expensive = useMemo(() => {
+    const { shareCommission = 0 } = userInfo;
     if (data.length > 0) {
       return (
         <View
@@ -44,9 +47,9 @@ export default ({
           <Swiper
             style={{ width: "100%", height: "100%" }}
             vertical
-            current={current}
             onChange={onChange}
             duration={200}
+            current={current}
             circular={circular}
             onTransition={onTransition}
           >
@@ -54,6 +57,7 @@ export default ({
               const {
                 frontImage,
                 frontImageHeight,
+                frontImageWidth,
                 videoContent,
                 userProfile,
                 merchantFollowStatus,
@@ -61,7 +65,7 @@ export default ({
                 merchantCollectionStatus,
                 collectionAmount,
                 shareAmount,
-                frontImageWidth,
+                guideMomentFlag = "0",
               } = item;
               if (
                 index === current ||
@@ -73,10 +77,11 @@ export default ({
                     <View
                       style={{
                         width: "100%",
-                        height: "100%",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        position: "relative",
+                        height: "100%",
                       }}
                     >
                       <View
@@ -101,44 +106,58 @@ export default ({
                           enableProgressGesture={false}
                           autoplay={index === current ? true : false}
                           showFullscreenBtn={false}
-                          enablePlayGesture={true}
+                          // enablePlayGesture={true}
                           loop={true}
                           showPlayBtn={false}
-                          showCenterPlayBtn={false}
                           objectFit={
                             computedVideoSize(frontImageWidth, frontImageHeight)
                               ? "fill"
                               : "cover"
                           }
+                          showCenterPlayBtn={false}
                           initialTime="0"
                           onTimeUpdate={(e) => {
-                            const { currentTime, duration } = e.detail;
-                            setScale(
-                              ((currentTime / duration) * 100).toFixed(2)
-                            );
+                            if (index === current) {
+                              const { currentTime, duration } = e.detail;
+                              setScale(
+                                ((currentTime / duration) * 100).toFixed(2)
+                              );
+                            }
                           }}
                           id={`video${index}`}
                           // onPause={onPause}
                           // onPlay={onPlay}
                           muted={false}
                         ></Video>
-                        <View className="video_liner">
-                          <View
-                            style={{
-                              height: "100%",
-                              width: `${scale}%`,
-                              background: "rgba(239, 71, 111, 1)",
-                            }}
-                          ></View>
-                        </View>
+                        {index === current && (
+                          <View className="video_liner">
+                            <View
+                              style={{
+                                height: "100%",
+                                width: `${scale}%`,
+                                background: "rgba(239, 71, 111, 1)",
+                              }}
+                            ></View>
+                          </View>
+                        )}
                       </View>
-                      <BottomView index={index} server={item}>
+                      <BottomView
+                        userInfo={userInfo}
+                        index={index}
+                        server={item}
+                      >
                         {children}
                       </BottomView>
                       <View className="home_stem_layer">
                         <View
                           style={userProfile ? backgroundObj(userProfile) : {}}
                           className="home_stem_userProfile dakale_profile"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigateTo(
+                              `/pages/perimeter/merchantDetails/index?merchantId=${userIdString}`
+                            );
+                          }}
                         >
                           {merchantFollowStatus === "0" && (
                             <View
@@ -149,29 +168,40 @@ export default ({
                             ></View>
                           )}
                         </View>
+                        {guideMomentFlag === "0" && (
+                          <>
+                            <View
+                              onClick={() => collection()}
+                              className={classNames(
+                                "collected_box",
+                                merchantCollectionStatus === "0"
+                                  ? "share_shoucang_icon1"
+                                  : "share_shoucang_icon2"
+                              )}
+                            ></View>
+                            <View className="collected_font">
+                              {setPeople(collectionAmount)}
+                            </View>
+                          </>
+                        )}
                         <View
-                          onClick={() => collection()}
                           className={classNames(
-                            "collected_box",
-                            merchantCollectionStatus === "0"
-                              ? "share_shoucang_icon1"
-                              : "share_shoucang_icon2"
+                            shareCommission > 0
+                              ? "home_share_animate"
+                              : "home_share_wechat"
                           )}
-                        ></View>
-                        <View className="collected_font">
-                          {setPeople(collectionAmount)}
-                        </View>
-
-                        <View className="home_share_wechat">
-                          <Button
-                            open-type="share"
-                            style={{
-                              border: "0px soild white",
-                              background: (0, 0, 0, 0),
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          ></Button>
+                        >
+                          {loginStatus() ? (
+                            <Button
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                border: "none",
+                                background: 'none'
+                              }}
+                              openType={"share"}
+                            ></Button>
+                          ) : null}
                         </View>
 
                         <View className="collected_font">{shareAmount}</View>
@@ -189,6 +219,6 @@ export default ({
     } else {
       return null;
     }
-  }, [data, current, scale]);
+  }, [data.length, current, scale]);
   return expensive;
 };

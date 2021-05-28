@@ -1,0 +1,69 @@
+.specail_hot_box {
+  width: 218px;
+  display: inline-block;
+  margin-right: 16px;
+  vertical-align: top;
+  .specail_hot_specalImage {
+    width: 218px;
+    height: 218px;
+    background: #ffffff;
+    border-radius: 5px;
+    position: relative;
+  }
+  .specail_hot_font {
+    width: 218px;
+    height: 84px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 42px;
+    margin-top: 12px;
+  }
+  .specail_hot_limit {
+    padding-top: 12px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+    line-height: 24px;
+  }
+  .specail_hot_price {
+    margin-top: 16px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 32px;
+    display: flex;
+    align-items: baseline;
+  }
+  .specail_hot_rel {
+    padding-top: 8px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #cccccc;
+    line-height: 20px;
+    text-decoration: line-through;
+  }
+  .specail_price_text {
+    font-size: 20px;
+    line-height: 22px;
+  }
+  .specail_bean_border {
+    margin-top: 8px;
+    display: inline-block;
+  }
+  .specail_bean_box {
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 6px;
+    font-size: 22px;
+    font-weight: 400;
+    color: #ef476f;
+    display: flex;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
+}
+.specail_hot_box:last-child {
+  margin-right: 0;
+}

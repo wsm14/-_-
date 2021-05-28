@@ -30,6 +30,11 @@
       left: 0;
       background: transparent;
     }
+    .animateCanvas_opacity {
+      opacity: 0;
+      width: 0px;
+      height:0px;
+    }
   }
   .canvas_tag {
     padding: 0px 16px 0 2px;

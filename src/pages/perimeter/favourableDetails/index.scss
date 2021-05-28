@@ -5,7 +5,15 @@ page {
 }
 .favourable_Details {
   width: 100%;
-  padding-bottom: 193px;
+  padding-bottom: 214px;
+  .shop_dakale_content {
+    margin: 30px 40px 40px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #666666;
+    line-height: 42px;
+    text-align: center;
+  }
   .shopDetails_banner {
     width: 750px;
     height: 530px;
@@ -16,23 +24,14 @@ page {
     .shopdetails_priceBox {
       padding: 24px 32px 0;
       color: #ffffff;
-      .shopdetails_top {
-        height: 28px;
-        width: 100%;
+      .shopdetails_left {
         .shopdetails_priceIcon {
           font-size: 24px;
           line-height: 28px;
         }
-        .shopdetails_time {
-          line-height: 28px;
-          font-size: 28px;
-        }
-      }
-      .shopdetails_bottom {
-        margin-top: 12px;
-        width: 100%;
+
         .shopdetails_setprice {
-          margin-top: 6px;
+          margin-top: 16px;
           height: 40px;
           font-size: 40px;
           .shopdetails_bigFont {
@@ -48,16 +47,38 @@ page {
             margin-left: 12px;
           }
         }
-        .shopdetails_setbean {
-          padding: 0 20px;
-          height: 40px;
-          background: #ffffff;
-          border-radius: 8px;
-          text-align: center;
-          line-height: 40px;
-          font-size: 24px;
+      }
+      .shopdetails_right {
+        .shopdetails_null_status {
+          font-size: 28px;
           font-weight: 400;
-          color: #108588;
+          color: #ffffff;
+        }
+        .shopdetails_pay_status {
+          color: #ffffff;
+          font-size: 28px;
+          text-align: right;
+          .shopdetails_pay_logo {
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+            justify-content: flex-end;
+            height: 40px;
+            font-size: 24px;
+            font-weight: 400;
+            color: #ffffff;
+            .shopdetail_profile_box {
+              width: 48px;
+              height: 48px;
+              border: 1px solid #ffffff;
+            }
+            .shopdetail_profile_left {
+              margin-left: -8px;
+            }
+            .shopdetail_left_pay {
+              margin-left: 8px;
+            }
+          }
         }
       }
     }
@@ -100,6 +121,10 @@ page {
         margin-right: 24px;
         height: 24px;
       }
+      .shopDetails_tab_questionRight {
+        margin-right: 8px;
+        height: 24px;
+      }
     }
   }
   .shopdetails_getPrice {
@@ -117,7 +142,72 @@ page {
       margin-right: 16px;
     }
   }
+  .shopdetails_setting {
+    width: 424px;
+    margin: 32px auto 0;
+  }
+  .shopdetails_collect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 80px;
+    border-radius: 8px;
+    border: 2px solid #333333;
+    font-size: 32px;
+  }
+  .shopdetails_collect::before {
+    width: 48px;
+    height: 48px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon574.png")
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+    margin-right: 8px;
+  }
 
+  .shopdetails_isCollect {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 80px;
+    border-radius: 8px;
+    border: 2px solid #333333;
+    font-size: 32px;
+    color: rgba(239, 71, 111, 1);
+  }
+  .shopdetails_isCollect::before {
+    width: 48px;
+    height: 48px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon584.png")
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+    margin-right: 8px;
+  }
+  .shopdetails_share {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 80px;
+    border-radius: 8px;
+    border: 2px solid #333333;
+    font-size: 32px;
+  }
+  .shopdetails_share::before {
+    width: 48px;
+    height: 48px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon575.png")
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+    margin-right: 8px;
+  }
 
   .shopdetails_shop_packageGroup {
     padding: 40px 32px;
@@ -147,9 +237,9 @@ page {
         color: #666666;
         line-height: 28px;
       }
-      .shopdetails_package_width{
-        max-width:330px;
-        display: inline-block
+      .shopdetails_package_width {
+        max-width: 330px;
+        display: inline-block;
       }
     }
   }
@@ -305,5 +395,11 @@ page {
       color: #ffffff;
       line-height: 28px;
     }
+  }
+  .shopdetails_share_info {
+    height: 76px;
+    background: #fdecf0;
+    padding: 0 32px;
+    font-size: 24px;
   }
 }

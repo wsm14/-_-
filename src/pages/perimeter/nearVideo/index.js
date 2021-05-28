@@ -25,7 +25,11 @@ import { inject, observer } from "mobx-react";
 import evens from "@/common/evens";
 import Toast from "@/components/beanToast";
 import Coupon from "@/components/freeCoupon";
+import Lead from "@/components/lead";
+import { getShareInfo } from "@/server/common";
 import "./index.scss";
+import TaroShareDrawer from "./components/TaroShareDrawer";
+import { rssConfigData } from "./components/data";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -48,9 +52,12 @@ class Index extends React.PureComponent {
       momentBarrageList: [],
       beanflag: false,
       couponFlag: false,
-      beanLimitStatus: "1",
       player: true,
       configUserLevelInfo: {},
+      cavansObj: {
+        data: null,
+        start: false,
+      },
     };
     this.interReload = null;
     this.interSwper = null;
@@ -209,7 +216,6 @@ class Index extends React.PureComponent {
       this.setState(
         {
           userMomentsList: [...this.state.userMomentsList, ...userMomentsList],
-          beanLimitStatus,
         },
         (res) => {
           fn && fn();
@@ -230,41 +236,43 @@ class Index extends React.PureComponent {
       }
     );
   } //设置定时器领取卡豆
+
   saveBean() {
     const {
-      userMomentsInfo: { userMomentIdString },
+      userMomentsInfo: { userMomentIdString, guideMomentFlag },
       userMomentsInfo,
-      beanLimitStatus,
     } = this.state;
-    if (beanLimitStatus === "1") {
-      saveWatchBean(
-        {
-          momentId: userMomentIdString,
-        },
-        (res) => {
-          checkPuzzleBeanLimitStatus({}, (res) => {
-            const { beanLimitStatus = "1" } = res;
-            this.setState({ beanLimitStatus });
-          });
-          this.setState({
-            beanflag: true,
-            time: null,
-            userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
-            userMomentsList: this.state.userMomentsList.map((item) => {
-              if (item.userMomentIdString === userMomentIdString) {
-                return {
-                  ...item,
-                  watchStatus: "1",
-                };
-              }
-              return item;
-            }),
-          });
-        }
-      );
-    } else {
-    }
+    const { homeStore } = this.props.store;
+    checkPuzzleBeanLimitStatus({}, (res) => {
+      const { beanLimitStatus } = res;
+      if (beanLimitStatus === "1") {
+        saveWatchBean(
+          {
+            momentId: userMomentIdString,
+          },
+          (res) => {
+            this.setState({
+              beanflag: true,
+              time: null,
+              userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
+              userMomentsList: this.state.userMomentsList.map((item) => {
+                if (item.userMomentIdString === userMomentIdString) {
+                  return {
+                    ...item,
+                    watchStatus: "1",
+                  };
+                }
+                return item;
+              }),
+            });
+          }
+        );
+      } else {
+        homeStore.setBeanLimitStatus(beanLimitStatus);
+      }
+    });
   }
+
   //领取卡豆
   initInterval() {
     const { userMomentsInfo, interval } = this.state;
@@ -414,36 +422,72 @@ class Index extends React.PureComponent {
     }
   }
   componentDidShow() {
-    const { time } = this.state;
+    const { time, player } = this.state;
+    // this.listParentCategory();
     this.fetchUserShareCommission();
-    if (time === 0 || time) {
+    if ((time || time === 0) && player) {
       this.initInterval();
     }
   }
-  componentDidMount() {
-    this.initInterval();
-  }
+  componentDidMount() {}
   componentWillMount() {
     const { selectObj, list, index } = this.props.store.homeStore;
-    if (list.length === 0) {
+    if (
+      list.length === 0 &&
+      getCurrentInstance().router.params.type !== "goods"
+    ) {
       toast("参数异常");
     } else {
-      this.setState({
-        userMomentsList: list,
-        current: index,
-        userMomentsInfo: list[index],
-        httpData: {
-          ...this.state.httpData,
-          ...selectObj,
-        },
-      });
+      if (getCurrentInstance().router.params.type === "goods") {
+        this.setState(
+          {
+            httpData: {
+              browseType: "commend",
+              page: 1,
+              limit: "10",
+            },
+          },
+          (res) => {
+            this.getVideoList(() => {
+              const { userMomentsList } = this.state;
+              if (userMomentsList.length > 0) {
+                this.setState(
+                  {
+                    userMomentsInfo: this.state.userMomentsList[0],
+                  },
+                  (res) => {
+                    this.initInterval();
+                  }
+                );
+              }
+            });
+          }
+        );
+      } else {
+        this.setState(
+          {
+            userMomentsList: list,
+            current: index,
+            userMomentsInfo: list[index],
+            httpData: {
+              ...this.state.httpData,
+              ...selectObj,
+            },
+          },
+          (res) => {
+            this.initInterval();
+          }
+        );
+      }
     }
   }
   componentWillUnmount() {
     const { homeStore } = this.props.store;
-    homeStore.clearNavitor();
-    evens.$emit("updateMomentsList", this.state.userMomentsList);
-    console.log(this.state.userMomentsList);
+    if (!getCurrentInstance().router.params.type) {
+      homeStore.clearNavitor();
+      evens.$emit("updateMomentsList", this.state.userMomentsList);
+      console.log(this.state.userMomentsList);
+    }
   }
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
@@ -452,6 +496,62 @@ class Index extends React.PureComponent {
         configUserLevelInfo,
       });
     });
+  }
+  shareImageInfo() {
+    const {
+      userMomentsInfo: {
+        userMomentIdString,
+        message,
+        username,
+        cityName,
+        districtName,
+        merchantAddress,
+        frontImage,
+      },
+      player,
+    } = this.state;
+    getShareInfo(
+      {
+        shareType: "video",
+        shareId: userMomentIdString,
+      },
+      (res) => {
+        const {
+          goodsImg,
+          goodsName,
+          hasGoods,
+          oriPrice,
+          realPrice,
+          qcodeUrl,
+          image,
+        } = res;
+        if (player) {
+          this.stopVideoPlayerControl();
+        }
+        let userInfo = Taro.getStorageSync("userInfo");
+        console.log(userInfo);
+        this.setState({
+          cavansObj: {
+            start: true,
+            data: rssConfigData({
+              hasGoods,
+              frontImage: frontImage,
+              message,
+              merchantName: username,
+              cityName: cityName + districtName,
+              address: merchantAddress,
+              username: userInfo.username,
+              userProfile: userInfo.profile,
+              wxCode: qcodeUrl,
+              goodsImg,
+              goodsName,
+              oriPrice,
+              realPrice,
+            }),
+          },
+        });
+      }
+    );
   }
   onShareAppMessage(res) {
     const {
@@ -471,13 +571,13 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
         };
       } else {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
         };
       }
     } else {
@@ -485,13 +585,13 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
         };
       } else {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/index/home/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
         };
       }
     }
@@ -508,9 +608,10 @@ class Index extends React.PureComponent {
       httpData: { browseType },
       beanflag,
       couponFlag,
-      beanLimitStatus,
       player,
+      cavansObj,
     } = this.state;
+    const { beanLimitStatus } = this.props.store.homeStore;
     const templateView = () => {
       if (userMomentsList.length > 0) {
         console.log(time);
@@ -521,6 +622,7 @@ class Index extends React.PureComponent {
               length={length}
               data={userMomentsInfo}
               beanLimitStatus={beanLimitStatus}
+              show={!cavansObj.start}
             ></InterVal>
             <VideoView
               circular={circular}
@@ -532,6 +634,7 @@ class Index extends React.PureComponent {
               onTransition={this.onTransition.bind(this)}
               stop={this.stopVideoPlayerControl.bind(this)}
               userInfo={configUserLevelInfo}
+              shareInfo={this.shareImageInfo.bind(this)}
             ></VideoView>
           </>
         );
@@ -541,7 +644,7 @@ class Index extends React.PureComponent {
             <View>
               <View className="home_order_image home_nullStatus_black"></View>
               <View className="home_order_font">
-                {browseType === "commend" ? "暂无附近的内容" : "暂无关注的内容"}
+                {browseType === "commend" ? "暂无推荐的内容" : "暂无附近的内容"}
               </View>
             </View>
           </View>
@@ -580,12 +683,20 @@ class Index extends React.PureComponent {
             });
           }}
         ></Coupon>
+        <Lead beanLimitStatus={beanLimitStatus}></Lead>
         {!player && (
           <View
             onClick={() => this.stopVideoPlayerControl()}
             className="player_no"
           ></View>
         )}
+        <TaroShareDrawer
+          {...cavansObj}
+          onSave={() => console.log("点击保存")}
+          onClose={() =>
+            this.setState({ cavansObj: { start: false, data: null } })
+          }
+        ></TaroShareDrawer>
       </View>
     );
   }

@@ -36,6 +36,17 @@ export const getSearchDataStatistic = (data, fn) => {
  *null
  *
  * */
+
+export const getListUserMomentBySearch = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/userMoment/listUserMomentBySearch",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取搜索动态 
 export const getSearchRecommend = (data, fn) => {
   httpGet(
     {
@@ -146,6 +157,16 @@ export const getListKolMoments = (data, fn) => {
 };
 //根据条件查找达人种草
 
+export const fetchSearchGoods = (data = {}, fn) => {
+  httpGet(
+    {
+      url: "/user/specialGoods/listSpecialGoods",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//根据条件查找商品
 export const getListMomentByType = (data, fn) => {
   httpGet(
     {
@@ -222,3 +243,25 @@ export const getListMayLikeCoupon = (data = {}, fn) => {
   );
 };
 //猜你喜欢有价券
+
+export const getListSpecialByPeriod = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/specialGoods/listSpecialByPeriodType",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//猜你喜欢有价券
+
+export const fetchMainMerchantList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/mainRecommendMerchantList",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//周边好店列表

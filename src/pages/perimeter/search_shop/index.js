@@ -8,9 +8,12 @@ import {
   getSearchRecommend,
   getSearchConditions,
 } from "@/server/perimeter";
+import { fetchUserShareCommission } from "@/server/index";
 import ContentData from "./components/selectContent/index";
 import Router from "@/common/router";
-
+import { inject, observer } from "mobx-react";
+@inject("store")
+@observer
 export default class Index extends React.Component {
   constructor() {
     super(...arguments);
@@ -31,9 +34,10 @@ export default class Index extends React.Component {
       // },
       userMerchantList: [],
       countStatus: true,
+      configUserLevelInfo: {},
       storageList: Taro.getStorageSync("storageList") || [],
       setting: {
-        tabList: ["商家", "内容", "用户", "话题"],
+        tabList: ["商家", "视频", "商品", "用户"],
         current: 0,
       },
     };
@@ -45,6 +49,15 @@ export default class Index extends React.Component {
       this.setState({
         hotSearchList,
         topicInfo,
+      });
+    });
+  }
+
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
       });
     });
   }
@@ -101,17 +114,10 @@ export default class Index extends React.Component {
         (res) => {
           if (this.state.statistic.keyword) {
             getSearchDataStatistic(this.state.statistic, (res) => {
-              const { userMerchantNum, userMerchantNameList = [] } = res;
-              if (userMerchantNum > 0 && userMerchantNameList.length > 0) {
-                this.setState({
-                  searchInfo: res,
-                  status: "1",
-                });
-              } else {
-                this.setState({
-                  status: "1",
-                });
-              }
+              this.setState({
+                searchInfo: res,
+                status: "1",
+              });
             });
           } else {
             this.setState({
@@ -176,74 +182,63 @@ export default class Index extends React.Component {
 
   componentDidMount() {
     this.getSearchRecommend();
+    this.fetchUserShareCommission();
   }
 
   render() {
     const {
       topicInfo: { topicIdString, topicName, kolMomentsNum },
       hotSearchList,
-      storageList,
+      storageList = [],
       statistic: { keyword },
       searchInfo,
       searchInfo: {
-        userMerchantNum = 0,
+        specialGoodsNum = 0,
         userMerchantNameList = [],
+        userMerchantNum = 0,
         userNum = 0,
-        topicNum = 0,
+        userMomentNum = 0,
       },
       status,
       userMerchantList,
       keywords,
+      configUserLevelInfo,
     } = this.state;
 
     const hasListObj = {
       0: (
         <>
-          <View className="search_shop_orderTags">
-            <View className="search_shop_title color2 font24">最近搜索</View>
-            <View
-              className="search_shop_close"
-              onClick={() => this.cleanList()}
-            ></View>
-          </View>
-          {/*最近搜索*/}
-
-          <View className="search_shopTags font24">
-            {storageList.map((item) => {
-              return (
-                <View
-                  onClick={() => this.changeClick(item)}
-                  className="shopTag  font_hide"
-                >
-                  {item}
+          <View className="search_searchPadding"></View>
+          {storageList.length > 0 && (
+            <>
+              <View className="search_shop_orderTags">
+                <View className="search_shop_title color1 font32 bold">
+                  最近搜索
                 </View>
-              );
-            })}
-          </View>
-          {/*标签*/}
+                <View
+                  className="search_shop_close"
+                  onClick={() => this.cleanList()}
+                ></View>
+              </View>
+              {/*最近搜索*/}
 
-          <View className="search_shop_liner"></View>
-          {/*下划线*/}
-          <View
-            onClick={() =>
-              Router({
-                routerName: "tipView",
-                args: {
-                  topicId: topicIdString,
-                },
-              })
-            }
-          >
-            <View className="search_hot_search color2 font24 public_auto">
-              <Text>推荐话题</Text>
-              <Text>{kolMomentsNum}篇分享</Text>
-            </View>
-            <View className="search_hot_tipName font28 bold color1">
-              #{topicName}
-            </View>
-            <View className="search_hot_liner"></View>
-          </View>
-          <View className="search_hot_search color2 font24">热门搜索</View>
+              <View className="search_shopTags font24">
+                {storageList.map((item) => {
+                  return (
+                    <View
+                      onClick={() => this.changeClick(item)}
+                      className="shopTag  font_hide"
+                    >
+                      {item}
+                    </View>
+                  );
+                })}
+              </View>
+            </>
+          )}
+
+          {/*标签*/}
+          <View className="search_hot_search color1 font32 bold">热门搜索</View>
           {/*热门搜索*/}
           <View className="search_hot_list">
             <View className="search_liner"></View>
@@ -268,7 +263,7 @@ export default class Index extends React.Component {
             onClick={() => {
               this.setState({
                 setting: {
-                  tabList: ["商家", "内容", "用户", "话题"],
+                  tabList: ["商家", "视频", "商品", "用户"],
                   current: 0,
                 },
               });
@@ -280,7 +275,7 @@ export default class Index extends React.Component {
               {keyword}
             </View>
             <View className="font24 color2 search_shop_right">
-              约{userMerchantNum || 0}个商户
+              约{userMerchantNum}个商家
             </View>
           </View>
           <View
@@ -288,8 +283,48 @@ export default class Index extends React.Component {
             onClick={() => {
               this.setState({
                 setting: {
-                  tabList: ["商家", "内容", "用户", "话题"],
+                  tabList: ["商家", "视频", "商品", "用户"],
                   current: 1,
+                },
+              });
+              this.changeClick(keyword);
+            }}
+          >
+            <View className="search_video_icon"></View>
+            <View className="font28 color1 font_hide search_hide">
+              {keyword}
+            </View>
+            <View className="font24 color2 search_shop_right">
+              约{userMomentNum}个视频
+            </View>
+          </View>
+          <View
+            className="search_shop_layer"
+            onClick={() => {
+              this.setState({
+                setting: {
+                  tabList: ["商家", "视频", "商品", "用户"],
+                  current: 2,
+                },
+              });
+              this.changeClick(keyword);
+            }}
+          >
+            <View className="search_goods_icon"></View>
+            <View className="font28 color1 font_hide search_hide">
+              {keyword}
+            </View>
+            <View className="font24 color2 search_shop_right">
+              约{specialGoodsNum}个商品
+            </View>
+          </View>
+          <View
+            className="search_shop_layer"
+            onClick={() => {
+              this.setState({
+                setting: {
+                  tabList: ["商家", "视频", "商品", "用户"],
+                  current: 3,
                 },
               });
               this.changeClick(keyword);
@@ -300,47 +335,7 @@ export default class Index extends React.Component {
               {keyword}
             </View>
             <View className="font24 color2 search_shop_right">
-              约{userNum || 0}个用户
-            </View>
-          </View>
-          <View
-            className="search_shop_layer"
-            onClick={() => {
-              this.setState({
-                setting: {
-                  tabList: ["商家", "内容", "用户", "话题"],
-                  current: 2,
-                },
-              });
-              this.changeClick(keyword);
-            }}
-          >
-            <View className="search_share_icon"></View>
-            <View className="font28 color1 font_hide search_hide">
-              {keyword}
-            </View>
-            <View className="font24 color2 search_shop_right">
-              约{topicNum || 0}个分享
-            </View>
-          </View>
-          <View
-            className="search_shop_layer"
-            onClick={() => {
-              this.setState({
-                setting: {
-                  tabList: ["商家", "内容", "用户", "话题"],
-                  current: 3,
-                },
-              });
-              this.changeClick(keyword);
-            }}
-          >
-            <View className="search_tip_icon"></View>
-            <View className="font28 color1 font_hide search_hide">
-              {keyword}
-            </View>
-            <View className="font24 color2 search_shop_right">
-              约{searchInfo.kolMomentsNum || 0}个话题
+              约{searchInfo.userNum}个用户
             </View>
           </View>
           {userMerchantNameList.map((item) => {
@@ -364,6 +359,8 @@ export default class Index extends React.Component {
           keyword={keywords}
           setting={this.state.setting}
           userList={userMerchantList}
+          configUserLevelInfo={configUserLevelInfo}
+          store={this.props.store}
         ></ContentData>
       ),
     }[status];
@@ -380,7 +377,7 @@ export default class Index extends React.Component {
               value={keyword}
               onInput={(e) => this.searchDetails(e)}
               className="search_shop_input"
-              placeholder={"搜索附近商户/用户以及好玩的话题内容"}
+              placeholder={"搜索附近好玩的内容"}
             ></Input>
           </View>
           {hasListObj}

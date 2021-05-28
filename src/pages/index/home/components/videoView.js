@@ -28,12 +28,14 @@ export default ({
   onTransition,
   stop,
   userInfo,
+  shareInfo,
 }) => {
   const [scale, setScale] = useState(0);
   useEffect(() => {
     setScale(0);
   }, [current]);
   const expensive = useMemo(() => {
+    const { shareCommission = 0 } = userInfo;
     if (data.length > 0) {
       return (
         <View
@@ -182,17 +184,14 @@ export default ({
                             </View>
                           </>
                         )}
-                        <View className="home_share_wechat">
-                          <Button
-                            open-type="share"
-                            style={{
-                              border: "0px soild white",
-                              background: (0, 0, 0, 0),
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          ></Button>
-                        </View>
+                        <View
+                          onClick={() => shareInfo()}
+                          className={classNames(
+                            shareCommission > 0
+                              ? "home_share_animate"
+                              : "home_share_wechat"
+                          )}
+                        ></View>
 
                         <View className="collected_font">{shareAmount}</View>
                       </View>

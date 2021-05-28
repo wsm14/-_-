@@ -4,11 +4,84 @@ page {
 }
 .specialOffer_box {
   width: 100%;
+  min-height: 100%;
   background: #ffffff;
   overflow-x: hidden;
   overflow-y: auto;
+  .specialOffer_novite {
+    height: 680px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ef476f;
+    .specialOffer_novite_content {
+      margin: 0 16px;
+      width: 718px;
+      height: 612px;
+      background: #ffffff;
+      border-radius: 20px;
+      position: relative;
+      .specialOffer_select_content {
+        width: 718px;
+        height: 84px;
+        font-size: 32px;
+        position: relative;
+        display: flex;
+      }
+      .specialOffer_select_liner {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 40px;
+        height: 4px;
+        background: #ef476f;
+        margin: 0 auto;
+      }
+      .specialOffer_select_view {
+        flex: 1;
+        padding-top: 32px;
+        text-align: center;
+        position: relative;
+      }
+      .specialOffer_select_tags1 {
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon588.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .specialOffer_select_tags2 {
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon589.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .specialOffer_novite_title {
+        padding: 32px 0 0;
+        font-size: 32px;
+        font-weight: normal;
+        color: #ef476f;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .specialOffer_novite_liner {
+        margin: 16px auto 0;
+        width: 40px;
+        height: 4px;
+        background: #ef476f;
+        border-radius: 2px;
+      }
+      .specialOffer_novite_scroll {
+        margin: 24px 16px 0;
+      }
+    }
+  }
+  .specialOffer_content_pay {
+    font-size: 36px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 36px;
+    padding: 40px 32px 0;
+  }
   .specialOffer_content {
     padding: 32px 32px 0;
   }
- 
 }

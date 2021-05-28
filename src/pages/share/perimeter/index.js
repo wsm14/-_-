@@ -8,7 +8,7 @@ import NallStatus from "@/components/nullStatus";
 import Favourable from "./components/favourable";
 import Waterfall from "@/components/waterfall";
 import { createdShareKol } from "@/components/publicShopStyle";
-import { login, authGeography, scanCode, mapTx } from "@/common/authority";
+import { login, scanCode, mapTx } from "@/common/authority";
 import {
   filterLogin,
   navigateTo,

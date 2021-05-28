@@ -1,15 +1,15 @@
 /*
 店铺详情优惠券公共样式
-
 */
 import React from "react";
 import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import Router from "@/common/router";
 import { computedPrice, setBuyRule } from "@/common/utils";
+import classNames from "classnames";
+import ButtonView from "@/components/Button";
 import "./../../index.scss";
-export default ({ data, configUserLevelInfo }) => {
-  console.log(data);
+export default ({ data, configUserLevelInfo, setCollection, getShareInfo }) => {
   const {
     anytimeRefund,
     expireRefund,
@@ -20,9 +20,10 @@ export default ({ data, configUserLevelInfo }) => {
     couponName,
     couponPrice,
     personLimit,
+    userCollectionStatus,
   } = data;
   const { payBeanCommission = 50 } = configUserLevelInfo;
-  console.log(configUserLevelInfo );
+  console.log(configUserLevelInfo);
   const templateSelect = () => {
     if (buyRule === "unlimited") {
       return `不限购`;
@@ -77,6 +78,25 @@ export default ({ data, configUserLevelInfo }) => {
         <View className="coupon_top_right">
           卡豆可抵 ¥{computedPrice(buyPrice, payBeanCommission)}
         </View>
+      </View>
+      <View className="coupon_setting public_auto">
+        <ButtonView>
+          <View
+            onClick={() => setCollection()}
+            className={classNames(
+              userCollectionStatus === "1"
+                ? "coupon_isCollect"
+                : "coupon_collect"
+            )}
+          >
+            {userCollectionStatus === "1" ? "已收藏" : "收藏"}
+          </View>
+        </ButtonView>
+        <ButtonView>
+          <View onClick={() => getShareInfo()} className="coupon_share">
+            分享
+          </View>
+        </ButtonView>
       </View>
     </View>
   );

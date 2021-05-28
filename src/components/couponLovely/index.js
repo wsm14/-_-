@@ -1,3 +1,6 @@
+/*猜你喜欢有价券列表  
+  title 自定义有价券列表标题
+*/
 import React, { useState, useRef, useEffect } from "react";
 import { ScrollView, View } from "@tarojs/components";
 import Taro, { useReachBottom } from "@tarojs/taro";

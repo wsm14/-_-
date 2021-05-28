@@ -23,6 +23,7 @@ const config = {
         enable: true,
         config: {},
       },
+
       url: {
         enable: true,
         config: {
@@ -36,6 +37,9 @@ const config = {
           generateScopedName: "[name]__[local]___[hash:base64:5]",
         },
       },
+    },
+    csso: {
+      enable: false,
     },
   },
   h5: {
@@ -54,7 +58,6 @@ const config = {
         },
       },
     },
-   
   },
   alias: {
     "@/api": path.resolve(__dirname, "..", "src/api"),
@@ -63,11 +66,19 @@ const config = {
     "@/layout": path.resolve(__dirname, "..", "src/layout"),
     "@/server": path.resolve(__dirname, "..", "src/server"),
   },
+  copy: {
+    patterns: [
+      { from: "cloud", to: "dist/cloud" }, // 指定需要 copy 的目录
+    ],
+  },
 };
 
 module.exports = function (merge) {
   if (process.env.NODE_ENV === "development") {
     return merge({}, config, require("./dev"));
+  }
+  if (process.env.NODE_ENV === "pre") {
+    return merge({}, config, require("./pre"));
   }
   return merge({}, config, require("./prod"));
 };

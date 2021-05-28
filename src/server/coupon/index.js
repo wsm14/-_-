@@ -6,7 +6,7 @@ import { httpGet, httpPost } from "@/api/newRequest";
  * size
  * */
 export const getCouponList = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/userCoupon/listUserCouponByUserId",
       data: data,

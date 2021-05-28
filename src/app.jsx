@@ -25,11 +25,8 @@ class App extends Component {
     this.getShareType();
   }
   getShareType() {
-    const {
-      shareUserId,
-      shareUserType,
-      scene,
-    } = getCurrentInstance().router.params;
+    const { shareUserId, shareUserType, scene } =
+      getCurrentInstance().router.params;
     if (scene) {
       getShareParamInfo({ uniqueKey: scene }, (res) => {
         const {

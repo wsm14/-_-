@@ -2,14 +2,15 @@ import React from "react";
 import Taro from "@tarojs/taro";
 import Banner from "@/components/banner";
 import { View } from "@tarojs/components";
-import { backgroundObj, loginStatus, navigateTo } from "@/common/utils";
+import { backgroundObj, loginStatus, navigateTo, toast } from "@/common/utils";
 import Router from "@/common/router";
 import classnames from "classnames";
-import Skeleton from "taro-skeleton";
+import { bindTelephone } from "@/server/auth";
+import { saveUpdateLoginUserInfo } from "@/server/user";
 import "./../../index.scss";
 
 export default (props) => {
-  const { data, status } = props;
+  const { data, status, reload } = props;
   const {
     profile,
     username,
@@ -25,9 +26,39 @@ export default (props) => {
   };
   const goUser = () => {
     if (status === 1 && loginStatus()) {
-      navigateTo("/pages/newUser/userDetails/index");
+      navigateTo("/pages/share/download/index");
     } else {
       login();
+    }
+  };
+
+  const fetchUserDetails = () => {
+    const { xcxOpenId = "", unionId = "" } = loginStatus() || {};
+    console.log(wx.getUserProfile);
+    if (wx.getUserProfile) {
+      wx.getUserProfile({
+        desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+        success: (res) => {
+          const { errMsg, userInfo } = res;
+          if (errMsg === "getUserProfile:ok") {
+            const { nickName, avatarUrl } = userInfo;
+            saveUpdateLoginUserInfo(
+              {
+                username: nickName,
+                profile: avatarUrl,
+              },
+              (res) => {
+                reload();
+              }
+            );
+          } else {
+            console.log(errMsg);
+            toast("获取失败");
+          }
+        },
+      });
+    } else {
+      toast("基础库版本过低 无法同步,请升级微信");
     }
   };
   return (
@@ -64,9 +95,11 @@ export default (props) => {
             : "打卡，记录美好生活"}
         </View>
       </View>
-      <View className="user_goLink" onClick={() => goUser()}>
-        <View className="color1 font24">个人主页</View>
-      </View>
+      {status === 1 && loginStatus() && (
+        <View className="user_goLink" onClick={() => fetchUserDetails()}>
+          <View className="color6 font24">同步微信账号</View>
+        </View>
+      )}
     </View>
   );
 };

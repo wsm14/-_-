@@ -9,7 +9,7 @@ export default {
     "pages/auth/index", //登录
   ],
   window: {
-    backgroundTextStyle: "light",
+    backgroundTextStyle: "dark",
     navigationBarBackgroundColor: "#ffffff",
     navigationBarTitleText: "WeChat",
     navigationBarTextStyle: "black",
@@ -54,7 +54,7 @@ export default {
   },
   subPackages: [
     {
-      root: "pages/kol/",
+      root: "pages/kol",
       pages: [
         "legal/index", //达人等级
         "report/index", //举报
@@ -63,7 +63,7 @@ export default {
       ],
     },
     {
-      root: "pages/newUser/",
+      root: "pages/newUser",
       pages: [
         "circle/index", //协议规则
         "incomeDetails/index", //收益明细
@@ -77,29 +77,30 @@ export default {
       ],
     },
     {
-      root: "pages/share/",
+      root: "pages/share",
       pages: [
         "invitation/index", //邀请函
         "download/index", //下载,
-        "step/index", //,同步步数
         "shareFriend/index", //分享好友,
-        "shareShop/index", //分享家店
         "pay_wx_lite/index", //微信支付
         "webView/index", //webView页面
         "mPay_wx_lite/index", //商家端支付页面
       ],
     },
     {
-      root: "pages/perimeter/",
+      root: "pages/perimeter",
       pages: [
+        "perimeterShops/index", //周边好店
+        "videoDetails/index", //视频详情
         "couponList/index", //有价券列表
         "payCouponDetails/index", //有价券详情
         "benchmark/index", //逛逛风向标列表
-        "specialOffer/index", //逛逛内层列表
+        "specialOffer/index", //逛逛限时秒杀内层列表
+        "speciaMaterial/index", //逛逛爆品福利内层列表
         "groupList/index", //特惠集团搜索
         "merchantVideo/index", //商家主页视频
         "nearVideo/index", //附近主页视频
-        "beanReward/index",
+        "beanReward/index", //卡豆明细
         "commodity/index", //橱窗商品详情
         "willCity/index", //即将开通
         "businessSell/index", //商家信息
@@ -119,7 +120,7 @@ export default {
       ],
     },
     {
-      root: "pages/goods/",
+      root: "pages/goods",
       pages: [
         "payWeex/index", //支付
         "favourOrder/index", //特价下单
@@ -134,7 +135,7 @@ export default {
       ],
     },
     {
-      root: "pages/coupon/",
+      root: "pages/coupon",
       pages: [
         "wraparound/index", //券包
         "couponDetails/index", //券包详情
@@ -142,7 +143,7 @@ export default {
       ],
     },
     {
-      root: "pages/rules/",
+      root: "pages/rules",
       pages: [
         "interests/index", //券包
       ],

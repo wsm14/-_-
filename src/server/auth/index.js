@@ -22,7 +22,7 @@ export const getUserInfo = (data, fn) => {
 export const bindTelephone = (data, fn) => {
   httpGet(
     {
-      url: "/user/wechat/bindMobileByWechatXcx",
+      url: "/user/wechat/v2/bindMobileByWechatXcx",
       data: data,
     },
     (res) => fn(res)

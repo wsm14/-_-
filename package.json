@@ -47,7 +47,6 @@
     "mobx-react": "^6.1.4",
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
-    "taro-ui": "3.0.0-alpha.3",
     "terser-webpack-plugin": "^5.1.1"
   },
   "devDependencies": {
@@ -55,7 +54,6 @@
     "@babel/plugin-syntax-flow": "^7.12.1",
     "@babel/preset-flow": "^7.12.1",
     "@miniprogram-component-plus/video-swiper": "^1.0.1",
-    "@mvpleung/taro-skeleton": "^1.0.14",
     "@tarojs/mini-runner": "3.0.21",
     "@tarojs/mobx": "^2.2.10",
     "@tarojs/webpack-runner": "3.0.21",
@@ -73,8 +71,6 @@
     "mina-painter": "^1.0.0",
     "qs": "^6.9.4",
     "stylelint": "9.3.0",
-    "taro-skeleton": "^2.0.3",
-    "taro-ui": "3.0.0-alpha.3",
     "weapp-qrcode": "^1.0.0",
     "webpack-bundle-analyzer": "^4.3.0",
     "wxmp-qrcode": "^2.0.3"

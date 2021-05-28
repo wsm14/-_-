@@ -18,11 +18,7 @@ const toastCity = (props) => {
   const { data, store } = props;
   const [visible, setVisible] = useState(false);
   const [citys, setCity] = useState({});
-  const [result, setResult] = useState({
-    ad_info: {},
-    address: {},
-    address_component: {},
-  });
+  const [result, setResult] = useState({});
   useEffect(() => {
     if (Object.keys(data).length > 0) {
       setResult(data);
@@ -30,11 +26,8 @@ const toastCity = (props) => {
   }, [data]);
   useEffect(() => {
     if (Object.keys(result).length > 3) {
-      let {
-        ad_info: { city_code, nation_code },
-        address_component: { city },
-      } = result;
-      city_code = city_code.slice(3, 7);
+      const { city, adcode } = result;
+      const city_code = adcode.slice(0, 4);
       checkLocations({ cityCode: city_code, city });
     }
   }, [result]);
@@ -42,17 +35,15 @@ const toastCity = (props) => {
     checkLocation(obj, (res) => {
       const { cityStatus, cityName } = res;
       if (cityStatus === "0") {
-        let cityData = Taro.getStorageSync("city");
-        if (!cityData) {
+        let relData = Taro.getStorageSync("relCity") || {};
+        if (obj.cityCode !== relData.cityCode) {
           setVisible(true);
         }
       }
     });
   };
   if (visible) {
-    const {
-      address_component: { city = "" },
-    } = result;
+    const { city = "" } = result;
     return (
       <View catchMove className="toastCity_layer">
         <View className="toastCity_box">
@@ -67,7 +58,7 @@ const toastCity = (props) => {
             <View
               className="toastCity_font4 font32"
               onClick={() => {
-                navigateTo("/pages/perimeter/city/index");
+                navigateTo(`/pages/perimeter/city/index?type=nullStatus&cityCode=${result.adcode.slice(0,4)}`);
               }}
             >
               切换城市

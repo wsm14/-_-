@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { View, Text, Image, ScrollView } from "@tarojs/components";
-import { GetDistance, getLnt, getLat, backgroundObj } from "@/common/utils";
+import { GetDistance, getLnt, getLat, backgroundObj ,computedPrice} from "@/common/utils";
 import Router from "@/common/router";
 import "./../index.scss";
 export default ({ data = [], userInfo = {}, linkTo }) => {
@@ -29,25 +29,39 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
           className="lookAround_hot_specal animated  fadeIn"
           onClick={() => linkTo(specialActivityIdString, merchantIdString)}
         >
-          <View className="lookAround_hot_specalImage" style={backgroundObj(goodsImg)}>
-          </View>
+          <View
+            className="lookAround_hot_specalImage"
+            style={backgroundObj(goodsImg)}
+          ></View>
           <View className="lookAround_hot_bottom font_noHide">{goodsName}</View>
+          <View className="lookAround_hot_user">
+            <View
+              className="lookAround_hot_userProfile"
+              style={backgroundObj(merchantLogo)}
+            ></View>
+            <View className="lookAround_hot_merchantName font_hide">
+              {merchantName}
+            </View>
+            <View className="lookAround_hot_limit">
+              {"|" + GetDistance(getLat(), getLnt(), lat, lnt)}
+            </View>
+          </View>
           <View className="lookAround_hot_price">
-            <Text className="lookAround_price_text">¥  </Text>
+            <Text className="lookAround_price_text">¥ </Text>
             {realPrice}
             {shareCommission !== 0 && (
               <View className="lookAround_share_text">
-                /赚¥  
-                {(
-                  (realPrice - merchantPrice) *
-                  (shareCommission / 100)
-                ).toFixed(2)}
+                /赚¥
+                {computedPrice(realPrice - merchantPrice, shareCommission)}
               </View>
             )}
           </View>
           <View className="lookAround_hot_rel"> ¥ {oriPrice}</View>
           <View className="lookAround_bean_border">
-            <View style={{  border: '1px solid #ef476f'}} className="lookAround_bean_box">
+            <View
+              style={{ border: "1px solid #ef476f" }}
+              className="lookAround_bean_box"
+            >
               卡豆可抵 ¥{(realPrice * (payBeanCommission / 100)).toFixed(2)}
             </View>
           </View>
@@ -60,9 +74,6 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
           onClick={() =>
             Router({
               routerName: "specialOffer",
-              args: {
-                type: "hot",
-              },
             })
           }
           className="lookAround_active_title"
@@ -81,6 +92,6 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
         </ScrollView>
       </View>
     );
-  }, [data, payBeanCommission,shareCommission]);
+  }, [data, payBeanCommission, shareCommission]);
   return memo;
 };
