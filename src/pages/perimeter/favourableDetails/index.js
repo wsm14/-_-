@@ -552,7 +552,7 @@ class MerchantDetails extends Component {
                         : "shopdetails_collect"
                     )}
                   >
-                    收藏
+                    { userCollectionStatus === "1"?'已收藏':'收藏'}
                   </View>
                 </ButtonView>
                 <ButtonView>

@@ -5,6 +5,7 @@ import Taro, { useReachBottom } from "@tarojs/taro";
 import { getSearchConditions } from "@/server/perimeter";
 import "./../../../index.scss";
 import { backgroundObj, GetDistance, getLat, getLnt } from "@/common/utils";
+import classNames from "classnames";
 import Router from "@/common/router";
 export default ({ keyword, current }) => {
   const [data, setData] = useState({
@@ -44,7 +45,10 @@ export default ({ keyword, current }) => {
       if (markFlag === "1" || specialGoodsFlag === "1") {
         return (
           <View
-            className="search_merchant_specail"
+            className={classNames(
+              "search_merchant_specail",
+              businessTime && "search_merchant_buss"
+            )}
             onClick={() =>
               Router({
                 routerName: "merchantDetails",
@@ -92,11 +96,13 @@ export default ({ keyword, current }) => {
               ｜人均￥{perCapitaConsumption}
             </View>
             <View className="search_merchantCard_time">
-              {businessTime ? `营业时间 ${businessTime.split(',')[0]}` : ""}
+              {businessTime
+                ? `营业时间 ${businessTime.split(",")[0]}`
+                : bottomRender()}
             </View>
           </View>
         </View>
-        {bottomRender()}
+        {businessTime && bottomRender()}
       </View>
     );
   };

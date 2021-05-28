@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { View, Text, Image, ScrollView } from "@tarojs/components";
-import { GetDistance, getLnt, getLat, backgroundObj } from "@/common/utils";
+import { GetDistance, getLnt, getLat, backgroundObj ,computedPrice} from "@/common/utils";
 import Router from "@/common/router";
 import "./../index.scss";
 export default ({ data = [], userInfo = {}, linkTo }) => {
@@ -52,10 +52,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
             {shareCommission !== 0 && (
               <View className="lookAround_share_text">
                 /赚¥
-                {(
-                  (realPrice - merchantPrice) *
-                  (shareCommission / 100)
-                ).toFixed(2)}
+                {computedPrice(realPrice - merchantPrice, shareCommission)}
               </View>
             )}
           </View>

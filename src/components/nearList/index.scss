@@ -102,8 +102,12 @@
       border-radius: 50%;
     }
     .nearList_merchantName {
-      max-width: 184px;
+      max-width: 124px;
       margin-left: 16px;
+    }
+    .nearList_limit{
+      max-width: 184px;
+      text-indent: 12px;
     }
   }
 }

@@ -342,10 +342,7 @@ class Index extends Component {
       <View className="lookAround_box">
         <Navition city={cityName}></Navition>
         {num === 0 && (
-          <View
-          
-            className="wechant_init color6 font28"
-          >
+          <View className="wechant_init color6 font28">
             “添加到我的小程序”，更多优惠抢不停
           </View>
         )}{" "}

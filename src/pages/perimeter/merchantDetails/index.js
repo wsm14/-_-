@@ -603,14 +603,7 @@ class MerchantDetails extends Component {
 
           {specialGoodsList.length > 0 && (
             <>
-              <View
-                className="merchant_active"
-                onClick={() =>
-                  navigateTo(
-                    `/pages/perimeter/special/index?merchantId=${merchantId}`
-                  )
-                }
-              >
+              <View className="merchant_active">
                 <View className="merchant_active_title">
                   <View className="merchant_active_iconBox active_icon2"></View>
                   <View className="merchant_active_biaoti">特价活动</View>
@@ -618,7 +611,16 @@ class MerchantDetails extends Component {
                 <View className="merchant_active_dec">
                   店铺超限时特价活动 限时限量
                 </View>
-                <View className="active_go"></View>
+                {specialGoodsList.length === 6 && (
+                  <View
+                    className="active_go"
+                    onClick={() =>
+                      navigateTo(
+                        `/pages/perimeter/special/index?merchantId=${merchantId}`
+                      )
+                    }
+                  ></View>
+                )}
               </View>
               <View className="merchant_newPrice">
                 {specialGoodsList.length > 1 ? (

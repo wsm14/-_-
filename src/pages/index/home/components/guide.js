@@ -101,7 +101,7 @@ export default (props) => {
                 login();
               }}
             >
-              授权手机号领取
+              授权登录领取
             </View>
           </View>
           <View className="guide_Box_close"></View>

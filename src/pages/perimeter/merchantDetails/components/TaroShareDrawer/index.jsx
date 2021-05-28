@@ -120,7 +120,7 @@ const shareImg = ({ start = false, data = [], onClose, onSave }) => {
             src={shareImage}
             mode="widthFix"
             lazy-load
-            className="share_image"
+            className="share_image public_image_radius"
           />
           <View className="share_image_save">
             <View

@@ -128,8 +128,8 @@ export default (props) => {
                 卡豆抵扣到手价
               </View>
               <View className="home_active_price">
-                <View className="color10 font20">¥ </View>
-                <View className="color10 font28">
+                <View className="color12 font20">¥ </View>
+                <View className="color12 font28">
                   {" " + promotionBuyPrice}
                 </View>
                 <View className="home_active_specal">
@@ -164,8 +164,8 @@ export default (props) => {
                 <View className="home_shareCommission_title font20">
                   卡豆抵扣到手价
                 </View>
-                <View className="color10  font24">¥ </View>
-                <View className="color10  font28">{promotionBuyPrice}</View>
+                <View className="color12  font24">¥ </View>
+                <View className="color12  font28">{promotionBuyPrice}</View>
                 <View className="home_shareCommission_specal">
                   {"¥" + promotionOriPrice}
                 </View>
@@ -258,6 +258,7 @@ export default (props) => {
       {/* {list.length > 0 && <Barrage data={list}></Barrage>} */}
       {children}
       {activeView()}
+      <View className='home_username font_hide'>@{username}</View>
       {descView()}
       <View className="home_desc_coll public_auto">
         <View

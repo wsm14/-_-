@@ -90,8 +90,8 @@ export const nearList = (item = {}, list = [], store) => {
         ></View>
 
         <View className="nearList_merchantName font_hide">{username}</View>
-        <View className="nearList_limit">
-          {"|" + GetDistance(getLat(), getLnt(), lat, lnt)}
+        <View className="nearList_limit  font_hide">
+          {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
         </View>
       </View>
     </View>
@@ -134,7 +134,7 @@ export const searchList = (item = {}, list = [], store) => {
     if (promotionExtraParam.length > 0) {
       obj = JSON.parse(promotionExtraParam);
     }
-    const {buyPrice = ''} = obj;
+    const { buyPrice = "" } = obj;
     const template = {
       special: (
         <View className="nearList_dakale_active">
@@ -181,9 +181,9 @@ export const searchList = (item = {}, list = [], store) => {
           className="nearList_user dakale_profile"
         ></View>
 
-        <View className="nearList_merchantName font_hide">{username}</View>
-        <View className="nearList_limit">
-          {"|" + GetDistance(getLat(), getLnt(), lat, lnt)}
+        <View className="nearList_merchantName font_hide">{username+' '}</View>
+        <View className="nearList_limit font_hide">
+          {"| " + GetDistance(getLat(), getLnt(), lat, lnt)}
         </View>
       </View>
     </View>

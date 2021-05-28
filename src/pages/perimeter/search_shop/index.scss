@@ -60,7 +60,7 @@ page {
     }
 
     .search_shopTags {
-      padding-top: 12px;
+      padding-top: 20px;
       display: flex;
       flex-wrap: wrap;
 
@@ -246,7 +246,7 @@ page {
         position: absolute;
         bottom: 18px;
         right: 0px;
-        font-size: 24px;
+        font-size: 28px;
         border-radius: 4px;
       }
       .search_user_btnStyle1 {
@@ -351,8 +351,12 @@ page {
     }
   }
   .search_merchant_specail {
-    padding: 16px 0 0 164px;
+  
     display: flex;
+  }
+  .search_merchant_buss{
+    padding-left: 164px;
+    padding-top: 16px;
   }
   .search_merchant_bean {
     display: flex;

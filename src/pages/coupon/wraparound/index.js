@@ -93,17 +93,15 @@ class Index extends PureComponent {
 
   render() {
     const tabStyle = {
-      height: Taro.pxTransform(88),
-      borderRadius: "0px 0px 20px 20px",
+      height: Taro.pxTransform(96),
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
       background: "#FFFFFF",
-      padding: `0 ${Taro.pxTransform(52)}`,
+      padding: `0 ${Taro.pxTransform(71)}`,
       position: "fixed",
       left: 0,
       right: 0,
-      top: 0,
       zIndex: 100,
     };
     const {
@@ -166,6 +164,14 @@ class Index extends PureComponent {
         <Tabs
           fn={this.setIndex.bind(this)}
           style={tabStyle}
+          lineStyle={{
+        background: "#108588",
+        width: Taro.pxTransform(40),
+        height: Taro.pxTransform(4),
+        borderRadius: Taro.pxTransform(2),
+      }}
+      fontStyle={{ color: "#108588", fontSize: Taro.pxTransform(32) }}
+      sizeStyle={{ fontSize: Taro.pxTransform(32), color: "#999999" }}
           {...setting}
         ></Tabs>
         <View className="wraparound_content_box">

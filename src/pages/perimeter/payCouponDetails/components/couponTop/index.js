@@ -89,7 +89,7 @@ export default ({ data, configUserLevelInfo, setCollection, getShareInfo }) => {
                 : "coupon_collect"
             )}
           >
-            收藏
+            {userCollectionStatus === "1" ? "已收藏" : "收藏"}
           </View>
         </ButtonView>
         <ButtonView>

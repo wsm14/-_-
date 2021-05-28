@@ -50,7 +50,7 @@ export default ({
           borderRadius: Taro.pxTransform(2),
         }}
         fontStyle={{ color: "#108588", fontSize: Taro.pxTransform(32) }}
-        sizeStyle={{ fontSize: Taro.pxTransform(32) }}
+        sizeStyle={{ fontSize: Taro.pxTransform(32) ,color:'#999999'}}
         style={tabStyle}
         {...setting}
       ></Tabs>
