@@ -206,7 +206,6 @@ class Index extends Component {
     const {
       detail: { scrollLeft, scrollWidth },
     } = val;
-    console.log(val);
     let box = scrollWidth - 335;
     if (parseInt((scrollLeft / box) * 100) < 50) {
       this.setState({
@@ -383,7 +382,6 @@ class Index extends Component {
               showNear
             ></Banner>
           </View>
-
           <ScrollView
             onScroll={this.setSlider.bind(this)}
             className="lookAround_category_scroll"

@@ -38,7 +38,6 @@ const config = {
         },
       },
     },
-    enableSourceMap: false,
     csso: {
       enable: false,
     },

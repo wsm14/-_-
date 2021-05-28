@@ -16,6 +16,7 @@ import { scanCard } from "@/common/authority";
 import ShopView from "./components/shopView";
 import { fetchUserShareCommission } from "@/server/index";
 import {getBanner} from  '@/server/common'
+import Banner from "@/components/banner";
 import "./index.scss";
 
 class index extends PureComponent {
