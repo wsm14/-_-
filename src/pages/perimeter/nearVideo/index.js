@@ -10,7 +10,7 @@ import {
   goBack,
   loginStatus,
 } from "@/common/utils";
-import InterVal from "@/components/setTimeCanvas";
+import InterVal from "@/components/videoComponents";
 import {
   getUserMomentList,
   saveWatchBean,
@@ -27,9 +27,9 @@ import Toast from "@/components/beanToast";
 import Coupon from "@/components/freeCoupon";
 import Lead from "@/components/lead";
 import { getShareInfo } from "@/server/common";
-import "./index.scss";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -64,7 +64,7 @@ class Index extends React.PureComponent {
   }
 
   onChange(e) {
-    const { countStatus, httpData, userMomentsList, interval } = this.state;
+    const { countStatus, httpData, userMomentsList } = this.state;
     let { current } = e.detail;
     this.setState(
       {
@@ -76,7 +76,7 @@ class Index extends React.PureComponent {
       },
       (res) => {
         this.videoPlayerControl();
-        this.initInterval();
+
         if (current >= this.state.userMomentsList.length - 3 && countStatus) {
           this.setState(
             {
@@ -89,10 +89,6 @@ class Index extends React.PureComponent {
               this.getVideoList();
             }
           );
-        } else {
-          if (current === this.state.userMomentsList.length - 1) {
-            return toast("暂无数据");
-          }
         }
       }
     );
@@ -100,21 +96,14 @@ class Index extends React.PureComponent {
   stopVideoPlayerControl() {
     const { current, interval, player } = this.state;
     if (player) {
-      if (interval) {
-        this.stopInterval(interval);
-      }
       this.setState({
         player: false,
       });
-      Taro.createVideoContext(`video${current}`).stop();
+      Taro.createVideoContext(`video${current}`).pause();
     } else {
-      if (interval) {
-        this.stopInterval(interval);
-      }
       this.setState({
         player: true,
       });
-      this.initInterval();
       Taro.createVideoContext(`video${current}`).play();
     }
   }
@@ -122,12 +111,12 @@ class Index extends React.PureComponent {
     if (!this.interSwper) {
       this.interSwper = setTimeout(() => {
         this.onChange(e);
-      }, 200);
+      }, 400);
     } else {
       clearTimeout(this.interSwper);
       this.interSwper = setTimeout(() => {
         this.onChange(e);
-      }, 200);
+      }, 400);
     }
   }
   onTransition(e) {
@@ -156,14 +145,9 @@ class Index extends React.PureComponent {
               (res) => {
                 this.getVideoList(() => {
                   if (this.state.userMomentsList.length > 0) {
-                    this.setState(
-                      {
-                        userMomentsInfo: this.state.userMomentsList[0],
-                      },
-                      (res) => {
-                        this.initInterval();
-                      }
-                    );
+                    this.setState({
+                      userMomentsInfo: this.state.userMomentsList[0],
+                    });
                   }
                 });
               }
@@ -186,14 +170,9 @@ class Index extends React.PureComponent {
             (res) => {
               this.getVideoList(() => {
                 if (this.state.userMomentsList.length > 0) {
-                  this.setState(
-                    {
-                      userMomentsInfo: this.state.userMomentsList[0],
-                    },
-                    (res) => {
-                      this.initInterval();
-                    }
-                  );
+                  this.setState({
+                    userMomentsInfo: this.state.userMomentsList[0],
+                  });
                 }
               });
             }
@@ -224,19 +203,6 @@ class Index extends React.PureComponent {
     });
   }
 
-  getBean(time) {
-    this.setState(
-      {
-        time: time,
-      },
-      (res) => {
-        if (time == 0) {
-          this.saveBean();
-        }
-      }
-    );
-  } //设置定时器领取卡豆
-
   saveBean() {
     const {
       userMomentsInfo: { userMomentIdString, guideMomentFlag },
@@ -266,46 +232,33 @@ class Index extends React.PureComponent {
               }),
             });
           }
-        );
+        ).catch((res) => {
+          const { resultCode } = res;
+          if (resultCode == "5231") {
+            this.setState({
+              userMomentsInfo: {
+                ...userMomentsInfo,
+                beanFlag: 0,
+              },
+              userMomentsList: this.state.userMomentsList.map((item) => {
+                if (item.userMomentIdString === userMomentIdString) {
+                  return {
+                    ...item,
+                    beanFlag: 0,
+                  };
+                }
+                return item;
+              }),
+            });
+          }
+        });
       } else {
         homeStore.setBeanLimitStatus(beanLimitStatus);
       }
     });
   }
-
   //领取卡豆
-  initInterval() {
-    const { userMomentsInfo, interval } = this.state;
-    const { watchStatus, length } = userMomentsInfo;
-    interval && clearInterval(interval);
-    if ((this.state.time || this.state.time === 0) && watchStatus === "0") {
-      this.setState({
-        interval: setIntive(this.state.time, this.getBean.bind(this)),
-      });
-    } else {
-      if (watchStatus === "0" && length) {
-        this.setState(
-          {
-            time: length,
-          },
-          (res) => {
-            this.setState({
-              interval: setIntive(this.state.time, this.getBean.bind(this)),
-            });
-          }
-        );
-      }
-    }
-  }
-  //初始化详情数据
 
-  stopInterval(interval) {
-    console.log("清理成功");
-    clearInterval(interval);
-    this.setState({
-      interval: null,
-    });
-  }
   videoPlayerControl() {
     const { current } = this.state;
     const list = [current - 1, current, current + 1];
@@ -415,19 +368,11 @@ class Index extends React.PureComponent {
       );
     }
   }
-  componentDidHide() {
-    const { interval } = this.state;
-    if (interval) {
-      this.stopInterval(interval);
-    }
-  }
+  componentDidHide() {}
   componentDidShow() {
     const { time, player } = this.state;
     // this.listParentCategory();
     this.fetchUserShareCommission();
-    if ((time || time === 0) && player) {
-      this.initInterval();
-    }
   }
   componentDidMount() {}
   componentWillMount() {
@@ -451,33 +396,23 @@ class Index extends React.PureComponent {
             this.getVideoList(() => {
               const { userMomentsList } = this.state;
               if (userMomentsList.length > 0) {
-                this.setState(
-                  {
-                    userMomentsInfo: this.state.userMomentsList[0],
-                  },
-                  (res) => {
-                    this.initInterval();
-                  }
-                );
+                this.setState({
+                  userMomentsInfo: this.state.userMomentsList[0],
+                });
               }
             });
           }
         );
       } else {
-        this.setState(
-          {
-            userMomentsList: list,
-            current: index,
-            userMomentsInfo: list[index],
-            httpData: {
-              ...this.state.httpData,
-              ...selectObj,
-            },
+        this.setState({
+          userMomentsList: list,
+          current: index,
+          userMomentsInfo: list[index],
+          httpData: {
+            ...this.state.httpData,
+            ...selectObj,
           },
-          (res) => {
-            this.initInterval();
-          }
-        );
+        });
       }
     }
   }
@@ -553,56 +488,12 @@ class Index extends React.PureComponent {
       }
     );
   }
-  onShareAppMessage(res) {
-    const {
-      userMomentsInfo: { frontImage, title, userMomentIdString },
-    } = this.state;
-    updateUserMomentParam(
-      {
-        updateType: "share",
-        id: userMomentIdString,
-      },
-      (res) => {}
-    );
-    let userInfo = loginStatus() || {};
-    if (loginStatus()) {
-      const { userIdString } = userInfo;
-      if (res.from === "button") {
-        return {
-          title: title,
-          imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
-        };
-      } else {
-        return {
-          title: title,
-          imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
-        };
-      }
-    } else {
-      if (res.from === "button") {
-        return {
-          title: title,
-          imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
-        };
-      } else {
-        return {
-          title: title,
-          imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
-        };
-      }
-    }
-  }
   render() {
     const {
       userMomentsList,
       current,
       circular,
-      userMomentsInfo,
-      userMomentsInfo: { length = "" },
+      userMomentsInfo = {},
       time,
       configUserLevelInfo,
       httpData: { browseType },
@@ -614,27 +505,22 @@ class Index extends React.PureComponent {
     const { beanLimitStatus } = this.props.store.homeStore;
     const templateView = () => {
       if (userMomentsList.length > 0) {
-        console.log(time);
         return (
           <>
-            <InterVal
-              interval={time}
-              length={length}
-              data={userMomentsInfo}
-              beanLimitStatus={beanLimitStatus}
-              show={!cavansObj.start}
-            ></InterVal>
             <VideoView
               circular={circular}
               data={userMomentsList}
+              dataInfo={userMomentsInfo}
               current={current}
               onChange={this.onInterSwper.bind(this)}
+              onTransition={this.onTransition.bind(this)}
               follow={this.followStatus.bind(this)}
               collection={this.collection.bind(this)}
-              onTransition={this.onTransition.bind(this)}
               stop={this.stopVideoPlayerControl.bind(this)}
               userInfo={configUserLevelInfo}
               shareInfo={this.shareImageInfo.bind(this)}
+              beanLimitStatus={beanLimitStatus}
+              saveBean={this.saveBean.bind(this)}
             ></VideoView>
           </>
         );

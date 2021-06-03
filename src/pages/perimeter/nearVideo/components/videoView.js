@@ -1,21 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
-import {
-  Video,
-  Swiper,
-  SwiperItem,
-  View,
-  Image,
-  Button,
-} from "@tarojs/components";
+import { Video, Swiper, SwiperItem, View } from "@tarojs/components";
 import Taro, { pxTransform, useReady } from "@tarojs/taro";
 import BottomView from "./bottom";
-import {
-  backgroundObj,
-  navigateTo,
-  setPeople,
-  computedVideoSize,
-} from "@/common/utils";
-import classNames from "classnames";
+import { computedVideoSize } from "@/common/utils";
+import InterVal from "@/components/videoComponents";
 import "./../index.scss";
 export default ({
   data = [],
@@ -29,10 +17,19 @@ export default ({
   stop,
   userInfo,
   shareInfo,
+  beanLimitStatus,
+  saveBean,
+  dataInfo
 }) => {
   const [scale, setScale] = useState(0);
+  const [player, setPlayer] = useState(false);
+  const [time, setTime] = useState(0);
+  const [walk, setWalk] = useState(false);
   useEffect(() => {
     setScale(0);
+    setPlayer(false);
+    setTime(0);
+    setWalk(false);
   }, [current]);
   const expensive = useMemo(() => {
     const { shareCommission = 0 } = userInfo;
@@ -57,14 +54,10 @@ export default ({
               const {
                 frontImage,
                 frontImageHeight,
-                videoContent,
-                userProfile,
-                merchantFollowStatus,
-                userIdString,
-                merchantCollectionStatus,
-                collectionAmount,
-                shareAmount,
                 frontImageWidth,
+                videoContent,
+                watchStatus,
+                beanFlag,
               } = item;
               if (
                 index === current ||
@@ -76,13 +69,28 @@ export default ({
                     <View
                       style={{
                         width: "100%",
-                        height: "100%",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         position: "relative",
+                        height: "100%",
                       }}
                     >
+                      <InterVal
+                        userInfo={userInfo}
+                        shareInfo={shareInfo}
+                        follow={follow}
+                        collection={collection}
+                        data={item}
+                        current={current}
+                        beanLimitStatus={beanLimitStatus}
+                        index={index}
+                        id={`video${index}`}
+                        play={player}
+                        time={time}
+                        show={index === current}
+                        dataInfo={dataInfo}
+                      ></InterVal>
                       <View
                         style={{
                           height: "100%",
@@ -108,24 +116,46 @@ export default ({
                           // enablePlayGesture={true}
                           loop={true}
                           showPlayBtn={false}
-                          showCenterPlayBtn={false}
                           objectFit={
                             computedVideoSize(frontImageWidth, frontImageHeight)
                               ? "fill"
                               : "cover"
                           }
+                          showCenterPlayBtn={false}
                           initialTime="0"
                           onTimeUpdate={(e) => {
                             if (index === current) {
                               const { currentTime, duration } = e.detail;
+                              setWalk(false);
+                              setTime(parseInt(currentTime));
                               setScale(
                                 ((currentTime / duration) * 100).toFixed(2)
                               );
                             }
                           }}
+                          onWaiting={(e) => {
+                            setWalk(true);
+                          }}
+                          onPause={() => {
+                            if (index === current) {
+                              setPlayer(false);
+                            }
+                          }}
+                          onPlay={() => {
+                            if (index === current) {
+                              setPlayer(true);
+                            }
+                          }}
+                          onEnded={() => {
+                            if (
+                              index === current &&
+                              watchStatus === "0" &&
+                              beanFlag === "1"
+                            ) {
+                              saveBean();
+                            }
+                          }}
                           id={`video${index}`}
-                          // onPause={onPause}
-                          // onPlay={onPlay}
                           muted={false}
                         ></Video>
                         {index === current && (
@@ -134,7 +164,7 @@ export default ({
                               style={{
                                 height: "100%",
                                 width: `${scale}%`,
-                                background: "rgba(239, 71, 111, 1)",
+                                background: "rgba(255, 235, 165, 1)",
                               }}
                             ></View>
                           </View>
@@ -144,53 +174,10 @@ export default ({
                         userInfo={userInfo}
                         index={index}
                         server={item}
+                        current={current}
                       >
                         {children}
                       </BottomView>
-                      <View className="home_stem_layer">
-                        <View
-                          style={userProfile ? backgroundObj(userProfile) : {}}
-                          className="home_stem_userProfile dakale_profile"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigateTo(
-                              `/pages/perimeter/merchantDetails/index?merchantId=${userIdString}`
-                            );
-                          }}
-                        >
-                          {merchantFollowStatus === "0" && (
-                            <View
-                              onClick={(e) => follow(e)}
-                              className={classNames(
-                                "home_stem_fallStatus home_stem_status1"
-                              )}
-                            ></View>
-                          )}
-                        </View>
-                        <View
-                          onClick={() => collection()}
-                          className={classNames(
-                            "collected_box",
-                            merchantCollectionStatus === "0"
-                              ? "share_shoucang_icon1"
-                              : "share_shoucang_icon2"
-                          )}
-                        ></View>
-                        <View className="collected_font">
-                          {setPeople(collectionAmount)}
-                        </View>
-
-                        <View
-                          onClick={() => shareInfo()}
-                          className={classNames(
-                            shareCommission > 0
-                              ? "home_share_animate"
-                              : "home_share_wechat"
-                          )}
-                        ></View>
-
-                        <View className="collected_font">{shareAmount}</View>
-                      </View>
                     </View>
                   </SwiperItem>
                 );
@@ -204,6 +191,6 @@ export default ({
     } else {
       return null;
     }
-  }, [data.length, current, scale]);
+  }, [data.length, current, scale, player, time, walk]);
   return expensive;
 };

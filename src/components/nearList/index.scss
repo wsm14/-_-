@@ -1,7 +1,7 @@
 .nearList_box {
   width: 372px;
   border-radius: 4px;
-  margin-bottom: 6px;
+  margin-bottom: 12px;
   .nearList_image {
     width: 372px;
     border-radius: 4px;
@@ -62,12 +62,12 @@
       }
       .nearList_bottom_avtiveBox {
         margin-top: 8px;
+        display: flex;
       }
     }
     .nearList_dakale_coupon {
       width: 64px;
       height: 32px;
-      display: inline-block;
       background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon550.png")
         no-repeat;
       background-size: 100% 100%;
@@ -75,17 +75,15 @@
       font-size: 22px;
       text-align: center;
       color: white;
-      line-height: 32px;
     }
     .nearList_dakale_active {
-      padding: 0 8px;
-      height: 32px;
+      padding: 5px 8px;
       display: inline-block;
       text-align: center;
       background: #ef476f;
       font-size: 22px;
       color: white;
-      line-height: 32px;
+      border-radius: 4px;
     }
   }
   .nearList_user_box {
@@ -102,12 +100,49 @@
       border-radius: 50%;
     }
     .nearList_merchantName {
-      max-width: 124px;
+      max-width: 174px;
       margin-left: 16px;
     }
-    .nearList_limit{
+    .nearList_limit {
       max-width: 184px;
       text-indent: 12px;
     }
   }
+  .nearList_new_content {
+    padding: 24px 16px 0px;
+    .nearList_new_title {
+      width: 340px;
+      font-size: 28px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 40px;
+    }
+    .nearList_dakale_active {
+      padding: 5px 8px;
+      display: inline-block;
+      text-align: center;
+      background: #ef476f;
+      font-size: 22px;
+      color: white;
+      border-radius: 4px;
+    }
+    .nearList_bottom_avtiveBox {
+      margin-top: 8px;
+      display: flex;
+    }
+    .nearList_dakale_coupon {
+      width: 64px;
+      height: 32px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon550.png")
+        no-repeat;
+      background-size: 100% 100%;
+      margin-right: 8px;
+      font-size: 22px;
+      text-align: center;
+      color: white;
+    }
+  }
+}
+.nearListBg {
+  background: #222222;
 }

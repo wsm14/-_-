@@ -14,7 +14,6 @@ import { Swiper, SwiperItem, View, Image } from "@tarojs/components";
 import classNames from "classnames";
 import Router from "@/common/router";
 import "./index.scss";
-
 export default (props) => {
   const {
     style = {

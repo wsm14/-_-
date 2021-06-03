@@ -85,7 +85,6 @@ export default (props) => {
               {couponName}
             </View>
             <View class="atomicActivity_save_city">
-              面值{couponPrice}元｜
               {thresholdPrice > 0 ? `满${thresholdPrice}元可用` : ""}
             </View>
             <View class="atomicActivity_save_time  font_hide">

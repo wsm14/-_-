@@ -1,0 +1,143 @@
+.video_layer_box {
+  .video_layer_toast {
+    position: fixed;
+    top: 160px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 28px;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    .video_layer_toastBg {
+      padding: 14px 12px 14px 16px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      display: inline-block;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+  .video_stem_layer {
+    position: absolute;
+    right: 24px;
+    width: 96px;
+    bottom: 42px;
+    z-index: 100;
+    .video_stem_userProfile {
+      width: 88px;
+      height: 88px;
+      border: 2px solid #ffffff;
+      position: relative;
+      .video_stem_fallStatus {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        bottom: -16px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+      }
+      .video_stem_status1 {
+        background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon456.png)
+          no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .collected_box {
+      width: 72px;
+      height: 72px;
+      margin: 56px auto 0;
+    }
+    .collected_font {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 33px;
+    }
+    .video_share_wechat {
+      width: 72px;
+      height: 72px;
+      margin: 32px auto 0;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon457.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .video_share_animate {
+      width: 80px;
+      height: 80px;
+      margin: 32px auto 0;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon549.png")
+        no-repeat;
+      background-size: 100% 100%;
+      animation-name: slace;
+      animation-duration: 2s;
+      animation-timing-function: ease;
+      animation-iteration-count: infinite;
+      animation-fill-mode: both;
+    }
+  }
+  .bean_animate {
+    margin: 56px auto 0;
+    width: 84px;
+    height: 84px;
+  }
+  .bean_animate_bg1 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon612.png")
+      no-repeat;
+    background-size: 100% 100%;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+  .bean_animate_bg2 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon613.png")
+      no-repeat;
+    background-size: 100% 100%;
+    font-size: 20px;
+    line-height: 20px;
+  }
+  .bean_animate_time {
+    padding-top: 10px;
+    text-align: center;
+    color: #ef476f;
+  }
+  .bean_animate_padding {
+    padding-top: 14px;
+    text-align: center;
+    color: #ef476f;
+  }
+  .beanAdd {
+    animation-name: around;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+  }
+  @keyframes around {
+    from {
+      transform: rotateZ(0deg);
+    }
+    to {
+      transform: rotateZ(360deg);
+    }
+  }
+  @keyframes slace {
+    25% {
+      transform: rotateZ(-15deg);
+    }
+    50% {
+      transform: rotateZ(15deg);
+    }
+    75% {
+      transform: rotateZ(-15deg);
+    }
+    100% {
+      transform: rotateZ(15deg);
+    }
+  }
+}

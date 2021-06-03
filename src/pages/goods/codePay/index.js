@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, Input } from "@tarojs/components";
-import "./index.scss";
 import PayGo from "@/components/pay_btn";
-import classNames from "classnames";
 import { getReserveOrder, saveScanCodeOrder } from "@/server/goods";
 import { backgroundObj, toast, redirectTo } from "@/common/utils";
 import { fetchUserShareCommission } from "@/server/index";
@@ -11,6 +9,7 @@ import SelectBean from "@/components/componentView/selectBean";
 import Evens from "@/common/evens";
 import Router from "@/common/router";
 import ShareView from "@/components/componentView/shareView";
+import "./index.scss";
 const computedScan = (value, couponPrice, scale, bean) => {
   let setBean = (Number(value) - Number(couponPrice)) * 100 * scale;
   console.log(Number(value) - Number(couponPrice));
@@ -44,11 +43,11 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    this.getUserDetails();
     Evens.$on("payCode", this.payCode.bind(this));
   }
 
   componentDidShow() {
+    this.getUserDetails();
     this.fetchUserShareCommission();
   }
   payCode(obj) {
@@ -258,8 +257,8 @@ class Index extends Component {
                       Router({
                         routerName: "coupon",
                         args: {
-                          merchantId: getCurrentInstance().router.params
-                            .merchantId,
+                          merchantId:
+                            getCurrentInstance().router.params.merchantId,
                           total: totalFee,
                           couponId: userCouponIdString,
                         },

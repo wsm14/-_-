@@ -51,19 +51,22 @@ export const nearList = (item = {}, list = [], store) => {
         <View className="nearList_dakale_active">{promotionPrice}元抵扣券</View>
       ),
     }[promotionType];
-
-    return (
-      <View className="nearList_bottom_avtiveBox">
-        {couponTitlesJson.length > 0 &&
-          couponTitlesJson.map((item) => {
-            return <View className="nearList_dakale_coupon">领券</View>;
-          })}
-        {promotionId && template}
-      </View>
-    );
+    if (promotionId || couponTitlesJson.length > 0) {
+      return (
+        <View className="nearList_bottom_avtiveBox">
+          {couponTitlesJson.length > 0 &&
+            couponTitlesJson.map((item) => {
+              return <View className="nearList_dakale_coupon public_center">领券</View>;
+            })}
+          {promotionId && template}
+        </View>
+      );
+    } else {
+      return null;
+    }
   };
   return (
-    <View onClick={() => linkTo()} className="nearList_box">
+    <View onClick={() => linkTo()} className="nearList_box  nearListBg">
       <View
         style={{
           height: Taro.pxTransform(
@@ -78,11 +81,13 @@ export const nearList = (item = {}, list = [], store) => {
           {getBean}
         </View>
         <View className="nearList_time">{filterTime(length)}</View>
-        <View className="nearList_bottom">
-          <View className="nearList_bottom_title font_noHide">{title}</View>
-          {activeTemplate()}
-        </View>
       </View>
+      <View className="nearList_new_content font_hide">
+        <View className="nearList_new_title font_hide"> {title}</View>
+
+        {activeTemplate()}
+      </View>
+
       <View className="nearList_user_box">
         <View
           style={backgroundObj(userProfile)}
@@ -181,7 +186,9 @@ export const searchList = (item = {}, list = [], store) => {
           className="nearList_user dakale_profile"
         ></View>
 
-        <View className="nearList_merchantName font_hide">{username+' '}</View>
+        <View className="nearList_merchantName font_hide">
+          {username + " "}
+        </View>
         <View className="nearList_limit font_hide">
           {"| " + GetDistance(getLat(), getLnt(), lat, lnt)}
         </View>
