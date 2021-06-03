@@ -246,27 +246,6 @@ class MerchantDetails extends Component {
       };
     }
   }
-
-  onShareTimeline() {
-    const {
-      userMerchantInfo: { merchantName, coverImg },
-      merchantHttpData: { merchantId },
-    } = this.state;
-    let userInfo = loginStatus() || {};
-    const { userIdString } = userInfo;
-    if (loginStatus()) {
-      return {
-        title: merchantName,
-        imageUrl: coverImg,
-        path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
-      };
-    } else {
-      return {
-        title: merchantName,
-        imageUrl: coverImg,
-      };
-    }
-  }
   getMerchantLove() {
     const {
       userMerchantInfo: { merchantId },
