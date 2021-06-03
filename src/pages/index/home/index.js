@@ -10,7 +10,6 @@ import {
   loginStatus,
 } from "@/common/utils";
 import { ScrollView, View, Image } from "@tarojs/components";
-import InterVal from "@/components/setTimeCanvas";
 import {
   getUserMomentList,
   saveWatchBean,
@@ -27,8 +26,6 @@ import {
   getShareParamInfo,
   getShareInfo,
 } from "@/server/common";
-import "./index.scss";
-import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import { nearList } from "@/components/nearList";
 import Toast from "@/components/beanToast";
@@ -37,10 +34,11 @@ import Coupon from "@/components/freeCoupon";
 import Lead from "@/components/lead";
 import evens from "@/common/evens";
 import Router from "@/common/router";
-import { scanCode } from "@/common/authority";
-import GuideView from "./components/guide";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
+import NearTitle from "./components/nearTitle";
+import GuideView from "./components/guide";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -118,12 +116,10 @@ class Index extends React.PureComponent {
         player: true,
         current,
         userMomentsInfo: userMomentsList[current],
-        time: null,
         couponFlag: false,
       },
       (res) => {
         this.videoPlayerControl();
-        this.initInterval();
         if (current >= this.state.userMomentsList.length - 3 && countStatus) {
           this.setState(
             {
@@ -136,10 +132,6 @@ class Index extends React.PureComponent {
               this.getVideoList();
             }
           );
-        } else {
-          if (current === this.state.userMomentsList.length - 1) {
-            return toast("暂无数据");
-          }
         }
       }
     );
@@ -174,15 +166,11 @@ class Index extends React.PureComponent {
   }
 
   selectList(data = {}) {
-    console.log(data);
     const { httpData, interval } = this.state;
     const { val } = data;
     const obj = {};
     if (val) {
       obj.browseType = val;
-    }
-    if (interval) {
-      this.stopInterval(interval);
     }
     this.setState(
       {
@@ -198,14 +186,9 @@ class Index extends React.PureComponent {
       (res) => {
         this.getVideoList(() => {
           if (this.state.userMomentsList.length > 0 && val !== "near") {
-            this.setState(
-              {
-                userMomentsInfo: this.state.userMomentsList[0],
-              },
-              (res) => {
-                this.initInterval();
-              }
-            );
+            this.setState({
+              userMomentsInfo: this.state.userMomentsList[0],
+            });
           }
         });
       }
@@ -218,9 +201,7 @@ class Index extends React.PureComponent {
       loadPromotionType = "",
       loadCategoryIds = [],
     } = data;
-    if (interval) {
-      this.stopInterval(interval);
-    }
+
     this.setState(
       {
         httpData: {
@@ -242,24 +223,19 @@ class Index extends React.PureComponent {
       (res) => {
         this.getVideoList(() => {
           if (this.state.userMomentsList.length > 0) {
-            this.setState(
-              {
-                userMomentsInfo: this.state.userMomentsList[0],
-              },
-              (res) => {
-                this.initInterval();
-              }
-            );
+            this.setState({
+              userMomentsInfo: this.state.userMomentsList[0],
+            });
           }
         });
       }
     );
   }
-  setScreen(data) {
-    const { homeStore } = this.props.store;
-    homeStore.setSelectObj(data);
-    this.screen(data);
-  }
+  // setScreen(data) {
+  //   const { homeStore } = this.props.store;
+  //   homeStore.setSelectObj(data);
+  //   this.screen(data);
+  // }
   getVideoList(fn) {
     const { httpData, current } = this.state;
     getUserMomentList(httpData, (res) => {
@@ -267,12 +243,14 @@ class Index extends React.PureComponent {
       if (userMomentsList.length === 0) {
         this.setState({
           countStatus: false,
+          triggered: false,
         });
         return;
       }
       this.setState(
         {
           userMomentsList: [...this.state.userMomentsList, ...userMomentsList],
+          triggered: false,
         },
         (res) => {
           fn && fn();
@@ -349,44 +327,35 @@ class Index extends React.PureComponent {
               }
             );
           }
-        );
+        ).catch((res) => {
+          const { resultCode } = res;
+          if (resultCode == "5231") {
+            this.setState({
+              userMomentsInfo: {
+                ...userMomentsInfo,
+                beanFlag: 0,
+              },
+              userMomentsList: this.state.userMomentsList.map((item) => {
+                if (item.userMomentIdString === userMomentIdString) {
+                  return {
+                    ...item,
+                    beanFlag: 0,
+                  };
+                }
+                return item;
+              }),
+            });
+          }
+        });
       } else {
         homeStore.setBeanLimitStatus(beanLimitStatus);
       }
     });
   }
   //领取卡豆
-  initInterval() {
-    const { userMomentsInfo, interval } = this.state;
-    const { watchStatus, length } = userMomentsInfo;
-    interval && clearInterval(interval);
-    if ((this.state.time || this.state.time === 0) && watchStatus === "0") {
-      this.setState({
-        interval: setIntive(this.state.time, this.getBean.bind(this)),
-      });
-    } else {
-      if (watchStatus === "0" && length) {
-        this.setState(
-          {
-            time: length,
-          },
-          (res) => {
-            this.setState({
-              interval: setIntive(this.state.time, this.getBean.bind(this)),
-            });
-          }
-        );
-      }
-    }
-  }
+
   //初始化详情数据
 
-  stopInterval(interval) {
-    clearInterval(interval);
-    this.setState({
-      interval: null,
-    });
-  }
   videoPlayerControl() {
     const { current } = this.state;
     const list = [current - 1, current, current + 1];
@@ -400,21 +369,14 @@ class Index extends React.PureComponent {
   stopVideoPlayerControl() {
     const { current, interval, player } = this.state;
     if (player) {
-      if (interval) {
-        this.stopInterval(interval);
-      }
       this.setState({
         player: false,
       });
-      Taro.createVideoContext(`video${current}`).stop();
+      Taro.createVideoContext(`video${current}`).pause();
     } else {
-      if (interval) {
-        this.stopInterval(interval);
-      }
       this.setState({
         player: true,
       });
-      this.initInterval();
       Taro.createVideoContext(`video${current}`).play();
     }
   }
@@ -549,7 +511,9 @@ class Index extends React.PureComponent {
                       userMomentsInfo: this.state.userMomentsList[0],
                     },
                     (res) => {
-                      this.initInterval();
+                      this.setState({
+                        interval: true,
+                      });
                     }
                   );
                 }
@@ -571,21 +535,16 @@ class Index extends React.PureComponent {
               userMomentsInfo: this.state.userMomentsList[0],
             },
             (res) => {
-              this.initInterval();
+              this.setState({
+                interval: true,
+              });
             }
           );
         }
       });
     }
   }
-  componentDidHide() {
-    const { interval } = this.state;
-    if (interval) {
-      this.stopInterval(interval);
-    }
-  }
-  updateList(list) {
-    console.log(list);
+  updateList(list = []) {
     const { userMomentsList } = this.state;
     this.setState({
       userMomentsList: list,
@@ -599,9 +558,6 @@ class Index extends React.PureComponent {
     const { time, player } = this.state;
     // this.listParentCategory();
     this.fetchUserShareCommission();
-    if ((time || time === 0) && player) {
-      this.initInterval();
-    }
   }
   componentDidMount() {
     evens.$on("updateMomentsList", this.updateList.bind(this));
@@ -628,7 +584,9 @@ class Index extends React.PureComponent {
                     userMomentsInfo: this.state.userMomentsList[0],
                   },
                   (res) => {
-                    this.initInterval();
+                    this.setState({
+                      interval: true,
+                    });
                   }
                 );
               }
@@ -640,14 +598,9 @@ class Index extends React.PureComponent {
       this.getVideoList(() => {
         const { userMomentsList } = this.state;
         if (userMomentsList.length > 0) {
-          this.setState(
-            {
-              userMomentsInfo: this.state.userMomentsList[0],
-            },
-            (res) => {
-              this.initInterval();
-            }
-          );
+          this.setState({
+            userMomentsInfo: this.state.userMomentsList[0],
+          });
         }
       });
     });
@@ -691,7 +644,7 @@ class Index extends React.PureComponent {
         cityName,
         districtName,
         merchantAddress,
-        frontImage
+        frontImage,
       },
       player,
     } = this.state;
@@ -799,17 +752,11 @@ class Index extends React.PureComponent {
   }
   render() {
     const {
-      userMomentsList,
+      userMomentsList = [],
       current,
       circular,
-      userMomentsInfo,
-      userMomentsInfo: { length = "" },
-      time,
+      userMomentsInfo = {},
       httpData: { browseType },
-      visible,
-      distanceList = [],
-      promotionTypeList = [],
-      categoryList = [],
       beanflag,
       couponFlag,
       configUserLevelInfo,
@@ -819,7 +766,6 @@ class Index extends React.PureComponent {
       triggered,
     } = this.state;
     const { selectObj, beanLimitStatus } = this.props.store.homeStore;
-    const { categoryIds, distance, promotionType } = selectObj;
     const templateView = () => {
       if (browseType === "near") {
         if (userMomentsList.length > 0) {
@@ -832,11 +778,13 @@ class Index extends React.PureComponent {
               refresherEnabled
               onRefresherRefresh={this.onReload.bind(this)}
               refresherTriggered={triggered}
+              refresherBackground={"#000000"}
               className="home_Waterfall_box"
               style={{
                 top: computedClient().top + computedClient().height + 20,
               }}
             >
+              <NearTitle reload={triggered}></NearTitle>
               <Waterfall
                 list={userMomentsList}
                 createDom={nearList}
@@ -868,17 +816,10 @@ class Index extends React.PureComponent {
         if (userMomentsList.length > 0) {
           return (
             <>
-              <InterVal
-                interval={time}
-                length={length}
-                data={userMomentsInfo}
-                current={current}
-                beanLimitStatus={beanLimitStatus}
-                show={!cavansObj.start}
-              ></InterVal>
               <VideoView
                 circular={circular}
                 data={userMomentsList}
+                dataInfo={userMomentsInfo}
                 current={current}
                 onChange={this.onInterSwper.bind(this)}
                 onTransition={this.onTransition.bind(this)}
@@ -887,6 +828,8 @@ class Index extends React.PureComponent {
                 stop={this.stopVideoPlayerControl.bind(this)}
                 userInfo={configUserLevelInfo}
                 shareInfo={this.shareImageInfo.bind(this)}
+                beanLimitStatus={beanLimitStatus}
+                saveBean={this.saveBean.bind(this)}
               ></VideoView>
             </>
           );
@@ -909,32 +852,41 @@ class Index extends React.PureComponent {
             );
           }
           return (
-            <View className="home_order_box public_center">
-              <View>
-                <View className="home_order_image home_new_nullStatus"></View>
-                <View className="home_order_font">
-                  {browseType === "commend"
-                    ? "暂无推荐的内容"
-                    : "您还没任何关注"}
-                </View>
-                <View className="home_order_font1">
-                  {browseType === "commend"
-                    ? ""
-                    : "去关注想关注的人，实时了解精彩内容"}
+            <ScrollView
+              scrollY
+              onRefresherRefresh={this.onReload.bind(this)}
+              refresherEnabled
+              refresherTriggered={triggered}
+              refresherBackground={"#000000"}
+              className="debug_test"
+              style={{
+                width: "100%",
+                height: "100%",
+                zIndex: 100,
+              }}
+            >
+              <View className="home_order_box public_center">
+                <View>
+                  <View className="home_order_image home_new_nullStatus"></View>
+                  <View className="home_order_font">
+                    {browseType === "commend"
+                      ? "我们正在努力探索更多城市，敬请期待"
+                      : "您还没任何关注"}
+                  </View>
+                  <View className="home_order_font1">
+                    {browseType === "commend"
+                      ? "若无数据请下拉刷新试试"
+                      : "去关注想关注的人，实时了解精彩内容"}
+                  </View>
                 </View>
               </View>
-            </View>
+            </ScrollView>
           );
         }
       }
     };
     return (
-      <View
-        className={classNames(
-          "home_box",
-          browseType === "near" ? "home_white" : "home_black"
-        )}
-      >
+      <View className="home_box home_black">
         <View style={{ top: computedClient().top }} className="home_wait">
           <TopView
             data={browseType}
@@ -961,17 +913,6 @@ class Index extends React.PureComponent {
             onConfirm={this.setScreen.bind(this)}
           ></Dressing>
         )} */}
-        {browseType === "commend" && (
-          <View className="home_scan" onClick={() => scanCode()}>
-            <Image
-              style={{ width: "100%", height: "100%" }}
-              src={
-                "https://wechat-config.dakale.net/miniprogram/image/icon583.png"
-              }
-            ></Image>
-          </View>
-        )}
-
         <Toast
           data={userMomentsInfo}
           show={beanflag}
@@ -995,17 +936,12 @@ class Index extends React.PureComponent {
         <Lead beanLimitStatus={beanLimitStatus}></Lead>
         <GuideView
           videoPlayer={() => {
-            this.initInterval();
             Taro.createVideoContext(`video${current}`).play();
           }}
           videoStop={() => {
             Taro.createVideoContext(`video${current}`).stop();
-            if (interval) {
-              this.stopInterval(interval);
-            }
           }}
-          current={current}
-          interval={interval}
+          proxy={interval}
           data={userMomentsInfo}
         ></GuideView>
         {!player && (

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View } from "@tarojs/components";
 import classNames from "classnames";
 import Router from "@/common/router";
+import { scanCode } from "@/common/authority";
 import "./../index.scss";
 export default (props) => {
   const { onChange, data = "", session } = props;
@@ -53,17 +54,17 @@ export default (props) => {
     <View className="home_top">
       <View className="home_right">
         <View
+          className="home_right_up"
+          onClick={() => {
+            scanCode();
+          }}
+        ></View>
+        <View
           className="home_right_search"
           onClick={() => {
             Router({
               routerName: "search_shop",
             });
-          }}
-        ></View>
-        <View
-          className="home_right_up"
-          onClick={() => {
-            session();
           }}
         ></View>
       </View>

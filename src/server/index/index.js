@@ -21,7 +21,7 @@ export const getUserMomentDetailById = (data, fn) => {
 };
 //获取动态详情
 export const saveWatchBean = (data, fn) => {
-  httpPost(
+  return httpPost(
     {
       url: "/user/beanDetail/saveWatchBeanDetailByUserId",
       data: data,
@@ -172,3 +172,13 @@ export const updateUserMomentParam = (data = {}, fn) => {
   );
 };
 //添加分享数量
+export const fetchSpecialForRecommend = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/specialGoods/listSpecialForRecommend",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取附近热销特惠

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, Image, Text, ScrollView } from "@tarojs/components";
 import { useReady } from "@tarojs/taro";
 import classNames from "classnames";
@@ -13,33 +13,37 @@ import {
 import Taro from "@tarojs/taro";
 import { getPromotionInfo } from "@/server/index";
 import Router from "@/common/router";
-// import Barrage from "./barrage";
-import { getMomentBarrage } from "@/server/common";
 import { mapGo } from "@/common/utils";
+import TemplateCard from "./shopcard";
 import "./../index.scss";
 export default (props) => {
-  const { server = {}, children, index, userInfo } = props;
+  const { server = {}, children, index, userInfo, current } = props;
   const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
   const [flag, setFlag] = useState({
     flagType: false,
     boolean: false,
   });
   const [couponInfo, setCouponInfo] = useState({});
-  const [list, setList] = useState([]);
+  const [showFlag, setShowFlag] = useState(false);
+
   useEffect(() => {
     getPromotion(server);
-    setTimeout(() => computedFont(), 1);
+    let time = setTimeout(() => {
+      computedFont();
+      clearTimeout(time);
+    }, 1);
   }, []);
-  // useEffect(() => {
-  //   const { promotionId, couponTitlesJson = [] } = server;
-  //   if (couponTitlesJson.length > 0 && promotionId) {
-  //     getMomentBarrages({});
-  //   } else if (promotionId) {
-  //     getMomentBarrages({ freeCouponStatus: "1" });
-  //   } else {
-  //     setList([]);
-  //   }
-  // }, [server]);
+
+  useEffect(() => {
+    const { promotionIdString } = server;
+    setShowFlag(false);
+    if (promotionIdString && current === index) {
+      let time = setTimeout(() => {
+        clearTimeout(time);
+        setShowFlag(true);
+      }, 3000);
+    }
+  }, [current]);
   const { flagType, boolean } = flag;
   const {
     message,
@@ -71,130 +75,62 @@ export default (props) => {
       );
     }
   };
-  const activeView = () => {
+  const templateStated = (val, callback) => {
     const {
-      promotionType,
-      promotionImg = "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png",
       promotionName,
       promotionBuyPrice,
-      promotionIdString,
-      promotionOriPrice,
       promotionMerchantPrice,
-    } = couponInfo;
-    const linkTo = () => {
-      if (promotionType === "special") {
-        Router({
-          routerName: "favourableDetails",
-          args: {
-            specialActivityId: promotionIdString,
-            merchantId: userIdString,
-            momentId: userMomentIdString,
-          },
-        });
-      } else {
-        const { ownerIdString, promotionIdString } = couponInfo;
-        Router({
-          routerName: "payCouponDetails",
-          args: {
-            merchantId: userIdString,
-            ownerId: ownerIdString,
-            ownerCouponId: promotionIdString,
-          },
-        });
-      }
-    };
-    if (Object.keys(couponInfo).length > 0) {
-      if (shareCommission === 0) {
-        return (
+      promotionImg,
+    } = val;
+    return (
+      <View className="test_debug">
+        <View className="templateStated_box" onClick={() => callback()}>
           <View
-            onClick={() => linkTo()}
-            className={classNames("home_active_box", `home_active_box${index}`)}
-          >
-            <View className="home_active_image">
-              <View
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: Taro.pxTransform(4),
-                  ...backgroundObj(promotionImg),
-                }}
-              />
+            className="templateStated_img"
+            style={backgroundObj(
+              promotionImg ||
+                "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png"
+            )}
+          ></View>
+          <View className="templateStated_font">
+            <View
+              style={
+                shareCommission > 0 ? { maxWidth: Taro.pxTransform(336) } : {}
+              }
+              className="templateStated_title font_hide"
+            >
+              {promotionName}
             </View>
-            <View className="home_active_details">
-              <View className="home_active_font1  font_hide">
-                {promotionName}
-              </View>
-              <View className="home_active_font2 font_hide">
-                卡豆抵扣到手价
-              </View>
-              <View className="home_active_price">
-                <View className="color12 font20">¥ </View>
-                <View className="color12 font28">
-                  {" " + promotionBuyPrice}
-                </View>
-                <View className="home_active_specal">
-                  {"¥ " + promotionOriPrice}
-                </View>
-              </View>
-            </View>
-            <View className={classNames("home_active_btn")}>立即抢购</View>
-          </View>
-        );
-      } else {
-        return (
-          <View
-            onClick={() => linkTo()}
-            className={"home_active_shareCommission"}
-          >
-            <View className="home_shareCommission_image">
-              <View
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: Taro.pxTransform(4),
-                  ...backgroundObj(promotionImg),
-                }}
-              />
-            </View>
-            <View className="home_shareCommission_details">
-              <View className="home_shareCommission_font1  font_hide">
-                {promotionName}
-              </View>
-              <View className="home_shareCommission_font2 font_hide">
-                <View className="home_shareCommission_title font20">
-                  卡豆抵扣到手价
-                </View>
-                <View className="color12  font24">¥ </View>
-                <View className="color12  font28">{promotionBuyPrice}</View>
-                <View className="home_shareCommission_specal">
-                  {"¥" + promotionOriPrice}
-                </View>
-              </View>
-              <View className="home_shareCommission_tag">
-                <View className="home_shareCommission_tagBox home_shareCommission_tagColor1">
-                  {"自购省¥" +
-                    computedPrice(
-                      promotionBuyPrice - promotionMerchantPrice,
-                      shareCommission
-                    )}
-                </View>
-
-                <View className="home_shareCommission_tagBox home_shareCommission_tagColor2">
-                  {"分享赚¥" +
-                    computedPrice(
-                      promotionBuyPrice - promotionMerchantPrice,
-                      shareCommission
-                    )}
-                </View>
-              </View>
+            <View className="templateStated_price font_hide">
+              <Text className="font20">卡豆抵扣到手价</Text>
+              <Text className="font20 bold templateStated_margin">¥</Text>
+              <Text className="font28 bold templateStated_margin">
+                {promotionBuyPrice * (payBeanCommission / 100)}
+              </Text>
+              {shareCommission > 0 && (
+                <Text className="font22 templateStated_margin">
+                  /赚
+                  {computedPrice(
+                    promotionBuyPrice - promotionMerchantPrice,
+                    shareCommission
+                  )}
+                </Text>
+              )}
             </View>
           </View>
-        );
-      }
-    } else {
-      return;
-    }
+          <View
+            style={
+              shareCommission === 0 ? {} : { width: Taro.pxTransform(112) }
+            }
+            className="templateStated_pay public_center"
+          >
+            {shareCommission === 0 ? "抢购" : "分享赚"}
+          </View>
+        </View>
+      </View>
+    );
   };
+
   const descView = () => {
     if (flagType && boolean) {
       return (
@@ -212,6 +148,9 @@ export default (props) => {
     } else {
       return (
         <View
+          onClick={() => {
+            updateDec();
+          }}
           className={classNames(
             `home_bottom_decBox`,
             `home_bottom_decBox${index}`,
@@ -247,49 +186,112 @@ export default (props) => {
       boolean: !boolean,
     });
   };
-  const getMomentBarrages = (obj = {}) => {
-    getMomentBarrage({ size: 25, ...obj }, (res) => {
-      const { momentBarrageList = [] } = res;
-      setList(momentBarrageList);
-    });
+  const {
+    promotionType,
+    promotionImg = "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png",
+    promotionName,
+    promotionBuyPrice,
+    promotionIdString,
+    promotionOriPrice,
+    promotionMerchantPrice,
+  } = couponInfo;
+  const linkTo = () => {
+    if (promotionType === "special") {
+      Router({
+        routerName: "favourableDetails",
+        args: {
+          specialActivityId: promotionIdString,
+          merchantId: userIdString,
+          momentId: userMomentIdString,
+        },
+      });
+    } else {
+      const { ownerIdString, promotionIdString } = couponInfo;
+      Router({
+        routerName: "payCouponDetails",
+        args: {
+          merchantId: userIdString,
+          ownerId: ownerIdString,
+          ownerCouponId: promotionIdString,
+        },
+      });
+    }
   };
-  return (
-    <View className="home_bottom">
-      {/* {list.length > 0 && <Barrage data={list}></Barrage>} */}
-      {children}
-      {activeView()}
-      <View className='home_username font_hide'>@{username}</View>
-      {descView()}
-      <View className="home_desc_coll public_auto">
-        <View
-          className="color6 home_desc_city"
-          onClick={() =>
-            mapGo({
-              lat: lat,
-              lnt: lnt,
-              address: merchantAddress,
-              merchantName: username,
-            })
-          }
-        >
-          <View className="home_city_icon"></View>
-          <View className="home_desc_text font_hide">
-            {cityName}·{categoryName}｜
-            {GetDistance(
-              getLat(),
-              getLnt(),
-              merchantLat || lat,
-              merchantLnt || lnt
-            )}
-            ｜{merchantAddress}
+  if (Object.keys(couponInfo).length > 0 && showFlag === true) {
+    return (
+      <TemplateCard
+        shareCommission={shareCommission}
+        payBeanCommission={payBeanCommission}
+        val={couponInfo}
+        callback={linkTo}
+        onClose={() => setShowFlag(false)}
+      ></TemplateCard>
+    );
+  } else if (Object.keys(couponInfo).length > 0 && !showFlag) {
+    return (
+      <View className="home_bottom">
+        {templateStated(couponInfo, linkTo)}
+        <View className="home_username font_hide">@{username}</View>
+        {descView()}
+        <View className="home_desc_coll public_auto">
+          <View
+            className="color6 home_desc_city"
+            onClick={() =>
+              mapGo({
+                lat: lat,
+                lnt: lnt,
+                address: merchantAddress,
+                merchantName: username,
+              })
+            }
+          >
+            <View className="home_city_icon"></View>
+            <View className="home_desc_text font_hide">
+              {cityName}·{categoryName}｜
+              {GetDistance(
+                getLat(),
+                getLnt(),
+                merchantLat || lat,
+                merchantLnt || lnt
+              )}
+              ｜{merchantAddress}
+            </View>
           </View>
         </View>
-        {flagType && (
-          <View className="bold" onClick={() => updateDec()}>
-            {!boolean ? "展开" : "收起"}
-          </View>
-        )}
       </View>
-    </View>
-  );
+    );
+  } else {
+    return (
+      <View className="home_bottom">
+        {children}
+        <View className="home_username font_hide">@{username}</View>
+        {descView()}
+        <View className="home_desc_coll public_auto">
+          <View
+            className="color6 home_desc_city"
+            onClick={() =>
+              mapGo({
+                lat: lat,
+                lnt: lnt,
+                address: merchantAddress,
+                merchantName: username,
+              })
+            }
+          >
+            <View className="home_city_icon"></View>
+            <View className="home_desc_text font_hide">
+              {cityName}·{categoryName}｜
+              {GetDistance(
+                getLat(),
+                getLnt(),
+                merchantLat || lat,
+                merchantLnt || lnt
+              )}
+              ｜{merchantAddress}
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  }
 };

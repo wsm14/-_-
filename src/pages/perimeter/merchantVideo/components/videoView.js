@@ -1,22 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
-import {
-  Video,
-  Swiper,
-  SwiperItem,
-  View,
-  Image,
-  Button,
-} from "@tarojs/components";
+import { Video, Swiper, SwiperItem, View } from "@tarojs/components";
 import Taro, { pxTransform, useReady } from "@tarojs/taro";
 import BottomView from "./bottom";
-import {
-  backgroundObj,
-  navigateTo,
-  setPeople,
-  computedVideoSize,
-  loginStatus,
-} from "@/common/utils";
-import classNames from "classnames";
+import { computedVideoSize } from "@/common/utils";
+import InterVal from "@/components/videoComponents";
 import "./../index.scss";
 export default ({
   data = [],
@@ -29,10 +16,15 @@ export default ({
   onTransition,
   stop,
   userInfo,
+  shareInfo,
+  beanLimitStatus,
+  saveBean,
 }) => {
   const [scale, setScale] = useState(0);
+  const [player, setPlayer] = useState(false);
   useEffect(() => {
     setScale(0);
+    setPlayer(false);
   }, [current]);
   const expensive = useMemo(() => {
     const { shareCommission = 0 } = userInfo;
@@ -59,13 +51,7 @@ export default ({
                 frontImageHeight,
                 frontImageWidth,
                 videoContent,
-                userProfile,
-                merchantFollowStatus,
-                userIdString,
-                merchantCollectionStatus,
-                collectionAmount,
-                shareAmount,
-                guideMomentFlag = "0",
+                watchStatus,
               } = item;
               if (
                 index === current ||
@@ -84,6 +70,20 @@ export default ({
                         height: "100%",
                       }}
                     >
+                      <InterVal
+                        initBean={false}
+                        userInfo={userInfo}
+                        shareInfo={shareInfo}
+                        follow={follow}
+                        collection={collection}
+                        data={item}
+                        current={current}
+                        beanLimitStatus={beanLimitStatus}
+                        index={index}
+                        id={`video${index}`}
+                        play={player}
+                        show={index === current}
+                      ></InterVal>
                       <View
                         style={{
                           height: "100%",
@@ -124,9 +124,17 @@ export default ({
                               );
                             }
                           }}
+                          onPause={() => {
+                            if (index === current) {
+                              setPlayer(false);
+                            }
+                          }}
+                          onPlay={() => {
+                            if (index === current) {
+                              setPlayer(true);
+                            }
+                          }}
                           id={`video${index}`}
-                          // onPause={onPause}
-                          // onPlay={onPlay}
                           muted={false}
                         ></Video>
                         {index === current && (
@@ -135,7 +143,7 @@ export default ({
                               style={{
                                 height: "100%",
                                 width: `${scale}%`,
-                                background: "rgba(239, 71, 111, 1)",
+                                background: "rgba(255, 235, 165, 1)",
                               }}
                             ></View>
                           </View>
@@ -145,67 +153,10 @@ export default ({
                         userInfo={userInfo}
                         index={index}
                         server={item}
+                        current={current}
                       >
                         {children}
                       </BottomView>
-                      <View className="home_stem_layer">
-                        <View
-                          style={userProfile ? backgroundObj(userProfile) : {}}
-                          className="home_stem_userProfile dakale_profile"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigateTo(
-                              `/pages/perimeter/merchantDetails/index?merchantId=${userIdString}`
-                            );
-                          }}
-                        >
-                          {merchantFollowStatus === "0" && (
-                            <View
-                              onClick={(e) => follow(e)}
-                              className={classNames(
-                                "home_stem_fallStatus home_stem_status1"
-                              )}
-                            ></View>
-                          )}
-                        </View>
-                        {guideMomentFlag === "0" && (
-                          <>
-                            <View
-                              onClick={() => collection()}
-                              className={classNames(
-                                "collected_box",
-                                merchantCollectionStatus === "0"
-                                  ? "share_shoucang_icon1"
-                                  : "share_shoucang_icon2"
-                              )}
-                            ></View>
-                            <View className="collected_font">
-                              {setPeople(collectionAmount)}
-                            </View>
-                          </>
-                        )}
-                        <View
-                          className={classNames(
-                            shareCommission > 0
-                              ? "home_share_animate"
-                              : "home_share_wechat"
-                          )}
-                        >
-                          {loginStatus() ? (
-                            <Button
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                border: "none",
-                                background: 'none'
-                              }}
-                              openType={"share"}
-                            ></Button>
-                          ) : null}
-                        </View>
-
-                        <View className="collected_font">{shareAmount}</View>
-                      </View>
                     </View>
                   </SwiperItem>
                 );
@@ -219,6 +170,6 @@ export default ({
     } else {
       return null;
     }
-  }, [data.length, current, scale]);
+  }, [data.length, current, scale, player]);
   return expensive;
 };

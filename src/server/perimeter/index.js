@@ -265,3 +265,14 @@ export const fetchMainMerchantList = (data = {}, fn) => {
   );
 };
 //周边好店列表
+
+export const fetchMerchantNearRank = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/listMerchantNearRank",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//排行榜

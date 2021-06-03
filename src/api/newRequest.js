@@ -63,9 +63,9 @@ const env =
 
 switch (env) {
   case "development":
-    // baseUrl = "https://devgateway.dakale.net";
+    baseUrl = "https://devgateway.dakale.net";
     // baseUrl = "https://pregateway.dakale.net";
-    baseUrl = "https://gateway1.dakale.net";
+    // baseUrl = "https://gateway1.dakale.net";
     break;
   case "production":
     // baseUrl = "https://pregateway.dakale.net";
@@ -73,7 +73,6 @@ switch (env) {
     baseUrl = "https://gateway1.dakale.net";
     break;
 }
-
 const httpCondition = {
   header: {
     apptype: "user",
@@ -105,7 +104,6 @@ export const httpGet = (obj, fn) => {
   ) {
     obj.data.token = Taro.getStorageSync("userInfo").token;
   }
-
   return new Promise((resolve, reject) => {
     Taro.request({
       ...httpCondition,
@@ -173,52 +171,56 @@ export const httpPost = (obj, fn) => {
     return;
   } else {
     requestUrl.push(obj.url);
-    Taro.request({
-      ...httpCondition,
-      header: {
-        ...httpCondition.header,
-        "content-type": "application/json",
-        lnt: Taro.getStorageSync("lnt"),
-        lat: Taro.getStorageSync("lat"),
-        "city-code": Taro.getStorageSync("city").cityCode || "3301",
-        "district-code": Taro.getStorageSync("district-code") || null,
-        ...header,
-      },
-      url: baseUrl + obj.url,
-      data: encrypt(obj.data) || {},
-      method: "post",
-      success: (res) => {
-        Taro.hideLoading();
-        const { data, statusCode } = res;
-        if (statusCode === 200 && res.data.success) {
-          const { content } = data;
-          fn && fn(content, data);
-        } else {
-          if (statusCode !== 200) {
-            toast("服务路径不存在");
-          } else if (!data.success) {
-            const { resultDesc, resultCode } = data;
-            if (resultOperate[resultCode]) {
-              toast(resultDesc);
-              resultOperate[resultCode].fn();
-              resultOperate[resultCode].link &&
-                navigateTo(resultOperate[resultCode].link);
-              return;
+    return new Promise((resolve, reject) => {
+      Taro.request({
+        ...httpCondition,
+        header: {
+          ...httpCondition.header,
+          "content-type": "application/json",
+          lnt: Taro.getStorageSync("lnt"),
+          lat: Taro.getStorageSync("lat"),
+          "city-code": Taro.getStorageSync("city").cityCode || "3301",
+          "district-code": Taro.getStorageSync("district-code") || null,
+          ...header,
+        },
+        url: baseUrl + obj.url,
+        data: encrypt(obj.data) || {},
+        method: "post",
+        success: (res) => {
+          Taro.hideLoading();
+          const { data, statusCode } = res;
+          if (statusCode === 200 && res.data.success) {
+            const { content } = data;
+            fn && fn(content, data);
+            resolve(content, data);
+          } else {
+            if (statusCode !== 200) {
+              toast("服务路径不存在");
+            } else if (!data.success) {
+              const { resultDesc, resultCode } = data;
+              reject(res.data);
+              if (resultOperate[resultCode]) {
+                toast(resultDesc);
+                resultOperate[resultCode].fn();
+                resultOperate[resultCode].link &&
+                  navigateTo(resultOperate[resultCode].link);
+                return;
+              }
+              return toast(resultDesc);
             }
-            return toast(resultDesc);
           }
-        }
-      },
-      fail: (res) => {
-        Taro.hideLoading();
-        const { errMsg } = res;
-        toast(filterHttpStatus(errMsg));
-      },
-      complete: () => {
-        requestUrl = requestUrl.filter((item) => {
-          return item !== obj.url;
-        });
-      },
+        },
+        fail: (res) => {
+          Taro.hideLoading();
+          const { errMsg } = res;
+          toast(filterHttpStatus(errMsg));
+        },
+        complete: () => {
+          requestUrl = requestUrl.filter((item) => {
+            return item !== obj.url;
+          });
+        },
+      });
     });
   }
 };

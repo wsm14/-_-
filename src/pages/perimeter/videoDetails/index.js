@@ -10,7 +10,7 @@ import {
   goBack,
   loginStatus,
 } from "@/common/utils";
-import InterVal from "@/components/setTimeCanvas";
+import InterVal from "@/components/videoComponents";
 import {
   saveWatchBean,
   saveMerchantCollection,
@@ -25,7 +25,9 @@ import "./index.scss";
 import classNames from "classnames";
 import Toast from "@/components/beanToast";
 import Coupon from "@/components/freeCoupon";
-
+import { getShareInfo } from "@/server/common";
+import TaroShareDrawer from "./components/TaroShareDrawer";
+import { rssConfigData } from "./components/data";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -42,29 +44,26 @@ class Index extends React.PureComponent {
       beanLimitStatus: "1",
       player: true,
       configUserLevelInfo: {},
+      cavansObj: {
+        data: null,
+        start: false,
+      },
     };
     this.interReload = null;
     this.interSwper = null;
   }
 
   stopVideoPlayerControl() {
-    const { current, interval, player } = this.state;
+    const { current, player } = this.state;
     if (player) {
-      if (interval) {
-        this.stopInterval(interval);
-      }
       this.setState({
         player: false,
       });
-      Taro.createVideoContext(`details1`).stop();
+      Taro.createVideoContext(`details1`).pause();
     } else {
-      if (interval) {
-        this.stopInterval(interval);
-      }
       this.setState({
         player: true,
       });
-      this.initInterval();
       Taro.createVideoContext(`details1`).play();
     }
   }
@@ -97,50 +96,31 @@ class Index extends React.PureComponent {
           userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
         });
       }
-    );
-  }
-  //领取卡豆
-  initInterval() {
-    const { userMomentsInfo, interval } = this.state;
-    const { watchStatus, length } = userMomentsInfo;
-    interval && clearInterval(interval);
-    if ((this.state.time || this.state.time === 0) && watchStatus === "0") {
-      this.setState({
-        interval: setIntive(this.state.time, this.getBean.bind(this)),
-      });
-    } else {
-      if (watchStatus === "0" && length) {
-        this.setState(
-          {
-            time: length,
+    ).catch((res) => {
+      const { resultCode } = res;
+      if (resultCode == "5231") {
+        this.setState({
+          userMomentsInfo: {
+            ...userMomentsInfo,
+            beanFlag: 0,
           },
-          (res) => {
-            this.setState({
-              interval: setIntive(this.state.time, this.getBean.bind(this)),
-            });
-          }
-        );
+        });
       }
-    }
-  }
-  //初始化详情数据
-
-  stopInterval(interval) {
-    console.log("清理成功");
-    clearInterval(interval);
-    this.setState({
-      interval: null,
     });
   }
+  //领取卡豆
+
+  //初始化详情数据
+
   videoPlayerControl() {
     const { current } = this.state;
     const list = [current - 1, current, current + 1];
     for (const item of list) {
       if (item >= 0) {
-        Taro.createVideoContext(`video${item}`).stop();
+        Taro.createVideoContext(`details1`).stop();
       }
     }
-    Taro.createVideoContext(`video${current}`).play();
+    Taro.createVideoContext(`details1`).play();
   }
   followStatus(e) {
     e.stopPropagation();
@@ -210,18 +190,9 @@ class Index extends React.PureComponent {
       );
     }
   }
-  componentDidHide() {
-    const { interval } = this.state;
-    if (interval) {
-      this.stopInterval(interval);
-    }
-  }
+  componentDidHide() {}
   componentDidShow() {
-    const { time } = this.state;
     this.fetchUserShareCommission();
-    if (time === 0 || time) {
-      this.initInterval();
-    }
   }
 
   getUserMomentDetailById(momentId) {
@@ -231,14 +202,9 @@ class Index extends React.PureComponent {
       },
       (res) => {
         const { userMomentsInfo } = res;
-        this.setState(
-          {
-            userMomentsInfo,
-          },
-          (res) => {
-            this.initInterval();
-          }
-        );
+        this.setState({
+          userMomentsInfo,
+        });
       }
     );
   }
@@ -275,6 +241,62 @@ class Index extends React.PureComponent {
         configUserLevelInfo,
       });
     });
+  }
+  shareImageInfo() {
+    const {
+      userMomentsInfo: {
+        userMomentIdString,
+        message,
+        username,
+        cityName,
+        districtName,
+        merchantAddress,
+        frontImage,
+      },
+      player,
+    } = this.state;
+    getShareInfo(
+      {
+        shareType: "video",
+        shareId: userMomentIdString,
+      },
+      (res) => {
+        const {
+          goodsImg,
+          goodsName,
+          hasGoods,
+          oriPrice,
+          realPrice,
+          qcodeUrl,
+          image,
+        } = res;
+        if (player) {
+          this.stopVideoPlayerControl();
+        }
+        let userInfo = Taro.getStorageSync("userInfo");
+        console.log(userInfo);
+        this.setState({
+          cavansObj: {
+            start: true,
+            data: rssConfigData({
+              hasGoods,
+              frontImage: frontImage,
+              message,
+              merchantName: username,
+              cityName: cityName + districtName,
+              address: merchantAddress,
+              username: userInfo.username,
+              userProfile: userInfo.profile,
+              wxCode: qcodeUrl,
+              goodsImg,
+              goodsName,
+              oriPrice,
+              realPrice,
+            }),
+          },
+        });
+      }
+    );
   }
   onShareAppMessage(res) {
     const {
@@ -329,24 +351,22 @@ class Index extends React.PureComponent {
       couponFlag,
       beanLimitStatus,
       player,
+      cavansObj,
     } = this.state;
 
     return (
       <View className={classNames("home_box home_black")}>
         <View className="home_video_box">
           <>
-            <InterVal
-              interval={time}
-              length={length}
-              data={userMomentsInfo}
-              beanLimitStatus={beanLimitStatus}
-            ></InterVal>
             <VideoView
               data={userMomentsInfo}
               follow={this.followStatus.bind(this)}
               collection={this.collection.bind(this)}
               stop={this.stopVideoPlayerControl.bind(this)}
               userInfo={configUserLevelInfo}
+              shareInfo={this.shareImageInfo.bind(this)}
+              beanLimitStatus={beanLimitStatus}
+              saveBean={this.saveBean.bind(this)}
             ></VideoView>
           </>
         </View>
@@ -376,6 +396,13 @@ class Index extends React.PureComponent {
             className="player_no"
           ></View>
         )}
+        <TaroShareDrawer
+          {...cavansObj}
+          onSave={() => console.log("点击保存")}
+          onClose={() =>
+            this.setState({ cavansObj: { start: false, data: null } })
+          }
+        ></TaroShareDrawer>
       </View>
     );
   }

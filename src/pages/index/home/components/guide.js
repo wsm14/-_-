@@ -4,22 +4,23 @@ import Taro from "@tarojs/taro";
 import Router from "@/common/router";
 import "./../index.scss";
 export default (props) => {
-  const { data, current, interval, videoPlayer, videoStop, init } = props;
+  const { data, videoPlayer, videoStop, proxy } = props;
   const [showStatus, setShowStatus] = useState(0);
   const [animate, setAnimated] = useState(null);
-  const { beanAmount } = data;
+  const { beanAmount, guideMomentFlag } = data;
   useEffect(() => {
     if (
-      !Taro.getStorageSync("login") &&
+      (!Taro.getStorageSync("login") || guideMomentFlag === "1") &&
       showStatus !== null &&
-      !Taro.getStorageSync("userInfo")
+      (!Taro.getStorageSync("userInfo") || guideMomentFlag === "1")
     ) {
-      videoStop();
-      if (interval) {
+      if (proxy) {
+        console.log(proxy)
+        videoStop();
         animated();
       }
     }
-  }, [interval]);
+  }, [proxy]);
   const onClose = () => {
     let animateTem2 = Taro.createAnimation({
       duration: 300,
@@ -110,10 +111,10 @@ export default (props) => {
     );
   };
   if (
-    Taro.getStorageSync("login") ||
+    (Taro.getStorageSync("login") && guideMomentFlag !== "1") ||
     showStatus === null ||
     animate === null ||
-    Taro.getStorageSync("userInfo")
+    (Taro.getStorageSync("userInfo") && guideMomentFlag !== "1")
   ) {
     return null;
   } else {

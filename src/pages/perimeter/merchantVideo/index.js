@@ -17,13 +17,15 @@ import {
   fetchUserShareCommission,
 } from "@/server/index";
 import { listParentCategory } from "@/server/common";
-import "./index.scss";
-import Barrage from "./components/barrage";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import evens from "@/common/evens";
 import { listOtherMomentByType, listMomentByUserId } from "@/server/user";
 import { getListUserMomentBySearch } from "@/server/perimeter";
+import { getShareInfo } from "@/server/common";
+import TaroShareDrawer from "./components/TaroShareDrawer";
+import { rssConfigData } from "./components/data";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -45,6 +47,10 @@ class Index extends React.PureComponent {
       player: true,
       configUserLevelInfo: {},
       keyword: getCurrentInstance().router.params.keyword,
+      cavansObj: {
+        data: null,
+        start: false,
+      },
     };
   }
 
@@ -56,6 +62,7 @@ class Index extends React.PureComponent {
       {
         current,
         userMomentsInfo: userMomentsList[current],
+        player: true,
       },
       (res) => {
         this.videoPlayerControl();
@@ -154,7 +161,7 @@ class Index extends React.PureComponent {
       this.setState({
         player: false,
       });
-      Taro.createVideoContext(`video${current}`).stop();
+      Taro.createVideoContext(`video${current}`).pause();
     } else {
       this.setState({
         player: true,
@@ -322,6 +329,62 @@ class Index extends React.PureComponent {
       });
     });
   }
+  shareImageInfo() {
+    const {
+      userMomentsInfo: {
+        userMomentIdString,
+        message,
+        username,
+        cityName,
+        districtName,
+        merchantAddress,
+        frontImage,
+      },
+      player,
+    } = this.state;
+    getShareInfo(
+      {
+        shareType: "video",
+        shareId: userMomentIdString,
+      },
+      (res) => {
+        const {
+          goodsImg,
+          goodsName,
+          hasGoods,
+          oriPrice,
+          realPrice,
+          qcodeUrl,
+          image,
+        } = res;
+        if (player) {
+          this.stopVideoPlayerControl();
+        }
+        let userInfo = Taro.getStorageSync("userInfo");
+        console.log(userInfo);
+        this.setState({
+          cavansObj: {
+            start: true,
+            data: rssConfigData({
+              hasGoods,
+              frontImage: frontImage,
+              message,
+              merchantName: username,
+              cityName: cityName + districtName,
+              address: merchantAddress,
+              username: userInfo.username,
+              userProfile: userInfo.profile,
+              wxCode: qcodeUrl,
+              goodsImg,
+              goodsName,
+              oriPrice,
+              realPrice,
+            }),
+          },
+        });
+      }
+    );
+  }
   componentDidHide() {}
   componentDidShow() {}
   componentDidMount() {}
@@ -355,6 +418,7 @@ class Index extends React.PureComponent {
       httpData: { browseType },
       player,
       configUserLevelInfo,
+      cavansObj,
     } = this.state;
 
     const templateView = () => {
@@ -370,6 +434,7 @@ class Index extends React.PureComponent {
               collection={this.collection.bind(this)}
               stop={this.stopVideoPlayerControl.bind(this)}
               userInfo={configUserLevelInfo}
+              shareInfo={this.shareImageInfo.bind(this)}
             ></VideoView>
           </>
         );
@@ -392,6 +457,13 @@ class Index extends React.PureComponent {
             className="player_no"
           ></View>
         )}
+        <TaroShareDrawer
+          {...cavansObj}
+          onSave={() => console.log("点击保存")}
+          onClose={() =>
+            this.setState({ cavansObj: { start: false, data: null } })
+          }
+        ></TaroShareDrawer>
       </View>
     );
   }

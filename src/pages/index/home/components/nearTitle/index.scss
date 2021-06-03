@@ -1,0 +1,135 @@
+.nearTitle_box {
+  width: 718px;
+  margin: 12px auto 24px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  .nearTitle_left {
+    width: 408px;
+    height: 340px;
+    background: #222222;
+    border-radius: 8px;
+    .nearTitle_shop {
+      padding: 24px 16px 0;
+      display: flex;
+      .nearTitle_name {
+        font-size: 32px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 32px;
+      }
+      .nearTitle_tag {
+        width: 104px;
+        height: 32px;
+        background: linear-gradient(90deg, #ff4873 0%, #ff8135 100%);
+        border-radius: 4px;
+        font-size: 22px;
+        font-weight: 400;
+        color: #ffffff;
+        line-height: 22px;
+        margin-left: 8px;
+      }
+      .nearTitle_link {
+        width: 32px;
+        height: 32px;
+        margin-left: auto;
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon609.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+  }
+  .nearTitle_right {
+    width: 294;
+    height: 340px;
+    border-radius: 8px;
+    .nearTitle_right_activeBox {
+      width: 294px;
+      height: 158px;
+      position: relative;
+      .nearTitle_right_rank {
+        padding: 36px 16px 0;
+        font-size: 32px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 32px;
+      }
+      .nearTitle_right_details {
+        padding: 17px 16px 0;
+        font-size: 24px;
+        font-weight: 400;
+        color: #ffffff;
+        line-height: 24px;
+      }
+    }
+    .nearTitle_right_activeIcon1 {
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon605.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .nearTitle_right_activeIcon2 {
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon606.png")
+        no-repeat;
+      background-size: 100% 100%;
+      margin-top: 24px;
+    }
+    .nearTitle_right_logo {
+      width: 104px;
+      height: 88px;
+      position: absolute;
+      right: 11px;
+      top: -12px;
+    }
+    .nearTitle_right_logoIcon1 {
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon607.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .nearTitle_right_logoIcon2 {
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon608.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .nearTitle_shop_box {
+    position: relative;
+    margin-right: 16px;
+    .nearTitle_shop_img {
+      width: 180px;
+      height: 128px;
+      border-radius: 8px;
+    }
+    .nearTitle_shop_name {
+      padding-top: 16px;
+      width: 180px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 24px;
+    }
+    .nearTitle_shop_price {
+      padding-top: 16px;
+      width: 180px;
+      display: flex;
+      align-items: baseline;
+      font-size: 32px;
+      font-weight: bold;
+      color: #ef476f;
+      line-height: 32px;
+    }
+    .nearTitle_bean_toast {
+      font-size: 20px;
+      font-weight: 400;
+      color: #999999;
+      padding-top: 8px;
+    }
+  }
+  .nearTitle_active {
+    margin: 20px 16px 0;
+    display: flex;
+  }
+  .nearTitle_shop_box:last-child {
+    margin-right: 0;
+  }
+}

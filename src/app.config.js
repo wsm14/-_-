@@ -90,6 +90,7 @@ export default {
     {
       root: "pages/perimeter",
       pages: [
+        "rankInfo/index", //排行榜
         "perimeterShops/index", //周边好店
         "videoDetails/index", //视频详情
         "couponList/index", //有价券列表

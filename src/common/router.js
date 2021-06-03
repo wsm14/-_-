@@ -33,6 +33,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
     wraparound: "/pages/coupon/wraparound/index", //券包
     //券包
+    rankInfo: "/pages/perimeter/rankInfo/index", //排行榜
     payCouponDetails: "/pages/perimeter/payCouponDetails/index", //优惠券详情
     benchmark: "/pages/perimeter/benchmark/index", //逛逛风向标列表
     perimeterShops: "/pages/perimeter/perimeterShops/index", //周边好店
@@ -58,8 +59,8 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     tipView: "/pages/perimeter/tipView/index",
     payCouponList: "/pages/perimeter/couponList/index", //有价券列表
     //周边
-    kolShopGoods: "/pages/goods/kolShopGoods/index",//支付订单详情
-    codePay: "/pages/goods/codePay/index",//
+    kolShopGoods: "/pages/goods/kolShopGoods/index", //支付订单详情
+    codePay: "/pages/goods/codePay/index", //
     coupon: "/pages/goods/codeCoupon/index",
     couponOrder: "/pages/goods/couponOrder/index",
     favourableOrder: "/pages/goods/favourOrder/index",
@@ -73,14 +74,14 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     follow: "/pages/kol/follow/index", //关注列表,
     fans: "/pages/kol/fans/index", //粉丝列表
     //kol
-    wallet: "/pages/newUser/wallet/index",//我的钱包
+    wallet: "/pages/newUser/wallet/index", //我的钱包
     //newUser
 
     interests: "/pages/rules/interests/index",
-    shareActive: "/pages/share/invitation/index",//活动
-    download: "/pages/share/download/index",//下载
-    login: "/pages/auth/index",//登录
-    webView: "/pages/share/webView/index",//内嵌h5
+    shareActive: "/pages/share/invitation/index", //活动
+    download: "/pages/share/download/index", //下载
+    login: "/pages/auth/index", //登录
+    webView: "/pages/share/webView/index", //内嵌h5
     //规则类
   }[routerName];
   const types = type;
