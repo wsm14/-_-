@@ -101,7 +101,7 @@ export default ({
             <Text className="font20">卡豆抵扣到手价</Text>
             <Text className="font20 bold templateCard_margin1">¥ </Text>
             <Text className="font28 bold templateCard_margin1">
-              {" " + promotionBuyPrice * (payBeanCommission / 100)}
+              {" " +(promotionBuyPrice * (payBeanCommission / 100)).toFixed(2)}
             </Text>
           </View>
         </View>
