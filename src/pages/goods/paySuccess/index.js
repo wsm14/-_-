@@ -96,6 +96,7 @@ class Index extends Component {
       <View className="pay_details_payDetails">
         <Title></Title>
         <ShopCard
+          visible={visible}
           fn={() => this.getOrderResult()}
           data={orderResult}
         ></ShopCard>

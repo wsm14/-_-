@@ -16,7 +16,7 @@ import drawQrcode from "weapp-qrcode";
 import Taro from "@tarojs/taro";
 
 export default (props) => {
-  const { data, fn } = props;
+  const { data, fn, visible } = props;
   const [orderResult, setOrderResult] = useState({});
   const [current, setCurrent] = useState(0);
   const [list, setList] = useState([]);
@@ -31,21 +31,23 @@ export default (props) => {
   }, [data]);
   const { merchantImg, goodsName } = orderResult;
   useEffect(() => {
-    setTimeout(() => {
-      list.forEach((item, index) => {
-        const { verificationUrl } = item;
-        if (item.status === "0") {
-          drawQrcode({
-            width: qrwh,
-            height: qrwh,
-            background: "#FFFFFF",
-            canvasId: `canvas${index}`,
-            text: verificationUrl,
-          });
-        }
-      });
-    }, 1);
-  }, [list]);
+    if (!visible) {
+      setTimeout(() => {
+        list.forEach((item, index) => {
+          const { verificationUrl } = item;
+          if (item.status === "0") {
+            drawQrcode({
+              width: qrwh,
+              height: qrwh,
+              background: "#FFFFFF",
+              canvasId: `canvas${index}`,
+              text: verificationUrl,
+            });
+          }
+        });
+      }, 1);
+    }
+  }, [list, visible]);
   const setCode = () => {
     return (
       <View className="codeBox public_center">
@@ -60,22 +62,26 @@ export default (props) => {
           style={{ width: qrwh, height: qrwh }}
         >
           {list.map((item, index) => {
-            return (
-              <SwiperItem>
-                {item.status === "1" ? (
-                  <View
-                    style={{ width: qrwh, height: qrwh }}
-                    className="code_onloader bgCode public_center"
-                  ></View>
-                ) : (
-                  <Canvas
-                    id={"canvas" + index}
-                    style={{ width: qrwh, height: qrwh }}
-                    canvasId={"canvas" + index}
-                  ></Canvas>
-                )}
-              </SwiperItem>
-            );
+            if (!visible) {
+              return (
+                <SwiperItem>
+                  {item.status === "1" ? (
+                    <View
+                      style={{ width: qrwh, height: qrwh }}
+                      className="code_onloader bgCode public_center"
+                    ></View>
+                  ) : (
+                    <Canvas
+                      id={"canvas" + index}
+                      style={{ width: qrwh, height: qrwh }}
+                      canvasId={"canvas" + index}
+                    ></Canvas>
+                  )}
+                </SwiperItem>
+              );
+            } else {
+              return null;
+            }
           })}
         </Swiper>
 

@@ -66,7 +66,6 @@ export default (props) => {
 
   const [interVal, setIntervals] = useState(0);
   const [font, showFont] = useState(false);
-
   let i = 0;
   useEffect(() => {
     if (time >= 259200 || !time) {

@@ -4,9 +4,8 @@
  * visible 外部关闭方法
  */
 import React, { useEffect, useState } from "react";
-import { CoverImage, CoverView, Text, View } from "@tarojs/components";
+import { Image, Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { backgroundObj, switchTab } from "@/common/utils";
 import Router from "@/common/router";
 import ButtonView from "@/components/Button";
 import "./../index.scss";
@@ -87,7 +86,7 @@ export default (props) => {
         onClose();
       }}
     >
-      <CoverView
+      <View
         animation={animate}
         catchMove
         onClick={(e) => {
@@ -95,30 +94,30 @@ export default (props) => {
         }}
         className="pay_toast_box"
       >
-        <CoverImage
+        <Image
           className="pay_toast_Image"
           src={"https://wechat-config.dakale.net/miniprogram/image/icon621.png"}
-        ></CoverImage>
-        <CoverImage
+        ></Image>
+        <Image
           className="pay_toast_Image1"
           src={"https://wechat-config.dakale.net/miniprogram/image/icon624.png"}
-        ></CoverImage>
-        <CoverImage
+        ></Image>
+        <Image
           className="pay_toast_Image2"
           src={"https://wechat-config.dakale.net/miniprogram/image/icon625.png"}
-        ></CoverImage>
-        <CoverImage
+        ></Image>
+        <Image
           onClick={linkToDown}
           className="pay_toast_Image4"
           src={"https://wechat-config.dakale.net/miniprogram/image/icon622.png"}
-        ></CoverImage>
-        <CoverImage
+        ></Image>
+        <Image
           onClick={onClose}
           className="pay_toast_Image5"
           src={"https://wechat-config.dakale.net/miniprogram/image/icon623.png"}
-        ></CoverImage>
-        <CoverView className="pay_toast_view">{data.subsidyBean}</CoverView>
-      </CoverView>
+        ></Image>
+        <View className="pay_toast_view">{data.subsidyBean}</View>
+      </View>
     </View>
   );
 };

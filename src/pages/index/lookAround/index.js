@@ -110,6 +110,7 @@ class Index extends Component {
         this.getshopList(dateHttp, "dateList");
         this.getSpecialGoodsCategory();
         this.fetchUserShare();
+        this.fetchgNewcomerOrders();
       }
     );
   }
@@ -123,10 +124,10 @@ class Index extends Component {
     this.getshopList(hotHttp, "hotList");
     this.getshopList(dateHttp, "dateList");
     this.getSpecialGoodsCategory();
+    this.fetchgNewcomerOrders();
   }
   componentDidShow() {
     this.fetchUserShare();
-    this.fetchgNewcomerOrders();
   }
   fetchgNewcomerOrders() {
     getConfigNewcomerOrders({}, (res) => {
@@ -470,7 +471,7 @@ class Index extends Component {
               className="slider-inside .slider-inside-location"
             ></View>
           </View>
-          {taskStatus === "0" && (
+          {(taskStatus === "0" || taskStatus === "1") && (
             <View
               className="lookAround_goods_init"
               onClick={() =>

@@ -128,9 +128,8 @@ export const saveCouponOrder = (data, fn) => {
 };
 //购买有价券订单
 
-
 export const getNuwUserFirstOrderInfo = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/config/newcomer/order/getNewUserFirstOrderInfo",
       data: data,
