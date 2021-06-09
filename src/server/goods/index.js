@@ -127,3 +127,26 @@ export const saveCouponOrder = (data, fn) => {
   );
 };
 //购买有价券订单
+
+
+export const getNuwUserFirstOrderInfo = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/config/newcomer/order/getNewUserFirstOrderInfo",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//下单成功三单福利
+
+export const getConfigNewcomerOrders = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/config/newcomer/order/getConfigNewcomerOrders",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//下单成功三单福利

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
-import { ScrollView, View } from "@tarojs/components";
+import { ScrollView, View, Text } from "@tarojs/components";
 import Banner from "@/components/banner";
 import {
   backgroundObj,
@@ -20,6 +20,7 @@ import {
 } from "@/server/common";
 import classNames from "classnames";
 import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
+import { getConfigNewcomerOrders } from "@/server/goods";
 import { inject, observer } from "mobx-react";
 import Router from "@/common/router";
 import TabCity from "./components/tabCity";
@@ -64,6 +65,7 @@ class Index extends Component {
       flagDom: false,
       result: {},
       num: Taro.getStorageSync("toast") || 0,
+      configNewcomerOrdersInfo: {},
     };
   }
   //上拉刷新
@@ -124,6 +126,15 @@ class Index extends Component {
   }
   componentDidShow() {
     this.fetchUserShare();
+    this.fetchgNewcomerOrders();
+  }
+  fetchgNewcomerOrders() {
+    getConfigNewcomerOrders({}, (res) => {
+      const { configNewcomerOrdersInfo = {} } = res;
+      this.setState({
+        configNewcomerOrdersInfo,
+      });
+    });
   }
   setMap() {
     const latitude = getLat();
@@ -316,6 +327,12 @@ class Index extends Component {
       specialHttp: { categoryIds },
       result = {},
       num,
+      configNewcomerOrdersInfo: {
+        taskStatus = "2",
+        remainDay,
+        orderNum,
+        subsidyBean,
+      },
     } = this.state;
     const { cityName, cityCode } = this.props.store.locationStore;
     const bannerStyle = {
@@ -453,6 +470,21 @@ class Index extends Component {
               className="slider-inside .slider-inside-location"
             ></View>
           </View>
+          {taskStatus === "0" && (
+            <View
+              className="lookAround_goods_init"
+              onClick={() =>
+                Router({
+                  routerName: "download",
+                })
+              }
+            >
+              <View className="lookAround_goods_font">
+                新人{remainDay}天内成功核销{orderNum}单，赚
+                <Text className="color3">{subsidyBean}</Text>卡豆
+              </View>
+            </View>
+          )}
           <Banner
             imgName="coverImg"
             data={[...specialShopping]}

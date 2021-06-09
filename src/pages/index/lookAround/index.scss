@@ -514,6 +514,22 @@ page {
     background: #ffffff;
   }
 }
+.lookAround_goods_init {
+  width: 686px;
+  height: 48px;
+  margin: 20px auto 0;
+  display: flex;
+  align-items: center;
+  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon626.png")
+    no-repeat;
+  background-size: 100% 100%;
+  font-size: 24px;
+  font-weight: 400;
+  color: #333333;
+  .lookAround_goods_font{
+    margin-left: 204px;
+  }
+}
 .lookAround_hot_bottom {
   height: 84px;
   font-size: 28px;

@@ -49,7 +49,7 @@ export const getRestapiAddress = (data, fn) => {
 //获取高德城市定位信息
 
 export const getCategory = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/common/category/listCategory",
       data: data,
@@ -210,7 +210,7 @@ export const getShareParamInfo = (data = {}, fn) => {
 //获取解密分享码
 
 export const getConfigWindVaneBySize = (data = {}, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/common/category/scenes/listConfigWindVaneBySize",
       data: data,
@@ -252,4 +252,3 @@ export const getBusinessHub = (data = {}, fn) => {
   );
 };
 //获取解密分享码
-

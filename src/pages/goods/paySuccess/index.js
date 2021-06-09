@@ -3,7 +3,8 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
 import { goods } from "@/api/api";
 import { httpGet, httpPost } from "@/api/newRequest";
-import "./index.scss";
+import { getNuwUserFirstOrderInfo } from "@/server/goods";
+
 import {
   toast,
   backgroundObj,
@@ -17,6 +18,8 @@ import ShopCard from "./components/descriptionCard";
 import Lovely from "@/components/lovely";
 import CouponLovely from "@/components/couponLovely";
 import Router from "@/common/router";
+import Toast from "./components/paySuccessToast";
+import "./index.scss";
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -25,6 +28,8 @@ class Index extends Component {
         orderSn: getCurrentInstance().router.params.orderSn,
       },
       orderResult: {},
+      visible: false,
+      configNewcomerOrdersInfo: {},
     };
   }
 
@@ -33,7 +38,9 @@ class Index extends Component {
       goBack();
     }
   }
-
+  componentDidMount() {
+    this.getOwnToast();
+  }
   componentDidShow() {
     this.getOrderResult();
   }
@@ -64,6 +71,17 @@ class Index extends Component {
       },
     });
   }
+  getOwnToast() {
+    getNuwUserFirstOrderInfo({}, (res) => {
+      const { configNewcomerOrdersInfo } = res;
+      if (configNewcomerOrdersInfo) {
+        this.setState({
+          visible: true,
+          configNewcomerOrdersInfo,
+        });
+      }
+    });
+  }
   onError(msg) {
     console.log(msg);
   }
@@ -71,6 +89,8 @@ class Index extends Component {
     const {
       orderResult,
       orderResult: { orderType },
+      visible,
+      configNewcomerOrdersInfo,
     } = this.state;
     return (
       <View className="pay_details_payDetails">
@@ -92,6 +112,15 @@ class Index extends Component {
             查看订单
           </View>
         </View>
+        <Toast
+          visible={() => {
+            this.setState({
+              visible: false,
+            });
+          }}
+          data={configNewcomerOrdersInfo}
+          show={visible}
+        ></Toast>
         <View className="maybe_love">
           {orderType === "specialGoods" ? (
             <Lovely title={"小伙伴们还喜欢"}></Lovely>

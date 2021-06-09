@@ -105,7 +105,10 @@ export default (props) => {
               <Text className="font20">卡豆抵扣到手价</Text>
               <Text className="font20 bold templateStated_margin">¥</Text>
               <Text className="font28 bold templateStated_margin">
-                {(promotionBuyPrice * (payBeanCommission / 100)).toFixed(2)}
+                {(
+                  promotionBuyPrice *
+                  ((100 - payBeanCommission) / 100)
+                ).toFixed(2)}
               </Text>
               {shareCommission > 0 && (
                 <Text className="font22 templateStated_margin">

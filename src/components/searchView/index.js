@@ -23,7 +23,6 @@ export default (props) => {
     fn && fn(value);
   };
   const SearchMemo = useMemo(() => {
-    console.log(handler)
     const template = {
       0: (
         <View
