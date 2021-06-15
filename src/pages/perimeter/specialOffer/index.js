@@ -165,37 +165,28 @@ class Index extends Component {
         return (
           <View className="specialOffer_novite">
             <View className="specialOffer_novite_content">
-              <View
-                className={classNames(
-                  "specialOffer_select_content",
-                  selectType === 0
-                    ? "specialOffer_select_tags1"
-                    : "specialOffer_select_tags2"
-                )}
-              >
+              <View className={classNames("specialOffer_select_content")}>
                 <View
                   onClick={() => this.selectag(0)}
                   className={classNames(
                     "specialOffer_select_view bold",
-                    selectType === 0 ? "color3" : "color7"
+                    selectType === 0
+                      ? "specialOffer_select_tags1"
+                      : "specialOffer_select_tags2"
                   )}
                 >
                   本期必抢
-                  {selectType === 0 && (
-                    <View className="specialOffer_select_liner"></View>
-                  )}
                 </View>
                 <View
                   onClick={() => this.selectag(1)}
                   className={classNames(
                     "specialOffer_select_view bold",
-                    selectType === 1 ? "color3" : "color7"
+                    selectType === 1
+                      ? "specialOffer_select_tags1"
+                      : "specialOffer_select_tags2"
                   )}
                 >
                   下期预告
-                  {selectType === 1 && (
-                    <View className="specialOffer_select_liner"></View>
-                  )}
                 </View>
               </View>
               <View className="specialOffer_novite_scroll">
@@ -212,8 +203,11 @@ class Index extends Component {
         return (
           <View className="specialOffer_novite">
             <View className="specialOffer_novite_content">
-              <View className="specialOffer_novite_title">本期必抢</View>
-              <View className="specialOffer_novite_liner"></View>
+              <View className="specialOffer_select_content1">
+                <View className="specialOffer_select_view specialOffer_select_tags1">
+                  本期必抢
+                </View>
+              </View>
               <View className="specialOffer_novite_scroll">
                 {specialGoodsList.map((item) => {
                   return specailGoods(item, configUserLevelInfo);
@@ -228,9 +222,11 @@ class Index extends Component {
     };
     return (
       <View className="specialOffer_box">
+        <View className="specialOffer_banner"></View>
         {template()}
-        <View className="specialOffer_content_pay">抢购列表</View>
+
         <View className="specialOffer_content">
+          <View className="specialOffer_content_pay public_center">抢购列表</View>
           {kolGoodsList.map((item) => {
             return childTemplate(item, configUserLevelInfo);
           })}

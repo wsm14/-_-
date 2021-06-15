@@ -56,18 +56,24 @@ export const selectShop = (item, userInfo, linkTo) => {
         <View className="lookAround_pay_hander">卡豆抵扣到手价</View>
         <View className="lookAround_pay_price bold">
           <Text className="lookAround_price_text  font20">¥ </Text>
-          <Text className="bold font36">{realPrice}</Text>
+          <Text className="bold font36">
+            {(realPrice * ((100 - payBeanCommission) / 100)).toFixed(2)}
+          </Text>
           <View className="lookAround_bottom_left">¥ {oriPrice}</View>
         </View>
-        {shareCommission>0 &&  <View className="lookAround_bean_border">
-          <View
-            style={{ border: "1px solid #ef476f" }}
-            className="lookAround_tag_box"
-          >
-            赚¥{" "}
-            {((realPrice - merchantPrice) * (shareCommission / 100)).toFixed(2)}
+        {shareCommission > 0 && (
+          <View className="lookAround_bean_border">
+            <View
+              style={{ border: "1px solid #ef476f" }}
+              className="lookAround_tag_box"
+            >
+              赚¥{" "}
+              {((realPrice - merchantPrice) * (shareCommission / 100)).toFixed(
+                2
+              )}
+            </View>
           </View>
-        </View>}
+        )}
       </View>
     </View>
   );

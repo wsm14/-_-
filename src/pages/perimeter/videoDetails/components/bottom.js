@@ -112,7 +112,7 @@ export default (props) => {
               </Text>
               {shareCommission > 0 && (
                 <Text className="font22 templateStated_margin">
-                  /赚
+                  /赚¥
                   {computedPrice(
                     promotionBuyPrice - promotionMerchantPrice,
                     shareCommission

@@ -44,7 +44,7 @@ export const knowPay = (data, type = "good") => {
   };
   return (
     <View className="shopdetails_shop_toast">
-      <View className="shop_toastTitle">使用须知</View>
+      <View className="shop_toastTitle">购买须知</View>
       <View className="shop_toastDec shop_toastDate">有效期：</View>
       <View className="shop_toastText">
         <Text className="shop_toastTextColor">{templateTime()}</Text>
@@ -63,9 +63,9 @@ export const knowPay = (data, type = "good") => {
           <View className="shop_toastText">满{thresholdPrice}元可用；</View>
         </>
       )}
+      <View className="shop_toastDec shop_showNow">使用规则：</View>
       {templateDesc(buyDesc || couponDesc).length > 0 && (
         <>
-          <View className="shop_toastDec shop_showNow">购买须知：</View>
           <View
             style={{ lineHeight: Taro.pxTransform(36) }}
             className="shop_toastText"
@@ -74,6 +74,32 @@ export const knowPay = (data, type = "good") => {
           </View>
         </>
       )}
+      <View
+        style={{ lineHeight: Taro.pxTransform(36) }}
+        className="shop_toastText"
+      >
+        {" "}
+        本券不可拆分使用，不支持外卖点餐、电商订购等；不可转让、转售、转发、截图，也不能兑换现金；不可伪造，伪造无效。{" "}
+      </View>
+      <View
+        style={{ lineHeight: Taro.pxTransform(36) }}
+        className="shop_toastText"
+      >
+        {" "}
+        本券一经核销即为使用，卡券详情可查看存根信息；
+      </View>
+      <View
+        style={{ lineHeight: Taro.pxTransform(36) }}
+        className="shop_toastText"
+      >
+        如对订单有疑问，请到商家咨询，或者拨打哒卡乐官方客服电话：400-800-5881进行咨询。
+      </View>
+      <View
+        style={{ lineHeight: Taro.pxTransform(36) }}
+        className="shop_toastText"
+      >
+        *最终解释权归杭州哒卡乐智能科技有限公司所有
+      </View>
     </View>
   );
 };

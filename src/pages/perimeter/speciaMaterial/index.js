@@ -128,7 +128,10 @@ class Index extends Component {
             ></Banner>
           </View>
         )}
+       
+  
         <View className="speciaMaterial_content">
+        <View className="speciaMaterial_content_pay public_center">抢购列表</View>
           {specialGoodsList.map((item) => {
             return childTemplate(item, configUserLevelInfo, "today");
           })}

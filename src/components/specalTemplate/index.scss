@@ -6,7 +6,7 @@
   position: relative;
 }
 .specialOffer_shop_box {
-  width: 688px;
+  width: 654px;
   margin: 0 auto 32px;
 }
 .specialOffer_shop_child {
@@ -40,7 +40,7 @@
   margin-left: 24px;
   height: 264px;
   .specialOffer_title {
-    width: 380px;
+    width: 366px;
     height: 80px;
     font-size: 28px;
     font-weight: 400;
@@ -67,9 +67,15 @@
       max-width: 210px;
     }
   }
-
+  .specialOffer_toast {
+    margin-top: 28px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ef476f;
+    line-height: 20px;
+  }
   .specialOffer_date_price {
-    margin-top: 24px;
+    margin-top: 8px;
     font-size: 32px;
     font-weight: 600;
     color: #333333;
@@ -77,8 +83,10 @@
     display: flex;
     align-items: baseline;
   }
+  .specialOffer_date_relMargin {
+    margin-left: 8px;
+  }
   .specialOffer_date_rel {
-    padding-top: 8px;
     font-size: 20px;
     font-weight: 400;
     color: #cccccc;
@@ -90,9 +98,8 @@
     vertical-align: text-bottom;
   }
   .specialOffer_bean_box {
-    height: 32px;
-    padding: 0px 6px;
-    line-height: 32px;
+    padding: 4px 8px;
+    line-height: normal;
     font-size: 22px;
     font-weight: 400;
     color: #ef476f;
@@ -113,7 +120,7 @@
   }
 }
 .specialOffer_bean_border {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 .specialOffer_shop_bottom {
   height: 52px;

@@ -27,30 +27,45 @@ export const specailGoods = (item, val = {}) => {
       <View
         className="specail_hot_specalImage"
         style={backgroundObj(goodsImg)}
+        onClick={() =>
+          Router({
+            routerName: "favourableDetails",
+            args: {
+              specialActivityId: specialActivityIdString,
+              merchantId: merchantIdString,
+            },
+          })
+        }
       ></View>
       <View className="specail_hot_font font_noHide">{goodsName}</View>
       <View className="specail_hot_limit">
         距您 {GetDistance(getLat(), getLnt(), lat, lnt)}
       </View>
-      <View className="specail_hot_price">
-        <Text className="specail_price_text">¥ </Text>
-        {realPrice}
-        {shareCommission !== 0 && (
-          <View className="specail_share_text">
-            /赚¥
-            {((realPrice - merchantPrice) * (shareCommission / 100)).toFixed(2)}
-          </View>
-        )}
-      </View>
-      <View className="specail_hot_rel"> ¥ {oriPrice}</View>
-      <View className="specail_bean_border">
-        <View
-          style={{ border: "1px solid #ef476f" }}
-          className="specail_bean_box"
-        >
-          卡豆可抵 ¥{(realPrice * (payBeanCommission / 100)).toFixed(2)}
+      <View className="specail_hot_toast">卡豆抵扣到手价</View>
+      <View className="specail_hot_price font_hide">
+        <View className="specail_price_text">¥ </View>
+        {(realPrice * ((100 - payBeanCommission) / 100)).toFixed(2)}
+        <View className="specail_share_text specail_share_textMargin">
+          {" "}
+          ¥ {oriPrice}
         </View>
       </View>
+
+      {shareCommission !== 0 && (
+        <View className="specail_bean_border">
+          <View
+            style={{ border: "1px solid #ef476f" }}
+            className="specail_bean_box"
+          >
+            <View className="specail_share_text">
+              赚¥
+              {((realPrice - merchantPrice) * (shareCommission / 100)).toFixed(
+                2
+              )}
+            </View>
+          </View>
+        </View>
+      )}
     </View>
   );
 };

@@ -1,14 +1,13 @@
 .shopdetails_shop_toast {
-  margin: 24px 32px 0;
+  margin: 16px 0 0;
   color: #333333;
-  padding: 32px 40px 50px;
+  padding: 32px 24px;
   background: #ffffff;
-  border-radius: 20px;
   .shop_toastDate {
     margin-top: 24px;
   }
   .shop_getDate {
-    margin-top: 40px;
+    margin-top: 32px;
   }
   .shop_showNow {
     margin-top: 40px;
@@ -26,6 +25,12 @@
   }
   .shop_toastTextHeight {
     line-height: 36px;
+  }
+  .shop_toastDec {
+    font-size: 24px;
+    font-weight: 600;
+    color: #666666;
+    line-height: 24px;
   }
 }
 .shop_toastTitle {

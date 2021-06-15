@@ -1,17 +1,17 @@
 .specail_hot_box {
-  width: 218px;
+  width: 200px;
   display: inline-block;
   margin-right: 16px;
   vertical-align: top;
   .specail_hot_specalImage {
-    width: 218px;
-    height: 218px;
+    width: 200px;
+    height: 200px;
     background: #ffffff;
     border-radius: 5px;
     position: relative;
   }
   .specail_hot_font {
-    width: 218px;
+    width: 200px;
     height: 84px;
     font-size: 28px;
     font-weight: 400;
@@ -27,13 +27,14 @@
     line-height: 24px;
   }
   .specail_hot_price {
-    margin-top: 16px;
+    margin-top: 8px;
     font-size: 32px;
     font-weight: 600;
     color: #333333;
     line-height: 32px;
     display: flex;
     align-items: baseline;
+    max-width: 200px;
   }
   .specail_hot_rel {
     padding-top: 8px;
@@ -44,7 +45,7 @@
     text-decoration: line-through;
   }
   .specail_price_text {
-    font-size: 20px;
+    font-size: 24px;
     line-height: 22px;
   }
   .specail_bean_border {
@@ -52,16 +53,28 @@
     display: inline-block;
   }
   .specail_bean_box {
-    height: 32px;
-    align-items: center;
-    justify-content: center;
-    padding: 0px 6px;
+    padding: 4px 8px;
     font-size: 22px;
     font-weight: 400;
     color: #ef476f;
-    display: flex;
     box-sizing: border-box;
     border-radius: 4px;
+    line-height: normal;
+  }
+  .specail_hot_toast {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ef476f;
+    line-height: 20px;
+    padding-top: 16px;
+  }
+  .specail_share_text {
+    text-decoration: line-through;
+    color: #CCCCCC;
+    font-size: 20px;
+  }
+  .specail_share_textMargin {
+    margin-left: 8px;
   }
 }
 .specail_hot_box:last-child {

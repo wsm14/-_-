@@ -49,7 +49,6 @@ const filterSelectData = (obj) => {
   if (configWindVaneId.length > 0) {
     length += configWindVaneId.length;
   }
-  console.log(obj);
   return {
     length: length,
     data: {
@@ -219,28 +218,34 @@ class index extends PureComponent {
   }
 
   fetchList(init) {
-    const { httpData } = this.state;
-    getMerchantLat(httpData, (res) => {
-      const { userMerchantList = [] } = res;
-      if (!init) {
-        if (userMerchantList.length === 0) {
-          this.setState({
-            countStatus: false,
-          });
+    const {
+      httpData,
+      httpData: { distance },
+    } = this.state;
+    getMerchantLat(
+      { ...httpData, distance: distance ? distance : 5000 },
+      (res) => {
+        const { userMerchantList = [] } = res;
+        if (!init) {
+          if (userMerchantList.length === 0) {
+            this.setState({
+              countStatus: false,
+            });
+          } else {
+            this.setState({
+              userMerchantList: [
+                ...this.state.userMerchantList,
+                ...userMerchantList,
+              ],
+            });
+          }
         } else {
           this.setState({
-            userMerchantList: [
-              ...this.state.userMerchantList,
-              ...userMerchantList,
-            ],
+            userMerchantList,
           });
         }
-      } else {
-        this.setState({
-          userMerchantList,
-        });
       }
-    });
+    );
   }
   setActiveShop(data) {
     const { scenesId } = data;
