@@ -8,7 +8,21 @@ import "./index.scss";
 export default (props) => {
   const { data, configUserLevelInfo } = props;
   const { allowExpireRefund, allowRefund, needOrder } = data;
-  const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
+  const {
+    payBeanCommission = 50,
+    shareCommission = 0,
+    levelKey = "normal",
+    level = 0,
+  } = configUserLevelInfo;
+  const filterPeople = () => {
+    if (levelKey === "normal") {
+      return "哒人";
+    } else if (levelKey === "daren") {
+      return "哒人";
+    } else if (levelKey === "douzhang") {
+      return "豆长";
+    }
+  };
   return (
     <View className="represent_box">
       <View className="represent_buy_rules">
@@ -45,20 +59,22 @@ export default (props) => {
           className="shop_question question_icon"
         ></View>
       </View>
-      <View
-        className="represent_buy_lever public_auto"
-        onClick={() =>
-          Router({
-            routerName: "download",
-          })
-        }
-      >
-        <View className="color2 font28">哒人</View>
-        <View className="color3 font24">
-          升级哒人，立享好友消费佣金 & 更高卡豆抵扣比例
+      {level === "2.4" ? null : (
+        <View
+          className="represent_buy_lever public_auto"
+          onClick={() =>
+            Router({
+              routerName: "download",
+            })
+          }
+        >
+          <View className="color2 font28">哒人</View>
+          <View className="color3 font24">
+            升级{filterPeople()}，立享好友消费佣金 & 更高卡豆抵扣比例
+          </View>
+          <View className="represent_buy_goLink"></View>
         </View>
-        <View className="represent_buy_goLink"></View>
-      </View>
+      )}
       <View className="represent_buy_kefu">
         <View className="represent_buy_logo"></View>
         <View className="represent_buy_font">

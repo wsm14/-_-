@@ -102,7 +102,7 @@ export default (props) => {
       if (Object.keys(useData[type]).length > 0) {
         setUseData({
           ...useData,
-          [type]: {},
+          [type]: useData[type][value] === items[value] ? {} : { ...items },
         });
       } else {
         setUseData({

@@ -7,6 +7,8 @@ import {
   getLat,
   backgroundObj,
   setPeople,
+  computedBeanPrice,
+  computedPrice
 } from "@/common/utils";
 import "./index.scss";
 export const selectShop = (item, userInfo, linkTo) => {
@@ -57,7 +59,7 @@ export const selectShop = (item, userInfo, linkTo) => {
         <View className="lookAround_pay_price bold">
           <Text className="lookAround_price_text  font20">¥ </Text>
           <Text className="bold font36">
-            {(realPrice * ((100 - payBeanCommission) / 100)).toFixed(2)}
+            {computedBeanPrice(realPrice,payBeanCommission)}
           </Text>
           <View className="lookAround_bottom_left">¥ {oriPrice}</View>
         </View>
@@ -68,9 +70,7 @@ export const selectShop = (item, userInfo, linkTo) => {
               className="lookAround_tag_box"
             >
               赚¥{" "}
-              {((realPrice - merchantPrice) * (shareCommission / 100)).toFixed(
-                2
-              )}
+              {computedPrice(realPrice - merchantPrice, shareCommission)}
             </View>
           </View>
         )}

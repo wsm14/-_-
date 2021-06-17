@@ -1,6 +1,13 @@
 import React, { useMemo } from "react";
 import { View, Text, Image, ScrollView } from "@tarojs/components";
-import { GetDistance, getLnt, getLat, backgroundObj } from "@/common/utils";
+import {
+  GetDistance,
+  getLnt,
+  getLat,
+  backgroundObj,
+  computedBeanPrice,
+  computedPrice,
+} from "@/common/utils";
 import Router from "@/common/router";
 import "./index.scss";
 export const specailGoods = (item, val = {}) => {
@@ -44,7 +51,7 @@ export const specailGoods = (item, val = {}) => {
       <View className="specail_hot_toast">卡豆抵扣到手价</View>
       <View className="specail_hot_price font_hide">
         <View className="specail_price_text">¥ </View>
-        {(realPrice * ((100 - payBeanCommission) / 100)).toFixed(2)}
+        {computedBeanPrice(realPrice, payBeanCommission)}
         <View className="specail_share_text specail_share_textMargin">
           {" "}
           ¥ {oriPrice}
@@ -57,12 +64,8 @@ export const specailGoods = (item, val = {}) => {
             style={{ border: "1px solid #ef476f" }}
             className="specail_bean_box"
           >
-            <View className="specail_share_text">
-              赚¥
-              {((realPrice - merchantPrice) * (shareCommission / 100)).toFixed(
-                2
-              )}
-            </View>
+            赚¥
+            {computedPrice(realPrice - merchantPrice, shareCommission)}
           </View>
         </View>
       )}

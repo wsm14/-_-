@@ -637,9 +637,18 @@ class index extends PureComponent {
             }}
             scrollY
           >
-            {userMerchantList.map((item) => {
-              return template(item);
-            })}
+            <View className="perimeter_shop_scroll">
+              {userMerchantList.length > 0 ? (
+                userMerchantList.map((item) => {
+                  return template(item);
+                })
+              ) : (
+                <View>
+                  <View className="shop_init_nullStatus"></View>
+                  <View className="shop_init_nullfont">暂无商家信息</View>
+                </View>
+              )}
+            </View>
           </ScrollView>
           {visible && (
             <SelectList

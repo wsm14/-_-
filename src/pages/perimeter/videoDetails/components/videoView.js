@@ -37,6 +37,7 @@ export default ({
       frontImageWidth,
       videoContent,
       watchStatus,
+      beanFlag
     } = data;
     return (
       <View

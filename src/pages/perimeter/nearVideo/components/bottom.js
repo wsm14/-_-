@@ -9,6 +9,7 @@ import {
   getLnt,
   backgroundObj,
   computedPrice,
+  computedBeanPrice
 } from "@/common/utils";
 import Taro from "@tarojs/taro";
 import { getPromotionInfo } from "@/server/index";
@@ -105,10 +106,7 @@ export default (props) => {
               <Text className="font20">卡豆抵扣到手价</Text>
               <Text className="font20 bold templateStated_margin">¥</Text>
               <Text className="font28 bold templateStated_margin">
-                {(
-                  promotionBuyPrice *
-                  ((100 - payBeanCommission) / 100)
-                ).toFixed(2)}
+                {computedBeanPrice(promotionBuyPrice, payBeanCommission)}
               </Text>
               {shareCommission > 0 && (
                 <Text className="font22 templateStated_margin">

@@ -1,7 +1,11 @@
 import React from "react";
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { backgroundObj, computedPrice } from "@/common/utils";
+import {
+  backgroundObj,
+  computedPrice,
+  computedBeanPrice,
+} from "@/common/utils";
 import "./../index.scss";
 export default ({
   val,
@@ -101,10 +105,7 @@ export default ({
             <Text className="font20">卡豆抵扣到手价</Text>
             <Text className="font20 bold templateCard_margin1">¥ </Text>
             <Text className="font28 bold templateCard_margin1">
-              {" " +
-                (promotionBuyPrice * ((100 - payBeanCommission) / 100)).toFixed(
-                  2
-                )}
+              {computedBeanPrice(promotionBuyPrice, payBeanCommission)}
             </Text>
           </View>
         </View>

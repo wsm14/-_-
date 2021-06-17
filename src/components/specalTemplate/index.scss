@@ -39,6 +39,22 @@
 .specialOffer_desc {
   margin-left: 24px;
   height: 264px;
+  .specialOffer_coupon_title {
+    width: 366px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 40px;
+    padding-top: 4px;
+  }
+  .specialOffer_coupon_details {
+    width: 366px;
+    padding-top: 8px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+    line-height: 24px;
+  }
   .specialOffer_title {
     width: 366px;
     height: 80px;

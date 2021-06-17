@@ -5,7 +5,7 @@ page {
 }
 .favourable_Details {
   width: 100%;
-  padding-bottom: 139px;
+  padding-bottom: 220px;
   .shop_dakale_content {
     margin: 30px 40px 40px;
     font-size: 28px;
@@ -280,6 +280,7 @@ page {
     box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
+    z-index: 100;
     .shopdetails_shop_price {
       .shopdetails_shop_priceTop {
         color: rgba(239, 71, 111, 1);

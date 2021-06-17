@@ -37,7 +37,7 @@ export default class Index extends React.Component {
       configUserLevelInfo: {},
       storageList: Taro.getStorageSync("storageList") || [],
       setting: {
-        tabList: ["商家", "视频", "商品", "用户"],
+        tabList: ["商品", "商家", "视频", "用户"],
         current: 0,
       },
     };
@@ -263,48 +263,8 @@ export default class Index extends React.Component {
             onClick={() => {
               this.setState({
                 setting: {
-                  tabList: ["商家", "视频", "商品", "用户"],
+                  tabList: ["商品", "商家", "视频", "用户"],
                   current: 0,
-                },
-              });
-              this.changeClick(keyword);
-            }}
-          >
-            <View className="search_shop_icon"></View>
-            <View className="font28 color1 font_hide search_hide">
-              {keyword}
-            </View>
-            <View className="font24 color2 search_shop_right">
-              约{userMerchantNum}个商家
-            </View>
-          </View>
-          <View
-            className="search_shop_layer"
-            onClick={() => {
-              this.setState({
-                setting: {
-                  tabList: ["商家", "视频", "商品", "用户"],
-                  current: 1,
-                },
-              });
-              this.changeClick(keyword);
-            }}
-          >
-            <View className="search_video_icon"></View>
-            <View className="font28 color1 font_hide search_hide">
-              {keyword}
-            </View>
-            <View className="font24 color2 search_shop_right">
-              约{userMomentNum}个视频
-            </View>
-          </View>
-          <View
-            className="search_shop_layer"
-            onClick={() => {
-              this.setState({
-                setting: {
-                  tabList: ["商家", "视频", "商品", "用户"],
-                  current: 2,
                 },
               });
               this.changeClick(keyword);
@@ -323,7 +283,47 @@ export default class Index extends React.Component {
             onClick={() => {
               this.setState({
                 setting: {
-                  tabList: ["商家", "视频", "商品", "用户"],
+                  tabList: ["商品", "商家", "视频", "用户"],
+                  current: 1,
+                },
+              });
+              this.changeClick(keyword);
+            }}
+          >
+            <View className="search_shop_icon"></View>
+            <View className="font28 color1 font_hide search_hide">
+              {keyword}
+            </View>
+            <View className="font24 color2 search_shop_right">
+              约{userMerchantNum}个商家
+            </View>
+          </View>
+          <View
+            className="search_shop_layer"
+            onClick={() => {
+              this.setState({
+                setting: {
+                  tabList: ["商品", "商家", "视频", "用户"],
+                  current: 2,
+                },
+              });
+              this.changeClick(keyword);
+            }}
+          >
+            <View className="search_video_icon"></View>
+            <View className="font28 color1 font_hide search_hide">
+              {keyword}
+            </View>
+            <View className="font24 color2 search_shop_right">
+              约{userMomentNum}个视频
+            </View>
+          </View>
+          <View
+            className="search_shop_layer"
+            onClick={() => {
+              this.setState({
+                setting: {
+                  tabList: ["商品", "商家", "视频", "用户"],
                   current: 3,
                 },
               });

@@ -1,11 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ScrollView, View } from "@tarojs/components";
 import Taro, { useReachBottom } from "@tarojs/taro";
-import { shopDetails } from "@/components/publicShopStyle";
-import { getGoodsByMerchantId } from "@/server/perimeter";
-import { template } from "./../specalTemplate";
+import { getListMayLikeCoupon } from "@/server/perimeter";
+import { couponTemplate } from "../specalTemplate";
 import { toast } from "@/common/utils";
-import classNames from "classnames";
 import "./index.scss";
 export default (props) => {
   const { title, current = false, userInfo, page } = props;
@@ -35,10 +33,10 @@ export default (props) => {
     getDown();
   });
   const getLovely = () => {
-    getGoodsByMerchantId(httpData, (res) => {
-      const { specialGoodsList } = res;
-      if (specialGoodsList && specialGoodsList.length > 0) {
-        setData([...data, ...specialGoodsList]);
+    getListMayLikeCoupon(httpData, (res) => {
+      const { couponList } = res;
+      if (couponList && couponList.length > 0) {
+        setData([...data, ...couponList]);
       } else {
         countType(false);
       }
@@ -59,7 +57,7 @@ export default (props) => {
         <View className="specalActive_liner"></View>
         <View className="specalActive_goods">
           {data.map((item) => {
-            return template(item, userInfo);
+            return couponTemplate(item, userInfo);
           })}
         </View>
       </View>

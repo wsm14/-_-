@@ -128,7 +128,7 @@ export default ({ keyword, current }) => {
     }
   });
   return (
-    <View style={current == 0 ? { display: "block" } : { display: "none" }}>
+    <View style={current == 1 ? { display: "block" } : { display: "none" }}>
       <View className="flex_auto">
         {list.length > 0 ? (
           <View className="search_shopPubu">

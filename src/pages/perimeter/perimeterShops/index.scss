@@ -105,8 +105,25 @@
     right: 0;
     bottom: 0px;
     background: #108588;
-
+  }
+  .perimeter_shop_scroll {
     padding: 32px 24px 0px;
+  }
+  .shop_init_nullStatus {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto 0;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon615.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .shop_init_nullfont {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 28px;
   }
   .template_shop_box {
     width: 702px;
@@ -173,7 +190,7 @@
         .template_peopleRight {
           margin-left: auto;
           height: 32px;
-          
+
           .template_tags {
             padding: 7px 12px;
             color: #108588;
@@ -182,7 +199,7 @@
             border-radius: 16px;
             margin-right: 8px;
           }
-          .template_tags:last-child{
+          .template_tags:last-child {
             margin-right: 0px;
           }
         }

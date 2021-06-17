@@ -784,7 +784,10 @@ class Index extends React.PureComponent {
                 top: computedClient().top + computedClient().height + 20,
               }}
             >
-              <NearTitle reload={triggered}></NearTitle>
+              <NearTitle
+                configUserLevelInfo={configUserLevelInfo}
+                reload={triggered}
+              ></NearTitle>
               <Waterfall
                 list={userMomentsList}
                 createDom={nearList}

@@ -8,13 +8,13 @@ import {
   getLat,
   backgroundObj,
   computedPrice,
+  computedBeanPrice,
 } from "@/common/utils";
 import ButtonView from "@/components/Button";
 import Date from "@/components/dateTime";
 import "./index.scss";
 export const template = (item, configUserLevelInfo) => {
   const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
-  console.log(configUserLevelInfo, 111);
   const {
     goodsId,
     goodsName,
@@ -68,7 +68,7 @@ export const template = (item, configUserLevelInfo) => {
         <View className="specialOffer_toast">卡豆抵扣到手价</View>
         <View className="specialOffer_date_price">
           <View className="font20">{"¥"}</View>
-          {(realPrice * ((100 - payBeanCommission) / 100)).toFixed(2)}
+          {computedBeanPrice(realPrice, payBeanCommission)}
           <View className="specialOffer_date_rel specialOffer_date_relMargin">
             ¥ {oriPrice}
           </View>
@@ -168,9 +168,7 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
           className="specialOffer_shopImg"
         ></View>
         <View className="specialOffer_desc">
-          <View className="specialOffer_title  font_noHide">
-            {goodsName + goodsName + goodsName}
-          </View>
+          <View className="specialOffer_title  font_noHide">{goodsName}</View>
           <View className="specialOffer_userDetails font_hide">
             <View
               className="specialOffer_userprofile"
@@ -188,7 +186,7 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
           <View className="specialOffer_toast">卡豆抵扣到手价</View>
           <View className="specialOffer_date_price">
             <View className="font20">{"¥"}</View>
-            {(realPrice * ((100 - payBeanCommission) / 100)).toFixed(2)}
+            {computedBeanPrice(realPrice, payBeanCommission)}
             <View className="specialOffer_date_rel specialOffer_date_relMargin">
               ¥ {oriPrice}
             </View>
@@ -213,6 +211,110 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
           {shareCommission > 0 ? "分享赚" : "立即抢购"}
         </View>
       </View>
+    </View>
+  );
+};
+
+export const couponTemplate = (item, configUserLevelInfo) => {
+  const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
+  let nullCoupon =
+    "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_big.png";
+  let nullImage =
+    "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/conpon_shop.png";
+  const {
+    couponImg,
+    couponName,
+    merchantLogo,
+    lat,
+    lnt,
+    buyPrice,
+    merchantPrice,
+    merchantName,
+    buyRule,
+    personLimit,
+    dayMaxBuyAmount,
+    reduceObject: { couponPrice, thresholdPrice },
+    ownerCouponIdString,
+    ownerIdString,
+    merchantIdString,
+  } = item;
+  const templateSelect = () => {
+    if (buyRule === "unlimited") {
+      return `不限购`;
+    } else {
+      if (buyRule === "personLimit") {
+        return `每人限购${personLimit}`;
+      } else {
+        return `每人每天限购${dayMaxBuyAmount}`;
+      }
+    }
+  };
+  return (
+    <View
+      className="specialOffer_shop animated fadeIn"
+      onClick={() =>
+        Router({
+          routerName: "payCouponDetails",
+          args: {
+            ownerCouponId: ownerCouponIdString,
+            ownerId: ownerIdString,
+            merchantId: merchantIdString,
+          },
+        })
+      }
+    >
+      <View
+        style={backgroundObj(couponImg || nullCoupon)}
+        className="specialOffer_shopImg"
+      ></View>
+      <View className="specialOffer_desc">
+        <View className="specialOffer_coupon_title  font_hide">
+          {couponName}
+        </View>
+        <View className="specialOffer_coupon_details font_hide">
+          {thresholdPrice ? `满元${thresholdPrice}可用 | ` : ""}
+          {templateSelect()}
+        </View>
+        <View className="specialOffer_userDetails font_hide">
+          <View
+            className="specialOffer_userprofile"
+            style={backgroundObj(merchantLogo || nullImage)}
+          ></View>
+          <View className="specialOffer_username font_hide">
+            {" "}
+            {merchantName}
+          </View>
+          <View className="specialOffer_limit">
+            {" "}
+            ｜ {GetDistance(getLat(), getLnt(), lat, lnt)}
+          </View>
+        </View>
+        <View className="specialOffer_toast">卡豆抵扣到手价</View>
+        <View className="specialOffer_date_price">
+          <View className="font20">{"¥"}</View>
+          {computedBeanPrice(buyPrice, payBeanCommission)}
+          <View className="specialOffer_date_rel specialOffer_date_relMargin">
+            ¥ {couponPrice}
+          </View>
+        </View>
+
+        {shareCommission !== 0 && (
+          <View className="specialOffer_bean_border">
+            <View
+              className="specialOffer_bean_box"
+              style={{ border: "1px solid #ef476f" }}
+            >
+              赚¥
+              {computedPrice(buyPrice - merchantPrice, shareCommission)}
+            </View>
+          </View>
+        )}
+      </View>
+      <ButtonView>
+        <View className="specialOffer_bottom_btn">
+          {shareCommission > 0 ? "分享赚" : "抢购"}
+        </View>
+      </ButtonView>
     </View>
   );
 };

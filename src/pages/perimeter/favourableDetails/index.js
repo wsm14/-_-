@@ -14,8 +14,8 @@ import {
   saveCollection,
   deleteCollection,
   toast,
+  computedBeanPrice,
 } from "@/common/utils";
-
 import { loginBtn } from "@/common/authority";
 import ActivityStatus from "./components/index";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
@@ -316,7 +316,6 @@ class MerchantDetails extends Component {
         userCollectionStatus,
         personLimit,
         buyUserImageList,
-        
       },
       visible,
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
@@ -505,9 +504,7 @@ class MerchantDetails extends Component {
                       ¥
                     </View>
                     <View className="font28 color6 bold shopdetails_bean_priceLeft">
-                      {(realPrice * ((100 - payBeanCommission) / 100)).toFixed(
-                        2
-                      )}
+                      {computedBeanPrice(realPrice, payBeanCommission)}
                     </View>
                   </View>
                 </View>
@@ -605,7 +602,7 @@ class MerchantDetails extends Component {
             <Rule></Rule>
 
             <Recommend
-              current={false}
+              current={true}
               userInfo={configUserLevelInfo}
             ></Recommend>
             <VideoBean
