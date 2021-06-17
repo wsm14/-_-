@@ -156,7 +156,7 @@ export default (props) => {
           ></View>
           <View className="specal_layer_font">
             <View className="specal_title font_hide">{goodsName}</View>
-            <View className="specal_getBeanPrice">卡豆抵扣到手价</View>
+            <View className="specal_getBeanPrice">卡豆抵扣后最低到手价:</View>
             <View className="specal_orice">
               <Text className="color1 font24 bold">¥</Text>{" "}
               <Text className="color1 font28 bold"> {otherRealPrice}</Text>{" "}

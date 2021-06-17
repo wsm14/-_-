@@ -46,9 +46,9 @@ export default (props) => {
           <View className="merchant_com_RightFont">主页</View>
         </View>
       </View>
-      <View className="merchant_com_time color2 font24">
+      {businessTime && (<View className="merchant_com_time color2 font24">
         营业时间: {businessTime}
-      </View>
+      </View>)}
       <View className="merchant_com_telephone public_auto">
         <View className="merchant_com_telephoneMax color2 font24 font_hide">
           商家电话：{telephone}

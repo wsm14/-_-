@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { View, Text, Image, ScrollView } from "@tarojs/components";
-import { GetDistance, getLnt, getLat, backgroundObj ,computedPrice} from "@/common/utils";
+import { GetDistance, getLnt, getLat, backgroundObj, computedPrice, computedBeanPrice } from "@/common/utils";
 import Router from "@/common/router";
 import "./../index.scss";
 export default ({ data = [], userInfo = {}, linkTo }) => {
@@ -33,37 +33,42 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
             className="lookAround_hot_specalImage"
             style={backgroundObj(goodsImg)}
           ></View>
-          <View className="lookAround_hot_bottom font_noHide">{goodsName}</View>
+          <View className="lookAround_hot_bottom font_hide">{goodsName}</View>
           <View className="lookAround_hot_user">
             <View
               className="lookAround_hot_userProfile"
-              style={backgroundObj(merchantLogo)}
             ></View>
             <View className="lookAround_hot_merchantName font_hide">
               {merchantName}
             </View>
             <View className="lookAround_hot_limit">
-              {"|" + GetDistance(getLat(), getLnt(), lat, lnt)}
+              {"| " + GetDistance(getLat(), getLnt(), lat, lnt)}
             </View>
           </View>
-          <View className="lookAround_hot_price">
-            <Text className="lookAround_price_text">¥ </Text>
-            {realPrice}
-            {shareCommission !== 0 && (
-              <View className="lookAround_share_text">
-                /赚¥
+          <View className="lookAround_hot_price color1 font_hide">
+            <View className='font18'>原价:</View>
+            <View className='lookAround_hot_priceMax font_hide font20 price_margin4 bold text_through'>{oriPrice}</View>
+            <View className='font18 price_margin8'>优惠价: </View>
+            <View className='font20 price_margin4 bold'>{realPrice}</View>
+          </View>
+          <View className='lookAround_bean_price'>
+            卡豆抵扣后最低到手价
+          </View>
+          <View className='lookAround_bean_show'>
+            <View className='color3 font36 bold lookAround_bean_showText'>
+              <View className='color3 font20 bold'>¥</View>
+              {computedBeanPrice(realPrice, payBeanCommission)}
+            </View>
+            {shareCommission > 0 && (
+              <View
+                style={{ border: "1px solid #ef476f" }}
+                className="lookAround_bean_getMoney font_hide"
+              >
+                赚¥{" "}
                 {computedPrice(realPrice - merchantPrice, shareCommission)}
               </View>
+
             )}
-          </View>
-          <View className="lookAround_hot_rel"> ¥ {oriPrice}</View>
-          <View className="lookAround_bean_border">
-            <View
-              style={{ border: "1px solid #ef476f" }}
-              className="lookAround_bean_box"
-            >
-              卡豆可抵 ¥{(realPrice * (payBeanCommission / 100)).toFixed(2)}
-            </View>
           </View>
         </View>
       );

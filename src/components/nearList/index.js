@@ -157,7 +157,7 @@ export const searchList = (item = {}, list = [], store) => {
       <View className="nearList_bottom_avtiveBox">
         {couponTitlesJson.length > 0 &&
           couponTitlesJson.map((item) => {
-            return <View className="nearList_dakale_coupon">领券</View>;
+            return <View className="nearList_dakale_coupon public_center">领券</View>;
           })}
         {promotionId && template}
       </View>

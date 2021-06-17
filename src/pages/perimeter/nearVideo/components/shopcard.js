@@ -85,24 +85,24 @@ export default ({
           className="templateCard_image"
           style={backgroundObj(
             promotionImg ||
-              "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png"
+            "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png"
           )}
         ></View>
         <View className="templateCard_goods_box">
           <View className="templateCard_title font_hide">{promotionName}</View>
           <View className="templateCard_price font_hide">
-            <Text className="font22 color6 bold">现价:</Text>
-            <Text className="font20 color6 bold templateCard_margin1">¥</Text>
-            <Text className="font28 color6 bold templateCard_margin1">
-              {promotionBuyPrice}
-            </Text>
-            <Text className="font20 color13 templateCard_margin2">原价:</Text>
-            <Text className="font20 color13 templateCard_margin2 templateCard_through">
+            <Text className="font20 bold color6">原价:</Text>
+            <Text className="font24 bold color6 templateCard_margin1 templateCard_through">
               ¥{promotionOriPrice}
             </Text>
+            <Text className="font22 color6 bold templateCard_margin2">优惠价:</Text>
+            <Text className="font28 color6 bold templateCard_margin1">
+              ¥{promotionBuyPrice}
+            </Text>
+
           </View>
           <View className="templateCard_beanPrice font_hide">
-            <Text className="font20">卡豆抵扣到手价</Text>
+            <Text className="font20">卡豆抵扣后最低到手价:</Text>
             <Text className="font20 bold templateCard_margin1">¥ </Text>
             <Text className="font28 bold templateCard_margin1">
               {computedBeanPrice(promotionBuyPrice, payBeanCommission)}

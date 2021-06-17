@@ -25,6 +25,7 @@ page {
   .shopdetails_beanTitle_name {
     max-height: 96px;
     min-height: 48px;
+    line-height: 48px;
     width: 606px;
   }
   .shopDetails_banner {
@@ -113,42 +114,31 @@ page {
       .shopdetails_price_left {
         display: flex;
         align-items: baseline;
+
         .shopdetails_price_style {
-          margin-left: 8px;
-          font-size: 28px;
-          font-weight: 600;
-          color: #999999;
-          line-height: 28px;
+          margin-left: 12px;
+          line-height: 40px;
         }
         .shopdetails_price_style1 {
-          margin-left: 4px;
-          font-size: 28px;
-          text-decoration: line-through;
-          font-weight: bold;
-          color: #999999;
-          line-height: 28px;
+          line-height: 40px;
         }
       }
+    }
+    .shopdetails_bean_desc {
+      font-size: 22px;
+      font-weight: 400;
+      color: #ef476f;
+      line-height: 22px;
+      margin-top: 18px;
     }
   }
   .shopdetails_bean_box {
     margin-top: 12px;
     display: flex;
+    align-items: center;
     .shopdetails_bean_hander {
-      min-width: 239px;
-      padding: 0 12px;
-      height: 52px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon631.png")
-        no-repeat;
-      background-size: 100% 100%;
-      .shopdetails_bean_price {
-        padding-top: 16px;
-        display: flex;
-        align-items: baseline;
-        .shopdetails_bean_priceLeft {
-          margin-left: 8px;
-        }
-      }
+      display: flex;
+      align-items: baseline;
     }
     .shopdetails_bean_handerRight {
       margin-left: auto;

@@ -125,11 +125,10 @@ export default ({
                           initialTime="0"
                           onWaiting={(e) => {
                             setWalk(true);
-                          
+
                           }}
                           onTimeUpdate={(e) => {
                             if (index === current) {
-                              
                               const { currentTime, duration } = e.detail;
                               setWalk(false);
                               setTime(parseInt(currentTime));

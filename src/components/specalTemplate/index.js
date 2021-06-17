@@ -65,26 +65,30 @@ export const template = (item, configUserLevelInfo) => {
             ｜ {GetDistance(getLat(), getLnt(), lat, lnt)}
           </View>
         </View>
-        <View className="specialOffer_toast">卡豆抵扣到手价</View>
-        <View className="specialOffer_date_price">
-          <View className="font20">{"¥"}</View>
-          {computedBeanPrice(realPrice, payBeanCommission)}
-          <View className="specialOffer_date_rel specialOffer_date_relMargin">
-            ¥ {oriPrice}
-          </View>
+        <View className="specialOffer_hot_price color1 font_hide">
+          <View className='font24'>原价:</View>
+          <View className='specialOffer_hot_priceMax font_hide font28 price_margin4 bold  text_through'>{oriPrice}</View>
+          <View className='font24 price_margin8'>优惠价: </View>
+          <View className='font28 price_margin4 bold'>{realPrice}</View>
         </View>
-
-        {shareCommission !== 0 && (
-          <View className="specialOffer_bean_border">
-            <View
-              className="specialOffer_bean_box"
-              style={{ border: "1px solid #ef476f" }}
-            >
-              赚¥
-              {computedPrice(realPrice - merchantPrice, shareCommission)}
-            </View>
+        <View className='specialOffer_bean_price'>
+          卡豆抵扣后最低到手价
+        </View>
+        <View className='specialOffer_bean_show'>
+          <View className='color3 font36 bold specialOffer_bean_showText'>
+            <View className='color3 font20 bold'>¥ </View>
+            <View className='price_margin4'>{computedBeanPrice(realPrice, payBeanCommission)}</View>
           </View>
-        )}
+          {shareCommission > 0 && (
+            <View
+              style={{ border: "1px solid #ef476f" }}
+              className="specialOffer_bean_getMoney font_hide"
+            >
+              赚<Text className='bold'>¥{computedPrice(realPrice - merchantPrice, shareCommission)}</Text>
+            </View>
+
+          )}
+        </View>
       </View>
       <ButtonView>
         <View className="specialOffer_bottom_btn">
@@ -121,7 +125,7 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
     hot:
       activityTimeRule !== "infinite" ? (
         <View className="specialOffer_shop_text">
-          <Date styles times={activityEndTime} fn={() => {}}></Date>
+          <Date styles times={activityEndTime} fn={() => { }}></Date>
         </View>
       ) : (
         <View className="color1 font28">长期有效</View>
@@ -183,26 +187,30 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
               ｜ {GetDistance(getLat(), getLnt(), lat, lnt)}
             </View>
           </View>
-          <View className="specialOffer_toast">卡豆抵扣到手价</View>
-          <View className="specialOffer_date_price">
-            <View className="font20">{"¥"}</View>
-            {computedBeanPrice(realPrice, payBeanCommission)}
-            <View className="specialOffer_date_rel specialOffer_date_relMargin">
-              ¥ {oriPrice}
-            </View>
+          <View className="specialOffer_hot_price color1 font_hide">
+            <View className='font24'>原价:</View>
+            <View className='specialOffer_hot_priceMax font_hide font28 price_margin4 bold text_through'>{oriPrice}</View>
+            <View className='font24 price_margin8'>优惠价: </View>
+            <View className='font28 price_margin4 bold'>{realPrice}</View>
           </View>
-
-          {shareCommission !== 0 && (
-            <View className="specialOffer_bean_border">
-              <View
-                className="specialOffer_bean_box"
-                style={{ border: "1px solid #ef476f" }}
-              >
-                赚¥
-                {computedPrice(realPrice - merchantPrice, shareCommission)}
-              </View>
+          <View className='specialOffer_bean_price'>
+            卡豆抵扣后最低到手价
+          </View>
+          <View className='specialOffer_bean_show'>
+            <View className='color3 font36 bold specialOffer_bean_showText'>
+              <View className='color3 font20 bold'>¥</View>
+              {computedBeanPrice(realPrice, payBeanCommission)}
             </View>
-          )}
+            {shareCommission > 0 && (
+              <View
+                style={{ border: "1px solid #ef476f" }}
+                className="specialOffer_bean_getMoney font_hide"
+              >
+                赚<Text className='bold'>¥{computedPrice(realPrice - merchantPrice, shareCommission)}</Text>
+              </View>
+
+            )}
+          </View>
         </View>
       </View>
       <View className="specialOffer_shop_bottom public_auto">
@@ -289,7 +297,7 @@ export const couponTemplate = (item, configUserLevelInfo) => {
             ｜ {GetDistance(getLat(), getLnt(), lat, lnt)}
           </View>
         </View>
-        <View className="specialOffer_toast">卡豆抵扣到手价</View>
+        <View className="specialOffer_toast">卡豆抵扣后最低到手价</View>
         <View className="specialOffer_date_price">
           <View className="font20">{"¥"}</View>
           {computedBeanPrice(buyPrice, payBeanCommission)}

@@ -134,6 +134,39 @@
     font-weight: 500;
     color: #ef476f;
   }
+  .specialOffer_hot_price {
+    margin-top: 24px;
+    display: flex;
+    align-items: baseline;
+    .specialOffer_hot_priceMax {
+    }
+  }
+  .specialOffer_bean_price {
+    margin-top: 12px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ef476f;
+    line-height: 20px;
+  }
+  .specialOffer_bean_show {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    .specialOffer_bean_showText {
+      display: flex;
+      align-items: baseline;
+    }
+  }
+  .specialOffer_bean_getMoney {
+    max-width: 113px;
+    margin-left: 8px;
+    padding: 4px 8px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ef476f;
+    line-height: normal;
+    border-radius: 8px;
+  }
 }
 .specialOffer_bean_border {
   margin-top: 6px;

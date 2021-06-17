@@ -225,11 +225,11 @@ class Index extends Component {
             <View className="invitation_shop_title font_noHide">
               {goodsName}
             </View>
-            <View className="invitation_bean_title">卡豆抵扣到手价</View>
+            <View className="invitation_bean_title">卡豆抵扣后最低到手价:</View>
             <View className="invitation_bean_font bold">
               <Text className="font24">¥</Text>
               <Text className="font40">
-                {" " + (realPrice * (payBeanCommission / 100)).toFixed(2)}
+                {" " + (realPrice * (1 - (payBeanCommission / 100))).toFixed(2)}
               </Text>
             </View>
             <View className="invitation_oldPrice_font font_hide">

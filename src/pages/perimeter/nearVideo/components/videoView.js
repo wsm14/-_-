@@ -155,7 +155,7 @@ export default ({
                               saveBean();
                             }
                           }}
-                          id={`video${index}`}
+                          id={`nearVideo${index}`}
                           muted={false}
                         ></Video>
                         {index === current && (

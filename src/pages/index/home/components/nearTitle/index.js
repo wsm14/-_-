@@ -65,7 +65,7 @@ export default (props) => {
           <View className="font24">¥ </View>
           <View>{" " + computedBeanPrice(realPrice, payBeanCommission)}</View>
         </View>
-        <View className="nearTitle_bean_toast">卡豆抵扣到手价</View>
+        <View className="nearTitle_bean_toast">卡豆抵扣后最低到手价:</View>
       </View>
     );
   };

@@ -424,7 +424,7 @@ class MerchantDetails extends Component {
                 onlyTime
                 type={true}
                 times={activityEndTime}
-                fn={() => {}}
+                fn={() => { }}
               ></Date>
             ) : (
               <View className="shopDetails_avtiveTime_tag">长期有效</View>
@@ -465,14 +465,14 @@ class MerchantDetails extends Component {
             <View className="shopdetails_getShop">
               <View className="shopdetails_price_people">
                 <View className="shopdetails_price_left">
-                  <View className="font24 color3">¥</View>
-                  <View className="font48 bold color3"> {realPrice}</View>
-                  <View className="shopdetails_price_style">原价¥</View>
-                  <View className="shopdetails_price_style1">{oriPrice}</View>
+                  <View className="font28 color1">原价:</View>
+                  <View className="font36 color1 bold price_margin4 text_through">¥{oriPrice}</View>
+                  <View className="shopdetails_price_style color1">优惠价:</View>
+                  <View className="shopdetails_price_style1 price_margin4 color1 bold">¥{realPrice}</View>
                 </View>
                 <View className="shopdetails_price_right">
                   {!format(activityStartTime) &&
-                  activityTimeRule === "fixed" ? null : (
+                    activityTimeRule === "fixed" ? null : (
                     <View className="shopdetails_pay_logo">
                       {buyUserImageList.map((item, index) => {
                         if (index === 0) {
@@ -496,17 +496,11 @@ class MerchantDetails extends Component {
                   )}
                 </View>
               </View>
+              <View className='shopdetails_bean_desc'>卡豆抵扣后最低到手价</View>
               <View className="shopdetails_bean_box">
                 <View className="shopdetails_bean_hander">
-                  <View className="shopdetails_bean_price">
-                    <View className="font22 color6">卡豆抵扣到手价</View>
-                    <View className="font20 color6 shopdetails_bean_priceLeft">
-                      ¥
-                    </View>
-                    <View className="font28 color6 bold shopdetails_bean_priceLeft">
-                      {computedBeanPrice(realPrice, payBeanCommission)}
-                    </View>
-                  </View>
+                  <View className='font28 bold color3'>¥</View>
+                  <View className='font48 price_margin8 bold color3'>{computedBeanPrice(realPrice, payBeanCommission)}</View>
                 </View>
                 <View className="shopdetails_bean_handerRight">
                   {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (

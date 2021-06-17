@@ -45,30 +45,44 @@ export const specailGoods = (item, val = {}) => {
         }
       ></View>
       <View className="specail_hot_font font_noHide">{goodsName}</View>
-      <View className="specail_hot_limit">
-        距您 {GetDistance(getLat(), getLnt(), lat, lnt)}
-      </View>
-      <View className="specail_hot_toast">卡豆抵扣到手价</View>
-      <View className="specail_hot_price font_hide">
-        <View className="specail_price_text">¥ </View>
-        {computedBeanPrice(realPrice, payBeanCommission)}
-        <View className="specail_share_text specail_share_textMargin">
-          {" "}
-          ¥ {oriPrice}
+      <View className="specails_hot_user">
+        <View
+          className="specails_hot_userProfile"
+        ></View>
+        <View className="specails_hot_merchantName font_hide">
+          {merchantName}
+        </View>
+        <View className="specails_hot_limit">
+          {"| " + GetDistance(getLat(), getLnt(), lat, lnt)}
         </View>
       </View>
-
-      {shareCommission !== 0 && (
-        <View className="specail_bean_border">
+      <View className="specails_hot_price color1 font_hide">
+        <View className='font20'>原价:</View>
+        <View className='specails_hot_priceMax font_hide font24 price_margin4 bold text_through'>¥{oriPrice}</View>
+      </View>
+      <View className="specails_hot_price1 color1 font_hide">
+        <View className='font20'>优惠价: </View>
+        <View className='font24 price_margin4 bold'>¥{realPrice}</View>
+      </View>
+      <View className='specails_bean_price'>
+        卡豆抵扣后最低到手价
+      </View>
+      <View className='specails_bean_show'>
+        <View className='color3 font36 bold specails_bean_showText'>
+          <View className='color3 font20 bold'>¥</View>{' '}
+          {computedBeanPrice(realPrice, payBeanCommission)}
+        </View>
+        {shareCommission > 0 && (
           <View
             style={{ border: "1px solid #ef476f" }}
-            className="specail_bean_box"
+            className="specails_bean_getMoney font_hide"
           >
-            赚¥
-            {computedPrice(realPrice - merchantPrice, shareCommission)}
+            赚
+            <Text className='bold'>¥{computedPrice(realPrice - merchantPrice, shareCommission)}</Text>
           </View>
-        </View>
-      )}
+
+        )}
+      </View>
     </View>
   );
 };

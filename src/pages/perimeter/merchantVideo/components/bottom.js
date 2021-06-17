@@ -103,7 +103,7 @@ export default (props) => {
               {promotionName}
             </View>
             <View className="templateStated_price font_hide">
-              <Text className="font20">卡豆抵扣到手价</Text>
+              <Text className="font20">卡豆抵扣后最低到手价:</Text>
               <Text className="font20 bold templateStated_margin">¥</Text>
               <Text className="font28 bold templateStated_margin">
                 {computedBeanPrice(promotionBuyPrice, payBeanCommission)}

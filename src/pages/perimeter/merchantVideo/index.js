@@ -161,12 +161,12 @@ class Index extends React.PureComponent {
       this.setState({
         player: false,
       });
-      Taro.createVideoContext(`video${current}`).pause();
+      Taro.createVideoContext(`merchantVideo${current}`).pause();
     } else {
       this.setState({
         player: true,
       });
-      Taro.createVideoContext(`video${current}`).play();
+      Taro.createVideoContext(`merchantVideo${current}`).play();
     }
   }
   videoPlayerControl() {
@@ -177,7 +177,7 @@ class Index extends React.PureComponent {
         Taro.createVideoContext(`video${item}`).stop();
       }
     }
-    Taro.createVideoContext(`video${current}`).play();
+    Taro.createVideoContext(`merchantVideo${current}`).play();
   }
   followStatus(e) {
     e.stopPropagation();

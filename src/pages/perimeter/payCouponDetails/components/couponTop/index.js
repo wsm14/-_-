@@ -85,7 +85,7 @@ export default ({ data, configUserLevelInfo, setCollection, getShareInfo }) => {
         <View className="coupon_top_left">
           <View className="coupon_bean_hander">
             <View className="coupon_bean_price">
-              <View className="font22 color6">卡豆抵扣到手价</View>
+              <View className="font22 color6">卡豆抵扣后最低到手价:</View>
               <View className="font20 color6 coupon_bean_priceLeft">¥</View>
               <View className="font28 color6 bold coupon_bean_priceLeft">
                 {computedBeanPrice(buyPrice, payBeanCommission)}

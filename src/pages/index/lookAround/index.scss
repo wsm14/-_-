@@ -283,11 +283,38 @@ page {
         }
       }
       .lookAround_hot_price {
-        margin-top: 16px;
-        font-size: 32px;
-        font-weight: 600;
-        color: #333333;
-        line-height: 32px;
+        margin-top: 17px;
+        display: flex;
+        align-items: baseline;
+        .lookAround_hot_priceMax {
+          max-width: 88px;
+        }
+      }
+      .lookAround_bean_price {
+        margin-top: 11px;
+        font-size: 18px;
+        font-weight: 400;
+        color: #ef476f;
+        line-height: 18px;
+      }
+      .lookAround_bean_show {
+        display: flex;
+        align-items: center;
+        margin-top: 8px;
+        .lookAround_bean_showText {
+          display: flex;
+          align-items: baseline;
+        }
+      }
+      .lookAround_bean_getMoney {
+        max-width: 113px;
+        margin-left: 8px;
+        padding: 4px 8px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #ef476f;
+        line-height: normal;
+        border-radius: 8px;
       }
       .lookAround_hot_rel {
         padding-top: 8px;
@@ -526,12 +553,11 @@ page {
   font-size: 24px;
   font-weight: 400;
   color: #333333;
-  .lookAround_goods_font{
+  .lookAround_goods_font {
     margin-left: 204px;
   }
 }
 .lookAround_hot_bottom {
-  height: 84px;
   font-size: 28px;
   font-weight: 400;
   color: #333333;
@@ -540,19 +566,21 @@ page {
 }
 .lookAround_hot_user {
   display: flex;
-  height: 30px;
-  margin-top: 16px;
-  font-size: 24px;
+  margin-top: 8px;
+  font-size: 18px;
   font-weight: 400;
   color: #999999;
   align-items: center;
   .lookAround_hot_userProfile {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon641.png")
+      no-repeat;
+    background-size: 100% 100%;
   }
   .lookAround_hot_merchantName {
-    margin-left: 8px;
-    max-width: 118px;
+    margin-left: 4px;
+    max-width: 148px;
+    margin-right: 8px;
   }
 }
