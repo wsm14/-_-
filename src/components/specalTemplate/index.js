@@ -243,9 +243,9 @@ export const couponTemplate = (item, configUserLevelInfo) => {
       return `不限购`;
     } else {
       if (buyRule === "personLimit") {
-        return `每人限购${personLimit}`;
+        return `每人限购${personLimit}份`;
       } else {
-        return `每人每天限购${dayMaxBuyAmount}`;
+        return `每人每天限购${dayMaxBuyAmount}份`;
       }
     }
   };

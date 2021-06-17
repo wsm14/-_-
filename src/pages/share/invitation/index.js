@@ -44,6 +44,7 @@ class Index extends Component {
       goodBill: "",
       activeRuleImg: "",
       btnImg: "",
+      location: true,
     };
   }
   componentWillMount() {
@@ -102,6 +103,7 @@ class Index extends Component {
         goodBill = "https://wechat-config.dakale.net/miniprogram/image/share_active4.png",
         activeRuleImg = "https://wechat-config.dakale.net/miniprogram/image/share_active5.png",
         btnImg = "https://wechat-config.dakale.net/miniprogram/image/5_1_6.png",
+        location = true,
       } = res;
       this.setState({
         specialGoodsDTOList,
@@ -118,6 +120,7 @@ class Index extends Component {
         goodBill,
         activeRuleImg,
         btnImg,
+        location,
       });
     });
   }
@@ -190,6 +193,7 @@ class Index extends Component {
       activeRuleImg = "",
       btnImg = "",
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
+      location,
     } = this.state;
     const shopView = (item) => {
       const {
@@ -251,14 +255,16 @@ class Index extends Component {
 
         <View
           className="invitation_img2"
-          onClick={() =>
-            mapGo({
-              lat,
-              lnt,
-              address: address,
-              merchantName: merchantName,
-            })
-          }
+          onClick={() => {
+            if (location) {
+              mapGo({
+                lat,
+                lnt,
+                address: address,
+                merchantName: merchantName,
+              });
+            }
+          }}
         >
           <Image className="invitation_image" src={mapImg} lazyLoad></Image>
         </View>

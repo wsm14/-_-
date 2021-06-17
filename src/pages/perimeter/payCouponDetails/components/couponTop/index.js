@@ -34,9 +34,9 @@ export default ({ data, configUserLevelInfo, setCollection, getShareInfo }) => {
       return `不限购`;
     } else {
       if (buyRule === "personLimit") {
-        return `每人限购${personLimit}`;
+        return `每人限购${personLimit}份`;
       } else {
-        return `每人每天限购${dayMaxBuyAmount}`;
+        return `每人每天限购${dayMaxBuyAmount}份`;
       }
     }
   };
@@ -45,7 +45,7 @@ export default ({ data, configUserLevelInfo, setCollection, getShareInfo }) => {
     <View className="coupon_bg">
       <View className="coupon_top_bg">
         <View className="coupon_top_title font_hide">
-          ¥{buyPrice} 代 {couponPrice}元抵扣券
+          {buyPrice} 元代 {couponPrice}元抵扣券
         </View>
         <View className="coupon_top_name  font_hide">{couponName}</View>
       </View>

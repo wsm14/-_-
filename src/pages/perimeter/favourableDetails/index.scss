@@ -280,7 +280,7 @@ page {
     box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
-    z-index: 100;
+    z-index: 999;
     .shopdetails_shop_price {
       .shopdetails_shop_priceTop {
         color: rgba(239, 71, 111, 1);

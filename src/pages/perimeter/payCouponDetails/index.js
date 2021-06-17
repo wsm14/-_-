@@ -28,6 +28,7 @@ import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import Toast from "@/components/dakale_toast";
 import Card from "@/components/shopView/represent";
+import Merchant from "@/components/shopView/merchant";
 import Rule from "@/components/shopView/rule";
 import VideoBean from "./components/getVideoBean";
 import Recommend from "@/components/couponActive";
@@ -259,7 +260,7 @@ class Index extends Component {
     }
     this.fetchUserShareCommission();
   }
-  componentDidMount() {}
+  componentDidMount() { }
   render() {
     const {
       couponDetail,
@@ -384,6 +385,8 @@ class Index extends Component {
               allowExpireRefund: expireRefund,
             }}
           ></Card>
+
+          <Merchant data={couponDetail}></Merchant>
           {/*使用须知*/}
           {knowPay(couponDetail, "coupon")}
           {/*使用方法*/}
