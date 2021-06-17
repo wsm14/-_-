@@ -667,7 +667,6 @@ class Index extends React.PureComponent {
           this.stopVideoPlayerControl();
         }
         let userInfo = Taro.getStorageSync("userInfo");
-        console.log(userInfo);
         this.setState({
           cavansObj: {
             start: true,

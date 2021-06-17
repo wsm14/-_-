@@ -96,7 +96,6 @@ const shareImg = ({ start = false, data = [], onClose, onSave }) => {
   };
   const saveImage = async () => {
     const res = await Taro.saveImageToPhotosAlbum({ filePath: shareImage });
-    console.log(res);
     if (res.errMsg === "saveImageToPhotosAlbum:ok") {
       Taro.showToast({
         title: "保存图片成功",

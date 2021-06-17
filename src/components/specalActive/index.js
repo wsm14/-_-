@@ -12,7 +12,6 @@ export default (props) => {
   const [data, setData] = useState([]);
   const [httpData, setHttpData] = useState(null);
   const [count, countType] = useState(true);
-  console.log(userInfo);
   useEffect(() => {
     if (current) {
       setHttpData({

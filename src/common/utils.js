@@ -18,7 +18,6 @@ import { View } from "@tarojs/components";
 import Router from "./router";
 // import moment from 'moment'
 export const navigateTo = (url, events) => {
-  console.log(url);
   Taro.navigateTo({
     url: url,
     events: events || {},
@@ -610,7 +609,6 @@ export const setBuyRule = (val, day, max) => {
 //商品规则对应文案
 export const computedPrice = (price, scale) => {
   let size = (price * (scale / 100)).toFixed(3);
-  console.log(price, scale, size);
   size = size.substring(0, size.length - 1);
   if (size === "0.00") {
     return 0.01;
