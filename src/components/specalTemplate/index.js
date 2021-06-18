@@ -56,14 +56,17 @@ export const template = (item, configUserLevelInfo) => {
             className="specialOffer_userprofile"
             style={backgroundObj(merchantLogo)}
           ></View>
-          <View className="specialOffer_username font_hide">
-            {" "}
-            {merchantName}
+          <View className='specialOffer_userHide'>
+            <View className="specialOffer_username font_hide">
+              {" "}
+              {merchantName}
+            </View>
+            <View className="specialOffer_limit">
+              {" "}
+              ｜{GetDistance(getLat(), getLnt(), lat, lnt)}
+            </View>
           </View>
-          <View className="specialOffer_limit">
-            {" "}
-            ｜ {GetDistance(getLat(), getLnt(), lat, lnt)}
-          </View>
+
         </View>
         <View className="specialOffer_hot_price color1 font_hide">
           <View className='font24'>原价:</View>
@@ -178,13 +181,15 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
               className="specialOffer_userprofile"
               style={backgroundObj(merchantLogo)}
             ></View>
-            <View className="specialOffer_username font_hide">
-              {" "}
-              {merchantName}
-            </View>
-            <View className="specialOffer_limit">
-              {" "}
-              ｜ {GetDistance(getLat(), getLnt(), lat, lnt)}
+            <View className='specialOffer_userHide'>
+              <View className="specialOffer_username font_hide">
+                {" "}
+                {merchantName}
+              </View>
+              <View className="specialOffer_limit">
+                {" "}
+                ｜ {GetDistance(getLat(), getLnt(), lat, lnt)}
+              </View>
             </View>
           </View>
           <View className="specialOffer_hot_price color1 font_hide">

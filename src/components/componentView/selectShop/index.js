@@ -48,12 +48,15 @@ export const selectShop = (item, userInfo, linkTo) => {
             className="lookAround_select_userProfile"
             style={backgroundObj(merchantLogo)}
           ></View>
-          <View className="lookAround_select_merchantName font_hide">
-            {merchantName}
+          <View className='lookAround_select_userHide font_hide'>
+            <View className="lookAround_select_merchantName font_hide">
+              {merchantName}
+            </View>
+            <View className="lookAround_hot_limit price_margin8">
+              {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
+            </View>
           </View>
-          <View className="lookAround_hot_limit">
-            {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
-          </View>
+
         </View>
         <View className="shopInit_hot_price color1 font_hide">
           <View className='font20'>原价:</View>

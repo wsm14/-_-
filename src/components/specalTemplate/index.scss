@@ -39,6 +39,7 @@
 .specialOffer_desc {
   margin-left: 24px;
   height: 264px;
+  width: 398px;
   .specialOffer_coupon_title {
     width: 366px;
     font-size: 28px;
@@ -78,9 +79,15 @@
       height: 30px;
       border-radius: 50%;
     }
+    .specialOffer_userHide {
+      width: 340px;
+      display: flex;
+      align-content: center;
+    }
+
     .specialOffer_username {
       margin-left: 8px;
-      max-width: 210px;
+      max-width: 270px;
     }
   }
   .specialOffer_toast {

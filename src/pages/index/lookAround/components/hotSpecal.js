@@ -38,10 +38,10 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
             <View
               className="lookAround_hot_userProfile"
             ></View>
-            <View className="lookAround_hot_merchantName font_hide">
+            <View className="lookAround_hot_merchantName font20 font_hide">
               {merchantName}
             </View>
-            <View className="lookAround_hot_limit">
+            <View className="lookAround_hot_limit font20">
               {"| " + GetDistance(getLat(), getLnt(), lat, lnt)}
             </View>
           </View>

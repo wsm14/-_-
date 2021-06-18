@@ -38,9 +38,14 @@
       height: 30px;
       border-radius: 50%;
     }
+    .lookAround_select_userHide{
+      width: 265px;
+      display: flex;
+      align-items: center;
+    }
     .lookAround_select_merchantName {
       margin-left: 8px;
-      max-width: 132px;
+      max-width: 180px;
     }
   }
   .lookAround_bean_relbox {

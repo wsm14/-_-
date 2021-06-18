@@ -112,9 +112,8 @@ page {
       display: flex;
       align-items: center;
       .shopdetails_price_left {
-        display: flex;
-        align-items: baseline;
-
+        vertical-align: baseline;
+        max-width: 480px;
         .shopdetails_price_style {
           margin-left: 12px;
           line-height: 40px;
@@ -213,6 +212,7 @@ page {
     margin-top: 16px;
     background: #ffffff;
     color: rgba(51, 51, 51, 1);
+    padding-bottom: 16px;
     .shopdetails_shop_merchantDetails {
       padding: 32px 24px 0;
       height: 32px;

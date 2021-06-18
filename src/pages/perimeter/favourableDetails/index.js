@@ -465,11 +465,11 @@ class MerchantDetails extends Component {
             {/*使用商家*/}
             <View className="shopdetails_getShop">
               <View className="shopdetails_price_people">
-                <View className="shopdetails_price_left">
-                  <View className="font28 color1">原价:</View>
-                  <View className="font36 color1 bold price_margin4 text_through">¥{oriPrice}</View>
-                  <View className="shopdetails_price_style color1">优惠价:</View>
-                  <View className="shopdetails_price_style1 price_margin4 color1 bold">¥{realPrice}</View>
+                <View className="shopdetails_price_left font_hide">
+                  <Text className="font28 color1">原价:</Text>
+                  <Text className="font36 color1 bold price_margin4 text_through">¥{oriPrice}</Text>
+                  <Text className="shopdetails_price_style color1">优惠价:</Text>
+                  <Text className="font36 shopdetails_price_style1 price_margin4 color1 bold">¥{realPrice}</Text>
                 </View>
                 <View className="shopdetails_price_right">
                   {!format(activityStartTime) &&

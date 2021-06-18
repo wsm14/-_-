@@ -447,7 +447,7 @@ page {
     border-radius: 4px;
   }
   .lookAround_active_scroll {
-    width: 688px;
+    width: 718px;
     margin: 32px auto 0;
     white-space: nowrap;
     overflow: hidden;
@@ -567,7 +567,6 @@ page {
 .lookAround_hot_user {
   display: flex;
   margin-top: 8px;
-  font-size: 18px;
   font-weight: 400;
   color: #999999;
   align-items: center;
@@ -582,5 +581,7 @@ page {
     margin-left: 4px;
     max-width: 148px;
     margin-right: 8px;
+  }
+  .lookAround_hot_limit {
   }
 }
