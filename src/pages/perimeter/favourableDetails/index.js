@@ -145,13 +145,13 @@ class MerchantDetails extends Component {
         shareId: specialActivityIdString,
       },
       (res) => {
-        const { body, oriPrice, title, realPrice, qcodeUrl } = res;
+        const { body, oriPrice, title, realPrice, qcodeUrl, buyPrice = 0 } = res;
         this.setState({
           cavansObj: {
             start: true,
             data: rssConfigData({
               merchantName,
-              time: activityEndTime || "长期有效",
+              time: activityEndTime ? activityEndTime + '结束' : "长期有效",
               oldPrice: oriPrice,
               price: realPrice,
               wxCode: qcodeUrl,
@@ -161,6 +161,7 @@ class MerchantDetails extends Component {
               address,
               city: cityName,
               merchantLogo: merchantLogo,
+              buyPrice
             }),
           },
         });

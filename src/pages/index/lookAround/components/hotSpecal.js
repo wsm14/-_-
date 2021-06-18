@@ -64,8 +64,8 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
                 style={{ border: "1px solid #ef476f" }}
                 className="lookAround_bean_getMoney font_hide"
               >
-                赚¥{" "}
-                {computedPrice(realPrice - merchantPrice, shareCommission)}
+                赚
+                <Text className='bold'>¥{computedPrice(realPrice - merchantPrice, shareCommission)}</Text>
               </View>
 
             )}

@@ -368,13 +368,13 @@ class Index extends React.PureComponent {
       );
     }
   }
-  componentDidHide() {}
+  componentDidHide() { }
   componentDidShow() {
     const { time, player } = this.state;
     // this.listParentCategory();
     this.fetchUserShareCommission();
   }
-  componentDidMount() {}
+  componentDidMount() { }
   componentWillMount() {
     const { selectObj, list, index } = this.props.store.homeStore;
     if (
@@ -459,6 +459,7 @@ class Index extends React.PureComponent {
           realPrice,
           qcodeUrl,
           image,
+          buyPrice = 0
         } = res;
         if (player) {
           this.stopVideoPlayerControl();
@@ -482,6 +483,7 @@ class Index extends React.PureComponent {
               goodsName,
               oriPrice,
               realPrice,
+              buyPrice
             }),
           },
         });

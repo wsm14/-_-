@@ -13,7 +13,8 @@ export const rssConfigData = (data = {}) => {
     background = "https://wechat-config.dakale.net/miniprogram/image/icon495.png",
     username,
     merchantLogo,
-    tag = "https://wechat-config.dakale.net/miniprogram/image/icon496.png",
+    buyPrice,
+    tag = "https://wechat-config.dakale.net/miniprogram/image/icon642.png",
   } = data;
 
   if (
@@ -30,29 +31,6 @@ export const rssConfigData = (data = {}) => {
     width: 750, // 画布宽度
     height: 1334, // 画布高度
     backgroundColor: "#108588", // 画布颜色
-    blocks: [
-      {
-        x: 61,
-        y: 720,
-        height: 45,
-        paddingLeft: 15,
-        paddingRight: 0,
-        borderWidth: 1,
-        borderColor: "#EF486F",
-        borderRadius: 4,
-        zIndex: 998,
-        text: {
-          width: 151,
-          lineHeight: 45,
-          text: "卡豆抵扣后", // tag 标签 - 卡豆抵扣后
-          fontSize: 24,
-          color: "#EF486F",
-          zIndex: 999,
-          textAlign: "center",
-          baseLine: "middle",
-        },
-      },
-    ],
     texts: [
       {
         x: 60,
@@ -68,7 +46,7 @@ export const rssConfigData = (data = {}) => {
       {
         x: 61,
         y: 674 + 15,
-        text: `${time}结束`, // 结束时间
+        text: `${time}`, // 结束时间
         fontSize: 24,
         color: "#999999",
         lineNum: 1,
@@ -76,7 +54,46 @@ export const rssConfigData = (data = {}) => {
       },
       {
         x: 61,
-        y: 840,
+        y: 740 + 20,
+        text: '原价:',
+        lineNum: 1,
+        fontSize: 32,
+        color: "#333333",
+        fontWeight: "bold",
+        zIndex: 999,
+        addonAfter: {
+          type: "text",
+          text: '¥' + oldPrice, // 用户昵称后缀
+          fontSize: 36,
+          color: "#333333",
+          fontWeight: 'bold',
+          marginLeft: 5,
+          zIndex: 999,
+          textDecoration: "line-through",
+        },
+      },
+      {
+        x: 61,
+        y: 792 + 20,
+        text: '优惠价:',
+        lineNum: 1,
+        fontSize: 32,
+        color: "#333333",
+        fontWeight: "bold",
+        zIndex: 999,
+        addonAfter: {
+          type: "text",
+          text: '¥' + buyPrice, 
+          fontSize: 36,
+          color: "#333333",
+          fontWeight: 'bold',
+          marginLeft: 5,
+          zIndex: 999,
+        },
+      },
+      {
+        x: 61,
+        y: 902,
         text: "¥", // ¥
         fontSize: 32,
         color: "#EF486F",
@@ -85,22 +102,14 @@ export const rssConfigData = (data = {}) => {
       },
       {
         x: 85,
-        y: 840,
+        y: 902,
         text: price, // 现价
         fontSize: 60,
         color: "#EF486F",
         fontWeight: "bold",
-        zIndex: 999,
+        zIndex: 999
       },
-      {
-        x: 61,
-        y: 886,
-        text: `原价 ¥${oldPrice}`, // 原价
-        fontSize: 32,
-        color: "#666666",
-        textDecoration: "line-through",
-        zIndex: 999,
-      },
+
       {
         x: 61,
         y: 1030 + topExtraPx,
@@ -172,10 +181,10 @@ export const rssConfigData = (data = {}) => {
       },
       {
         url: tag, // 最低到手价
-        width: 181,
+        width: 272,
         height: 52,
-        y: 788,
-        x: 95 + priceLength,
+        y: 852,
+        x: 75 + priceLength,
         zIndex: 999,
       },
       {

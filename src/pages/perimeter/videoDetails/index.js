@@ -190,7 +190,7 @@ class Index extends React.PureComponent {
       );
     }
   }
-  componentDidHide() {}
+  componentDidHide() { }
   componentDidShow() {
     this.fetchUserShareCommission();
   }
@@ -233,7 +233,7 @@ class Index extends React.PureComponent {
       toast("参数异常");
     }
   }
-  componentWillUnmount() {}
+  componentWillUnmount() { }
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
       const { configUserLevelInfo = {} } = res;
@@ -269,12 +269,12 @@ class Index extends React.PureComponent {
           realPrice,
           qcodeUrl,
           image,
+          buyPrice = 0
         } = res;
         if (player) {
           this.stopVideoPlayerControl();
         }
         let userInfo = Taro.getStorageSync("userInfo");
-        console.log(userInfo);
         this.setState({
           cavansObj: {
             start: true,
@@ -292,6 +292,7 @@ class Index extends React.PureComponent {
               goodsName,
               oriPrice,
               realPrice,
+              buyPrice
             }),
           },
         });
@@ -307,7 +308,7 @@ class Index extends React.PureComponent {
         updateType: "share",
         id: userMomentIdString,
       },
-      (res) => {}
+      (res) => { }
     );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {

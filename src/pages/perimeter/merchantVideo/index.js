@@ -356,6 +356,7 @@ class Index extends React.PureComponent {
           realPrice,
           qcodeUrl,
           image,
+          buyPrice = 0
         } = res;
         if (player) {
           this.stopVideoPlayerControl();
@@ -379,6 +380,7 @@ class Index extends React.PureComponent {
               goodsName,
               oriPrice,
               realPrice,
+              buyPrice
             }),
           },
         });
