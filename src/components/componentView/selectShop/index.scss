@@ -38,9 +38,14 @@
       height: 30px;
       border-radius: 50%;
     }
+    .lookAround_select_userHide {
+      width: 265px;
+      display: flex;
+      align-items: center;
+    }
     .lookAround_select_merchantName {
       margin-left: 8px;
-      max-width: 132px;
+      max-width: 180px;
     }
   }
   .lookAround_bean_relbox {
@@ -115,4 +120,38 @@
   color: #cccccc;
   text-decoration: line-through;
   margin-left: 8px;
+}
+.shopInit_hot_price {
+  margin-top: 20px;
+  display: flex;
+  align-items: baseline;
+  .lookAround_hot_priceMax {
+  }
+}
+.shopInit_bean_price {
+  margin-top: 14px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #ef476f;
+  line-height: 20px;
+}
+.shopInit_bean_show {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  .shopInit_bean_showText {
+    display: flex;
+    align-items: baseline;
+  }
+}
+.shopInit_bean_getMoney {
+  max-width: 113px;
+  margin-left: 8px;
+  padding: 4px 8px;
+  font-size: 24px;
+  font-weight: 400;
+  color: #ef476f;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
 }

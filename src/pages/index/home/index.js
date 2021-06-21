@@ -662,12 +662,12 @@ class Index extends React.PureComponent {
           realPrice,
           qcodeUrl,
           image,
+          buyPrice = 0
         } = res;
         if (player) {
           this.stopVideoPlayerControl();
         }
         let userInfo = Taro.getStorageSync("userInfo");
-        console.log(userInfo);
         this.setState({
           cavansObj: {
             start: true,
@@ -685,6 +685,7 @@ class Index extends React.PureComponent {
               goodsName,
               oriPrice,
               realPrice,
+              buyPrice
             }),
           },
         });
@@ -784,7 +785,10 @@ class Index extends React.PureComponent {
                 top: computedClient().top + computedClient().height + 20,
               }}
             >
-              <NearTitle reload={triggered}></NearTitle>
+              <NearTitle
+                configUserLevelInfo={configUserLevelInfo}
+                reload={triggered}
+              ></NearTitle>
               <Waterfall
                 list={userMomentsList}
                 createDom={nearList}

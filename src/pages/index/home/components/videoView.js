@@ -125,6 +125,7 @@ export default ({
                           initialTime="0"
                           onWaiting={(e) => {
                             setWalk(true);
+
                           }}
                           onTimeUpdate={(e) => {
                             if (index === current) {

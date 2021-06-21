@@ -58,14 +58,14 @@ const kolView = ({ keyword, current, configUserLevelInfo }) => {
     }
   });
   return (
-    <View style={current == 2 ? { display: "block" } : { display: "none" }}>
+    <View style={current == 0 ? { display: "block" } : { display: "none" }}>
       <View className="flex_auto">
         {list.length > 0 ? (
           <View className="search_shopPubu">
             {
               <Waterfall
                 list={list}
-                noMargin={{margin:0}}
+                noMargin={{ margin: 0 }}
                 createDom={createView}
                 style={{ width: Taro.pxTransform(335) }}
               ></Waterfall>

@@ -75,6 +75,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     fans: "/pages/kol/fans/index", //粉丝列表
     //kol
     wallet: "/pages/newUser/wallet/index", //我的钱包
+    merchantHome: "/pages/newUser/merchantDetails/index",
     //newUser
 
     interests: "/pages/rules/interests/index",

@@ -1,95 +1,85 @@
-.shopView_box {
-  padding: 32px 32px 0;
-  .shopView_title {
-    font-size: 28px;
+.shop_seachView {
+  width: 100%;
+  min-height: 100%;
+  background: #ffffff;
+  .shop_seach_box {
+    padding: 0 32px;
+    height: 64px;
     display: flex;
     align-items: center;
-    .shopView_title_style {
-      height: 40px;
-      margin-right: 40px;
-    }
-    .shopView_liner {
-      width: 24px;
-      height: 4px;
-      background: #108588;
-      border-radius: 2px;
-      margin: 8px auto 0;
-    }
   }
-  .shopView_template_inline {
-    display: inline-block;
-    width: 624px;
-    margin-right: 24px;
+  .search_shop_input {
+    width: 518px;
+    height: 64px;
+    border-radius: 32px;
+    background: #f5f5f5
+      url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon336.png")
+      no-repeat;
+    background-size: 36px 36px;
+    background-position: 32px 14px;
+    display: block;
+    padding-left: 80px;
+    font-size: 24px;
   }
-  .shopView_template_inline:last-child {
-    margin-right: 0px;
+  .search_close {
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    margin-left: 32px;
   }
-  .shopView_template {
-    position: relative;
-    width: 624px;
-    margin: 32px auto 12px;
-    white-space: nowrap;
-
-    overflow: hidden;
-    .shopView_template_box {
+  .shop_seach_nullStatus {
+    width: 300px;
+    height: 300px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon615.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin: 76px auto 0;
+  }
+  .shop_seach_nullfont {
+    margin: 32px 0 0;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+  }
+  .shop_seach_top {
+    padding-top: 48px;
+  }
+  .template_map {
+    margin: 0 32px 32px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid rgba(229, 229, 229, 1);
+    .template_map_box {
+      height: 80px;
       display: flex;
-      align-items: center;
-      position: relative;
-      .shopView_template_cover {
-        width: 168px;
-        height: 168px;
-        background: #eef7f8;
-        border-radius: 4px;
+      .template_map_img {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
       }
-      .shopView_template_right {
+      .template_map_content {
         margin-left: 16px;
-        max-width: 438px;
-        overflow: hidden;
-        .shopView_template_name {
-          max-width: 438px;
-          font-size: 28px;
+        height: 80px;
+        .template_map_title {
+          width: 590px;
+          font-size: 32px;
           font-weight: 400;
           color: #333333;
-          padding-top: 4px;
         }
-        .shopView_template_bean {
-          font-size: 20px;
-          font-weight: 600;
-          color: #ef476f;
-          margin-top: 28px;
-        }
-        .shopView_template_price {
-          margin-top: 8px;
+        .template_map_address {
+          width: 590px;
+          font-size: 24px;
+          font-weight: 400;
+          color: #999999;
           display: flex;
-          align-items: baseline;
-          line-height: 32px;
-        }
-        .real_price {
-          margin-left: 8px;
-          text-decoration: line-through;
-        }
-        .shopView_template_earn {
-          margin-top: 8px;
-          .shopView_earn_box {
-            display: inline-block;
-            padding: 4px 8px;
-            font-size: 24px;
-            font-weight: 400;
-            color: #ef476f;
+          padding-top: 16px;
+          .template_map_limit {
+            margin-left: auto;
+          }
+          .template_map_left {
+            width: 480px;
           }
         }
-      }
-      .shopView_template_btn {
-        width: 160px;
-        height: 52px;
-        background: #ef476f;
-        border-radius: 26px;
-        font-size: 28px;
-        font-weight: 400;
-        color: #ffffff;
-        position: absolute;
-        right: 0px;
-        bottom: 0;
       }
     }
   }

@@ -3,10 +3,16 @@ import { View } from "@tarojs/components";
 import Router from "@/common/router";
 import { fetchSpecialForRecommend } from "@/server/index";
 import "./index.scss";
-import { backgroundObj, getLat, getLnt } from "@/common/utils";
+import {
+  backgroundObj,
+  getLat,
+  getLnt,
+  computedBeanPrice,
+} from "@/common/utils";
 export default (props) => {
-  const { reload } = props;
+  const { reload, configUserLevelInfo } = props;
   const [list, setList] = useState([]);
+  const { payBeanCommission = 50 } = configUserLevelInfo;
   const fetchGoods = () => {
     fetchSpecialForRecommend(
       {
@@ -24,7 +30,6 @@ export default (props) => {
     fetchGoods();
   }, []);
   useEffect(() => {
-
     if (reload) {
       fetchGoods();
     }
@@ -58,9 +63,9 @@ export default (props) => {
         <View className="nearTitle_shop_name font_hide">{goodsName}</View>
         <View className="nearTitle_shop_price font_hide">
           <View className="font24">¥ </View>
-          <View>{" " + realPrice}</View>
+          <View>{" " + computedBeanPrice(realPrice, payBeanCommission)}</View>
         </View>
-        <View className="nearTitle_bean_toast">卡豆抵扣到手价</View>
+        <View className="nearTitle_bean_toast">卡豆抵扣后最低到手价:</View>
       </View>
     );
   };

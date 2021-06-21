@@ -14,8 +14,8 @@ import {
   saveCollection,
   deleteCollection,
   toast,
+  computedBeanPrice,
 } from "@/common/utils";
-import "./index.scss";
 import { loginBtn } from "@/common/authority";
 import ActivityStatus from "./components/index";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
@@ -23,18 +23,17 @@ import { fetchUserShareCommission } from "@/server/index";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import ButtonView from "@/components/Button";
-import { payNeed } from "@/components/componentView/NeedPay";
 import { knowPay } from "@/components/componentView/KnowPay";
-import Card from "./components/wechant_card";
 import VideoBean from "./components/getVideoBean";
 import Router from "@/common/router";
 import Date from "@/components/dateTime";
-import {
-  Instruction,
-  merchantSet,
-} from "@/components/componentView/Instruction";
 import Toast from "@/components/dakale_toast";
+import Card from "@/components/shopView/represent";
+import Merchant from "@/components/shopView/merchant";
+import Rule from "@/components/shopView/rule";
+import Recommend from "@/components/specalActive";
 import classNames from "classnames";
+import "./index.scss";
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -137,6 +136,7 @@ class MerchantDetails extends Component {
         goodsName,
         cityName,
         merchantLogo,
+        activityGoodsImg
       },
     } = this.state;
     const { profile, username } = Taro.getStorageSync("userInfo");
@@ -146,13 +146,13 @@ class MerchantDetails extends Component {
         shareId: specialActivityIdString,
       },
       (res) => {
-        const { body, oriPrice, title, realPrice, qcodeUrl } = res;
+        const { body, oriPrice, title, realPrice, qcodeUrl, buyPrice = 0 } = res;
         this.setState({
           cavansObj: {
             start: true,
             data: rssConfigData({
               merchantName,
-              time: activityEndTime || "长期有效",
+              time: activityEndTime ? activityEndTime + '  24点结束' : "长期有效",
               oldPrice: oriPrice,
               price: realPrice,
               wxCode: qcodeUrl,
@@ -161,7 +161,8 @@ class MerchantDetails extends Component {
               name: goodsName,
               address,
               city: cityName,
-              merchantLogo: merchantLogo,
+              merchantLogo: activityGoodsImg.split(",")[0],
+              buyPrice
             }),
           },
         });
@@ -320,109 +321,121 @@ class MerchantDetails extends Component {
       },
       visible,
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
+      configUserLevelInfo,
       specialGoodsInfo,
       cavansObj,
     } = this.state;
-    const payBtn = () => {
-      if (!format(activityStartTime) && activityTimeRule === "fixed") {
+    const shareInfoBtn = () => {
+      if (shareCommission > 0) {
         return (
           <ButtonView>
-            <View className="shopdetails_shop_goshop shopdetails_shop_option">
-              即将开抢
-            </View>
-          </ButtonView>
-        );
-      } else if (remain === 0) {
-        return (
-          <ButtonView>
-            <View className="shopdetails_shop_goshop shopdetails_shop_option">
-              已售罄
-            </View>
-          </ButtonView>
-        );
-      } else if (shareCommission !== 0) {
-        return (
-          <View className="shopdetails_kol_goshop">
-            <ButtonView>
-              <View
-                className="shopdetails_kol_btnBox shopdetails_kol_btnColor1"
-                onClick={() => loginBtn(() => this.saveGoodsOrder())}
-              >
-                <View className="shopdetails_kol_font1">自购返</View>
-                <View className="shopdetails_kol_font2">
-                  {" "}
-                  省¥
-                  {computedPrice(realPrice - merchantPrice, shareCommission)}
+            <View
+              onClick={() => loginBtn(() => this.getShareInfo())}
+              className="shopdetails_shop_btnBox2 shopdetails_shop_btnColor2"
+            >
+              <View className="shop_price_font">
+                <View>分享赚</View>
+                <View>
+                  ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
                 </View>
               </View>
-            </ButtonView>
-            <ButtonView>
-              <View
-                className="shopdetails_kol_btnBox shopdetails_kol_btnColor2"
-                onClick={() => loginBtn(() => this.getShareInfo())}
-              >
-                <View className="shopdetails_kol_font1">分享赚</View>
-                <View className="shopdetails_kol_font2">
-                  {" "}
-                  赚¥
-                  {computedPrice(realPrice - merchantPrice, shareCommission)}
-                </View>
-              </View>
-            </ButtonView>
-          </View>
+            </View>
+          </ButtonView>
         );
       } else {
         return (
           <ButtonView>
             <View
-              className="shopdetails_shop_goshop"
-              onClick={() => loginBtn(() => this.saveGoodsOrder())}
+              onClick={() => loginBtn(() => this.getShareInfo())}
+              className="shopdetails_shop_btnBox2 shopdetails_shop_btnColor2"
             >
-              立即抢购
+              分享给好友
             </View>
           </ButtonView>
         );
       }
     };
-    const template = () => {
+    const payBtn = () => {
       if (!format(activityStartTime) && activityTimeRule === "fixed") {
         return (
-          <View className="shopdetails_null_status public_center">
-            即将开始
+          <View className="shopdetails_shop_btnBox">
+            <ButtonView>
+              <View className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1 shopdetails_shop_option">
+                即将开始
+              </View>
+            </ButtonView>
+            {shareInfoBtn()}
+          </View>
+        );
+      } else if (remain === 0) {
+        return (
+          <View className="shopdetails_shop_btnBox">
+            <ButtonView>
+              <View className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1 shopdetails_shop_option">
+                已售罄
+              </View>
+            </ButtonView>
+            {shareInfoBtn()}
+          </View>
+        );
+      } else if (shareCommission !== 0) {
+        return (
+          <View className="shopdetails_shop_btnBox">
+            <ButtonView>
+              {" "}
+              <View
+                className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"
+                onClick={() => loginBtn(() => this.saveGoodsOrder())}
+              >
+                <View className="shop_price_font">
+                  <View>自购返</View>
+                  <View>
+                    ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
+                  </View>
+                </View>
+              </View>
+            </ButtonView>
+            {shareInfoBtn()}
           </View>
         );
       } else {
         return (
-          <View className="shopdetails_pay_status">
-            {activityTimeRule !== "infinite" ? (
-              <Date type={true} times={activityEndTime} fn={() => {}}></Date>
-            ) : (
-              <View className="font28">长期有效</View>
-            )}
-            <View className="shopdetails_pay_logo">
-              {buyUserImageList.map((item, index) => {
-                if (index === 0) {
-                  return (
-                    <View
-                      className="shopdetail_profile_box dakale_profile"
-                      style={backgroundObj(item)}
-                    ></View>
-                  );
-                } else {
-                  return (
-                    <View
-                      className="shopdetail_profile_box dakale_profile shopdetail_profile_left"
-                      style={backgroundObj(item)}
-                    ></View>
-                  );
-                }
-              })}
-              <View className="shopdetail_left_pay">抢购中</View>
-            </View>
+          <View className="shopdetails_shop_btnBox">
+            <ButtonView>
+              {" "}
+              <View
+                className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"
+                onClick={() => loginBtn(() => this.saveGoodsOrder())}
+              >
+                立即抢购
+              </View>
+            </ButtonView>
+            {shareInfoBtn()}
           </View>
         );
       }
     };
+    const template = () => {
+      if (!format(activityStartTime) && activityTimeRule === "fixed") {
+        return <View className="shopDetails_avtiveTime_tag">即将开始</View>;
+      } else {
+        return (
+          <View className="shopdetails_pay_status">
+            {activityTimeRule !== "infinite" ? (
+              <Date
+                onlyTime
+                type={true}
+                times={activityEndTime}
+                fn={() => { }}
+              ></Date>
+            ) : (
+              <View className="shopDetails_avtiveTime_tag">长期有效</View>
+            )}
+          </View>
+        );
+      }
+    };
+
     if (Object.keys(specialGoodsInfo).length > 0) {
       if (status !== "0") {
         return (
@@ -440,122 +453,84 @@ class MerchantDetails extends Component {
                   filterStrList(activityGoodsImg).length > 1 ? true : false
                 }
                 imgStyle
+                showNear
                 data={filterStrList(activityGoodsImg) || []}
                 style={{ width: "100%", height: "100%" }}
                 boxStyle={{ width: "100%", height: "100%" }}
               ></Banner>
             </View>
-            <View className="shopdetails_price">
-              <View className="shopdetails_priceBox public_auto">
-                <View className="shopdetails_left">
-                  <View className="shopdetails_priceIcon">哒卡乐专享价</View>
-                  <View className="shopdetails_setprice">
-                    <Text className="shopdetails_bigFont">¥</Text>
-                    {realPrice || "--"}
-                    <Text className="shopdetails_lineFont">
-                      ¥ {oriPrice || "--"}
-                    </Text>
-                  </View>
-                </View>
-                <View className="shopdetails_right">{template()}</View>
-              </View>
+            <View className="shopDetails_activeStatus">
+              <View className="shopDetails_avtiveLogo"></View>
+              <View className="shopDetails_avtiveTime">{template()}</View>
             </View>
             {/*使用商家*/}
             <View className="shopdetails_getShop">
-              <View className="shopdetails_title font_noHide">
-                {goodsName || "--"}
+              <View className="shopdetails_price_people">
+                <View className="shopdetails_price_left font_hide">
+                  <Text className="font28 color1">原价:</Text>
+                  <Text className="font36 color1 bold price_margin4 text_through">¥{oriPrice}</Text>
+                  <Text className="shopdetails_price_style color1">优惠价:</Text>
+                  <Text className="font36 shopdetails_price_style1 price_margin4 color1 bold">¥{realPrice}</Text>
+                </View>
+                <View className="shopdetails_price_right">
+                  {!format(activityStartTime) &&
+                    activityTimeRule === "fixed" ? null : (
+                    <View className="shopdetails_pay_logo">
+                      {buyUserImageList.map((item, index) => {
+                        if (index === 0) {
+                          return (
+                            <View
+                              className="shopdetail_profile_box dakale_profile"
+                              style={backgroundObj(item)}
+                            ></View>
+                          );
+                        } else {
+                          return (
+                            <View
+                              className="shopdetail_profile_box dakale_profile shopdetail_profile_left"
+                              style={backgroundObj(item)}
+                            ></View>
+                          );
+                        }
+                      })}
+                      <View className="shopdetail_left_pay">抢购中</View>
+                    </View>
+                  )}
+                </View>
               </View>
-              <View className="shopDetails_tab">
-                {needOrder === "0" && (
-                  <>
-                    <View className="shopDetails_tab_icon"></View>
-                    <View className="shopDetails_tab_font">免预约</View>
-                  </>
-                )}
+              <View className='shopdetails_bean_desc'>卡豆抵扣后最低到手价</View>
+              <View className="shopdetails_bean_box">
+                <View className="shopdetails_bean_hander">
+                  <View className='font28 bold color3'>¥</View>
+                  <View className='font48 price_margin8 bold color3'>{computedBeanPrice(realPrice, payBeanCommission)}</View>
+                </View>
+                <View className="shopdetails_bean_handerRight">
+                  {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
+                    <View className="shopdetails_getPrice_tag">
+                      {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount)}
+                    </View>
+                  )}
+                </View>
+              </View>
+              <View className="shopdetails_beanTitleName public_auto">
+                <View className="shopdetails_beanTitle_name"> {goodsName}</View>
 
-                {allowRefund === "1" && (
-                  <>
-                    <View className="shopDetails_tab_icon"></View>
-                    <View className="shopDetails_tab_font">随时退</View>
-                  </>
-                )}
-                {allowExpireRefund === "1" && (
-                  <>
-                    <View className="shopDetails_tab_icon"></View>
-                    <View className="shopDetails_tab_font">过期退</View>
-                  </>
-                )}
-
-                <>
-                  <View className="shopDetails_tab_icon"></View>
-                  <View className="shopDetails_tab_questionRight">
-                    卡豆抵扣
-                    <Text className="color11">{payBeanCommission + "%"}</Text>
-                  </View>
-                </>
                 <View
-                  onClick={() => Router({ routerName: "interests" })}
-                  className="shop_question question_icon"
+                  onClick={() => this.setCollection()}
+                  className={classNames(
+                    userCollectionStatus === "1"
+                      ? "shopdetails_isCollect"
+                      : "shopdetails_collect"
+                  )}
                 ></View>
               </View>
-              <View className="shopdetails_getPrice">
-                <View className="shopdetails_getPrice_tag">
-                  卡豆可抵¥
-                  {(realPrice * (payBeanCommission / 100))
-                    .toFixed(3)
-                    .substring(
-                      0,
-                      (realPrice * (payBeanCommission / 100)).toFixed(3)
-                        .length - 1
-                    )}
-                </View>
-
-                {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
-                  <View className="shopdetails_getPrice_tag">
-                    {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount)}
-                  </View>
-                )}
-                {remain === 0 && (
-                  <View className="shopdetails_getPrice_tag">已售罄</View>
-                )}
-              </View>
-              <View className="shopdetails_setting public_auto">
-                <ButtonView>
-                  <View
-                    onClick={() => this.setCollection()}
-                    className={classNames(
-                      userCollectionStatus === "1"
-                        ? "shopdetails_isCollect"
-                        : "shopdetails_collect"
-                    )}
-                  >
-                    { userCollectionStatus === "1"?'已收藏':'收藏'}
-                  </View>
-                </ButtonView>
-                <ButtonView>
-                  <View
-                    onClick={() => this.getShareInfo()}
-                    className="shopdetails_share"
-                  >
-                    分享
-                  </View>
-                </ButtonView>
-              </View>
             </View>
-            <View
-              className="shopdetails_share_info public_auto color11"
-              onClick={() =>
-                Router({
-                  routerName: "download",
-                })
-              }
-            >
-              <View>{"升级哒人，立享好友消费佣金 & 更高卡豆抵扣比例"}</View>
-              <View>{">"}</View>
-            </View>
-            <Card></Card>
-            {merchantSet(specialGoodsInfo)}
-            {/* 商品详情 */}
+            {/*抵扣价格 和状态*/}
+            <Card
+              configUserLevelInfo={configUserLevelInfo}
+              data={specialGoodsInfo}
+            ></Card>
+            {/*保障*/}
             {goodsType === "package" && (
               <View className="shopdetails_shop_packageGroup">
                 <View className="shopdetails_shop_groupTitle">套餐详情</View>
@@ -585,6 +560,9 @@ class MerchantDetails extends Component {
                 })}
               </View>
             )}
+            {/* 套餐 */}
+            <Merchant data={specialGoodsInfo}></Merchant>
+            {/* 商品详情 */}
 
             {(goodsDesc || goodsDescImg) && (
               <View className="shopdetails_shop_details">
@@ -614,9 +592,21 @@ class MerchantDetails extends Component {
             {/*使用须知*/}
             {knowPay(specialGoodsInfo)}
             {/*使用方法*/}
-            {Instruction()}
-            {/*使用规则*/}
-            {payNeed()}
+            <Rule></Rule>
+
+            <Recommend
+              current={true}
+              userInfo={configUserLevelInfo}
+            ></Recommend>
+            <VideoBean
+              price={(realPrice * (payBeanCommission / 100))
+                .toFixed(3)
+                .substring(
+                  0,
+                  (realPrice * (payBeanCommission / 100)).toFixed(3).length - 1
+                )}
+              data={specialGoodsInfo}
+            ></VideoBean>
             <View className="shopdetails_shop_btn">
               <View className="shopdetails_shop_price">
                 <View className="shopdetails_shop_priceTop">
@@ -628,20 +618,11 @@ class MerchantDetails extends Component {
                     ¥ {oriPrice}
                   </Text>
                   <Text className="shopdetails_shop_realStatus2">
-                    {((Number(realPrice) / Number(oriPrice)) * 10).toFixed(1)}折
+                    {((Number(realPrice) / Number(oriPrice)) * 10).toFixed(2)}折
                   </Text>
                 </View>
               </View>
-              <VideoBean
-                price={(realPrice * (payBeanCommission / 100))
-                  .toFixed(3)
-                  .substring(
-                    0,
-                    (realPrice * (payBeanCommission / 100)).toFixed(3).length -
-                      1
-                  )}
-                data={specialGoodsInfo}
-              ></VideoBean>
+
               {payBtn()}
             </View>
             {visible && (
@@ -666,7 +647,7 @@ class MerchantDetails extends Component {
           </View>
         );
       } else {
-        return <ActivityStatus></ActivityStatus>;
+        return <ActivityStatus userInfo={configUserLevelInfo}></ActivityStatus>;
       }
     } else return null;
   }

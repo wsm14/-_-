@@ -177,7 +177,6 @@ export const rssConfigData = (data = {}) => {
           zIndex: 999,
           textAlign: "center",
           baseLine: "middle",
-
           x: 32,
           lineNum: 1,
         },
@@ -212,7 +211,9 @@ export const rssConfigData = (data = {}) => {
         text: telephone, // 电话
         fontSize: 24,
         color: "#333333",
-        with: 520,
+        width: 380,
+        lineNum: 1,
+        
         zIndex: 999,
       },
       {

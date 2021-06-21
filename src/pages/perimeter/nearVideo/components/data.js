@@ -14,6 +14,7 @@ export const rssConfigData = (data = {}) => {
     goodsName,
     oriPrice,
     realPrice,
+    buyPrice
   } = data;
 
   if (
@@ -24,7 +25,8 @@ export const rssConfigData = (data = {}) => {
   }
 
   if (hasGoods === "1") {
-    const priceLength = realPrice.toString().length * 27;
+    const priceLength = oriPrice.toString().length * 27;
+    const priceLengthImg = realPrice.toString().length * 42;
     return {
       width: 750, // 画布宽度
       height: 1334, // 画布高度
@@ -59,44 +61,65 @@ export const rssConfigData = (data = {}) => {
         },
         {
           x: 209,
-          y: 890,
-          width: 380,
-          height: 32,
-          text: "卡豆抵扣后", //横幅
+          y: 882,
+          text: '原价', // 原价
           fontSize: 24,
-          color: "rgba(239, 72, 111, 1)",
+          color: "#333333",
+          fontWeight: "bold",
           lineNum: 1,
           zIndex: 999,
-          lineHeight: 32,
+          lineHeight: 40,
+          addonAfter: {
+            type: "text",
+            text: '¥' + oriPrice, // 用户昵称后缀
+            fontSize: 28,
+            color: "#333333",
+            marginLeft: 5,
+            zIndex: 999,
+            textDecoration: "line-through",
+            fontWeight: 'bold'
+          },
+        },
+        {
+          x: 209 + priceLength + 24,
+          y: 882,
+          text: '优惠价', // 优惠价
+          fontSize: 24,
+          color: "#333333",
+          fontWeight: "bold",
+          lineNum: 1,
+          zIndex: 999,
+          lineHeight: 40,
+          addonAfter: {
+            type: "text",
+            text: '¥' + buyPrice, // 优惠价
+            fontSize: 28,
+            color: "#333333",
+            marginLeft: 5,
+            zIndex: 999,
+            fontWeight: 'bold'
+          },
         },
         {
           x: 209,
-          y: 936,
+          y: 946,
           text: "¥", // ¥
           fontSize: 32,
           color: "#EF486F",
           fontWeight: "bold",
           zIndex: 999,
+          addonAfter: {
+            type: "text",
+            text: realPrice, // 实际价格
+            fontSize: 64,
+            color: "#333333",
+            marginLeft: 5,
+            zIndex: 999,
+            fontWeight: 'bold',
+            color: "#EF486F",
+          },
         },
-        {
-          x: 235,
-          y: 936,
-          text: realPrice, // 现价
-          fontSize: 32,
-          color: "#EF486F",
-          fontWeight: "bold",
-          zIndex: 999,
-        },
-        {
-          x: 379 + priceLength,
-          y: 936,
-          text: `原价 ¥${oriPrice}`, // 原价
-          fontSize: 20,
-          color: "#666666",
-          textDecoration: "line-through",
-          lineHeight: 28,
-          zIndex: 999,
-        },
+
         {
           x: 61,
           y: 1042,
@@ -181,6 +204,14 @@ export const rssConfigData = (data = {}) => {
           zIndex: 10,
         },
         {
+          url: 'https://wechat-config.dakale.net/miniprogram/image/icon642.png', // 最低到手价
+          width: 272,
+          height: 52,
+          y: 897,
+          x: 209 + priceLengthImg,
+          zIndex: 999,
+        },
+        {
           url: "https://wechat-config.dakale.net/miniprogram/image/icon581.png", // 播放按钮图片
           width: 80,
           height: 80,
@@ -195,14 +226,6 @@ export const rssConfigData = (data = {}) => {
           y: 818,
           x: 61,
           zIndex: 10,
-        },
-        {
-          url: "https://wechat-config.dakale.net/miniprogram/image/icon496.png", // 最低到手价
-          width: 150,
-          height: 40,
-          y: 905,
-          x: 209 + priceLength,
-          zIndex: 999,
         },
         {
           /**

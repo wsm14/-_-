@@ -16,11 +16,10 @@ import drawQrcode from "weapp-qrcode";
 import Taro from "@tarojs/taro";
 
 export default (props) => {
-  const { data, fn } = props;
+  const { data, fn, visible } = props;
   const [orderResult, setOrderResult] = useState({});
   const [current, setCurrent] = useState(0);
   const [list, setList] = useState([]);
-  console.log(data);
   const qrwh = (304 / 750) * Taro.getSystemInfoSync().windowWidth;
   useEffect(() => {
     const { orderGoodsVerifications } = data;
@@ -44,7 +43,7 @@ export default (props) => {
           });
         }
       });
-    }, 1);
+    }, 100);
   }, [list]);
   const setCode = () => {
     return (
@@ -70,7 +69,11 @@ export default (props) => {
                 ) : (
                   <Canvas
                     id={"canvas" + index}
-                    style={{ width: qrwh, height: qrwh }}
+                    style={{
+                      width: qrwh,
+                      height: qrwh,
+                      display: visible ? "none" : "block",
+                    }}
                     canvasId={"canvas" + index}
                   ></Canvas>
                 )}

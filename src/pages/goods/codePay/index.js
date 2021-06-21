@@ -147,14 +147,12 @@ class Index extends Component {
           const { status, orderSn, orderType, payMonth } = res;
           if (status === "0" || status === "5") {
             redirectTo(
-              `/pages/goods/code_wx_pay/index?payMonth=${payMonth}&orderType=${orderType}&orderSn=${orderSn}&merchantId=${
-                getCurrentInstance().router.params.merchantId
+              `/pages/goods/code_wx_pay/index?payMonth=${payMonth}&orderType=${orderType}&orderSn=${orderSn}&merchantId=${getCurrentInstance().router.params.merchantId
               }`
             );
           } else {
             redirectTo(
-              `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}&merchantId=${
-                getCurrentInstance().router.params.merchantId
+              `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}&merchantId=${getCurrentInstance().router.params.merchantId
               }`
             );
           }
@@ -164,7 +162,7 @@ class Index extends Component {
       toast("输入金额不能为0");
     }
   }
-  errorToast(e) {}
+  errorToast(e) { }
 
   render() {
     const {
@@ -173,9 +171,10 @@ class Index extends Component {
       configUserLevelInfo: { payBeanCommission = 50 },
       useBeanStatus,
       useBeanType,
-      reserveOrderResult: { merchantName, merchantImg, availableCouponCount },
+      reserveOrderResult: { merchantName, merchantImg, availableCouponCount, computedBean, computedIconBean, userIncomeBean, userRewardBean },
       httpData: { totalFee },
       couponObj: { couponPrice = 0, userCouponIdString },
+
     } = this.state;
     if (Object.keys(reserveOrderResult).length > 0) {
       return (
@@ -216,26 +215,28 @@ class Index extends Component {
                         this.setState({
                           reserveOrderResult: {
                             ...reserveOrderResult,
-                            userBean: computedScan(
+                            computedBean: computedScan(
                               value,
                               couponPrice,
                               payBeanCommission / 100,
                               userRewardBean
                             ),
-                            userIncomeBean: computedScan(
+                            computedIconBean: computedScan(
                               value,
                               couponPrice,
                               payBeanCommission / 100,
                               userIncomeBean
                             ),
                           },
+                        }, res => {
+                          console.log(this.state)
                         });
                       } else {
                         this.setState({
                           reserveOrderResult: {
                             ...reserveOrderResult,
-                            userBean: userRewardBean,
-                            userIncomeBean: userIncomeBean,
+                            computedBean: userRewardBean,
+                            computedIconBean: userIncomeBean,
                           },
                         });
                       }
@@ -297,7 +298,12 @@ class Index extends Component {
             <SelectBean
               fn={this.useBean.bind(this)}
               useBeanType={useBeanType}
-              data={reserveOrderResult}
+              data={{
+                ...reserveOrderResult,
+                userBean: computedBean || userRewardBean,
+                userIncomeBean: computedIconBean || userIncomeBean,
+
+              }}
               configUserLevelInfo={configUserLevelInfo}
               useBeanStatus={useBeanStatus}
               payType={"scan"}

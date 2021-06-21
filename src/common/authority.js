@@ -394,10 +394,6 @@ export const scanCard = () => {
         // return
       },
       fail: (res) => {
-        Taro.showModal({
-          showCancel: "false",
-          content: "扫码失败",
-        });
       },
     });
   });

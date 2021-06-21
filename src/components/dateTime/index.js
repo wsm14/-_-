@@ -7,12 +7,12 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import { toast } from "../../common/utils";
 import classNames from "classnames";
-function getSeconds(s) {
+import "./index.scss";
+function getSeconds(s, val = false) {
   let second = parseInt(s); // 秒
   let minute = 0;
   let house = 0;
   let date = 0;
-
   if (second > 60) {
     //如果秒数大于60，将秒数转换成整数
     //获取分钟，除以60取整数，得到整数分钟
@@ -53,22 +53,77 @@ function getSeconds(s) {
     result = parseInt(date) + "天" + result;
   }
   if (s > 0) {
-    console.log(result);
-    return result;
+    if (!val) {
+      return result;
+    } else {
+      let list = result.split("天");
+      if (list.length === 2) {
+        list = [...list[0], ...list[1].toString().split(":")];
+        return (
+          <View className="time_box">
+            {list.map((item, index) => {
+              if (index === 0) {
+                return (
+                  <View className="time_box">
+                    <View className="time_color_box public_center">{item}</View>
+                    <View className="time_color_font">天</View>
+                  </View>
+                );
+              } else if (index === list.length - 1) {
+                return (
+                  <View className="time_box">
+                    <View className="time_color_box public_center">{item}</View>
+                  </View>
+                );
+              } else {
+                return (
+                  <View className="time_box">
+                    <View className="time_color_box public_center">{item}</View>
+                    <View className="time_color_font">:</View>
+                  </View>
+                );
+              }
+            })}
+          </View>
+        );
+      } else {
+        list = [...list.toString().split(":")];
+        return (
+          <View className="time_box">
+            {list.map((item, index) => {
+              if (index === list.length - 1) {
+                return (
+                  <View className="time_box">
+                    <View className="time_color_box public_center">{item}</View>
+                  </View>
+                );
+              } else {
+                return (
+                  <View className="time_box">
+                    <View className="time_color_box public_center">{item}</View>
+                    <View className="time_color_font">:</View>
+                  </View>
+                );
+              }
+            })}
+          </View>
+        );
+      }
+    }
   } else return "";
 }
-
 export default (props) => {
-  const { times, fn, mint, type } = props;
+  const { times, fn, mint, type, onlyTime = false, styles = false } = props;
   let time =
-    parseInt(new Date(times.replace(/-/g, "/")).getTime() / 1000)+86399 -
+    parseInt(new Date(times.replace(/-/g, "/")).getTime() / 1000) +
+    86399 -
     parseInt(new Date().getTime() / 1000);
 
   const [interVal, setIntervals] = useState(0);
   const [font, showFont] = useState(false);
-
   let i = 0;
   useEffect(() => {
+    let collection = true;
     if (time >= 259200 || !time) {
       showFont(true);
     } else {
@@ -76,26 +131,46 @@ export default (props) => {
         let setTime = setInterval(() => {
           i++;
           setIntervals(time - i);
-          if (time - i === 0) {
+          if (time - i === 0 || collection === false) {
             clearInterval(setTime);
             fn && fn();
           }
         }, 1000);
       }
     }
+    return () => {
+      collection = false;
+    };
   }, []);
-  return (
-    <>
-      {font ? (
-        <Text>{times + "截止"} </Text>
-      ) : (
-        <>
-          <Text>抢购倒计时</Text>
-          <Text className={classNames(!type ? "color3 bold" : "")}>
+  if (onlyTime) {
+    if (font) {
+      return (
+        <View className="shopDetails_avtiveTime_jz">{times + "截止"} </View>
+      );
+    } else {
+      return (
+        <View className="shopDetails_avtiveTime_flex">
+          <View className="shopDetails_avtiveTime_tag">抢购倒计时</View>
+          <View className="shopDetails_avtiveTime_left">
             {"  " + getSeconds(interVal)}
-          </Text>
-        </>
-      )}
-    </>
-  );
+          </View>
+        </View>
+      );
+    }
+  } else {
+    return (
+      <>
+        {font ? (
+          <Text>{times + "截止"} </Text>
+        ) : (
+          <View className="time_box">
+            <View className="time_box">抢购倒计时</View>
+            <View className={classNames("time_box  time_margin")}>
+              {getSeconds(interVal, styles)}
+            </View>
+          </View>
+        )}
+      </>
+    );
+  }
 };

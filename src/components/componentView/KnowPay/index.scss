@@ -1,14 +1,13 @@
 .shopdetails_shop_toast {
-  margin: 24px 32px 0;
+  margin: 16px 0 0;
   color: #333333;
-  padding: 32px 40px 50px;
+  padding: 32px 24px;
   background: #ffffff;
-  border-radius: 20px;
   .shop_toastDate {
     margin-top: 24px;
   }
   .shop_getDate {
-    margin-top: 40px;
+    margin-top: 32px;
   }
   .shop_showNow {
     margin-top: 40px;
@@ -20,12 +19,19 @@
     font-weight: 400;
     color: rgba(102, 102, 102, 1);
     line-height: 36px;
+    word-wrap: break-word;
   }
   .shop_toastTextColor {
     color: rgba(7, 192, 194, 1);
   }
   .shop_toastTextHeight {
     line-height: 36px;
+  }
+  .shop_toastDec {
+    font-size: 24px;
+    font-weight: 600;
+    color: #666666;
+    line-height: 24px;
   }
 }
 .shop_toastTitle {

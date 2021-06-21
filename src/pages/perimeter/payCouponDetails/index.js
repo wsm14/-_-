@@ -27,6 +27,11 @@ import { inject, observer } from "mobx-react";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import Toast from "@/components/dakale_toast";
+import Card from "@/components/shopView/represent";
+import Merchant from "@/components/shopView/merchant";
+import Rule from "@/components/shopView/rule";
+import VideoBean from "./components/getVideoBean";
+import Recommend from "@/components/couponActive";
 import "./index.scss";
 @inject("store")
 @observer
@@ -255,12 +260,12 @@ class Index extends Component {
     }
     this.fetchUserShareCommission();
   }
-  componentDidMount() {}
+  componentDidMount() { }
   render() {
     const {
       couponDetail,
       configUserLevelInfo,
-      configUserLevelInfo: { shareCommission = 0 },
+      configUserLevelInfo: { shareCommission = 0, payBeanCommission = 50 },
       cavansObj,
       couponDetail: {
         couponPrice,
@@ -272,59 +277,87 @@ class Index extends Component {
         dayMaxBuyAmount,
         personLimit,
         userCollectionStatus,
+        anytimeRefund,
+        expireRefund,
       },
       visible,
     } = this.state;
-    const payBtn = () => {
-      if (remain === 0) {
+    const shareInfoBtn = () => {
+      if (shareCommission > 0) {
         return (
           <ButtonView>
-            <View className="shopdetails_shop_goshop shopdetails_shop_option">
-              已售罄
+            <View
+              onClick={() => loginBtn(() => this.getShareInfo())}
+              className="shopdetails_shop_btnBox2 shopdetails_shop_btnColor2"
+            >
+              <View className="shop_price_font">
+                <View>分享赚</View>
+                <View>
+                  ¥{computedPrice(buyPrice - merchantPrice, shareCommission)}
+                </View>
+              </View>
             </View>
           </ButtonView>
-        );
-      } else if (shareCommission) {
-        return (
-          <View className="shopdetails_kol_goshop">
-            <ButtonView>
-              <View
-                onClick={() => loginBtn(() => this.saveCouponOrder())}
-                className="shopdetails_kol_btnBox shopdetails_kol_btnColor1"
-              >
-                <View className="shopdetails_kol_font1">自购返</View>
-                <View className="shopdetails_kol_font2">
-                  {" "}
-                  省¥
-                  {computedPrice(buyPrice - merchantPrice, shareCommission)}
-                </View>
-              </View>
-            </ButtonView>
-            <ButtonView>
-              <View
-                className="shopdetails_kol_btnBox shopdetails_kol_btnColor2"
-                onClick={() => loginBtn(() => this.getShareInfo())}
-              >
-                <View className="shopdetails_kol_font1">分享赚</View>
-                <View className="shopdetails_kol_font2">
-                  {" "}
-                  赚¥
-                  {computedPrice(buyPrice - merchantPrice, shareCommission)}
-                </View>
-              </View>
-            </ButtonView>
-          </View>
         );
       } else {
         return (
           <ButtonView>
             <View
-              className="shopdetails_shop_goshop"
-              onClick={() => loginBtn(() => this.saveCouponOrder())}
+              onClick={() => loginBtn(() => this.getShareInfo())}
+              className="shopdetails_shop_btnBox2 shopdetails_shop_btnColor2"
             >
-              立即抢购
+              分享给好友
             </View>
           </ButtonView>
+        );
+      }
+    };
+    const payBtn = () => {
+      if (remain === 0) {
+        return (
+          <View className="shopdetails_shop_btnBox">
+            <ButtonView>
+              <View className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1 shopdetails_shop_option">
+                已售罄
+              </View>
+            </ButtonView>
+            {shareInfoBtn()}
+          </View>
+        );
+      } else if (shareCommission) {
+        return (
+          <View className="shopdetails_shop_btnBox">
+            <ButtonView>
+              {" "}
+              <View
+                className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"
+                onClick={() => loginBtn(() => this.saveCouponOrder())}
+              >
+                <View className="shop_price_font">
+                  <View>自购返</View>
+                  <View>
+                    ¥{computedPrice(buyPrice - merchantPrice, shareCommission)}
+                  </View>
+                </View>
+              </View>
+            </ButtonView>
+            {shareInfoBtn()}
+          </View>
+        );
+      } else {
+        return (
+          <View className="shopdetails_shop_btnBox">
+            <ButtonView>
+              {" "}
+              <View
+                className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"
+                onClick={() => loginBtn(() => this.saveCouponOrder())}
+              >
+                立即抢购
+              </View>
+            </ButtonView>
+            {shareInfoBtn()}
+          </View>
         );
       }
     };
@@ -344,13 +377,31 @@ class Index extends Component {
             setCollection={this.setCollection.bind(this)}
             getShareInfo={this.getShareInfo.bind(this)}
           ></Coupon>
-          {merchantSet(couponDetail)}
+          <Card
+            configUserLevelInfo={configUserLevelInfo}
+            data={{
+              ...couponDetail,
+              allowRefund: anytimeRefund,
+              allowExpireRefund: expireRefund,
+            }}
+          ></Card>
+
+          <Merchant data={couponDetail}></Merchant>
           {/*使用须知*/}
           {knowPay(couponDetail, "coupon")}
           {/*使用方法*/}
-          {Instruction()}
+          <Rule></Rule>
           {/*使用规则*/}
-          {payNeed()}
+          <Recommend current={true} userInfo={configUserLevelInfo}></Recommend>
+          <VideoBean
+            price={(buyPrice * (payBeanCommission / 100))
+              .toFixed(3)
+              .substring(
+                0,
+                (buyPrice * (payBeanCommission / 100)).toFixed(3).length - 1
+              )}
+            data={couponDetail}
+          ></VideoBean>
           <View className="shopdetails_shop_btn">
             <View className="shopdetails_shop_price">
               <View className="shopdetails_shop_priceTop">
@@ -362,7 +413,7 @@ class Index extends Component {
                   ¥ {couponPrice}
                 </Text>
                 <Text className="shopdetails_shop_realStatus2">
-                  {((Number(buyPrice) / Number(couponPrice)) * 10).toFixed(1)}折
+                  {((Number(buyPrice) / Number(couponPrice)) * 10).toFixed(2)}折
                 </Text>
               </View>
             </View>
@@ -390,7 +441,7 @@ class Index extends Component {
         </View>
       );
     } else {
-      return <NullStatus></NullStatus>;
+      return <NullStatus userInfo={configUserLevelInfo}></NullStatus>;
     }
   }
 }

@@ -18,7 +18,6 @@ import { View } from "@tarojs/components";
 import Router from "./router";
 // import moment from 'moment'
 export const navigateTo = (url, events) => {
-  console.log(url);
   Taro.navigateTo({
     url: url,
     events: events || {},
@@ -610,9 +609,20 @@ export const setBuyRule = (val, day, max) => {
 //商品规则对应文案
 export const computedPrice = (price, scale) => {
   let size = (price * (scale / 100)).toFixed(3);
-  return size.substring(0, size.length - 1);
+  size = size.substring(0, size.length - 1);
+  if (size === "0.00") {
+    return 0.01;
+  } else return size;
 };
 //换算价格计算
+export const computedBeanPrice = (price, scale) => {
+  let size = (price * (1 - scale / 100)).toFixed(2);
+  if (size === "0.00") {
+    return 0.01;
+  } else return size;
+};
+//换算价格计算
+
 export const computedVideoSize = (width = 0, height = 0) => {
   let widthScale = (width * 16) / 9;
   if (widthScale === height || widthScale <= (height * 9) / 16) {
@@ -621,6 +631,7 @@ export const computedVideoSize = (width = 0, height = 0) => {
     return false;
   }
 };
+
 //首页视频计算比例
 export const resiApiKey = "f390f1e2b0faa95710d00a0801384c41";
 //高德key

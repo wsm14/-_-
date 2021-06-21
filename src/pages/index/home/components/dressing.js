@@ -59,7 +59,6 @@ export default (props) => {
     onConfirm(loadData);
     onClose();
   };
-  console.log(loadData);
   return (
     <View className={classNames("dressing_box animated")}>
       <View className="dressing_layer  animated fadeInUp">

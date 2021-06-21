@@ -6,13 +6,58 @@ page {
 .payCoupon_box {
   background: #f5f5f5;
   width: 100%;
-  padding-bottom: 200px;
+  padding-bottom: 220px;
+  .shopdetails_shop_btnBox {
+    display: flex;
+  }
+  .shopdetails_shop_btnBox1 {
+    width: 200px;
+    height: 116px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #07c0c2;
+  }
+  .shopdetails_shop_btnColor1 {
+    font-size: 32px;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+  }
+  .shopdetails_shop_btnBox2 {
+    width: 200px;
+    height: 116px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ef476f;
+  }
+  .shopdetails_shop_btnColor2 {
+    font-size: 32px;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+  }
+  .shop_price_font {
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 36px;
+    text-align: center;
+  }
+
+  .shopdetails_share_info {
+    height: 76px;
+    background: #fdecf0;
+    padding: 0 32px;
+    font-size: 24px;
+  }
   .coupon_bg {
     background: #ffffff;
     padding-top: 32px;
     .coupon_setting {
       width: 424px;
-      margin: 0px auto;
+      margin: 40px auto 0;
       padding-bottom: 32px;
     }
     .coupon_collect {
@@ -78,11 +123,50 @@ page {
       margin-right: 8px;
     }
   }
+  .coupon_top_view {
+    margin: 32px 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .coupon_margin1 {
+      margin-left: 4px;
+    }
+    .coupon_margin2 {
+      margin-left: 8px;
+    }
+    .coupon_text_thour {
+      text-decoration: line-through;
+    }
+    .coupon_view_left {
+      display: flex;
+      align-items: baseline;
+    }
+    .coupon_pay_logo {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 40px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #333333;
+      .coupon_profile_box {
+        width: 48px;
+        height: 48px;
+        border: 1px solid #ffffff;
+      }
+      .coupon_profile_left {
+        margin-left: -8px;
+      }
+      .coupon_left_pay {
+        margin-left: 8px;
+      }
+    }
+  }
   .coupon_top_price {
-    height: 104px;
     display: flex;
     align-items: center;
     padding: 0 32px;
+    margin-top: 12px;
     justify-content: space-between;
     .coupon_top_right {
       font-size: 24px;
@@ -98,6 +182,31 @@ page {
     .coupon_top_margin {
       margin-left: 32px;
     }
+    .coupon_bean_hander {
+      min-width: 239px;
+      padding: 0 12px;
+      height: 52px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon631.png")
+        no-repeat;
+      background-size: 100% 100%;
+      .coupon_bean_price {
+        padding-top: 16px;
+        display: flex;
+        align-items: baseline;
+        .coupon_bean_priceLeft {
+          margin-left: 8px;
+        }
+      }
+    }
+    .coupon_getPrice_tag {
+      line-height: normal;
+      background: rgba(239, 71, 111, 0.1);
+      border-radius: 4px;
+      padding: 8px 12px;
+      color: rgba(241, 88, 125, 1);
+      font-size: 24px;
+      margin-left: 8px;
+    }
   }
   .coupon_top_bg {
     width: 686px;
@@ -107,19 +216,20 @@ page {
       no-repeat;
     background-size: 100% 100%;
     .coupon_top_title {
-      font-size: 40px;
+      font-size: 50px;
       font-weight: 600;
       color: #333333;
-      padding-top: 40px;
+      padding-top: 61px;
       text-align: center;
       max-width: 640px;
       margin: 0 auto;
+      line-height: 50px;
     }
     .coupon_top_name {
       font-size: 28px;
       font-weight: 400;
       color: #666666;
-      padding-top: 24px;
+      padding-top: 97px;
       text-align: center;
       margin: 0 auto;
       max-width: 640px;
@@ -156,17 +266,18 @@ page {
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 0 32px 0;
-    height: 128px;
+    padding: 0 0 0 32px;
+    height: 116px;
     background: #ffffff;
     box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
+    z-index: 999;
     .shopdetails_shop_price {
       .shopdetails_shop_priceTop {
         color: rgba(239, 71, 111, 1);
         font-size: 52px;
-        padding-top: 22px;
+        padding-top: 16px;
       }
     }
     .shopdetails_shop_real {

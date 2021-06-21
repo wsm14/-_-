@@ -35,7 +35,7 @@ export default {
       },
       {
         pagePath: "pages/index/goods/index",
-        iconPath: "./assets/image/tab-bar/good_1.png",
+        iconPath: "./assets/image/tab-bar/goods_1.png",
         selectedIconPath: "./assets/image/tab-bar/goods.png",
         text: "订单",
       },

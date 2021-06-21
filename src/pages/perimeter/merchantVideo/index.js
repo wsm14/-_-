@@ -161,12 +161,12 @@ class Index extends React.PureComponent {
       this.setState({
         player: false,
       });
-      Taro.createVideoContext(`video${current}`).pause();
+      Taro.createVideoContext(`merchantVideo${current}`).pause();
     } else {
       this.setState({
         player: true,
       });
-      Taro.createVideoContext(`video${current}`).play();
+      Taro.createVideoContext(`merchantVideo${current}`).play();
     }
   }
   videoPlayerControl() {
@@ -174,10 +174,10 @@ class Index extends React.PureComponent {
     const list = [current - 1, current, current + 1];
     for (const item of list) {
       if (item >= 0) {
-        Taro.createVideoContext(`video${item}`).stop();
+        Taro.createVideoContext(`merchantVideo${item}`).stop();
       }
     }
-    Taro.createVideoContext(`video${current}`).play();
+    Taro.createVideoContext(`merchantVideo${current}`).play();
   }
   followStatus(e) {
     e.stopPropagation();
@@ -356,6 +356,7 @@ class Index extends React.PureComponent {
           realPrice,
           qcodeUrl,
           image,
+          buyPrice = 0
         } = res;
         if (player) {
           this.stopVideoPlayerControl();
@@ -379,6 +380,7 @@ class Index extends React.PureComponent {
               goodsName,
               oriPrice,
               realPrice,
+              buyPrice
             }),
           },
         });

@@ -7,13 +7,13 @@ import "./index.scss";
 export default (props) => {
   const { price, data } = props;
   const { userBean, userIncomeBean } = data;
-  console.log(price,userBean,userIncomeBean)
-  if ((price*100) < userBean ||(price*100) < userIncomeBean) {
+  console.log(price, userBean, userIncomeBean);
+  if (price * 100 < userBean || price * 100 < userIncomeBean) {
     return null;
   } else
     return (
       <View
-        className="videoBean_box public_auto"
+        className="videoBean_liner"
         onClick={() =>
           Router({
             routerName: "nearVideo",
@@ -23,8 +23,9 @@ export default (props) => {
           })
         }
       >
-        <View>卡豆不足？刷视频捡豆最高可抵¥{price}</View>
-        <View>{">"}</View>
+        <View>卡豆不足？刷视频捡豆最高可抵¥</View>
+        <View className="bold">{price}</View>
+        <View className='bold videoBean_left'>{" >"}</View>
       </View>
     );
 };

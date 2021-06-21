@@ -72,7 +72,6 @@ export const shopDetails = (data, obj) => {
       boughtActivityGoodsNum,
       activityTimeRule,
     } = data;
-    console.log(activityTimeRule);
     const templateBtn = () => {
       if (status === "0") {
         return (

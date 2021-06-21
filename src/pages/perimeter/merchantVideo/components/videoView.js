@@ -134,7 +134,7 @@ export default ({
                               setPlayer(true);
                             }
                           }}
-                          id={`video${index}`}
+                          id={`merchantVideo${index}`}
                           muted={false}
                         ></Video>
                         {index === current && (

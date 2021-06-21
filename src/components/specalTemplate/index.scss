@@ -6,7 +6,7 @@
   position: relative;
 }
 .specialOffer_shop_box {
-  width: 688px;
+  width: 654px;
   margin: 0 auto 32px;
 }
 .specialOffer_shop_child {
@@ -39,8 +39,25 @@
 .specialOffer_desc {
   margin-left: 24px;
   height: 264px;
+  width: 398px;
+  .specialOffer_coupon_title {
+    width: 366px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 40px;
+    padding-top: 4px;
+  }
+  .specialOffer_coupon_details {
+    width: 366px;
+    padding-top: 8px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+    line-height: 24px;
+  }
   .specialOffer_title {
-    width: 380px;
+    width: 366px;
     height: 80px;
     font-size: 28px;
     font-weight: 400;
@@ -62,14 +79,26 @@
       height: 30px;
       border-radius: 50%;
     }
+    .specialOffer_userHide {
+      width: 340px;
+      display: flex;
+      align-content: center;
+    }
+
     .specialOffer_username {
       margin-left: 8px;
-      max-width: 210px;
+      max-width: 270px;
     }
   }
-
+  .specialOffer_toast {
+    margin-top: 28px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ef476f;
+    line-height: 20px;
+  }
   .specialOffer_date_price {
-    margin-top: 24px;
+    margin-top: 8px;
     font-size: 32px;
     font-weight: 600;
     color: #333333;
@@ -77,8 +106,10 @@
     display: flex;
     align-items: baseline;
   }
+  .specialOffer_date_relMargin {
+    margin-left: 8px;
+  }
   .specialOffer_date_rel {
-    padding-top: 8px;
     font-size: 20px;
     font-weight: 400;
     color: #cccccc;
@@ -90,9 +121,8 @@
     vertical-align: text-bottom;
   }
   .specialOffer_bean_box {
-    height: 32px;
-    padding: 0px 6px;
-    line-height: 32px;
+    padding: 4px 8px;
+    line-height: normal;
     font-size: 22px;
     font-weight: 400;
     color: #ef476f;
@@ -111,9 +141,43 @@
     font-weight: 500;
     color: #ef476f;
   }
+  .specialOffer_hot_price {
+    margin-top: 24px;
+    display: flex;
+    align-items: baseline;
+    .specialOffer_hot_priceMax {
+    }
+  }
+  .specialOffer_bean_price {
+    margin-top: 12px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ef476f;
+    line-height: 20px;
+  }
+  .specialOffer_bean_show {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    .specialOffer_bean_showText {
+      display: flex;
+      align-items: baseline;
+    }
+  }
+  .specialOffer_bean_getMoney {
+    max-width: 113px;
+    margin-left: 8px;
+    padding: 4px 8px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ef476f;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+  }
 }
 .specialOffer_bean_border {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 .specialOffer_shop_bottom {
   height: 52px;

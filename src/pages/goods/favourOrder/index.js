@@ -56,7 +56,13 @@ class Index extends Component {
   }
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
+      const {
+        configUserLevelInfo = {
+          payBeanCommission: 50,
+          shareCommission: 0,
+          teamCommission: 0,
+        },
+      } = res;
       this.setState({
         configUserLevelInfo,
       });

@@ -1,0 +1,24 @@
+.time_box {
+  display: flex;
+  align-items: center;
+}
+.time_margin {
+ margin-left: 4px;
+}
+.time_color_box {
+  width: 36px;
+  height: 36px;
+  background: #ef476f;
+  border-radius: 4px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-right: 4px;
+}
+.time_color_font {
+  font-size: 28px;
+  font-weight: 600;
+  color: #ef476f;
+  line-height: 28px;
+  margin-right: 4px;
+}

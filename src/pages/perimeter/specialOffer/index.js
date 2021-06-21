@@ -101,17 +101,12 @@ class Index extends Component {
   }
 
   selectag(val) {
-    const { selectType } = this.state;
-    if (val === selectType) {
-      return;
-    }
     this.setState({
       selectType: val,
     });
   }
   onPullDownRefresh() {
     const { httpData } = this.state;
-    let that = this;
     Taro.stopPullDownRefresh();
     this.setState(
       {
@@ -133,7 +128,6 @@ class Index extends Component {
     );
   }
   onReachBottom() {
-    console.log(11111);
     const { httpData, countStatus } = this.state;
     if (countStatus) {
       this.setState(
@@ -149,7 +143,6 @@ class Index extends Component {
         }
       );
     } else {
-      return toast("暂无数据");
     }
   } //上拉加载
   render() {
@@ -160,42 +153,36 @@ class Index extends Component {
       noticeList,
       selectType,
     } = this.state;
+    console.log(noticeList, specialGoodsList);
     const template = () => {
-      if (noticeList.length > 0) {
+      if (noticeList.length > 0 && specialGoodsList.length > 0) {
         return (
           <View className="specialOffer_novite">
             <View className="specialOffer_novite_content">
-              <View
-                className={classNames(
-                  "specialOffer_select_content",
-                  selectType === 0
-                    ? "specialOffer_select_tags1"
-                    : "specialOffer_select_tags2"
-                )}
-              >
-                <View
-                  onClick={() => this.selectag(0)}
-                  className={classNames(
-                    "specialOffer_select_view bold",
-                    selectType === 0 ? "color3" : "color7"
-                  )}
-                >
-                  本期必抢
-                  {selectType === 0 && (
-                    <View className="specialOffer_select_liner"></View>
-                  )}
-                </View>
-                <View
-                  onClick={() => this.selectag(1)}
-                  className={classNames(
-                    "specialOffer_select_view bold",
-                    selectType === 1 ? "color3" : "color7"
-                  )}
-                >
-                  下期预告
-                  {selectType === 1 && (
-                    <View className="specialOffer_select_liner"></View>
-                  )}
+              <View className={classNames("specialOffer_select_content")}>
+                <View className="public_auto" style={{ width: "100%" }}>
+                  <View
+                    onClick={() => this.selectag(0)}
+                    className={classNames(
+                      "specialOffer_select_view bold",
+                      selectType === 0
+                        ? "specialOffer_select_tags1"
+                        : "specialOffer_select_tags2"
+                    )}
+                  >
+                    本期必抢
+                  </View>
+                  <View
+                    onClick={() => this.selectag(1)}
+                    className={classNames(
+                      "specialOffer_select_view bold",
+                      selectType === 1
+                        ? "specialOffer_select_tags1"
+                        : "specialOffer_select_tags2"
+                    )}
+                  >
+                    下期预告
+                  </View>
                 </View>
               </View>
               <View className="specialOffer_novite_scroll">
@@ -212,8 +199,11 @@ class Index extends Component {
         return (
           <View className="specialOffer_novite">
             <View className="specialOffer_novite_content">
-              <View className="specialOffer_novite_title">本期必抢</View>
-              <View className="specialOffer_novite_liner"></View>
+              <View className="specialOffer_select_content1">
+                <View className="specialOffer_select_view specialOffer_select_tags1">
+                  本期必抢
+                </View>
+              </View>
               <View className="specialOffer_novite_scroll">
                 {specialGoodsList.map((item) => {
                   return specailGoods(item, configUserLevelInfo);
@@ -222,15 +212,37 @@ class Index extends Component {
             </View>
           </View>
         );
+      } else if (noticeList.length > 0) {
+        return (
+          <View className="specialOffer_novite">
+            <View className="specialOffer_novite_content">
+              <View className="specialOffer_select_content1">
+                <View className="specialOffer_select_view specialOffer_select_tags1">
+                  下期预告
+                </View>
+              </View>
+              <View className="specialOffer_novite_scroll">
+                {noticeList.map((item) => {
+                  return specailGoods(item, configUserLevelInfo);
+                })}
+              </View>
+            </View>
+          </View>
+        );
       } else {
+        console.log(111);
         return null;
       }
     };
     return (
       <View className="specialOffer_box">
+        <View className="specialOffer_banner"></View>
         {template()}
-        <View className="specialOffer_content_pay">抢购列表</View>
+
         <View className="specialOffer_content">
+          <View className="specialOffer_content_pay public_center">
+            抢购列表
+          </View>
           {kolGoodsList.map((item) => {
             return childTemplate(item, configUserLevelInfo);
           })}

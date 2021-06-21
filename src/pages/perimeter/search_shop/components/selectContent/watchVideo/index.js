@@ -46,12 +46,12 @@ const kolView = ({ keyword, current, store }) => {
     }
   });
   return (
-    <View style={current == 1 ? { display: "block" } : { display: "none" }}>
+    <View style={current == 2 ? { display: "block" } : { display: "none" }}>
       <View className="flex_auto">
         {list.length > 0 ? (
           <View className="search_video">
             <Waterfall
-              list={list.map(item => ({...item, keyword}))}
+              list={list.map((item) => ({ ...item, keyword }))}
               createDom={searchList}
               imgHight={"frontImageHeight"}
               imgWidth={"frontImageWidth"}
