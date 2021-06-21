@@ -136,6 +136,7 @@ class MerchantDetails extends Component {
         goodsName,
         cityName,
         merchantLogo,
+        activityGoodsImg
       },
     } = this.state;
     const { profile, username } = Taro.getStorageSync("userInfo");
@@ -151,7 +152,7 @@ class MerchantDetails extends Component {
             start: true,
             data: rssConfigData({
               merchantName,
-              time: activityEndTime ? activityEndTime + '结束' : "长期有效",
+              time: activityEndTime ? activityEndTime + '  24点结束' : "长期有效",
               oldPrice: oriPrice,
               price: realPrice,
               wxCode: qcodeUrl,
@@ -160,7 +161,7 @@ class MerchantDetails extends Component {
               name: goodsName,
               address,
               city: cityName,
-              merchantLogo: merchantLogo,
+              merchantLogo: activityGoodsImg.split(",")[0],
               buyPrice
             }),
           },
@@ -508,9 +509,6 @@ class MerchantDetails extends Component {
                     <View className="shopdetails_getPrice_tag">
                       {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount)}
                     </View>
-                  )}
-                  {remain === 0 && (
-                    <View className="shopdetails_getPrice_tag">已售罄</View>
                   )}
                 </View>
               </View>

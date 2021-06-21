@@ -47,9 +47,9 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
           </View>
           <View className="lookAround_hot_price color1 font_hide">
             <View className='font18'>原价:</View>
-            <View className='lookAround_hot_priceMax font_hide font20 price_margin4 bold text_through'>{oriPrice}</View>
+            <View className='lookAround_hot_priceMax font_hide font20 price_margin4 bold text_through'>¥{oriPrice}</View>
             <View className='font18 price_margin8'>优惠价: </View>
-            <View className='font20 price_margin4 bold'>{realPrice}</View>
+            <View className='font20 price_margin4 bold'>¥{realPrice}</View>
           </View>
           <View className='lookAround_bean_price'>
             卡豆抵扣后最低到手价

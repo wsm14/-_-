@@ -60,9 +60,9 @@ export const selectShop = (item, userInfo, linkTo) => {
         </View>
         <View className="shopInit_hot_price color1 font_hide">
           <View className='font20'>原价:</View>
-          <View className='shopInit_hot_priceMax font_hide font24 price_margin4 bold text_through'>{oriPrice}</View>
+          <View className='shopInit_hot_priceMax font_hide font24 price_margin4 bold text_through'>¥{oriPrice}</View>
           <View className='font20 price_margin8'>优惠价: </View>
-          <View className='font24 price_margin4 bold'>{realPrice}</View>
+          <View className='font24 price_margin4 bold'>¥{realPrice}</View>
         </View>
         <View className='shopInit_bean_price'>
           卡豆抵扣后最低到手价

@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View } from "@tarojs/components";
 import Router from "@/common/router";
+import Taro from '@tarojs/taro';
 import {
   toast,
   GetDistance,
@@ -70,9 +71,9 @@ export const template = (item, configUserLevelInfo) => {
         </View>
         <View className="specialOffer_hot_price color1 font_hide">
           <View className='font24'>原价:</View>
-          <View className='specialOffer_hot_priceMax font_hide font28 price_margin4 bold  text_through'>{oriPrice}</View>
+          <View className='specialOffer_hot_priceMax font_hide font28 price_margin4 bold  text_through'>¥{oriPrice}</View>
           <View className='font24 price_margin8'>优惠价: </View>
-          <View className='font28 price_margin4 bold'>{realPrice}</View>
+          <View className='font28 price_margin4 bold'>¥{realPrice}</View>
         </View>
         <View className='specialOffer_bean_price'>
           卡豆抵扣后最低到手价
@@ -126,7 +127,7 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
   } = item;
   const leftTemplate = {
     hot:
-      activityTimeRule !== "infinite" ? (
+      ((activityTimeRule !== "infinite") && activityTimeRule !== '') ? (
         <View className="specialOffer_shop_text">
           <Date styles times={activityEndTime} fn={() => { }}></Date>
         </View>
@@ -194,9 +195,9 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
           </View>
           <View className="specialOffer_hot_price color1 font_hide">
             <View className='font24'>原价:</View>
-            <View className='specialOffer_hot_priceMax font_hide font28 price_margin4 bold text_through'>{oriPrice}</View>
+            <View className='specialOffer_hot_priceMax font_hide font28 price_margin4 bold text_through'>¥{oriPrice}</View>
             <View className='font24 price_margin8'>优惠价: </View>
-            <View className='font28 price_margin4 bold'>{realPrice}</View>
+            <View className='font28 price_margin4 bold'>¥{realPrice}</View>
           </View>
           <View className='specialOffer_bean_price'>
             卡豆抵扣后最低到手价
@@ -208,12 +209,11 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
             </View>
             {shareCommission > 0 && (
               <View
-                style={{ border: "1px solid #ef476f" }}
+                style={{ border: "1px solid #ef476f", padding: `0 ${Taro.pxTransform(8)}`, height: Taro.pxTransform(32) }}
                 className="specialOffer_bean_getMoney font_hide"
               >
                 赚<Text className='bold'>¥{computedPrice(realPrice - merchantPrice, shareCommission)}</Text>
               </View>
-
             )}
           </View>
         </View>

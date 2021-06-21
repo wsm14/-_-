@@ -203,7 +203,7 @@ class MerchantDetails extends Component {
         shareId: merchantId,
       },
       (res) => {
-        const { qcodeUrl } = res;
+        const { qcodeUrl, image } = res;
         const { profile, username } = Taro.getStorageSync("userInfo");
         this.setState({
           cavansObj: {
@@ -211,7 +211,7 @@ class MerchantDetails extends Component {
             data: rssConfigData({
               merchantName,
               scenesList: filterStrList(scenesNames),
-              merchantLogo: coverImg,
+              merchantLogo: image,
               address,
               businessTime,
               username,

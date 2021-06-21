@@ -81,7 +81,7 @@ export default (props) => {
           value={keyword}
           onInput={onInput}
           className="search_shop_input"
-          placeholder={"搜索周边好店"}
+          placeholder={"搜一下发现附近好店"}
         ></Input>
         <View onClick={close} className="search_close">
           取消

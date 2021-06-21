@@ -313,8 +313,9 @@ page {
         font-size: 24px;
         font-weight: 400;
         color: #ef476f;
-        line-height: normal;
         border-radius: 8px;
+        display: flex;
+        align-items: center;
       }
       .lookAround_hot_rel {
         padding-top: 8px;

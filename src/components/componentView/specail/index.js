@@ -9,6 +9,7 @@ import {
   computedPrice,
 } from "@/common/utils";
 import Router from "@/common/router";
+import Taro from '@tarojs/taro';
 import "./index.scss";
 export const specailGoods = (item, val = {}) => {
   const {
@@ -74,7 +75,7 @@ export const specailGoods = (item, val = {}) => {
         </View>
         {shareCommission > 0 && (
           <View
-            style={{ border: "1px solid #ef476f" }}
+            style={{ border: "1px solid #ef476f", padding: `0 ${Taro.pxTransform(8)}`, height: Taro.pxTransform(32), lineHeight: Taro.pxTransform(32) }}
             className="specails_bean_getMoney font_hide"
           >
             赚

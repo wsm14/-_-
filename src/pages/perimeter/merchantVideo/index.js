@@ -174,7 +174,7 @@ class Index extends React.PureComponent {
     const list = [current - 1, current, current + 1];
     for (const item of list) {
       if (item >= 0) {
-        Taro.createVideoContext(`video${item}`).stop();
+        Taro.createVideoContext(`merchantVideo${item}`).stop();
       }
     }
     Taro.createVideoContext(`merchantVideo${current}`).play();

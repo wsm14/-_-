@@ -38,7 +38,7 @@
       height: 30px;
       border-radius: 50%;
     }
-    .lookAround_select_userHide{
+    .lookAround_select_userHide {
       width: 265px;
       display: flex;
       align-items: center;
@@ -151,6 +151,7 @@
   font-size: 24px;
   font-weight: 400;
   color: #ef476f;
-  line-height: normal;
   border-radius: 8px;
+  display: flex;
+  align-items: center;
 }

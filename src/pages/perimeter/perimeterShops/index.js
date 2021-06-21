@@ -521,7 +521,7 @@ class index extends PureComponent {
                 <View className="template_peopleRight public_center">
                   {filterStrList(tag).map((item, index) => {
                     if (index < 2) {
-                      return <View className="template_tags">{item}</View>;
+                      return <View className="template_tags font_hide">{item}</View>;
                     }
                   })}
                 </View>
@@ -559,7 +559,7 @@ class index extends PureComponent {
                 })
               }
             >
-              {keyword || "周边好店"}
+              {keyword || "搜一下发现附近好店"}
             </View>
             <View
               className="perimeter_shop_scan"
