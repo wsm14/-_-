@@ -411,19 +411,6 @@ class MerchantDetails extends Component {
             <View className="share_btn public_auto">
               <ButtonView>
                 {" "}
-                <View
-                  className="share_goMerchant_btn"
-                  onClick={() =>
-                    navigateTo(
-                      `/pages/newUser/merchantDetails/index?userId=${userIdString}`
-                    )
-                  }
-                >
-                  去主页
-                </View>
-              </ButtonView>
-              <ButtonView>
-                {" "}
                 {merchantFollowStatus === "0" ? (
                   <View
                     className="share_saveColleton_btn"

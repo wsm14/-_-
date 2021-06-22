@@ -701,7 +701,7 @@ class Index extends React.PureComponent {
         updateType: "share",
         id: userMomentIdString,
       },
-      (res) => {}
+      (res) => { }
     );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {

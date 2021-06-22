@@ -4,6 +4,8 @@ import Store from "./model/index";
 import { Provider } from "mobx-react";
 import { authUpdateGeography } from "@/common/authority";
 import { getShareParamInfo } from "@/server/common";
+import { authWxLogin } from "@/common/authority";
+import { getOpenId } from "@/server/auth";
 import "./assets/css/app.scss";
 import "./assets/css/color.scss";
 import "./assets/css/font.scss";
@@ -18,6 +20,7 @@ class App extends Component {
   componentDidMount() {
     this.fetchLocation();
     this.fetchNetwork();
+    // authWxLogin(this.fetchOpenId.bind(this));
   }
 
   componentDidShow() {
@@ -79,7 +82,20 @@ class App extends Component {
       });
     }
   }
-
+  // fetchOpenId(code) {
+  //   getOpenId(
+  //     {
+  //       code: code,
+  //     },
+  //     (res) => {
+  //       const { userInfo } = res;
+  //       if (userInfo && userInfo.mobile.length >= 11) {
+  //         Taro.setStorageSync("userInfo", userInfo);
+  //         Store.authStore.setUserInfoStore(userInfo);
+  //       }
+  //     }
+  //   );
+  // }
   fetchLocation() {
     authUpdateGeography(this.fetchUpdataLocation.bind(this));
   }

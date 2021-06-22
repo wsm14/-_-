@@ -20,6 +20,7 @@ export default ({
   beanLimitStatus,
   saveBean,
   dataInfo,
+
 }) => {
   const [scale, setScale] = useState(0);
   const [player, setPlayer] = useState(false);
@@ -130,6 +131,7 @@ export default ({
                           onTimeUpdate={(e) => {
                             if (index === current) {
                               const { currentTime, duration } = e.detail;
+          
                               setWalk(false);
                               setTime(parseInt(currentTime));
                               setScale(

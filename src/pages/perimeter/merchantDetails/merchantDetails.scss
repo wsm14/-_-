@@ -79,9 +79,9 @@ page {
 
     .share_btn {
       margin: 40px auto 0;
-      padding: 0 19px;
       font-size: 32px;
       font-weight: 400;
+      width: 432px;
       .share_goMerchant_btn {
         display: flex;
         align-items: center;
@@ -149,9 +149,8 @@ page {
         height: 80px;
         border-radius: 8px;
         border: 2px solid #333333;
-        margin-left: 10px;
+
         color: #f0597d;
-        margin-right: 10px;
       }
       .share_updateColleton_btn::before {
         width: 48px;
