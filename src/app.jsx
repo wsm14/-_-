@@ -20,7 +20,7 @@ class App extends Component {
   componentDidMount() {
     this.fetchLocation();
     this.fetchNetwork();
-    // authWxLogin(this.fetchOpenId.bind(this));
+    authWxLogin(this.fetchOpenId.bind(this));
   }
 
   componentDidShow() {
@@ -82,20 +82,21 @@ class App extends Component {
       });
     }
   }
-  // fetchOpenId(code) {
-  //   getOpenId(
-  //     {
-  //       code: code,
-  //     },
-  //     (res) => {
-  //       const { userInfo } = res;
-  //       if (userInfo && userInfo.mobile.length >= 11) {
-  //         Taro.setStorageSync("userInfo", userInfo);
-  //         Store.authStore.setUserInfoStore(userInfo);
-  //       }
-  //     }
-  //   );
-  // }
+  fetchOpenId(code) {
+    getOpenId(
+      {
+        code: code,
+      },
+      (res) => {
+        const { userInfo } = res;
+        if (userInfo && userInfo.mobile.length >= 11) {
+          Taro.setStorageSync("userInfo", userInfo);
+          Store.authStore.setUserInfoStore(userInfo);
+        }
+        Store.authStore.setLoginStatus();
+      }
+    );
+  }
   fetchLocation() {
     authUpdateGeography(this.fetchUpdataLocation.bind(this));
   }

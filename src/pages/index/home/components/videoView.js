@@ -20,15 +20,14 @@ export default ({
   beanLimitStatus,
   saveBean,
   dataInfo,
-
+  initVideo
 }) => {
   const [scale, setScale] = useState(0);
-  const [player, setPlayer] = useState(false);
   const [time, setTime] = useState(0);
   const [walk, setWalk] = useState(false);
+  //进度条缓冲状态
   useEffect(() => {
     setScale(0);
-    setPlayer(false);
     setTime(0);
     setWalk(false);
   }, [current]);
@@ -87,7 +86,7 @@ export default ({
                         beanLimitStatus={beanLimitStatus}
                         index={index}
                         id={`video${index}`}
-                        play={player}
+
                         time={time}
                         show={index === current}
                         dataInfo={dataInfo}
@@ -126,12 +125,11 @@ export default ({
                           initialTime="0"
                           onWaiting={(e) => {
                             setWalk(true);
-
                           }}
                           onTimeUpdate={(e) => {
                             if (index === current) {
                               const { currentTime, duration } = e.detail;
-          
+                              initVideo()
                               setWalk(false);
                               setTime(parseInt(currentTime));
                               setScale(
@@ -141,12 +139,12 @@ export default ({
                           }}
                           onPause={() => {
                             if (index === current) {
-                              setPlayer(false);
+
                             }
                           }}
                           onPlay={() => {
                             if (index === current) {
-                              setPlayer(true);
+
                             }
                           }}
                           onEnded={() => {
@@ -199,6 +197,6 @@ export default ({
     } else {
       return null;
     }
-  }, [data, current, scale, player, time, walk]);
+  }, [data, current, scale, time, walk]);
   return expensive;
 };

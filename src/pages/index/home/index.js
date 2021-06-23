@@ -101,6 +101,7 @@ class Index extends React.PureComponent {
       this.interSwper = setTimeout(() => {
         this.onChange(e);
       }, 400);
+
     } else {
       clearTimeout(this.interSwper);
       this.interSwper = setTimeout(() => {
@@ -365,20 +366,29 @@ class Index extends React.PureComponent {
       }
     }
     Taro.createVideoContext(`video${current}`).play();
+    clearTimeout(this.interSwper)
+    this.interSwper = null
   }
   stopVideoPlayerControl() {
     const { current, interval, player } = this.state;
-    if (player) {
-      this.setState({
-        player: false,
-      });
-      Taro.createVideoContext(`video${current}`).pause();
-    } else {
-      this.setState({
-        player: true,
-      });
-      Taro.createVideoContext(`video${current}`).play();
+    if (!this.interSwper) {
+      if (player) {
+        this.setState({
+          player: false,
+        }, res => {
+          Taro.createVideoContext(`video${current}`).pause();
+        });
+
+      } else {
+        this.setState({
+          player: true,
+        }, res => {
+          Taro.createVideoContext(`video${current}`).play();
+        });
+
+      }
     }
+
   }
   followStatus(e) {
     e.stopPropagation();
@@ -834,6 +844,13 @@ class Index extends React.PureComponent {
                 shareInfo={this.shareImageInfo.bind(this)}
                 beanLimitStatus={beanLimitStatus}
                 saveBean={this.saveBean.bind(this)}
+                initVideo={() => {
+                  if (!player && !this.interSwper) {
+                    this.setState({
+                      player: true
+                    })
+                  }
+                }}
               ></VideoView>
             </>
           );

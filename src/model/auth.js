@@ -7,12 +7,15 @@ const authStore = observable({
   },
   setUserInfoStore(obj) {
     this.userInfo = obj;
-    this.login = true
+
   },
   setShareType(obj) {
     this.shareType = {
       ...obj,
     };
   },
+  setLoginStatus() {
+    this.login = true
+  }
 });
 export default authStore;
