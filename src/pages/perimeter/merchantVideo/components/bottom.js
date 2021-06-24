@@ -59,6 +59,7 @@ export default (props) => {
     username,
     promotionPrice,
     userMomentIdString,
+    userProfile
   } = server;
   const getPromotion = (item) => {
     const { promotionType, promotionIdString, userIdString } = item;
@@ -90,7 +91,7 @@ export default (props) => {
             className="templateStated_img"
             style={backgroundObj(
               promotionImg ||
-                "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png"
+              userProfile
             )}
           ></View>
           <View className="templateStated_font">
@@ -226,6 +227,7 @@ export default (props) => {
         callback={linkTo}
         payBeanCommission={payBeanCommission}
         onClose={() => setShowFlag(false)}
+        userProfile={userProfile}
       ></TemplateCard>
     );
   } else if (Object.keys(couponInfo).length > 0 && !showFlag) {

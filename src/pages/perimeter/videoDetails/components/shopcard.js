@@ -13,6 +13,7 @@ export default ({
   shareCommission,
   onClose,
   payBeanCommission,
+  userProfile
 }) => {
   const {
     promotionName,
@@ -85,7 +86,7 @@ export default ({
           className="templateCard_image"
           style={backgroundObj(
             promotionImg ||
-            "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png"
+            userProfile
           )}
         ></View>
         <View className="templateCard_goods_box">

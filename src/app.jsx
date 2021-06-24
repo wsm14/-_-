@@ -28,8 +28,13 @@ class App extends Component {
     this.getShareType();
   }
   getShareType() {
-    const { shareUserId, shareUserType, scene } =
-      getCurrentInstance().router.params;
+    const {
+      shareUserId,
+      shareUserType,
+      scene,
+      sourceKey = "",
+      sourceType = "",
+    } = getCurrentInstance().router.params;
     if (scene) {
       getShareParamInfo({ uniqueKey: scene }, (res) => {
         const {
@@ -46,6 +51,8 @@ class App extends Component {
       Store.authStore.setShareType({
         shareUserId,
         shareUserType,
+        sourceKey,
+        sourceType,
       });
     } else {
       return;

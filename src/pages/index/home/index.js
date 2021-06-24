@@ -155,6 +155,13 @@ class Index extends React.PureComponent {
       {
         triggered: true,
         httpData: { ...httpData, page: 1 },
+        current: 0,
+        userMomentsList: [],
+        VideoList: [],
+        circular: false,
+        countStatus: true,
+        time: null,
+        player: true,
       },
       (res) => {
         this.getVideoList(() =>
@@ -568,6 +575,20 @@ class Index extends React.PureComponent {
     const { time, player } = this.state;
     // this.listParentCategory();
     this.fetchUserShareCommission();
+    Taro.setTabBarStyle({
+      // color: '#FF0000',
+      // selectedColor: '#00FF00',
+      backgroundColor: '#000000',
+    
+    })
+  }
+  componentDidHide() {
+    Taro.setTabBarStyle({
+      // color: '#FF0000',
+      // selectedColor: '#00FF00',
+      backgroundColor: 'FFFFFF',
+  
+    })
   }
   componentDidMount() {
     evens.$on("updateMomentsList", this.updateList.bind(this));
