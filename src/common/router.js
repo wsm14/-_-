@@ -83,6 +83,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     download: "/pages/share/download/index", //下载
     login: "/pages/auth/index", //登录
     webView: "/pages/share/webView/index", //内嵌h5
+    userNewArtist: '/pages/share/userNewArtist/index'
     //规则类
   }[routerName];
   const types = type;

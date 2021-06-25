@@ -576,18 +576,17 @@ class Index extends React.PureComponent {
     // this.listParentCategory();
     this.fetchUserShareCommission();
     Taro.setTabBarStyle({
-      // color: '#FF0000',
-      // selectedColor: '#00FF00',
+      color: '#999999',
+      selectedColor: '#FFFFFF',
       backgroundColor: '#000000',
-    
+
     })
   }
   componentDidHide() {
     Taro.setTabBarStyle({
-      // color: '#FF0000',
-      // selectedColor: '#00FF00',
+      color: '#999999',
+      selectedColor: '#333333',
       backgroundColor: 'FFFFFF',
-  
     })
   }
   componentDidMount() {

@@ -1,15 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import { getShareInfo } from '@/server/user';
+import { getUserMomentcheckNew } from '@/server/share';
 import Router from "@/common/router";
-import "./../index.scss";
-export default (props) => {
-  const { data, videoStop, proxy } = props;
+import "./index.scss";
+export default ({ data, auth, type }) => {
   const [animate, setAnimated] = useState(null);
-  const { beanAmount, guideMomentFlag } = data;
+  const [visible, setVisible] = useState(true)
+  const [userInfo, setUserInfo] = useState({})
+  const [beanInfo, setBeanInfo] = useState({ newUserFlag: '0', newUserBean: '300' })
+  const { newUserFlag, newUserBean } = beanInfo
   useEffect(() => {
+    console.log(data)
+    const { shareUserId } = data
+    if (shareUserId) {
+      console.log(shareUserId)
+      getShareInfo({ userId: shareUserId }, res => {
+        const { userInfo } = res
+        setUserInfo(userInfo)
+      })
+    }
+  }, [data]);
+  useEffect(() => {
+    if (auth !== 0) {
+      getUserMomentcheckNew({
+        newDeviceFlag: Taro.getStorageSync("newDeviceFlag") || "1",
+      }).then(val => {
+        const { newUserFlag = '0', newUserBean = '300' } = val
+        setBeanInfo({
+          newUserFlag: '1',
+          newUserBean
+        })
+      })
+    }
+  }, [auth]);
 
-  }, [proxy]);
+  useEffect(() => {
+    if (newUserFlag === '1' && visible) {
+      animated()
+    }
+  }, [beanInfo]);
+  const { username } = userInfo
   const onClose = () => {
     let animateTem2 = Taro.createAnimation({
       duration: 300,
@@ -20,9 +52,7 @@ export default (props) => {
     animateTem2.scale(0, 0).step();
     setAnimated(animateTem2);
     setTimeout(() => {
-      setShowStatus(null);
-      Taro.setStorageSync("login", true);
-      videoPlayer();
+      setVisible(false)
     }, 300);
   };
   const animated = () => {
@@ -55,10 +85,13 @@ export default (props) => {
     animateTem2.scale(0, 0).step();
     setAnimated(animateTem2);
     setTimeout(() => {
-      setShowStatus(null);
-      Taro.setStorageSync("login", true);
+      setVisible(false)
       Router({
-        routerName: "login",
+        routerName: "userNewArtist",
+        args: {
+          ...data,
+          type
+        }
       });
     }, 300);
   };
@@ -77,11 +110,12 @@ export default (props) => {
       >
         <View className="noviceGuide_Box">
           <View className="noviceGuide_image">
+            <View className='noviceGuide_user font_hide'>@{username + ' '}送你</View>
             <View className="noviceGuide_font1"></View>
             <View className="noviceGuide_font2 public_center">
               <View className="noviceGuide_bean_icon"></View>
               <View className="noviceGuide_num_icon"></View>
-              <View className="noviceGuide_num">{beanAmount}</View>
+              <View className="noviceGuide_num">{newUserBean}</View>
             </View>
             <View className="noviceGuide_font3">等你领取</View>
             <View
@@ -90,7 +124,7 @@ export default (props) => {
                 login();
               }}
             >
-              授权登录领取
+              立即领取
             </View>
           </View>
           <View className="noviceGuide_Box_close"></View>
@@ -98,7 +132,11 @@ export default (props) => {
       </View>
     );
   };
-
-  return template();
+  if (newUserFlag === '1' && visible) {
+    return template();
+  }
+  else {
+    return null
+  }
 
 };

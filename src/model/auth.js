@@ -2,7 +2,7 @@ import { observable } from "mobx";
 import Taro from "@tarojs/taro";
 const authStore = observable({
   userInfo: Taro.getStorageSync("userInfo") || {},
-  login: false,
+  login: 0,
   shareType: {
   },
   setUserInfoStore(obj) {
@@ -15,7 +15,7 @@ const authStore = observable({
     };
   },
   setLoginStatus() {
-    this.login = true
+    this.login = this.login + 1
   }
 });
 export default authStore;

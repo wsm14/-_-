@@ -15,6 +15,7 @@ import {
   deleteCollection,
   toast,
   computedBeanPrice,
+  filterPath
 } from "@/common/utils";
 import { loginBtn } from "@/common/authority";
 import ActivityStatus from "./components/index";
@@ -32,8 +33,12 @@ import Card from "@/components/shopView/represent";
 import Merchant from "@/components/shopView/merchant";
 import Rule from "@/components/shopView/rule";
 import Recommend from "@/components/specalActive";
+import NewToast from '@/components/noviceGuide'
 import classNames from "classnames";
+import { inject, observer } from "mobx-react";
 import "./index.scss";
+@inject("store")
+@observer
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -42,6 +47,7 @@ class MerchantDetails extends Component {
         specialActivityId:
           getCurrentInstance().router.params.specialActivityId || "",
         merchantId: getCurrentInstance().router.params.merchantId || "",
+        shareUserId: getCurrentInstance().router.params.shareUserId || "",
       },
       lnt: Taro.getStorageSync("lnt"),
       lat: Taro.getStorageSync("lat"),
@@ -169,6 +175,7 @@ class MerchantDetails extends Component {
       }
     );
   }
+
   onShareAppMessage(res) {
     const {
       specialGoodsInfo: { goodsName },
@@ -324,7 +331,9 @@ class MerchantDetails extends Component {
       configUserLevelInfo,
       specialGoodsInfo,
       cavansObj,
+      httpData
     } = this.state;
+    const { login } = this.props.store.authStore;
     const shareInfoBtn = () => {
       if (shareCommission > 0) {
         return (
@@ -563,7 +572,6 @@ class MerchantDetails extends Component {
             {/* 套餐 */}
             <Merchant data={specialGoodsInfo}></Merchant>
             {/* 商品详情 */}
-
             {(goodsDesc || goodsDescImg) && (
               <View className="shopdetails_shop_details">
                 <View className="shopdetails_shop_merchantDetails">
@@ -588,12 +596,10 @@ class MerchantDetails extends Component {
                 </View>
               </View>
             )}
-
             {/*使用须知*/}
             {knowPay(specialGoodsInfo)}
             {/*使用方法*/}
             <Rule></Rule>
-
             <Recommend
               current={true}
               userInfo={configUserLevelInfo}
@@ -644,7 +650,8 @@ class MerchantDetails extends Component {
                 </View>
               </Toast>
             )}
-          </View>
+            {filterPath(getCurrentInstance().router.params) && !Taro.getStorageSync("newDeviceFlag") && <NewToast type={'goods'} auth={login} data={httpData}></NewToast>}
+          </View >
         );
       } else {
         return <ActivityStatus userInfo={configUserLevelInfo}></ActivityStatus>;

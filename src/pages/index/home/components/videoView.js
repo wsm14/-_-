@@ -172,7 +172,6 @@ export default ({
                                 }}
                               ></View>
                             )}
-                            <View className="video_loadding"></View>
                           </View>
                         )}
                       </View>

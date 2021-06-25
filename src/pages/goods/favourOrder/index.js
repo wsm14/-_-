@@ -153,7 +153,7 @@ class Index extends Component {
       httpData: { merchantId, specialActivityId, goodsCount },
     } = this.state;
     const { shareType } = this.props.store.authStore;
-    const { shareUserId, shareUserType } = shareType;
+    const { shareUserId, shareUserType, sourceKey, sourceType } = shareType;
     const {
       favourOrder: { saveSpecialGoods },
     } = goods;
@@ -170,6 +170,8 @@ class Index extends Component {
           },
           shareUserId,
           shareUserType,
+          sourceKey,
+          sourceType
         },
         url: saveSpecialGoods,
       },
@@ -267,9 +269,8 @@ class Index extends Component {
     } = this.state;
     const templateTime = () => {
       if (activeDays) {
-        return `购买后${
-          delayDays === 0 ? "立刻" : delayDays + "天"
-        }生效，有效期${activeDays}天`;
+        return `购买后${delayDays === 0 ? "立刻" : delayDays + "天"
+          }生效，有效期${activeDays}天`;
       } else {
         return `${useStartTime}至${useEndTime}`;
       }
@@ -399,9 +400,8 @@ class Index extends Component {
               }
               visible={visible}
               canfirm={() => this.saveKolGoodsOrder()}
-              content={`是否确认使用${
-                useBeanType === "reward" ? userBean : userIncomeBean
-              }卡豆支付？`}
+              content={`是否确认使用${useBeanType === "reward" ? userBean : userIncomeBean
+                }卡豆支付？`}
               canfirmText="再想想"
               cancelText="确定"
             ></PayBean>
