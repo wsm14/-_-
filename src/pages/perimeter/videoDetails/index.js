@@ -9,8 +9,8 @@ import {
   saveFollow,
   goBack,
   loginStatus,
+  filterPath,
 } from "@/common/utils";
-import InterVal from "@/components/videoComponents";
 import {
   saveWatchBean,
   saveMerchantCollection,
@@ -21,13 +21,15 @@ import {
   getUserMomentDetailById,
 } from "@/server/index";
 import { inject, observer } from "mobx-react";
-import "./index.scss";
+
 import classNames from "classnames";
 import Toast from "@/components/beanToast";
 import Coupon from "@/components/freeCoupon";
 import { getShareInfo } from "@/server/common";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
+import NewToast from "@/components/noviceGuide";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -35,6 +37,9 @@ class Index extends React.PureComponent {
     super(...arguments);
     this.state = {
       userMomentsInfo: {},
+      httpData: {
+        ...getCurrentInstance().router.params,
+      },
       countStatus: true,
       time: null,
       interval: null,
@@ -190,7 +195,7 @@ class Index extends React.PureComponent {
       );
     }
   }
-  componentDidHide() { }
+  componentDidHide() {}
   componentDidShow() {
     this.fetchUserShareCommission();
   }
@@ -221,6 +226,11 @@ class Index extends React.PureComponent {
             const { momentId } = JSON.parse(param);
             if (momentId) {
               this.getUserMomentDetailById(momentId);
+              this.setState({
+                httpData: {
+                  ...param,
+                },
+              });
             }
           }
         });
@@ -233,7 +243,7 @@ class Index extends React.PureComponent {
       toast("参数异常");
     }
   }
-  componentWillUnmount() { }
+  componentWillUnmount() {}
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
       const { configUserLevelInfo = {} } = res;
@@ -269,7 +279,7 @@ class Index extends React.PureComponent {
           realPrice,
           qcodeUrl,
           image,
-          buyPrice = 0
+          buyPrice = 0,
         } = res;
         if (player) {
           this.stopVideoPlayerControl();
@@ -292,7 +302,7 @@ class Index extends React.PureComponent {
               goodsName,
               oriPrice,
               realPrice,
-              buyPrice
+              buyPrice,
             }),
           },
         });
@@ -308,7 +318,7 @@ class Index extends React.PureComponent {
         updateType: "share",
         id: userMomentIdString,
       },
-      (res) => { }
+      (res) => {}
     );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {
@@ -345,7 +355,7 @@ class Index extends React.PureComponent {
   render() {
     const {
       userMomentsInfo,
-      userMomentsInfo: { length = "" },
+      userMomentsInfo: { length = "", userIdString },
       time,
       configUserLevelInfo,
       beanflag,
@@ -353,8 +363,9 @@ class Index extends React.PureComponent {
       beanLimitStatus,
       player,
       cavansObj,
+      httpData,
     } = this.state;
-
+    const { login } = this.props.store.authStore;
     return (
       <View className={classNames("home_box home_black")}>
         <View className="home_video_box">
@@ -404,6 +415,20 @@ class Index extends React.PureComponent {
             this.setState({ cavansObj: { start: false, data: null } })
           }
         ></TaroShareDrawer>
+        {filterPath(getCurrentInstance().router.params) &&
+          !Taro.getStorageSync("newDeviceFlag") && (
+            <NewToast
+              type={"merchant"}
+              stopVideo={() => {
+                Taro.createVideoContext(`details1`).pause();
+              }}
+              initVideo={() => {
+                Taro.createVideoContext(`details1`).play();
+              }}
+              auth={login}
+              data={{ ...httpData, merchantId: userIdString }}
+            ></NewToast>
+          )}
       </View>
     );
   }

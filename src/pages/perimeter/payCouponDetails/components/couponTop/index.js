@@ -47,7 +47,7 @@ export default ({ data, configUserLevelInfo, setCollection, getShareInfo }) => {
         <View className="coupon_top_title font_hide">
           {buyPrice} 元代 {couponPrice}元抵扣券
         </View>
-        <View className="coupon_top_name  font_hide">{couponName}</View>
+        <View className="coupon_top_name  font_noHide">{couponName}</View>
       </View>
       <View className="coupon_top_view">
         <View className="coupon_view_left">

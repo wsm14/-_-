@@ -442,7 +442,6 @@ class Index extends Component {
         </View>
       );
     } else {
-
       return(<NullStatus userInfo={configUserLevelInfo}>
         {filterPath(getCurrentInstance().router.params) && !Taro.getStorageSync("newDeviceFlag") && <NewToast type={'coupon'} auth={login} data={httpData}></NewToast>}
       </NullStatus>)

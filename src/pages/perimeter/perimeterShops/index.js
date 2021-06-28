@@ -521,7 +521,9 @@ class index extends PureComponent {
                 <View className="template_peopleRight public_center">
                   {filterStrList(tag).map((item, index) => {
                     if (index < 2) {
-                      return <View className="template_tags font_hide">{item}</View>;
+                      return (
+                        <View className="template_tags font_hide">{item}</View>
+                      );
                     }
                   })}
                 </View>
@@ -640,7 +642,7 @@ class index extends PureComponent {
             <View className="perimeter_shop_scroll">
               {userMerchantList.length > 0 ? (
                 userMerchantList.map((item) => {
-                  return template(item);
+                  return <View>{template(item)}</View>;
                 })
               ) : (
                 <View>
