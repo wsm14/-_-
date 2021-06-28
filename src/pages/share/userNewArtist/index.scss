@@ -4,6 +4,7 @@ page {
   background: rgba(239, 71, 111, 1);
 }
 .userNewArtist_box {
+  padding-bottom: 180px;
   .userNewArtist_image {
     width: 100%;
     height: 500px;
@@ -100,5 +101,79 @@ page {
     font-size: 32px;
     font-weight: 400;
     color: #ffffff;
+  }
+  .userNewArtist_infoGoods {
+    margin: 32px 32px 0;
+  }
+  .userNewArtist_scrollView {
+    width: 718px;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 32px 0 0 32px;
+  }
+  .userNewArtist_own_view {
+    margin: 32px 32px 0;
+  }
+  .shop_info {
+    margin: 40px 0px 0;
+    .shop_info_title {
+      font-size: 36px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 36px;
+      padding: 0px 32px;
+    }
+    .shop_info_pay {
+      padding: 32px 32px 0;
+    }
+  }
+  .shop_btn_Info {
+    width: 500px;
+    height: 80px;
+    background: #ffcf3b;
+    border-radius: 41px;
+    border: 2px solid #000000;
+    margin: 60px auto 0;
+    font-size: 32px;
+    font-weight: 500;
+    color: #000000;
+  }
+  .shop_info_fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 32px;
+    height: 80px;
+    background: #ffffff;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    .shop_info_close {
+      width: 48px;
+      height: 48px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon648.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .shop_info_font {
+      font-size: 28px;
+      font-weight: 400;
+      color: #333333;
+      margin-left: 8px;
+    }
+    .shop_info_setBtn {
+      margin-left: auto;
+      padding: 12px 21px 12px 33px;
+      line-height: normal;
+      font-size: 28px;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 28px;
+      background: #07c0c2;
+      border-radius: 26px;
+    }
   }
 }

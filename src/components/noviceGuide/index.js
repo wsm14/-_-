@@ -29,7 +29,7 @@ export default ({ data, auth, type }) => {
       }).then(val => {
         const { newUserFlag = '0', newUserBean = '300' } = val
         setBeanInfo({
-          newUserFlag: '1',
+          newUserFlag: newUserFlag,
           newUserBean
         })
       })
@@ -90,6 +90,7 @@ export default ({ data, auth, type }) => {
         routerName: "userNewArtist",
         args: {
           ...data,
+          username,
           type
         }
       });

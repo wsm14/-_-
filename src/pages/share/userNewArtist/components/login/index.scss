@@ -19,25 +19,25 @@
   .login_Box_loginBody {
     width: 540px;
     height: 336px;
-    text-align: center;
     background: #ffffff;
-    border-radius: 20px;
+    border-radius: 0 0 20px 20px;
     .login_Box_title {
       padding-top: 40px;
       font-size: 32px;
       font-weight: 600;
       color: #333333;
       line-height: 32px;
+      text-align: center;
     }
     .login_Box_message {
-      padding-top: 36px;
+      padding: 36px 60px 0;
       font-size: 28px;
       font-weight: 400;
       color: #333333;
       line-height: 28px;
     }
     .login_Box_phone {
-      padding-top: 16px;
+      padding: 16px 60px 0;
       font-size: 24px;
       font-weight: 400;
       color: #999999;

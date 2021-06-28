@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import Router from "@/common/router";
-import "./../index.scss";
+import "./index.scss";
 export default (props) => {
-  const { data, show } = props;
+  const { show, stopVideo, close } = props
   const [animate, setAnimated] = useState(null);
-  const { beanAmount, guideMomentFlag } = data;
-  useEffect(() => {
 
-  }, [proxy]);
+  useEffect(() => {
+    if (show) {
+      animated()
+
+    }
+  }, [show]);
   const onClose = () => {
     let animateTem2 = Taro.createAnimation({
       duration: 300,
@@ -19,7 +22,11 @@ export default (props) => {
     });
     animateTem2.scale(0, 0).step();
     setAnimated(animateTem2);
-
+    let time = setTimeout(() => {
+      Taro.createVideoContext(`newVideoInfo`).play()
+      close();
+      clearTimeout(time)
+    }, 300)
   };
   const animated = () => {
     let animateTem = Taro.createAnimation({
@@ -39,6 +46,8 @@ export default (props) => {
     setTimeout(() => {
       animateTem1.scale(1, 1).step();
       setAnimated(animateTem1);
+      Taro.createVideoContext(`newVideoInfo`).pause()
+      stopVideo();
     }, 300);
   };
   const login = () => {
@@ -50,12 +59,13 @@ export default (props) => {
     });
     animateTem2.scale(0, 0).step();
     setAnimated(animateTem2);
-    setTimeout(() => {
-      setShowStatus(null);
-      Taro.setStorageSync("login", true);
+    let time = setTimeout(() => {
+      close();
+      Taro.createVideoContext(`newVideoInfo`).play()
       Router({
         routerName: "login",
       });
+      clearTimeout(time)
     }, 300);
   };
 
@@ -64,6 +74,7 @@ export default (props) => {
   const template = () => {
     return (
       <View
+        catchMove
         animation={animate}
         className="login_Box_father"
         onClick={(e) => {
@@ -71,13 +82,13 @@ export default (props) => {
           onClose();
         }}
       >
-        <View className='login_Box_content'>
+        <View className='login_Box_content' onClick={() => e.stopPropagation()}>
           <View className='login_Box_loginImg'></View>
           <View className='login_Box_loginBody'>
             <View className='login_Box_title'>哒卡乐</View>
             <View className='login_Box_message'>该小程序获得以下授权：</View>
             <View className='login_Box_phone'>获取您的手机号，以享受更多优惠</View>
-            <View className='login_Box_btn'>授权登录</View>
+            <View className='login_Box_btn public_center' onClick={() => login()}>授权登录</View>
           </View>
         </View>
       </View>

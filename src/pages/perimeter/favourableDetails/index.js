@@ -654,7 +654,9 @@ class MerchantDetails extends Component {
           </View >
         );
       } else {
-        return <ActivityStatus userInfo={configUserLevelInfo}></ActivityStatus>;
+        return <ActivityStatus userInfo={configUserLevelInfo}>
+          {filterPath(getCurrentInstance().router.params) && !Taro.getStorageSync("newDeviceFlag") && <NewToast type={'goods'} auth={login} data={httpData}></NewToast>}
+        </ActivityStatus>;
       }
     } else return null;
   }

@@ -6,7 +6,7 @@ import Recommend from "@/components/specalActive";
 import Lovely from "@/components/lovely";
 import "./index.scss";
 
-export default ({ userInfo }) => {
+export default ({ userInfo, children }) => {
   return (
     <View className="specialActivity_box">
       <View className="specialActivity_nullImage"></View>
@@ -14,6 +14,7 @@ export default ({ userInfo }) => {
       <View className="specialActivity_lovely">
         <Recommend current={true} userInfo={userInfo}></Recommend>
       </View>
+      {children}
     </View>
   );
 };

@@ -39,6 +39,7 @@
         border-radius: 50%;
       }
       .view_shopContent_username {
+        max-width: 320px;
       }
     }
   }
@@ -182,7 +183,7 @@
           color: #999999;
           line-height: 28px;
           margin-left: 16px;
-          max-width: 288px;
+          max-width: 188px;
         }
         .view_card_limit {
           margin-left: auto;
@@ -202,6 +203,8 @@
     background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon643.png")
       no-repeat;
     background-size: 100% 100%;
+    width: 48px;
+    height: 48px;
   }
 }
 
@@ -209,6 +212,8 @@
   width: 512px;
   height: 212px;
   background: #ffffff;
+  margin-bottom: 20px;
+  border-radius: 8px;
   .newShopView_content_box {
     padding: 8px 8px 0;
     display: flex;
@@ -248,13 +253,14 @@
           border-radius: 50%;
         }
         .newShopView_shopContent_username {
+          max-width: 220px;
         }
       }
       .newShopView_shopContent_price {
-        margin-top: 20px;
+        margin-top: 12px;
         display: flex;
         align-items: center;
-        max-width: 427px;
+        max-width: 310px;
         .newShopView_shopContent_priceTitle {
           font-size: 24px;
           font-weight: 400;
@@ -293,7 +299,12 @@
     }
   }
 }
-
+.newShopView_box:last-child {
+  margin-bottom: 0;
+}
+.getBeanInfo_own {
+  margin: 25px 24px 0;
+}
 .meShopView_item {
   width: 260px;
   height: 435px;
@@ -301,6 +312,7 @@
   border-radius: 8px;
   border: 1px solid #e5e5e5;
   margin-right: 16px;
+  display: inline-block;
   .meShopView_item_img {
     width: 260px;
     height: 196px;
@@ -331,6 +343,7 @@
       border-radius: 50%;
     }
     .meShopView_shopContent_username {
+      max-width: 118px;
     }
   }
   .meShopView_shopContent_oldPrice {
@@ -338,15 +351,23 @@
   }
   .meShopView_shopContent_realPrice {
     margin-top: 10px;
+    display: flex;
+  }
+  .meShopView_shopContent_newPrice {
+    display: flex;
+    margin-top: 5px;
   }
   .meShopView_shopContent_getBean {
     font-size: 18px;
     font-weight: 400;
     color: #ef476f;
     line-height: 18px;
+    margin-top: 9px;
   }
   .meShopView_shopContent_money {
     margin-top: 8px;
     color: rgba(239, 71, 111, 1);
+    display: flex;
+    align-items: baseline;
   }
 }

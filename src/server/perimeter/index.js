@@ -300,3 +300,14 @@ export const getMerchantDetail = (data = {}, fn) => {
   );
 };
 //获取商家详情
+
+export const listAllPut = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/specialGoods/listMerchantSpecialGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+

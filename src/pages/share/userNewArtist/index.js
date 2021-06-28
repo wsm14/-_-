@@ -1,15 +1,19 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { View, Image, Text, Video } from "@tarojs/components";
+import { View, Image, Text, Video, ScrollView } from "@tarojs/components";
 import { getGuildMomentDetail } from "@/server/share";
+import { saveWatchBean } from "@/server/index";
 import {
+  loginStatus, toast
 } from "@/common/utils";
-import { getSpecialGoodsDetail, getOwnerCouponDetail, getMerchantDetail } from "@/server/perimeter";
+import { getSpecialGoodsDetail, getOwnerCouponDetail, getMerchantDetail, listAllPut, getGoodsByMerchantId } from "@/server/perimeter";
 import Router from "@/common/router";
 import classNames from "classnames";
 import { ShopView, CardView, newShopView, meShopView_box } from './components/view'
+import Login from './components/login'
+import GetBean from './components/getBeanInfo'
 import './index.scss'
-class Index extends Component {
+class Index extends PureComponent {
   constructor() {
     super(...arguments);
     this.state = {
@@ -21,7 +25,12 @@ class Index extends Component {
       httpData: {
         ...getCurrentInstance().router.params
       },
-      infoData: {}
+      infoData: {},
+      specialGoodsList: [],
+      goodList: [],
+      bottomFlag: true,
+      authFlag: true,
+      getBeanFlag: false
     }
   }
   componentWillMount() {
@@ -30,6 +39,8 @@ class Index extends Component {
   componentDidMount() {
     this.fetchMomentDetails()
     this.filterRelated()
+    this.fetchMerchantPut()
+    this.fetchNearGoods()
   }
   componentDidShow() {
 
@@ -58,9 +69,9 @@ class Index extends Component {
     const { httpData } = this.state;
     getOwnerCouponDetail(httpData, (res) => {
       const { couponDetail } = res;
-      const { reduceObject = {} } = couponDetail;
+      const { reduceObject = {}, merchantCouponStatus = '1' } = couponDetail;
       this.setState({
-        infoData: { ...couponDetail, ...reduceObject },
+        infoData: { ...couponDetail, ...reduceObject, status: merchantCouponStatus },
       });
     });
   }
@@ -74,15 +85,79 @@ class Index extends Component {
         })
     })
   }
+  fetchMerchantPut() {
+    const { merchantId } = this.state.httpData
+    listAllPut({
+      merchantId,
+      page: 1,
+      limit: 5
+    }, res => {
+      const { specialGoodsList = [] } = res;
+      this.setState({
+        specialGoodsList: [...specialGoodsList]
+      });
+    })
+  }
+  fetchNearGoods() {
+    getGoodsByMerchantId({ page: 1, limit: 6 }, (res) => {
+      const { specialGoodsList = [] } = res;
+
+      this.setState({
+        goodList: specialGoodsList
+      })
+    });
+  }
+  fakeBean() {
+    const { guildMomentDetail } = this.state
+    const { userMomentIdString, watchStatus } = guildMomentDetail
+    saveWatchBean(
+      {
+        momentId: userMomentIdString,
+      },
+      (res) => {
+        if (guideMomentFlag === "1") {
+          Taro.setStorageSync("newDeviceFlag", "0");
+        }
+        this.setState({
+          getBeanFlag: true
+        })
+      }).catch((e) => {
+        const { resultCode } = e
+        if (resultCode === '5224') {
+          this.setState({
+            guildMomentDetail: {
+              ...guildMomentDetail,
+              beanFlag: 0,
+              watchStatus: '1'
+            }
+          })
+        }
+      })
+  }
   filterRelated() {
-    const { httpData: {
-      type = 'default'
-    } } = this.state
+    const {
+      httpData: {
+        type = 'default'
+      }
+    } = this.state
     switch (type) {
       case 'goods': this.fetchGoodsById(); break;
       case 'coupon': this.fetchCouponDetail(); break;
       case 'merchant': this.fetchMerchantById(); break;
       case 'video': return;
+    }
+  }
+  filterBeanToastData() {
+    const { infoData, specialGoodsList, goodList, type } = this.state
+    const { status } = infoData
+    if (infoData && status === '1' && type !== 'merchant') {
+      return [{ ...infoData }]
+    }
+    else if (specialGoodsList.length > 0) {
+      return specialGoodsList
+    }
+    else {
+      return goodList
     }
   }
   onShareAppMessage(res) {
@@ -105,7 +180,16 @@ class Index extends Component {
       httpData: {
         username = '',
         type
-      }
+      },
+      infoData: {
+        status = '0'
+      },
+      infoData,
+      specialGoodsList,
+      goodList,
+      bottomFlag,
+      authFlag,
+      getBeanFlag
     } = this.state;
     const filterObject = (str) => {
       if (str) {
@@ -155,6 +239,7 @@ class Index extends Component {
                 walk: true
               })
             }}
+            id={'newVideoInfo'}
             onTimeUpdate={(e) => {
               const { currentTime, duration } = e.detail;
               this.setState({
@@ -164,10 +249,19 @@ class Index extends Component {
                 player: true
               })
             }}
+            onEnded={() => {
+              const { guildMomentDetail } = this.state
+              const { watchStatus, beanFlag } = guildMomentDetail
+              if (
+                watchStatus === "0" && beanFlag === '1'
+              ) {
+                this.fakeBean();
+              }
+            }}
             objectFit={'cover'}
           ></Video>
-          {player && <View className='userNewArtist_video_stop'></View>}
-          <View className="video_liner">
+          {!player && <View className='userNewArtist_video_stop'></View>}
+          {/* <View className="video_liner">
             {walk ? (
               <View className="video_loadding"></View>
             ) : (
@@ -180,11 +274,79 @@ class Index extends Component {
               ></View>
             )}
 
-          </View>
+          </View> */}
         </View>
         {message && <View className='userNewArtist_message font_noHide'>{message}</View>}
         <View className='userNewArtist_user'>来自<Text className='bold'>{'@' + username}</Text>的诚意推荐</View>
-      </View>
+        {
+          status === '1' &&
+          (<View className='userNewArtist_infoGoods'>
+            {ShopView(infoData, 'goods')}
+          </View>)
+        }
+        {type === 'merchant' &&
+          (<View className='userNewArtist_infoGoods'>
+            {CardView(infoData)}
+          </View>)
+        }
+        {
+          specialGoodsList.length > 0 &&
+          <View className='shop_info'>
+            <View className='shop_info_title'>本店特惠</View>
+            {specialGoodsList.length === 1 ?
+              (<View className='userNewArtist_own_view'>
+                {ShopView(specialGoodsList[0], 'goods')}
+              </View>) :
+              <ScrollView scrollX className='userNewArtist_scrollView'>
+                {specialGoodsList.map(item => {
+                  return (meShopView_box(item))
+                })}
+              </ScrollView>}
+
+
+          </View>
+        }
+        <View className='shop_info'>
+          <View className='shop_info_title'>限时秒杀抢购中</View>
+          <View className='shop_info_pay'>
+            {goodList.map(item => {
+              return ShopView(item, 'goods')
+            })}
+          </View>
+
+        </View>
+        <View className='shop_btn_Info public_center bold' onClick={() => Router({
+          routerName: 'perimeter',
+          type: 'switchTab'
+        })}>更多好物去逛逛</View>
+        {
+          bottomFlag &&
+          (<View className='shop_info_fixed'>
+            <View className='shop_info_close'
+              onClick={
+                () =>
+                  this.setState(
+                    { bottomFlag: false }
+                  )}
+            ></View>
+            <View className='shop_info_font'>更多福利请关注哒卡乐公众号</View>
+            <View className='shop_info_setBtn'>戳一下</View>
+          </View>)
+        }
+        {
+          !loginStatus() && <Login stopVideo={() => {
+            this.setState({
+              player: false
+            })
+          }}
+            show={authFlag}
+            close={() => this.setState({
+              authFlag: false
+            })}
+          ></Login>
+        }
+        <GetBean list={this.filterBeanToastData()} close={() => this.setState({ getBeanFlag: false })} show={getBeanFlag} data={guildMomentDetail}></GetBean>
+      </View >
     );
   }
 }

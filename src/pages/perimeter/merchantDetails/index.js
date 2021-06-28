@@ -17,6 +17,7 @@ import Waterfall from "@/components/waterfall";
 import ButtonView from "@/components/Button";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
 import { getUserCoupon } from "@/server/perimeter";
+import NewToast from '@/components/noviceGuide'
 import {
   backgroundObj,
   saveFollow,
@@ -35,20 +36,25 @@ import {
   filterTime,
   mapGo,
   loginStatus,
+  filterPath
 } from "@/common/utils";
-import "./merchantDetails.scss";
+
 import Coupons from "@/components/coupon";
 import { coupon } from "@/components/componentView/CouponView";
 import { getAvailableCoupon } from "@/server/coupon";
 import Router from "@/common/router";
 import { rssConfigData } from "./components/data";
 import TaroShareDrawer from "./components/TaroShareDrawer";
+import { inject, observer } from "mobx-react";
+import "./merchantDetails.scss";
+@inject("store")
+@observer
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
     this.state = {
       merchantHttpData: {
-        merchantId: getCurrentInstance().router.params.merchantId,
+        ...getCurrentInstance().router.params
       },
       bannerList: [],
       userMerchantInfo: {},
@@ -321,6 +327,7 @@ class MerchantDetails extends Component {
       },
       visible,
       specialGoodsList,
+      merchantHttpData,
       goodsList,
       getBeanStatus,
       conpouVisible,
@@ -334,6 +341,7 @@ class MerchantDetails extends Component {
       imageUrl = "",
       mp4Url = "",
     } = headerContentObject;
+    const { login } = this.props.store.authStore;
     const templateTitle = () => {
       if (headerType === "image") {
         return (
@@ -675,6 +683,7 @@ class MerchantDetails extends Component {
               data={couponList}
             ></Coupons>
           )}
+          {filterPath(getCurrentInstance().router.params) && !Taro.getStorageSync("newDeviceFlag") && <NewToast type={'merchant'} auth={login} data={merchantHttpData}></NewToast>}
         </View>
       );
     }

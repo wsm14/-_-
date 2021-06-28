@@ -23,7 +23,8 @@ const switchTab = (url) => {
 export default ({ routerName, type = "navigateTo", args = {} }) => {
   const routerObj = {
     goods: "/pages/index/goods/index", //订单中心
-    perimeter: "/pages/index/perimeter/index", //周边打卡,
+    perimeter: "/pages/index/lookAround/index", //周边打卡,
+    home: "/pages/index/home/index", //首页
     takeCard: "/pages/index/takeCard/index", //打卡地图
     user: "/pages/index/user/index", //首页个人
     lookShare: "/pages/index/lookShare/index", //看视频图文
