@@ -101,7 +101,6 @@ class Index extends React.PureComponent {
       this.interSwper = setTimeout(() => {
         this.onChange(e);
       }, 400);
-
     } else {
       clearTimeout(this.interSwper);
       this.interSwper = setTimeout(() => {
@@ -373,29 +372,32 @@ class Index extends React.PureComponent {
       }
     }
     Taro.createVideoContext(`video${current}`).play();
-    clearTimeout(this.interSwper)
-    this.interSwper = null
+    clearTimeout(this.interSwper);
+    this.interSwper = null;
   }
   stopVideoPlayerControl() {
     const { current, interval, player } = this.state;
     if (!this.interSwper) {
       if (player) {
-        this.setState({
-          player: false,
-        }, res => {
-          Taro.createVideoContext(`video${current}`).pause();
-        });
-
+        this.setState(
+          {
+            player: false,
+          },
+          (res) => {
+            Taro.createVideoContext(`video${current}`).pause();
+          }
+        );
       } else {
-        this.setState({
-          player: true,
-        }, res => {
-          Taro.createVideoContext(`video${current}`).play();
-        });
-
+        this.setState(
+          {
+            player: true,
+          },
+          (res) => {
+            Taro.createVideoContext(`video${current}`).play();
+          }
+        );
       }
     }
-
   }
   followStatus(e) {
     e.stopPropagation();
@@ -576,18 +578,17 @@ class Index extends React.PureComponent {
     // this.listParentCategory();
     this.fetchUserShareCommission();
     Taro.setTabBarStyle({
-      color: '#999999',
-      selectedColor: '#FFFFFF',
-      backgroundColor: '#000000',
-
-    })
+      color: "#999999",
+      selectedColor: "#FFFFFF",
+      backgroundColor: "#000000",
+    });
   }
   componentDidHide() {
     Taro.setTabBarStyle({
-      color: '#999999',
-      selectedColor: '#333333',
-      backgroundColor: 'FFFFFF',
-    })
+      color: "#999999",
+      selectedColor: "#333333",
+      backgroundColor: "FFFFFF",
+    });
   }
   componentDidMount() {
     evens.$on("updateMomentsList", this.updateList.bind(this));
@@ -692,7 +693,7 @@ class Index extends React.PureComponent {
           realPrice,
           qcodeUrl,
           image,
-          buyPrice = 0
+          buyPrice = 0,
         } = res;
         if (player) {
           this.stopVideoPlayerControl();
@@ -715,7 +716,7 @@ class Index extends React.PureComponent {
               goodsName,
               oriPrice,
               realPrice,
-              buyPrice
+              buyPrice,
             }),
           },
         });
@@ -731,7 +732,7 @@ class Index extends React.PureComponent {
         updateType: "share",
         id: userMomentIdString,
       },
-      (res) => { }
+      (res) => {}
     );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {
@@ -867,8 +868,8 @@ class Index extends React.PureComponent {
                 initVideo={() => {
                   if (!player && !this.interSwper) {
                     this.setState({
-                      player: true
-                    })
+                      player: true,
+                    });
                   }
                 }}
               ></VideoView>
@@ -980,7 +981,9 @@ class Index extends React.PureComponent {
             Taro.createVideoContext(`video${current}`).play();
           }}
           videoStop={() => {
-            Taro.createVideoContext(`video${current}`).stop();
+            setTimeout(() => {
+              Taro.createVideoContext(`video${current}`).pause();
+            }, 300);
           }}
           proxy={interval}
           data={userMomentsInfo}

@@ -143,7 +143,7 @@ class Index extends PureComponent {
       }
     ).catch((e) => {
       const { resultCode } = e;
-      if (resultCode === "5224") {
+      if (resultCode === "5224" || resultCode === "5031") {
         this.setState({
           guildMomentDetail: {
             ...guildMomentDetail,
@@ -210,7 +210,12 @@ class Index extends PureComponent {
       }
     };
     return (
-      <View className="userNewArtist_box">
+      <View
+        className={classNames(
+          "userNewArtist_box",
+          getBeanFlag && "userNewArtist_vh"
+        )}
+      >
         <View className="userNewArtist_image"></View>
         <View className="userNewArtist_video">
           <View
@@ -287,13 +292,16 @@ class Index extends PureComponent {
         {message && (
           <View className="userNewArtist_message font_noHide">{message}</View>
         )}
-        <View className="userNewArtist_user font_hide">
-          来自<Text className="bold">{"@" + username}</Text>的诚意推荐
-        </View>
+
         {status === "1" && Object.keys(infoData).length && (
-          <View className="userNewArtist_infoGoods">
-            {ShopView(infoData, "goods")}
-          </View>
+          <>
+            <View className="userNewArtist_user font_hide">
+              来自<Text className="bold">{"@" + username}</Text>的诚意推荐
+            </View>
+            <View className="userNewArtist_infoGoods">
+              {ShopView(infoData, "goods")}
+            </View>
+          </>
         )}
         {type === "merchant" && Object.keys(infoData).length && (
           <View className="userNewArtist_infoGoods">{CardView(infoData)}</View>

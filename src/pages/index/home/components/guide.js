@@ -15,7 +15,6 @@ export default (props) => {
       (!Taro.getStorageSync("userInfo") || guideMomentFlag === "1")
     ) {
       if (proxy) {
-        console.log(proxy)
         videoStop();
         animated();
       }

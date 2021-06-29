@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View ,Text} from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { getShareInfo } from "@/server/user";
 import { getUserMomentcheckNew } from "@/server/share";
@@ -39,7 +39,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
 
   useEffect(() => {
     if (newUserFlag === "1" && visible) {
-      console.log(newUserFlag)
+      console.log(newUserFlag);
       animated();
     }
   }, [beanInfo]);
@@ -109,6 +109,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
       <View
         animation={animate}
         className="noviceGuide_Box_father"
+        catchMove
         onClick={(e) => {
           e.stopPropagation();
           onClose();
