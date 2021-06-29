@@ -98,7 +98,7 @@ export default ({ data, show, list, close }) => {
               onlinkBuy(list[0])
             }}
           >
-            立即领取
+            立即购买
           </View>
         </View>)
     }

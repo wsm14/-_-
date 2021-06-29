@@ -38,7 +38,7 @@ class Index extends PureComponent {
       specialGoodsList: [],
       goodList: [],
       bottomFlag: true,
-      authFlag: true,
+      authFlag: false,
       getBeanFlag: false,
     };
   }
@@ -50,7 +50,6 @@ class Index extends PureComponent {
     this.fetchNearGoods();
   }
   componentDidShow() {}
-
   fetchGoodsById() {
     const { httpData } = this.state;
     getSpecialGoodsDetail(httpData, (res) => {
@@ -63,9 +62,18 @@ class Index extends PureComponent {
   fetchMomentDetails() {
     getGuildMomentDetail({}).then((val) => {
       const { guildMomentDetail } = val;
-      this.setState({
-        guildMomentDetail,
-      });
+      this.setState(
+        {
+          guildMomentDetail,
+        },
+        (res) => {
+          if (!loginStatus()) {
+            this.setState({
+              authFlag: true,
+            });
+          }
+        }
+      );
     });
   }
   fetchCouponDetail() {
@@ -108,7 +116,7 @@ class Index extends PureComponent {
     );
   }
   fetchNearGoods() {
-    getGoodsByMerchantId({ page: 1, limit: 6 }, (res) => {
+    getGoodsByMerchantId({ page: 1, limit: 5 }, (res) => {
       const { specialGoodsList = [] } = res;
 
       this.setState({
@@ -124,11 +132,13 @@ class Index extends PureComponent {
         momentId: userMomentIdString,
       },
       (res) => {
-        if (guideMomentFlag === "1") {
-          Taro.setStorageSync("newDeviceFlag", "0");
-        }
+        Taro.setStorageSync("newDeviceFlag", "0");
         this.setState({
           getBeanFlag: true,
+          guildMomentDetail: {
+            ...guildMomentDetail,
+            watchStatus: "1",
+          },
         });
       }
     ).catch((e) => {
@@ -239,6 +249,9 @@ class Index extends PureComponent {
             id={"newVideoInfo"}
             onTimeUpdate={(e) => {
               const { currentTime, duration } = e.detail;
+              if (authFlag) {
+                Taro.createVideoContext(`newVideoInfo`).pause();
+              }
               this.setState({
                 scale: ((currentTime / duration) * 100).toFixed(2),
                 time: parseInt(currentTime),
@@ -330,21 +343,24 @@ class Index extends PureComponent {
             <View className="shop_info_setBtn">戳一下</View>
           </View>
         )}
-        {!loginStatus() && (
-          <Login
-            stopVideo={() => {
-              this.setState({
-                player: false,
-              });
-            }}
-            show={authFlag}
-            close={() =>
-              this.setState({
+        <Login
+          stopVideo={() => {
+            this.setState({
+              player: false,
+            });
+          }}
+          show={authFlag}
+          close={() =>
+            this.setState(
+              {
                 authFlag: false,
-              })
-            }
-          ></Login>
-        )}
+              },
+              (res) => {
+                Taro.createVideoContext(`newVideoInfo`).play();
+              }
+            )
+          }
+        ></Login>
         <GetBean
           list={this.filterBeanToastData()}
           close={() => this.setState({ getBeanFlag: false })}

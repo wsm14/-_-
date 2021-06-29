@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from "@tarojs/components";
+import { View ,Text} from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { getShareInfo } from "@/server/user";
 import { getUserMomentcheckNew } from "@/server/share";
@@ -28,7 +28,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
       getUserMomentcheckNew({
         newDeviceFlag: Taro.getStorageSync("newDeviceFlag") || "1",
       }).then((val) => {
-        const { newUserFlag = "0", newUserBean = "300" } = val;
+        const { newUserFlag = "1", newUserBean = "300" } = val;
         setBeanInfo({
           newUserFlag: newUserFlag,
           newUserBean,
@@ -39,6 +39,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
 
   useEffect(() => {
     if (newUserFlag === "1" && visible) {
+      console.log(newUserFlag)
       animated();
     }
   }, [beanInfo]);
@@ -124,7 +125,10 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
               <View className="noviceGuide_num_icon"></View>
               <View className="noviceGuide_num">{newUserBean}</View>
             </View>
-            <View className="noviceGuide_font3">等你领取</View>
+            <View className="noviceGuide_font3">
+              成功领取 立减
+              <Text className="color14">{newUserBean / 100}元</Text>
+            </View>
             <View
               className="noviceGuide_font4 public_center"
               onClick={() => {
