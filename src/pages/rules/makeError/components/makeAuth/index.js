@@ -1,11 +1,11 @@
 /*
- 到点打卡,位置不在打卡范围
+ 到点打卡,无权限
 */
 import React from "react";
 import { View } from "@tarojs/components";
-import Router from "@/common/router";
+import evens from "@/common/evens";
 import { goBack } from "@/common/utils";
-import { scanCard } from "@/common/authority";
+import evens from "@/common/evens";
 export default (props) => {
   const { Store } = props;
   return (
@@ -17,15 +17,17 @@ export default (props) => {
       </View>
       <View className="makeError_make_btnBox public_auto">
         <View
-          className="makeError_btn_box makeError_btn_color2"
-          onClick={() => {}}
+          className="makeError_btn_box makeError_btn_color1"
+          onClick={() => {
+            goBack();
+          }}
         >
           取消
         </View>
         <View
           className="makeError_btn_box makeError_btn_color2"
           onClick={() => {
-            
+            evens.$emit("setLocation");
           }}
         >
           去授权

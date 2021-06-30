@@ -6,10 +6,12 @@ import { authUpdateGeography } from "@/common/authority";
 import { getShareParamInfo } from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
+import evens from "@/common/evens";
 import "./assets/css/app.scss";
 import "./assets/css/color.scss";
 import "./assets/css/font.scss";
 import "./assets/css/background.scss";
+
 const store = {
   ...Store,
 };
@@ -18,10 +20,10 @@ class App extends Component {
     super(...arguments);
   }
   componentDidMount() {
-    console.log(111)
     this.fetchLocation();
     this.fetchNetwork();
     authWxLogin(this.fetchOpenId.bind(this));
+    evens.$on("setLocation", this.fetchLocation.bind(this));
   }
 
   componentDidShow() {

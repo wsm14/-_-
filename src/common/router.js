@@ -78,13 +78,13 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     wallet: "/pages/newUser/wallet/index", //我的钱包
     merchantHome: "/pages/newUser/merchantDetails/index",
     //newUser
-
+    makeError: "/pages/rules/makeError/index",//打卡失败
     interests: "/pages/rules/interests/index",
     shareActive: "/pages/share/invitation/index", //活动
     download: "/pages/share/download/index", //下载
     login: "/pages/auth/index", //登录
     webView: "/pages/share/webView/index", //内嵌h5
-    userNewArtist: '/pages/share/userNewArtist/index'
+    userNewArtist: "/pages/share/userNewArtist/index",
     //规则类
   }[routerName];
   const types = type;
