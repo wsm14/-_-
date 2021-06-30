@@ -4,7 +4,7 @@ import Taro from "@tarojs/taro";
 import Router from "@/common/router";
 import "./../index.scss";
 export default (props) => {
-  const { data, videoPlayer, videoStop, proxy } = props;
+  const { data, proxy, player, setPlayer } = props;
   const [showStatus, setShowStatus] = useState(0);
   const [animate, setAnimated] = useState(null);
   const { beanAmount, guideMomentFlag } = data;
@@ -15,7 +15,6 @@ export default (props) => {
       (!Taro.getStorageSync("userInfo") || guideMomentFlag === "1")
     ) {
       if (proxy) {
-        videoStop();
         animated();
       }
     }
@@ -32,7 +31,7 @@ export default (props) => {
     setTimeout(() => {
       setShowStatus(null);
       Taro.setStorageSync("login", true);
-      videoPlayer();
+      setPlayer(true);
     }, 300);
   };
   const animated = () => {
@@ -53,6 +52,7 @@ export default (props) => {
     setTimeout(() => {
       animateTem1.scale(1, 1).step();
       setAnimated(animateTem1);
+      setPlayer(false);
     }, 300);
   };
   const login = () => {
@@ -67,7 +67,7 @@ export default (props) => {
     setTimeout(() => {
       setShowStatus(null);
       Taro.setStorageSync("login", true);
-      videoPlayer();
+      setPlayer(true);
       Router({
         routerName: "login",
       });
