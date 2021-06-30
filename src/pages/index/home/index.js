@@ -866,10 +866,12 @@ class Index extends React.PureComponent {
                 beanLimitStatus={beanLimitStatus}
                 saveBean={this.saveBean.bind(this)}
                 initVideo={() => {
-                  if (!player && !this.interSwper) {
-                    this.setState({
-                      player: true,
-                    });
+                  if (!this.interSwper) {
+                    if (!player) {
+                      Taro.createVideoContext(`video${current}`).pause();
+                    } else {
+                      Taro.createVideoContext(`video${current}`).play();
+                    }
                   }
                 }}
               ></VideoView>
@@ -979,21 +981,9 @@ class Index extends React.PureComponent {
         <GuideView
           player={player}
           setPlayer={(val) => {
-            this.setState(
-              {
-                player: val,
-              },
-              (res) => {
-                if (val) {
-                  Taro.createVideoContext(`video${current}`).play();
-                } else {
-                  let videoTime = setTimeout(() => {
-                    Taro.createVideoContext(`video${current}`).pause();
-                    clearTimeout(videoTime);
-                  }, 300);
-                }
-              }
-            );
+            this.setState({
+              player: val,
+            });
           }}
           proxy={interval}
           data={userMomentsInfo}
