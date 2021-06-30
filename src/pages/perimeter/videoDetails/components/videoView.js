@@ -18,6 +18,7 @@ export default ({
   shareInfo,
   beanLimitStatus,
   saveBean,
+  play,
 }) => {
   const [scale, setScale] = useState(0);
   const [player, setPlayer] = useState(false);
@@ -37,7 +38,7 @@ export default ({
       frontImageWidth,
       videoContent,
       watchStatus,
-      beanFlag
+      beanFlag,
     } = data;
     return (
       <View
@@ -105,9 +106,16 @@ export default ({
               initialTime="0"
               onTimeUpdate={(e) => {
                 const { currentTime, duration } = e.detail;
-                setWalk(false);
-                setTime(parseInt(currentTime));
-                setScale(((currentTime / duration) * 100).toFixed(2));
+                if (!play) {
+                  setWalk(false);
+                  setTime(parseInt(currentTime));
+                  setScale(((currentTime / duration) * 100).toFixed(2));
+                  Taro.createVideoContext(`details1`).pause();
+                } else {
+                  setWalk(false);
+                  setTime(parseInt(currentTime));
+                  setScale(((currentTime / duration) * 100).toFixed(2));
+                }
               }}
               onPause={() => {
                 setPlayer(false);

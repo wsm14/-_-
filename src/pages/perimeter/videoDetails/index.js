@@ -379,6 +379,7 @@ class Index extends React.PureComponent {
               shareInfo={this.shareImageInfo.bind(this)}
               beanLimitStatus={beanLimitStatus}
               saveBean={this.saveBean.bind(this)}
+              play={player}
             ></VideoView>
           </>
         </View>
@@ -420,10 +421,12 @@ class Index extends React.PureComponent {
             <NewToast
               type={"merchant"}
               stopVideo={() => {
-                Taro.createVideoContext(`details1`).pause();
+                this.setState({ player: false });
               }}
               initVideo={() => {
-                Taro.createVideoContext(`details1`).play();
+                this.setState({ player: true }, (res) => {
+                  Taro.createVideoContext(`details1`).play();
+                });
               }}
               auth={login}
               data={{ ...httpData, merchantId: userIdString }}

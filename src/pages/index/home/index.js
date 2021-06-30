@@ -977,13 +977,23 @@ class Index extends React.PureComponent {
         ></Coupon>
         <Lead beanLimitStatus={beanLimitStatus}></Lead>
         <GuideView
-          videoPlayer={() => {
-            Taro.createVideoContext(`video${current}`).play();
-          }}
-          videoStop={() => {
-            setTimeout(() => {
-              Taro.createVideoContext(`video${current}`).pause();
-            }, 300);
+          player={player}
+          setPlayer={(val) => {
+            this.setState(
+              {
+                player: val,
+              },
+              (res) => {
+                if (val) {
+                  Taro.createVideoContext(`video${current}`).play();
+                } else {
+                  let videoTime = setTimeout(() => {
+                    Taro.createVideoContext(`video${current}`).pause();
+                    clearTimeout(videoTime);
+                  }, 300);
+                }
+              }
+            );
           }}
           proxy={interval}
           data={userMomentsInfo}
