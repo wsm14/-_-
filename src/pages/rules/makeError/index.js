@@ -20,6 +20,7 @@ class Index extends Component {
     const { code } = this.state;
     const template = {
       10086: <MakeAuth></MakeAuth>,
+      40003:
     }[code];
     return <View className="makeError_box">{template}</View>;
   }

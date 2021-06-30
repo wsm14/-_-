@@ -287,6 +287,16 @@ export const scanCode = (data) => {
                       },
                     });
                   }
+                }).catch((val) => {
+                  const { resultCode } = val;
+                  if (resultCode !== "-1") {
+                    router({
+                      routerName: "makeError",
+                      args: {
+                        code: resultCode,
+                      },
+                    });
+                  }
                 });
               },
               fail: () => {
@@ -375,6 +385,16 @@ export const scanCard = () => {
                       args: {
                         merchantId: data.merchantId,
                         beanAmount,
+                      },
+                    });
+                  }
+                }).catch((val) => {
+                  const { resultCode } = val;
+                  if (resultCode !== "-1") {
+                    router({
+                      routerName: "makeError",
+                      args: {
+                        code: resultCode,
                       },
                     });
                   }

@@ -86,7 +86,6 @@ export default ({
                         beanLimitStatus={beanLimitStatus}
                         index={index}
                         id={`video${index}`}
-
                         time={time}
                         show={index === current}
                         dataInfo={dataInfo}
