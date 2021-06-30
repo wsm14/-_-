@@ -798,6 +798,7 @@ class Index extends React.PureComponent {
       triggered,
     } = this.state;
     const { selectObj, beanLimitStatus } = this.props.store.homeStore;
+    const { login } = this.props.store.authStore;
     const templateView = () => {
       if (browseType === "near") {
         if (userMomentsList.length > 0) {
@@ -866,12 +867,9 @@ class Index extends React.PureComponent {
                 beanLimitStatus={beanLimitStatus}
                 saveBean={this.saveBean.bind(this)}
                 initVideo={() => {
-                  if (!this.interSwper) {
-                    if (!player) {
+                  if (!player && !this.interSwper) {
+                    !this.state.player &&
                       Taro.createVideoContext(`video${current}`).pause();
-                    } else {
-                      Taro.createVideoContext(`video${current}`).play();
-                    }
                   }
                 }}
               ></VideoView>
@@ -979,13 +977,28 @@ class Index extends React.PureComponent {
         ></Coupon>
         <Lead beanLimitStatus={beanLimitStatus}></Lead>
         <GuideView
-          player={player}
           setPlayer={(val) => {
-            this.setState({
-              player: val,
-            });
+            this.setState(
+              {
+                player: val,
+              },
+              (res) => {
+                if (this.state.player) {
+                  setTimeout(() => {
+                    console.log(this.state.player, 2222);
+                    Taro.createVideoContext(`video${current}`).play();
+                  }, 300);
+                } else {
+                  setTimeout(() => {
+                    Taro.createVideoContext(`video${current}`).pause();
+                    console.log(this.state.player, 3333);
+                  }, 300);
+                }
+              }
+            );
           }}
           proxy={interval}
+          auth={login}
           data={userMomentsInfo}
         ></GuideView>
         {!player && (
