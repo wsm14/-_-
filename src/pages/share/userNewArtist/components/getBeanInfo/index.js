@@ -61,7 +61,7 @@ export default ({ data, show, list, close }) => {
     animateTem2.scale(0, 0).step();
     setAnimated(animateTem2);
     setTimeout(() => {
-      linkTo(item);
+      close(() => linkTo(item));
     }, 300);
   };
   const animated = () => {

@@ -53,15 +53,33 @@ class Index extends PureComponent {
   fetchGoodsById() {
     const { httpData } = this.state;
     getSpecialGoodsDetail(httpData, (res) => {
-      const { specialGoodsInfo } = res;
-      this.setState({
-        infoData: specialGoodsInfo,
-      });
+      const {
+        specialGoodsInfo,
+        specialGoodsInfo: { status = "1" },
+      } = res;
+      if (status === "1") {
+        this.setState({
+          infoData: specialGoodsInfo,
+        });
+      } else {
+        this.setState(
+          {
+            httpData: {
+              ...this.state.httpData,
+              type: "merchant",
+            },
+          },
+          (res) => {
+            this.fetchMerchantById();
+          }
+        );
+      }
     });
   }
   fetchMomentDetails() {
     getGuildMomentDetail({}).then((val) => {
       const { guildMomentDetail } = val;
+      console.log(guildMomentDetail);
       this.setState(
         {
           guildMomentDetail,
@@ -81,13 +99,27 @@ class Index extends PureComponent {
     getOwnerCouponDetail(httpData, (res) => {
       const { couponDetail } = res;
       const { reduceObject = {}, merchantCouponStatus = "1" } = couponDetail;
-      this.setState({
-        infoData: {
-          ...couponDetail,
-          ...reduceObject,
-          status: merchantCouponStatus,
-        },
-      });
+      if (merchantCouponStatus === "1") {
+        this.setState({
+          infoData: {
+            ...couponDetail,
+            ...reduceObject,
+            status: merchantCouponStatus,
+          },
+        });
+      } else {
+        this.setState(
+          {
+            httpData: {
+              ...this.state.httpData,
+              type: "merchant",
+            },
+          },
+          (res) => {
+            this.fetchMerchantById();
+          }
+        );
+      }
     });
   }
   fetchMerchantById() {
@@ -118,7 +150,6 @@ class Index extends PureComponent {
   fetchNearGoods() {
     getGoodsByMerchantId({ page: 1, limit: 5 }, (res) => {
       const { specialGoodsList = [] } = res;
-
       this.setState({
         goodList: specialGoodsList,
       });
@@ -188,7 +219,7 @@ class Index extends PureComponent {
   render() {
     const {
       guildMomentDetail,
-      guildMomentDetail: { videoContent, length, watchStatus, message },
+      guildMomentDetail: { videoContent, length = 0, watchStatus, message },
       player,
       scale,
       walk,
@@ -213,7 +244,7 @@ class Index extends PureComponent {
       <View
         className={classNames(
           "userNewArtist_box",
-          getBeanFlag && "userNewArtist_vh"
+          getBeanFlag ? "userNewArtist_vh" : ""
         )}
       >
         <View className="userNewArtist_image"></View>
@@ -292,16 +323,13 @@ class Index extends PureComponent {
         {message && (
           <View className="userNewArtist_message font_noHide">{message}</View>
         )}
-
+        <View className="userNewArtist_user font_hide">
+          来自<Text className="bold">{"@" + username}</Text>的诚意推荐
+        </View>
         {status === "1" && Object.keys(infoData).length && (
-          <>
-            <View className="userNewArtist_user font_hide">
-              来自<Text className="bold">{"@" + username}</Text>的诚意推荐
-            </View>
-            <View className="userNewArtist_infoGoods">
-              {ShopView(infoData, "goods")}
-            </View>
-          </>
+          <View className="userNewArtist_infoGoods">
+            {ShopView(infoData, "goods")}
+          </View>
         )}
         {type === "merchant" && Object.keys(infoData).length && (
           <View className="userNewArtist_infoGoods">{CardView(infoData)}</View>
@@ -371,7 +399,11 @@ class Index extends PureComponent {
         ></Login>
         <GetBean
           list={this.filterBeanToastData()}
-          close={() => this.setState({ getBeanFlag: false })}
+          close={(callback) => {
+            this.setState({ getBeanFlag: false }, (res) => {
+              callback && callback();
+            });
+          }}
           show={getBeanFlag}
           data={guildMomentDetail}
         ></GetBean>
