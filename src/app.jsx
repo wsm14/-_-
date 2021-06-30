@@ -18,6 +18,7 @@ class App extends Component {
     super(...arguments);
   }
   componentDidMount() {
+    console.log(111)
     this.fetchLocation();
     this.fetchNetwork();
     authWxLogin(this.fetchOpenId.bind(this));

@@ -150,9 +150,14 @@ class Index extends PureComponent {
   fetchNearGoods() {
     getGoodsByMerchantId({ page: 1, limit: 5 }, (res) => {
       const { specialGoodsList = [] } = res;
-      this.setState({
-        goodList: specialGoodsList,
-      });
+      this.setState(
+        {
+          goodList: specialGoodsList,
+        },
+        (res) => {
+          Taro.stopPullDownRefresh();
+        }
+      );
     });
   }
   fakeBean() {
@@ -214,6 +219,19 @@ class Index extends PureComponent {
       return goodList;
     }
   }
+
+  stopVideoPlayerControl() {
+    const { player } = this.state;
+    if (player) {
+      Taro.createVideoContext(`newVideoInfo`).pause();
+    } else {
+      Taro.createVideoContext(`newVideoInfo`).play();
+    }
+  }
+
+  onPullDownRefresh() {
+    this.fetchNearGoods();
+  }
   onShareAppMessage(res) {}
 
   render() {
@@ -248,9 +266,13 @@ class Index extends PureComponent {
         )}
       >
         <View className="userNewArtist_image"></View>
-        <View className="userNewArtist_video">
+        <View
+          className="userNewArtist_video"
+          onClick={() => this.stopVideoPlayerControl()}
+        >
           <View
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               Router({
                 routerName: "beanReward",
               });
@@ -283,6 +305,11 @@ class Index extends PureComponent {
               });
             }}
             id={"newVideoInfo"}
+            onPause={() => {
+              this.setState({
+                player: false,
+              });
+            }}
             onTimeUpdate={(e) => {
               const { currentTime, duration } = e.detail;
               if (authFlag) {

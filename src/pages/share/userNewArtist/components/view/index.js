@@ -123,12 +123,13 @@ export const CardView = (item) => {
   const {
     headerImg,
     merchantName,
-    businessTime,
+    businessTime = "",
     lat,
     lnt,
     categoryName,
     address,
     merchantId,
+    perCapitaConsumption,
   } = item;
   return (
     <View
@@ -153,12 +154,14 @@ export const CardView = (item) => {
                 <View className="view_card_load">营业时间</View>
                 <View className="view_card_liner"></View>
                 <View className="view_card_time price_margin8">
-                  {businessTime}
+                  {businessTime.split(",")[0]}
                 </View>
               </View>
             )}
 
-            <View className="view_card_peoplePay">人均￥89</View>
+            <View className="view_card_peoplePay">
+              人均￥{perCapitaConsumption}
+            </View>
           </View>
           <View className="view_card_address font_hide">
             <View className="view_card_size">{categoryName}</View>

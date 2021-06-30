@@ -17,7 +17,7 @@ import Waterfall from "@/components/waterfall";
 import ButtonView from "@/components/Button";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
 import { getUserCoupon } from "@/server/perimeter";
-import NewToast from '@/components/noviceGuide'
+import NewToast from "@/components/noviceGuide";
 import {
   backgroundObj,
   saveFollow,
@@ -36,7 +36,7 @@ import {
   filterTime,
   mapGo,
   loginStatus,
-  filterPath
+  filterPath,
 } from "@/common/utils";
 
 import Coupons from "@/components/coupon";
@@ -54,7 +54,7 @@ class MerchantDetails extends Component {
     super(...arguments);
     this.state = {
       merchantHttpData: {
-        ...getCurrentInstance().router.params
+        ...getCurrentInstance().router.params,
       },
       bannerList: [],
       userMerchantInfo: {},
@@ -232,7 +232,7 @@ class MerchantDetails extends Component {
     );
   }
   //获取商家轮播图
-  onShareAppMessage() {
+  onShareAppMessage(res) {
     const {
       userMerchantInfo: { merchantName, coverImg },
       merchantHttpData: { merchantId },
@@ -240,11 +240,23 @@ class MerchantDetails extends Component {
     let userInfo = loginStatus() || {};
     const { userIdString } = userInfo;
     if (loginStatus()) {
-      return {
-        title: merchantName,
-        imageUrl: coverImg,
-        path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
-      };
+      if (res.from === "button") {
+        return {
+          title: merchantName,
+          imageUrl: coverImg,
+          path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
+        };
+      } else {
+        return {
+          title: merchantName,
+          imageUrl: coverImg,
+          path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
+        };
+      }
     } else {
       return {
         title: merchantName,
@@ -683,7 +695,14 @@ class MerchantDetails extends Component {
               data={couponList}
             ></Coupons>
           )}
-          {filterPath(getCurrentInstance().router.params) && !Taro.getStorageSync("newDeviceFlag") && <NewToast type={'merchant'} auth={login} data={merchantHttpData}></NewToast>}
+          {filterPath(getCurrentInstance().router.params) &&
+            !Taro.getStorageSync("newDeviceFlag") && (
+              <NewToast
+                type={"merchant"}
+                auth={login}
+                data={merchantHttpData}
+              ></NewToast>
+            )}
         </View>
       );
     }
