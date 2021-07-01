@@ -78,7 +78,7 @@
       color: #ef476f;
     }
     .view_shopContent_money {
-      font-size: 28px;
+      font-size: 36px;
       font-weight: bold;
       color: #ef476f;
     }
@@ -305,7 +305,7 @@
 }
 .meShopView_item {
   width: 260px;
-  height: 435px;
+  padding-bottom: 24px;
   background: #ffffff;
   border-radius: 8px;
   border: 1px solid #e5e5e5;
@@ -350,10 +350,12 @@
   .meShopView_shopContent_realPrice {
     margin-top: 10px;
     display: flex;
+    align-items: center;
   }
   .meShopView_shopContent_newPrice {
     display: flex;
     margin-top: 5px;
+    align-items: center;
   }
   .meShopView_shopContent_getBean {
     font-size: 18px;

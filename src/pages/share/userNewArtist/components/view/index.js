@@ -106,9 +106,9 @@ export const ShopView = (item, type = "goods", userInfo) => {
           </View>
           <View className="view_shopContent_bean">卡豆抵扣后最低到手价</View>
           <View className="view_shopContent_buyPrice">
-            <View className="view_shopContent_info"></View>
+            <View className="view_shopContent_info">¥</View>
             <View className="view_shopContent_money price_margin4">
-              ¥ {computedPrice(relPrice || buyPrice, 50)}
+              {computedPrice(relPrice || buyPrice, 50)}
             </View>
           </View>
         </View>
@@ -305,12 +305,12 @@ export const meShopView_box = (item) => {
         <View className="meShopView_shopContent_realPrice color1">
           <View className="font18 price_margin4">原价:</View>
           <View className="font20 text_through price_margin4 bold">
-            ¥ {oriPrice}
+            ¥{oriPrice}
           </View>
         </View>
         <View className="meShopView_shopContent_newPrice">
           <View className="font18 price_margin4">优惠价:</View>
-          <View className="font20 price_margin4 bold"> ¥ {realPrice}</View>
+          <View className="font20 price_margin4 bold"> ¥{realPrice}</View>
         </View>
         <View className="meShopView_shopContent_getBean">
           卡豆抵扣后最低到手价

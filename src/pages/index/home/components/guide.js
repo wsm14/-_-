@@ -90,6 +90,7 @@ export default (props) => {
         <View className="guide_Box">
           <View className="guide_image">
             <View className="guide_font1"></View>
+            <View className="guide_font1_1">这里有</View>
             <View className="guide_font2 public_center">
               <View className="guide_bean_icon"></View>
               <View className="guide_num_icon"></View>
