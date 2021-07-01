@@ -20,7 +20,7 @@ export default ({
   beanLimitStatus,
   saveBean,
   dataInfo,
-  initVideo
+  initVideo,
 }) => {
   const [scale, setScale] = useState(0);
   const [time, setTime] = useState(0);
@@ -31,6 +31,7 @@ export default ({
     setTime(0);
     setWalk(false);
   }, [current]);
+
   const expensive = useMemo(() => {
     const { shareCommission = 0 } = userInfo;
     if (data.length > 0) {
@@ -128,7 +129,7 @@ export default ({
                           onTimeUpdate={(e) => {
                             if (index === current) {
                               const { currentTime, duration } = e.detail;
-                              initVideo()
+                              initVideo();
                               setWalk(false);
                               setTime(parseInt(currentTime));
                               setScale(
@@ -138,12 +139,10 @@ export default ({
                           }}
                           onPause={() => {
                             if (index === current) {
-
                             }
                           }}
                           onPlay={() => {
                             if (index === current) {
-
                             }
                           }}
                           onEnded={() => {
