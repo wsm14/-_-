@@ -154,7 +154,7 @@ export const CardView = (item) => {
                 <View className="view_card_load">营业时间</View>
                 <View className="view_card_liner"></View>
                 <View className="view_card_time price_margin8">
-                  {businessTime.split(",")[0]}
+                  {businessTime.split(" ")[0]}
                 </View>
               </View>
             )}
