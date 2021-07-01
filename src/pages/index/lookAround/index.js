@@ -26,6 +26,7 @@ import Router from "@/common/router";
 import TabCity from "./components/tabCity";
 import ToastCity from "./components/toastCity";
 import Navition from "./components/navition";
+import Plate from "./components/plate";
 import SelectSpecal from "./components/selectSpecal";
 import "./index.scss";
 @inject("store")
@@ -301,15 +302,7 @@ class Index extends Component {
       }
     );
   } //上拉加载
-  saveRouter(activityId, merchantId) {
-    Router({
-      routerName: "favourableDetails",
-      args: {
-        specialActivityId: activityId,
-        merchantId: merchantId,
-      },
-    });
-  }
+  
   render() {
     const {
       specialHeadList,
@@ -484,6 +477,8 @@ class Index extends Component {
               </View>
             </View>
           )}
+
+          <Plate userInfo={configUserLevelInfo}></Plate>
           <Banner
             imgName="coverImg"
             data={[...specialShopping]}
@@ -491,21 +486,8 @@ class Index extends Component {
             boxStyle={bannerContentStyle}
             showNear
           ></Banner>
-          {/* {hotList.length > 0 && (
-            <HotSpecal
-              linkTo={this.saveRouter.bind(this)}
-              userInfo={configUserLevelInfo}
-              data={hotList}
-            ></HotSpecal>
-          )}
-          {dateList.length > 0 && (
-            <DateSpecal
-              userInfo={configUserLevelInfo}
-              data={dateList}
-              linkTo={this.saveRouter.bind(this)}
-            ></DateSpecal>
-          )} */}
 
+          <View className="lookAround_linder_bottom"></View>
           <View className="lookAround_category_linder"></View>
           <View
             style={

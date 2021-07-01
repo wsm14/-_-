@@ -265,143 +265,13 @@ page {
         }
       }
     }
-    .lookAround_hot_specal {
-      width: 250px;
-      display: inline-block;
-      margin-right: 16px;
-      .lookAround_hot_specalImage {
-        width: 250px;
-        height: 250px;
-        background: #ffffff;
-        border-radius: 5px;
-        position: relative;
-        .lookAround_hot_image {
-          width: 100%;
-          height: 100%;
-          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.06);
-          border-radius: 8px;
-        }
-      }
-      .lookAround_hot_price {
-        margin-top: 17px;
-        display: flex;
-        align-items: baseline;
-        .lookAround_hot_priceMax {
-          max-width: 88px;
-        }
-      }
-      .lookAround_bean_price {
-        margin-top: 11px;
-        font-size: 18px;
-        font-weight: 400;
-        color: #ef476f;
-        line-height: 18px;
-      }
-      .lookAround_bean_show {
-        display: flex;
-        align-items: center;
-        margin-top: 8px;
-        .lookAround_bean_showText {
-          display: flex;
-          align-items: baseline;
-        }
-      }
-      .lookAround_bean_getMoney {
-        max-width: 113px;
-        margin-left: 8px;
-        padding: 4px 8px;
-        font-size: 24px;
-        font-weight: 400;
-        color: #ef476f;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-      }
-      .lookAround_hot_rel {
-        padding-top: 8px;
-        font-size: 20px;
-        font-weight: 400;
-        color: #cccccc;
-        line-height: 20px;
-        text-decoration: line-through;
-      }
+    .lookAround_active_card {
+      width: 218px;
+      height: 104px;
     }
-    .lookAround_data_specal {
-      display: inline-block;
-      margin-right: 16px;
-      width: 282px;
-      height: 404px;
-      background: #ffffff;
-      box-sizing: border-box;
-      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.06);
-      border-radius: 8px;
-
-      .lookAround_date_specalImage {
-        width: 282px;
-        height: 208px;
-        background: #ffffff;
-        border-radius: 5px;
-        position: relative;
-        .lookAround_date_image {
-          width: 100%;
-          height: 100%;
-          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.06);
-          border-radius: 8px;
-        }
-        .lookAround_date_bottom {
-          font-size: 24px;
-          font-weight: 400;
-          color: #ffffff;
-          height: 64px;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          .lookAround_date_profile {
-            width: 30px;
-            height: 30px;
-            border: 1px solid #ffffff;
-            margin-right: 12px;
-            margin-left: 14px;
-            border-radius: 50%;
-          }
-          .lookAround_date_name {
-            width: 208px;
-            font-size: 24px;
-            font-weight: 400;
-            color: #ffffff;
-          }
-        }
-      }
-      .lookAround_date_content {
-        padding: 16px;
-        .lookAround_date_title {
-          width: 202px;
-          line-height: 40px;
-          font-size: 28px;
-          font-weight: 600;
-          color: #333333;
-        }
-        .lookAround_date_price {
-          margin-top: 8px;
-          font-size: 32px;
-          font-weight: 600;
-          color: #333333;
-          line-height: 32px;
-        }
-        .lookAround_date_rel {
-          padding-top: 8px;
-          font-size: 20px;
-          font-weight: 400;
-          color: #cccccc;
-          line-height: 20px;
-          text-decoration: line-through;
-        }
-      }
-    }
-
-    .lookAround_bean_border {
-      margin-top: 8px;
-      display: inline-block;
+    .lookAround_active_image {
+      width: 100%;
+      height: 100%;
     }
   }
   .lookAround_active_limit {
@@ -458,6 +328,9 @@ page {
       no-repeat top #f5f5f5;
     background-size: 100% 462px;
     min-height: 1190px;
+  }
+  .lookAround_linder_bottom {
+    height: 24px;
   }
   .lookAround_category_linder {
     width: 100%;
@@ -539,6 +412,42 @@ page {
     z-index: 1000;
     margin: 0 auto;
     background: #ffffff;
+  }
+  .lookAround_template_specal {
+    width: 188px;
+    margin-right: 12px;
+    .lookAround_template_img {
+      width: 188px;
+      height: 140px;
+      border-radius: 4px;
+      position: relative;
+      .lookAround_template_limit {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        border-radius: 14px;
+        background: rgba(0, 0, 0, 0.5);
+        font-size: 20px;
+        font-weight: 400;
+        color: #ffffff;
+        padding: 4px 6px;
+        line-height: normal;
+      }
+    }
+    .lookAround_template_name {
+      padding-top: 16px;
+      font-size: 22px;
+      font-weight: 400;
+      color: #000000;
+      line-height: 22px;
+      max-width: 180px;
+    }
+  }
+  .lookAround_template_specal:last-child {
+    margin-right: 0px;
+  }
+  .lookAround_template_price {
+    padding-top: 17px;
   }
 }
 .lookAround_goods_init {
