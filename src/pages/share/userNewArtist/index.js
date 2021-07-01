@@ -37,7 +37,7 @@ class Index extends PureComponent {
       infoData: {},
       specialGoodsList: [],
       goodList: [],
-      bottomFlag: true,
+      bottomFlag: false,
       authFlag: false,
       getBeanFlag: false,
     };
