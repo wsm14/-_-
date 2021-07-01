@@ -26,8 +26,6 @@ import Router from "@/common/router";
 import TabCity from "./components/tabCity";
 import ToastCity from "./components/toastCity";
 import Navition from "./components/navition";
-import HotSpecal from "./components/hotSpecal";
-import DateSpecal from "./components/dateSpecal";
 import SelectSpecal from "./components/selectSpecal";
 import "./index.scss";
 @inject("store")
@@ -363,7 +361,7 @@ class Index extends Component {
           <View className="wechant_init color6 font28">
             “添加到我的小程序”，更多优惠抢不停
           </View>
-        )}{" "}
+        )}
         <ScrollView
           scrollY
           onScrollToLower={this.getReachBottom.bind(this)}
@@ -493,7 +491,7 @@ class Index extends Component {
             boxStyle={bannerContentStyle}
             showNear
           ></Banner>
-          {hotList.length > 0 && (
+          {/* {hotList.length > 0 && (
             <HotSpecal
               linkTo={this.saveRouter.bind(this)}
               userInfo={configUserLevelInfo}
@@ -506,7 +504,7 @@ class Index extends Component {
               data={dateList}
               linkTo={this.saveRouter.bind(this)}
             ></DateSpecal>
-          )}
+          )} */}
 
           <View className="lookAround_category_linder"></View>
           <View
@@ -517,6 +515,7 @@ class Index extends Component {
             }
             className="lookAround_categorys_box lookAround_categorys_box1"
           >
+            <View className="lookAround_categorys_orderBtn"></View>
             <ScrollView
               scrollWithAnimation={true}
               scrollX
@@ -530,7 +529,7 @@ class Index extends Component {
                     className={classNames(
                       "lookAround_categorys",
                       categoryIds === categoryIdString
-                        ? "lookAround_categorys_true"
+                        ? "lookAround_categorys_true bold"
                         : "lookAround_categorys_flag"
                     )}
                   >
@@ -543,7 +542,6 @@ class Index extends Component {
                           : "lookAround_iconText_color2"
                       )}
                     >
-                      {subtitle}
                       {categoryIds === categoryIdString && (
                         <View className="lookAround_categorys_icon"></View>
                       )}
@@ -564,6 +562,7 @@ class Index extends Component {
             style={!flagDom ? { display: "none" } : {}}
             className="lookAround_categorys_box nav_flex"
           >
+            <View className="lookAround_categorys_orderBtn"></View>
             <ScrollView
               scrollWithAnimation={true}
               scrollX
@@ -577,7 +576,7 @@ class Index extends Component {
                     className={classNames(
                       "lookAround_categorys",
                       categoryIds === categoryIdString
-                        ? "lookAround_categorys_true"
+                        ? "lookAround_categorys_true bold"
                         : "lookAround_categorys_flag"
                     )}
                   >
@@ -590,7 +589,6 @@ class Index extends Component {
                           : "lookAround_iconText_color2"
                       )}
                     >
-                      {subtitle}
                       {categoryIds === categoryIdString && (
                         <View className="lookAround_categorys_icon"></View>
                       )}
