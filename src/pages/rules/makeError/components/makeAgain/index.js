@@ -27,7 +27,7 @@ export default (props) => {
         <View
           className="makeError_btn_box makeError_btn_color2"
           onClick={() => {
-            scanCard();
+            goBack(() => scanCard());
           }}
         >
           再次尝试

@@ -254,30 +254,13 @@ export const scanCode = (data) => {
                     beanAmount,
                     merchantName = "",
                   } = res;
-                  if (resultCode) {
-                    const resultCodeObj = {
-                      3018: () =>
-                        router({
-                          routerName: "abnormalStatus",
-                          args: {
-                            merchantLnt,
-                            merchantLat,
-                            merchantAddress,
-                            beanAmount,
-                            merchantName,
-                          },
-                        }),
-                      4003: () =>
-                        router({
-                          routerName: "repeatStatus",
-                        }),
-                      5019: () => {
-                        Taro.showModal({
-                          showCancel: "false",
-                          content: "商家不允许打卡，请到指定打卡商家哦",
-                        });
+                  if (resultCode && resultCode === "40012") {
+                    router({
+                      routerName: "makeError",
+                      args: {
+                        code: resultCode,
                       },
-                    }[resultCode]();
+                    });
                   } else {
                     router({
                       routerName: "merchantDetails",
@@ -289,14 +272,12 @@ export const scanCode = (data) => {
                   }
                 }).catch((val) => {
                   const { resultCode } = val;
-                  if (resultCode !== "-1") {
-                    router({
-                      routerName: "makeError",
-                      args: {
-                        code: resultCode,
-                      },
-                    });
-                  }
+                  router({
+                    routerName: "makeError",
+                    args: {
+                      code: resultCode,
+                    },
+                  });
                 });
               },
               fail: () => {
@@ -355,30 +336,13 @@ export const scanCard = () => {
                     beanAmount,
                     merchantName = "",
                   } = res;
-                  if (resultCode) {
-                    const resultCodeObj = {
-                      3018: () =>
-                        router({
-                          routerName: "abnormalStatus",
-                          args: {
-                            merchantLnt,
-                            merchantLat,
-                            merchantAddress,
-                            beanAmount,
-                            merchantName,
-                          },
-                        }),
-                      4003: () =>
-                        router({
-                          routerName: "repeatStatus",
-                        }),
-                      5019: () => {
-                        Taro.showModal({
-                          showCancel: "false",
-                          content: "商家不允许打卡，请到指定打卡商家哦",
-                        });
+                  if (resultCode && resultCode === "40012") {
+                    router({
+                      routerName: "makeError",
+                      args: {
+                        code: resultCode,
                       },
-                    }[resultCode]();
+                    });
                   } else {
                     router({
                       routerName: "merchantDetails",
@@ -390,14 +354,12 @@ export const scanCard = () => {
                   }
                 }).catch((val) => {
                   const { resultCode } = val;
-                  if (resultCode !== "-1") {
-                    router({
-                      routerName: "makeError",
-                      args: {
-                        code: resultCode,
-                      },
-                    });
-                  }
+                  router({
+                    routerName: "makeError",
+                    args: {
+                      code: resultCode,
+                    },
+                  });
                 });
               },
               fail: () => {

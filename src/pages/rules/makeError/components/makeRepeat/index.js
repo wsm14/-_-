@@ -5,7 +5,6 @@ import React from "react";
 import { View } from "@tarojs/components";
 import Router from "@/common/router";
 export default (props) => {
-  const {} = props;
   return (
     <View className="makeError_makeRepeat_init">
       <View className="makeError_img_box makeError_makeRepeat_img"></View>
