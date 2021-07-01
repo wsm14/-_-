@@ -106,9 +106,9 @@ export const ShopView = (item, type = "goods", userInfo) => {
           </View>
           <View className="view_shopContent_bean">卡豆抵扣后最低到手价</View>
           <View className="view_shopContent_buyPrice">
-            <View className="view_shopContent_info"></View>
+            <View className="view_shopContent_info">¥</View>
             <View className="view_shopContent_money price_margin4">
-              ¥ {computedPrice(relPrice || buyPrice, 50)}
+              {computedPrice(relPrice || buyPrice, 50)}
             </View>
           </View>
         </View>
@@ -154,7 +154,7 @@ export const CardView = (item) => {
                 <View className="view_card_load">营业时间</View>
                 <View className="view_card_liner"></View>
                 <View className="view_card_time price_margin8">
-                  {businessTime.split(",")[0]}
+                  {businessTime.split(" ")[0]}
                 </View>
               </View>
             )}
@@ -223,10 +223,12 @@ export const newShopView = (item) => {
             {goodsName || couponName}
           </View>
           <View className="newShopView_shopContent_user font_hide">
-            <View
-              className="newShopView_shopContent_profile"
-              style={backgroundObj(merchantLogo || shopLogo)}
-            ></View>
+            <View>
+              <View
+                className="newShopView_shopContent_profile"
+                style={backgroundObj(merchantLogo || shopLogo)}
+              ></View>
+            </View>
             <View className="newShopView_shopContent_username price_margin8 font_hide">
               {merchantName}
             </View>
@@ -289,10 +291,12 @@ export const meShopView_box = (item) => {
       <View className="meShopView_item_content">
         <View className="meShopView_item_title font_hide">{goodsName}</View>
         <View className="meShopView_shopContent_user font_hide">
-          <View
-            className="meShopView_shopContent_profile"
-            style={backgroundObj(merchantLogo)}
-          ></View>
+          <View>
+            <View
+              className="meShopView_shopContent_profile"
+              style={backgroundObj(merchantLogo)}
+            ></View>
+          </View>
           <View className="meShopView_shopContent_username price_margin8 font_hide">
             {merchantName}
           </View>
@@ -305,12 +309,12 @@ export const meShopView_box = (item) => {
         <View className="meShopView_shopContent_realPrice color1">
           <View className="font18 price_margin4">原价:</View>
           <View className="font20 text_through price_margin4 bold">
-            ¥ {oriPrice}
+            ¥{oriPrice}
           </View>
         </View>
         <View className="meShopView_shopContent_newPrice">
           <View className="font18 price_margin4">优惠价:</View>
-          <View className="font20 price_margin4 bold"> ¥ {realPrice}</View>
+          <View className="font20 price_margin4 bold"> ¥{realPrice}</View>
         </View>
         <View className="meShopView_shopContent_getBean">
           卡豆抵扣后最低到手价
