@@ -446,8 +446,29 @@ page {
   .lookAround_template_specal:last-child {
     margin-right: 0px;
   }
+  .lookAround_template_oldPrice {
+    padding-top: 16px;
+    display: flex;
+    align-items: center;
+  }
   .lookAround_template_price {
-    padding-top: 17px;
+    display: flex;
+    align-items: center;
+    padding-top: 6px;
+  }
+  .lookAround_template_priceMax {
+    max-width: 140px;
+  }
+  .lookAround_bean_price {
+    padding-top: 8px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ef476f;
+    line-height: 16px;
+  }
+  .lookAround_bean_show {
+    padding-top: 8px;
+    max-width: 180px;
   }
 }
 .lookAround_goods_init {

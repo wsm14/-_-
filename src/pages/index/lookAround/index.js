@@ -302,7 +302,16 @@ class Index extends Component {
       }
     );
   } //上拉加载
-  
+
+  saveRouter(activityId, merchantId) {
+    Router({
+      routerName: "favourableDetails",
+      args: {
+        specialActivityId: activityId,
+        merchantId: merchantId,
+      },
+    });
+  }
   render() {
     const {
       specialHeadList,

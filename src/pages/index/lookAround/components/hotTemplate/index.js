@@ -11,7 +11,11 @@ import {
 import Router from "@/common/router";
 import "./../index.scss";
 export default ({ data = [], userInfo = {} }) => {
-  const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
+  const {
+    payBeanCommission = 50,
+    shareCommission = 0,
+    title = "秒杀价",
+  } = userInfo;
   const linkTo = (activityId, merchantId) => {
     Router({
       routerName: "favourableDetails",
@@ -56,31 +60,31 @@ export default ({ data = [], userInfo = {} }) => {
           <View className="lookAround_template_name font_hide">
             {goodsName}
           </View>
-          <View className="lookAround_template_price color1 font_hide">
+          <View className="lookAround_template_oldPrice color1 font_hide">
             <View className="font18">原价:</View>
-            <View className="lookAround_hot_priceMax font_hide font20 price_margin4 bold text_through">
+            <View className="lookAround_template_priceMax font_hide font20 price_margin4 bold text_through">
               ¥{oriPrice}
             </View>
           </View>
 
-          <View className="font18 price_margin8">优惠价: </View>
-          <View className="font20 price_margin4 bold">¥{realPrice}</View>
-          <View className="lookAround_bean_price">卡豆抵扣后最低到手价</View>
-          <View className="lookAround_bean_show">
-            <View className="color3 font36 bold lookAround_bean_showText">
-              <View className="color3 font20 bold">¥</View>
-              {computedBeanPrice(realPrice, payBeanCommission)}
+          <View className="lookAround_template_price color1 font_hide">
+            <View className="font18 price_margin8">{title}: </View>
+            <View className="lookAround_template_priceMax font_hide font20 price_margin4 bold">
+              ¥{realPrice}
             </View>
+          </View>
+
+          <View className="lookAround_bean_price">卡豆抵扣后最低到手价</View>
+          <View className="lookAround_bean_show font_hide">
+            <Text className="color3 font20 bold">¥</Text>
+            <Text className="color3 font28 bold">
+              {" "}
+              {computedBeanPrice(realPrice, payBeanCommission)}
+            </Text>
             {shareCommission > 0 && (
-              <View
-                style={{ border: "1px solid #ef476f" }}
-                className="lookAround_bean_getMoney font_hide"
-              >
-                赚
-                <Text className="bold">
-                  ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
-                </Text>
-              </View>
+              <Text className="color3 font18 bold">
+                /赚{computedPrice(realPrice - merchantPrice, shareCommission)}
+              </Text>
             )}
           </View>
         </View>
