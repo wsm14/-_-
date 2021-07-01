@@ -223,10 +223,12 @@ export const newShopView = (item) => {
             {goodsName || couponName}
           </View>
           <View className="newShopView_shopContent_user font_hide">
-            <View
-              className="newShopView_shopContent_profile"
-              style={backgroundObj(merchantLogo || shopLogo)}
-            ></View>
+            <View>
+              <View
+                className="newShopView_shopContent_profile"
+                style={backgroundObj(merchantLogo || shopLogo)}
+              ></View>
+            </View>
             <View className="newShopView_shopContent_username price_margin8 font_hide">
               {merchantName}
             </View>
@@ -289,10 +291,12 @@ export const meShopView_box = (item) => {
       <View className="meShopView_item_content">
         <View className="meShopView_item_title font_hide">{goodsName}</View>
         <View className="meShopView_shopContent_user font_hide">
-          <View
-            className="meShopView_shopContent_profile"
-            style={backgroundObj(merchantLogo)}
-          ></View>
+          <View>
+            <View
+              className="meShopView_shopContent_profile"
+              style={backgroundObj(merchantLogo)}
+            ></View>
+          </View>
           <View className="meShopView_shopContent_username price_margin8 font_hide">
             {merchantName}
           </View>
