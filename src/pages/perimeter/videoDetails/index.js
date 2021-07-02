@@ -21,7 +21,6 @@ import {
   getUserMomentDetailById,
 } from "@/server/index";
 import { inject, observer } from "mobx-react";
-
 import classNames from "classnames";
 import Toast from "@/components/beanToast";
 import Coupon from "@/components/freeCoupon";
