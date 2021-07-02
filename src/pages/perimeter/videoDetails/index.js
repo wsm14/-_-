@@ -21,14 +21,13 @@ import {
   getUserMomentDetailById,
 } from "@/server/index";
 import { inject, observer } from "mobx-react";
-
-import classNames from "classnames";
 import Toast from "@/components/beanToast";
 import Coupon from "@/components/freeCoupon";
-import { getShareInfo } from "@/server/common";
+import { getShareInfo, getShareParamInfo } from "@/server/common";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import NewToast from "@/components/noviceGuide";
+import classNames from "classnames";
 import "./index.scss";
 @inject("store")
 @observer

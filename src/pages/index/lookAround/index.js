@@ -28,6 +28,7 @@ import ToastCity from "./components/toastCity";
 import Navition from "./components/navition";
 import Plate from "./components/plate";
 import SelectSpecal from "./components/selectSpecal";
+import SpecalPlate from "./components/specalPlate";
 import "./index.scss";
 @inject("store")
 @observer
@@ -486,7 +487,11 @@ class Index extends Component {
               </View>
             </View>
           )}
-
+          <SpecalPlate
+            data={hotList}
+            userInfo={configUserLevelInfo}
+            list={dateList}
+          ></SpecalPlate>
           <Plate userInfo={configUserLevelInfo}></Plate>
           <Banner
             imgName="coverImg"

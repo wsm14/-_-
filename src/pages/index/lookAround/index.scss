@@ -470,6 +470,65 @@ page {
     padding-top: 8px;
     max-width: 180px;
   }
+  .lookAround_specalPlate_box {
+    height: 400px;
+    width: 688px;
+    margin: 44px auto 0;
+    .lookAround_specalPlate_time {
+      width: 420px;
+      height: 400px;
+      position: relative;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon664.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .lookAround_specalPlate_hot {
+      width: 250px;
+      height: 400px;
+      position: relative;
+      background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+      border-radius: 8px;
+      border: 1px solid #e5e5e5;
+      box-sizing: border-box;
+    }
+    .lookAround_specalPlate_view {
+      padding: 24px 16px 0;
+      .lookAround_specalPlate_topBox {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .lookAround_specalPlate_title {
+          width: 114px;
+          height: 28px;
+        }
+        .lookAround_specalPlate_titleIcon1 {
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon665.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+        .lookAround_specalPlate_titleIcon2 {
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon666.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+        .lookAround_specalPlate_link {
+          width: 24px;
+          height: 24px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon667.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+      .lookAround_specalPlate_swiper {
+        margin: 24px 16px auto;
+        width: 218px;
+      }
+    }
+    .lookAround_specalPlate_content {
+      display: flex;
+      padding: 24px 16px 0;
+    }
+  }
 }
 .lookAround_goods_init {
   width: 686px;
