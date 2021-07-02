@@ -1,0 +1,81 @@
+.getBeanInfo_Box_father {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10088;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .getBeanInfo_Box {
+    .getBeanInfo_image {
+      width: 560px;
+      height: 910px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon650.png")
+        no-repeat;
+      background-size: 100% 100%;
+
+      .getBeanInfo_font2 {
+        padding-top: 433px;
+        .getBeanInfo_bean_icon {
+          width: 64px;
+          height: 64px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon573.png")
+            no-repeat;
+          background-size: 100% 100%;
+          margin-right: 8px;
+        }
+        .getBeanInfo_num_icon {
+          width: 48px;
+          height: 48px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon572.png")
+            no-repeat;
+          background-size: 100% 100%;
+          margin-right: 8px;
+        }
+        .getBeanInfo_num {
+          font-size: 50px;
+          font-weight: 600;
+          color: #ffeebc;
+          line-height: 50px;
+        }
+      }
+      .getBeanInfo_font3 {
+        padding-top: 24px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        color: #ffffff;
+        text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1);
+      }
+      .getBeanInfo_font4 {
+        margin: 48px auto 0;
+        width: 440px;
+        height: 80px;
+        background: #ffcf3b;
+        border-radius: 41px;
+        border: 2px solid #000000;
+        font-size: 32px;
+        font-weight: 600;
+        color: #000000;
+      }
+    }
+    .getBeanInfo_Box_close {
+      width: 48px;
+      height: 48px;
+      margin: 40px auto 0;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon563.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .getBeanInfo_scroll {
+    height: 340px;
+    width: 512px;
+    margin: 25px 24px 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}

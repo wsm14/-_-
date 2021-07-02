@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import { ScrollView, View } from "@tarojs/components";
 import Taro, { useReachBottom } from "@tarojs/taro";
@@ -9,6 +10,11 @@ import classNames from "classnames";
 import "./index.scss";
 export default (props) => {
   const { title, current = false, userInfo, page } = props;
+  /*
+    为你推荐 商品组件  
+    current @params {boolean} false 开启翻页  true  最多两条数据  
+    userInfo @params {object} 用户哒人身份信息
+    */
   const [data, setData] = useState([]);
   const [httpData, setHttpData] = useState(null);
   const [count, countType] = useState(true);

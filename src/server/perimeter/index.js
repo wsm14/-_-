@@ -276,3 +276,38 @@ export const fetchMerchantNearRank = (data = {}, fn) => {
   );
 };
 //排行榜
+
+
+export const getSpecialGoodsDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/specialGoods/getSpecialGoodsDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取特惠商品详情
+
+
+export const getMerchantDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/getMerchantDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取商家详情
+
+export const listAllPut = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/specialGoods/listMerchantSpecialGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+

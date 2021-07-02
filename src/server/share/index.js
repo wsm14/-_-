@@ -38,3 +38,35 @@ export const getWechatActivityData = (data, fn) => {
   );
 };
 //动态活动页面模板接口
+
+
+
+export const getUserMomentcheckNew = (data, fn) => {
+  /*
+    params  newDeviceFlag {{string}} 1 未观看   0已观看
+  */
+  return httpGet(
+    {
+      url: "/user/userMoment/checkNewGuildMomentUser",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//检查是否能看新手视频
+
+export const getGuildMomentDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMoment/getGuildMomentDetail",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取新手视频详情
+

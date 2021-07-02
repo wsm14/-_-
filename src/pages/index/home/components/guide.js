@@ -4,23 +4,22 @@ import Taro from "@tarojs/taro";
 import Router from "@/common/router";
 import "./../index.scss";
 export default (props) => {
-  const { data, videoPlayer, videoStop, proxy } = props;
+  const { data, proxy, player, setPlayer, initVideo, auth } = props;
   const [showStatus, setShowStatus] = useState(0);
   const [animate, setAnimated] = useState(null);
   const { beanAmount, guideMomentFlag } = data;
   useEffect(() => {
-    if (
-      (!Taro.getStorageSync("login") || guideMomentFlag === "1") &&
-      showStatus !== null &&
-      (!Taro.getStorageSync("userInfo") || guideMomentFlag === "1")
-    ) {
-      if (proxy) {
-        console.log(proxy)
-        videoStop();
+    if (proxy && auth !== 0) {
+      if (
+        ((!Taro.getStorageSync("login") || guideMomentFlag === "1") &&
+          showStatus !== null &&
+          !Taro.getStorageSync("userInfo")) ||
+        guideMomentFlag === "1"
+      ) {
         animated();
       }
     }
-  }, [proxy]);
+  }, [proxy, auth]);
   const onClose = () => {
     let animateTem2 = Taro.createAnimation({
       duration: 300,
@@ -33,7 +32,7 @@ export default (props) => {
     setTimeout(() => {
       setShowStatus(null);
       Taro.setStorageSync("login", true);
-      videoPlayer();
+      setPlayer(true);
     }, 300);
   };
   const animated = () => {
@@ -54,6 +53,7 @@ export default (props) => {
     setTimeout(() => {
       animateTem1.scale(1, 1).step();
       setAnimated(animateTem1);
+      setPlayer(false);
     }, 300);
   };
   const login = () => {
@@ -68,7 +68,7 @@ export default (props) => {
     setTimeout(() => {
       setShowStatus(null);
       Taro.setStorageSync("login", true);
-      videoPlayer();
+      setPlayer(true);
       Router({
         routerName: "login",
       });
@@ -90,6 +90,7 @@ export default (props) => {
         <View className="guide_Box">
           <View className="guide_image">
             <View className="guide_font1"></View>
+            <View className="guide_font1_1">这里有</View>
             <View className="guide_font2 public_center">
               <View className="guide_bean_icon"></View>
               <View className="guide_num_icon"></View>

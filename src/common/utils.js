@@ -298,7 +298,7 @@ export const GetDistance = function (lat1, lng1, lat2, lng2) {
     Math.asin(
       Math.sqrt(
         Math.pow(Math.sin(a / 2), 2) +
-          Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)
+        Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)
       )
     );
   s = s * 6378.137; // EARTH_RADIUS;
@@ -387,7 +387,7 @@ export const addPhotosAlbum = (path) => {
       Taro.hideLoading();
       toast("保存失败");
     },
-    complete: () => {},
+    complete: () => { },
   });
 };
 export const goDown = () => {
@@ -549,7 +549,7 @@ export const filterGoods = (data) => {
 export const removeLogin = () =>
   Taro.removeStorage({
     key: "userInfo",
-    success: (res) => {},
+    success: (res) => { },
     fail: (res) => {
       toast("缓存清理错误");
     },
@@ -567,7 +567,7 @@ export const mapGo = (item) => {
 export const removeStorage = (key) =>
   Taro.removeStorage({
     key: key,
-    success: (res) => {},
+    success: (res) => { },
     fail: (res) => {
       toast("缓存清理错误");
     },
@@ -631,6 +631,15 @@ export const computedVideoSize = (width = 0, height = 0) => {
     return false;
   }
 };
+export const filterPath = (obj) => {
+  const params = obj
+  if (params.scene || (params.shareUserId && params.shareUserType)) {
+    return true
+  }
+  else {
+    return false
+  }
+}
 
 //首页视频计算比例
 export const resiApiKey = "f390f1e2b0faa95710d00a0801384c41";

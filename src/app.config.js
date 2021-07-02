@@ -85,6 +85,7 @@ export default {
         "pay_wx_lite/index", //微信支付
         "webView/index", //webView页面
         "mPay_wx_lite/index", //商家端支付页面
+        "userNewArtist/index" //新人福利頁面
       ],
     },
     {

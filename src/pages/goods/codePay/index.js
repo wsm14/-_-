@@ -9,6 +9,7 @@ import SelectBean from "@/components/componentView/selectBean";
 import Evens from "@/common/evens";
 import Router from "@/common/router";
 import ShareView from "@/components/componentView/shareView";
+import { inject, observer } from "mobx-react";
 import "./index.scss";
 const computedScan = (value, couponPrice, scale, bean) => {
   let setBean = (Number(value) - Number(couponPrice)) * 100 * scale;
@@ -25,7 +26,8 @@ const computedScan = (value, couponPrice, scale, bean) => {
     return "0";
   }
 };
-
+@inject("store")
+@observer
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -134,7 +136,8 @@ class Index extends Component {
       useBeanType,
       useBeanStatus,
     } = this.state;
-
+    const { shareType } = this.props.store.authStore;
+    const { sourceKey, sourceType } = shareType;
     if (totalFee != 0) {
       saveScanCodeOrder(
         {
@@ -142,6 +145,8 @@ class Index extends Component {
           userCouponId: userCouponIdString,
           useBeanType,
           useBeanStatus,
+          sourceKey,
+          sourceType
         },
         (res) => {
           const { status, orderSn, orderType, payMonth } = res;

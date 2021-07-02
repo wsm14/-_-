@@ -23,7 +23,8 @@ const switchTab = (url) => {
 export default ({ routerName, type = "navigateTo", args = {} }) => {
   const routerObj = {
     goods: "/pages/index/goods/index", //订单中心
-    perimeter: "/pages/index/perimeter/index", //周边打卡,
+    perimeter: "/pages/index/lookAround/index", //周边打卡,
+    home: "/pages/index/home/index", //首页
     takeCard: "/pages/index/takeCard/index", //打卡地图
     user: "/pages/index/user/index", //首页个人
     lookShare: "/pages/index/lookShare/index", //看视频图文
@@ -83,6 +84,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     download: "/pages/share/download/index", //下载
     login: "/pages/auth/index", //登录
     webView: "/pages/share/webView/index", //内嵌h5
+    userNewArtist: '/pages/share/userNewArtist/index'
     //规则类
   }[routerName];
   const types = type;

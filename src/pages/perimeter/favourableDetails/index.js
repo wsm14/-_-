@@ -15,6 +15,7 @@ import {
   deleteCollection,
   toast,
   computedBeanPrice,
+  filterPath,
 } from "@/common/utils";
 import { loginBtn } from "@/common/authority";
 import ActivityStatus from "./components/index";
@@ -32,8 +33,12 @@ import Card from "@/components/shopView/represent";
 import Merchant from "@/components/shopView/merchant";
 import Rule from "@/components/shopView/rule";
 import Recommend from "@/components/specalActive";
+import NewToast from "@/components/noviceGuide";
 import classNames from "classnames";
+import { inject, observer } from "mobx-react";
 import "./index.scss";
+@inject("store")
+@observer
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -42,6 +47,7 @@ class MerchantDetails extends Component {
         specialActivityId:
           getCurrentInstance().router.params.specialActivityId || "",
         merchantId: getCurrentInstance().router.params.merchantId || "",
+        shareUserId: getCurrentInstance().router.params.shareUserId || "",
       },
       lnt: Taro.getStorageSync("lnt"),
       lat: Taro.getStorageSync("lat"),
@@ -136,7 +142,7 @@ class MerchantDetails extends Component {
         goodsName,
         cityName,
         merchantLogo,
-        activityGoodsImg
+        activityGoodsImg,
       },
     } = this.state;
     const { profile, username } = Taro.getStorageSync("userInfo");
@@ -146,13 +152,22 @@ class MerchantDetails extends Component {
         shareId: specialActivityIdString,
       },
       (res) => {
-        const { body, oriPrice, title, realPrice, qcodeUrl, buyPrice = 0 } = res;
+        const {
+          body,
+          oriPrice,
+          title,
+          realPrice,
+          qcodeUrl,
+          buyPrice = 0,
+        } = res;
         this.setState({
           cavansObj: {
             start: true,
             data: rssConfigData({
               merchantName,
-              time: activityEndTime ? activityEndTime + '  24点结束' : "长期有效",
+              time: activityEndTime
+                ? activityEndTime + "  24点结束"
+                : "长期有效",
               oldPrice: oriPrice,
               price: realPrice,
               wxCode: qcodeUrl,
@@ -162,13 +177,14 @@ class MerchantDetails extends Component {
               address,
               city: cityName,
               merchantLogo: activityGoodsImg.split(",")[0],
-              buyPrice
+              buyPrice,
             }),
           },
         });
       }
     );
   }
+
   onShareAppMessage(res) {
     const {
       specialGoodsInfo: { goodsName },
@@ -324,7 +340,9 @@ class MerchantDetails extends Component {
       configUserLevelInfo,
       specialGoodsInfo,
       cavansObj,
+      httpData,
     } = this.state;
+    const { login } = this.props.store.authStore;
     const shareInfoBtn = () => {
       if (shareCommission > 0) {
         return (
@@ -426,7 +444,7 @@ class MerchantDetails extends Component {
                 onlyTime
                 type={true}
                 times={activityEndTime}
-                fn={() => { }}
+                fn={() => {}}
               ></Date>
             ) : (
               <View className="shopDetails_avtiveTime_tag">长期有效</View>
@@ -468,13 +486,19 @@ class MerchantDetails extends Component {
               <View className="shopdetails_price_people">
                 <View className="shopdetails_price_left font_hide">
                   <Text className="font28 color1">原价:</Text>
-                  <Text className="font36 color1 bold price_margin4 text_through">¥{oriPrice}</Text>
-                  <Text className="shopdetails_price_style color1">优惠价:</Text>
-                  <Text className="font36 shopdetails_price_style1 price_margin4 color1 bold">¥{realPrice}</Text>
+                  <Text className="font36 color1 bold price_margin4 text_through">
+                    ¥{oriPrice}
+                  </Text>
+                  <Text className="shopdetails_price_style color1">
+                    优惠价:
+                  </Text>
+                  <Text className="font36 shopdetails_price_style1 price_margin4 color1 bold">
+                    ¥{realPrice}
+                  </Text>
                 </View>
                 <View className="shopdetails_price_right">
                   {!format(activityStartTime) &&
-                    activityTimeRule === "fixed" ? null : (
+                  activityTimeRule === "fixed" ? null : (
                     <View className="shopdetails_pay_logo">
                       {buyUserImageList.map((item, index) => {
                         if (index === 0) {
@@ -498,11 +522,15 @@ class MerchantDetails extends Component {
                   )}
                 </View>
               </View>
-              <View className='shopdetails_bean_desc'>卡豆抵扣后最低到手价</View>
+              <View className="shopdetails_bean_desc">
+                卡豆抵扣后最低到手价
+              </View>
               <View className="shopdetails_bean_box">
                 <View className="shopdetails_bean_hander">
-                  <View className='font28 bold color3'>¥</View>
-                  <View className='font48 price_margin8 bold color3'>{computedBeanPrice(realPrice, payBeanCommission)}</View>
+                  <View className="font28 bold color3">¥</View>
+                  <View className="font48 price_margin8 bold color3">
+                    {computedBeanPrice(realPrice, payBeanCommission)}
+                  </View>
                 </View>
                 <View className="shopdetails_bean_handerRight">
                   {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
@@ -563,7 +591,6 @@ class MerchantDetails extends Component {
             {/* 套餐 */}
             <Merchant data={specialGoodsInfo}></Merchant>
             {/* 商品详情 */}
-
             {(goodsDesc || goodsDescImg) && (
               <View className="shopdetails_shop_details">
                 <View className="shopdetails_shop_merchantDetails">
@@ -588,12 +615,10 @@ class MerchantDetails extends Component {
                 </View>
               </View>
             )}
-
             {/*使用须知*/}
             {knowPay(specialGoodsInfo)}
             {/*使用方法*/}
             <Rule></Rule>
-
             <Recommend
               current={true}
               userInfo={configUserLevelInfo}
@@ -644,10 +669,29 @@ class MerchantDetails extends Component {
                 </View>
               </Toast>
             )}
+            {filterPath(getCurrentInstance().router.params) &&
+              !Taro.getStorageSync("newDeviceFlag") && (
+                <NewToast
+                  type={"goods"}
+                  auth={login}
+                  data={httpData}
+                ></NewToast>
+              )}
           </View>
         );
       } else {
-        return <ActivityStatus userInfo={configUserLevelInfo}></ActivityStatus>;
+        return (
+          <ActivityStatus userInfo={configUserLevelInfo}>
+            {filterPath(getCurrentInstance().router.params) &&
+              !Taro.getStorageSync("newDeviceFlag") && (
+                <NewToast
+                  type={"goods"}
+                  auth={login}
+                  data={httpData}
+                ></NewToast>
+              )}
+          </ActivityStatus>
+        );
       }
     } else return null;
   }

@@ -1,0 +1,184 @@
+page {
+  width: 100%;
+  height: 100%;
+  background: rgba(239, 71, 111, 1);
+}
+.userNewArtist_box {
+  padding-bottom: 180px;
+  .userNewArtist_image {
+    width: 100%;
+    height: 500px;
+    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon646.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .userNewArtist_video {
+    position: relative;
+    margin: 3px auto 0;
+    width: 686px;
+    height: 386px;
+    background: #d8d8d8;
+    border-radius: 20px;
+    .userNewArtist_video_style {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+    }
+  }
+  .userNewArtist_video_stop {
+    position: absolute;
+    top: 156px;
+    left: 303px;
+    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon647.png)
+      no-repeat;
+    background-size: 100% 100%;
+    width: 80px;
+    height: 80px;
+    z-index: 1000;
+  }
+  .video_liner {
+    background: rgba(255, 255, 255, 0.2);
+    height: 6px;
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+    right: 10px;
+    .video_liner_bean {
+      position: absolute;
+      right: -28px;
+      top: -14px;
+      width: 28px;
+      height: 28px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon602.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .video_animate {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    width: 84px;
+    height: 84px;
+    z-index: 1000;
+  }
+  .video_animate_bg1 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon612.png")
+      no-repeat;
+    background-size: 100% 100%;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+  .video_animate_bg2 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon613.png")
+      no-repeat;
+    background-size: 100% 100%;
+    font-size: 20px;
+    line-height: 20px;
+  }
+  .video_animate_time {
+    padding-top: 10px;
+    text-align: center;
+    color: #ef476f;
+  }
+  .video_animate_padding {
+    padding-top: 14px;
+    text-align: center;
+    color: #ef476f;
+  }
+  .userNewArtist_message {
+    margin: 24px 32px 0;
+    max-height: 84px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 42px;
+    min-height: 42px;
+  }
+  .userNewArtist_user {
+    margin: 54px 32px 0;
+    font-size: 32px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+  .userNewArtist_infoGoods {
+    margin: 32px 32px 0;
+  }
+  .userNewArtist_scrollView {
+    width: 718px;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 32px 0 0 32px;
+  }
+  .userNewArtist_own_view {
+    margin: 32px 32px 0;
+  }
+  .shop_info {
+    margin: 40px 0px 0;
+    .shop_info_title {
+      font-size: 36px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 36px;
+      padding: 0px 32px;
+    }
+    .shop_info_pay {
+      padding: 32px 32px 0;
+    }
+  }
+  .shop_btn_Info {
+    width: 500px;
+    height: 80px;
+    background: #ffcf3b;
+    border-radius: 41px;
+    border: 2px solid #000000;
+    margin: 60px auto 0;
+    font-size: 32px;
+    font-weight: 600;
+    color: #000000;
+  }
+  .shop_info_fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 32px;
+    height: 80px;
+    background: #ffffff;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    .shop_info_close {
+      width: 48px;
+      height: 48px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon648.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .shop_info_font {
+      font-size: 28px;
+      font-weight: 400;
+      color: #333333;
+      margin-left: 8px;
+    }
+    .shop_info_setBtn {
+      margin-left: auto;
+      padding: 12px 21px 12px 33px;
+      line-height: normal;
+      font-size: 28px;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 28px;
+      background: #07c0c2;
+      border-radius: 26px;
+    }
+  }
+}
+.userNewArtist_vh {
+  height: 100vh;
+  padding-bottom: 0px;
+  overflow: hidden;
+}

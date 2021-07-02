@@ -27,7 +27,7 @@ export default (props) => {
   };
   const goUser = () => {
     if (status === 1 && loginStatus()) {
-      navigateTo("/pages/share/download/index");
+      fetchUserDetails();
     } else {
       login();
     }
@@ -35,7 +35,6 @@ export default (props) => {
 
   const fetchUserDetails = () => {
     const { xcxOpenId = "", unionId = "" } = loginStatus() || {};
-    console.log(wx.getUserProfile);
     if (wx.getUserProfile) {
       wx.getUserProfile({
         desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
@@ -70,7 +69,11 @@ export default (props) => {
           className="user_top_userProfile dakale_profile"
           style={backgroundObj(profile)}
         ></View>
-        <View onClick={() => goUser()} className="user_top_usercontent">
+        <View onClick={() => {
+          if (!loginStatus()) {
+            goUser()
+          }
+        }} className="user_top_usercontent">
           <View className="user_top_username">
             <View className="user_max_width  font_hide">
               {status === 1 && loginStatus() ? username : "登录后玩转哒卡乐"}

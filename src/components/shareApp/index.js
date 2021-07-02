@@ -32,16 +32,7 @@ export default (props) => {
               <View className="page_share_userTitle">{content}</View>
             </View>
           </View>
-          <View className="page_share_btn">
-            <Button
-              appParameter={JSON.stringify({ ...jumpObj })}
-              openType="launchApp"
-              onError={(e) => goDown()}
-              className="page_share_btnStyle"
-            >
-              打开APP
-            </Button>
-          </View>
+
         </View>
       </View>
       {/*<View className='page_share_openApp'>*/}

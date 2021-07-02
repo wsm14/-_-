@@ -9,16 +9,13 @@ import ButtonView from "@/components/Button";
 import { payNeed } from "@/components/componentView/NeedPay";
 import { knowPay } from "@/components/componentView/KnowPay";
 import {
-  Instruction,
-  merchantSet,
-} from "@/components/componentView/Instruction";
-import {
   format,
   loginStatus,
   computedPrice,
   saveCollection,
   deleteCollection,
   toast,
+  filterPath
 } from "@/common/utils";
 import Router from "@/common/router";
 import { loginBtn } from "@/common/authority";
@@ -32,6 +29,7 @@ import Merchant from "@/components/shopView/merchant";
 import Rule from "@/components/shopView/rule";
 import VideoBean from "./components/getVideoBean";
 import Recommend from "@/components/couponActive";
+import NewToast from '@/components/noviceGuide'
 import "./index.scss";
 @inject("store")
 @observer
@@ -281,7 +279,9 @@ class Index extends Component {
         expireRefund,
       },
       visible,
+      httpData
     } = this.state;
+    const { login } = this.props.store.authStore;
     const shareInfoBtn = () => {
       if (shareCommission > 0) {
         return (
@@ -438,10 +438,13 @@ class Index extends Component {
               </View>
             </Toast>
           )}
+          {filterPath(getCurrentInstance().router.params) && !Taro.getStorageSync("newDeviceFlag") && <NewToast type={'coupon'} auth={login} data={httpData}></NewToast>}
         </View>
       );
     } else {
-      return <NullStatus userInfo={configUserLevelInfo}></NullStatus>;
+      return(<NullStatus userInfo={configUserLevelInfo}>
+        {filterPath(getCurrentInstance().router.params) && !Taro.getStorageSync("newDeviceFlag") && <NewToast type={'coupon'} auth={login} data={httpData}></NewToast>}
+      </NullStatus>)
     }
   }
 }

@@ -17,6 +17,7 @@ import Waterfall from "@/components/waterfall";
 import ButtonView from "@/components/Button";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
 import { getUserCoupon } from "@/server/perimeter";
+import NewToast from "@/components/noviceGuide";
 import {
   backgroundObj,
   saveFollow,
@@ -35,20 +36,25 @@ import {
   filterTime,
   mapGo,
   loginStatus,
+  filterPath,
 } from "@/common/utils";
-import "./merchantDetails.scss";
+
 import Coupons from "@/components/coupon";
 import { coupon } from "@/components/componentView/CouponView";
 import { getAvailableCoupon } from "@/server/coupon";
 import Router from "@/common/router";
 import { rssConfigData } from "./components/data";
 import TaroShareDrawer from "./components/TaroShareDrawer";
+import { inject, observer } from "mobx-react";
+import "./merchantDetails.scss";
+@inject("store")
+@observer
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
     this.state = {
       merchantHttpData: {
-        merchantId: getCurrentInstance().router.params.merchantId,
+        ...getCurrentInstance().router.params,
       },
       bannerList: [],
       userMerchantInfo: {},
@@ -226,7 +232,7 @@ class MerchantDetails extends Component {
     );
   }
   //获取商家轮播图
-  onShareAppMessage() {
+  onShareAppMessage(res) {
     const {
       userMerchantInfo: { merchantName, coverImg },
       merchantHttpData: { merchantId },
@@ -234,11 +240,23 @@ class MerchantDetails extends Component {
     let userInfo = loginStatus() || {};
     const { userIdString } = userInfo;
     if (loginStatus()) {
-      return {
-        title: merchantName,
-        imageUrl: coverImg,
-        path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
-      };
+      if (res.from === "button") {
+        return {
+          title: merchantName,
+          imageUrl: coverImg,
+          path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
+        };
+      } else {
+        return {
+          title: merchantName,
+          imageUrl: coverImg,
+          path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
+        };
+      }
     } else {
       return {
         title: merchantName,
@@ -321,6 +339,7 @@ class MerchantDetails extends Component {
       },
       visible,
       specialGoodsList,
+      merchantHttpData,
       goodsList,
       getBeanStatus,
       conpouVisible,
@@ -334,6 +353,7 @@ class MerchantDetails extends Component {
       imageUrl = "",
       mp4Url = "",
     } = headerContentObject;
+    const { login } = this.props.store.authStore;
     const templateTitle = () => {
       if (headerType === "image") {
         return (
@@ -409,19 +429,6 @@ class MerchantDetails extends Component {
               })}
             </ScrollView>
             <View className="share_btn public_auto">
-              <ButtonView>
-                {" "}
-                <View
-                  className="share_goMerchant_btn"
-                  onClick={() =>
-                    navigateTo(
-                      `/pages/newUser/merchantDetails/index?userId=${userIdString}`
-                    )
-                  }
-                >
-                  去主页
-                </View>
-              </ButtonView>
               <ButtonView>
                 {" "}
                 {merchantFollowStatus === "0" ? (
@@ -688,6 +695,14 @@ class MerchantDetails extends Component {
               data={couponList}
             ></Coupons>
           )}
+          {filterPath(getCurrentInstance().router.params) &&
+            !Taro.getStorageSync("newDeviceFlag") && (
+              <NewToast
+                type={"merchant"}
+                auth={login}
+                data={merchantHttpData}
+              ></NewToast>
+            )}
         </View>
       );
     }

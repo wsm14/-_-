@@ -55,8 +55,7 @@ class Index extends React.PureComponent {
   }
 
   onChange(e) {
-    const { countStatus, httpData, userMomentsList, interval, type } =
-      this.state;
+    const { countStatus, httpData, userMomentsList, interval, type } = this.state;
     const { current } = e.detail;
     this.setState(
       {
@@ -287,7 +286,7 @@ class Index extends React.PureComponent {
         updateType: "share",
         id: userMomentIdString,
       },
-      (res) => {}
+      (res) => { }
     );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {
@@ -387,9 +386,9 @@ class Index extends React.PureComponent {
       }
     );
   }
-  componentDidHide() {}
-  componentDidShow() {}
-  componentDidMount() {}
+  componentDidHide() { }
+  componentDidShow() { }
+  componentDidMount() { }
   componentWillMount() {
     const { selectObj, list, index } = this.props.store.homeStore;
     console.log(index);

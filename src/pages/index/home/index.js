@@ -154,6 +154,13 @@ class Index extends React.PureComponent {
       {
         triggered: true,
         httpData: { ...httpData, page: 1 },
+        current: 0,
+        userMomentsList: [],
+        VideoList: [],
+        circular: false,
+        countStatus: true,
+        time: null,
+        player: true,
       },
       (res) => {
         this.getVideoList(() =>
@@ -365,19 +372,31 @@ class Index extends React.PureComponent {
       }
     }
     Taro.createVideoContext(`video${current}`).play();
+    clearTimeout(this.interSwper);
+    this.interSwper = null;
   }
   stopVideoPlayerControl() {
     const { current, interval, player } = this.state;
-    if (player) {
-      this.setState({
-        player: false,
-      });
-      Taro.createVideoContext(`video${current}`).pause();
-    } else {
-      this.setState({
-        player: true,
-      });
-      Taro.createVideoContext(`video${current}`).play();
+    if (!this.interSwper) {
+      if (player) {
+        this.setState(
+          {
+            player: false,
+          },
+          (res) => {
+            Taro.createVideoContext(`video${current}`).pause();
+          }
+        );
+      } else {
+        this.setState(
+          {
+            player: true,
+          },
+          (res) => {
+            Taro.createVideoContext(`video${current}`).play();
+          }
+        );
+      }
     }
   }
   followStatus(e) {
@@ -558,6 +577,18 @@ class Index extends React.PureComponent {
     const { time, player } = this.state;
     // this.listParentCategory();
     this.fetchUserShareCommission();
+    Taro.setTabBarStyle({
+      color: "#999999",
+      selectedColor: "#FFFFFF",
+      backgroundColor: "#000000",
+    });
+  }
+  componentDidHide() {
+    Taro.setTabBarStyle({
+      color: "#999999",
+      selectedColor: "#333333",
+      backgroundColor: "FFFFFF",
+    });
   }
   componentDidMount() {
     evens.$on("updateMomentsList", this.updateList.bind(this));
@@ -662,7 +693,7 @@ class Index extends React.PureComponent {
           realPrice,
           qcodeUrl,
           image,
-          buyPrice = 0
+          buyPrice = 0,
         } = res;
         if (player) {
           this.stopVideoPlayerControl();
@@ -685,7 +716,7 @@ class Index extends React.PureComponent {
               goodsName,
               oriPrice,
               realPrice,
-              buyPrice
+              buyPrice,
             }),
           },
         });
@@ -767,6 +798,7 @@ class Index extends React.PureComponent {
       triggered,
     } = this.state;
     const { selectObj, beanLimitStatus } = this.props.store.homeStore;
+    const { login } = this.props.store.authStore;
     const templateView = () => {
       if (browseType === "near") {
         if (userMomentsList.length > 0) {
@@ -834,6 +866,12 @@ class Index extends React.PureComponent {
                 shareInfo={this.shareImageInfo.bind(this)}
                 beanLimitStatus={beanLimitStatus}
                 saveBean={this.saveBean.bind(this)}
+                initVideo={() => {
+                  if (!player && !this.interSwper) {
+                    !this.state.player &&
+                      Taro.createVideoContext(`video${current}`).pause();
+                  }
+                }}
               ></VideoView>
             </>
           );
@@ -939,13 +977,28 @@ class Index extends React.PureComponent {
         ></Coupon>
         <Lead beanLimitStatus={beanLimitStatus}></Lead>
         <GuideView
-          videoPlayer={() => {
-            Taro.createVideoContext(`video${current}`).play();
-          }}
-          videoStop={() => {
-            Taro.createVideoContext(`video${current}`).stop();
+          setPlayer={(val) => {
+            this.setState(
+              {
+                player: val,
+              },
+              (res) => {
+                if (this.state.player) {
+                  setTimeout(() => {
+                    console.log(this.state.player, 2222);
+                    Taro.createVideoContext(`video${current}`).play();
+                  }, 300);
+                } else {
+                  setTimeout(() => {
+                    Taro.createVideoContext(`video${current}`).pause();
+                    console.log(this.state.player, 3333);
+                  }, 300);
+                }
+              }
+            );
           }}
           proxy={interval}
+          auth={login}
           data={userMomentsInfo}
         ></GuideView>
         {!player && (
