@@ -91,6 +91,7 @@ export default {
     {
       root: "pages/perimeter",
       pages: [
+        "evenGoods/index", //排行榜
         "rankInfo/index", //排行榜
         "perimeterShops/index", //周边好店
         "videoDetails/index", //视频详情
@@ -146,7 +147,7 @@ export default {
       root: "pages/rules",
       pages: [
         "interests/index", //券包
-        "makeError/index",//打卡失败
+        "makeError/index", //打卡失败
       ],
     },
   ],

@@ -243,12 +243,12 @@ export const getShareInfo = (data = {}, fn) => {
 //获取解密分享码
 
 export const getBusinessHub = (data = {}, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/common/businessHub/lisBusinessHubByCityCode",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
-//获取解密分享码
+//获取商圈

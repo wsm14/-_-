@@ -23,7 +23,7 @@ export default (props) => {
   });
   return (
     <View className="makeError_makeRepeat_init">
-      <View className="makeError_img_box makeError_beyondLimit_img"></View>
+      <View className="makeError_img_box makeError_makeAuth_img"></View>
       <View className="makeError_make_toast">哒卡乐温馨提示</View>
       <View className="makeError_error_toast">
         {type

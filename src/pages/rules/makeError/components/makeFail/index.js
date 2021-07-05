@@ -9,7 +9,7 @@ import { goBack } from "@/common/utils";
 export default (props) => {
   return (
     <View className="makeError_makeRepeat_init">
-      <View className="makeError_img_box makeError_makeAuth_img"></View>
+      <View className="makeError_img_box makeError_makeAgain_img"></View>
       <View className="makeError_make_toast">哒卡乐温馨提示</View>
       <View className="makeError_error_toast">
         不好意思，打卡失败，请重新尝试一下

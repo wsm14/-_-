@@ -10,7 +10,7 @@ export default (props) => {
   const {} = props;
   return (
     <View className="makeError_makeRepeat_init">
-      <View className="makeError_img_box makeError_makeAuth_img"></View>
+      <View className="makeError_img_box makeError_makeAgain_img"></View>
       <View className="makeError_make_toast">哒卡乐温馨提示</View>
       <View className="makeError_error_toast">
         您打卡的商户暂不支持到店打卡，请联系商户开通设置

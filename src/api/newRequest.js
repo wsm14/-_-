@@ -24,20 +24,7 @@ const resultOperate = {
     link: "/pages/auth/index",
     fn: () => {},
   },
-  4003: {
-    type: "商家今日已被打卡",
-    link: "/pages/perimeter/repeatStatus/index",
-    fn: () => {},
-  },
-  5019: {
-    type: "商家今日已被打卡",
-    fn: () => {
-      Taro.showModal({
-        showCancel: "false",
-        content: "商家不允许打卡，请到指定打卡商家哦",
-      });
-    },
-  },
+
   4001: {
     type: "动态已下架",
     fn: () => {
@@ -47,9 +34,9 @@ const resultOperate = {
         success: (res) => {
           const { confirm } = res;
           if (confirm) {
-            Taro.reLaunch({
-              url: "/pages/index/perimeter/index",
-            });
+            // Taro.reLaunch({
+            //   url: "/pages/index/perimeter/index",
+            // });
           }
         },
       });
@@ -64,8 +51,8 @@ const env =
 switch (env) {
   case "development":
     // baseUrl = "https://devgateway.dakale.net";
-    baseUrl = "https://pregateway.dakale.net";
-    // baseUrl = "https://gateway1.dakale.net";
+    // baseUrl = "https://pregateway.dakale.net";
+    baseUrl = "https://gateway1.dakale.net";
     break;
   case "production":
     // baseUrl = "https://pregateway.dakale.net";
