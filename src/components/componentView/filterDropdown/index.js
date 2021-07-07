@@ -12,45 +12,49 @@ const filterOnChange = (item) => {
   let nearVal = near.val;
   let categoryVal = category.val;
   let selectVal = select.val;
-  let limit = "";
+  let distance = "";
   let districtCode = "";
   let businessHubId = "";
-  let categoryId = "";
+  let categoryIds = "";
   if (categoryVal.categoryIdString || categoryVal.fatherId) {
-    categoryId = categoryVal.categoryIdString || categoryVal.fatherId;
+    categoryIds = categoryVal.categoryIdString || categoryVal.fatherId;
   }
 
   if (nearVal.type === "all") {
-    limit = "";
+    distance = "";
     businessHubId = "";
     districtCode = nearVal.districtCode;
   }
   if (!nearVal.type && nearVal.businessHubIdString) {
-    console.log(nearVal, 111);
-    limit = "";
+    distance = "";
     districtCode = "";
     businessHubId = nearVal.businessHubIdString;
   }
   if (nearVal.value) {
-    console.log(nearVal, 222);
-    limit = nearVal.value;
+    distance = nearVal.value;
     districtCode = "";
     businessHubId = "";
   }
   return {
-    a: selectVal.value,
-    categoryId,
-    limit,
+    sortRule: selectVal.value,
+    categoryIds,
+    distance,
     businessHubId,
     districtCode,
   };
 };
-export default ({ filterData = [], confirm }) => {
+export default ({
+  filterData = [],
+  confirm,
+  configUserLevelInfo,
+  top = false,
+}) => {
   useEffect(() => {
     setData(JSON.parse(JSON.stringify(filterData)));
   }, [filterData]);
   const [data, setData] = useState([]);
   const [menuLayerHeight, setMenuLayerHeight] = useState(0);
+  const [falg, setFlag] = useState(null);
   const [selectData, setSelectData] = useState({
     near: {
       selectIndex: -1,
@@ -77,7 +81,11 @@ export default ({ filterData = [], confirm }) => {
   const { near, category, select } = selectData;
   const { index } = visible;
   useEffect(() => {
-    confirm(filterOnChange(selectData));
+    if (!falg) {
+      setFlag(true);
+    } else {
+      confirm(filterOnChange(selectData));
+    }
   }, [selectData]);
   useEffect(() => {
     if (index !== -1) {
@@ -121,6 +129,7 @@ export default ({ filterData = [], confirm }) => {
             index: -1,
           });
         }}
+        configUserLevelInfo={configUserLevelInfo}
         visible={index}
         defaul={select}
         data={data[2]}
@@ -137,34 +146,47 @@ export default ({ filterData = [], confirm }) => {
     if (val === index) {
       setVisible({ index: -1 });
     } else {
-      setVisible({ index: val });
+      if (top) {
+        console.log("111");
+        Taro.pageScrollTo({
+          selector: ".dakale_nav_box",
+          top: 0,
+          success: (res) => {
+            console.log("111");
+            setVisible({ index: val });
+          },
+        });
+      } else {
+        setVisible({ index: val });
+      }
     }
   };
 
   return (
-    <View>
+    <View className="dakale_nav_box">
       <View className="nav" id="dakale_nav">
-        {data.map((item, val) => {
-          const { name, type } = item;
-
-          return (
-            <View
-              onClick={() => seletCollection(val)}
-              className={classNames(
-                "navMenu",
-                index === val ? "navMenuSelect" : "navMenuNormal"
-              )}
-            >
-              {selectData[type].val.selectName ? (
-                <Text className={"color4"}>
-                  {selectData[type].val.selectName}
-                </Text>
-              ) : (
-                name
-              )}
-            </View>
-          );
-        })}
+        <View className="nav_lineBox">
+          {data.map((item, val) => {
+            const { name, type } = item;
+            return (
+              <View
+                onClick={() => seletCollection(val)}
+                className={classNames(
+                  "navMenu  font_hide",
+                  index === val ? "navMenuSelect" : "navMenuNormal"
+                )}
+              >
+                {selectData[type].val.selectName ? (
+                  <Text className={"color4"}>
+                    {selectData[type].val.selectName}
+                  </Text>
+                ) : (
+                  name
+                )}
+              </View>
+            );
+          })}
+        </View>
       </View>
       <View className="sub-menu-layerBox">
         <View

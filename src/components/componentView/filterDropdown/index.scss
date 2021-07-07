@@ -28,19 +28,28 @@
 .nav {
   padding: 0 24px;
   height: 88px;
-  border-bottom: solid 1px #eee;
-  z-index: 12;
   background-color: #ffffff;
   display: flex;
   align-items: center;
   position: relative;
   z-index: 205;
-
+  .nav_lineBox {
+    height: 88px;
+    width: 100%;
+    border-bottom: solid 1px #eee;
+    z-index: 12;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 205;
+  }
   .navMenu {
     font-size: 24px;
     display: flex;
     align-items: center;
     margin-right: 48px;
+    max-width: 192px;
   }
   .navMenuSelect {
     font-weight: 400;
@@ -97,11 +106,18 @@
   .sub-menu-trantionOut {
     transform: translateY(-200%);
   }
+  .sub-menu-trantionShow {
+    display: block;
+  }
+  .sub-menu-trantionHide {
+    display: none;
+  }
   .sub-menuBottom-trantionInit {
     opacity: 1;
   }
   .sub-menuBottom-trantionOut {
     opacity: 0;
+    display: none;
   }
 }
 

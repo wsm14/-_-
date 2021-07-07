@@ -252,3 +252,14 @@ export const getBusinessHub = (data = {}, fn) => {
   );
 };
 //获取商圈
+
+export const fetchGoodsTag = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/config/goods/tag/listGoodsTagByCategoryId",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//通过行业id & 端类型获取商品标签;

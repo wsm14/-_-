@@ -1,5 +1,5 @@
 .specialOffer_shop {
-  width: 688px;
+  width: 702px;
   height: 264px;
   margin: 0 auto 32px;
   display: flex;
@@ -14,6 +14,22 @@
   height: 264px;
   display: flex;
   position: relative;
+}
+.specialOffer_new_btn {
+  padding: 0 16px;
+  min-width: 96px;
+  height: 52px;
+  background: #ef476f;
+  border-radius: 26px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 400;
+  color: #ffffff;
 }
 .specialOffer_bottom_btn {
   width: 120px;

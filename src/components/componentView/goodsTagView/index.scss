@@ -1,0 +1,28 @@
+.tag_view_box {
+  position: relative;
+  margin-top: 24px;
+}
+.tag_view_scroll {
+  width: 726px;
+  margin-left: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+
+  .tag_box {
+    padding: 10px 20px;
+    font-size: 24px;
+    margin-right: 16px;
+    display: inline-block;
+    box-sizing: border-box;
+  }
+  .tag_color1 {
+    border-radius: 24px;
+    border: 1px solid #999999;
+    color: #999999;
+  }
+  .tag_color2 {
+    border-radius: 24px;
+    border: 1px solid #07c0c2;
+    color: #07c0c2;
+  }
+}

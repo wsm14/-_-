@@ -3,8 +3,15 @@ import Taro from "@tarojs/taro";
 import { View, Text, ScrollView } from "@tarojs/components";
 import classNames from "classnames";
 
-export default ({ data = [], onChange, defaul, visible }) => {
+export default ({
+  data = [],
+  onChange,
+  defaul,
+  visible,
+  configUserLevelInfo,
+}) => {
   const { list = [], type } = data;
+  const { shareCommission } = configUserLevelInfo;
   const [checked, setChecked] = useState({});
   useEffect(() => {
     if (visible === 2) {
@@ -26,6 +33,9 @@ export default ({ data = [], onChange, defaul, visible }) => {
       <ScrollView scrollY className="sub-scorllView-own">
         <View className="sub-scorllView-ownPad">
           {list.map((item, index) => {
+            if (index === 2 && !shareCommission) {
+              return null;
+            }
             return (
               <View
                 onClick={() => {

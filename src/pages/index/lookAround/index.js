@@ -54,7 +54,7 @@ class Index extends Component {
       specialHttp: {
         page: 1,
         limit: 10,
-        specialFilterType: "recommend",
+        specialFilterType: "aroundSpecial",
         categoryIds: "",
       },
       configUserLevelInfo: {},
@@ -90,7 +90,7 @@ class Index extends Component {
         specialHttp: {
           page: 1,
           limit: 10,
-          specialFilterType: "recommend",
+          specialFilterType: "aroundSpecial",
           categoryIds: "",
         },
         configUserLevelInfo: {},
@@ -241,16 +241,7 @@ class Index extends Component {
       if (categoryList.length > 0) {
         this.setState(
           {
-            categoryList: [
-              {
-                categoryIdString: "",
-                categoryIds: "",
-                categoryName: "周边特惠",
-                showCopy: "周边特惠",
-                subtitle: "猜你喜欢",
-              },
-              ...categoryList,
-            ],
+            categoryList: [...categoryList],
             specialHttp: {
               ...this.state.specialHttp,
             },
@@ -278,6 +269,7 @@ class Index extends Component {
             ...this.state.specialHttp,
             page: 1,
             categoryIds: categoryIdString,
+            specialFilterType: null,
           },
           kolGoodsList: [],
         },
@@ -326,7 +318,7 @@ class Index extends Component {
       kolGoodsList = [],
       flagDom,
       triggered,
-      specialHttp: { categoryIds },
+      specialHttp: { categoryIds, specialFilterType },
       result = {},
       num,
       configNewcomerOrdersInfo: {
@@ -337,6 +329,89 @@ class Index extends Component {
       },
     } = this.state;
     const { cityName, cityCode } = this.props.store.locationStore;
+    const templateSelect = () => {
+      return (
+        <>
+          <View
+            onClick={() => {
+              this.setState(
+                {
+                  specialHttp: {
+                    specialFilterType: "aroundSpecial",
+                    categoryIds: "",
+                    page: 1,
+                    limit: 10,
+                  },
+                  kolGoodsList: [],
+                },
+                (res) => {
+                  this.getshopList(this.state.specialHttp);
+                }
+              );
+            }}
+            className={classNames(
+              "lookAround_categorys",
+              specialFilterType === "aroundSpecial"
+                ? "lookAround_categorys_true bold"
+                : "lookAround_categorys_flag"
+            )}
+          >
+            <View className="lookAround_topText">周边特惠</View>
+            <View
+              className={classNames(
+                "lookAround_categorys_iconText",
+                specialFilterType === "aroundSpecial"
+                  ? "lookAround_iconText_color1"
+                  : "lookAround_iconText_color2"
+              )}
+            >
+              {specialFilterType === "aroundSpecial" && (
+                <View className="lookAround_categorys_icon"></View>
+              )}
+            </View>
+          </View>
+
+          <View
+            onClick={() => {
+              this.setState(
+                {
+                  specialHttp: {
+                    specialFilterType: "follow",
+                    categoryIds: "",
+                    page: 1,
+                    limit: 10,
+                  },
+                  kolGoodsList: [],
+                },
+                (res) => {
+                  this.getshopList(this.state.specialHttp);
+                }
+              );
+            }}
+            className={classNames(
+              "lookAround_categorys",
+              specialFilterType === "follow"
+                ? "lookAround_categorys_true bold"
+                : "lookAround_categorys_flag"
+            )}
+          >
+            <View className="lookAround_topText">关注</View>
+            <View
+              className={classNames(
+                "lookAround_categorys_iconText",
+                specialFilterType === "follow"
+                  ? "lookAround_iconText_color1"
+                  : "lookAround_iconText_color2"
+              )}
+            >
+              {specialFilterType === "follow" && (
+                <View className="lookAround_categorys_icon"></View>
+              )}
+            </View>
+          </View>
+        </>
+      );
+    };
     const bannerStyle = {
       width: Taro.pxTransform(686),
       height: Taro.pxTransform(200),
@@ -511,12 +586,20 @@ class Index extends Component {
             }
             className="lookAround_categorys_box lookAround_categorys_box1"
           >
-            <View className="lookAround_categorys_orderBtn"></View>
+            <View
+              className="lookAround_categorys_orderBtn"
+              onClick={() =>
+                Router({
+                  routerName: "goodList",
+                })
+              }
+            ></View>
             <ScrollView
               scrollWithAnimation={true}
               scrollX
               className="lookAround_categorys_parent"
             >
+              {templateSelect()}
               {categoryList.map((item) => {
                 const { categoryName, subtitle, categoryIdString } = item;
                 return (
@@ -551,6 +634,7 @@ class Index extends Component {
             userInfo={configUserLevelInfo}
             data={kolGoodsList}
             linkTo={this.saveRouter.bind(this)}
+            type={specialFilterType}
           ></SelectSpecal>
         </ScrollView>
         {
@@ -558,12 +642,20 @@ class Index extends Component {
             style={!flagDom ? { display: "none" } : {}}
             className="lookAround_categorys_box nav_flex"
           >
-            <View className="lookAround_categorys_orderBtn"></View>
+            <View
+              className="lookAround_categorys_orderBtn"
+              onClick={() =>
+                Router({
+                  routerName: "goodList",
+                })
+              }
+            ></View>
             <ScrollView
               scrollWithAnimation={true}
               scrollX
               className="lookAround_categorys_parent"
             >
+              {templateSelect()}
               {categoryList.map((item) => {
                 const { categoryName, subtitle, categoryIdString } = item;
                 return (

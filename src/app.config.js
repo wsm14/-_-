@@ -91,7 +91,9 @@ export default {
     {
       root: "pages/perimeter",
       pages: [
-        "evenGoods/index", //排行榜
+        "gradeGood/index", //带搜索的公用商品列表
+        "perimeterList/index", //逛逛商品列表
+        "publicTypeGoods/index", //逛逛公用功能区页面
         "rankInfo/index", //排行榜
         "perimeterShops/index", //周边好店
         "videoDetails/index", //视频详情
@@ -117,7 +119,6 @@ export default {
         "perimeteRoducts/index",
         "tipView/index", //打卡状态： 超过距离
         "groupMerchant/index", //集团核销列表
-        "index", //周边首页
       ],
     },
     {
