@@ -645,7 +645,7 @@ export const computedViewHeight = (id, fn) => {
       const { windowHeight } = res;
       getDom(id, (res = []) => {
         if (res[0] && res[0].top) {
-          fn && fn(windowHeight - res[0].top);
+          fn && fn(windowHeight - res[0].top, windowHeight);
         }
       });
     },
@@ -661,6 +661,12 @@ export const setNavTitle = (title) => {
       toast("未知异常");
     },
   });
+};
+
+export const computedSize = (size) => {
+  let width = Taro.getSystemInfoSync().windowWidth;
+  let sizeScale = width / 375;
+  return parseInt(sizeScale * size);
 };
 //首页视频计算比例
 export const resiApiKey = "f390f1e2b0faa95710d00a0801384c41";

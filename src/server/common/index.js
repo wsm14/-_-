@@ -75,7 +75,7 @@ export const getLimit = (data, fn) => {
 //获取距离
 
 export const getBanner = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       data: data,
       url: "/common/banner/listBanner",

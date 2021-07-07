@@ -11,7 +11,7 @@ import "./assets/css/app.scss";
 import "./assets/css/color.scss";
 import "./assets/css/font.scss";
 import "./assets/css/background.scss";
-
+import "taro-skeleton/dist/index.css"; // 引入组件样式
 const store = {
   ...Store,
 };

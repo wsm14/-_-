@@ -14,8 +14,9 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
         Router({
           routerName: "publicTypeGoods",
           args: {
-            type: "beanSelection",
+            type: "dayPush",
             title: "小豆精选",
+            bannerType: "beanSelection",
           },
         });
       },

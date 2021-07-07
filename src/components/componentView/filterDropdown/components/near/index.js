@@ -2,9 +2,11 @@ import React, { useState, useEffect, Fragment } from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, ScrollView } from "@tarojs/components";
 import classNames from "classnames";
+import { getDom } from "@/common/utils";
 
 export default ({ data = [], onChange, defaul, visible }) => {
   const [dataIndex, setDataIndex] = useState(null);
+  const [TikIndex, setTikIndex] = useState(null);
   const { list = [], hubList, type } = data;
   const [childrenList, setChildrenList] = useState([]);
   const [checked, setChecked] = useState(null);
@@ -26,20 +28,26 @@ export default ({ data = [], onChange, defaul, visible }) => {
     } else {
       setChildrenList(hubList[dataIndex - 1].businessHubList);
     }
+    Taro.nextTick(() => {
+      if (!TikIndex) {
+        setTikIndex(dataIndex);
+      }
+    });
   }, [dataIndex]);
   useEffect(() => {
     if (visible === 0) {
       const { selectIndex, val } = defaul;
-
       setDataIndex(selectIndex);
       setChecked({ ...val });
     }
   }, [visible]);
+  //数据回显
   const setMenu = (item, val, key) => {
     if (item[key] == val[key]) {
       return true;
     } else return false;
   };
+  //设置按钮是否为选中
   const filterFont = (val, key, set) => {
     console.log(dataIndex, childrenList);
     if (dataIndex === -1 || !dataIndex) {
@@ -70,10 +78,13 @@ export default ({ data = [], onChange, defaul, visible }) => {
       },
     });
   };
-  const scrollTo = () => {};
   return (
     <View className="sub-scorllView-box">
-      <ScrollView scrollY className="sub-scorllView-left">
+      <ScrollView
+        scrollIntoView={`sub-scorll-btn${TikIndex}`}
+        scrollY
+        className="sub-scorllView-left"
+      >
         {list.map((item, index) => {
           const { name } = item;
           return (

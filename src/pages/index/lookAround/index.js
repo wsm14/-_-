@@ -47,7 +47,7 @@ class Index extends Component {
       },
       dateHttp: {
         page: 1,
-        limit: 6,
+        limit: 3,
         specialFilterType: "today",
       },
 
@@ -83,7 +83,7 @@ class Index extends Component {
         },
         dateHttp: {
           page: 1,
-          limit: 6,
+          limit: 3,
           specialFilterType: "today",
         },
 

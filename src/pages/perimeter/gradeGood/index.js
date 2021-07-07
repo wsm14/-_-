@@ -20,6 +20,8 @@ import {
   goBack,
 } from "@/common/utils";
 import classNames from "classnames";
+import Skeleton from "./components/SkeletonView";
+("");
 import "./index.scss";
 import Router from "@/common/router";
 class Index extends Component {
@@ -34,11 +36,10 @@ class Index extends Component {
         categoryIds: "",
         keyword: "",
         goodsTags: "",
-        // specialFilterType: getCurrentInstance().router.params.type,
+        specialFilterType: getCurrentInstance().router.params.type,
       },
       bannerType: {
-        bannerType:
-          "wanderAroundMainBanner" || getCurrentInstance().router.params.type,
+        bannerType: getCurrentInstance().router.params.type,
       },
       selectList: [],
       configUserLevelInfo: {},
@@ -48,6 +49,8 @@ class Index extends Component {
       top: 0,
       body: getCurrentInstance().router.params.body,
       title: getCurrentInstance().router.params.title,
+      size: 0,
+      loading: false,
     };
   }
   fetchUserShare() {
@@ -60,12 +63,24 @@ class Index extends Component {
   }
   getBannerList() {
     const { bannerType } = this.state;
-    getBanner(bannerType, (res) => {
-      const { bannerList } = res;
-      this.setState({
-        bannerList,
-      });
-    });
+    this.setState(
+      {
+        loading: true,
+      },
+      (res) => {
+        getBanner(bannerType, (res) => {
+          const { bannerList } = res;
+          this.setState({
+            bannerList,
+            loading: false,
+          });
+        }).catch(() => {
+          this.setState({
+            loading: false,
+          });
+        });
+      }
+    );
   }
   initSelect() {
     Promise.all([
@@ -74,7 +89,7 @@ class Index extends Component {
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
       const { categoryDTOList } = val[0];
-   
+
       this.setState({
         selectList: [
           {
@@ -178,9 +193,17 @@ class Index extends Component {
     this.initSelect();
     this.getshopList();
     this.getBannerList();
+    this.computedSize();
   }
   componentDidShow() {
     this.fetchUserShare();
+  }
+  computedSize() {
+    let width = Taro.getSystemInfoSync().windowWidth;
+    let sizeScale = width / 375;
+    this.setState({
+      size: parseInt(sizeScale * 220),
+    });
   }
   onPageScroll(res) {
     const { scrollTop } = res;
@@ -214,6 +237,8 @@ class Index extends Component {
       body,
       httpData: { categoryIds },
       title,
+      size,
+      loading,
     } = this.state;
     const bannerStyle = {
       width: "100%",
@@ -227,126 +252,142 @@ class Index extends Component {
       justifyContent: "center",
       zIndex: 285,
     };
-    return (
-      <View className="gradeGood_box">
-        <View
-          onScroll={(e) => {
-            const { scrollTop } = e.detail;
-            console.log(e);
-          }}
-          scrollY
-          catchMove
-          className="gradeGood_scroll"
-        >
-          <Banner
-            imgName="coverImg"
-            data={bannerList}
-            bottom={bottom}
-            boxStyle={bannerStyle}
-            showNear
-          ></Banner>
-          <View
-            catchMove
-            className={classNames(
-              top >= 220 ? "gradeGood_tabbar_box1" : "gradeGood_tabbar_box"
-            )}
-            style={
-              top >= 220
-                ? {
-                    paddingTop:
-                      computedClient().top + (computedClient().height - 24) / 2,
-                  }
-                : {
-                    top:
-                      computedClient().top + (computedClient().height - 24) / 2,
-                  }
-            }
-          >
+    console.log(loading);
+    const templateView = () => {
+      return (
+        <View className="gradeGood_box">
+          <View className="gradeGood_scroll">
+            <Banner
+              imgName="coverImg"
+              data={bannerList}
+              bottom={bottom}
+              boxStyle={bannerStyle}
+              showNear
+            ></Banner>
             <View
-              onClick={() => goBack()}
-              className="gradeGood_tabbar_box_back"
-            ></View>
-            <View onClick={() => goBack()}> {title}</View>
+              catchMove
+              className={classNames(
+                top >= size ? "gradeGood_tabbar_box1" : "gradeGood_tabbar_box"
+              )}
+              style={
+                top >= size
+                  ? {
+                      paddingTop:
+                        computedClient().top +
+                        (computedClient().height - 24) / 2,
+                    }
+                  : {
+                      top:
+                        computedClient().top +
+                        (computedClient().height - 24) / 2,
+                    }
+              }
+            >
+              <View
+                onClick={() => goBack()}
+                className={
+                  top >= size
+                    ? "gradeGood_tabbar_box_back1"
+                    : "gradeGood_tabbar_box_back"
+                }
+              ></View>
+              <View onClick={() => goBack()}> {title}</View>
+
+              <View
+                className={
+                  top >= size
+                    ? "gradeGood_tabbar_box_search1"
+                    : "gradeGood_tabbar_box_search"
+                }
+                onClick={() =>
+                  Router({
+                    routerName: "search_shop",
+                  })
+                }
+              ></View>
+            </View>
 
             <View
-              className={
-                top >= 220
-                  ? "gradeGood_tabbar_box_search1"
-                  : "gradeGood_tabbar_box_search"
-              }
-              onClick={() =>
-                Router({
-                  routerName: "search_shop",
-                })
-              }
-            ></View>
+              catchMove
+              className={classNames(
+                top >= size ? "gradeGood_view_box1" : "gradeGood_view_box"
+              )}
+              catchMove
+            >
+              <View className="gradeGood_view_body">{body}</View>
+            </View>
+            <FilterDropdown
+              filterData={selectList}
+              confirm={(e) => {
+                this.changeSelect(e);
+              }}
+              top={size > top}
+              configUserLevelInfo={configUserLevelInfo}
+              dataFormat="Object"
+            ></FilterDropdown>
+            <Tags
+              onChange={(val) => {
+                this.changeSelect({ goodsTags: val });
+              }}
+              val={categoryIds}
+            ></Tags>
+            <View className="scroll_margin"></View>
+            <ScrollView
+              scrollY
+              onScrollToLower={(e) => {
+                this.onPageUp();
+              }}
+              onScroll={(e) => {
+                const { scrollTop } = e.detail;
+                console.log(
+                  scrollTop < size && top < size,
+                  scrollTop,
+                  top,
+                  size
+                );
+                if (scrollTop < size && top < size) {
+                  Taro.pageScrollTo({
+                    selector: ".perimeterList_scroll1",
+                    top: scrollTop,
+                    success: (res) => {
+                      this.setState({
+                        top: scrollTop,
+                      });
+                    },
+                  });
+                }
+              }}
+              style={{
+                height: height
+                  ? height
+                  : computedViewHeight(".perimeterList_scroll1", (e) => {
+                      this.setState({ height: e });
+                    }),
+              }}
+              className="perimeterList_scroll1"
+            >
+              {specialGoodsList.length === 0 && (
+                <>
+                  <View className="perimeterList_nullStatus"></View>
+                  <View className="perimeterList_text">暂无商品</View>
+                </>
+              )}
+              {specialGoodsList.map((item) => {
+                return template(item, configUserLevelInfo);
+              })}
+              {specialGoodsList.map((item) => {
+                return template(item, configUserLevelInfo);
+              })}
+            </ScrollView>
           </View>
-
-          <View
-            catchMove
-            className={classNames(
-              top >= 220 ? "gradeGood_view_box1" : "gradeGood_view_box"
-            )}
-            catchMove
-          >
-            <View className="gradeGood_view_body">{body}</View>
-          </View>
-          <FilterDropdown
-            filterData={selectList}
-            confirm={(e) => {
-              this.changeSelect(e);
-            }}
-            top={true}
-            configUserLevelInfo={configUserLevelInfo}
-            dataFormat="Object"
-          ></FilterDropdown>
-          <Tags
-            onChange={(val) => {
-              this.changeSelect({ goodsTags: val });
-            }}
-            val={categoryIds}
-          ></Tags>
-          <View className="scroll_margin"></View>
-          <ScrollView
-            scrollY
-            onScrollToLower={(e) => {
-              this.onPageUp();
-            }}
-            onScroll={(e) => {
-              const { scrollTop } = e.detail;
-              if (scrollTop <= 220) {
-                Taro.pageScrollTo({
-                  selector: ".perimeterList_scroll1",
-                  top: scrollTop,
-                  success: (res) => {},
-                });
-              }
-            }}
-            style={{
-              height: height
-                ? height
-                : computedViewHeight(".perimeterList_scroll1", (e) => {
-                    console.log(e);
-                    this.setState({ height: top > 210 ? e - 64 : e });
-                  }),
-            }}
-            className="perimeterList_scroll1"
-          >
-            {specialGoodsList.length === 0 && (
-              <>
-                <View className="perimeterList_nullStatus"></View>
-                <View className="perimeterList_text">暂无商品</View>
-              </>
-            )}
-            {specialGoodsList.map((item) => {
-              return template(item, configUserLevelInfo);
-            })}
-            {specialGoodsList.map((item) => {
-              return template(item, configUserLevelInfo);
-            })}
-          </ScrollView>
         </View>
-      </View>
+      );
+    };
+
+    return (
+      <Skeleton title={title} loading={loading}>
+        {templateView()}
+      </Skeleton>
     );
   }
 }

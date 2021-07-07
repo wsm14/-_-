@@ -29,7 +29,7 @@ export default ({
   };
   const scrollTo = () => {};
   return (
-    <View className="sub-scorllView-box">
+    <View  className="sub-scorllView-box">
       <ScrollView scrollY className="sub-scorllView-own">
         <View className="sub-scorllView-ownPad">
           {list.map((item, index) => {

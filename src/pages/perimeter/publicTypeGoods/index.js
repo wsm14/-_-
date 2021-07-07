@@ -29,7 +29,9 @@ class Index extends Component {
         specialFilterType: getCurrentInstance().router.params.type,
       },
       bannerType: {
-        bannerType: getCurrentInstance().router.params.type,
+        bannerType:
+          getCurrentInstance().router.params.bannerType ||
+          getCurrentInstance().router.params.type,
       },
       selectList: [],
       configUserLevelInfo: {},
@@ -63,7 +65,6 @@ class Index extends Component {
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
       const { categoryDTOList } = val[0];
-      console.log(categoryDTOList);
       this.setState({
         selectList: [
           {

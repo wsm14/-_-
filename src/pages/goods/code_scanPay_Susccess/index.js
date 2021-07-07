@@ -13,8 +13,11 @@ import {
   switchTab,
 } from "@/common/utils";
 import Lovely from "@/components/lovely";
+import { fetchUserShareCommission } from "@/server/index";
 import Coupons from "@/components/coupon";
-import { getAvailableCoupon } from "@/server/coupon";
+import Recommend from "@/components/specalActive";
+import Coupon from "./components/coupon";
+
 const formatTime = (date) => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -42,6 +45,7 @@ class Index extends Component {
       orderResult: {},
       conpouVisible: false,
       couponList: [],
+      configUserLevelInfo: {},
     };
   }
 
@@ -50,24 +54,15 @@ class Index extends Component {
       goBack(() => toast("参数缺失"));
     }
   }
-  getAvailable() {
-    getAvailableCoupon(
-      {
-        identifyId: getCurrentInstance().router.params.merchantId,
-        channel: "consume",
-        merchantId: getCurrentInstance().router.params.merchantId,
-      },
-      (res) => {
-        const { couponList = [] } = res;
-        if (couponList.length > 0) {
-          this.setState({
-            couponList,
-            conpouVisible: true,
-          });
-        }
-      }
-    );
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
   }
+
   getOrderResult() {
     const { orderSn } = this.state;
     getOrderResult(
@@ -85,7 +80,7 @@ class Index extends Component {
 
   componentDidShow() {
     this.getOrderResult();
-    this.getAvailable();
+    this.fetchUserShareCommission();
   }
 
   errorToast(e) {}
@@ -103,6 +98,7 @@ class Index extends Component {
       orderSn,
       conpouVisible,
       couponList,
+      configUserLevelInfo,
     } = this.state;
     if (Object.keys(orderResult).length > 0) {
       return (
@@ -114,11 +110,13 @@ class Index extends Component {
             </View>
             <View className="code_scanPay_payNum">
               <Text className="code_scanPay_icon  font36 bold color1">¥ </Text>
-              <Text className="code_scanPay_font bold  color1">{' '+totalFee}</Text>
+              <Text className="code_scanPay_font bold  color1">
+                {" " + totalFee}
+              </Text>
             </View>
             <View className="code_scanPay_decBox  code_scanPay_decMargin public_auto font24">
               <View className="color2">实付金额</View>
-              <View className="color1">{'¥  ' +  payFee}</View>
+              <View className="color1">{"¥  " + payFee}</View>
             </View>
             {beanFee ? (
               <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
@@ -127,15 +125,15 @@ class Index extends Component {
                   {beanFee + `(¥ ${(Number(beanFee) / 100).toFixed(2)})`}
                 </View>
               </View>
-            ):null}
+            ) : null}
 
             {deductFeeObject.length > 0 ? (
               <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
                 <View className="color2">优惠券</View>
                 <View className="color3">{deductFeeObject[0].reduceFee}</View>
               </View>
-            ):null}
-            <View  className='code_scanPay_liner'></View>
+            ) : null}
+            <View className="code_scanPay_liner"></View>
 
             <View className="code_scanPay_btnBox">
               <View
@@ -155,10 +153,11 @@ class Index extends Component {
                 查看订单
               </View>
             </View>
+            <Coupon data={orderResult}></Coupon>
           </View>
-          <View className="code_scanPay_loveMagin">
-            <Lovely title={"当前可买"}></Lovely>
-          </View>
+
+          <Recommend current={true} userInfo={configUserLevelInfo}></Recommend>
+
           {conpouVisible && (
             <Coupons
               title={"到店支付有福利"}

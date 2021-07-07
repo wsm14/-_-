@@ -51,7 +51,7 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
               <View className="lookAround_specalPlate_title  lookAround_specalPlate_titleIcon2"></View>
               <View className="lookAround_specalPlate_link"></View>
             </View>
-            <Swiper autoplay className="lookAround_specalPlate_swiper">
+            <Swiper circular autoplay className="lookAround_specalPlate_swiper">
               {list.map((item) => {
                 return (
                   <SwiperItem>

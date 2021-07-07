@@ -48,6 +48,7 @@ export default ({
   confirm,
   configUserLevelInfo,
   top = false,
+  scrollName,
 }) => {
   useEffect(() => {
     setData(JSON.parse(JSON.stringify(filterData)));
@@ -147,9 +148,8 @@ export default ({
       setVisible({ index: -1 });
     } else {
       if (top) {
-        console.log("111");
         Taro.pageScrollTo({
-          selector: ".dakale_nav_box",
+          selector: scrollName || ".dakale_nav_box",
           top: 0,
           success: (res) => {
             console.log("111");
@@ -163,7 +163,7 @@ export default ({
   };
 
   return (
-    <View className="dakale_nav_box">
+    <View catchMove className="dakale_nav_box">
       <View className="nav" id="dakale_nav">
         <View className="nav_lineBox">
           {data.map((item, val) => {
@@ -177,7 +177,7 @@ export default ({
                 )}
               >
                 {selectData[type].val.selectName ? (
-                  <Text className={"color4"}>
+                  <Text className={"navMenu_text color4 font_hide"}>
                     {selectData[type].val.selectName}
                   </Text>
                 ) : (
@@ -198,7 +198,6 @@ export default ({
           {template}
         </View>
         <View
-          catchMove
           onClick={() => onClose()}
           style={{ top: menuLayerHeight }}
           className={classNames(

@@ -149,3 +149,14 @@ export const getConfigNewcomerOrders = (data, fn) => {
   );
 };
 //下单成功三单福利
+
+export const getListFreeCoupon = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/merchantMainCoupon/listFreeCoupon",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//下单成功三单福利

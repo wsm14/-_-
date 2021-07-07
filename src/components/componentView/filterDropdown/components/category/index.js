@@ -2,12 +2,14 @@ import React, { useState, useEffect, Fragment } from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, ScrollView } from "@tarojs/components";
 import classNames from "classnames";
-
+import { getDom } from "@/common/utils";
 export default ({ data = [], onChange, defaul, visible }) => {
-  const [dataIndex, setDataIndex] = useState(null);
   const { list = [], type } = data;
+  const [dataIndex, setDataIndex] = useState(null);
+  const [TikIndex, setTikIndex] = useState(null);
   const [childrenList, setChildrenList] = useState([]);
   const [checked, setChecked] = useState(null);
+  const [top, setTop] = useState(null);
   const marginTags = (list, num, style, components) => {
     return list.map((item, index) => {
       return (
@@ -24,9 +26,13 @@ export default ({ data = [], onChange, defaul, visible }) => {
     if (dataIndex === -1 || !dataIndex) {
       setChildrenList(list[0].childList);
     } else {
-      console.log(list[dataIndex].childList);
       setChildrenList(list[dataIndex].childList);
     }
+    Taro.nextTick(() => {
+      if (!TikIndex) {
+        setTikIndex(dataIndex);
+      }
+    });
   }, [dataIndex]);
   useEffect(() => {
     if (visible === 1) {
@@ -61,10 +67,13 @@ export default ({ data = [], onChange, defaul, visible }) => {
       },
     });
   };
-  const scrollTo = () => {};
   return (
     <View className="sub-scorllView-box">
-      <ScrollView scrollY className="sub-scorllView-left">
+      <ScrollView
+        scrollIntoView={`menu${TikIndex}`}
+        scrollY
+        className="sub-scorllView-left"
+      >
         {list.map((item, index) => {
           const { categoryName } = item;
           return (
@@ -82,6 +91,7 @@ export default ({ data = [], onChange, defaul, visible }) => {
                   selectIndex(index);
                 }
               }}
+              id={`menu${index}`}
               className={classNames(
                 "sub-scorll-btn",
                 ((!dataIndex || dataIndex === -1) && index === 0) ||
