@@ -1,4 +1,4 @@
-import Taro from "@tarojs/taro";
+import Taro, { usePageScroll } from "@tarojs/taro";
 import React, { useState, useEffect, Fragment } from "react";
 import { View, Text, ScrollView } from "@tarojs/components";
 import Near from "./components/near";
@@ -6,7 +6,7 @@ import Categorys from "./components/category";
 import Selects from "./components/select";
 import classNames from "classnames";
 import "./index.scss";
-import { getDom } from "@/common/utils";
+import { getDom, computedSize } from "@/common/utils";
 const filterOnChange = (item) => {
   const { near, category, select } = item;
   let nearVal = near.val;
@@ -49,13 +49,16 @@ export default ({
   configUserLevelInfo,
   top = false,
   scrollName,
+  setTop = {
+    falgNav: false,
+    topNav: 0,
+    setNav: 0,
+  },
 }) => {
-  useEffect(() => {
-    setData(JSON.parse(JSON.stringify(filterData)));
-  }, [filterData]);
   const [data, setData] = useState([]);
   const [menuLayerHeight, setMenuLayerHeight] = useState(0);
   const [falg, setFlag] = useState(null);
+  const [navFlag, setNavFlag] = useState(false);
   const [selectData, setSelectData] = useState({
     near: {
       selectIndex: -1,
@@ -80,7 +83,21 @@ export default ({
     index: -1,
   });
   const { near, category, select } = selectData;
+  const { falgNav, topNav, setNav } = setTop;
   const { index } = visible;
+  useEffect(() => {
+    setData(JSON.parse(JSON.stringify(filterData)));
+  }, [filterData]);
+  usePageScroll((e) => {
+    if (falgNav) {
+      const { scrollTop } = e;
+      if (scrollTop >= topNav) {
+        setNavFlag(true);
+      } else {
+        setNavFlag(false);
+      }
+    } else return;
+  });
   useEffect(() => {
     if (!falg) {
       setFlag(true);
@@ -142,17 +159,15 @@ export default ({
       index: -1,
     });
   };
-
   const seletCollection = (val) => {
     if (val === index) {
       setVisible({ index: -1 });
     } else {
-      if (top) {
+      if (top && !navFlag) {
         Taro.pageScrollTo({
           selector: scrollName || ".dakale_nav_box",
           top: 0,
           success: (res) => {
-            console.log("111");
             setVisible({ index: val });
           },
         });
@@ -161,10 +176,17 @@ export default ({
       }
     }
   };
-
   return (
     <View catchMove className="dakale_nav_box">
-      <View className="nav" id="dakale_nav">
+      <View
+        className="nav"
+        style={
+          falgNav && navFlag
+            ? { position: "fixed", top: setNav, left: 0, right: 0 }
+            : {}
+        }
+        id="dakale_nav"
+      >
         <View className="nav_lineBox">
           {data.map((item, val) => {
             const { name, type } = item;
@@ -190,6 +212,11 @@ export default ({
       </View>
       <View className="sub-menu-layerBox">
         <View
+          style={
+            falgNav && navFlag
+              ? { position: "fixed", top: computedSize(44) + setNav }
+              : {}
+          }
           className={classNames(
             "sub-menu-layer",
             index === -1 ? "sub-menu-trantionOut" : "sub-menu-trantionInit"

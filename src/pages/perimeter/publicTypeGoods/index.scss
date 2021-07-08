@@ -15,15 +15,23 @@ page {
     margin-top: -20px;
     z-index: 1000;
   }
+  .publicTypeGoods_view_nodeBox {
+    height: 88px;
+  }
   .publicTypeGoods_scroll {
     width: 100%;
     height: 100%;
+  }
+  .publicTypeGoods_bannerBox {
+    width: 100%;
+    height: 440px;
   }
   .scroll_margin {
     padding-top: 32px;
   }
   .perimeterList_scroll1 {
     background: #ffffff;
+    min-height: 1200px;
   }
   .perimeterList_nullStatus {
     width: 300px;

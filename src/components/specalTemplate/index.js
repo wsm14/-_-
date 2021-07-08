@@ -13,8 +13,9 @@ import {
 } from "@/common/utils";
 import ButtonView from "@/components/Button";
 import Date from "@/components/dateTime";
+import classNames from "classnames";
 import "./index.scss";
-export const template = (item, configUserLevelInfo) => {
+export const template = (item, configUserLevelInfo, animate = true) => {
   const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
   const {
     goodsId,
@@ -35,7 +36,7 @@ export const template = (item, configUserLevelInfo) => {
   } = item;
   return (
     <View
-      className="specialOffer_shop animated fadeIn"
+      className={classNames("specialOffer_shop", animate && "animated fadeIn")}
       onClick={() =>
         Router({
           routerName: "favourableDetails",

@@ -12,7 +12,13 @@ import {
 import { fetchUserShareCommission, fetchSpecialGoods } from "@/server/index";
 import Tags from "@/components/componentView/goodsTagView";
 import { template } from "@/components/specalTemplate";
-import { toast, computedViewHeight, setNavTitle } from "@/common/utils";
+import {
+  toast,
+  computedViewHeight,
+  setNavTitle,
+  computedSize,
+} from "@/common/utils";
+import Skeleton from "./components/SkeletonView";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -37,8 +43,9 @@ class Index extends Component {
       configUserLevelInfo: {},
       specialGoodsList: [],
       bannerList: [],
+      size: computedSize(220),
       height: 0,
-      top: 0,
+      loading: false,
     };
   }
   fetchUserShare() {
@@ -51,13 +58,26 @@ class Index extends Component {
   }
   getBannerList() {
     const { bannerType } = this.state;
-    getBanner(bannerType, (res) => {
-      const { bannerList } = res;
-      this.setState({
-        bannerList,
-      });
-    });
+    this.setState(
+      {
+        loading: true,
+      },
+      (res) => {
+        getBanner(bannerType, (res) => {
+          const { bannerList } = res;
+          this.setState({
+            bannerList,
+            loading: false,
+          });
+        }).catch((e) => {
+          this.setState({
+            loading: false,
+          });
+        });
+      }
+    );
   }
+  onPageScroll(res) {}
   initSelect() {
     Promise.all([
       getCategory({ parentId: "0" }, () => {}),
@@ -173,6 +193,9 @@ class Index extends Component {
   componentDidShow() {
     this.fetchUserShare();
   }
+  onReachBottom() {
+    this.onPageUp();
+  }
   onPageUp() {
     const { httpData } = this.state;
     this.setState(
@@ -194,7 +217,9 @@ class Index extends Component {
       configUserLevelInfo,
       height,
       bannerList,
-      top,
+      topFlag,
+      size,
+      loading,
       httpData: { categoryIds },
     } = this.state;
     const bannerStyle = {
@@ -209,74 +234,58 @@ class Index extends Component {
       justifyContent: "center",
       zIndex: 285,
     };
-    return (
-      <View className="publicTypeGoods_box">
-        <ScrollView scrollY className="publicTypeGoods_scroll">
-          <Banner
-            imgName="coverImg"
-            data={bannerList}
-            bottom={bottom}
-            boxStyle={bannerStyle}
-            showNear
-          ></Banner>
-          <View className="publicTypeGoods_view_box">
-            <FilterDropdown
-              filterData={selectList}
-              confirm={(e) => {
-                this.changeSelect(e);
-              }}
-              top={true}
-              configUserLevelInfo={configUserLevelInfo}
-              dataFormat="Object"
-            ></FilterDropdown>
-            <Tags
-              onChange={(val) => {
-                this.changeSelect({ goodsTags: val });
-              }}
-              val={categoryIds}
-            ></Tags>
-            <View className="scroll_margin"></View>
+    const templateView = () => {
+      return (
+        <View className="publicTypeGoods_box">
+          <View className="publicTypeGoods_scroll">
+            <View className="publicTypeGoods_bannerBox">
+              <Banner
+                imgName="coverImg"
+                data={bannerList}
+                bottom={bottom}
+                boxStyle={bannerStyle}
+                showNear
+              ></Banner>
+            </View>
+
+            <View className="publicTypeGoods_view_box">
+              <View className="publicTypeGoods_view_nodeBox">
+                <FilterDropdown
+                  filterData={selectList}
+                  confirm={(e) => {
+                    this.changeSelect(e);
+                  }}
+                  top={true}
+                  configUserLevelInfo={configUserLevelInfo}
+                  dataFormat="Object"
+                  setTop={{ falgNav: true, topNav: size, setNav: 0 }}
+                ></FilterDropdown>
+              </View>
+
+              <Tags
+                onChange={(val) => {
+                  this.changeSelect({ goodsTags: val });
+                }}
+                val={categoryIds}
+              ></Tags>
+              <View className="scroll_margin"></View>
+              <View className="perimeterList_scroll1">
+                {specialGoodsList.length === 0 && (
+                  <>
+                    <View className="perimeterList_nullStatus"></View>
+                    <View className="perimeterList_text">暂无商品</View>
+                  </>
+                )}
+                {specialGoodsList.map((item) => {
+                  return template(item, configUserLevelInfo, false);
+                })}
+              </View>
+            </View>
           </View>
-          <ScrollView
-            scrollY
-            onScrollToLower={(e) => {
-              this.onPageUp();
-            }}
-            onScroll={(e) => {
-              const { scrollTop } = e.detail;
-              if (scrollTop < 240) {
-                Taro.pageScrollTo({
-                  selector: ".perimeterList_scroll1",
-                  top: scrollTop,
-                  success: (res) => {},
-                });
-              }
-            }}
-            style={{
-              height: height
-                ? height
-                : computedViewHeight(".perimeterList_scroll1", (e) => {
-                    this.setState({ height: e });
-                  }),
-            }}
-            className="perimeterList_scroll1"
-          >
-            {specialGoodsList.length === 0 && (
-              <>
-                <View className="perimeterList_nullStatus"></View>
-                <View className="perimeterList_text">暂无商品</View>
-              </>
-            )}
-            {specialGoodsList.map((item) => {
-              return template(item, configUserLevelInfo);
-            })}
-            {specialGoodsList.map((item) => {
-              return template(item, configUserLevelInfo);
-            })}
-          </ScrollView>
-        </ScrollView>
-      </View>
-    );
+        </View>
+      );
+    };
+    return <Skeleton loading={loading}>{templateView()}</Skeleton>;
   }
 }
 

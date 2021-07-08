@@ -21,7 +21,6 @@ import {
 } from "@/common/utils";
 import classNames from "classnames";
 import Skeleton from "./components/SkeletonView";
-("");
 import "./index.scss";
 import Router from "@/common/router";
 class Index extends Component {
@@ -36,7 +35,7 @@ class Index extends Component {
         categoryIds: "",
         keyword: "",
         goodsTags: "",
-        specialFilterType: getCurrentInstance().router.params.type,
+        // specialFilterType: getCurrentInstance().router.params.type,
       },
       bannerType: {
         bannerType: getCurrentInstance().router.params.type,
@@ -212,6 +211,9 @@ class Index extends Component {
       top: scrollTop,
     });
   }
+  onReachBottom() {
+    this.onPageUp();
+  }
   onPageUp() {
     const { httpData } = this.state;
     this.setState(
@@ -257,13 +259,16 @@ class Index extends Component {
       return (
         <View className="gradeGood_box">
           <View className="gradeGood_scroll">
-            <Banner
-              imgName="coverImg"
-              data={bannerList}
-              bottom={bottom}
-              boxStyle={bannerStyle}
-              showNear
-            ></Banner>
+            <View className="gradeGood_scroll_banner">
+              <Banner
+                imgName="coverImg"
+                data={bannerList}
+                bottom={bottom}
+                boxStyle={bannerStyle}
+                showNear
+              ></Banner>
+            </View>
+
             <View
               catchMove
               className={classNames(
@@ -322,6 +327,7 @@ class Index extends Component {
                 this.changeSelect(e);
               }}
               top={size > top}
+              setTop={{ falgNav: true, topNav: size, setNav: 48 }}
               configUserLevelInfo={configUserLevelInfo}
               dataFormat="Object"
             ></FilterDropdown>
@@ -332,31 +338,7 @@ class Index extends Component {
               val={categoryIds}
             ></Tags>
             <View className="scroll_margin"></View>
-            <ScrollView
-              scrollY
-              onScrollToLower={(e) => {
-                this.onPageUp();
-              }}
-              onScroll={(e) => {
-                const { scrollTop } = e.detail;
-                console.log(
-                  scrollTop < size && top < size,
-                  scrollTop,
-                  top,
-                  size
-                );
-                if (scrollTop < size && top < size) {
-                  Taro.pageScrollTo({
-                    selector: ".perimeterList_scroll1",
-                    top: scrollTop,
-                    success: (res) => {
-                      this.setState({
-                        top: scrollTop,
-                      });
-                    },
-                  });
-                }
-              }}
+            <View
               style={{
                 height: height
                   ? height
@@ -378,7 +360,7 @@ class Index extends Component {
               {specialGoodsList.map((item) => {
                 return template(item, configUserLevelInfo);
               })}
-            </ScrollView>
+            </View>
           </View>
         </View>
       );
