@@ -14,6 +14,7 @@ import {
 } from "@/common/utils";
 import Lovely from "@/components/lovely";
 import Coupons from "@/components/coupon";
+import Toast from "./components/index";
 import { getAvailableCoupon } from "@/server/coupon";
 const formatTime = (date) => {
   const year = date.getFullYear();
@@ -42,6 +43,7 @@ class Index extends Component {
       orderResult: {},
       conpouVisible: false,
       couponList: [],
+      visible: false,
     };
   }
 
@@ -78,6 +80,7 @@ class Index extends Component {
         const { orderResult } = res;
         this.setState({
           orderResult,
+          visible: true,
         });
       }
     );
@@ -103,6 +106,7 @@ class Index extends Component {
       orderSn,
       conpouVisible,
       couponList,
+      visible,
     } = this.state;
     if (Object.keys(orderResult).length > 0) {
       return (
@@ -114,11 +118,13 @@ class Index extends Component {
             </View>
             <View className="code_scanPay_payNum">
               <Text className="code_scanPay_icon  font36 bold color1">¥ </Text>
-              <Text className="code_scanPay_font bold  color1">{' '+totalFee}</Text>
+              <Text className="code_scanPay_font bold  color1">
+                {" " + totalFee}
+              </Text>
             </View>
             <View className="code_scanPay_decBox  code_scanPay_decMargin public_auto font24">
               <View className="color2">实付金额</View>
-              <View className="color1">{'¥  ' +  payFee}</View>
+              <View className="color1">{"¥  " + payFee}</View>
             </View>
             {beanFee ? (
               <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
@@ -127,48 +133,46 @@ class Index extends Component {
                   {beanFee + `(¥ ${(Number(beanFee) / 100).toFixed(2)})`}
                 </View>
               </View>
-            ):null}
+            ) : null}
 
             {deductFeeObject.length > 0 ? (
               <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
                 <View className="color2">优惠券</View>
                 <View className="color3">{deductFeeObject[0].reduceFee}</View>
               </View>
-            ):null}
-            <View  className='code_scanPay_liner'></View>
+            ) : null}
+            <View className="code_scanPay_liner"></View>
 
             <View className="code_scanPay_btnBox">
               <View
-                className="code_scanPay_btn"
-                onClick={() => switchTab("/pages/index/user/index")}
+                className="code_scanPay_btn btn_style1"
+                onClick={() => switchTab("/pages/index/home/index")}
               >
-                返回首页
+                查看订单
               </View>
               <View
-                className="code_scanPay_btn"
+                className="code_scanPay_btn btn_style2"
                 onClick={() =>
                   redirectTo(
                     `/pages/goods/getShopGoods/index?orderSn=${orderSn}`
                   )
                 }
               >
-                查看订单
+                天天捡卡豆
               </View>
             </View>
           </View>
           <View className="code_scanPay_loveMagin">
             <Lovely title={"当前可买"}></Lovely>
           </View>
-          {conpouVisible && (
-            <Coupons
-              title={"到店支付有福利"}
-              visible={() => {
-                this.setState({ conpouVisible: false });
-              }}
-              type={"consume"}
-              data={couponList}
-            ></Coupons>
-          )}
+          <Toast
+            show={visible}
+            visible={() => {
+              this.setState({
+                visible: false,
+              });
+            }}
+          ></Toast>
         </View>
       );
     } else {

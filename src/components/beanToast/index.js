@@ -9,10 +9,12 @@ import Taro from "@tarojs/taro";
 import { backgroundObj, switchTab } from "@/common/utils";
 import Router from "@/common/router";
 import ButtonView from "@/components/Button";
+import { scanCode } from "@/common/authority";
 import "./index.scss";
 export default (props) => {
-  const { data, visible, show = false, } = props;
+  const { data, visible, show = false, scan = {} } = props;
   const [animate, setAnimated] = useState(null);
+  const { scene } = scan;
   const {
     guideMomentFlag = "0",
     goodsName = "",
@@ -76,6 +78,21 @@ export default (props) => {
     setTimeout(() => {
       visible();
       switchTab("/pages/index/lookAround/index");
+    }, 300);
+  };
+  /* 跳转主页逛逛页面  */
+  const linkToScan = () => {
+    let animateTem2 = Taro.createAnimation({
+      duration: 300,
+      timingFunction: "linear",
+      delay: 0,
+      transformOrigin: "50% 50%",
+    });
+    animateTem2.scale(0, 0).step();
+    setAnimated(animateTem2);
+    setTimeout(() => {
+      visible();
+      scanCode();
     }, 300);
   };
   /* 跳转主页逛逛页面  */
@@ -168,24 +185,48 @@ export default (props) => {
           </ButtonView>
         </View>
         <View className="specal_layer_shareFriend"></View>
-        <View className="specal_layer_btn public_auto">
-          <ButtonView>
-            <View
-              onClick={() => onClose()}
-              className="specal_layer_btnLeft specal_layer_btnBox public_center"
-            >
-              继续捡豆
-            </View>
-          </ButtonView>
-          <ButtonView>
-            <View
-              onClick={() => linkToGuang()}
-              className="specal_layer_btnRight specal_layer_btnBox public_center"
-            >
-              马上逛逛
-            </View>
-          </ButtonView>
-        </View>
+
+        {scene ? (
+          <View className="specal_layer_btn public_auto">
+            <ButtonView>
+              <View
+                onClick={() => {
+                  linkToScan();
+                }}
+                className="specal_layer_scanBtn public_center"
+              >
+                扫码付
+              </View>
+            </ButtonView>
+            <ButtonView>
+              <View
+                onClick={() => linkToGuang()}
+                className="specal_layer_scanBtn public_center"
+              >
+                去逛逛
+              </View>
+            </ButtonView>
+          </View>
+        ) : (
+          <View className="specal_layer_btn public_auto">
+            <ButtonView>
+              <View
+                onClick={() => onClose()}
+                className="specal_layer_btnLeft specal_layer_btnBox public_center"
+              >
+                继续捡豆
+              </View>
+            </ButtonView>
+            <ButtonView>
+              <View
+                onClick={() => linkToGuang()}
+                className="specal_layer_btnRight specal_layer_btnBox public_center"
+              >
+                马上逛逛
+              </View>
+            </ButtonView>
+          </View>
+        )}
       </View>
     ),
   }[guideMomentFlag];
@@ -199,7 +240,6 @@ export default (props) => {
       }}
     >
       {templateBean}
-
     </View>
   );
 };
