@@ -134,25 +134,23 @@ class Index extends Component {
               </View>
             ) : null}
             <View className="code_scanPay_liner"></View>
-
             <View className="code_scanPay_btnBox">
               <View
-                className="code_scanPay_btn"
-                onClick={() => switchTab("/pages/index/user/index")}
+                className="code_scanPay_btn btn_style1"
+                onClick={() => switchTab("/pages/index/home/index")}
               >
-                返回首页
+                查看订单
               </View>
               <View
-                className="code_scanPay_btn"
+                className="code_scanPay_btn btn_style2"
                 onClick={() =>
                   redirectTo(
                     `/pages/goods/getShopGoods/index?orderSn=${orderSn}`
                   )
                 }
               >
-                查看订单
+                天天捡卡豆
               </View>
-            </View>
             <Coupon data={orderResult}></Coupon>
           </View>
 
