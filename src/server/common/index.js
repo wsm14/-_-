@@ -1,4 +1,5 @@
 import { httpGet, httpPost, httpOtherGet } from "@/api/newRequest";
+import store from "./../../model";
 import Taro from "@tarojs/taro";
 /*
  * params
