@@ -958,6 +958,7 @@ class Index extends React.PureComponent {
         <Toast
           data={userMomentsInfo}
           show={beanflag}
+          scan={getCurrentInstance().router.params || {}}
           visible={() => {
             this.setState({
               beanflag: false,
