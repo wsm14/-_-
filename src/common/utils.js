@@ -668,6 +668,9 @@ export const computedSize = (size) => {
   let sizeScale = width / 375;
   return parseInt(sizeScale * size);
 };
+export const computedWinHeight = () => {
+  return Taro.getSystemInfoSync().windowHeight;
+};
 //首页视频计算比例
 export const resiApiKey = "f390f1e2b0faa95710d00a0801384c41";
 //高德key

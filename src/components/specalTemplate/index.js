@@ -55,7 +55,7 @@ export const template = (item, configUserLevelInfo, animate = true) => {
         <View className="specialOffer_title  font_noHide">{goodsName}</View>
         <View className="specialOffer_userDetails font_hide">
           <View
-            className="specialOffer_userprofile"
+            className="specialOffer_userprofile dakale_profile"
             style={backgroundObj(merchantLogo)}
           ></View>
           <View className="specialOffer_userHide">

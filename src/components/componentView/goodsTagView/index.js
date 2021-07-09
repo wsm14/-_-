@@ -11,14 +11,13 @@ export default ({ confirm, onChange, val }) => {
   const [falg, setFlag] = useState(null);
   useEffect(() => {
     if (falg) {
-      setData([]);
-      setList([]);
       if (val) {
         fetchGoodsTag({
           categoryId: val,
         }).then((res) => {
           const { configGoodsTagList = [] } = res;
           setList(configGoodsTagList);
+          setData([]);
         });
       }
     }
@@ -27,6 +26,7 @@ export default ({ confirm, onChange, val }) => {
     if (!falg) {
       setFlag(true);
     } else {
+      console.log(123213123);
       onChange(data.toString());
     }
   }, [data]);

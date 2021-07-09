@@ -6,6 +6,7 @@ page {
 }
 .publicTypeGoods_box {
   width: 100%;
+  min-height: 100%;
   background: #ffffff;
   .publicTypeGoods_view_box {
     position: relative;
@@ -31,7 +32,7 @@ page {
   }
   .perimeterList_scroll1 {
     background: #ffffff;
-    min-height: 1200px;
+    min-height: 1300px;
   }
   .perimeterList_nullStatus {
     width: 300px;

@@ -14,7 +14,7 @@ import Tags from "@/components/componentView/goodsTagView";
 import { template } from "@/components/specalTemplate";
 import {
   toast,
-  computedViewHeight,
+  computedWinHeight,
   setNavTitle,
   computedSize,
 } from "@/common/utils";
@@ -44,7 +44,7 @@ class Index extends Component {
       specialGoodsList: [],
       bannerList: [],
       size: computedSize(220),
-      height: 0,
+      height: computedWinHeight() - computedSize(44),
       loading: false,
     };
   }
@@ -180,6 +180,7 @@ class Index extends Component {
         specialGoodsList: [],
       },
       (res) => {
+        console.log();
         this.getshopList();
       }
     );
@@ -220,7 +221,7 @@ class Index extends Component {
       topFlag,
       size,
       loading,
-      httpData: { categoryIds },
+      httpData: { categoryIds, goodsTags },
     } = this.state;
     const bannerStyle = {
       width: "100%",
@@ -234,19 +235,22 @@ class Index extends Component {
       justifyContent: "center",
       zIndex: 285,
     };
+    console.log(computedWinHeight());
     const templateView = () => {
       return (
         <View className="publicTypeGoods_box">
           <View className="publicTypeGoods_scroll">
-            <View className="publicTypeGoods_bannerBox">
-              <Banner
-                imgName="coverImg"
-                data={bannerList}
-                bottom={bottom}
-                boxStyle={bannerStyle}
-                showNear
-              ></Banner>
-            </View>
+            {bannerList.length && (
+              <View className="publicTypeGoods_bannerBox">
+                <Banner
+                  imgName="coverImg"
+                  data={bannerList}
+                  bottom={bottom}
+                  boxStyle={bannerStyle}
+                  showNear
+                ></Banner>
+              </View>
+            )}
 
             <View className="publicTypeGoods_view_box">
               <View className="publicTypeGoods_view_nodeBox">
@@ -258,18 +262,27 @@ class Index extends Component {
                   top={true}
                   configUserLevelInfo={configUserLevelInfo}
                   dataFormat="Object"
-                  setTop={{ falgNav: true, topNav: size, setNav: 0 }}
+                  setTop={{
+                    falgNav: true,
+                    topNav: bannerList.length ? size : 0,
+                    setNav: 0,
+                  }}
                 ></FilterDropdown>
               </View>
 
               <Tags
                 onChange={(val) => {
-                  this.changeSelect({ goodsTags: val });
+                  if (goodsTags !== val) {
+                    this.changeSelect({ goodsTags: val });
+                  }
                 }}
                 val={categoryIds}
               ></Tags>
               <View className="scroll_margin"></View>
-              <View className="perimeterList_scroll1">
+              <View
+                style={{ minHeight: height + "px" }}
+                className="perimeterList_scroll1"
+              >
                 {specialGoodsList.length === 0 && (
                   <>
                     <View className="perimeterList_nullStatus"></View>

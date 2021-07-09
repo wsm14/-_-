@@ -42,7 +42,7 @@ class Index extends Component {
       left: 0,
       hotHttp: {
         page: 1,
-        limit: 5,
+        limit: 2,
         specialFilterType: "hot",
       },
       dateHttp: {
@@ -78,7 +78,7 @@ class Index extends Component {
         left: 0,
         hotHttp: {
           page: 1,
-          limit: 5,
+          limit: 2,
           specialFilterType: "hot",
         },
         dateHttp: {
@@ -329,6 +329,7 @@ class Index extends Component {
       },
     } = this.state;
     const { cityName, cityCode } = this.props.store.locationStore;
+    
     const templateSelect = () => {
       return (
         <>

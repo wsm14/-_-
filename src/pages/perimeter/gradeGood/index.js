@@ -237,7 +237,7 @@ class Index extends Component {
       bannerList,
       top,
       body,
-      httpData: { categoryIds },
+      httpData: { categoryIds, goodsTags },
       title,
       size,
       loading,
@@ -333,7 +333,9 @@ class Index extends Component {
             ></FilterDropdown>
             <Tags
               onChange={(val) => {
-                this.changeSelect({ goodsTags: val });
+                if (goodsTags !== val) {
+                  this.changeSelect({ goodsTags: val });
+                }
               }}
               val={categoryIds}
             ></Tags>
@@ -354,9 +356,6 @@ class Index extends Component {
                   <View className="perimeterList_text">暂无商品</View>
                 </>
               )}
-              {specialGoodsList.map((item) => {
-                return template(item, configUserLevelInfo);
-              })}
               {specialGoodsList.map((item) => {
                 return template(item, configUserLevelInfo);
               })}

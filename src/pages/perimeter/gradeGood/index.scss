@@ -23,6 +23,8 @@ page {
     top: 0;
     font-size: 32px;
     color: #ffffff;
+    left: 0;
+    right: 0;
   }
   .gradeGood_tabbar_box1 {
     display: flex;
@@ -34,6 +36,8 @@ page {
     font-size: 32px;
     color: #333333;
     background: #ffffff;
+    left: 0;
+    right: 0;
   }
   .gradeGood_tabbar_box_search {
     width: 48px;
@@ -107,7 +111,7 @@ page {
   }
   .perimeterList_scroll1 {
     background: #ffffff;
-    min-height: 1200px;
+    min-height: 1300px;
   }
   .perimeterList_nullStatus {
     width: 300px;
