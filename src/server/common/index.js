@@ -232,10 +232,17 @@ export const getSpecialGoodsCategory = (data = {}, fn) => {
 //获取解密分享码
 
 export const getShareInfo = (data = {}, fn) => {
+  const { authStore } = store;
+  const { shareType = {} } = authStore;
+  const { sourceKey, sourceType } = shareType;
   httpGet(
     {
       url: "/common/share/getShareInfo",
-      data: data,
+      data: {
+        ...data,
+        sourceKey,
+        sourceType,
+      },
     },
     (res) => fn(res)
   );
