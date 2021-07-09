@@ -61,26 +61,33 @@ page {
       border-radius: 1px;
       margin: 24px auto 0;
     }
-    .code_scanPay_btnBox {
-      padding: 48px 149px 0;
+  }
+  .code_scanPay_btnBox {
+    padding: 48px 149px;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    width: 452px;
+    .code_scanPay_btn {
+      width: 214px;
       height: 60px;
-      display: flex;
-      justify-content: space-between;
-      width: 452px;
-      .code_scanPay_btn {
-        width: 214px;
-        height: 60px;
-        border-radius: 8px;
-        border: 2px solid #06c0c2;
-        text-align: center;
-        line-height: 60px;
-        margin-right: 24px;
-        color: #06c0c2;
-        font-size: 28px;
-      }
-      .code_scanPay_btn:last-child {
-        margin-right: 0px;
-      }
+      border-radius: 8px;
+      text-align: center;
+      line-height: 60px;
+      margin-right: 24px;
+
+      font-size: 28px;
+    }
+    .btn_style1 {
+      border: 2px solid #06c0c2;
+      color: #06c0c2;
+    }
+    .btn_style2 {
+      border: 2px solid #ef476f;
+      color: #ef476f;
+    }
+    .code_scanPay_btn:last-child {
+      margin-right: 0px;
     }
   }
   .code_scanPay_loveMagin {

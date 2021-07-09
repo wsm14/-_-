@@ -17,6 +17,7 @@ import { fetchUserShareCommission } from "@/server/index";
 import Coupons from "@/components/coupon";
 import Recommend from "@/components/specalActive";
 import Coupon from "./components/coupon";
+import Toast from "./components/toast";
 
 const formatTime = (date) => {
   const year = date.getFullYear();
@@ -134,12 +135,13 @@ class Index extends Component {
               </View>
             ) : null}
             <View className="code_scanPay_liner"></View>
+
             <View className="code_scanPay_btnBox">
               <View
                 className="code_scanPay_btn btn_style1"
-                onClick={() => switchTab("/pages/index/home/index")}
+                onClick={() => switchTab("/pages/index/user/index")}
               >
-                查看订单
+                返回首页
               </View>
               <View
                 className="code_scanPay_btn btn_style2"
@@ -149,8 +151,9 @@ class Index extends Component {
                   )
                 }
               >
-                天天捡卡豆
+                查看订单
               </View>
+            </View>
             <Coupon data={orderResult}></Coupon>
           </View>
 
@@ -166,6 +169,7 @@ class Index extends Component {
               data={couponList}
             ></Coupons>
           )}
+          <Toast></Toast>
         </View>
       );
     } else {
