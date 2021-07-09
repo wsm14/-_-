@@ -105,7 +105,6 @@ class Index extends Component {
         merchantLogo,
       },
     } = this.state;
-
     const { profile, username } = Taro.getStorageSync("userInfo");
     getShareInfo(
       {
