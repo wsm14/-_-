@@ -10,7 +10,7 @@ class Index extends Component {
     super(...arguments);
     this.state = {
       httpData: {
-        merchantId: getCurrentInstance().router.params.merchantId,
+        ...getCurrentInstance().router.params,
         page: 1,
         limit: 10,
       },

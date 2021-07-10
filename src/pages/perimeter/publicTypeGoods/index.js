@@ -240,7 +240,7 @@ class Index extends Component {
       return (
         <View className="publicTypeGoods_box">
           <View className="publicTypeGoods_scroll">
-            {bannerList.length && (
+            {bannerList.length ? (
               <View className="publicTypeGoods_bannerBox">
                 <Banner
                   imgName="coverImg"
@@ -250,7 +250,7 @@ class Index extends Component {
                   showNear
                 ></Banner>
               </View>
-            )}
+            ) : null}
 
             <View className="publicTypeGoods_view_box">
               <View className="publicTypeGoods_view_nodeBox">

@@ -47,6 +47,7 @@ class Index extends Component {
       conpouVisible: false,
       couponList: [],
       configUserLevelInfo: {},
+      visible: false,
     };
   }
 
@@ -74,6 +75,7 @@ class Index extends Component {
         const { orderResult } = res;
         this.setState({
           orderResult,
+          visible: true,
         });
       }
     );
@@ -100,6 +102,7 @@ class Index extends Component {
       conpouVisible,
       couponList,
       configUserLevelInfo,
+      visible,
     } = this.state;
     if (Object.keys(orderResult).length > 0) {
       return (
@@ -169,7 +172,14 @@ class Index extends Component {
               data={couponList}
             ></Coupons>
           )}
-          <Toast></Toast>
+          <Toast
+            show={visible}
+            visible={() => {
+              this.setState({
+                visible: false,
+              });
+            }}
+          ></Toast>
         </View>
       );
     } else {

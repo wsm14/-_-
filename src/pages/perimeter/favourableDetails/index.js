@@ -589,7 +589,11 @@ class MerchantDetails extends Component {
               </View>
             )}
             {/* 套餐 */}
-            <Merchant data={specialGoodsInfo}></Merchant>
+            <Merchant
+              serviceType={"specialGoods"}
+              data={specialGoodsInfo}
+              ownerServiceId={specialActivityIdString}
+            ></Merchant>
             {/* 商品详情 */}
             {(goodsDesc || goodsDescImg) && (
               <View className="shopdetails_shop_details">

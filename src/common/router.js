@@ -32,6 +32,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
     wraparound: "/pages/coupon/wraparound/index", //券包
     //券包
+    groupDetails: "/pages/perimeter/kaMerchantDetails/index", //集团详情
     gradeGood: "/pages/perimeter/gradeGood/index", //店铺带搜索通用页面
     publicTypeGoods: "/pages/perimeter/publicTypeGoods/index", //店铺公用页面
     goodList: "/pages/perimeter/perimeterList/index", //店铺列表

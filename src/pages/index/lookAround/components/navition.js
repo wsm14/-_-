@@ -24,7 +24,7 @@ export default (props) => {
         className="lookAround_navition_center"
         onClick={() => navigateTo("/pages/perimeter/search_shop/index")}
       >
-        搜你想搜
+        搜索附近吃喝玩乐～
       </View>
       <View className="lookAround_navition_right">
         <View

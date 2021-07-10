@@ -308,3 +308,35 @@ export const listAllPut = (data = {}, fn) => {
     (res) => fn && fn(res)
   );
 };
+
+export const fetchMerchantListByKeyword = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/searchMerchantListByKeyword",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//新版商家名搜索商家列表（只用来搜索，包含KA）
+
+export const fetchGroupDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/getGroupDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取集团详情
+export const fetchServiceMerchants = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/listActivityServiceMerchants",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取集团商品适用门店

@@ -91,6 +91,7 @@ export default {
     {
       root: "pages/perimeter",
       pages: [
+        "kaMerchantDetails/index", //集团详情
         "gradeGood/index", //带搜索的公用商品列表
         "perimeterList/index", //逛逛商品列表
         "publicTypeGoods/index", //逛逛公用功能区页面

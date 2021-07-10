@@ -19,8 +19,9 @@ export const coupon = (data) => {
     merchantIdString,
     ownerIdString,
     ownerCouponIdString,
+    remain
   } = data;
-  const { couponPrice = 0, thresholdPrice, remain } = reduceObject;
+  const { couponPrice = 0, thresholdPrice } = reduceObject;
   let a = 0;
   const templateThreshold = () => {
     if (thresholdPrice && thresholdPrice.length > 0) {
