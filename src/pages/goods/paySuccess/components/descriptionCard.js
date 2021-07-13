@@ -109,7 +109,7 @@ export default (props) => {
   return (
     <View className="paySuccess_box">
       <View
-        className="paySuccess_cover"
+        className="paySuccess_cover coupon_shop_icon"
         style={backgroundObj(merchantImg)}
       ></View>
       <View className="paySuccess_goodName">{goodsName}</View>

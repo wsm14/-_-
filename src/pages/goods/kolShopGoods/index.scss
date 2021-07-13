@@ -109,14 +109,30 @@ page {
           max-width: 280px;
           height: 42px;
           font-size: 28px;
-          font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 600;
           color: #333333;
           line-height: 42px;
           margin-left: 29px;
           margin-right: 16px;
         }
-
+        .descriptionCard_group_liner {
+          font-size: 24px;
+          font-weight: 400;
+          color: #07c0c2;
+          display: flex;
+          align-items: center;
+          margin-left: auto;
+        }
+        .descriptionCard_group_liner::after {
+          width: 24px;
+          height: 24px;
+          margin-left: 4px;
+          content: "";
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon692.png")
+            no-repeat;
+          background-size: 100% 100%;
+          display: block;
+        }
         .descriptionCard_goIcon {
           width: 36px;
           height: 36px;

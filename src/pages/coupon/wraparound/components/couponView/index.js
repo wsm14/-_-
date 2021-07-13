@@ -44,7 +44,7 @@ export default (props) => {
     }
   };
   const templateContent = () => {
-    if (couponType === "goodsCoupon") {
+    if (couponType === "specialGoods") {
       return `数量${verificationCodeAmount}`;
     } else {
       return `面值${couponPrice} ${

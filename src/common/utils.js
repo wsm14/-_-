@@ -430,7 +430,7 @@ export const filterPayStatus = (string, type = "") => {
   if (type === "expiredRefund") {
     return "订单已过期";
   } else if (type === "manualRefund") {
-    return "已退款成功";
+    return "申请退款中";
   } else {
     switch (string) {
       case "0":

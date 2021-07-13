@@ -88,7 +88,7 @@ class Index extends Component {
   render() {
     const {
       orderResult,
-      orderResult: { orderType },
+      orderResult: { orderType = "specialGoods" },
       visible,
       configNewcomerOrdersInfo,
     } = this.state;
