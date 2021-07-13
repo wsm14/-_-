@@ -83,7 +83,7 @@ export default ({
       ></View>
       <View className="templateCard_details_box">
         <View
-          className="templateCard_image"
+          className="templateCard_image coupon_shop_icon"
           style={backgroundObj(
             promotionImg ||
             userProfile

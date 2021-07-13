@@ -75,7 +75,7 @@ export default ({
     select: {
       selectIndex: -1,
       val: {
-        value: "",
+        value: "distanceSort",
       },
     },
   });

@@ -50,11 +50,17 @@ export default ({
           borderRadius: Taro.pxTransform(2),
         }}
         fontStyle={{ color: "#07C0C2", fontSize: Taro.pxTransform(32) }}
-        sizeStyle={{ fontSize: Taro.pxTransform(32) ,color:'#999999'}}
+        sizeStyle={{ fontSize: Taro.pxTransform(32), color: "#999999" }}
         style={tabStyle}
         {...setting}
       ></Tabs>
-      {<MerchantView current={count} keyword={keywords}></MerchantView>}
+      {
+        <MerchantView
+          configUserLevelInfo={configUserLevelInfo}
+          current={count}
+          keyword={keywords}
+        ></MerchantView>
+      }
       {<KolView store={store} current={count} keyword={keywords}></KolView>}
       {
         <ShopView

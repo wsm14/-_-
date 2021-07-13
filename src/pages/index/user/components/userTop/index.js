@@ -69,11 +69,14 @@ export default (props) => {
           className="user_top_userProfile dakale_profile"
           style={backgroundObj(profile)}
         ></View>
-        <View onClick={() => {
-          if (!loginStatus()) {
-            goUser()
-          }
-        }} className="user_top_usercontent">
+        <View
+          onClick={() => {
+            if (!loginStatus()) {
+              goUser();
+            }
+          }}
+          className="user_top_usercontent"
+        >
           <View className="user_top_username">
             <View className="user_max_width  font_hide">
               {status === 1 && loginStatus() ? username : "登录后玩转哒卡乐"}
@@ -103,15 +106,16 @@ export default (props) => {
       </View>
       {status === 1 && loginStatus() && (
         <View className="user_other_box public_auto">
-          <View
-            className="user_goLink"
-            onClick={() => fetchUserDetails()}
-          >
+          <View className="user_goLink" onClick={() => fetchUserDetails()}>
             <View className="color6 font24">同步微信账号</View>
           </View>
-          <View className="user_scan" onClick={() => scanCode()}></View>
         </View>
       )}
+      <View
+        className="user_coupon"
+        onClick={() => navigateTo("/pages/coupon/wraparound/index")}
+      ></View>
+      <View className="user_scan" onClick={() => scanCode()}></View>
     </View>
   );
 };

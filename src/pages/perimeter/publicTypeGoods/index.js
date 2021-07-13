@@ -33,6 +33,7 @@ class Index extends Component {
         keyword: "",
         goodsTags: "",
         specialFilterType: getCurrentInstance().router.params.type,
+        sortRule: "distanceSort",
       },
       bannerType: {
         bannerType:

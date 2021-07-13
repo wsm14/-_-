@@ -6,7 +6,14 @@ import { navigateTo, loginStatus } from "@/common/utils";
 import { loginBtn } from "@/common/authority";
 import Router from "@/common/router";
 export default (props) => {
-  const { status, data = {}, levelDetails = {}, nextLevel = {} } = props;
+  const {
+    status,
+    data = {},
+    levelDetails = {},
+    nextLevel = {},
+    infoCollect,
+    fetchLever,
+  } = props;
   const { informCount, level = "0" } = data;
   const { bean } = data;
   const {
@@ -16,7 +23,7 @@ export default (props) => {
     monthToIncome = 0,
     totalIncome = 0,
   } = levelDetails;
-  const { levelProgress = {}, processInfo } = nextLevel;
+  const { levelProgress = {}, processInfo, currentProgress = {} } = nextLevel;
   const { normal } = levelProgress;
   const list = [
     {
@@ -60,14 +67,7 @@ export default (props) => {
   const templateKol = () => {
     if (level === "0") {
       return (
-        <View
-          onClick={() =>
-            Router({
-              routerName: "download",
-            })
-          }
-          className="user_content_kolBox"
-        >
+        <View className="user_content_kolBox">
           <View className="user_content_kol">
             <View className="user_kol_lever public_auto">
               <View className="user_kol_leverLeft">
@@ -75,7 +75,16 @@ export default (props) => {
                 <View className="user_kol_leverTitle">升级哒人</View>
                 <View className="user_kol_leverDesc">自购省 分享赚</View>
               </View>
-              <View className="user_kol_leverRight public_center">
+              <View
+                className="user_kol_leverRight public_center"
+                onClick={() => {
+                  if (currentProgress.normal / normal >= 1) {
+                    fetchLever();
+                  } else {
+                    infoCollect();
+                  }
+                }}
+              >
                 解锁哒人
               </View>
             </View>
@@ -101,14 +110,7 @@ export default (props) => {
       );
     } else {
       return (
-        <View
-          onClick={() =>
-            Router({
-              routerName: "download",
-            })
-          }
-          className="user_content_kolBox"
-        >
+        <View className="user_content_kolBox">
           <View className="user_parentBox">
             <View className="user_ParentTitle">
               <View>你已累计赚取</View>
@@ -148,16 +150,6 @@ export default (props) => {
   };
   return (
     <View className="user_content">
-      <View className="user_tab_iconBox public_auto">
-        {list.map((item) => {
-          return (
-            <View className="user_tabList" onClick={() => linkTo(item)}>
-              <View className={`user_tab_icons ${item.style}`}></View>
-              <View className="user_tab_font">{item.font}</View>
-            </View>
-          );
-        })}
-      </View>
       <View
         onClick={() => {
           loginBtn(() => {

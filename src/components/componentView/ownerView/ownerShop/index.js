@@ -42,11 +42,7 @@ export default ({ data, type = "any" }) => {
       specialGoodsAmount,
       markBean,
     } = item;
-    if (
-      specialGoodsFlag !== "1" &&
-      markFlag !== "1" &&
-      couponList.length === 0
-    ) {
+    if (markFlag !== "1" && couponList.length === 0) {
       return null;
     } else {
       return (

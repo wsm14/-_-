@@ -7,12 +7,142 @@ page {
 
 .page_userBox {
   width: 750px;
-  background: #F5F5F5;
+  background: #f5f5f5;
   line-height: 1;
   padding-bottom: 83px;
+  .close_box {
+    width: 48px;
+    height: 48px;
+    margin-right: 8px;
+  }
+  .reloadBottom {
+    height: 80px;
+    background: #ffffff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    padding: 0 32px;
+  }
+  .reloadBottom_box {
+    height: 52px;
+    width: 100%;
+  }
+  .reloadBottom_left {
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    display: flex;
+    align-items: center;
+  }
+  .reloadBottom_right {
+    width: 138px;
+    height: 52px;
+    background: #108588;
+    border-radius: 26px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+  .rules_box {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    .rules_prompts {
+      width: 650px;
+      height: 960px;
+      background: #ffffff;
+      border-radius: 20px;
+      .rules_title {
+        height: 92px;
+        font-size: 32px;
+        font-weight: 600;
+        color: #333333;
+        border-bottom: 1px solid #e5e5e5;
+        line-height: 92px;
+        text-align: center;
+      }
+      .rules_context {
+        width: 588px;
+        height: 680px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #666666;
+        line-height: 42px;
+        text-align: left;
+        margin: 32px auto;
+      }
+      .rules_btn {
+        margin-top: 40px;
+        padding: 0 40px;
+        display: flex;
+        height: 70px;
+        align-items: center;
+        justify-content: center;
+        .rules_btn_out {
+          width: 520px;
+          height: 70px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 8px;
+          font-size: 28px;
+          font-weight: 600;
+          color: #ffffff;
+          background: #07c0c2;
+        }
+        .rules_btn_opcity {
+          opacity: 0.4;
+        }
+      }
+    }
+    .rules_success_box {
+      width: 540px;
+      height: 616px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon691.png)
+        no-repeat;
+      background-size: 100% 100%;
+      position: relative;
+    }
+    .rules_success_btn {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      right: 40px;
+      height: 70px;
+      .rules_success_btnLeft {
+        width: 144px;
+        height: 70px;
+        border-radius: 8px;
+        border: 2px solid #07c0c2;
+        box-sizing: border-box;
+        font-size: 32px;
+        font-weight: 400;
+        color: #07c0c2;
+      }
+      .rules_success_btnRight {
+        width: 296px;
+        height: 70px;
+        background: #07c0c2;
+        border-radius: 8px;
+        font-size: 32px;
+        font-weight: 400;
+        color: #ffffff;
+        line-height: 32px;
+      }
+    }
+  }
+  .page_user_toast1 {
+    padding: 32px 52px;
+  }
   .user_top_newBox {
     background: white;
     padding: 32px;
+    position: relative;
   }
   .user_other_box {
     margin: 8px 32px 0 152px;
@@ -33,6 +163,29 @@ page {
     background: url(https://wechat-config.dakale.net/miniprogram/image/icon614.png)
       no-repeat;
     background-size: 100% 100%;
+    position: absolute;
+    right: 32px;
+    bottom: 32px;
+  }
+  .user_coupon {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon690.png)
+      no-repeat;
+    background-size: 100% 100%;
+    right: 112px;
+    bottom: 32px;
+  }
+  .user_coupon::after {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: #ef476f;
+    display: block;
+    content: "";
+    right: -7px;
+    border-radius: 50%;
   }
   .user_top_box {
     display: flex;
@@ -97,7 +250,7 @@ page {
   }
 
   .user_content {
-    padding: 48px 44px;
+    padding: 40px 32px;
     background: #ffffff;
 
     .user_tab_iconBox {
@@ -157,7 +310,6 @@ page {
       background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon524.png")
         no-repeat;
       background-size: 100% 100%;
-      margin-top: 48px;
       .user_card_box {
         padding: 32px 24px;
         .user_card_left {

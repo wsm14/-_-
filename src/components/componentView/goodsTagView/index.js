@@ -19,6 +19,9 @@ export default ({ confirm, onChange, val }) => {
           setList(configGoodsTagList);
           setData([]);
         });
+      } else {
+        setList([]);
+        setData([]);
       }
     }
   }, [val]);
@@ -26,7 +29,6 @@ export default ({ confirm, onChange, val }) => {
     if (!falg) {
       setFlag(true);
     } else {
-      console.log(123213123);
       onChange(data.toString());
     }
   }, [data]);

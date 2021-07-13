@@ -5,7 +5,7 @@ import Taro, { useReachBottom } from "@tarojs/taro";
 import { fetchMerchantListByKeyword } from "@/server/perimeter";
 import GroupView from "@/components/componentView/ownerView/ownerGroup";
 import ShopView from "@/components/componentView/ownerView/ownerShop";
-export default ({ keyword, current }) => {
+export default ({ keyword, current, configUserLevelInfo }) => {
   const [data, setData] = useState({
     page: 1,
     limit: 10,
@@ -60,9 +60,11 @@ export default ({ keyword, current }) => {
         )}
 
         {list.length > 0 ? (
-          <View>
+          <View className="xixihaha">
             {list.map((item) => {
-              return <ShopView data={item}></ShopView>;
+              return (
+                <ShopView userInfo={configUserLevelInfo} data={item}></ShopView>
+              );
             })}
           </View>
         ) : (
