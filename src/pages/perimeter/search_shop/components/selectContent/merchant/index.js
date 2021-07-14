@@ -41,7 +41,7 @@ export default ({ keyword, current, configUserLevelInfo }) => {
     }
   };
   useReachBottom(() => {
-    if (countStatus && current == 0) {
+    if (countStatus && current == 1) {
       setData({
         ...data,
         page: data.page + 1,
