@@ -126,7 +126,7 @@ class Index extends Component {
               <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
                 <View className="color2">卡豆优惠抵扣</View>
                 <View className="color3">
-                  {beanFee + `(¥ ${(Number(beanFee) / 100).toFixed(2)})`}
+                  - {beanFee + `(¥ ${(Number(beanFee) / 100).toFixed(2)})`}
                 </View>
               </View>
             ) : null}
@@ -134,7 +134,7 @@ class Index extends Component {
             {deductFeeObject.length > 0 ? (
               <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
                 <View className="color2">优惠券</View>
-                <View className="color3">{deductFeeObject[0].reduceFee}</View>
+                <View className="color3">- {deductFeeObject[0].reduceFee}</View>
               </View>
             ) : null}
             <View className="code_scanPay_liner"></View>
@@ -163,16 +163,6 @@ class Index extends Component {
 
           <Recommend current={true} userInfo={configUserLevelInfo}></Recommend>
 
-          {conpouVisible && (
-            <Coupons
-              title={"到店支付有福利"}
-              visible={() => {
-                this.setState({ conpouVisible: false });
-              }}
-              type={"consume"}
-              data={couponList}
-            ></Coupons>
-          )}
           <Toast
             show={visible}
             visible={() => {

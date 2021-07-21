@@ -9,7 +9,7 @@ import {
   navigateTo,
   mapGo,
 } from "@/common/utils";
-import goLink from "@/common/router";
+import Router from "@/common/router";
 import Taro from "@tarojs/taro";
 import drawQrcode from "weapp-qrcode";
 export default (props) => {
@@ -137,21 +137,26 @@ export default (props) => {
   }[orderResult.couponStatus];
 
   console.log(orderResult);
-  const { ownerType, thresholdPrice = "" } = orderResult;
+  const {
+    ownerType,
+    thresholdPrice = "",
+    merchantCount,
+    ownerIdString,
+    userCouponIdString,
+    couponType,
+  } = orderResult;
   return (
     <View className="couponDetails_title" style={style ? style : {}}>
       <View className="couponDetails_box">
-        {ownerType === "group" ? (
+        {merchantCount !== 1 ? (
           <>
-            <View
-              onClick={() =>
-                navigateTo(
-                  `/pages/perimeter/groupMerchant/index?merchantId=${orderResult.merchantIdString}`
-                )
-              }
-              className="couponDetails_merchant"
-            >
+            <View className="couponDetails_merchant">
               <View
+                onClick={() =>
+                  navigateTo(
+                    `/pages/perimeter/merchantDetails/index?merchantId=${ownerIdString}`
+                  )
+                }
                 className="couponDetails_profile coupon_shop_icon"
                 style={
                   orderResult.merchantLogo
@@ -163,8 +168,21 @@ export default (props) => {
                 {orderResult.merchantName}
               </View>
             </View>
-            <View className="groupGo">
-              <View className="groupGo_font">查看可用商家</View>
+            <View
+              className="groupGo"
+              onClick={() =>
+                Router({
+                  routerName: "groupList",
+                  args: {
+                    ownerServiceId: userCouponIdString,
+                    ownerId: ownerIdString,
+                  },
+                })
+              }
+            >
+              <View className="groupGo_font">
+                更多{merchantCount}家门店可用
+              </View>
             </View>
           </>
         ) : (
@@ -172,7 +190,7 @@ export default (props) => {
             <View
               onClick={() =>
                 navigateTo(
-                  `/pages/perimeter/merchantDetails/index?merchantId=${orderResult.merchantIdString}`
+                  `/pages/perimeter/merchantDetails/index?merchantId=${ownerIdString}`
                 )
               }
               className="couponDetails_merchant"

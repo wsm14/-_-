@@ -49,7 +49,10 @@ export const list = (item, index) => {
         }}
       ></View>
       <View className="list_shop_detailsBox">
-        <View className="list_shop_img" style={backgroundObj(coverImg)}></View>
+        <View
+          className="list_shop_img merchant_dakale_logo"
+          style={backgroundObj(coverImg)}
+        ></View>
         <View className="list_shop_font">
           <View className="list_shop_merchantName font_hide">
             {merchantName}

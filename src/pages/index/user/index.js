@@ -96,7 +96,7 @@ class Index extends React.Component {
         this.setState(
           {
             loginStatus: 1,
-            userInfo,
+            userInfo: { ...userInfo },
           },
           (res) => {
             this.getLevel();
@@ -114,30 +114,30 @@ class Index extends React.Component {
       collectStatus,
       collectStatus: { toastClick, ruleStatus },
     } = this.state;
-    if (!toastClick) {
+    // if (!toastClick) {
+    //   this.setState({
+    //     collectStatus: {
+    //       ...collectStatus,
+    //       toastVisible: true,
+    //     },
+    //   });
+    // } else if (!ruleStatus) {
+    //   this.setState({
+    //     collectStatus: {
+    //       ...collectStatus,
+    //       ruleVisible: true,
+    //     },
+    //   });
+    // } else {
+    saveLevelTarget({}).then((val) => {
       this.setState({
         collectStatus: {
           ...collectStatus,
-          toastVisible: true,
+          successToast: true,
         },
       });
-    } else if (!ruleStatus) {
-      this.setState({
-        collectStatus: {
-          ...collectStatus,
-          ruleVisible: true,
-        },
-      });
-    } else {
-      saveLevelTarget({}).then((val) => {
-        this.setState({
-          collectStatus: {
-            ...collectStatus,
-            successToast: true,
-          },
-        });
-      });
-    }
+    });
+    // }
   }
   getUserSub() {
     getUserSub({}, (res) => {
@@ -170,7 +170,7 @@ class Index extends React.Component {
       <View className="page_userBox">
         <UserTitle
           reload={() => {
-            this.getUserDetails.bind(this);
+            this.getUserDetails();
             this.setState({
               visible: true,
             });

@@ -115,17 +115,11 @@ class Index extends PureComponent {
         <>
           {nearUseList.length > 0 && (
             <>
-              <View className="wraparound_content_margin font32 color1 bold">
-                周边可用
-              </View>
               <CouponStatus data={nearUseList} visible={false}></CouponStatus>
             </>
           )}
           {otherUseList.length > 0 && (
             <>
-              <View className="wraparound_content_margin font32 color1 bold">
-                其他
-              </View>
               <CouponStatus data={otherUseList}></CouponStatus>
             </>
           )}
@@ -165,13 +159,13 @@ class Index extends PureComponent {
           fn={this.setIndex.bind(this)}
           style={tabStyle}
           lineStyle={{
-        background: "#108588",
-        width: Taro.pxTransform(40),
-        height: Taro.pxTransform(4),
-        borderRadius: Taro.pxTransform(2),
-      }}
-      fontStyle={{ color: "#108588", fontSize: Taro.pxTransform(32) }}
-      sizeStyle={{ fontSize: Taro.pxTransform(32), color: "#999999" }}
+            background: "#108588",
+            width: Taro.pxTransform(40),
+            height: Taro.pxTransform(4),
+            borderRadius: Taro.pxTransform(2),
+          }}
+          fontStyle={{ color: "#108588", fontSize: Taro.pxTransform(32) }}
+          sizeStyle={{ fontSize: Taro.pxTransform(32), color: "#999999" }}
           {...setting}
         ></Tabs>
         <View className="wraparound_content_box">

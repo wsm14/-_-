@@ -353,14 +353,14 @@ class Index extends PureComponent {
         <View className="userNewArtist_user font_hide">
           来自<Text className="bold">{"@" + username}</Text>的诚意推荐
         </View>
-        {status === "1" && Object.keys(infoData).length && (
+        {status === "1" && Object.keys(infoData).length > 0 ? (
           <View className="userNewArtist_infoGoods">
             {ShopView(infoData, "goods")}
           </View>
-        )}
-        {type === "merchant" && Object.keys(infoData).length && (
+        ) : null}
+        {type === "merchant" && Object.keys(infoData).length > 0 ? (
           <View className="userNewArtist_infoGoods">{CardView(infoData)}</View>
-        )}
+        ) : null}
         {specialGoodsList.length > 0 && (
           <View className="shop_info">
             <View className="shop_info_title">本店特惠</View>

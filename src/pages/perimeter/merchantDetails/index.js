@@ -18,6 +18,7 @@ import ButtonView from "@/components/Button";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
 import { getUserCoupon } from "@/server/perimeter";
 import NewToast from "@/components/noviceGuide";
+import NullStatus from "./components/undercarriage";
 import {
   backgroundObj,
   saveFollow,
@@ -38,7 +39,6 @@ import {
   loginStatus,
   filterPath,
 } from "@/common/utils";
-
 import Coupons from "@/components/coupon";
 import { coupon } from "@/components/componentView/CouponView";
 import { getAvailableCoupon } from "@/server/coupon";
@@ -176,10 +176,13 @@ class MerchantDetails extends Component {
       },
       (res) => {
         Taro.stopPullDownRefresh();
-        const { userMerchant } = res;
+        const { userMerchant = {} } = res;
         this.setState(
           {
-            userMerchantInfo: { ...userMerchant },
+            userMerchantInfo: {
+              ...userMerchant,
+              merchantStatus: Object.keys(userMerchant).length > 0 ? "1" : "2",
+            },
           },
           (res) => {
             this.getMerchantLove();
@@ -328,7 +331,6 @@ class MerchantDetails extends Component {
         categoryName,
         lat,
         lnt,
-        userIdString,
         telephone,
         merchantFollowStatus,
         tag,
@@ -336,6 +338,7 @@ class MerchantDetails extends Component {
         merchantName,
         headerContentObject = {},
         scenesNames = "",
+        merchantStatus = "1",
       },
       visible,
       specialGoodsList,
@@ -377,7 +380,7 @@ class MerchantDetails extends Component {
         );
       }
     };
-    if (Object.keys(userMerchantInfo).length > 0) {
+    if (Object.keys(userMerchantInfo).length > 0 && merchantStatus === "1") {
       return (
         <View className="merchantBox">
           {userId && (
@@ -438,7 +441,7 @@ class MerchantDetails extends Component {
                       saveFollow(
                         {
                           followType: "merchant",
-                          followUserId: userIdString,
+                          followUserId: merchantId,
                         },
                         (res) => {
                           this.setState(
@@ -462,19 +465,22 @@ class MerchantDetails extends Component {
                   <View
                     className="share_updateColleton_btn"
                     onClick={() =>
-                      deleteFollow({ followUserId: userIdString }, (res) => {
-                        this.setState(
-                          {
-                            userMerchantInfo: {
-                              ...this.state.userMerchantInfo,
-                              merchantFollowStatus: "0",
+                      deleteFollow(
+                        { followUserId: merchantId, followType: "merchant" },
+                        (res) => {
+                          this.setState(
+                            {
+                              userMerchantInfo: {
+                                ...this.state.userMerchantInfo,
+                                merchantFollowStatus: "0",
+                              },
                             },
-                          },
-                          () => {
-                            toast("取消成功");
-                          }
-                        );
-                      })
+                            () => {
+                              toast("取消成功");
+                            }
+                          );
+                        }
+                      )
                     }
                   >
                     已关注
@@ -634,7 +640,7 @@ class MerchantDetails extends Component {
               </View>
               <ScrollView scrollX className="merchant_billboard">
                 {goodsList.map((item, index) => {
-                  return billboard(this, item, userIdString);
+                  return billboard(this, item, merchantId);
                 })}
               </ScrollView>
             </>
@@ -705,8 +711,20 @@ class MerchantDetails extends Component {
             )}
         </View>
       );
+    } else {
+      return (
+        <NullStatus data={userMerchantInfo}>
+          {filterPath(getCurrentInstance().router.params) &&
+            !Taro.getStorageSync("newDeviceFlag") && (
+              <NewToast
+                type={"merchant"}
+                auth={login}
+                data={merchantHttpData}
+              ></NewToast>
+            )}
+        </NullStatus>
+      );
     }
-    return null;
   }
 }
 

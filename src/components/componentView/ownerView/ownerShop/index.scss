@@ -7,6 +7,7 @@
     .templateOwn_coverImg {
       width: 200px;
       height: 150px;
+      border-radius: 4px;
     }
     .templateOwn_content {
       margin-left: 16px;
@@ -211,10 +212,8 @@
         }
       }
       .ownerShop_text2 {
-        height: 32px;
         padding: 0 8px;
         text-align: center;
-        line-height: 32px;
         font-size: 22px;
         font-weight: 400;
         color: #333333;

@@ -105,7 +105,6 @@ export default (props) => {
             Router({
               routerName: "groupList",
               args: {
-                serviceType,
                 ownerServiceId,
                 ownerId: ownerIdString,
               },

@@ -113,6 +113,7 @@ export default ({ data = [], onChange, defaul, visible }) => {
             { marginRight: Taro.pxTransform(23) },
             (item, index) => {
               const { fatherId } = item;
+
               return (
                 <View
                   onClick={() => {
@@ -120,8 +121,11 @@ export default ({ data = [], onChange, defaul, visible }) => {
                   }}
                   className={classNames(
                     "sub-scorllView-tag",
-                    (fatherId && checked === null) ||
-                      setMenu(item, checked, "categoryIdString")
+                    fatherId
+                      ? fatherId === checked.fatherId
+                        ? "sub-scorllView-tagSelect"
+                        : "sub-scorllView-tagSelectNo"
+                      : setMenu(item, checked, "categoryIdString")
                       ? "sub-scorllView-tagSelect"
                       : "sub-scorllView-tagSelectNo"
                   )}

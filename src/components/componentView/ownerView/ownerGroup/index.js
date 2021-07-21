@@ -29,7 +29,7 @@ export default ({ data }) => {
     >
       <View className="ownerGroup_info_box">
         <View
-          class="ownerGroup_info_profile"
+          class="ownerGroup_info_profile merchant_dakale_logo"
           style={backgroundObj(brandLogo)}
         ></View>
         <View class="ownerGroup_info_content">

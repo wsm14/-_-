@@ -138,22 +138,20 @@ page {
       display: flex;
       align-items: center;
       .groupGo_font {
-        height: 36px;
-        font-size: 28px;
+        font-size: 24px;
         font-weight: 400;
-        color: #479bef;
-        line-height: 36px;
+        color: #07c0c2;
       }
     }
     .groupGo::after {
-      display: block;
-      content: "";
-      width: 36px;
-      height: 36px;
+      width: 24px;
+      height: 24px;
       margin-left: 4px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon424.png")
+      content: "";
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon692.png")
         no-repeat;
       background-size: 100% 100%;
+      display: block;
     }
     .goMap {
       width: 48px;

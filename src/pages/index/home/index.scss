@@ -18,6 +18,29 @@ page {
   height: 100%;
   position: relative;
   overflow: hidden;
+  .home_near_box {
+    position: relative;
+    top: 120px;
+  }
+  .home_near_image {
+    width: 300px;
+    height: 300px;
+    margin: 48px auto 0;
+  }
+  .home_near_font {
+    font-size: 28px;
+    margin-top: 32px;
+    text-align: center;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  .home_near_font2 {
+    font-size: 28px;
+    margin-top: 16px;
+    text-align: center;
+    font-weight: 400;
+    color: #999999;
+  }
   button::after {
     border: none;
   }
@@ -259,9 +282,11 @@ page {
   .home_Select {
     height: 48px;
     line-height: 48px;
-    font-size: 28px;
-    font-weight: 400;
+    font-size: 32px;
+    font-weight: 500;
     color: rgba(255, 255, 255, 0.6);
+    line-height: 32px;
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
     display: flex;
     .home_select_right {
       margin-right: 40px;

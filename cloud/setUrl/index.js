@@ -24,6 +24,6 @@ async function setWxUrl(path, query) {
     query: query,
     isExpire: false,
     expireType: 1,
-    expireInterval: 7,
+    expireInterval: 28,
   });
 }

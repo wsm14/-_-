@@ -41,7 +41,7 @@ class Index extends PureComponent {
   }
 
   render() {
-    const {
+    let {
       userCouponInfo,
       userCouponInfo: {
         activeBeginDate,
@@ -50,8 +50,14 @@ class Index extends PureComponent {
         useTime,
         buyDesc,
         thresholdPrice,
+        couponDesc,
       },
     } = this.state;
+    if (couponDesc) {
+      if (JSON.parse(couponDesc)) {
+        couponDesc = JSON.parse(couponDesc).toString();
+      }
+    }
     if (Object.keys(userCouponInfo).length > 0) {
       return (
         <View className="voucherDetails_father_box">
@@ -75,11 +81,11 @@ class Index extends PureComponent {
                   style={{ lineHeight: Taro.pxTransform(36) }}
                   className="shop_toastText"
                 >
-                  满{thresholdPrice}元可用 
+                  满{thresholdPrice}元可用
                 </View>
               </>
             )}
-            <View className="shop_toastDec shop_showNow">购买须知：</View>
+
             <View
               style={{ lineHeight: Taro.pxTransform(36) }}
               className="shop_toastText"
@@ -87,6 +93,12 @@ class Index extends PureComponent {
               到店后，在APP/小程序我的—卡券中找到相应的券码，将
               券码出示给店员，直接验码核销，要补差价的另行补齐；
             </View>
+            {couponDesc && (
+              <>
+                <View className="shop_toastDec shop_showNow">购买须知：</View>
+                <View className="shop_toastText">{couponDesc}</View>
+              </>
+            )}
           </View>
           {/*使用规则*/}
           <View className="shopdetails_shop_toast">

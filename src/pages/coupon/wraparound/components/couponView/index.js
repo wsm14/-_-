@@ -37,7 +37,7 @@ export default (props) => {
     );
   };
   const goCouponDetails = (couponType, userCouponIdString) => {
-    if (couponType !== "reduce") {
+    if (couponType !== "reduceCoupon") {
       navigateTo(`/pages/coupon/couponDetails/index?id=${userCouponIdString}`);
     } else {
       navigateTo(`/pages/coupon/voucherDetails/index?id=${userCouponIdString}`);

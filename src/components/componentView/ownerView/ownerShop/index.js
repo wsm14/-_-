@@ -9,8 +9,9 @@ import {
   filterStrList,
 } from "@/common/utils";
 import Router from "@/common/router";
+import SpecalList from "./components/specalList";
 import "./index.scss";
-export default ({ data, type = "any" }) => {
+export default ({ data, type = "any", userInfo }) => {
   const {
     perCapitaConsumption,
     categoryName,
@@ -21,7 +22,7 @@ export default ({ data, type = "any" }) => {
     coverImg,
     logoImg,
     specialGoodsFlag,
-    specialGoodsAmount,
+    specialActivityList,
     brandFlag,
     couponList = [],
     lat,
@@ -39,10 +40,14 @@ export default ({ data, type = "any" }) => {
       markFlag,
       couponFlag,
       couponList = [],
-      specialGoodsAmount,
+      specialActivityList,
       markBean,
     } = item;
-    if (markFlag !== "1" && couponList.length === 0) {
+    if (
+      markFlag !== "1" &&
+      couponList.length === 0 &&
+      specialActivityList.length === 0
+    ) {
       return null;
     } else {
       return (
@@ -71,6 +76,12 @@ export default ({ data, type = "any" }) => {
               </View>
             </View>
           )}
+          {specialActivityList.length > 0 && (
+            <SpecalList
+              userInfo={userInfo}
+              list={specialActivityList}
+            ></SpecalList>
+          )}
         </View>
       );
     }
@@ -89,7 +100,7 @@ export default ({ data, type = "any" }) => {
     >
       <View className="ownerShop_shop_detailsBox">
         <View
-          className="ownerShop_shop_img"
+          className="ownerShop_shop_img merchant_dakale_logo"
           style={backgroundObj(coverImg)}
         ></View>
         <View className="ownerShop_shop_font">

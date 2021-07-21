@@ -13,15 +13,15 @@ export default (props) => {
   useEffect(() => {
     const { relateOwnerId, merchantId, merchantIdString } = data;
     if (relateOwnerId && merchantId && list.length === 0) {
-      getListFreeCoupon({ relateOwnerId, merchantId: merchantIdString }).then(
-        (val) => {
-          const { couponList } = val;
-          setList(couponList);
-        }
-      );
+      getListFreeCoupon(
+        { relateOwnerId, merchantId: merchantIdString },
+        () => {}
+      ).then((val) => {
+        const { couponList = [] } = val;
+        setList(couponList);
+      });
     }
   }, [data]);
-  console.log(saveVal);
   const saveCoupon = (obj) => {
     const { ownerCouponId } = obj;
 
@@ -37,11 +37,17 @@ export default (props) => {
     });
   };
   const renderList = (item) => {
-    const { ownerCouponIdString, couponName, ownerIdString, thresholdPrice } =
-      item;
+    const {
+      ownerCouponIdString,
+      couponName,
+      ownerIdString,
+
+      reduceObject = {},
+    } = item;
+    const { thresholdPrice, couponPrice } = reduceObject;
     return (
       <View className="goods_coupon_sile">
-        <View className="goods_coupon_name font_hide">{couponName}</View>
+        <View className="goods_coupon_name font_hide">{couponPrice}元抵扣券</View>
         <View className="goods_coupon_type">
           {thresholdPrice ? `满${thresholdPrice}元可用` : "不限门槛"}
         </View>

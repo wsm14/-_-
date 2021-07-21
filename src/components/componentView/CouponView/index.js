@@ -95,8 +95,8 @@ export const coupon = (data) => {
             <View className="coupon_view_title font_hide">{couponName}</View>
             <View className="coupon_view_content">
               {" "}
-              {templateThreshold()}
-              {templateSelect()}
+               {templateThreshold()}
+               {templateSelect()}
             </View>
             <View className="coupon_view_bottom">
               <Text className="coupon_view_priceIcon">¥ </Text>

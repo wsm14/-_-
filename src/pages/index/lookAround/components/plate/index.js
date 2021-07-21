@@ -82,7 +82,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
         Router({
           routerName: "gradeGood",
           args: {
-            type: "highCommissionAlliance",
+            type: "highCommission",
             title: "高佣联盟",
             body: "好货精选",
           },

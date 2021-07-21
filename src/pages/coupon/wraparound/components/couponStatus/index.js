@@ -21,17 +21,8 @@ export default (props) => {
     <>
       {list.map((item, index) => {
         const { couponStatus } = item;
-        if (!close && index >= 2) {
-          return null;
-        }
         return <CouponView item={item}></CouponView>;
       })}
-      {!close && list.length > 2 && (
-        <View
-          className="wraparound_couponType_down"
-          onClick={() => onClose(true)}
-        ></View>
-      )}
     </>
   );
 };

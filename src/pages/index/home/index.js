@@ -838,6 +838,10 @@ class Index extends React.PureComponent {
         } else {
           return (
             <View className="home_near_box">
+              <NearTitle
+                configUserLevelInfo={configUserLevelInfo}
+                reload={triggered}
+              ></NearTitle>
               <View>
                 <View className="home_near_image  home_new_nullStatus"></View>
                 <View className="home_near_font">您的附近没有内容</View>
@@ -986,13 +990,11 @@ class Index extends React.PureComponent {
               (res) => {
                 if (this.state.player) {
                   setTimeout(() => {
-                    console.log(this.state.player, 2222);
                     Taro.createVideoContext(`video${current}`).play();
                   }, 300);
                 } else {
                   setTimeout(() => {
                     Taro.createVideoContext(`video${current}`).pause();
-                    console.log(this.state.player, 3333);
                   }, 300);
                 }
               }

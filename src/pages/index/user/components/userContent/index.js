@@ -110,7 +110,15 @@ export default (props) => {
       );
     } else {
       return (
-        <View className="user_content_kolBox">
+        <View
+          className="user_content_kolBox"
+          onClick={(e) => {
+            e.stopPropagation();
+            Router({
+              routerName: "download"
+            });
+          }}
+        >
           <View className="user_parentBox">
             <View className="user_ParentTitle">
               <View>你已累计赚取</View>

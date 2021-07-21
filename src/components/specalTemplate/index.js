@@ -255,11 +255,12 @@ export const couponTemplate = (item, configUserLevelInfo) => {
     buyRule,
     personLimit,
     dayMaxBuyAmount,
-    reduceObject: { couponPrice, thresholdPrice },
+    reduceObject = {},
     ownerCouponIdString,
     ownerIdString,
     merchantIdString,
   } = item;
+  const { couponPrice = "", thresholdPrice = "" } = reduceObject;
   const templateSelect = () => {
     if (buyRule === "unlimited") {
       return `不限购`;
