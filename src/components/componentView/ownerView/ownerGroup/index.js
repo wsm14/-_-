@@ -35,11 +35,11 @@ export default ({ data }) => {
         <View class="ownerGroup_info_content">
           <View className="ownerGroup_info_title font_hide">{groupName}</View>
           <View className="ownerGroup_info_contentbox">
-            {activityGoodsNum && (
+            {activityGoodsNum ? (
               <View className="ownerGroup_info_specal">
                 {activityGoodsNum}款特惠热卖中
               </View>
-            )}
+            ) : null}
             <View
               className="ownerGroup_info_near"
               onClick={(e) => {

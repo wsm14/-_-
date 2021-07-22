@@ -273,7 +273,7 @@ class Index extends Component {
         couponPrice,
         buyPrice,
         merchantPrice,
-        merchantCouponStatus = "1",
+        ownerCouponStatus = "1",
         remain,
         buyRule,
         dayMaxBuyAmount,
@@ -366,7 +366,7 @@ class Index extends Component {
         );
       }
     };
-    if (merchantCouponStatus === "1") {
+    if (ownerCouponStatus === "1") {
       return (
         <View className="payCoupon_box">
           <TaroShareDrawer

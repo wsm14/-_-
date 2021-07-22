@@ -11,15 +11,15 @@ import {
 import Router from "@/common/router";
 export default ({ data = {}, userInfo = {}, title = "秒杀价" }) => {
   const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
-  const linkTo = (activityId, merchantId) => {
-    Router({
-      routerName: "favourableDetails",
-      args: {
-        specialActivityId: activityId,
-        merchantId: merchantId,
-      },
-    });
-  };
+  // const linkTo = (activityId, merchantId) => {
+  //   Router({
+  //     routerName: "favourableDetails",
+  //     args: {
+  //       specialActivityId: activityId,
+  //       merchantId: merchantId,
+  //     },
+  //   });
+  // };
   const template = () => {
     const {
       goodsId,
@@ -41,7 +41,7 @@ export default ({ data = {}, userInfo = {}, title = "秒杀价" }) => {
     return (
       <View
         className="lookAround_template_specal animated  fadeIn"
-        onClick={() => linkTo(specialActivityIdString, merchantIdString)}
+        // onClick={() => linkTo(specialActivityIdString, merchantIdString)}
       >
         <View
           className="lookAround_template_img"

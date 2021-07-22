@@ -13,15 +13,15 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
   const memo = useMemo(() => {
     return (
       <View className="lookAround_specalPlate_box public_auto">
-        <View className="lookAround_specalPlate_time">
-          <View
-            onClick={() =>
-              Router({
-                routerName: "specialOffer",
-              })
-            }
-            className="lookAround_specalPlate_view"
-          >
+        <View
+          onClick={() =>
+            Router({
+              routerName: "specialOffer",
+            })
+          }
+          className="lookAround_specalPlate_time"
+        >
+          <View className="lookAround_specalPlate_view">
             <View className="lookAround_specalPlate_topBox">
               <View className="lookAround_specalPlate_title  lookAround_specalPlate_titleIcon1"></View>
               <View className="lookAround_specalPlate_link"></View>
@@ -37,6 +37,10 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
         </View>
         <View className="lookAround_specalPlate_hot">
           <View className="lookAround_specalPlate_view">
+            <View className="lookAround_specalPlate_topBox">
+              <View className="lookAround_specalPlate_title  lookAround_specalPlate_titleIcon2"></View>
+              <View className="lookAround_specalPlate_link"></View>
+            </View>
             <View
               onClick={() =>
                 Router({
@@ -46,24 +50,27 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
                   },
                 })
               }
-              className="lookAround_specalPlate_topBox"
+              style={{ position: "relative" }}
             >
-              <View className="lookAround_specalPlate_title  lookAround_specalPlate_titleIcon2"></View>
-              <View className="lookAround_specalPlate_link"></View>
+              <Swiper
+                circular
+                autoplay
+                className="lookAround_specalPlate_swiper"
+              >
+                {list.map((item) => {
+                  return (
+                    <SwiperItem>
+                      <Template
+                        userInfo={userInfo}
+                        data={item}
+                        title={"福利价:"}
+                      ></Template>
+                    </SwiperItem>
+                  );
+                })}
+              </Swiper>
+              <View className="lookAround_absolute"></View>
             </View>
-            <Swiper circular autoplay className="lookAround_specalPlate_swiper">
-              {list.map((item) => {
-                return (
-                  <SwiperItem>
-                    <Template
-                      userInfo={userInfo}
-                      data={item}
-                      title={"福利价:"}
-                    ></Template>
-                  </SwiperItem>
-                );
-              })}
-            </Swiper>
           </View>
         </View>
       </View>

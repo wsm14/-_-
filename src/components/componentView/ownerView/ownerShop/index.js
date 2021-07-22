@@ -22,7 +22,7 @@ export default ({ data, type = "any", userInfo }) => {
     coverImg,
     logoImg,
     specialGoodsFlag,
-    specialActivityList,
+    specialActivityList = [],
     brandFlag,
     couponList = [],
     lat,
@@ -40,7 +40,7 @@ export default ({ data, type = "any", userInfo }) => {
       markFlag,
       couponFlag,
       couponList = [],
-      specialActivityList,
+      specialActivityList = [],
       markBean,
     } = item;
     if (

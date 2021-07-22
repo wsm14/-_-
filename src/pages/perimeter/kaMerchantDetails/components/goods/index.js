@@ -16,7 +16,7 @@ export default ({ list, merchantGroupId }) => {
             <View className="kaMerchantDetails_active_biaoti">品牌特价</View>
           </View>
           <View className="kaMerchantDetails_active_dec">
-            店铺超限时特价活动 限时限量
+            品牌限时特价活动 限时限量
           </View>
           {list.length === 6 && (
             <View

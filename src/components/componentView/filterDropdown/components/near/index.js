@@ -151,7 +151,8 @@ export default ({ data = [], onChange, defaul, visible }) => {
                 3,
                 { marginRight: Taro.pxTransform(23) },
                 (item, index) => {
-                  const { businessHubName } = item;
+                  const { businessHubName, type } = item;
+                  console.log(item);
                   return (
                     <View
                       onClick={() => {
@@ -159,7 +160,11 @@ export default ({ data = [], onChange, defaul, visible }) => {
                       }}
                       className={classNames(
                         "sub-scorllView-tag",
-                        setMenu(item, checked, "businessHubIdString")
+                        type === "all" && !checked.businessHubIdString
+                          ? setMenu(item, checked, "districtCode")
+                            ? "sub-scorllView-tagSelect"
+                            : "sub-scorllView-tagSelectNo"
+                          : setMenu(item, checked, "businessHubIdString")
                           ? "sub-scorllView-tagSelect"
                           : "sub-scorllView-tagSelectNo"
                       )}

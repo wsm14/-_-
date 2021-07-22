@@ -4,9 +4,11 @@ import Taro, { useDidShow } from "@tarojs/taro";
 import OldView from "./../oldStatus";
 import NewView from "./../newStatus";
 import OverStatus from "./../overStatus";
+
 import SkeletonView from "./../SkeletonView";
 export default ({ auth, userInfo = {} }) => {
   const [authInfo, setAuthInfo] = useState(null);
+
   useEffect(() => {
     if (auth === 1) {
       let userInfo = Taro.getStorageSync("userInfo");

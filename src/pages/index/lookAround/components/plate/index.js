@@ -85,6 +85,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
             type: "highCommission",
             title: "高佣联盟",
             body: "好货精选",
+            bannerType: "highCommissionAlliance",
           },
         });
       },

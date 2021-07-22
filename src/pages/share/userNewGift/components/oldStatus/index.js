@@ -5,7 +5,7 @@ import Router from "@/common/router";
 export default (props) => {
   return (
     <View className="userNewGift_box">
-      <View className="userNewGift_status_box">
+      <View className="userNewGift_status_box2">
         <View className="userNewGift_info_btnBox public_auto">
           <View
             className="userNewGift_info_btn public_center"

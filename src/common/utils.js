@@ -436,7 +436,7 @@ export const filterPayStatus = (string, type = "") => {
       case "0":
         return "待付款";
       case "1":
-        return "待使用";
+        return "待核销";
       case "2":
         return "已关闭";
       case "3":
@@ -544,7 +544,7 @@ export const filterGoods = (data) => {
   let { orderDesc = {}, orderType } = data;
   orderDesc = JSON.parse(orderDesc);
   const { reduceCoupon = {}, specialGoods = {} } = orderDesc;
-  return { ...data, ...reduceCoupon, ...specialGoods, ...orderDesc };
+  return { ...reduceCoupon, ...specialGoods, ...orderDesc, ...data };
 };
 export const removeLogin = () =>
   Taro.removeStorage({

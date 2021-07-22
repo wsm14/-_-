@@ -8,8 +8,17 @@ import "./index.scss";
 import { navigateTo } from "@/common/utils";
 import Router from "@/common/router";
 
-const goMerchant = (merchantId) => {
-  navigateTo(`/pages/perimeter/merchantDetails/index?merchantId=${merchantId}`);
+const goMerchant = (val) => {
+  const { ownerType, merchantIdString, ownerIdString } = val;
+  if (ownerType !== "group") {
+    navigateTo(
+      `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
+    );
+  } else {
+    navigateTo(
+      `/pages/perimeter/kaMerchantDetails/index?merchantGroupId=${ownerIdString}`
+    );
+  }
 };
 //跳转商家
 const goCodeDetails = (orderSn) => {
@@ -79,7 +88,7 @@ export default (props) => {
         className="createGood_title"
         onClick={(e) => {
           e.stopPropagation();
-          goMerchant(merchant.merchantIdString);
+          goMerchant(merchant);
         }}
       >
         <View className="createGood_title_box">
@@ -203,12 +212,8 @@ export default (props) => {
   const createCodeGoods = (item) => {
     let { payFee, orderDesc, orderSn, createTime } = item;
     orderDesc = JSON.parse(orderDesc) || {};
-    const {
-      merchantName,
-      merchantImg,
-      merchantId,
-      merchantIdString,
-    } = orderDesc;
+    const { merchantName, merchantImg, merchantId, merchantIdString } =
+      orderDesc;
     return (
       <View className="createGood_box">
         <View

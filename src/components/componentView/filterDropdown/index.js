@@ -54,6 +54,7 @@ export default ({
     topNav: 0,
     setNav: 0,
   },
+  callback,
 }) => {
   const [data, setData] = useState([]);
   const [menuLayerHeight, setMenuLayerHeight] = useState(0);
@@ -168,7 +169,11 @@ export default ({
           selector: scrollName || ".dakale_nav_box",
           top: 0,
           success: (res) => {
-            setVisible({ index: val });
+            if (callback) {
+              callback && callback(() => setVisible({ index: val }));
+            } else {
+              setVisible({ index: val });
+            }
           },
         });
       } else {

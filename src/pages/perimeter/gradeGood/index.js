@@ -18,6 +18,8 @@ import {
   setNavTitle,
   computedClient,
   goBack,
+  computedWinHeight,
+  computedSize,
 } from "@/common/utils";
 import classNames from "classnames";
 import Skeleton from "./components/SkeletonView";
@@ -39,7 +41,7 @@ class Index extends Component {
         sortRule: "distanceSort",
       },
       bannerType: {
-        bannerType: getCurrentInstance().router.params.type,
+        bannerType: getCurrentInstance().router.params.bannerType,
       },
       selectList: [],
       configUserLevelInfo: {},
@@ -51,6 +53,8 @@ class Index extends Component {
       title: getCurrentInstance().router.params.title,
       size: 0,
       loading: false,
+      topFlag: false,
+      computedHight: computedWinHeight() - computedSize(44),
     };
   }
   fetchUserShare() {
@@ -207,7 +211,8 @@ class Index extends Component {
   }
   onPageScroll(res) {
     const { scrollTop } = res;
-    const { top } = this.state;
+    console.log(scrollTop);
+    const { size } = this.state;
     this.setState({
       top: scrollTop,
     });
@@ -242,6 +247,8 @@ class Index extends Component {
       title,
       size,
       loading,
+      computedHight,
+      topFlag,
     } = this.state;
     const bannerStyle = {
       width: "100%",
@@ -255,7 +262,6 @@ class Index extends Component {
       justifyContent: "center",
       zIndex: 285,
     };
-    console.log(loading);
     const templateView = () => {
       return (
         <View className="gradeGood_box">
@@ -280,12 +286,12 @@ class Index extends Component {
                   ? {
                       paddingTop:
                         computedClient().top +
-                        (computedClient().height - 24) / 2,
+                        (computedClient().height - computedSize(24)) / 2,
                     }
                   : {
                       top:
                         computedClient().top +
-                        (computedClient().height - 24) / 2,
+                        (computedClient().height - computedSize(24)) / 2,
                     }
               }
             >
@@ -328,8 +334,18 @@ class Index extends Component {
                 this.changeSelect(e);
               }}
               top={size > top}
-              setTop={{ falgNav: true, topNav: size, setNav: 48 }}
+              setTop={{
+                falgNav: true,
+                topNav: size,
+                setNav: computedSize(computedClient().top + 24),
+              }}
               configUserLevelInfo={configUserLevelInfo}
+              callback={(e) => {
+                this.setState({}, (res) => {
+                  // Taro.nextTick(() => );
+                  e & e();
+                });
+              }}
               dataFormat="Object"
             ></FilterDropdown>
             <Tags
@@ -343,11 +359,12 @@ class Index extends Component {
             <View className="scroll_margin"></View>
             <View
               style={{
-                height: height
-                  ? height
-                  : computedViewHeight(".perimeterList_scroll1", (e) => {
-                      this.setState({ height: e });
-                    }),
+                minHeight: computedHight + "px",
+                position: "relative",
+                top:
+                  top >= size
+                    ? computedSize(computedClient().top + 61)
+                    : 0,
               }}
               className="perimeterList_scroll1"
             >

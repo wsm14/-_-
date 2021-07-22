@@ -8,7 +8,7 @@ import {
   backgroundObj,
   setPeople,
   computedBeanPrice,
-  computedPrice
+  computedPrice,
 } from "@/common/utils";
 import "./index.scss";
 export const selectShop = (item, userInfo, linkTo) => {
@@ -45,10 +45,10 @@ export const selectShop = (item, userInfo, linkTo) => {
         <View className="lookAround_title  font_noHide">{goodsName}</View>
         <View className="lookAround_select_user">
           <View
-            className="lookAround_select_userProfile"
+            className="lookAround_select_userProfile merchant_dakale_logo"
             style={backgroundObj(merchantLogo)}
           ></View>
-          <View className='lookAround_select_userHide font_hide'>
+          <View className="lookAround_select_userHide font_hide">
             <View className="lookAround_select_merchantName font_hide">
               {merchantName}
             </View>
@@ -56,21 +56,22 @@ export const selectShop = (item, userInfo, linkTo) => {
               {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
             </View>
           </View>
-
         </View>
         <View className="shopInit_hot_price color1 font_hide">
-          <View className='font20'>原价:</View>
-          <View className='shopInit_hot_priceMax font_hide font24 price_margin4 bold text_through'>¥{oriPrice}</View>
-          <View className='font20 price_margin8'>优惠价: </View>
-          <View className='font24 price_margin4 bold'>¥{realPrice}</View>
+          <View className="font20">原价:</View>
+          <View className="shopInit_hot_priceMax font_hide font24 price_margin4 bold text_through">
+            ¥{oriPrice}
+          </View>
+          <View className="font20 price_margin8">优惠价: </View>
+          <View className="font24 price_margin4 bold">¥{realPrice}</View>
         </View>
-        <View className='shopInit_bean_price'>
-          卡豆抵扣后最低到手价
-        </View>
-        <View className='shopInit_bean_show'>
-          <View className='color3 font36 bold shopInit_bean_showText'>
-            <View className='color3 font20 bold'>¥</View>
-            <View className='price_margin4'>{computedBeanPrice(realPrice, payBeanCommission)}</View>
+        <View className="shopInit_bean_price">卡豆抵扣后最低到手价</View>
+        <View className="shopInit_bean_show">
+          <View className="color3 font36 bold shopInit_bean_showText">
+            <View className="color3 font20 bold">¥</View>
+            <View className="price_margin4">
+              {computedBeanPrice(realPrice, payBeanCommission)}
+            </View>
           </View>
           {shareCommission > 0 && (
             <View
@@ -78,12 +79,12 @@ export const selectShop = (item, userInfo, linkTo) => {
               className="shopInit_bean_getMoney font_hide"
             >
               赚
-              <Text className='bold'>¥{computedPrice(realPrice - merchantPrice, shareCommission)}</Text>
+              <Text className="bold">
+                ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
+              </Text>
             </View>
-
           )}
         </View>
-
       </View>
     </View>
   );

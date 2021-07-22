@@ -21,7 +21,6 @@ class Index extends Component {
       couponList: [],
     };
   }
-
   componentWillMount() {}
 
   onReady() {
@@ -48,7 +47,7 @@ class Index extends Component {
     getUserCoupon(
       {
         page: 1,
-        limit: 6,
+        limit: 3,
         merchantGroupId,
       },
       (res) => {

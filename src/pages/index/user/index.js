@@ -107,7 +107,13 @@ class Index extends React.Component {
     });
   }
   fetchCollect() {
-    toast("关注啦");
+    Router({
+      routerName: "webView",
+      args: {
+        link: "https://mp.weixin.qq.com/s/cigoCWs94L4wT_T40fSOkw",
+        title: "关注公众号",
+      },
+    });
   }
   fetchLever() {
     const {

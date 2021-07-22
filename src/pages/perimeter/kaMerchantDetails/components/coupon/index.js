@@ -12,12 +12,12 @@ export default ({ list, merchantGroupId }) => {
         <View className="kaMerchantDetails_active">
           <View className="kaMerchantDetails_active_title">
             <View className="kaMerchantDetails_active_iconBox active_icon1"></View>
-            <View className="kaMerchantDetails_active_biaoti">到店优惠</View>
+            <View className="kaMerchantDetails_active_biaoti">品牌优惠</View>
           </View>
           <View className="kaMerchantDetails_active_dec">
-            店铺超级优惠权益 到店消费直接抵扣
+            品牌超级优惠权益 到店消费直接抵扣
           </View>
-          {list.length === 6 && (
+          {list.length === 3 && (
             <View
               className="active_go"
               onClick={() =>
