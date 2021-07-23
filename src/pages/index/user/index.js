@@ -127,23 +127,23 @@ class Index extends React.Component {
     //       toastVisible: true,
     //     },
     //   });
-    // } else if (!ruleStatus) {
-    //   this.setState({
-    //     collectStatus: {
-    //       ...collectStatus,
-    //       ruleVisible: true,
-    //     },
-    //   });
-    // } else {
-    saveLevelTarget({}).then((val) => {
+    if (!ruleStatus) {
       this.setState({
         collectStatus: {
           ...collectStatus,
-          successToast: true,
+          ruleVisible: true,
         },
       });
-    });
-    // }
+    } else {
+      saveLevelTarget({}).then((val) => {
+        this.setState({
+          collectStatus: {
+            ...collectStatus,
+            successToast: true,
+          },
+        });
+      });
+    }
   }
   getUserSub() {
     getUserSub({}, (res) => {

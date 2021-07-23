@@ -104,7 +104,11 @@ class Index extends Component {
         activeRuleImg = "https://wechat-config.dakale.net/miniprogram/image/share_active5.png",
         btnImg = "https://wechat-config.dakale.net/miniprogram/image/5_1_6.png",
         location = true,
+        title = "哒卡乐活动",
       } = res;
+      Taro.setNavigationBarTitle({
+        title: title,
+      });
       this.setState({
         specialGoodsDTOList,
         lnt,
@@ -229,7 +233,7 @@ class Index extends Component {
             <View className="invitation_bean_font bold">
               <Text className="font24">¥</Text>
               <Text className="font40">
-                {" " + (realPrice * (1 - (payBeanCommission / 100))).toFixed(2)}
+                {" " + (realPrice * (1 - payBeanCommission / 100)).toFixed(2)}
               </Text>
             </View>
             <View className="invitation_oldPrice_font font_hide">

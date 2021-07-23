@@ -31,13 +31,22 @@ export default (props) => {
     "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/conpon_shop.png";
   let nullCoupon =
     "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_big.png";
-  const goMerchant = (merchantId) => {
-    navigateTo(
-      `/pages/perimeter/merchantDetails/index?merchantId=${merchantId}`
-    );
+
+  const goMerchant = (val) => {
+    const { ownerType, merchantIdString, ownerIdString } = val;
+    if (ownerType !== "group") {
+      navigateTo(
+        `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
+      );
+    } else {
+      navigateTo(
+        `/pages/perimeter/kaMerchantDetails/index?merchantGroupId=${ownerIdString}`
+      );
+    }
   };
+
   const goCouponDetails = (couponType, userCouponIdString) => {
-    if (couponType !== "reduceCoupon") {
+    if (couponType !== "reduceCoupon" && couponType !== "freeReduceCoupon") {
       navigateTo(`/pages/coupon/couponDetails/index?id=${userCouponIdString}`);
     } else {
       navigateTo(`/pages/coupon/voucherDetails/index?id=${userCouponIdString}`);
@@ -161,7 +170,7 @@ export default (props) => {
             className="wraparound_topBox"
             onClick={(e) => {
               e.stopPropagation();
-              goMerchant(merchantIdString);
+              goMerchant(item);
             }}
           >
             <View className="wraparound_logo">
@@ -217,7 +226,7 @@ export default (props) => {
             className="wraparound_topBox"
             onClick={(e) => {
               e.stopPropagation();
-              goMerchant(merchantIdString);
+              goMerchant(item);
             }}
           >
             <View className="wraparound_logo">

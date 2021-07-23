@@ -18,6 +18,21 @@ export default (props) => {
   const [current, setCurrent] = useState(0);
   const [list, setList] = useState([]);
   const qrwh = (304 / 750) * Taro.getSystemInfoSync().windowWidth;
+
+  const goMerchant = (val) => {
+    const { ownerType, merchantIdString, ownerIdString } = val;
+    navigateTo(
+      `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
+    );
+    // if (ownerType !== "group") {
+
+    // } else {
+    //   navigateTo(
+    //     `/pages/perimeter/kaMerchantDetails/index?merchantGroupId=${ownerIdString}`
+    //   );
+    // }
+  };
+
   useEffect(() => {
     const { orderGoodsVerifications } = data;
     setOrderResult(data);
@@ -144,41 +159,29 @@ export default (props) => {
     });
   };
   const goShopGoods = () => {
-    const { merchantIdString, activityIdString, kolMomentsIdString } =
+    const { merchantIdString, ownerCouponIdString, kolMomentsIdString } =
       orderResult;
-    if (orderResult.orderType === "kolGoods") {
-      Router({
-        routerName: "shopDetails",
-        args: {
-          merchantId: merchantIdString,
-          kolActivityIdString: activityIdString,
-          kolMomentsId: kolMomentsIdString,
-        },
-      });
-    } else {
-      Router({
-        routerName: "favourableDetails",
-        args: {
-          merchantId: merchantIdString,
-          specialActivityId: activityIdString,
-        },
-      });
-    }
+    Router({
+      routerName: "favourableDetails",
+      args: {
+        merchantId: merchantIdString,
+        specialActivityId: ownerCouponIdString,
+      },
+    });
   };
   //商品详情
   const { ownerIdString, ownerCouponIdString, merchantCount } = orderResult;
   return (
     <View className="couponDetails_title" style={style ? style : {}}>
       <View className="couponDetails_box">
+        {" "}
         {merchantCount !== 1 ? (
           <>
-            <View className="couponDetails_merchant">
+            <View
+              className="couponDetails_merchant"
+              onClick={() => goMerchant(orderResult)}
+            >
               <View
-                onClick={() =>
-                  navigateTo(
-                    `/pages/perimeter/merchantDetails/index?merchantId=${ownerIdString}`
-                  )
-                }
                 className="couponDetails_profile coupon_shop_icon"
                 style={
                   orderResult.merchantLogo
@@ -192,15 +195,16 @@ export default (props) => {
             </View>
             <View
               className="groupGo"
-              onClick={() =>
+              onClick={(e) => {
+                e.stopPropagation();
                 Router({
                   routerName: "groupList",
                   args: {
                     ownerServiceId: ownerCouponIdString,
                     ownerId: ownerIdString,
                   },
-                })
-              }
+                });
+              }}
             >
               <View className="groupGo_font">
                 更多{merchantCount}家门店可用
@@ -223,7 +227,7 @@ export default (props) => {
             <View
               onClick={() =>
                 navigateTo(
-                  `/pages/perimeter/merchantDetails/index?merchantId=${ownerIdString}`
+                  `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
                 )
               }
               className="couponDetails_merchant"
@@ -249,7 +253,7 @@ export default (props) => {
               {orderResult.couponName}
             </View>
             <View className="font24 color2  font_hide couponDetails_goods_num">
-              {"凭券领取:" + orderResult.couponTitle}
+              {"凭券领取:" + orderResult.couponName}
             </View>
             {orderStatusObj}
           </View>

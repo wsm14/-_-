@@ -5,6 +5,7 @@ import goodsStore from "./goods";
 import locationStore from "./location";
 import activeStore from "./activeStatus";
 import homeStore from "./home";
+import activeInfoStore from "./active";
 export default {
   authStore,
   beanStore,
@@ -13,4 +14,5 @@ export default {
   locationStore,
   activeStore,
   homeStore,
+  activeInfoStore,
 };

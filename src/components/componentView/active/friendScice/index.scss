@@ -1,0 +1,14 @@
+.friendScice_box {
+  padding: 48px 32px 64px;
+  position: relative;
+  z-index: 1000;
+  background: #f0597d;
+  .friendScice_shop_good {
+    width: 322px;
+    height: 103px;
+    margin: 0px auto 0;
+    background: url("https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_11.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+}

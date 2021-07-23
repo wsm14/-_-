@@ -35,23 +35,24 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
             })}
           </View>
         </View>
-        <View className="lookAround_specalPlate_hot">
+        <View
+          className="lookAround_specalPlate_hot"
+          style={{ border: "1px solid #e5e5e5;" }}
+          onClick={() =>
+            Router({
+              routerName: "speciaMaterial",
+              args: {
+                type: "today",
+              },
+            })
+          }
+        >
           <View className="lookAround_specalPlate_view">
             <View className="lookAround_specalPlate_topBox">
               <View className="lookAround_specalPlate_title  lookAround_specalPlate_titleIcon2"></View>
               <View className="lookAround_specalPlate_link"></View>
             </View>
-            <View
-              onClick={() =>
-                Router({
-                  routerName: "speciaMaterial",
-                  args: {
-                    type: "today",
-                  },
-                })
-              }
-              style={{ position: "relative" }}
-            >
+            <View style={{ position: "relative" }}>
               <Swiper
                 circular
                 autoplay

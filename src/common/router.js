@@ -82,6 +82,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     //newUser
     makeError: "/pages/rules/makeError/index", //打卡失败
     interests: "/pages/rules/interests/index",
+    hotActive: "/pages/share/hotActive/index",//88前活动
     shareActive: "/pages/share/invitation/index", //活动
     download: "/pages/share/download/index", //下载
     login: "/pages/auth/index", //登录

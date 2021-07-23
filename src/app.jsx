@@ -6,6 +6,7 @@ import { authUpdateGeography } from "@/common/authority";
 import { getShareParamInfo } from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
+import { fetchActiveStatus } from "@/server/user";
 import evens from "@/common/evens";
 import "./assets/css/app.scss";
 import "./assets/css/color.scss";
@@ -22,6 +23,7 @@ class App extends Component {
   componentDidMount() {
     this.fetchLocation();
     this.fetchNetwork();
+    this.getActiveStatus();
     authWxLogin(this.fetchOpenId.bind(this));
     evens.$on("setLocation", this.fetchLocation.bind(this));
   }
@@ -29,6 +31,18 @@ class App extends Component {
   componentDidShow() {
     this.fetchCheckUpdate();
     this.getShareType();
+  }
+  getActiveStatus() {
+    fetchActiveStatus({
+      activityType: "88activity",
+    }).then((val) => {
+      const { activityStatus = "0", needCountDown = "0", dayCount = 0 } = val;
+      Store.activeInfoStore.setInfo({
+        activityStatus,
+        needCountDown,
+        dayCount,
+      });
+    });
   }
   getShareType() {
     const {

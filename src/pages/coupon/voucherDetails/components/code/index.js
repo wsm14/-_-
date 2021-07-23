@@ -135,8 +135,6 @@ export default (props) => {
       </View>
     ),
   }[orderResult.couponStatus];
-
-  console.log(orderResult);
   const {
     ownerType,
     thresholdPrice = "",
@@ -144,6 +142,7 @@ export default (props) => {
     ownerIdString,
     userCouponIdString,
     couponType,
+    merchantIdString,
   } = orderResult;
   return (
     <View className="couponDetails_title" style={style ? style : {}}>
@@ -154,7 +153,7 @@ export default (props) => {
               <View
                 onClick={() =>
                   navigateTo(
-                    `/pages/perimeter/merchantDetails/index?merchantId=${ownerIdString}`
+                    `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
                   )
                 }
                 className="couponDetails_profile coupon_shop_icon"
@@ -190,7 +189,7 @@ export default (props) => {
             <View
               onClick={() =>
                 navigateTo(
-                  `/pages/perimeter/merchantDetails/index?merchantId=${ownerIdString}`
+                  `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
                 )
               }
               className="couponDetails_merchant"

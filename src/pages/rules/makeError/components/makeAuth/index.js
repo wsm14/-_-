@@ -5,8 +5,9 @@ import React from "react";
 import Taro, { useDidShow } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { goBack } from "@/common/utils";
-import evens from "@/common/evens";
+
 import { useState } from "react";
+import evens from "@/common/evens";
 import { getAuthStatus, scanCard } from "@/common/authority";
 export default (props) => {
   const [type, setType] = useState(false);

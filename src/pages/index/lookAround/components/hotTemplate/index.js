@@ -60,7 +60,7 @@ export default ({ data = {}, userInfo = {}, title = "秒杀价" }) => {
         </View>
 
         <View className="lookAround_template_price color1 font_hide">
-          <View className="font18">{title}: </View>
+          <View className="font18">{title} </View>
           <View className="lookAround_template_priceMax font_hide font20 price_margin4 bold">
             ¥{realPrice}
           </View>
