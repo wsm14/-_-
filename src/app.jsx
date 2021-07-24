@@ -23,13 +23,14 @@ class App extends Component {
   componentDidMount() {
     this.fetchLocation();
     this.fetchNetwork();
-    this.getActiveStatus();
+
     authWxLogin(this.fetchOpenId.bind(this));
     evens.$on("setLocation", this.fetchLocation.bind(this));
   }
 
   componentDidShow() {
     this.fetchCheckUpdate();
+    this.getActiveStatus();
     this.getShareType();
   }
   getActiveStatus() {

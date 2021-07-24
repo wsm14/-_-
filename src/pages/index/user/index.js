@@ -23,7 +23,11 @@ import Toast from "@/components/stopBean";
 import Rules from "./components/retailRules";
 import Success from "./components/successLevel";
 import ReloadBottom from "./components/reloadBottom";
+import ActiveToast from "@/components/componentView/active/tabbarBox";
+import { inject, observer } from "mobx-react";
 import "./index.scss";
+@inject("store")
+@observer
 class Index extends React.Component {
   constructor() {
     super(...arguments);
@@ -172,6 +176,11 @@ class Index extends React.Component {
       collectStatus,
       collectStatus: { toastVisible, ruleVisible, successToast },
     } = this.state;
+    const {
+      homeStore = {},
+      authStore = {},
+      activeInfoStore = {},
+    } = this.props.store;
     return (
       <View className="page_userBox">
         <UserTitle
@@ -184,6 +193,7 @@ class Index extends React.Component {
           status={loginStatus}
           data={userInfo}
         ></UserTitle>
+
         <View className="page_user_liner"></View>
         <UserContent
           levelDetails={levelDetails}
@@ -194,6 +204,7 @@ class Index extends React.Component {
           fetchLever={this.fetchLever.bind(this)}
         ></UserContent>
         <View className="page_user_liner"></View>
+        <ActiveToast store={activeInfoStore}></ActiveToast>
         <UserBottom list={bannerList}></UserBottom>
         {visible && (
           <Toast

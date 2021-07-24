@@ -3,7 +3,7 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image, Text, ScrollView } from "@tarojs/components";
 import { rssConfigData } from "./components/data";
 import TaroShareDrawer from "./components/TaroShareDrawer";
-import { getShareParamInfo, getShareInfo } from "@/server/common";
+import {  getShareInfo } from "@/server/common";
 import ButtonView from "@/components/Button";
 import {
   loginStatus,

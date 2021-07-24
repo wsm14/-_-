@@ -29,6 +29,7 @@ import Navition from "./components/navition";
 import Plate from "./components/plate";
 import SelectSpecal from "./components/selectSpecal";
 import SpecalPlate from "./components/specalPlate";
+import ActiveToast from "@/components/componentView/active/tabbarBox";
 import "./index.scss";
 @inject("store")
 @observer
@@ -329,7 +330,7 @@ class Index extends Component {
       },
     } = this.state;
     const { cityName, cityCode } = this.props.store.locationStore;
-    
+
     const templateSelect = () => {
       return (
         <>
@@ -433,9 +434,15 @@ class Index extends Component {
       bottom: Taro.pxTransform(-12),
       justifyContent: "center",
     };
+    const {
+      homeStore = {},
+      authStore = {},
+      activeInfoStore = {},
+    } = this.props.store;
     return (
       <View className="lookAround_box">
         <Navition city={cityName}></Navition>
+        <ActiveToast store={activeInfoStore}></ActiveToast>
         {num === 0 && (
           <View className="wechant_init color6 font28">
             “添加到我的小程序”，更多优惠抢不停

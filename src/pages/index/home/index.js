@@ -38,6 +38,8 @@ import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import NearTitle from "./components/nearTitle";
 import GuideView from "./components/guide";
+import Active from "./components/activeToast";
+import ActiveToast from "@/components/componentView/active/tabbarBox";
 import "./index.scss";
 @inject("store")
 @observer
@@ -83,6 +85,7 @@ class Index extends React.PureComponent {
         data: null,
         start: false,
       },
+      showTwoToast: false,
       triggered: false,
     };
     this.interReload = null;
@@ -796,9 +799,16 @@ class Index extends React.PureComponent {
       interval,
       cavansObj,
       triggered,
+      showTwoToast,
     } = this.state;
-    const { selectObj, beanLimitStatus } = this.props.store.homeStore;
-    const { login } = this.props.store.authStore;
+    const {
+      homeStore = {},
+      authStore = {},
+      activeInfoStore = {},
+    } = this.props.store;
+    const { selectObj, beanLimitStatus } = homeStore;
+    const { login } = authStore;
+    const { setCount } = activeInfoStore;
     const templateView = () => {
       if (browseType === "near") {
         if (userMomentsList.length > 0) {
@@ -941,24 +951,6 @@ class Index extends React.PureComponent {
           ></TopView>
         </View>
         <View className="home_video_box">{templateView()}</View>
-        {/* {visible && (
-          <Dressing
-            distanceList={distanceList}
-            promotionTypeList={promotionTypeList}
-            categoryList={categoryList}
-            distance={distance}
-            promotionType={promotionType}
-            categoryIds={categoryIds.split(",")}
-            visible={visible}
-            onClose={() =>
-              this.setState({
-                visible: false,
-              })
-            }
-            onReload={this.setScreen.bind(this)}
-            onConfirm={this.setScreen.bind(this)}
-          ></Dressing>
-        )} */}
         <Toast
           data={userMomentsInfo}
           show={beanflag}
@@ -981,7 +973,33 @@ class Index extends React.PureComponent {
           }}
         ></Coupon>
         <Lead beanLimitStatus={beanLimitStatus}></Lead>
-        <GuideView
+        {showTwoToast && (
+          <GuideView
+            setPlayer={(val) => {
+              this.setState(
+                {
+                  player: val,
+                },
+                (res) => {
+                  if (this.state.player) {
+                    setTimeout(() => {
+                      Taro.createVideoContext(`video${current}`).play();
+                    }, 300);
+                  } else {
+                    setTimeout(() => {
+                      Taro.createVideoContext(`video${current}`).pause();
+                    }, 300);
+                  }
+                }
+              );
+            }}
+            proxy={interval}
+            setCount={setCount}
+            auth={login}
+            data={userMomentsInfo}
+          ></GuideView>
+        )}
+        <Active
           setPlayer={(val) => {
             this.setState(
               {
@@ -1000,16 +1018,21 @@ class Index extends React.PureComponent {
               }
             );
           }}
+          showNewsInfo={() =>
+            this.setState({
+              showTwoToast: true,
+            })
+          }
           proxy={interval}
-          auth={login}
-          data={userMomentsInfo}
-        ></GuideView>
+          store={activeInfoStore}
+        ></Active>
         {!player && (
           <View
             onClick={() => this.stopVideoPlayerControl()}
             className="player_no"
           ></View>
         )}
+        <ActiveToast store={activeInfoStore}></ActiveToast>
         <TaroShareDrawer
           {...cavansObj}
           onSave={() => console.log("点击保存")}

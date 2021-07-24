@@ -77,7 +77,7 @@ const loadBeadRequest = [
   "/user/userInfo/getUserShareCommission",
 ];
 export const httpGet = (obj, fn) => {
-  const { header = {} } = obj;
+  const { header = {}, data = {} } = obj;
   if (!loadBeadRequest.includes(obj.url)) {
     Taro.showLoading({
       title: "加载中",
@@ -89,7 +89,10 @@ export const httpGet = (obj, fn) => {
     Taro.getStorageSync("userInfo").mobile.length === 11 &&
     Taro.getStorageSync("userInfo").token
   ) {
-    obj.data.token = Taro.getStorageSync("userInfo").token;
+    obj.data = {
+      token: Taro.getStorageSync("userInfo").token,
+      ...obj.data,
+    };
   }
   return new Promise((resolve, reject) => {
     Taro.request({
@@ -141,7 +144,7 @@ export const httpGet = (obj, fn) => {
 };
 
 export const httpPost = (obj, fn) => {
-  const { header = {} } = obj;
+  const { header = {}, data = {} } = obj;
   Taro.showLoading({
     title: "加载中",
     mask: true,
@@ -152,7 +155,10 @@ export const httpPost = (obj, fn) => {
     Taro.getStorageSync("userInfo").mobile.length === 11 &&
     Taro.getStorageSync("userInfo").token
   ) {
-    obj.data.token = Taro.getStorageSync("userInfo").token;
+    obj.data = {
+      token: Taro.getStorageSync("userInfo").token,
+      ...obj.data,
+    };
   }
   if (requestUrl.includes(obj.url)) {
     return;
@@ -238,5 +244,3 @@ export const httpOtherGet = (obj, fn) => {
     complete: () => {},
   });
 };
-
-
