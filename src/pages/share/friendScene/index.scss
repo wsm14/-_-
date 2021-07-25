@@ -1,0 +1,181 @@
+.friendScene_box {
+  width: 100%;
+  .friendScene_top {
+    width: 100%;
+    height: 1575px;
+    position: relative;
+    background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_23.png);
+    background-size: 100% 100%;
+    position: relative;
+    .friendScene_content_topHeight {
+      height: 531px;
+    }
+    .friendScene_card {
+      width: 717px;
+      height: 494px;
+      margin: 0 auto;
+      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_24.png);
+      background-size: 100% 100%;
+      .friendScene_card_details {
+        position: relative;
+        top: 388px;
+        display: flex;
+        margin: 0 62px 0 70px;
+        align-items: center;
+        .textmargin {
+          margin-left: 12px;
+          display: inline-block;
+        }
+      }
+      .friendScene_card_btn {
+        margin-left: auto;
+        width: 136px;
+        height: 44px;
+        background: #ef476f;
+        border-radius: 23px;
+        font-size: 24px;
+        font-weight: 600;
+        color: #ffffff;
+      }
+    }
+  }
+  .friendScene_layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10001;
+    line-height: 1;
+  }
+  .friendScene_layer_content {
+    width: 560px;
+    height: 900px;
+    background: #ffffff;
+    border-radius: 40px;
+    .friendScene_layer_top {
+      width: 560px;
+      height: 140px;
+      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_30.png);
+      background-size: 100% 100%;
+    }
+    .friendScene_layer_content {
+      width: 560px;
+      height: 585px;
+    }
+    .friendScene_layer_btn {
+      width: 560px;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .friendScene_layer_btnBox {
+      width: 440px;
+      height: 80px;
+      background: #ef476f;
+      border-radius: 64px;
+      font-size: 36px;
+      font-weight: 600;
+      color: #ffd95d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .friendScene_layer_child {
+    height: 129px;
+    margin: 0 24px;
+    border-bottom: 1px solid #e5e5e5;
+    .friendScene_time {
+      font-size: 24px;
+      padding-top: 12px;
+      text-align: right;
+      font-weight: 400;
+      color: #999999;
+    }
+    .friendScene_content_top {
+      padding-top: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  .friendScene_ceil_margin {
+    height: 140px;
+    background: rgba(239, 71, 111, 1);
+  }
+  .shareInfo_btn {
+    width: 560px;
+    height: 140px;
+    margin: 14px auto 0;
+    background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_25.png);
+    background-size: 100% 100%;
+  }
+  .shareInfo_btn1 {
+    width: 560px;
+    height: 140px;
+    margin: 14px auto 0;
+    background: red;
+    background-size: 100% 100%;
+  }
+  .friendScene_timesAuto {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+  .friendScene_shareCount_box {
+    width: 688px;
+    height: 241px;
+    margin: 48px auto 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .friendScene_bean_box {
+    width: 120px;
+    height: 241px;
+    position: relative;
+    .friendScene_bean_iconBox {
+      width: 120px;
+      height: 63px;
+      font-size: 24px;
+      font-weight: 800;
+      color: #ffd95d;
+      line-height: 48px;
+      text-align: center;
+    }
+    .friendScene_bean_iconBox1 {
+      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_29.png);
+      background-size: 100% 100%;
+      opacity: 0.4;
+    }
+    .friendScene_bean_iconBox2 {
+      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_28.png);
+      background-size: 100% 100%;
+    }
+    .friendScene_bean_profile {
+      width: 100px;
+      height: 100px;
+      margin: 7px auto 0;
+    }
+    .friendScene_bean_profile1 {
+      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_26.png);
+      background-size: 100% 100%;
+    }
+    .friendScene_bean_profile2 {
+      box-sizing: border-box;
+      border: 4px solid #ffd95d;
+    }
+    .friendScene_bean_index {
+      width: 78px;
+      height: 51px;
+      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_27.png);
+      background-size: 100% 100%;
+      margin: 20px auto 0;
+    }
+  }
+}

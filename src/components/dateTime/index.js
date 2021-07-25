@@ -113,7 +113,15 @@ function getSeconds(s, val = false) {
   } else return "";
 }
 export default (props) => {
-  const { times, fn, mint, type, onlyTime = false, styles = false } = props;
+  const {
+    times,
+    fn,
+    mint,
+    type,
+    onlyTime = false,
+    styles = false,
+    showTimeInfo = false,
+  } = props;
   let time =
     parseInt(new Date(times.replace(/-/g, "/")).getTime() / 1000) +
     86399 -
@@ -142,35 +150,39 @@ export default (props) => {
       collection = false;
     };
   }, []);
-  if (onlyTime) {
-    if (font) {
-      return (
-        <View className="shopDetails_avtiveTime_jz">{times + "截止"} </View>
-      );
-    } else {
-      return (
-        <View className="shopDetails_avtiveTime_flex">
-          <View className="shopDetails_avtiveTime_tag">抢购倒计时</View>
-          <View className="shopDetails_avtiveTime_left">
-            {"  " + getSeconds(interVal)}
-          </View>
-        </View>
-      );
-    }
+  if (showTimeInfo) {
+    return getSeconds(interVal, styles);
   } else {
-    return (
-      <>
-        {font ? (
-          <Text>{times + "截止"} </Text>
-        ) : (
-          <View className="time_box">
-            <View className="time_box">抢购倒计时</View>
-            <View className={classNames("time_box  time_margin")}>
-              {getSeconds(interVal, styles)}
+    if (onlyTime) {
+      if (font) {
+        return (
+          <View className="shopDetails_avtiveTime_jz">{times + "截止"} </View>
+        );
+      } else {
+        return (
+          <View className="shopDetails_avtiveTime_flex">
+            <View className="shopDetails_avtiveTime_tag">抢购倒计时</View>
+            <View className="shopDetails_avtiveTime_left">
+              {"  " + getSeconds(interVal)}
             </View>
           </View>
-        )}
-      </>
-    );
+        );
+      }
+    } else {
+      return (
+        <>
+          {font ? (
+            <Text>{times + "截止"} </Text>
+          ) : (
+            <View className="time_box">
+              <View className="time_box">抢购倒计时</View>
+              <View className={classNames("time_box  time_margin")}>
+                {getSeconds(interVal, styles)}
+              </View>
+            </View>
+          )}
+        </>
+      );
+    }
   }
 };

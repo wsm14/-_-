@@ -140,12 +140,17 @@ class Index extends React.Component {
       });
     } else {
       saveLevelTarget({}).then((val) => {
-        this.setState({
-          collectStatus: {
-            ...collectStatus,
-            successToast: true,
+        this.setState(
+          {
+            collectStatus: {
+              ...collectStatus,
+              successToast: true,
+            },
           },
-        });
+          (res) => {
+            this.getUserDetails();
+          }
+        );
       });
     }
   }
