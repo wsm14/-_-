@@ -46,7 +46,7 @@ export const getListUserMomentBySearch = (data, fn) => {
     (res) => fn(res)
   );
 };
-//获取搜索动态 
+//获取搜索动态
 export const getSearchRecommend = (data, fn) => {
   httpGet(
     {
@@ -126,7 +126,7 @@ export const getTopicKolMoments = (data, fn) => {
 //搜索话题和种草数量
 
 export const saveMarkBean = (data, fn) => {
-  httpPost(
+  return httpPost(
     {
       url: "/user/beanDetail/saveMarkBeanDetailByUserId",
       data: data,
@@ -277,7 +277,6 @@ export const fetchMerchantNearRank = (data = {}, fn) => {
 };
 //排行榜
 
-
 export const getSpecialGoodsDetail = (data = {}, fn) => {
   return httpGet(
     {
@@ -288,7 +287,6 @@ export const getSpecialGoodsDetail = (data = {}, fn) => {
   );
 };
 //获取特惠商品详情
-
 
 export const getMerchantDetail = (data = {}, fn) => {
   return httpGet(
@@ -311,3 +309,34 @@ export const listAllPut = (data = {}, fn) => {
   );
 };
 
+export const fetchMerchantListByKeyword = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/searchMerchantListByKeyword",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//新版商家名搜索商家列表（只用来搜索，包含KA）
+
+export const fetchGroupDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/getGroupDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取集团详情
+export const fetchServiceMerchants = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/listActivityServiceMerchants",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取集团商品适用门店

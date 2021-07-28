@@ -31,20 +31,41 @@ export default (props) => {
     "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/conpon_shop.png";
   let nullCoupon =
     "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_big.png";
-  const goMerchant = (merchantId) => {
-    navigateTo(
-      `/pages/perimeter/merchantDetails/index?merchantId=${merchantId}`
-    );
+  const templateTag = () => {
+    if (couponType === "specialGoods") {
+      return "wraparound_couponContent_iconStyle3";
+    } else if (couponType === "reduceCoupon") {
+      return "wraparound_couponContent_iconStyle1";
+    } else {
+      return "wraparound_couponContent_iconStyle2";
+    }
   };
+  console.log(item);
+  const goMerchant = (val) => {
+    const { ownerType, merchantIdString, ownerIdString } = val;
+    if (ownerType !== "group") {
+      navigateTo(
+        `/pages/perimeter/merchantDetails/index?merchantId=${ownerIdString}`
+      );
+    } else {
+      navigateTo(
+        `/pages/perimeter/kaMerchantDetails/index?merchantGroupId=${ownerIdString}`
+      );
+    }
+  };
+
   const goCouponDetails = (couponType, userCouponIdString) => {
-    if (couponType !== "reduce") {
+    if (couponType !== "reduceCoupon" && couponType !== "freeReduceCoupon") {
       navigateTo(`/pages/coupon/couponDetails/index?id=${userCouponIdString}`);
     } else {
+      if (couponType === "freeReduceCoupon") {
+        return;
+      }
       navigateTo(`/pages/coupon/voucherDetails/index?id=${userCouponIdString}`);
     }
   };
   const templateContent = () => {
-    if (couponType === "goodsCoupon") {
+    if (couponType === "specialGoods") {
       return `数量${verificationCodeAmount}`;
     } else {
       return `面值${couponPrice} ${
@@ -161,7 +182,7 @@ export default (props) => {
             className="wraparound_topBox"
             onClick={(e) => {
               e.stopPropagation();
-              goMerchant(merchantIdString);
+              goMerchant(item);
             }}
           >
             <View className="wraparound_logo">
@@ -190,7 +211,17 @@ export default (props) => {
             </View>
             <View className="wraparound_couponContent">
               <View className="wraparound_couponContent_title font_hide font32 color1 bold">
-                {couponName}
+                <View className="wraparound_couponContent_text font_hide">
+                  {couponName}
+                </View>
+                <View
+                  className={classNames(
+                    "wraparound_couponContent_icon",
+                    `${templateTag()}`
+                  )}
+                >
+                  {" "}
+                </View>
               </View>
               <View className="wraparound_couponContent_details font_hide font24 color2">
                 {templateContent()}
@@ -217,7 +248,7 @@ export default (props) => {
             className="wraparound_topBox"
             onClick={(e) => {
               e.stopPropagation();
-              goMerchant(merchantIdString);
+              goMerchant(item);
             }}
           >
             <View className="wraparound_logo">

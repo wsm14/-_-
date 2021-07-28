@@ -1,0 +1,307 @@
+.ownerShop_shop_box {
+  width: 750px;
+  padding: 32px 0px 0px;
+  background: #ffffff;
+  .templateOwn_box {
+    display: flex;
+    margin-top: 24px;
+    .templateOwn_coverImg {
+      width: 200px;
+      height: 150px;
+      border-radius: 4px;
+    }
+    .templateOwn_content {
+      margin-left: 16px;
+      height: 150px;
+      max-width: 340px;
+    }
+    .templateOther_template_name {
+      padding-top: 4px;
+      font-size: 22px;
+      font-weight: 400;
+      color: #000000;
+      line-height: 22px;
+      max-width: 340px;
+    }
+    .templateOwn_template_oldPrice {
+      padding-top: 16px;
+      display: flex;
+      align-items: center;
+    }
+    .templateOwn_template_price {
+      display: flex;
+      align-items: center;
+      padding-top: 6px;
+    }
+    .templateOwn_template_priceMax {
+      max-width: 280px;
+    }
+    .templateOwn_bean_price {
+      padding-top: 8px;
+      font-size: 16px;
+      font-weight: 400;
+      color: #ef476f;
+      line-height: 16px;
+    }
+    .templateOwn_bean_show {
+      padding-top: 8px;
+      max-width: 310px;
+    }
+  }
+  .templateOther_template_specal {
+    width: 200px;
+    display: inline-block;
+    margin-right: 8px;
+    .templateOther_template_img {
+      width: 200px;
+      height: 150px;
+      border-radius: 4px;
+      position: relative;
+    }
+    .templateOther_template_name {
+      padding-top: 16px;
+      font-size: 22px;
+      font-weight: 400;
+      color: #000000;
+      line-height: 22px;
+      max-width: 200px;
+    }
+  }
+  .templateOther_template_specal:last-child {
+    margin-right: 0px;
+  }
+  .templateOther_template_oldPrice {
+    padding-top: 16px;
+    display: flex;
+    align-items: center;
+  }
+  .templateOther_template_price {
+    display: flex;
+    align-items: center;
+    padding-top: 6px;
+  }
+  .templateOther_template_priceMax {
+    max-width: 140px;
+  }
+  .templateOther_bean_price {
+    padding-top: 8px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ef476f;
+    line-height: 16px;
+  }
+  .templateOther_bean_show {
+    padding-top: 8px;
+    max-width: 180px;
+  }
+  .templateOther_specalPlate_box {
+    height: 400px;
+    width: 688px;
+    margin: 44px auto 0;
+    .templateOther_specalPlate_time {
+      width: 420px;
+      height: 400px;
+      position: relative;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon664.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .templateOther_specalPlate_hot {
+      width: 250px;
+      height: 400px;
+      position: relative;
+      background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+      border-radius: 8px;
+      border: 1px solid #e5e5e5;
+      box-sizing: border-box;
+    }
+    .templateOther_specalPlate_view {
+      padding: 24px 16px 0;
+      .templateOther_specalPlate_topBox {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .templateOther_specalPlate_title {
+          width: 114px;
+          height: 28px;
+        }
+        .templateOther_specalPlate_titleIcon1 {
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon665.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+        .templateOther_specalPlate_titleIcon2 {
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon666.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+        .templateOther_specalPlate_link {
+          width: 24px;
+          height: 24px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon667.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+    }
+  }
+  .ownerShop_shop_active {
+    margin: 16px 0 0 190px;
+    .ownerShop_bean {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      height: 32px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ef476f;
+      margin-right: 8px;
+    }
+    .ownerShop_bean::before {
+      width: 32px;
+      height: 32px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon462.png")
+        no-repeat;
+      background-size: 100% 100%;
+      content: "";
+      display: block;
+      margin-right: 8px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .ownerShop_specal {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      border-radius: 8px 2px 2px 2px;
+      margin-right: 8px;
+      .ownerShop_icon1 {
+        border-radius: 8px 2px 8px 2px;
+        .ownerShop_hui {
+          width: 32px;
+          height: 30px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon617.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+      .ownerShop_text1 {
+        height: 30px;
+        padding: 0 8px;
+        text-align: center;
+        line-height: 30px;
+        font-size: 22px;
+        font-weight: 400;
+        color: #333333;
+      }
+    }
+    .ownerShop_coupon {
+      margin-top: 16px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      border-radius: 8px 2px 2px 2px;
+      .ownerShop_icon2 {
+        border-radius: 8px 2px 8px 2px;
+        .ownerShop_cou {
+          width: 32px;
+          height: 30px;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon616.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+      .ownerShop_text2 {
+        padding: 0 8px;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 400;
+        color: #333333;
+        max-width: 488px;
+      }
+    }
+  }
+  .templateOther_scroll {
+    margin-top: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+.ownerShop_shop_detailsBox {
+  padding: 0px 24px 0px;
+  display: flex;
+  .ownerShop_shop_img {
+    width: 148px;
+    height: 148px;
+    border-radius: 4px;
+  }
+  .ownerShop_shop_font {
+    height: 148px;
+    margin-left: 16px;
+    .ownerShop_shop_merchantName {
+      padding-top: 4px;
+      width: 538px;
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 32px;
+    }
+    .ownerShop_shop_bussionTime {
+      padding-top: 20px;
+      width: 538px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      .bussionTime_tag {
+        padding: 0px 8px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        background: rgba(16, 133, 136, 0.1);
+        border-radius: 4px;
+        margin-right: 16px;
+        max-width: 290px;
+      }
+      .bussionTime_liner {
+        width: 1px;
+        height: 20px;
+        background: #108588;
+        border-radius: 1px;
+        opacity: 0.3;
+      }
+      .bussionTime_margin {
+        margin-left: 8px;
+        max-width: 160px;
+      }
+      .ownerShop_shop_peoplePay {
+        font-size: 26px;
+        font-weight: 400;
+        color: #333333;
+        line-height: 26px;
+      }
+    }
+
+    .ownerShop_shop_address {
+      padding-top: 24px;
+      width: 538px;
+      display: flex;
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+    }
+    .ownerShop_shop_addressFont {
+      width: 438px;
+    }
+    .ownerShop_shop_limit {
+      margin-left: auto;
+    }
+  }
+}
+.ownerShop_shop_liner {
+  margin: 24px 0 0 190px;
+  height: 2px;
+  background: #e5e5e5;
+  border-radius: 1px;
+  width: 538px;
+}

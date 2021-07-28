@@ -79,18 +79,27 @@ export default {
     {
       root: "pages/share",
       pages: [
+        "hotActive/index", //8.8前面活动
+        "mainScene/index", //8_8主会场
+        "shopScene/index", //8_8帶貨
+        "friendScene/index", //8_8邀请好友
         "invitation/index", //邀请函
         "download/index", //下载,
         "shareFriend/index", //分享好友,
         "pay_wx_lite/index", //微信支付
         "webView/index", //webView页面
         "mPay_wx_lite/index", //商家端支付页面
-        "userNewArtist/index" //新人福利頁面
+        "userNewArtist/index", //新人福利頁面
+        "userNewGift/index", //新人红包頁面
       ],
     },
     {
       root: "pages/perimeter",
       pages: [
+        "kaMerchantDetails/index", //集团详情
+        "gradeGood/index", //带搜索的公用商品列表
+        "perimeterList/index", //逛逛商品列表
+        "publicTypeGoods/index", //逛逛公用功能区页面
         "rankInfo/index", //排行榜
         "perimeterShops/index", //周边好店
         "videoDetails/index", //视频详情
@@ -114,11 +123,8 @@ export default {
         "merchantDetails/index", //商家详情
         "special/index", //特价商品
         "perimeteRoducts/index",
-        "repeatStatus/index", //打卡状态： 重复打卡
-        "abnormalStatus/index", //打卡状态： 超过距离
         "tipView/index", //打卡状态： 超过距离
         "groupMerchant/index", //集团核销列表
-        "index", //周边首页
       ],
     },
     {
@@ -148,6 +154,7 @@ export default {
       root: "pages/rules",
       pages: [
         "interests/index", //券包
+        "makeError/index", //打卡失败
       ],
     },
   ],

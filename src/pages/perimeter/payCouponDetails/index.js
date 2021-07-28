@@ -15,7 +15,7 @@ import {
   saveCollection,
   deleteCollection,
   toast,
-  filterPath
+  filterPath,
 } from "@/common/utils";
 import Router from "@/common/router";
 import { loginBtn } from "@/common/authority";
@@ -29,7 +29,7 @@ import Merchant from "@/components/shopView/merchant";
 import Rule from "@/components/shopView/rule";
 import VideoBean from "./components/getVideoBean";
 import Recommend from "@/components/couponActive";
-import NewToast from '@/components/noviceGuide'
+import NewToast from "@/components/noviceGuide";
 import "./index.scss";
 @inject("store")
 @observer
@@ -78,9 +78,13 @@ class Index extends Component {
     const { httpData, index } = this.state;
     getOwnerCouponDetail(httpData, (res) => {
       const { couponDetail } = res;
-      const { reduceObject = {} } = couponDetail;
+      const { reduceObject = {}, merchantCouponStatus = "2" } = couponDetail;
       this.setState({
-        couponDetail: { ...couponDetail, ...reduceObject },
+        couponDetail: {
+          ...couponDetail,
+          ...reduceObject,
+          merchantCouponStatus,
+        },
         index: index + 1,
       });
     });
@@ -204,13 +208,18 @@ class Index extends Component {
 
   setCollection() {
     const {
-      couponDetail: { userCollectionStatus = "0", ownerCouponIdString },
+      couponDetail: {
+        userCollectionStatus = "0",
+        ownerCouponIdString,
+        ownerIdString,
+      },
       couponDetail,
     } = this.state;
     if (userCollectionStatus === "0") {
       saveCollection(
         {
           collectionType: "reduce",
+          ownerId: ownerIdString,
           collectionId: ownerCouponIdString,
         },
         (res) => {
@@ -231,6 +240,7 @@ class Index extends Component {
       deleteCollection(
         {
           collectionType: "reduce",
+          ownerId: ownerIdString,
           collectionId: ownerCouponIdString,
         },
         (res) => {
@@ -257,7 +267,7 @@ class Index extends Component {
     }
     this.fetchUserShareCommission();
   }
-  componentDidMount() { }
+  componentDidMount() {}
   render() {
     const {
       couponDetail,
@@ -268,7 +278,7 @@ class Index extends Component {
         couponPrice,
         buyPrice,
         merchantPrice,
-        merchantCouponStatus = "1",
+        ownerCouponStatus = "1",
         remain,
         buyRule,
         dayMaxBuyAmount,
@@ -276,9 +286,10 @@ class Index extends Component {
         userCollectionStatus,
         anytimeRefund,
         expireRefund,
+        ownerCouponIdString,
       },
       visible,
-      httpData
+      httpData,
     } = this.state;
     const { login } = this.props.store.authStore;
     const shareInfoBtn = () => {
@@ -360,7 +371,7 @@ class Index extends Component {
         );
       }
     };
-    if (merchantCouponStatus === "1") {
+    if (ownerCouponStatus === "1") {
       return (
         <View className="payCoupon_box">
           <TaroShareDrawer
@@ -385,7 +396,11 @@ class Index extends Component {
             }}
           ></Card>
 
-          <Merchant data={couponDetail}></Merchant>
+          <Merchant
+            serviceType={"coupon"}
+            ownerServiceId={ownerCouponIdString}
+            data={couponDetail}
+          ></Merchant>
           {/*使用须知*/}
           {knowPay(couponDetail, "coupon")}
           {/*使用方法*/}
@@ -412,7 +427,7 @@ class Index extends Component {
                   ¥ {couponPrice}
                 </Text>
                 <Text className="shopdetails_shop_realStatus2">
-                  {((Number(buyPrice) / Number(couponPrice)) * 10).toFixed(2)}折
+                  {((Number(buyPrice) / Number(couponPrice)) * 10).toFixed(1)}折
                 </Text>
               </View>
             </View>
@@ -437,13 +452,21 @@ class Index extends Component {
               </View>
             </Toast>
           )}
-          {filterPath(getCurrentInstance().router.params) && !Taro.getStorageSync("newDeviceFlag") && <NewToast type={'coupon'} auth={login} data={httpData}></NewToast>}
+          {filterPath(getCurrentInstance().router.params) &&
+            !Taro.getStorageSync("newDeviceFlag") && (
+              <NewToast type={"coupon"} auth={login} data={httpData}></NewToast>
+            )}
         </View>
       );
     } else {
-      return(<NullStatus userInfo={configUserLevelInfo}>
-        {filterPath(getCurrentInstance().router.params) && !Taro.getStorageSync("newDeviceFlag") && <NewToast type={'coupon'} auth={login} data={httpData}></NewToast>}
-      </NullStatus>)
+      return (
+        <NullStatus userInfo={configUserLevelInfo}>
+          {filterPath(getCurrentInstance().router.params) &&
+            !Taro.getStorageSync("newDeviceFlag") && (
+              <NewToast type={"coupon"} auth={login} data={httpData}></NewToast>
+            )}
+        </NullStatus>
+      );
     }
   }
 }

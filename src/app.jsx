@@ -6,10 +6,13 @@ import { authUpdateGeography } from "@/common/authority";
 import { getShareParamInfo } from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
+import { fetchActiveStatus } from "@/server/user";
+import evens from "@/common/evens";
 import "./assets/css/app.scss";
 import "./assets/css/color.scss";
 import "./assets/css/font.scss";
 import "./assets/css/background.scss";
+import "taro-skeleton/dist/index.css"; // 引入组件样式
 const store = {
   ...Store,
 };
@@ -18,15 +21,28 @@ class App extends Component {
     super(...arguments);
   }
   componentDidMount() {
-    console.log(111)
     this.fetchLocation();
     this.fetchNetwork();
     authWxLogin(this.fetchOpenId.bind(this));
+    evens.$on("setLocation", this.fetchLocation.bind(this));
   }
 
   componentDidShow() {
     this.fetchCheckUpdate();
+    this.getActiveStatus();
     this.getShareType();
+  }
+  getActiveStatus() {
+    fetchActiveStatus({
+      activityType: "88activity",
+    }).then((val) => {
+      const { activityStatus = "0", needCountDown = "0", dayCount = 0 } = val;
+      Store.activeInfoStore.setInfo({
+        activityStatus,
+        needCountDown,
+        dayCount,
+      });
+    });
   }
   getShareType() {
     const {

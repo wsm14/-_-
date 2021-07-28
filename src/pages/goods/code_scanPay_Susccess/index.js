@@ -13,9 +13,12 @@ import {
   switchTab,
 } from "@/common/utils";
 import Lovely from "@/components/lovely";
+import { fetchUserShareCommission } from "@/server/index";
 import Coupons from "@/components/coupon";
-import Toast from "./components/index";
-import { getAvailableCoupon } from "@/server/coupon";
+import Recommend from "@/components/specalActive";
+import Coupon from "./components/coupon";
+import Toast from "./components/toast";
+
 const formatTime = (date) => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -43,6 +46,7 @@ class Index extends Component {
       orderResult: {},
       conpouVisible: false,
       couponList: [],
+      configUserLevelInfo: {},
       visible: false,
     };
   }
@@ -52,24 +56,15 @@ class Index extends Component {
       goBack(() => toast("参数缺失"));
     }
   }
-  getAvailable() {
-    getAvailableCoupon(
-      {
-        identifyId: getCurrentInstance().router.params.merchantId,
-        channel: "consume",
-        merchantId: getCurrentInstance().router.params.merchantId,
-      },
-      (res) => {
-        const { couponList = [] } = res;
-        if (couponList.length > 0) {
-          this.setState({
-            couponList,
-            conpouVisible: true,
-          });
-        }
-      }
-    );
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
   }
+
   getOrderResult() {
     const { orderSn } = this.state;
     getOrderResult(
@@ -88,7 +83,7 @@ class Index extends Component {
 
   componentDidShow() {
     this.getOrderResult();
-    this.getAvailable();
+    this.fetchUserShareCommission();
   }
 
   errorToast(e) {}
@@ -106,6 +101,7 @@ class Index extends Component {
       orderSn,
       conpouVisible,
       couponList,
+      configUserLevelInfo,
       visible,
     } = this.state;
     if (Object.keys(orderResult).length > 0) {
@@ -130,7 +126,7 @@ class Index extends Component {
               <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
                 <View className="color2">卡豆优惠抵扣</View>
                 <View className="color3">
-                  {beanFee + `(¥ ${(Number(beanFee) / 100).toFixed(2)})`}
+                  - {beanFee + `(¥ ${(Number(beanFee) / 100).toFixed(2)})`}
                 </View>
               </View>
             ) : null}
@@ -138,7 +134,7 @@ class Index extends Component {
             {deductFeeObject.length > 0 ? (
               <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto  font24">
                 <View className="color2">优惠券</View>
-                <View className="color3">{deductFeeObject[0].reduceFee}</View>
+                <View className="color3">- {deductFeeObject[0].reduceFee}</View>
               </View>
             ) : null}
             <View className="code_scanPay_liner"></View>
@@ -146,25 +142,25 @@ class Index extends Component {
             <View className="code_scanPay_btnBox">
               <View
                 className="code_scanPay_btn btn_style1"
-                onClick={() => switchTab("/pages/index/home/index")}
-              >
-                查看订单
-              </View>
-              <View
-                className="code_scanPay_btn btn_style2"
                 onClick={() =>
                   redirectTo(
                     `/pages/goods/getShopGoods/index?orderSn=${orderSn}`
                   )
                 }
               >
+                {" "}
+                查看订单
+              </View>
+              <View
+                className="code_scanPay_btn btn_style2"
+                onClick={() => switchTab("/pages/index/home/index")}
+              >
                 天天捡卡豆
               </View>
             </View>
+            <Coupon data={orderResult}></Coupon>
           </View>
-          <View className="code_scanPay_loveMagin">
-            <Lovely title={"当前可买"}></Lovely>
-          </View>
+          <Recommend current={true} userInfo={configUserLevelInfo}></Recommend>
           <Toast
             show={visible}
             visible={() => {

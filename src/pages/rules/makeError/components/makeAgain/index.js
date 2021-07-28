@@ -3,19 +3,21 @@
 */
 import React from "react";
 import { View } from "@tarojs/components";
-import Router from "@/common/router";
+import { scanCard } from "@/common/authority";
+import { goBack } from "@/common/utils";
+
 export default (props) => {
   const {} = props;
   return (
     <View className="makeError_makeRepeat_init">
-      <View className="makeError_img_box makeError_makeAuth_img"></View>
+      <View className="makeError_img_box makeError_makeAgain_img"></View>
       <View className="makeError_make_toast">哒卡乐温馨提示</View>
       <View className="makeError_error_toast">
-        您的定位权限未开启，请开启定位授权  
+        您打卡的商户暂不支持到店打卡，请联系商户开通设置
       </View>
       <View className="makeError_make_btnBox public_auto">
         <View
-          className="makeError_btn_box makeError_btn_color2"
+          className="makeError_btn_box makeError_btn_color1"
           onClick={() => {
             goBack();
           }}
@@ -25,10 +27,10 @@ export default (props) => {
         <View
           className="makeError_btn_box makeError_btn_color2"
           onClick={() => {
-            scanCard();
+            goBack(() => scanCard());
           }}
         >
-          去授权
+          再次尝试
         </View>
       </View>
     </View>

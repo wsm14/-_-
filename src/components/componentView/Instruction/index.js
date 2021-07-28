@@ -21,7 +21,7 @@ export const merchantSet = (data) => {
   return (
     <View className="shopdetails_shop_merchantShop">
       {shopCard(this, data)}
-      {ownerType === "group" && (
+      {ownerType === "group" &&  (
         <View
           className="shopdetails_group"
           onClick={() =>

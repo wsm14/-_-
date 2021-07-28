@@ -190,7 +190,7 @@ export const getLevel = (data = {}, fn) => {
 //获取达人等级相关
 
 export const saveUpdateLoginUserInfo = (data = {}, fn) => {
-  httpPost(
+  return httpPost(
     {
       url: "/user/userInfo/updateLoginUserInfo",
       data: data,
@@ -200,3 +200,23 @@ export const saveUpdateLoginUserInfo = (data = {}, fn) => {
 };
 //获取达人等级相关
 
+export const saveLevelTarget = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/user/level/manualUpgrade",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//升级哒人等级
+export const fetchActiveStatus = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/getActivityStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取达人等级相关

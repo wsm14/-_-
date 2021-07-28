@@ -50,7 +50,7 @@ const kolView = ({ keyword, current, configUserLevelInfo }) => {
     );
   };
   useReachBottom(() => {
-    if (countStatus && current == 3) {
+    if (countStatus && current == 0) {
       setData({
         ...data,
         page: data.page + 1,

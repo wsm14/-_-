@@ -88,7 +88,7 @@ export default (props) => {
       <View className="test_debug">
         <View className="templateStated_box" onClick={() => callback()}>
           <View
-            className="templateStated_img"
+            className="templateStated_img coupon_shop_icon"
             style={backgroundObj(
               promotionImg ||
               userProfile

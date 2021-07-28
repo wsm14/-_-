@@ -20,6 +20,8 @@ export const knowPay = (data, type = "good") => {
     activeDate,
     thresholdPrice,
     endDate,
+    activeBeginDate,
+    activeEndDate,
   } = data;
   const templateTime = () => {
     if (activeDays) {
@@ -28,6 +30,8 @@ export const knowPay = (data, type = "good") => {
       }生效，有效期${activeDays}天`;
     } else if (activeDate) {
       return `${activeDate}至${endDate}`;
+    } else if (activeBeginDate) {
+      return `${activeBeginDate}至${activeEndDate}`;
     } else {
       return `${useStartTime}至${useEndTime}`;
     }

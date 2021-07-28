@@ -39,8 +39,6 @@ export const getWechatActivityData = (data, fn) => {
 };
 //动态活动页面模板接口
 
-
-
 export const getUserMomentcheckNew = (data, fn) => {
   /*
     params  newDeviceFlag {{string}} 1 未观看   0已观看
@@ -70,3 +68,41 @@ export const getGuildMomentDetail = (data, fn) => {
 };
 //获取新手视频详情
 
+export const fetchInActivityChildUser = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/listInActivityChildUser",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取活动期间的家人列表
+
+export const fetchInActivityAchievement = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/listInActivityAchievement",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取活动期间家人带货数量
+
+export const fetchListActivityGoods = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/listActivityGoods",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取活动期间家人带货数量

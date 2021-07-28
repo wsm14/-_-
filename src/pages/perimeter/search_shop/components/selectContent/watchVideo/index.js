@@ -38,7 +38,7 @@ const kolView = ({ keyword, current, store }) => {
     }
   };
   useReachBottom(() => {
-    if (countStatus && current == 1) {
+    if (countStatus && current == 2) {
       setData({
         ...data,
         page: data.page + 1,

@@ -83,12 +83,11 @@ class Index extends Component {
     });
   }
   onError(msg) {
-    console.log(msg);
   }
   render() {
     const {
       orderResult,
-      orderResult: { orderType },
+      orderResult: { orderType = "specialGoods" },
       visible,
       configNewcomerOrdersInfo,
     } = this.state;

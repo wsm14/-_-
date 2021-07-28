@@ -40,7 +40,7 @@ export const getAvailableCoupon = (data, fn) => {
 };
 //多渠道可用券列表(打卡/消费/看视频)
 export const acquireCoupon = (data, fn) => {
-  httpPost(
+  return httpPost(
     {
       url: "/user/userCoupon/acquireCoupon",
       data: data,

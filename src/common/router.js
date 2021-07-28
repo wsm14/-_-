@@ -27,13 +27,15 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     home: "/pages/index/home/index", //首页
     takeCard: "/pages/index/takeCard/index", //打卡地图
     user: "/pages/index/user/index", //首页个人
-    lookShare: "/pages/index/lookShare/index", //看视频图文
-    shareImage: "/pages/index/lookShare/shareImage/index", //圖文详情
-    shareVideo: "/pages/index/lookShare/shareVideo/index", //视频详情
+
     //tab页面和分享
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
     wraparound: "/pages/coupon/wraparound/index", //券包
     //券包
+    groupDetails: "/pages/perimeter/kaMerchantDetails/index", //集团详情
+    gradeGood: "/pages/perimeter/gradeGood/index", //店铺带搜索通用页面
+    publicTypeGoods: "/pages/perimeter/publicTypeGoods/index", //店铺公用页面
+    goodList: "/pages/perimeter/perimeterList/index", //店铺列表
     rankInfo: "/pages/perimeter/rankInfo/index", //排行榜
     payCouponDetails: "/pages/perimeter/payCouponDetails/index", //优惠券详情
     benchmark: "/pages/perimeter/benchmark/index", //逛逛风向标列表
@@ -79,12 +81,17 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     merchantHome: "/pages/newUser/merchantDetails/index",
     //newUser
 
+    makeError: "/pages/rules/makeError/index", //打卡失败
     interests: "/pages/rules/interests/index",
+    hotActive: "/pages/share/hotActive/index", //88前活动
     shareActive: "/pages/share/invitation/index", //活动
     download: "/pages/share/download/index", //下载
     login: "/pages/auth/index", //登录
     webView: "/pages/share/webView/index", //内嵌h5
-    userNewArtist: '/pages/share/userNewArtist/index'
+    mainScene: "/pages/share/mainScene/index", //88活動主会场
+    friendScene: "/pages/share/friendScene/index", //88活動邀请好友会场
+    shopScene: "/pages/share/shopScene/index", //88活动带货会场
+    userNewArtist: "/pages/share/userNewArtist/index",
     //规则类
   }[routerName];
   const types = type;

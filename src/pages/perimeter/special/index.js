@@ -8,7 +8,7 @@ import { toast } from "@/common/utils";
 import "./index.scss";
 import { kol } from "../../../api/api";
 import { shopDetails } from "@/components/publicShopStyle";
-import Waterfall from '@/components/waterfall'
+import Waterfall from "@/components/waterfall";
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -18,7 +18,7 @@ class MerchantDetails extends Component {
       httpData: {
         page: 1,
         limit: 10,
-        merchantId: getCurrentInstance().router.params.merchantId,
+        ...getCurrentInstance().router.params,
       },
     };
   }
@@ -86,9 +86,7 @@ class MerchantDetails extends Component {
     return (
       <View className="special_box">
         <Waterfall
-          list={
-            specialGoodsList
-          }
+          list={specialGoodsList}
           createDom={shopDetails}
           imgHight={240}
         ></Waterfall>

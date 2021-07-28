@@ -4,6 +4,7 @@
   margin: 0 auto 20px;
   border-radius: 8px;
   position: relative;
+  line-height: 1;
 }
 .coupon_view_checkColor {
   background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon532.png")
@@ -39,26 +40,13 @@
     max-width: 480px;
   }
   .coupon_view_content {
-    padding-top: 16px;
+    margin-top: 16px;
     font-size: 24px;
+    min-height: 24px;
     font-weight: 400;
   }
-  .coupon_view_bottom {
-    padding-top: 24px;
-    display: flex;
-    align-items: baseline;
-    .coupon_view_priceIcon {
-      font-size: 24px;
-    }
-    .coupon_view_price {
-      font-size: 36px;
-    }
-    .coupon_view_noFont {
-      font-size: 20px;
-      text-decoration: line-through;
-    }
-  }
 }
+
 .coupon_view_btn {
   position: absolute;
   top: 63px;
@@ -81,4 +69,19 @@
 }
 .coupon_btn_style3 {
   color: #cccccc;
+}
+.coupon_view_bottom {
+  padding-top: 24px;
+  display: flex;
+  align-items: baseline;
+  .coupon_view_priceIcon {
+    font-size: 24px;
+  }
+  .coupon_view_price {
+    font-size: 36px;
+  }
+  .coupon_view_noFont {
+    font-size: 20px;
+    text-decoration: line-through;
+  }
 }

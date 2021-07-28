@@ -589,7 +589,11 @@ class MerchantDetails extends Component {
               </View>
             )}
             {/* 套餐 */}
-            <Merchant data={specialGoodsInfo}></Merchant>
+            <Merchant
+              serviceType={"specialGoods"}
+              data={specialGoodsInfo}
+              ownerServiceId={specialActivityIdString}
+            ></Merchant>
             {/* 商品详情 */}
             {(goodsDesc || goodsDescImg) && (
               <View className="shopdetails_shop_details">
@@ -643,7 +647,7 @@ class MerchantDetails extends Component {
                     ¥ {oriPrice}
                   </Text>
                   <Text className="shopdetails_shop_realStatus2">
-                    {((Number(realPrice) / Number(oriPrice)) * 10).toFixed(2)}折
+                    {((Number(realPrice) / Number(oriPrice)) * 10).toFixed(1)}折
                   </Text>
                 </View>
               </View>

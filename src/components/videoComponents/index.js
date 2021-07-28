@@ -20,7 +20,13 @@ export default (props) => {
   const [toast, setToast] = useState(1);
   const [moment, setMoment] = useState({});
   const [timeOut, setTimeOut] = useState(null);
-  const { watchStatus, beanAmount, couponTitlesJson = [], beanFlag } = data;
+  const {
+    watchStatus,
+    beanAmount,
+    couponTitlesJson = [],
+    beanFlag,
+    guideMomentFlag,
+  } = data;
   useEffect(() => {
     setMoment(data);
     if (current === index) {
@@ -50,7 +56,11 @@ export default (props) => {
     } else if (watchStatus === "1") {
       return `已领取${beanAmount}卡豆`;
     } else {
-      return `看完可捡${beanAmount}卡豆${str}`;
+      if (guideMomentFlag === "1") {
+        return `新手福利 +${beanAmount}`;
+      } else {
+        return `看完可捡${beanAmount}卡豆${str}`;
+      }
     }
   };
   return (

@@ -11,7 +11,7 @@ import {
   loginStatus,
   mapGo,
   navigateTo,
-  toast
+  toast,
 } from "@/common/utils";
 import { getSearchConditions } from "@/server/perimeter";
 import { scanCode } from "@/common/authority";
@@ -139,6 +139,7 @@ class index extends Component {
         lnt,
         merchantName,
         address,
+        businessTime,
         userMerchantIdString,
       } = item;
       return (
@@ -166,14 +167,17 @@ class index extends Component {
               {GetDistance(getLat(), getLnt(), lat, lnt)}｜{businessHub}｜
               {categoryName}｜人均￥{perCapitaConsumption}
             </View>
-            <View className="template_time_box">
-              <View className="template_time">
-                <Text style={{ display: "inline-block" }} className="bold">
-                  营业时间
-                </Text>{" "}
-                <View className="liner"></View> 10:00 - 23:00
+            {businessTime ? (
+              <View className="template_time_box">
+                <View className="template_time">
+                  <Text style={{ display: "inline-block" }} className="bold">
+                    营业时间
+                  </Text>{" "}
+                  <View className="liner"></View> {businessTime}
+                </View>
               </View>
-            </View>
+            ) : null}
+
             <View className="template_goods">
               {markFlag === "1" && (
                 <View className="template_bean">打卡捡豆{markBean}</View>
@@ -200,7 +204,12 @@ class index extends Component {
               )}
             </View>
           </View>
-          <View className="template_share" onClick={(e) =>{e.stopPropagation()}}>
+          <View
+            className="template_share"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             {loginStatus() ? (
               <Button
                 style={{ width: "100%", height: "100%", background: "none" }}
@@ -235,7 +244,7 @@ class index extends Component {
           <View
             className="template_btn"
             onClick={(e) => {
-              e.stopPropagation()
+              e.stopPropagation();
               scanCode();
             }}
           >

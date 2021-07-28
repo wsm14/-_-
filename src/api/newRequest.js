@@ -24,20 +24,7 @@ const resultOperate = {
     link: "/pages/auth/index",
     fn: () => {},
   },
-  4003: {
-    type: "商家今日已被打卡",
-    link: "/pages/perimeter/repeatStatus/index",
-    fn: () => {},
-  },
-  5019: {
-    type: "商家今日已被打卡",
-    fn: () => {
-      Taro.showModal({
-        showCancel: "false",
-        content: "商家不允许打卡，请到指定打卡商家哦",
-      });
-    },
-  },
+
   4001: {
     type: "动态已下架",
     fn: () => {
@@ -47,9 +34,9 @@ const resultOperate = {
         success: (res) => {
           const { confirm } = res;
           if (confirm) {
-            Taro.reLaunch({
-              url: "/pages/index/perimeter/index",
-            });
+            // Taro.reLaunch({
+            //   url: "/pages/index/perimeter/index",
+            // });
           }
         },
       });
@@ -90,7 +77,7 @@ const loadBeadRequest = [
   "/user/userInfo/getUserShareCommission",
 ];
 export const httpGet = (obj, fn) => {
-  const { header = {} } = obj;
+  const { header = {}, data = {} } = obj;
   if (!loadBeadRequest.includes(obj.url)) {
     Taro.showLoading({
       title: "加载中",
@@ -102,7 +89,10 @@ export const httpGet = (obj, fn) => {
     Taro.getStorageSync("userInfo").mobile.length === 11 &&
     Taro.getStorageSync("userInfo").token
   ) {
-    obj.data.token = Taro.getStorageSync("userInfo").token;
+    obj.data = {
+      token: Taro.getStorageSync("userInfo").token,
+      ...obj.data,
+    };
   }
   return new Promise((resolve, reject) => {
     Taro.request({
@@ -154,7 +144,7 @@ export const httpGet = (obj, fn) => {
 };
 
 export const httpPost = (obj, fn) => {
-  const { header = {} } = obj;
+  const { header = {}, data = {} } = obj;
   Taro.showLoading({
     title: "加载中",
     mask: true,
@@ -165,7 +155,10 @@ export const httpPost = (obj, fn) => {
     Taro.getStorageSync("userInfo").mobile.length === 11 &&
     Taro.getStorageSync("userInfo").token
   ) {
-    obj.data.token = Taro.getStorageSync("userInfo").token;
+    obj.data = {
+      token: Taro.getStorageSync("userInfo").token,
+      ...obj.data,
+    };
   }
   if (requestUrl.includes(obj.url)) {
     return;

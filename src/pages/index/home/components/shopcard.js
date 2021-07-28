@@ -13,7 +13,7 @@ export default ({
   shareCommission,
   onClose,
   payBeanCommission,
-  userProfile
+  userProfile,
 }) => {
   const {
     promotionName,
@@ -83,10 +83,8 @@ export default ({
       ></View>
       <View className="templateCard_details_box">
         <View
-          className="templateCard_image"
-          style={backgroundObj(
-            promotionImg || userProfile
-          )}
+          className="templateCard_image coupon_shop_icon"
+          style={backgroundObj(promotionImg || userProfile)}
         ></View>
         <View className="templateCard_goods_box">
           <View className="templateCard_title font_hide">{promotionName}</View>
@@ -95,11 +93,12 @@ export default ({
             <Text className="font24 bold color6 templateCard_margin1 templateCard_through">
               ¥{promotionOriPrice}
             </Text>
-            <Text className="font22 color6 bold templateCard_margin2">优惠价:</Text>
+            <Text className="font22 color6 bold templateCard_margin2">
+              优惠价:
+            </Text>
             <Text className="font28 color6 bold templateCard_margin1">
               ¥{promotionBuyPrice}
             </Text>
-
           </View>
           <View className="templateCard_beanPrice font_hide">
             <Text className="font20">卡豆抵扣后最低到手价:</Text>

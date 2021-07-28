@@ -7,6 +7,7 @@ const locationStore = observable({
   lnt: 120.255384,
   cityName: Taro.getStorageSync("city").cityName || "杭州",
   cityCode: Taro.getStorageSync("city").cityCode || "3301",
+  locationStatus: false,
   setLocation(latitude, longitude) {
     this.lat = latitude;
     this.lnt = longitude;
@@ -27,6 +28,7 @@ const locationStore = observable({
           const { addressComponent = {} } = regeocode;
           const { adcode = "" } = addressComponent;
           Taro.setStorageSync("district-code", adcode.slice(0, 4));
+          this.locationStatus = true;
         } else {
           this.flag = false;
           toast(info);

@@ -1,34 +1,52 @@
 /*
- 到点打卡,位置不在打卡范围
+ 到点打卡,无权限
 */
 import React from "react";
+import Taro, { useDidShow } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import Router from "@/common/router";
 import { goBack } from "@/common/utils";
-import { scanCard } from "@/common/authority";
+
+import { useState } from "react";
+import evens from "@/common/evens";
+import { getAuthStatus, scanCard } from "@/common/authority";
 export default (props) => {
-  const { Store } = props;
+  const [type, setType] = useState(false);
+  useDidShow(() => {
+    getAuthStatus({
+      key: "location",
+      success: (res) => {
+        setType(res);
+      },
+      fail: (res) => {
+        setType(res);
+      },
+    });
+  });
   return (
     <View className="makeError_makeRepeat_init">
-      <View className="makeError_img_box makeError_beyondLimit_img"></View>
+      <View className="makeError_img_box makeError_makeAuth_img"></View>
       <View className="makeError_make_toast">哒卡乐温馨提示</View>
       <View className="makeError_error_toast">
-        您的定位权限未开启，请开启定位授权
+        {type
+          ? "已成功开启定位，请您重新扫码 "
+          : "您的定位权限未开启，请开启定位授权"}
       </View>
       <View className="makeError_make_btnBox public_auto">
         <View
-          className="makeError_btn_box makeError_btn_color2"
-          onClick={() => {}}
+          className="makeError_btn_box makeError_btn_color1"
+          onClick={() => {
+            goBack();
+          }}
         >
           取消
         </View>
         <View
           className="makeError_btn_box makeError_btn_color2"
           onClick={() => {
-            
+            type ? goBack(() => scanCard()) : evens.$emit("setLocation");
           }}
         >
-          去授权
+          {type ? "去打卡" : "去授权"}
         </View>
       </View>
     </View>

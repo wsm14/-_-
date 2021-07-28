@@ -7,9 +7,10 @@ import { toast, filterGoodsStatus, loginStatus } from "@/common/utils";
 import Tabs from "@/components/tabs";
 import Goods from "./components/goods";
 import { goodsNullStatus } from "@/components/publicShopStyle";
-import "./index.scss";
 import { inject, observer } from "mobx-react";
+import ActiveToast from "@/components/componentView/active/tabbarBox";
 import Router from "@/common/router";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends Component {
@@ -165,6 +166,7 @@ class Index extends Component {
         goodsStore: { orderList },
       },
     } = this.props;
+    const { activeInfoStore = {} } = this.props.store;
     const tabStyle = {
       height: Taro.pxTransform(88),
       borderRadius: "0px 0px 20px 20px",
@@ -186,6 +188,7 @@ class Index extends Component {
           style={tabStyle}
           {...setting}
         ></Tabs>
+        <ActiveToast store={activeInfoStore}></ActiveToast>
         {orderList.length === 0 ? (
           goodsNullStatus()
         ) : (

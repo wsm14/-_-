@@ -12,7 +12,7 @@ import Taro from "@tarojs/taro";
  * */
 import { objStatus } from "@/common/utils";
 export const getRootAndParent = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/common/dictionary/listDictionaryByRootAndParent",
       data: data,
@@ -76,7 +76,7 @@ export const getLimit = (data, fn) => {
 //获取距离
 
 export const getBanner = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       data: data,
       url: "/common/banner/listBanner",
@@ -251,12 +251,34 @@ export const getShareInfo = (data = {}, fn) => {
 //获取解密分享码
 
 export const getBusinessHub = (data = {}, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/common/businessHub/lisBusinessHubByCityCode",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
-//获取解密分享码
+//获取商圈
+
+export const fetchGoodsTag = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/config/goods/tag/listGoodsTagByCategoryId",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//通过行业id & 端类型获取商品标签;
+
+export const fetchBeanBarrage = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/listActivityBeanBarrage",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//活动卡豆弹幕;

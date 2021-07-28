@@ -17,7 +17,7 @@ export default (props) => {
       </View>
       <View className="makeError_make_btnBox public_auto">
         <View
-          className="makeError_btn_box makeError_btn_color2"
+          className="makeError_btn_box makeError_btn_color1"
           onClick={() => {
             goBack();
           }}
@@ -27,13 +27,12 @@ export default (props) => {
         <View
           className="makeError_btn_box makeError_btn_color2"
           onClick={() => {
-            scanCard();
+            goBack(() => scanCard());
           }}
         >
           重新定位
         </View>
       </View>
-   
     </View>
   );
 };

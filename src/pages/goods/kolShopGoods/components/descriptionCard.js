@@ -70,7 +70,12 @@ export default (props) => {
     thresholdPrice,
     couponPrice,
     useEndTime,
+    merchantCount,
+    ownerIdString,
+    activityIdString,
+    ownerCouponIdString,
   } = orderResult;
+  console.log(orderResult);
   const goSpeGoods = () => {
     const {
       ownerIdString,
@@ -180,9 +185,9 @@ export default (props) => {
     }
     return false;
   };
-  return (
-    <View className="descriptionCard_title" style={style ? style : {}}>
-      <View className="descriptionCard_box">
+  const filterTopMerchant = (count = 1) => {
+    if (count === 1) {
+      return (
         <View
           onClick={() =>
             navigateTo(
@@ -200,6 +205,46 @@ export default (props) => {
           </View>
           <View className="descriptionCard_goIcon"></View>
         </View>
+      );
+    } else
+      return (
+        <View
+          onClick={() =>
+            navigateTo(
+              `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
+            )
+          }
+          className="descriptionCard_merchant"
+        >
+          <View
+            className="descriptionCard_profile dakale_nullImage"
+            style={backgroundObj(merchantImg)}
+          ></View>
+          <View className="descriptionCard_merchantTitle font_hide">
+            {merchantName}
+          </View>
+          <View
+            className="descriptionCard_group_liner"
+            onClick={(e) => {
+              e.stopPropagation();
+              Router({
+                routerName: "groupList",
+                args: {
+                  ownerServiceId: activityIdString || ownerCouponIdString,
+                  ownerId: ownerIdString,
+                },
+              });
+            }}
+          >
+            更多{count}家门店可用
+          </View>
+        </View>
+      );
+  };
+  return (
+    <View className="descriptionCard_title" style={style ? style : {}}>
+      <View className="descriptionCard_box">
+        {filterTopMerchant(merchantCount)}
         <View className="descriptionCard_merchantShop">
           <View
             className={classNames(

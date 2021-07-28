@@ -13,7 +13,7 @@ import {
 } from "@/common/utils";
 import { selectShop } from "@/components/componentView/selectShop";
 import "./../index.scss";
-export default ({ data = [], userInfo = {}, linkTo }) => {
+export default ({ data = [], userInfo = {}, linkTo, type }) => {
   const memo = useMemo(() => {
     const template = (item) => {
       return selectShop(item, userInfo, linkTo);
@@ -27,7 +27,10 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
             style={{ width: Taro.pxTransform(335) }}
           ></Waterfall>
         ) : (
-          <NallStatus type={0} title={"暂无商品"}></NallStatus>
+          <NallStatus
+            type={0}
+            title={type === "follow" ? "还没有任何关注哦" : "暂无商品"}
+          ></NallStatus>
         )}
       </View>
     );

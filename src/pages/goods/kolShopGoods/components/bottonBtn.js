@@ -11,7 +11,7 @@ export default (props) => {
   useEffect(() => {
     setOrderDetails(data);
   }, [data]);
-  console.log(order);
+  console.log(order)
   const getPay = () => {
     const { orderSn, orderType } = order;
     navigateTo(

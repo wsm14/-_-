@@ -19,8 +19,9 @@ export const coupon = (data) => {
     merchantIdString,
     ownerIdString,
     ownerCouponIdString,
+    remain
   } = data;
-  const { couponPrice = 0, thresholdPrice, remain } = reduceObject;
+  const { couponPrice = 0, thresholdPrice } = reduceObject;
   let a = 0;
   const templateThreshold = () => {
     if (thresholdPrice && thresholdPrice.length > 0) {
@@ -94,8 +95,8 @@ export const coupon = (data) => {
             <View className="coupon_view_title font_hide">{couponName}</View>
             <View className="coupon_view_content">
               {" "}
-              {templateThreshold()}
-              {templateSelect()}
+               {templateThreshold()}
+               {templateSelect()}
             </View>
             <View className="coupon_view_bottom">
               <Text className="coupon_view_priceIcon">¥ </Text>

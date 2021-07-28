@@ -298,7 +298,7 @@ export const GetDistance = function (lat1, lng1, lat2, lng2) {
     Math.asin(
       Math.sqrt(
         Math.pow(Math.sin(a / 2), 2) +
-        Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)
+          Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)
       )
     );
   s = s * 6378.137; // EARTH_RADIUS;
@@ -307,6 +307,27 @@ export const GetDistance = function (lat1, lng1, lat2, lng2) {
   return filterLimit(s);
 };
 ////地理位置
+
+export const computedLimit = function (lat1, lng1, lat2, lng2) {
+  let radLat1 = Rad(lat1) || Rad(30.264561);
+  let radLat2 = Rad(lat2);
+  let radLng1 = Rad(lng1) || Rad(120.170189);
+  let radLng2 = Rad(lng2);
+  let a = radLat1 - radLat2;
+  let b = radLng1 - radLng2;
+  let s =
+    2 *
+    Math.asin(
+      Math.sqrt(
+        Math.pow(Math.sin(a / 2), 2) +
+          Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)
+      )
+    );
+  s = s * 6378.137; // EARTH_RADIUS;
+  s = Math.round(s * 10000) / 10000; //输出为公里
+  s = s.toFixed(2);
+  return s * 1000;
+};
 export const filterLogin = function (data) {
   switch (data) {
     case "1":
@@ -387,7 +408,7 @@ export const addPhotosAlbum = (path) => {
       Taro.hideLoading();
       toast("保存失败");
     },
-    complete: () => { },
+    complete: () => {},
   });
 };
 export const goDown = () => {
@@ -429,14 +450,14 @@ export const filterActive = (type) => {
 export const filterPayStatus = (string, type = "") => {
   if (type === "expiredRefund") {
     return "订单已过期";
-  } else if (type === "manualRefund") {
-    return "已退款成功";
+  } else if (type === "manualRefund" && string === "6") {
+    return "申请退款中";
   } else {
     switch (string) {
       case "0":
         return "待付款";
       case "1":
-        return "待使用";
+        return "待核销";
       case "2":
         return "已关闭";
       case "3":
@@ -544,12 +565,12 @@ export const filterGoods = (data) => {
   let { orderDesc = {}, orderType } = data;
   orderDesc = JSON.parse(orderDesc);
   const { reduceCoupon = {}, specialGoods = {} } = orderDesc;
-  return { ...data, ...reduceCoupon, ...specialGoods, ...orderDesc };
+  return { ...reduceCoupon, ...specialGoods, ...orderDesc, ...data };
 };
 export const removeLogin = () =>
   Taro.removeStorage({
     key: "userInfo",
-    success: (res) => { },
+    success: (res) => {},
     fail: (res) => {
       toast("缓存清理错误");
     },
@@ -567,7 +588,7 @@ export const mapGo = (item) => {
 export const removeStorage = (key) =>
   Taro.removeStorage({
     key: key,
-    success: (res) => { },
+    success: (res) => {},
     fail: (res) => {
       toast("缓存清理错误");
     },
@@ -632,15 +653,45 @@ export const computedVideoSize = (width = 0, height = 0) => {
   }
 };
 export const filterPath = (obj) => {
-  const params = obj
+  const params = obj;
   if (params.scene || (params.shareUserId && params.shareUserType)) {
-    return true
+    return true;
+  } else {
+    return false;
   }
-  else {
-    return false
-  }
-}
+};
+export const computedViewHeight = (id, fn) => {
+  Taro.getSystemInfo({
+    success: (res) => {
+      const { windowHeight } = res;
+      getDom(id, (res = []) => {
+        if (res[0] && res[0].top) {
+          fn && fn(windowHeight - res[0].top, windowHeight);
+        }
+      });
+    },
+    fail: () => {
+      toast("获取设备信息失败 ，渲染出错");
+    },
+  });
+};
+export const setNavTitle = (title) => {
+  Taro.setNavigationBarTitle({
+    title: title,
+    fail: (res) => {
+      toast("未知异常");
+    },
+  });
+};
 
+export const computedSize = (size) => {
+  let width = Taro.getSystemInfoSync().windowWidth;
+  let sizeScale = width / 375;
+  return parseInt(sizeScale * size);
+};
+export const computedWinHeight = () => {
+  return Taro.getSystemInfoSync().windowHeight;
+};
 //首页视频计算比例
 export const resiApiKey = "f390f1e2b0faa95710d00a0801384c41";
 //高德key

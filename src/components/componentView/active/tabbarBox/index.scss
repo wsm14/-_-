@@ -1,0 +1,30 @@
+.active_hish_info {
+  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/active/8.8/active8_8_18.png")
+    no-repeat;
+  background-size: 100% 100%;
+}
+.active_hish_countInfo {
+  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/active/8.8/active8_8_19.png")
+    no-repeat;
+  background-size: 100% 100%;
+}
+
+.active_hish_box {
+  position: fixed;
+  top: 206px;
+  right: 7px;
+  width: 175px;
+  height: 129px;
+  z-index: 999;
+}
+.active_hish_cont {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+  color: #f34b4b;
+  line-height: 28px;
+}

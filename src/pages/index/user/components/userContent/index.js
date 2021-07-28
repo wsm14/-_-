@@ -5,8 +5,17 @@ import "./../../index.scss";
 import { navigateTo, loginStatus } from "@/common/utils";
 import { loginBtn } from "@/common/authority";
 import Router from "@/common/router";
+import Download from "./components/index";
 export default (props) => {
-  const { status, data = {}, levelDetails = {}, nextLevel = {} } = props;
+  const {
+    status,
+    data = {},
+    levelDetails = {},
+    nextLevel = {},
+    infoCollect,
+    fetchLever,
+    fetchLoad,
+  } = props;
   const { informCount, level = "0" } = data;
   const { bean } = data;
   const {
@@ -16,7 +25,7 @@ export default (props) => {
     monthToIncome = 0,
     totalIncome = 0,
   } = levelDetails;
-  const { levelProgress = {}, processInfo } = nextLevel;
+  const { levelProgress = {}, processInfo, currentProgress = {} } = nextLevel;
   const { normal } = levelProgress;
   const list = [
     {
@@ -60,14 +69,7 @@ export default (props) => {
   const templateKol = () => {
     if (level === "0") {
       return (
-        <View
-          onClick={() =>
-            Router({
-              routerName: "download",
-            })
-          }
-          className="user_content_kolBox"
-        >
+        <View className="user_content_kolBox">
           <View className="user_content_kol">
             <View className="user_kol_lever public_auto">
               <View className="user_kol_leverLeft">
@@ -75,7 +77,16 @@ export default (props) => {
                 <View className="user_kol_leverTitle">升级哒人</View>
                 <View className="user_kol_leverDesc">自购省 分享赚</View>
               </View>
-              <View className="user_kol_leverRight public_center">
+              <View
+                className="user_kol_leverRight public_center"
+                onClick={() => {
+                  if (currentProgress.normal >= normal) {
+                    fetchLever();
+                  } else {
+                    fetchLoad();
+                  }
+                }}
+              >
                 解锁哒人
               </View>
             </View>
@@ -100,45 +111,7 @@ export default (props) => {
         </View>
       );
     } else {
-      return (
-        <View
-          onClick={() =>
-            Router({
-              routerName: "download",
-            })
-          }
-          className="user_content_kolBox"
-        >
-          <View className="user_parentBox">
-            <View className="user_ParentTitle">
-              <View>你已累计赚取</View>
-            </View>
-            <View className="user_parent_money">
-              {(totalIncome / 100).toFixed(2)}
-            </View>
-            <View className="user_parent_mx">
-              <View className="user_mx_left">
-                <View className="user_mx_top">
-                  {(monthIncome / 100).toFixed(2)}
-                </View>
-                <View className="user_mx_center">本月累计分佣/元</View>
-              </View>
-              <View className="user_mx_right">
-                <View className="user_mx_top">
-                  {(monthToIncome / 100).toFixed(2)}
-                </View>
-                <View className="user_mx_center">本月待分佣/元</View>
-              </View>
-              <View className="user_max_liner"></View>
-            </View>
-          </View>
-          <View className="user_lever_desc">
-            {nextLevelInfo}
-            <View className="user_lever_wxRight"></View>
-          </View>
-          <View className="user_group_people">团队人数：{teamUserCount}</View>
-        </View>
-      );
+      return <Download levelDetails={levelDetails}></Download>;
     }
   };
   const linkTo = (item) => {
@@ -148,16 +121,6 @@ export default (props) => {
   };
   return (
     <View className="user_content">
-      <View className="user_tab_iconBox public_auto">
-        {list.map((item) => {
-          return (
-            <View className="user_tabList" onClick={() => linkTo(item)}>
-              <View className={`user_tab_icons ${item.style}`}></View>
-              <View className="user_tab_font">{item.font}</View>
-            </View>
-          );
-        })}
-      </View>
       <View
         onClick={() => {
           loginBtn(() => {

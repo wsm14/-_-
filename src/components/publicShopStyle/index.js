@@ -119,7 +119,9 @@ export const shopDetails = (data, obj) => {
                 ¥ {" " + oriPrice || ""}
               </Text>
             </View>
-            <View className="shop_zhekou font20">{discount}折</View>
+            <View className="shop_zhekou font20">
+              {((Number(realPrice) / Number(oriPrice)) * 10).toFixed(1)}折
+            </View>
           </View>
           <View className="shopDetails_btnBox public_auto">
             <View className="shopDetails_btnTitle font24">

@@ -155,7 +155,6 @@ export const rssConfigData = (data = {}) => {
       return [];
     }
   };
-  console.log(filterScenesList());
   return {
     width: 750, // 画布宽度
     height: 1334, // 画布高度
