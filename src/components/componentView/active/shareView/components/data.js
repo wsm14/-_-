@@ -1,6 +1,6 @@
 export const rssConfigData = (data = {}) => {
   let {
-    background = "https://wechat-config.dakale.net/miniprogram/image/invitation_8.png",
+    background = "https://resource-new.dakale.net/common/activity/88activityBackgroundIos.png",
     qcodeUrl,
     username = "",
   } = data;

@@ -109,10 +109,10 @@ export default ({ data, type = "any", userInfo }) => {
           </View>
           <View className="ownerShop_shop_bussionTime">
             {businessTime && (
-              <View className="bussionTime_tag">
+              <View className="bussionTime_tag font_hide">
                 <Text className="font22 bold color9">营业时间</Text>
                 <Text className="bussionTime_liner bussionTime_margin"></Text>
-                <Text className="bussionTime_margin font22 bold  color9">
+                <Text className="bussionTime_margin font_hide font22 bold  color9">
                   {businessTime}
                 </Text>
               </View>

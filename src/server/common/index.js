@@ -12,7 +12,7 @@ import Taro from "@tarojs/taro";
  * */
 import { objStatus } from "@/common/utils";
 export const getRootAndParent = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/common/dictionary/listDictionaryByRootAndParent",
       data: data,
@@ -271,3 +271,14 @@ export const fetchGoodsTag = (data = {}, fn) => {
   );
 };
 //通过行业id & 端类型获取商品标签;
+
+export const fetchBeanBarrage = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/listActivityBeanBarrage",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//活动卡豆弹幕;

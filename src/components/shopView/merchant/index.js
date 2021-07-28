@@ -98,7 +98,7 @@ export default (props) => {
           data={filterStrList(telephone)}
         ></MakePhone>
       )}
-      {ownerType === "group" && merchantCount > 0 && (
+      {ownerType === "group" && merchantCount > 1 && (
         <View
           className="merchant_group_btn"
           onClick={() =>

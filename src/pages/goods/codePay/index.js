@@ -13,7 +13,6 @@ import { inject, observer } from "mobx-react";
 import "./index.scss";
 const computedScan = (value, couponPrice, scale, bean) => {
   let setBean = (Number(value) - Number(couponPrice)) * 100 * scale;
-  console.log(Number(value) - Number(couponPrice));
   if (Number(value) - Number(couponPrice) > 0) {
     if (setBean > 0) {
       if (setBean > bean) {

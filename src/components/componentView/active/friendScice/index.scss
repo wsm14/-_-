@@ -11,4 +11,24 @@
       no-repeat;
     background-size: 100% 100%;
   }
+  .friendScice_goods_box {
+    margin-top: 48px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .friendScice_goods_btn {
+    width: 190px;
+    height: 60px;
+    border-radius: 35px;
+    border: 2px solid #ffffff;
+    margin: 64px auto 0;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
 }

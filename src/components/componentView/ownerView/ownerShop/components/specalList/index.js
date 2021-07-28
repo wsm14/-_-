@@ -12,15 +12,15 @@ export default (props) => {
   const { list, userInfo } = props;
   const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
   const linkTo = (specialActivityId, ownerId) => {
+    console.log(specialActivityId, ownerId);
     Router({
       routerName: "favourableDetails",
       args: {
-        specialActivity: specialActivityId,
+        specialActivityId: specialActivityId,
         merchantId: ownerId,
       },
     });
   };
-  console.log(list);
   const templateOwn = () => {
     return list.map((item) => {
       const {
@@ -41,12 +41,13 @@ export default (props) => {
         merchantPrice,
         ownerIdString,
       } = item;
+      console.log(ownerIdString, specialActivityIdString);
       return (
         <View className="templateOwn_box">
           <View
             onClick={(e) => {
               e.stopPropagation();
-              linkTo(ownerIdString, specialActivityIdString);
+              linkTo(specialActivityIdString, ownerIdString);
             }}
             style={backgroundObj(goodsImg)}
             className="templateOwn_coverImg"
@@ -112,7 +113,7 @@ export default (props) => {
               className="templateOther_template_specal"
               onClick={(e) => {
                 e.stopPropagation();
-                linkTo(ownerIdString, specialActivityIdString);
+                linkTo(specialActivityIdString, ownerIdString);
               }}
             >
               <View

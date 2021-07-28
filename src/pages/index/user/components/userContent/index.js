@@ -14,6 +14,7 @@ export default (props) => {
     nextLevel = {},
     infoCollect,
     fetchLever,
+    fetchLoad,
   } = props;
   const { informCount, level = "0" } = data;
   const { bean } = data;
@@ -79,10 +80,10 @@ export default (props) => {
               <View
                 className="user_kol_leverRight public_center"
                 onClick={() => {
-                  if (currentProgress.normal / normal >= 1) {
+                  if (currentProgress.normal >= normal) {
                     fetchLever();
                   } else {
-                    infoCollect();
+                    fetchLoad();
                   }
                 }}
               >

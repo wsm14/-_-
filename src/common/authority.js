@@ -292,12 +292,11 @@ export const scanCode = (data) => {
           } else {
             Taro.showModal({
               showCancel: "false",
-              content: "二维码错误或参数缺失",
+              content: "二维码无效，请重新扫描哒卡乐二维码",
             });
             return;
           }
         }
-        // return
       },
       fail: (res) => {
         // Taro.showModal({
@@ -374,7 +373,7 @@ export const scanCard = () => {
           } else {
             Taro.showModal({
               showCancel: "false",
-              content: "二维码错误或参数缺失",
+              content: "二维码无效，请重新扫描哒卡乐打卡码",
             });
             return;
           }

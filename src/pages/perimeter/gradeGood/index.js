@@ -86,6 +86,24 @@ class Index extends Component {
       }
     );
   }
+  onPullDownRefresh() {
+    const { httpData } = this.state;
+    this.setState(
+      {
+        httpData: { ...httpData, page: 1, limit: 10 },
+        configUserLevelInfo: {},
+        specialGoodsList: [],
+      },
+      (res) => {
+        let time = setTimeout(() => {
+          Taro.stopPullDownRefresh();
+          clearTimeout(time);
+        }, 500);
+        this.fetchUserShare();
+        this.getshopList();
+      }
+    );
+  }
   initSelect() {
     Promise.all([
       getCategory({ parentId: "0" }, () => {}),
@@ -361,10 +379,7 @@ class Index extends Component {
               style={{
                 minHeight: computedHight + "px",
                 position: "relative",
-                top:
-                  top >= size
-                    ? computedSize(computedClient().top + 61)
-                    : 0,
+                top: top >= size ? computedSize(computedClient().top + 61) : 0,
               }}
               className="perimeterList_scroll1"
             >

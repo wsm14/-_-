@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
-import { View, Text, WebView } from "@tarojs/components";
+import { View, Text, WebView, ScrollView } from "@tarojs/components";
 import {
   getAuthStatus,
   scanCard,
@@ -10,12 +10,14 @@ import { inject, observer } from "mobx-react";
 import { getRestapiAddress } from "@/server/common";
 import { resiApiKey, toast, getLat, getLnt, loginStatus } from "@/common/utils";
 import { fetchUserShareCommission } from "@/server/index";
-import { fetchInActivityChildUser } from "@/server/share";
+import { fetchInActivityAchievement } from "@/server/share";
 import Top from "./components/top";
+import { getMainPage } from "@/server/user";
 import Center from "@/components/componentView/active/importScice";
 import FriendScice from "@/components/componentView/active/friendScice";
 import PayScice from "@/components/componentView/active/payScice";
 import ShareFriend from "@/components/componentView/active/shareView";
+import Toast from "@/components/dakale_toast";
 import "./index.scss";
 @inject("store")
 @observer
@@ -28,18 +30,30 @@ class Index extends Component {
       city: "杭州",
       cityCode: "3301",
       configUserLevelInfo: {},
+      userInfo: {},
       visible: false,
+      orderInfo: {},
+      ruleVisible: false,
     };
   }
   componentDidMount() {
     this.fetchUserShare();
   }
   componentDidShow() {
-    this.fetchInActivityChildUser();
+    this.fetchUserDetails();
+    this.fetchInActivityAchievement();
   }
-  fetchInActivityChildUser() {
-    fetchInActivityChildUser({ activityType: "88activity" }).then((val) => {
-      console.log(res);
+  fetchInActivityAchievement() {
+    fetchInActivityAchievement({ activityType: "88activity" }).then((val) => {
+      const { orderInfo } = val;
+      this.setState({
+        orderInfo,
+      });
+    });
+  }
+  setRuleVisible(val) {
+    this.setState({
+      ruleVisible: val,
     });
   }
   fetchUserShare() {
@@ -50,40 +64,13 @@ class Index extends Component {
       });
     });
   }
-  setCityName(lat, lnt) {
-    getRestapiAddress(
-      {
-        key: resiApiKey,
-        location: `${lat},${lnt}`,
-      },
-      (res) => {
-        const { info, regeocode = {} } = res;
-        if (info === "OK") {
-          const { addressComponent = {} } = regeocode;
-          const { city, adcode = "" } = addressComponent;
-          this.setState({
-            city: city.slice(0, 2),
-            cityCode: adcode.slice(0, 4),
-          });
-        } else {
-          toast("经纬度解析错误");
-        }
-      }
-    );
-  }
-  setTabLocation() {
-    const { cityCode } = this.state;
-    if (cityCode === "3301") {
+  fetchUserDetails() {
+    getMainPage({}, (res) => {
+      const { userInfo } = res;
       this.setState({
-        city: "湘西",
-        cityCode: "4331",
+        userInfo: userInfo,
       });
-    } else {
-      this.setState({
-        city: "杭州",
-        cityCode: "3301",
-      });
-    }
+    });
   }
   onShareAppMessage(res) {
     let userInfo = loginStatus() || {};
@@ -96,14 +83,41 @@ class Index extends Component {
     }
   }
   render() {
-    const { configUserLevelInfo, visible } = this.state;
+    const { configUserLevelInfo, visible, userInfo, orderInfo, ruleVisible } =
+      this.state;
     console.log(configUserLevelInfo);
     return (
       <View className="shopScene_box">
+        <View
+          className="active_Rule"
+          onClick={() => this.setRuleVisible(true)}
+        ></View>
         <Top
+          userInfo={userInfo}
+          orderInfo={orderInfo}
           onShare={() => this.setState({ visible: true })}
           configUserLevelInfo={configUserLevelInfo}
         ></Top>
+        {ruleVisible && (
+          <Toast title={"活动规则"} close={() => this.setRuleVisible(false)}>
+            <ScrollView scrollY className="shop_dakale_content">
+              <View>
+                1、活动期间，哒卡乐注册用户通过前述活动参与渠道进入活动页面即可根据页面提示参与活动；
+              </View>
+              <View>
+                2、活动期间，每位用户每日仅有1次拉新用户—领取卡豆膨胀金的机会，进入拉新卡豆膨胀金会场，可进行拉好友注册，膨胀卡豆金活动，只需将个人哒卡乐邀请码或本活动页面转发给好友，好友通过邀请码或分享的活动页面注册成功后，即算作成功拉新1人，邀请好友注册人数越多，获得卡豆奖励越多；
+              </View>
+              <View>3、 每日0点更新第二日活动；</View>
+              <View>
+                4、当日完成拉新任务达到指标后，需用户主动领取卡豆，领取后卡豆自动流入“我的一我的钱包”，若用户当日没有主动领取，第二日活动开始时，完成任务未领取的卡豆将自动流入“我的一我的钱包”中，具体卡豆使用规则及有效期详见卡豆钱包中卡豆规则；
+              </View>
+              <View>
+                5、
+                同一哒卡乐账户、微信账户、身份证、手机号、手机设备，符合以上任一条件，均视为同一用户，同一用户每日仅限参与一次拉新卡豆膨胀金活动。
+              </View>
+            </ScrollView>
+          </Toast>
+        )}
         <View className="shopScene_ceil_margin"></View>
         <Center></Center>
         <FriendScice></FriendScice>

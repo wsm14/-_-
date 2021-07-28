@@ -1,5 +1,15 @@
 .friendScene_box {
   width: 100%;
+  .shop_dakale_content {
+    width: 456px;
+    margin: 24px auto;
+    font-size: 28px;
+    font-weight: 400;
+    color: #666666;
+    line-height: 42px;
+    max-height: 560px;
+    text-align: left;
+  }
   .friendScene_top {
     width: 100%;
     height: 1575px;
@@ -7,6 +17,7 @@
     background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_23.png);
     background-size: 100% 100%;
     position: relative;
+
     .friendScene_content_topHeight {
       height: 531px;
     }
@@ -14,7 +25,7 @@
       width: 717px;
       height: 494px;
       margin: 0 auto;
-      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_24.png);
+      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_37.png);
       background-size: 100% 100%;
       .friendScene_card_details {
         position: relative;
@@ -84,6 +95,29 @@
       justify-content: center;
     }
   }
+  .friendScene_layer_toast {
+    width: 560px;
+    height: 600px;
+    background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_39.png);
+    background-size: 100% 100%;
+    position: relative;
+    .friendScene_layer_toastBtn {
+      width: 440px;
+      height: 80px;
+      background: #ef476f;
+      border-radius: 64px;
+      font-size: 36px;
+      font-weight: 600;
+      color: #ffd95d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      right: 60px;
+      left: 60px;
+      bottom: 40px;
+    }
+  }
   .friendScene_layer_child {
     height: 129px;
     margin: 0 24px;
@@ -108,16 +142,16 @@
   }
   .shareInfo_btn {
     width: 560px;
-    height: 140px;
+    height: 110px;
     margin: 14px auto 0;
     background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_25.png);
     background-size: 100% 100%;
   }
   .shareInfo_btn1 {
     width: 560px;
-    height: 140px;
+    height: 110px;
     margin: 14px auto 0;
-    background: red;
+    background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_36.png);
     background-size: 100% 100%;
   }
   .friendScene_timesAuto {
@@ -169,6 +203,7 @@
     .friendScene_bean_profile2 {
       box-sizing: border-box;
       border: 4px solid #ffd95d;
+      border-radius: 50%;
     }
     .friendScene_bean_index {
       width: 78px;

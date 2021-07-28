@@ -73,6 +73,7 @@ export default (props) => {
     merchantCount,
     ownerIdString,
     activityIdString,
+    ownerCouponIdString,
   } = orderResult;
   console.log(orderResult);
   const goSpeGoods = () => {
@@ -209,13 +210,9 @@ export default (props) => {
       return (
         <View
           onClick={() =>
-            Router({
-              routerName: "groupList",
-              args: {
-                ownerServiceId: activityIdString,
-                ownerId: ownerIdString,
-              },
-            })
+            navigateTo(
+              `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
+            )
           }
           className="descriptionCard_merchant"
         >
@@ -226,7 +223,19 @@ export default (props) => {
           <View className="descriptionCard_merchantTitle font_hide">
             {merchantName}
           </View>
-          <View className="descriptionCard_group_liner">
+          <View
+            className="descriptionCard_group_liner"
+            onClick={(e) => {
+              e.stopPropagation();
+              Router({
+                routerName: "groupList",
+                args: {
+                  ownerServiceId: activityIdString || ownerCouponIdString,
+                  ownerId: ownerIdString,
+                },
+              });
+            }}
+          >
             更多{count}家门店可用
           </View>
         </View>

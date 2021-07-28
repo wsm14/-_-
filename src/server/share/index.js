@@ -71,7 +71,7 @@ export const getGuildMomentDetail = (data, fn) => {
 export const fetchInActivityChildUser = (data, fn) => {
   return httpGet(
     {
-      url: "/user/actyivity/listInActivityChildUser",
+      url: "/user/activity/listInActivityChildUser",
       data: data,
     },
     (res) => {
@@ -80,3 +80,29 @@ export const fetchInActivityChildUser = (data, fn) => {
   );
 };
 //获取活动期间的家人列表
+
+export const fetchInActivityAchievement = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/listInActivityAchievement",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取活动期间家人带货数量
+
+export const fetchListActivityGoods = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/listActivityGoods",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取活动期间家人带货数量

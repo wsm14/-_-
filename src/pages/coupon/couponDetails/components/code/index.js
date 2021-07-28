@@ -175,7 +175,7 @@ export default (props) => {
     <View className="couponDetails_title" style={style ? style : {}}>
       <View className="couponDetails_box">
         {" "}
-        {merchantCount !== 1 ? (
+        {merchantCount > 1 ? (
           <>
             <View
               className="couponDetails_merchant"

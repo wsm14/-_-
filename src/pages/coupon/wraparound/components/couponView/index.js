@@ -36,7 +36,7 @@ export default (props) => {
     const { ownerType, merchantIdString, ownerIdString } = val;
     if (ownerType !== "group") {
       navigateTo(
-        `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
+        `/pages/perimeter/merchantDetails/index?merchantId=${ownerIdString}`
       );
     } else {
       navigateTo(

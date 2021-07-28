@@ -83,7 +83,6 @@ class Index extends Component {
     });
   }
   onError(msg) {
-    console.log(msg);
   }
   render() {
     const {

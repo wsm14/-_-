@@ -422,7 +422,7 @@ class Index extends Component {
                   ¥ {couponPrice}
                 </Text>
                 <Text className="shopdetails_shop_realStatus2">
-                  {((Number(buyPrice) / Number(couponPrice)) * 10).toFixed(2)}折
+                  {((Number(buyPrice) / Number(couponPrice)) * 10).toFixed(1)}折
                 </Text>
               </View>
             </View>

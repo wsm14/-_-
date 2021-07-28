@@ -23,7 +23,6 @@ class App extends Component {
   componentDidMount() {
     this.fetchLocation();
     this.fetchNetwork();
-
     authWxLogin(this.fetchOpenId.bind(this));
     evens.$on("setLocation", this.fetchLocation.bind(this));
   }

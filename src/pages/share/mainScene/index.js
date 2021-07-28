@@ -8,12 +8,24 @@ import {
 } from "@/common/authority";
 import { inject, observer } from "mobx-react";
 import { getRestapiAddress } from "@/server/common";
-import { resiApiKey, toast, getLat, getLnt, loginStatus } from "@/common/utils";
+import { fetchListActivityGoods } from "@/server/share";
+import { fetchUserShareCommission } from "@/server/index";
+import {
+  resiApiKey,
+  toast,
+  getLat,
+  getLnt,
+  loginStatus,
+  computedLimit,
+} from "@/common/utils";
+import { getMainPage } from "@/server/user";
 import Top from "./components/mainSceneTop";
 import Center from "@/components/componentView/active/importScice";
 import FriendScice from "@/components/componentView/active/friendScice";
 import PayScice from "@/components/componentView/active/payScice";
 import ShareFriend from "@/components/componentView/active/shareView";
+import BeanToast from "@/components/componentView/active/beanToast";
+import Router from "@/common/router";
 import "./index.scss";
 @inject("store")
 @observer
@@ -25,11 +37,34 @@ class Index extends Component {
       count: 0,
       city: "杭州",
       cityCode: "3301",
+      goodsList: [],
+      configUserLevelInfo: {},
+      userInfo: {},
+      changeInfo: {},
+      visible: false,
     };
   }
   componentDidMount() {}
-  componentDidShow() {}
-
+  componentDidShow() {
+    this.fetchUserShare();
+    this.fetchUserDetails();
+  }
+  fetchUserDetails() {
+    getMainPage({}, (res) => {
+      const { userInfo } = res;
+      this.setState({
+        userInfo: userInfo,
+      });
+    });
+  }
+  fetchUserShare() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
+  }
   setCityName(lat, lnt) {
     getRestapiAddress(
       {
@@ -41,29 +76,93 @@ class Index extends Component {
         if (info === "OK") {
           const { addressComponent = {} } = regeocode;
           const { city, adcode = "" } = addressComponent;
-          this.setState({
-            city: city.slice(0, 2),
-            cityCode: adcode.slice(0, 4),
-          });
+          this.setState(
+            {
+              city: city.slice(0, 2),
+              cityCode: adcode.slice(0, 4),
+            },
+            (res) => {
+              this.fetchGoods();
+            }
+          );
         } else {
-          toast("经纬度解析错误");
+          this.fetchGoods();
+          toast("经纬度解析错误,默认杭州");
         }
       }
     );
   }
+  onchangeInfo(item) {
+    const { configUserLevelInfo, userInfo } = this.state;
+    const { payBeanCommission } = configUserLevelInfo;
+    const { bean } = userInfo;
+    const { goodsIdString, ownerIdString, realPrice } = item;
+    if (realPrice * payBeanCommission > bean) {
+      this.setState({
+        visible: true,
+        changeInfo: { ...item },
+      });
+    } else {
+      Router({
+        routerName: "favourableDetails",
+        args: {
+          merchantId: ownerIdString,
+          specialActivityId: goodsIdString,
+        },
+      });
+    }
+  }
   setTabLocation() {
     const { cityCode } = this.state;
     if (cityCode === "3301") {
-      this.setState({
-        city: "湘西",
-        cityCode: "4331",
-      });
+      this.setState(
+        {
+          city: "湘西",
+          cityCode: "4331",
+        },
+        (res) => {
+          this.fetchGoods();
+        }
+      );
     } else {
-      this.setState({
-        city: "杭州",
-        cityCode: "3301",
-      });
+      this.setState(
+        {
+          city: "杭州",
+          cityCode: "3301",
+        },
+        (res) => {
+          this.fetchGoods();
+        }
+      );
     }
+  }
+  fetchGoods() {
+    const { cityCode } = this.state;
+    fetchListActivityGoods({
+      activityType: "88activity",
+      activityGoodsType: "hot",
+      cityCode: cityCode,
+      lat: getLat(),
+      lnt: getLnt(),
+    }).then((val) => {
+      const { goodsList = [] } = val;
+      this.setState({
+        goodsList: this.filterList(goodsList),
+      });
+    });
+  }
+  filterList(list) {
+    return list
+      .map((item) => {
+        const { lat, lnt } = item;
+        return {
+          ...item,
+          limit: computedLimit(getLat(), getLnt(), lat, lnt),
+        };
+      })
+      .sort(function (a, b) {
+        return a.limit - b.limit;
+      });
   }
   onShareAppMessage(res) {
     let userInfo = loginStatus() || {};
@@ -75,15 +174,28 @@ class Index extends Component {
       };
     }
   }
+  onRouterInit() {
+    Router({
+      routerName: "webView",
+      args: {
+        link: "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dakale-web-page/wechant/page/active/rule.html?sign=9fcd12080c041f4f09f552f2ac070ceb&t=1627044102",
+      },
+    });
+  }
   render() {
-    const { city } = this.state;
+    const { city, goodsList, userInfo, configUserLevelInfo, visible } =
+      this.state;
     const { locationStore } = this.props.store;
     const { cityName, flag, locationStatus, cityCode } = locationStore;
     const { activeInfoStore = {} } = this.props.store;
     const { activityStatus, needCountDown, dayCount } = activeInfoStore;
-    if (needCountDown !== "1") {
+    if (needCountDown === "1") {
       return (
         <View className="mainScene_box">
+          <View
+            className="active_Rule"
+            onClick={() => this.onRouterInit()}
+          ></View>
           <Top
             store={locationStore}
             locationStatus={locationStatus}
@@ -92,14 +204,57 @@ class Index extends Component {
             setTab={this.setTabLocation.bind(this)}
             setLocation={this.setCityName.bind(this)}
           ></Top>
-          <Center></Center>
-          <FriendScice></FriendScice>
-          <PayScice></PayScice>
+          <Center
+            onChange={this.onchangeInfo.bind(this)}
+            list={goodsList}
+            userInfo={configUserLevelInfo}
+          ></Center>
+          <FriendScice
+            list={[...goodsList, ...goodsList, ...goodsList, ...goodsList]}
+            userInfo={configUserLevelInfo}
+            onChange={this.onchangeInfo.bind(this)}
+          ></FriendScice>
+          <PayScice
+            list={[...goodsList, ...goodsList, ...goodsList, ...goodsList]}
+            userInfo={configUserLevelInfo}
+            onChange={this.onchangeInfo.bind(this)}
+          ></PayScice>
+          <BeanToast
+            onClose={() => {
+              this.setState({ visible: false });
+            }}
+            onLink={() => {
+              this.setState({ visible: false }, (res) => {
+                Router({
+                  routerName: "friendScene",
+                  args: { cityCode },
+                });
+              });
+            }}
+            onChange={() => {
+              this.setState({ visible: false }, (res) => {
+                const { changeInfo } = this.state;
+                const { ownerIdString, goodsIdString } = changeInfo;
+                Router({
+                  routerName: "favourableDetails",
+                  args: {
+                    merchantId: ownerIdString,
+                    specialActivityId: goodsIdString,
+                  },
+                });
+              });
+            }}
+            show={visible}
+          ></BeanToast>
         </View>
       );
     } else {
       return (
         <View className="mainScene_box">
+          <View
+            className="active_Rule"
+            onClick={() => this.onRouterInit()}
+          ></View>
           <ShareFriend></ShareFriend>
           <View className="mainScene_top">
             <View className="mainScene_box_location">
@@ -112,7 +267,7 @@ class Index extends Component {
                 <Text className="mainScene_box_styleFont">天</Text>
               </View>
             </View>
-            <View className="mainScene_box_card">
+            <View className="mainScene_box_card mainScene_box_cardbg2">
               <View className="mainScene_box_height"></View>
               <View className="mainScene_card_box mainScene_card_style1">
                 <View className="mainScene_card_btn mainScene_card_style4"></View>
@@ -123,6 +278,17 @@ class Index extends Component {
               <View className="mainScene_card_box mainScene_card_style3">
                 <View className="mainScene_card_btn mainScene_card_style4"></View>
               </View>
+              <View
+                className="mainScene_card_linkH5"
+                onClick={() => {
+                  Router({
+                    routerName: "webView",
+                    args: {
+                      link: "https://web-new.dakale.net/product/dakale-web-page/user/page/bannerShare/8.8upActive.html",
+                    },
+                  });
+                }}
+              ></View>
             </View>
           </View>
           <View className="mainScene_logo_box">

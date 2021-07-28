@@ -32,7 +32,7 @@ export const template = (item, configUserLevelInfo, animate = true) => {
     merchantLogo,
     merchantIdString,
     specialActivityIdString,
-    merchantPrice,
+    merchantPrice = 0,
   } = item;
   return (
     <View
@@ -55,7 +55,7 @@ export const template = (item, configUserLevelInfo, animate = true) => {
         <View className="specialOffer_title  font_noHide">{goodsName}</View>
         <View className="specialOffer_userDetails font_hide">
           <View
-            className="specialOffer_userprofile dakale_profile"
+            className="specialOffer_userprofile merchant_dakale_logo"
             style={backgroundObj(merchantLogo)}
           ></View>
           <View className="specialOffer_userHide">
@@ -122,7 +122,7 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
     merchantLogo,
     merchantIdString,
     specialActivityIdString,
-    merchantPrice,
+    merchantPrice = 0,
     activityEndTime,
     activityTimeRule = "infinite",
     buyUserImageList = [],
@@ -181,7 +181,7 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
           <View className="specialOffer_title  font_noHide">{goodsName}</View>
           <View className="specialOffer_userDetails font_hide">
             <View
-              className="specialOffer_userprofile"
+              className="specialOffer_userprofile merchant_dakale_logo"
               style={backgroundObj(merchantLogo)}
             ></View>
             <View className="specialOffer_userHide">
@@ -250,7 +250,7 @@ export const couponTemplate = (item, configUserLevelInfo) => {
     lat,
     lnt,
     buyPrice,
-    merchantPrice,
+    merchantPrice = 0,
     merchantName,
     buyRule,
     personLimit,

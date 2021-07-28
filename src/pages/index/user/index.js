@@ -119,6 +119,16 @@ class Index extends React.Component {
       },
     });
   }
+
+  fetchLoad() {
+    Router({
+      routerName: "webView",
+      args: {
+        link: "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dakale-web-page/wechant/page/interface.html",
+        title: "关注公众号",
+      },
+    });
+  }
   fetchLever() {
     const {
       collectStatus,
@@ -205,6 +215,7 @@ class Index extends React.Component {
           nextLevel={nextLevel}
           status={loginStatus}
           data={userInfo}
+          fetchLoad={this.fetchLoad.bind(this)}
           infoCollect={this.fetchCollect.bind(this)}
           fetchLever={this.fetchLever.bind(this)}
         ></UserContent>

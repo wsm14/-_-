@@ -291,7 +291,7 @@ class Index extends Component {
                 }
               >
                 <View
-                  className="order_merchant_userProfile dakale_profile"
+                  className="order_merchant_userProfile dakale_profile merchant_dakale_logo"
                   style={{ ...backgroundObj(merchantLogo) }}
                 ></View>
                 <View className="order_name font_hide">

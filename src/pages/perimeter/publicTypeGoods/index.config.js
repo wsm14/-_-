@@ -5,4 +5,5 @@ export default {
   backgroundColor: "#FFFFFF",
   backgroundTextStyle: "light",
   navigationStyle: "default",
+  enablePullDownRefresh: true,
 };

@@ -273,6 +273,13 @@ class Index extends Component {
             </View>
           </View>
           <ShopDetails data={orderInfo} />
+          <View style={{ marginTop: Taro.pxTransform(64) }}>
+            {orderType === "reduceCoupon" ? (
+              <CouponLovely title={"小伙伴们还喜欢"}></CouponLovely>
+            ) : (
+              <Lovely></Lovely>
+            )}
+          </View>
           <BtnLayer
             remove={() => this.setState({ visible: true })}
             data={orderInfo}

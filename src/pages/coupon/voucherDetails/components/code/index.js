@@ -140,14 +140,14 @@ export default (props) => {
     thresholdPrice = "",
     merchantCount,
     ownerIdString,
-    userCouponIdString,
+    ownerCouponIdString,
     couponType,
     merchantIdString,
   } = orderResult;
   return (
     <View className="couponDetails_title" style={style ? style : {}}>
       <View className="couponDetails_box">
-        {merchantCount !== 1 ? (
+        {merchantCount > 1 ? (
           <>
             <View className="couponDetails_merchant">
               <View
@@ -173,7 +173,7 @@ export default (props) => {
                 Router({
                   routerName: "groupList",
                   args: {
-                    ownerServiceId: userCouponIdString,
+                    ownerServiceId: ownerCouponIdString,
                     ownerId: ownerIdString,
                   },
                 })

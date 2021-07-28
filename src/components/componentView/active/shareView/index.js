@@ -24,11 +24,12 @@ export default ({ visible = false, close }) => {
         subType: "88activity",
       },
       (res) => {
-        const { backgroundIos, qcodeUrl } = res;
+        const { shareInfo } = res;
+        const { background, qcodeUrl } = shareInfo;
         setCanvasObj({
           start: true,
           data: rssConfigData({
-            background: backgroundIos,
+            background: background,
             qcodeUrl,
             username,
           }),

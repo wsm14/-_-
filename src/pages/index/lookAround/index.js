@@ -30,6 +30,7 @@ import Plate from "./components/plate";
 import SelectSpecal from "./components/selectSpecal";
 import SpecalPlate from "./components/specalPlate";
 import ActiveToast from "@/components/componentView/active/tabbarBox";
+
 import "./index.scss";
 @inject("store")
 @observer
@@ -495,7 +496,92 @@ class Index extends Component {
                 bubbleContent: "",
                 scenesId: "",
               },
-              ...configWindVaneList,
+              {
+                bubbleContent: "",
+                bubbleFlag: "0",
+                configWindVaneId: "1379434905456381953",
+                image:
+                  "https://resource-new.dakale.net/product/image/1ce09523-00ae-4435-8bcf-f41ed254ecd9.png",
+                jumpType: "scenes",
+                jumpUrl: "",
+                name: "超值探店",
+                scenesId:
+                  "1379432247932784642,1379432763387580418,1379433080531488770,1379433232116908034,1379433597889576961,1379433806225772546,1379434342068158465",
+                sort: 1,
+              },
+              {
+                bubbleContent: "",
+                bubbleFlag: "0",
+                configWindVaneId: "1379435134607065089",
+                image:
+                  "https://resource-new.dakale.net/product/image/c4dcc120-66a8-49e2-9f8e-23ece9f3e0d0.png",
+                jumpType: "scenes",
+                jumpUrl: "",
+                name: "聚会加成",
+                scenesId: "1379432289699663873,1379432811127148546",
+                sort: 2,
+              },
+              {
+                bubbleContent: "",
+                bubbleFlag: "0",
+                configWindVaneId: "1379435248356589570",
+                image:
+                  "https://resource-new.dakale.net/product/image/bb0335c9-3dba-4c52-8780-e92312508ac9.png",
+                jumpType: "scenes",
+                jumpUrl: "",
+                name: "理容悦己",
+                scenesId: "1379433277578969090",
+                sort: 3,
+              },
+              {
+                bubbleContent: "",
+                bubbleFlag: "0",
+                configWindVaneId: "1379435321874350081",
+                image:
+                  "https://resource-new.dakale.net/product/image/2d93ff93-99c2-4208-80ca-2c2cd554fc29.png",
+                jumpType: "scenes",
+                jumpUrl: "",
+                name: "美食哒卡",
+                scenesId: "1379432337916461058",
+                sort: 4,
+              },
+              {
+                bubbleContent: "",
+                bubbleFlag: "0",
+                configWindVaneId: "1379435562744840194",
+                image:
+                  "https://resource-new.dakale.net/product/image/51a23f84-2e60-416a-9c85-b6380df12645.png",
+                jumpType: "scenes",
+                jumpUrl: "",
+                name: "热门精选",
+                scenesId:
+                  "1379432403091750914,1379432867389542402,1379433316518887426,1379434294014017538,1379434471290470401",
+                sort: 5,
+              },
+              {
+                bubbleContent: "",
+                bubbleFlag: "0",
+                configWindVaneId: "1379435706195152897",
+                image:
+                  "https://resource-new.dakale.net/product/image/73dcb3ed-baf8-41cc-a03f-09962f0c0c70.png",
+                jumpType: "scenes",
+                jumpUrl: "",
+                name: "约会必选",
+                scenesId: "1379432529353805825,1379434417088401409",
+                sort: 6,
+              },
+              {
+                bubbleContent: "",
+                bubbleFlag: "0",
+                configWindVaneId: "1379435809677021185",
+                image:
+                  "https://resource-new.dakale.net/product/image/dd435205-1251-4c36-88b3-5a4ec341e847.png",
+                jumpType: "scenes",
+                jumpUrl: "",
+                name: "优质夜娱",
+                scenesId: "1379432982217003009,1379442573319376897",
+                sort: 7,
+              },
             ].map((item, index) => {
               const { name, image, bubbleFlag, bubbleContent, scenesId } = item;
               if (index === 0) {

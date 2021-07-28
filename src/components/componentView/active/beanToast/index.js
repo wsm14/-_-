@@ -2,7 +2,7 @@ import React from "react";
 import Taro from "@tarojs/taro";
 import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
 import "./index.scss";
-export default ({ show, onClose, item }) => {
+export default ({ show, onClose, onChange, onLink }) => {
   if (show) {
     return (
       <View
@@ -21,7 +21,7 @@ export default ({ show, onClose, item }) => {
             <View
               className="beanToast_btn_left"
               onClick={() => {
-                onClose && onClose();
+                onChange && onChange();
               }}
             >
               直接购买
@@ -29,7 +29,7 @@ export default ({ show, onClose, item }) => {
             <View
               className="beanToast_btn_right"
               onClick={() => {
-                onClose && onClose();
+                onLink && onLink();
               }}
             >
               赚取卡豆

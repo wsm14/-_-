@@ -78,7 +78,6 @@ class Index extends Component {
       }
     );
   }
-  onPageScroll(res) {}
   initSelect() {
     Promise.all([
       getCategory({ parentId: "0" }, () => {}),
@@ -182,6 +181,24 @@ class Index extends Component {
       },
       (res) => {
         console.log();
+        this.getshopList();
+      }
+    );
+  }
+  onPullDownRefresh() {
+    const { httpData } = this.state;
+    this.setState(
+      {
+        httpData: { ...httpData, page: 1, limit: 10 },
+        configUserLevelInfo: {},
+        specialGoodsList: [],
+      },
+      (res) => {
+        let time = setTimeout(() => {
+          Taro.stopPullDownRefresh();
+          clearTimeout(time);
+        }, 500);
+        this.fetchUserShare();
         this.getshopList();
       }
     );

@@ -307,6 +307,27 @@ export const GetDistance = function (lat1, lng1, lat2, lng2) {
   return filterLimit(s);
 };
 ////地理位置
+
+export const computedLimit = function (lat1, lng1, lat2, lng2) {
+  let radLat1 = Rad(lat1) || Rad(30.264561);
+  let radLat2 = Rad(lat2);
+  let radLng1 = Rad(lng1) || Rad(120.170189);
+  let radLng2 = Rad(lng2);
+  let a = radLat1 - radLat2;
+  let b = radLng1 - radLng2;
+  let s =
+    2 *
+    Math.asin(
+      Math.sqrt(
+        Math.pow(Math.sin(a / 2), 2) +
+          Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)
+      )
+    );
+  s = s * 6378.137; // EARTH_RADIUS;
+  s = Math.round(s * 10000) / 10000; //输出为公里
+  s = s.toFixed(2);
+  return s * 1000;
+};
 export const filterLogin = function (data) {
   switch (data) {
     case "1":
