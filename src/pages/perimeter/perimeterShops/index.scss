@@ -17,15 +17,14 @@
     box-sizing: border-box;
     font-size: 24px;
     font-weight: 400;
-    margin-top: 16px;
   }
   .select_top_tagColor1 {
     color: #999999;
-    border: 1px solid #999999;
+    
   }
   .select_top_tagColor2 {
     color: #07c0c2;
-    border: 1px solid #07c0c2;
+   
   }
   .perimeter_shop_searchTitle {
     width: 688px;
@@ -92,10 +91,9 @@
     }
     .perimeter_select_right {
       width: 556px;
-      height: 66px;
+      height: 88px;
       display: flex;
       align-items: center;
-      white-space: nowrap;
     }
   }
   .perimeter_shop_scrollBox {

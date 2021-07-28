@@ -3,13 +3,19 @@ import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { goodsView } from "@/components/componentView/active/activeView";
 import "./index.scss";
-export default ({ list = [], userInfo = {}, onChange }) => {
+export default ({
+  list = [],
+  userInfo = {},
+  onChange,
+  cityCode,
+  type = "toast",
+}) => {
   useEffect(() => {
     setPageDown({
       page: 1,
       limit: 4,
     });
-  }, [list]);
+  }, [cityCode]);
   const [pageDown, setPageDown] = useState({ page: 1, limit: 4 });
   const { page, limit } = pageDown;
   const filterBtn = () => {
@@ -25,7 +31,8 @@ export default ({ list = [], userInfo = {}, onChange }) => {
       <View className="friendScice_shop_good"></View>
       <View className="friendScice_goods_box">
         {list.map((item, index) => {
-          if (index < page * limit) return goodsView(item, userInfo, onChange);
+          if (index < page * limit)
+            return goodsView(item, userInfo, onChange, type);
           else {
             return null;
           }

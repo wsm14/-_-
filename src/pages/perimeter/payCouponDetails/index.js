@@ -209,13 +209,18 @@ class Index extends Component {
 
   setCollection() {
     const {
-      couponDetail: { userCollectionStatus = "0", ownerCouponIdString },
+      couponDetail: {
+        userCollectionStatus = "0",
+        ownerCouponIdString,
+        ownerIdString,
+      },
       couponDetail,
     } = this.state;
     if (userCollectionStatus === "0") {
       saveCollection(
         {
           collectionType: "reduce",
+          ownerId: ownerIdString,
           collectionId: ownerCouponIdString,
         },
         (res) => {
@@ -236,6 +241,7 @@ class Index extends Component {
       deleteCollection(
         {
           collectionType: "reduce",
+          ownerId: ownerIdString,
           collectionId: ownerCouponIdString,
         },
         (res) => {

@@ -160,15 +160,15 @@ class index extends PureComponent {
               key: "categoryName",
               value: "categoryIdString",
             },
-            {
-              type: "configWindVaneId",
-              title: "消费场景",
-              only: false,
-              children: null,
-              list: val[1].configWindVaneList,
-              key: "name",
-              value: "configWindVaneId",
-            },
+            // {
+            //   type: "configWindVaneId",
+            //   title: "消费场景",
+            //   only: false,
+            //   children: null,
+            //   list: val[1].configWindVaneList,
+            //   key: "name",
+            //   value: "configWindVaneId",
+            // },
             {
               type: "consumptionScope",
               title: "人均消费",
@@ -581,26 +581,31 @@ class index extends PureComponent {
                 </View>
               )}
             </View>
-            <View>
-              <ScrollView className="perimeter_select_right" scrollX>
-                {initRes &&
-                  selectList[1].list.map((item) => {
-                    const { description, value } = item;
-                    return (
-                      <View
-                        onClick={() => this.setActiveCard(item)}
-                        className={classNames(
-                          "select_top_tagBox",
-                          smartSiftType.includes(value)
-                            ? "select_top_tagColor2"
-                            : "select_top_tagColor1"
-                        )}
-                      >
-                        {description}
-                      </View>
-                    );
-                  })}
-                {initRes &&
+
+            <View className="perimeter_select_right" scrollX>
+              {initRes &&
+                selectList[1].list.map((item) => {
+                  const { description, value } = item;
+                  return (
+                    <View
+                      onClick={() => this.setActiveCard(item)}
+                      style={
+                        smartSiftType.includes(value)
+                          ? { border: "1px solid #07c0c2" }
+                          : { border: "1px solid #999999" }
+                      }
+                      className={classNames(
+                        "select_top_tagBox",
+                        smartSiftType.includes(value)
+                          ? "select_top_tagColor2"
+                          : "select_top_tagColor1"
+                      )}
+                    >
+                      {description}
+                    </View>
+                  );
+                })}
+              {/* {initRes &&
                   selectList[selectList.length - 2].list.map((item) => {
                     const { name } = item;
                     return (
@@ -616,8 +621,7 @@ class index extends PureComponent {
                         {name}
                       </View>
                     );
-                  })}
-              </ScrollView>
+                  })} */}
             </View>
           </View>
           <ScrollView

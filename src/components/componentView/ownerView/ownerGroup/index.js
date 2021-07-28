@@ -33,7 +33,10 @@ export default ({ data }) => {
           style={backgroundObj(brandLogo)}
         ></View>
         <View class="ownerGroup_info_content">
-          <View className="ownerGroup_info_title font_hide">{groupName}</View>
+          <View className="ownerGroup_info_title_box">
+            <View className="ownerGroup_info_title font_hide">{groupName}</View>
+            <View className="ownerGroup_info_icon"></View>
+          </View>
           <View className="ownerGroup_info_contentbox">
             {activityGoodsNum ? (
               <View className="ownerGroup_info_specal">

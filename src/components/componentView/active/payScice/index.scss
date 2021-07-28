@@ -3,6 +3,7 @@
   position: relative;
   z-index: 1000;
   background: #ef476f;
+  z-index: 1;
   .payScice_shop_good {
     width: 322px;
     height: 103px;
@@ -18,5 +19,24 @@
     background: url("https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_13.png")
       no-repeat;
     background-size: 100% 100%;
+  }
+  .payScice_goods_box {
+    margin-top: 48px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .payScice_goods_btn {
+    width: 190px;
+    height: 60px;
+    border-radius: 35px;
+    border: 2px solid #ffffff;
+    margin: 40px auto 0;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

@@ -1,9 +1,10 @@
 .ownerShop_shop_box {
   width: 750px;
-  padding: 32px 0px 24px;
+  padding: 32px 0px 0px;
   background: #ffffff;
   .templateOwn_box {
     display: flex;
+    margin-top: 24px;
     .templateOwn_coverImg {
       width: 200px;
       height: 150px;
@@ -145,7 +146,7 @@
     }
   }
   .ownerShop_shop_active {
-    margin: 24px 0 0 190px;
+    margin: 16px 0 0 190px;
     .ownerShop_bean {
       margin-top: 28px;
       display: flex;

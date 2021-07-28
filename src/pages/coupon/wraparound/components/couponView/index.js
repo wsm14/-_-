@@ -31,7 +31,16 @@ export default (props) => {
     "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/conpon_shop.png";
   let nullCoupon =
     "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_big.png";
-
+  const templateTag = () => {
+    if (couponType === "specialGoods") {
+      return "wraparound_couponContent_iconStyle3";
+    } else if (couponType === "reduceCoupon") {
+      return "wraparound_couponContent_iconStyle1";
+    } else {
+      return "wraparound_couponContent_iconStyle2";
+    }
+  };
+  console.log(item);
   const goMerchant = (val) => {
     const { ownerType, merchantIdString, ownerIdString } = val;
     if (ownerType !== "group") {
@@ -49,6 +58,9 @@ export default (props) => {
     if (couponType !== "reduceCoupon" && couponType !== "freeReduceCoupon") {
       navigateTo(`/pages/coupon/couponDetails/index?id=${userCouponIdString}`);
     } else {
+      if (couponType === "freeReduceCoupon") {
+        return;
+      }
       navigateTo(`/pages/coupon/voucherDetails/index?id=${userCouponIdString}`);
     }
   };
@@ -199,7 +211,17 @@ export default (props) => {
             </View>
             <View className="wraparound_couponContent">
               <View className="wraparound_couponContent_title font_hide font32 color1 bold">
-                {couponName}
+                <View className="wraparound_couponContent_text font_hide">
+                  {couponName}
+                </View>
+                <View
+                  className={classNames(
+                    "wraparound_couponContent_icon",
+                    `${templateTag()}`
+                  )}
+                >
+                  {" "}
+                </View>
               </View>
               <View className="wraparound_couponContent_details font_hide font24 color2">
                 {templateContent()}

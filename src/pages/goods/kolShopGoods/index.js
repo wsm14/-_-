@@ -117,9 +117,16 @@ class Index extends Component {
   getGoodsDetails() {
     const { httpData } = this.state;
     getOrderDetails(httpData, (res) => {
-      this.setState({
-        orderInfo: res,
-      });
+      this.setState(
+        {
+          orderInfo: {},
+        },
+        () => {
+          this.setState({
+            orderInfo: res,
+          });
+        }
+      );
     });
   }
 

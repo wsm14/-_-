@@ -42,6 +42,8 @@ class Index extends Component {
       userInfo: {},
       changeInfo: {},
       visible: false,
+      specailList: [],
+      playerList: [],
     };
   }
   componentDidMount() {}
@@ -83,10 +85,14 @@ class Index extends Component {
             },
             (res) => {
               this.fetchGoods();
+              this.fetchSpecailList();
+              this.fetchPlayerList();
             }
           );
         } else {
           this.fetchGoods();
+          this.fetchSpecailList();
+          this.fetchPlayerList();
           toast("经纬度解析错误,默认杭州");
         }
       }
@@ -151,6 +157,36 @@ class Index extends Component {
       });
     });
   }
+  fetchSpecailList() {
+    const { cityCode } = this.state;
+    fetchListActivityGoods({
+      activityType: "88activity",
+      activityGoodsType: "special",
+      cityCode: cityCode,
+      lat: getLat(),
+      lnt: getLnt(),
+    }).then((val) => {
+      const { goodsList = [] } = val;
+      this.setState({
+        specailList: this.filterList(goodsList),
+      });
+    });
+  }
+  fetchPlayerList() {
+    const { cityCode } = this.state;
+    fetchListActivityGoods({
+      activityType: "88activity",
+      activityGoodsType: "hot",
+      cityCode: cityCode,
+      lat: getLat(),
+      lnt: getLnt(),
+    }).then((val) => {
+      const { goodsList = [] } = val;
+      this.setState({
+        playerList: this.filterList(goodsList),
+      });
+    });
+  }
   filterList(list) {
     return list
       .map((item) => {
@@ -183,15 +219,23 @@ class Index extends Component {
     });
   }
   render() {
-    const { city, goodsList, userInfo, configUserLevelInfo, visible } =
-      this.state;
+    const {
+      city,
+      goodsList,
+      userInfo,
+      configUserLevelInfo,
+      visible,
+      specailList,
+      playerList,
+    } = this.state;
     const { locationStore } = this.props.store;
     const { cityName, flag, locationStatus, cityCode } = locationStore;
     const { activeInfoStore = {} } = this.props.store;
     const { activityStatus, needCountDown, dayCount } = activeInfoStore;
-    if (needCountDown === "1") {
+    if (needCountDown !== "1") {
       return (
         <View className="mainScene_box">
+          <ShareFriend></ShareFriend>
           <View
             className="active_Rule"
             onClick={() => this.onRouterInit()}
@@ -210,12 +254,14 @@ class Index extends Component {
             userInfo={configUserLevelInfo}
           ></Center>
           <FriendScice
-            list={[...goodsList, ...goodsList, ...goodsList, ...goodsList]}
+            cityCode={cityCode}
+            list={specailList}
             userInfo={configUserLevelInfo}
             onChange={this.onchangeInfo.bind(this)}
           ></FriendScice>
           <PayScice
-            list={[...goodsList, ...goodsList, ...goodsList, ...goodsList]}
+            cityCode={cityCode}
+            list={playerList}
             userInfo={configUserLevelInfo}
             onChange={this.onchangeInfo.bind(this)}
           ></PayScice>
@@ -255,7 +301,7 @@ class Index extends Component {
             className="active_Rule"
             onClick={() => this.onRouterInit()}
           ></View>
-          <ShareFriend></ShareFriend>
+
           <View className="mainScene_top">
             <View className="mainScene_box_location">
               <View

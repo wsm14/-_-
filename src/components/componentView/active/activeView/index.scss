@@ -94,6 +94,11 @@
       background: #ffffff;
       border-radius: 0px 100px 100px 0px;
       padding-right: 8px;
+      display: flex;
+    }
+    .activeView_card_maxRight {
+      max-width: 210px;
+      
     }
   }
   .activeView_btn_box {

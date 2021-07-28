@@ -28,7 +28,12 @@ export default (props) => {
       setList(orderGoodsVerifications);
     }
   }, [data]);
-  const { merchantImg, goodsName } = orderResult;
+  const {
+    merchantImg,
+    goodsName,
+    specialGoods = {},
+    reduceCoupon = {},
+  } = orderResult;
   useEffect(() => {
     setTimeout(() => {
       list.forEach((item, index) => {
@@ -112,7 +117,9 @@ export default (props) => {
         className="paySuccess_cover coupon_shop_icon"
         style={backgroundObj(merchantImg)}
       ></View>
-      <View className="paySuccess_goodName">{goodsName}</View>
+      <View className="paySuccess_goodName">
+        {specialGoods.goodsName || reduceCoupon.goodsName}
+      </View>
       <View className="paySuccess_count">数量:{list.length}</View>
       {setCode()}
       {list.length > 0 && (
