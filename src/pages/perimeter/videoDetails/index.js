@@ -214,15 +214,16 @@ class Index extends React.PureComponent {
   }
 
   componentWillMount() {
-    const { momentId, scene } = getCurrentInstance().router.params;
+    let { momentId, scene } = getCurrentInstance().router.params;
     if (scene || momentId) {
       if (scene) {
         getShareParamInfo({ uniqueKey: scene }, (res) => {
-          const {
+          let {
             shareParamInfo: { param },
           } = res;
           if (param && JSON.parse(param)) {
-            const { momentId } = JSON.parse(param);
+            param = JSON.parse(param);
+            let { momentId } = param;
             if (momentId) {
               this.getUserMomentDetailById(momentId);
               this.setState({

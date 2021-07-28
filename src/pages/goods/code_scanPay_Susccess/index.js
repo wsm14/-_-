@@ -160,9 +160,7 @@ class Index extends Component {
             </View>
             <Coupon data={orderResult}></Coupon>
           </View>
-
           <Recommend current={true} userInfo={configUserLevelInfo}></Recommend>
-
           <Toast
             show={visible}
             visible={() => {
