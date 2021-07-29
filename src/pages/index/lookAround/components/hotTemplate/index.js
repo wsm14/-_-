@@ -66,18 +66,21 @@ export default ({ data = {}, userInfo = {}, title = "秒杀价" }) => {
           </View>
         </View>
 
-        <View className="lookAround_bean_price">卡豆抵扣后最低到手价</View>
-        <View className="lookAround_bean_show font_hide">
-          <Text className="color3 font20 bold">¥</Text>
-          <Text className="color3 font28 bold">
-            {computedBeanPrice(realPrice, payBeanCommission)}
-          </Text>
-          {shareCommission > 0 && (
-            <Text className="color3 font18 bold">
-              /赚{computedPrice(realPrice - merchantPrice, shareCommission)}
-            </Text>
-          )}
+        <View className="lookAround_new_bean ">
+          <View className="bean_getInfo lookAround_new_img"></View>
+          <View className="lookAround_new_pay font_hide">
+            ¥{computedPrice(realPrice, payBeanCommission)}
+          </View>
         </View>
+
+        {shareCommission > 0 && (
+          <View className="lookAround_bean_show font_hide  font18 color3">
+            赚
+            <Text className="bold">
+              ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
+            </Text>
+          </View>
+        )}
       </View>
     );
   };
