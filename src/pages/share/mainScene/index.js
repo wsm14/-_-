@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
-import { View, Text, WebView } from "@tarojs/components";
+import { View, Text, WebView, Image } from "@tarojs/components";
 import {
   getAuthStatus,
   scanCard,
@@ -301,7 +301,7 @@ class Index extends Component {
             className="active_Rule"
             onClick={() => this.onRouterInit()}
           ></View>
-
+          <ShareFriend></ShareFriend>
           <View className="mainScene_top">
             <View className="mainScene_box_location">
               <View
@@ -337,6 +337,15 @@ class Index extends Component {
               ></View>
             </View>
           </View>
+          <Image
+            src={
+              "https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_42.png"
+            }
+            mode="widthFix"
+            className="mainScene_pp_box"
+            lazyLoad
+          ></Image>
+
           <View className="mainScene_logo_box">
             <View className="mainScene_card_logo"></View>
           </View>
