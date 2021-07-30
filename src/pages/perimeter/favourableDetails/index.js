@@ -34,6 +34,7 @@ import Merchant from "@/components/shopView/merchant";
 import Rule from "@/components/shopView/rule";
 import Recommend from "@/components/specalActive";
 import NewToast from "@/components/noviceGuide";
+import Wares from "@/components/componentView/wares";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
@@ -59,6 +60,7 @@ class MerchantDetails extends Component {
         data: null,
         start: false,
       },
+      mxVisible: false,
     };
   }
   componentWillMount() {
@@ -143,6 +145,7 @@ class MerchantDetails extends Component {
         cityName,
         merchantLogo,
         activityGoodsImg,
+        districtName,
       },
     } = this.state;
     const { profile, username } = Taro.getStorageSync("userInfo");
@@ -155,10 +158,12 @@ class MerchantDetails extends Component {
         const {
           body,
           oriPrice,
+          image = "",
           title,
           realPrice,
           qcodeUrl,
           buyPrice = 0,
+          saveMoney = "",
         } = res;
         this.setState({
           cavansObj: {
@@ -174,10 +179,10 @@ class MerchantDetails extends Component {
               username,
               userProfile: profile,
               name: goodsName,
-              address,
-              city: cityName,
-              merchantLogo: activityGoodsImg.split(",")[0],
+              city: cityName + districtName + address,
+              merchantLogo: image,
               buyPrice,
+              saveMoney,
             }),
           },
         });
@@ -205,7 +210,7 @@ class MerchantDetails extends Component {
       return {
         title: goodsName,
         imageUrl: img,
-        path: `/pages/perimeter/favourableDetails/index?sh  areUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     } else {
       return {
@@ -214,7 +219,16 @@ class MerchantDetails extends Component {
       };
     }
   }
-
+  filterBeanPrice() {
+    const { configUserLevelInfo, specialGoodsInfo } = this.state;
+    const { payBeanCommission = 50 } = configUserLevelInfo;
+    const { userBean, realPrice } = specialGoodsInfo;
+    if (userBean >= computedPrice(realPrice, payBeanCommission) * 100) {
+      return computedPrice(realPrice, payBeanCommission) * 100;
+    } else {
+      return userBean;
+    }
+  }
   setCollection() {
     const {
       specialGoodsInfo: { userCollectionStatus = "0", specialActivityIdString },
@@ -334,6 +348,7 @@ class MerchantDetails extends Component {
         userCollectionStatus,
         personLimit,
         buyUserImageList,
+        userBean = 0,
       },
       visible,
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
@@ -341,8 +356,10 @@ class MerchantDetails extends Component {
       specialGoodsInfo,
       cavansObj,
       httpData,
+      mxVisible,
     } = this.state;
     const { login } = this.props.store.authStore;
+    const { beanLimitStatus } = this.props.store.homeStore;
     const shareInfoBtn = () => {
       if (shareCommission > 0) {
         return (
@@ -484,62 +501,28 @@ class MerchantDetails extends Component {
             {/*使用商家*/}
             <View className="shopdetails_getShop">
               <View className="shopdetails_price_people">
-                <View className="shopdetails_price_left font_hide">
-                  <Text className="font28 color1">原价:</Text>
-                  <Text className="font36 color1 bold price_margin4 text_through">
-                    ¥{oriPrice}
-                  </Text>
-                  <Text className="shopdetails_price_style color1">
-                    优惠价:
-                  </Text>
-                  <Text className="font36 shopdetails_price_style1 price_margin4 color1 bold">
-                    ¥{realPrice}
-                  </Text>
+                <Text className="font28 color1">优惠价: </Text>
+                <Text className="font48 color1 font_hide bold price_margin4  shopdetails_price_info">
+                  ¥{realPrice}
+                </Text>
+                <Text className="shopdetails_price_style color2">原价:</Text>
+                <Text className="font36 shopdetails_price_style1 font_hide price_margin4 color2 bold text_through">
+                  ¥{oriPrice}
+                </Text>
+              </View>
+              <View
+                onClick={() => this.setState({ mxVisible: true })}
+                className="shopdetails_bean_showPay"
+              >
+                <View className="color3 font24">卡豆再省</View>
+                <View className="color3 font36 bold price_margin8">
+                  ¥{computedPrice(realPrice, payBeanCommission)}
                 </View>
-                <View className="shopdetails_price_right">
-                  {!format(activityStartTime) &&
-                  activityTimeRule === "fixed" ? null : (
-                    <View className="shopdetails_pay_logo">
-                      {buyUserImageList.map((item, index) => {
-                        if (index === 0) {
-                          return (
-                            <View
-                              className="shopdetail_profile_box dakale_profile"
-                              style={backgroundObj(item)}
-                            ></View>
-                          );
-                        } else {
-                          return (
-                            <View
-                              className="shopdetail_profile_box dakale_profile shopdetail_profile_left"
-                              style={backgroundObj(item)}
-                            ></View>
-                          );
-                        }
-                      })}
-                      <View className="shopdetail_left_pay">抢购中</View>
-                    </View>
-                  )}
+                <View className="shopdetails_bean_mx">
+                  {"卡豆抵扣明细" + " >"}
                 </View>
               </View>
-              <View className="shopdetails_bean_desc">
-                卡豆抵扣后最低到手价
-              </View>
-              <View className="shopdetails_bean_box">
-                <View className="shopdetails_bean_hander">
-                  <View className="font28 bold color3">¥</View>
-                  <View className="font48 price_margin8 bold color3">
-                    {computedBeanPrice(realPrice, payBeanCommission)}
-                  </View>
-                </View>
-                <View className="shopdetails_bean_handerRight">
-                  {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
-                    <View className="shopdetails_getPrice_tag">
-                      {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount)}
-                    </View>
-                  )}
-                </View>
-              </View>
+
               <View className="shopdetails_beanTitleName public_auto">
                 <View className="shopdetails_beanTitle_name"> {goodsName}</View>
 
@@ -551,6 +534,13 @@ class MerchantDetails extends Component {
                       : "shopdetails_collect"
                   )}
                 ></View>
+              </View>
+              <View className="shopdetails_bean_handerRight">
+                {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
+                  <View className="shopdetails_getPrice_tag">
+                    {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount)}
+                  </View>
+                )}
               </View>
             </View>
             {/*抵扣价格 和状态*/}
@@ -628,6 +618,7 @@ class MerchantDetails extends Component {
               userInfo={configUserLevelInfo}
             ></Recommend>
             <VideoBean
+              visible={beanLimitStatus === "1"}
               price={(realPrice * (payBeanCommission / 100))
                 .toFixed(3)
                 .substring(
@@ -638,17 +629,17 @@ class MerchantDetails extends Component {
             ></VideoBean>
             <View className="shopdetails_shop_btn">
               <View className="shopdetails_shop_price">
-                <View className="shopdetails_shop_priceTop">
+                <View className="shopdetails_shop_priceTop bold">
                   <Text className="font20">¥</Text>
-                  {realPrice}
+                  <Text className="price_margin8">
+                    {(
+                      realPrice - (this.filterBeanPrice() / 100).toFixed(2)
+                    ).toFixed(2)}
+                  </Text>
                 </View>
                 <View className="shopdetails_shop_real">
-                  <Text className="shopdetails_shop_realStatus1">
-                    ¥ {oriPrice}
-                  </Text>
-                  <Text className="shopdetails_shop_realStatus2">
-                    {((Number(realPrice) / Number(oriPrice)) * 10).toFixed(1)}折
-                  </Text>
+                  已用{this.filterBeanPrice()}卡豆抵扣
+                  {(this.filterBeanPrice() / 100).toFixed(2)}元
                 </View>
               </View>
 
@@ -673,6 +664,17 @@ class MerchantDetails extends Component {
                 </View>
               </Toast>
             )}
+            <Wares
+              close={(fn) =>
+                this.setState({ mxVisible: false }, (res) => {
+                  fn && fn();
+                })
+              }
+              visible={mxVisible}
+              configUserLevelInfo={configUserLevelInfo}
+              data={specialGoodsInfo}
+              status={beanLimitStatus}
+            ></Wares>
             {filterPath(getCurrentInstance().router.params) &&
               !Taro.getStorageSync("newDeviceFlag") && (
                 <NewToast

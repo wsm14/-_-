@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import Taro from "@tarojs/taro";
-import { Button, Text, View } from "@tarojs/components";
+import { Button, Text, View, Image } from "@tarojs/components";
 import {
   getLat,
   getLnt,
   GetDistance,
   filterStrList,
   mapGo,
+  filterWeek,
 } from "@/common/utils";
 import MakePhone from "@/components/payTelephone";
 import classNames from "classnames";
@@ -27,6 +28,8 @@ export default (props) => {
     ownerType = "merchant",
     ownerIdString,
     merchantCount,
+    merchantLogo,
+    useWeek,
   } = data;
   console.log(data);
   const [visible, setVisible] = useState(false);
@@ -44,17 +47,33 @@ export default (props) => {
         }
         className="merchantcom_name public_auto"
       >
-        <View className="merchant_com_nameLeft font_hide">{merchantName}</View>
-        <View className="merchant_com_Right">
-          <View className="merchant_com_RightIcon merchant_com_RightIcon1"></View>
-          <View className="merchant_com_RightFont">主页</View>
+        <View className="merchant_card_link">进店看看 {" >"}</View>
+        <View className="merchant_card_box">
+          <View className="merchant_card_img merchant_dakale_logo">
+            <Image
+              style={{ width: "100%", height: "100%", borderRadius: "4px" }}
+              src={merchantLogo}
+            ></Image>
+          </View>
+          <View className="merchant_card_right">
+            <View className="merchant_card_name  font_hide">
+              <View className="merchant_card_user bold color1 font_hide">
+                {merchantName}
+              </View>
+              {ownerType === "group" ? (
+                <View className="merchant_card_icon"></View>
+              ) : null}
+            </View>
+            <View className="merchant_card_time">
+              <Text className="font_hide merchant_card_max">
+                营业时间:{filterWeek(useWeek) + " "}
+              </Text>
+              <Text> {useTime}</Text>
+            </View>
+          </View>
         </View>
       </View>
-      {businessTime && (
-        <View className="merchant_com_time color2 font24">
-          营业时间: {businessTime}
-        </View>
-      )}
+      <View className="merchant_card_liner"></View>
       <View className="merchant_com_telephone public_auto">
         <View className="merchant_com_telephoneMax color2 font24 font_hide">
           商家电话：{telephone}

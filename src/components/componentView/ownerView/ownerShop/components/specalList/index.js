@@ -43,12 +43,14 @@ export default (props) => {
       } = item;
       console.log(ownerIdString, specialActivityIdString);
       return (
-        <View className="templateOwn_box">
+        <View
+          onClick={(e) => {
+            e.stopPropagation();
+            linkTo(specialActivityIdString, ownerIdString);
+          }}
+          className="templateOwn_box"
+        >
           <View
-            onClick={(e) => {
-              e.stopPropagation();
-              linkTo(specialActivityIdString, ownerIdString);
-            }}
             style={backgroundObj(goodsImg)}
             className="templateOwn_coverImg"
           ></View>

@@ -30,6 +30,7 @@ import Rule from "@/components/shopView/rule";
 import VideoBean from "./components/getVideoBean";
 import Recommend from "@/components/couponActive";
 import NewToast from "@/components/noviceGuide";
+import Wares from "@/components/componentView/wares";
 import "./index.scss";
 @inject("store")
 @observer
@@ -48,6 +49,7 @@ class Index extends Component {
         start: false,
       },
       visible: false,
+      mxVisible: false,
     };
   }
   componentWillMount() {
@@ -97,6 +99,15 @@ class Index extends Component {
       });
     });
   }
+  filterCoupon() {
+    const { couponDetail } = this.state;
+    const { activeDate, endDate, delayDays, activeDays } = couponDetail;
+    if (activeDate && endDate) {
+      return activeDate + "至" + endDate;
+    } else {
+      return `领取后${delayDays}天生效 | 有效期：${activeDays}天`;
+    }
+  }
   getShareInfo() {
     const {
       couponDetail: {
@@ -106,6 +117,7 @@ class Index extends Component {
         address,
         couponName,
         cityName,
+        districtName,
         merchantLogo,
       },
     } = this.state;
@@ -117,35 +129,46 @@ class Index extends Component {
       },
       (res) => {
         console.log(res);
-        const { oriPrice, realPrice, qcodeUrl, image } = res;
-        this.setState(
-          {
-            cavansObj: {
-              start: true,
-              data: rssConfigData({
-                merchantName,
-                time:
-                  (activityEndTime && activityEndTime + "结束") || "长期有效",
-                oldPrice: oriPrice,
-                price: realPrice,
-                wxCode: qcodeUrl,
-                username,
-                userProfile: profile,
-                name: couponName,
-                address,
-                city: cityName,
-                merchantLogo: image,
-              }),
-            },
+        const {
+          oriPrice,
+          realPrice,
+          qcodeUrl,
+          image,
+          saveMoney = "",
+          buyPrice,
+        } = res;
+        this.setState({
+          cavansObj: {
+            start: true,
+            data: rssConfigData({
+              merchantName,
+              time: this.filterCoupon(),
+              oldPrice: oriPrice,
+              buyPrice: buyPrice,
+              wxCode: qcodeUrl,
+              username,
+              userProfile: profile,
+              name: couponName,
+              address,
+              city: cityName + districtName + address,
+              merchantLogo: image,
+              saveMoney,
+            }),
           },
-          (res) => {
-            console.log(this.state.cavansObj);
-          }
-        );
+        });
       }
     );
   }
-
+  filterBeanPrice() {
+    const { configUserLevelInfo, couponDetail } = this.state;
+    const { payBeanCommission = 50 } = configUserLevelInfo;
+    const { userBean, buyPrice } = couponDetail;
+    if (userBean >= computedPrice(buyPrice, payBeanCommission) * 100) {
+      return computedPrice(buyPrice, payBeanCommission) * 100;
+    } else {
+      return userBean;
+    }
+  }
   onShareAppMessage(res) {
     const {
       couponDetail: { couponName, merchantLogo },
@@ -287,11 +310,14 @@ class Index extends Component {
         anytimeRefund,
         expireRefund,
         ownerCouponIdString,
+        userBean,
       },
       visible,
       httpData,
+      mxVisible,
     } = this.state;
     const { login } = this.props.store.authStore;
+    const { beanLimitStatus } = this.props.store.homeStore;
     const shareInfoBtn = () => {
       if (shareCommission > 0) {
         return (
@@ -386,6 +412,11 @@ class Index extends Component {
             data={couponDetail}
             setCollection={this.setCollection.bind(this)}
             getShareInfo={this.getShareInfo.bind(this)}
+            onChange={() =>
+              this.setState({
+                mxVisible: true,
+              })
+            }
           ></Coupon>
           <Card
             configUserLevelInfo={configUserLevelInfo}
@@ -407,6 +438,7 @@ class Index extends Component {
           <Rule></Rule>
           {/*使用规则*/}
           <Recommend current={true} userInfo={configUserLevelInfo}></Recommend>
+
           <VideoBean
             price={(buyPrice * (payBeanCommission / 100))
               .toFixed(3)
@@ -414,25 +446,37 @@ class Index extends Component {
                 0,
                 (buyPrice * (payBeanCommission / 100)).toFixed(3).length - 1
               )}
+            visible={beanLimitStatus === "1"}
             data={couponDetail}
           ></VideoBean>
           <View className="shopdetails_shop_btn">
             <View className="shopdetails_shop_price">
               <View className="shopdetails_shop_priceTop">
                 <Text className="font20">¥</Text>
-                {buyPrice}
+                {(buyPrice - (this.filterBeanPrice() / 100).toFixed(2)).toFixed(
+                  2
+                )}
               </View>
               <View className="shopdetails_shop_real">
-                <Text className="shopdetails_shop_realStatus1">
-                  ¥ {couponPrice}
-                </Text>
                 <Text className="shopdetails_shop_realStatus2">
-                  {((Number(buyPrice) / Number(couponPrice)) * 10).toFixed(1)}折
+                  已用{this.filterBeanPrice()}卡豆抵扣
+                  {(this.filterBeanPrice() / 100).toFixed(2)}元
                 </Text>
               </View>
             </View>
             {payBtn()}
           </View>
+          <Wares
+            close={(fn) =>
+              this.setState({ mxVisible: false }, (res) => {
+                fn && fn();
+              })
+            }
+            visible={mxVisible}
+            configUserLevelInfo={configUserLevelInfo}
+            data={couponDetail}
+            status={beanLimitStatus}
+          ></Wares>
           {visible && (
             <Toast
               title={"哒卡乐温馨提示"}

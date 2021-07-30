@@ -157,7 +157,7 @@ class Index extends Component {
     const { userIdString } = userInfo;
     if (res.from === "button") {
       return {
-        title: "达人招募令",
+        title: "哒卡乐88线下消费节",
         path: `/pages/share/mainScene/index?shareUserId=${userIdString}&shareUserType=user`,
       };
     }

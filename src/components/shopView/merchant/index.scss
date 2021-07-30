@@ -10,6 +10,7 @@
   }
   .merchantcom_name {
     margin-top: 40px;
+    position: relative;
     .merchant_com_nameLeft {
       max-width: 548px;
       font-size: 28px;
@@ -63,6 +64,66 @@
   }
   .merchant_com_max {
     max-width: 537px;
+  }
+  .merchant_card_link {
+    position: absolute;
+    top: 11px;
+    right: 0;
+    font-size: 24px;
+    font-weight: 400;
+    color: #07c0c2;
+  }
+  .merchant_card_box {
+    height: 96px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    .merchant_card_img {
+      width: 96px;
+      height: 96px;
+      border-radius: 4px;
+    }
+  }
+  .merchant_card_right {
+    padding-top: 8px;
+    height: 96px;
+    margin-left: 16px;
+  }
+  .merchant_card_name {
+    display: flex;
+    align-items: center;
+    height: 32px;
+  }
+  .merchant_card_liner {
+    width: 702px;
+    height: 1px;
+    background: #e5e5e5;
+    border-radius: 1px;
+    margin: 32px auto 0;
+  }
+  .merchant_card_user {
+    max-width: 340px;
+    font-size: 32px;
+    color: #333333;
+  }
+  .merchant_card_time {
+    padding-top: 24px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+    display: flex;
+    align-items: center;
+    .merchant_card_max {
+      max-width: 420px;
+    }
+  }
+  .merchant_card_icon {
+    width: 50px;
+    height: 28px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon684.png)
+      no-repeat;
+    background-size: 100% 100%;
+    margin-left: 8px;
   }
   .merchantcom_name {
     margin-top: 40px;

@@ -93,7 +93,6 @@ class Index extends Component {
           this.fetchGoods();
           this.fetchSpecailList();
           this.fetchPlayerList();
-          toast("经纬度解析错误,默认杭州");
         }
       }
     );
@@ -205,7 +204,7 @@ class Index extends Component {
     const { userIdString } = userInfo;
     if (res.from === "button") {
       return {
-        title: "达人招募令",
+        title: "哒卡乐88线下消费节",
         path: `/pages/share/mainScene/index?shareUserId=${userIdString}&shareUserType=user`,
       };
     }

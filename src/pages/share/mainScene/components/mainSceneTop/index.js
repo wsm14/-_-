@@ -12,7 +12,7 @@ export default ({ locationStatus, setLocation, city, setTab, cityCode }) => {
   return (
     <View className="mainScene_top">
       <View className="mainScene_box_location">
-        <View className="mainScene_box_scene">
+        {/* <View className="mainScene_box_scene">
           <View className="color3 font26  bold">当前城市:{city}</View>
           <View
             className="mainScene_location_btn public_center"
@@ -20,7 +20,7 @@ export default ({ locationStatus, setLocation, city, setTab, cityCode }) => {
           >
             切换
           </View>
-        </View>
+        </View> */}
       </View>
       <View className="mainScene_box_card mainScene_box_cardbg1">
         <View className="mainScene_box_height"></View>

@@ -55,7 +55,8 @@ class Index extends React.PureComponent {
   }
 
   onChange(e) {
-    const { countStatus, httpData, userMomentsList, interval, type } = this.state;
+    const { countStatus, httpData, userMomentsList, interval, type } =
+      this.state;
     const { current } = e.detail;
     this.setState(
       {
@@ -286,7 +287,7 @@ class Index extends React.PureComponent {
         updateType: "share",
         id: userMomentIdString,
       },
-      (res) => { }
+      (res) => {}
     );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {
@@ -350,18 +351,19 @@ class Index extends React.PureComponent {
         const {
           goodsImg,
           goodsName,
-          hasGoods,
+          hasCoupon = "0",
           oriPrice,
           realPrice,
           qcodeUrl,
           image,
-          buyPrice = 0
+          hasGoods = "0",
+          buyPrice = 0,
+          saveMoney = 0,
         } = res;
         if (player) {
           this.stopVideoPlayerControl();
         }
         let userInfo = Taro.getStorageSync("userInfo");
-        console.log(userInfo);
         this.setState({
           cavansObj: {
             start: true,
@@ -370,7 +372,7 @@ class Index extends React.PureComponent {
               frontImage: frontImage,
               message,
               merchantName: username,
-              cityName: cityName + districtName,
+              cityName: cityName + districtName + merchantAddress,
               address: merchantAddress,
               username: userInfo.username,
               userProfile: userInfo.profile,
@@ -379,16 +381,18 @@ class Index extends React.PureComponent {
               goodsName,
               oriPrice,
               realPrice,
-              buyPrice
+              buyPrice,
+              hasCoupon,
+              saveMoney,
             }),
           },
         });
       }
     );
   }
-  componentDidHide() { }
-  componentDidShow() { }
-  componentDidMount() { }
+  componentDidHide() {}
+  componentDidShow() {}
+  componentDidMount() {}
   componentWillMount() {
     const { selectObj, list, index } = this.props.store.homeStore;
     console.log(index);
