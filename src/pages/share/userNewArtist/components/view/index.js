@@ -92,9 +92,9 @@ export const ShopView = (item, type = "goods", userInfo) => {
               {GetDistance(getLat(), getLnt(), lat, lnt)}
             </View>
           </View>
-          <View className="view_shopContent_price">
+          <View className="view_shopContent_price font_hide">
             <View className="view_shopContent_priceTitle">原价:</View>
-            <View className="view_shopContent_priceNum text_through bold">
+            <View className="view_shopContent_priceNum font_hide text_through bold">
               ¥{oldPrice || couponPrice}
             </View>
             <View className="view_shopContent_priceTitle price_margin8">
@@ -104,11 +104,13 @@ export const ShopView = (item, type = "goods", userInfo) => {
               ¥{relPrice || buyPrice}
             </View>
           </View>
-          <View className="view_shopContent_bean">卡豆抵扣后最低到手价</View>
-          <View className="view_shopContent_buyPrice">
-            <View className="view_shopContent_info">¥</View>
-            <View className="view_shopContent_money price_margin4">
-              {computedPrice(relPrice || buyPrice, 50)}
+          <View
+            style={{ border: "1px solid #ef476f;" }}
+            className="shopContent_new_bean"
+          >
+            <View className="bean_getBigInfo shopContent_new_img"></View>
+            <View className="shopContent_new_pay font_hide">
+              ¥{computedPrice(realPrice || buyPrice, 50)}
             </View>
           </View>
         </View>
@@ -249,12 +251,12 @@ export const newShopView = (item) => {
               ¥{realPrice || buyPrice}
             </View>
           </View>
-          <View className="newShopView_shopContent_bean">
-            卡豆抵扣后最低到手价
-          </View>
-          <View className="newShopView_shopContent_buyPrice">
-            <View className="newShopView_shopContent_info"></View>
-            <View className="newShopView_shopContent_money price_margin4">
+          <View
+            style={{ border: "1px solid #ef476f;" }}
+            className="newShopView_new_bean"
+          >
+            <View className="bean_getBigInfo newShopView_new_img"></View>
+            <View className="newShopView_new_pay font_hide">
               ¥{computedPrice(realPrice || buyPrice, 50)}
             </View>
           </View>
@@ -316,13 +318,11 @@ export const meShopView_box = (item) => {
           <View className="font18 price_margin4">优惠价:</View>
           <View className="font20 price_margin4 bold"> ¥{realPrice}</View>
         </View>
-        <View className="meShopView_shopContent_getBean">
-          卡豆抵扣后最低到手价
-        </View>
-        <View className="meShopView_shopContent_money">
-          <View className="font20 bold">¥ </View>
-          <View className="font28 bold price_margin4">
-            {computedPrice(realPrice, 50)}
+
+        <View className="meShopView_new_bean ">
+          <View className="bean_getInfo meShopView_new_img"></View>
+          <View className="meShopView_new_pay font_hide">
+            ¥{computedPrice(realPrice, 50)}
           </View>
         </View>
       </View>

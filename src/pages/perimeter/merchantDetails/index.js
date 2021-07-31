@@ -653,7 +653,7 @@ class MerchantDetails extends Component {
               </View>
               <View className="merchant_layer_btn2" onClick={() => scanCode()}>
                 <View className="merchant_layer_btnBox merchant_layer_btnIcon3"></View>
-                <View>到店打卡</View>
+                <View>打卡领豆</View>
               </View>
             </View>
             <View

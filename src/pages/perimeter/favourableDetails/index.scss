@@ -110,51 +110,39 @@ page {
     }
     .shopdetails_price_people {
       display: flex;
-      align-items: center;
-      .shopdetails_price_left {
-        vertical-align: baseline;
-        max-width: 480px;
-        .shopdetails_price_style {
-          margin-left: 12px;
-          line-height: 40px;
-        }
-        .shopdetails_price_style1 {
-          line-height: 40px;
-        }
+      align-items: baseline;
+      .shopdetails_price_style {
+        margin-left: 16px;
       }
     }
-    .shopdetails_bean_desc {
-      font-size: 22px;
+    .shopdetails_bean_showPay {
+      height: 60px;
+      background: #fef4f7;
+      border-radius: 8px;
+      margin: 16px auto 0;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+    }
+    .shopdetails_bean_mx {
+      font-size: 24px;
       font-weight: 400;
       color: #ef476f;
-      line-height: 22px;
-      margin-top: 18px;
-    }
-  }
-  .shopdetails_bean_box {
-    margin-top: 12px;
-    display: flex;
-    align-items: center;
-    .shopdetails_bean_hander {
-      display: flex;
-      align-items: baseline;
-    }
-    .shopdetails_bean_handerRight {
       margin-left: auto;
-      padding-top: 12px;
-      display: flex;
-      .shopdetails_getPrice_tag {
-        line-height: normal;
-        background: rgba(239, 71, 111, 0.1);
-        border-radius: 4px;
-        padding: 8px 12px;
-        color: rgba(241, 88, 125, 1);
-        font-size: 24px;
-        margin-left: 8px;
-      }
     }
   }
-
+  .shopdetails_bean_handerRight {
+    padding-top: 24px;
+    display: inline-flex;
+    .shopdetails_getPrice_tag {
+      line-height: normal;
+      background: rgba(239, 71, 111, 0.1);
+      border-radius: 4px;
+      padding: 8px 12px;
+      color: rgba(241, 88, 125, 1);
+      font-size: 24px;
+    }
+  }
   .shopdetails_collect {
     width: 48px;
     height: 48px;
@@ -272,34 +260,26 @@ page {
     justify-content: space-between;
     z-index: 999;
     .shopdetails_shop_price {
+      height: 116px;
       .shopdetails_shop_priceTop {
         color: rgba(239, 71, 111, 1);
         font-size: 52px;
-        padding-top: 22px;
+        padding-top: 16px;
+        display: flex;
+        align-items: baseline;
       }
     }
     .shopdetails_shop_real {
-      .shopdetails_shop_realStatus1 {
-        line-height: 28px;
-        font-size: 24px;
-        font-weight: 400;
-        color: #999999;
-        text-decoration: line-through;
-        display: inline-block;
-      }
-      .shopdetails_shop_realStatus2 {
-        height: 28px;
-        background: rgba(239, 71, 111, 0.1);
-        border-radius: 4px;
-        line-height: 28px;
-        text-align: center;
-        padding: 0 6px;
-        font-size: 20px;
-        font-weight: 400;
-        color: #ef476f;
-        margin-left: 8px;
-        display: inline-block;
-      }
+      margin-top: 8px;
+      background: rgba(239, 71, 111, 0.1);
+      border-radius: 4px;
+      line-height: normal;
+      text-align: center;
+      padding: 4px 8px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #ef476f;
+      display: inline-block;
     }
     .shopdetails_shop_option {
       opacity: 0.5;

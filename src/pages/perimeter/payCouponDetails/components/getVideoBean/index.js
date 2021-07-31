@@ -5,15 +5,14 @@ import Router from "@/common/router";
 import "./index.scss";
 
 export default (props) => {
-  const { price, data } = props;
+  const { price, data, visible = true } = props;
   const { userBean, userIncomeBean } = data;
-  console.log(price, userBean, userIncomeBean);
-  if (price * 100 < userBean || price * 100 < userIncomeBean) {
+  if (price * 100 < userBean || !visible) {
     return null;
   } else
     return (
       <View
-        className="coupon_videoBean_liner"
+        className="videoBean_liner"
         onClick={() =>
           Router({
             routerName: "nearVideo",
@@ -23,9 +22,11 @@ export default (props) => {
           })
         }
       >
-        <View>卡豆不足？刷视频捡豆最高可抵¥</View>
-        <View className="bold">{price}</View>
-        <View className="bold coupon_videoBean_left">{" >"}</View>
+        <View className="videoBean_icon"></View>
+        <View className="videoBean_desc">您还有</View>
+        <View className="bold color3">5元</View>
+        <View>卡豆红包待领取</View>
+        <View className="bold videoBean_left">立即领取{" >"}</View>
       </View>
     );
 };

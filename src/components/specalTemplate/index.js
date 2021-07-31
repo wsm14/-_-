@@ -52,7 +52,7 @@ export const template = (item, configUserLevelInfo, animate = true) => {
         className="specialOffer_shopImg"
       ></View>
       <View className="specialOffer_desc">
-        <View className="specialOffer_title  font_noHide">{goodsName}</View>
+        <View className="specialOffer_title  font_hide">{goodsName}</View>
         <View className="specialOffer_userDetails font_hide">
           <View
             className="specialOffer_userprofile merchant_dakale_logo"
@@ -69,24 +69,29 @@ export const template = (item, configUserLevelInfo, animate = true) => {
             </View>
           </View>
         </View>
-        <View className="specialOffer_hot_price color1 font_hide">
-          <View className="font24">原价:</View>
-          <View className="specialOffer_hot_priceMax font_hide font28 price_margin4 bold  text_through">
+        <View className="specialOffer_hotOld_price color1 font_hide">
+          <View className="font20">原价:</View>
+          <View className="font24 bold price_margin4 text_through">
             ¥{oriPrice}
           </View>
-          <View className="font24 price_margin8">优惠价: </View>
-          <View className="font28 price_margin4 bold">¥{realPrice}</View>
         </View>
-        <View className="specialOffer_bean_price">卡豆抵扣后最低到手价</View>
-        <View className="specialOffer_bean_show">
-          <View className="color3 font36 bold specialOffer_bean_showText">
-            <View className="color3 font20 bold">¥ </View>
-            <View className="price_margin4">
-              {computedBeanPrice(realPrice, payBeanCommission)}
-            </View>
+        <View className="specialOffer_real_price font_hide">
+          <View className="font20 color1">优惠价:</View>
+          <View className="font28 color1 bold price_margin4  real_max font_hide">
+            ¥{realPrice}
+          </View>
+        </View>
+        <View
+          style={{ border: "1px solid #ef476f;" }}
+          className="specialOffer_new_bean"
+        >
+          <View className="bean_getBigInfo specialOffer_new_img"></View>
+          <View className="specialOffer_new_pay font_hide">
+            ¥{computedPrice(realPrice, payBeanCommission)}
           </View>
         </View>
       </View>
+
       <ButtonView>
         <View className="specialOffer_new_btn">
           {shareCommission > 0 ? (
@@ -178,7 +183,7 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
           className="specialOffer_shopImg"
         ></View>
         <View className="specialOffer_desc">
-          <View className="specialOffer_title  font_noHide">{goodsName}</View>
+          <View className="specialOffer_title  font_hide">{goodsName}</View>
           <View className="specialOffer_userDetails font_hide">
             <View
               className="specialOffer_userprofile merchant_dakale_logo"
@@ -195,42 +200,38 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
               </View>
             </View>
           </View>
-          <View className="specialOffer_hot_price color1 font_hide">
-            <View className="font24">原价:</View>
-            <View className="specialOffer_hot_priceMax font_hide font28 price_margin4 bold text_through">
+          <View className="specialOffer_hotOld_price color1 font_hide">
+            <View className="font20">原价:</View>
+            <View className="font24 bold price_margin4 text_through">
               ¥{oriPrice}
             </View>
-            <View className="font24 price_margin8">优惠价: </View>
-            <View className="font28 price_margin4 bold">¥{realPrice}</View>
           </View>
-          <View className="specialOffer_bean_price">卡豆抵扣后最低到手价</View>
-          <View className="specialOffer_bean_show">
-            <View className="color3 font36 bold specialOffer_bean_showText">
-              <View className="color3 font20 bold">¥</View>
-              {computedBeanPrice(realPrice, payBeanCommission)}
+          <View className="specialOffer_real_price font_hide">
+            <View className="font20 color1">优惠价:</View>
+            <View className="font28 color1 bold price_margin4  real_max font_hide">
+              ¥{realPrice}
             </View>
-            {shareCommission > 0 && (
-              <View
-                style={{
-                  border: "1px solid #ef476f",
-                  padding: `0 ${Taro.pxTransform(8)}`,
-                  height: Taro.pxTransform(32),
-                }}
-                className="specialOffer_bean_getMoney font_hide"
-              >
-                赚
-                <Text className="bold">
-                  ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
-                </Text>
-              </View>
-            )}
+          </View>
+          <View
+            style={{ border: "1px solid #ef476f;" }}
+            className="specialOffer_new_bean"
+          >
+            <View className="bean_getBigInfo specialOffer_new_img"></View>
+            <View className="specialOffer_new_pay font_hide">
+              ¥{computedPrice(realPrice, payBeanCommission)}
+            </View>
           </View>
         </View>
       </View>
       <View className="specialOffer_shop_bottom public_auto">
         {leftTemplate}
         <View className="specialOffer_shop_btn">
-          {shareCommission > 0 ? "分享赚" : "立即抢购"}
+          {shareCommission > 0
+            ? `分享赚¥${computedPrice(
+                realPrice - merchantPrice,
+                shareCommission
+              )}`
+            : "抢购"}
         </View>
       </View>
     </View>
@@ -295,8 +296,7 @@ export const couponTemplate = (item, configUserLevelInfo) => {
           {couponName}
         </View>
         <View className="specialOffer_coupon_details font_hide">
-          {thresholdPrice ? `满元${thresholdPrice}可用 | ` : ""}
-          {templateSelect()}
+          {thresholdPrice ? `满元${thresholdPrice}可用 ` : "无门槛"}
         </View>
         <View className="specialOffer_userDetails font_hide">
           <View
@@ -312,30 +312,31 @@ export const couponTemplate = (item, configUserLevelInfo) => {
             ｜ {GetDistance(getLat(), getLnt(), lat, lnt)}
           </View>
         </View>
-        <View className="specialOffer_toast">卡豆抵扣后最低到手价</View>
-        <View className="specialOffer_date_price">
-          <View className="font20">{"¥"}</View>
-          {computedBeanPrice(buyPrice, payBeanCommission)}
-          <View className="specialOffer_date_rel specialOffer_date_relMargin">
-            ¥ {couponPrice}
+        <View className="specialOffer_old_height"></View>
+        <View className="specialOffer_real_price font_hide">
+          <View className="font20 color1">优惠价:</View>
+          <View className="font28 color1 bold price_margin4  real_max font_hide">
+            ¥{buyPrice}
           </View>
         </View>
-
-        {shareCommission !== 0 && (
-          <View className="specialOffer_bean_border">
-            <View
-              className="specialOffer_bean_box"
-              style={{ border: "1px solid #ef476f" }}
-            >
-              赚¥
-              {computedPrice(buyPrice - merchantPrice, shareCommission)}
-            </View>
+        <View
+          style={{ border: "1px solid #ef476f;" }}
+          className="specialOffer_new_bean"
+        >
+          <View className="bean_getBigInfo specialOffer_new_img"></View>
+          <View className="specialOffer_new_pay font_hide">
+            ¥{computedPrice(buyPrice, payBeanCommission)}
           </View>
-        )}
+        </View>
       </View>
       <ButtonView>
         <View className="specialOffer_bottom_btn">
-          {shareCommission > 0 ? "分享赚" : "抢购"}
+          {shareCommission > 0
+            ? `分享赚¥${computedPrice(
+                buyPrice - merchantPrice,
+                shareCommission
+              )}`
+            : "抢购"}
         </View>
       </ButtonView>
     </View>

@@ -43,44 +43,47 @@ export default (props) => {
       } = item;
       console.log(ownerIdString, specialActivityIdString);
       return (
-        <View className="templateOwn_box">
+        <View
+          onClick={(e) => {
+            e.stopPropagation();
+            linkTo(specialActivityIdString, ownerIdString);
+          }}
+          className="templateOwn_box"
+        >
           <View
-            onClick={(e) => {
-              e.stopPropagation();
-              linkTo(specialActivityIdString, ownerIdString);
-            }}
             style={backgroundObj(goodsImg)}
             className="templateOwn_coverImg"
           ></View>
           <View className="templateOwn_content">
-            <View className="templateOwn_content_name font_hide">
+            <View className="templateOwn_content_name  font22 font_hide">
               {goodsName}
             </View>
-            <View className="templateOwn_template_oldPrice color1 font_hide">
-              <View className="font18">原价:</View>
+            <View className="templateOwn_template_oldPrice color2 font_hide">
+              <View className="font18 ">原价:</View>
               <View className="templateOwn_template_priceMax font_hide font20 price_margin4 bold text_through">
                 ¥{oriPrice}
               </View>
             </View>
             <View className="templateOwn_template_price color1 font_hide">
               <View className="font18">优惠价:</View>
-              <View className="templateOther_template_priceMax font_hide font20 price_margin4 bold">
+              <View className="templateOther_template_priceMax font_hide font24 price_margin4 bold">
                 ¥{realPrice}
               </View>
             </View>
-            <View className="templateOwn_bean_price">卡豆抵扣后最低到手价</View>
-            <View className="templateOwn_bean_show font_hide">
-              <Text className="color3 font20 bold">¥ </Text>
-              <Text className="color3 font28 bold">
-                {computedBeanPrice(realPrice, payBeanCommission)}
-              </Text>
-              {shareCommission > 0 && (
-                <Text className="color3 font18 bold">
-                  /赚
-                  {computedPrice(realPrice - merchantPrice, shareCommission)}
-                </Text>
-              )}
+            <View className="templateOwn_new_bean ">
+              <View className="bean_getInfo templateOwn_new_img"></View>
+              <View className="templateOwn_new_pay font_hide">
+                ¥{computedPrice(realPrice, payBeanCommission)}
+              </View>
             </View>
+            {shareCommission > 0 && (
+              <View className="templateOwn_bean_show font_hide  font18 color3">
+                赚
+                <Text className="bold">
+                  ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
+                </Text>
+              </View>
+            )}
           </View>
         </View>
       );
@@ -123,7 +126,7 @@ export default (props) => {
               <View className="templateOther_template_name font_hide">
                 {goodsName}
               </View>
-              <View className="templateOther_template_oldPrice color1 font_hide">
+              <View className="templateOther_template_oldPrice color2 font_hide">
                 <View className="font18">原价:</View>
                 <View className="templateOther_template_priceMax font_hide font20 price_margin4 bold text_through">
                   ¥{oriPrice}
@@ -132,26 +135,24 @@ export default (props) => {
 
               <View className="templateOther_template_price color1 font_hide">
                 <View className="font18">优惠价: </View>
-                <View className="templateOther_template_priceMax font_hide font20 price_margin4 bold">
+                <View className="templateOther_template_priceMax font_hide font24 price_margin4 bold">
                   ¥{realPrice}
                 </View>
               </View>
-
-              <View className="templateOther_bean_price">
-                卡豆抵扣后最低到手价
+              <View className="templateOther_new_bean ">
+                <View className="bean_getInfo templateOther_new_img"></View>
+                <View className="templateOther_new_pay font_hide">
+                  ¥{computedPrice(realPrice, payBeanCommission)}
+                </View>
               </View>
-              <View className="templateOther_bean_show font_hide">
-                <Text className="color3 font20 bold">¥ </Text>
-                <Text className="color3 font28 bold">
-                  {computedBeanPrice(realPrice, payBeanCommission)}
-                </Text>
-                {shareCommission > 0 && (
-                  <Text className="color3 font18 bold">
-                    /赚
-                    {computedPrice(realPrice - merchantPrice, shareCommission)}
+              {shareCommission > 0 && (
+                <View className="templateOther_bean_show font_hide  font18 color3">
+                  赚
+                  <Text className="bold">
+                    ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
                   </Text>
-                )}
-              </View>
+                </View>
+              )}
             </View>
           );
         })}

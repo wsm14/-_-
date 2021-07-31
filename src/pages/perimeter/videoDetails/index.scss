@@ -474,6 +474,9 @@ page {
         line-height: 28px;
         color: #999999;
       }
+      .templateCard_opcity {
+        color: rgba(255, 255, 255, 0.7);
+      }
       .templateCard_through {
         text-decoration: line-through;
       }
@@ -484,6 +487,9 @@ page {
         display: flex;
         align-items: baseline;
         color: rgba(255, 235, 165, 1);
+      }
+      .templateCard_opcity {
+        color: rgba(255, 255, 255, 0.7);
       }
     }
   }

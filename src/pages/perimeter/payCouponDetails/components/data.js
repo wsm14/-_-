@@ -6,14 +6,15 @@ export const rssConfigData = (data = {}) => {
     price = 0,
     oldPrice,
     merchantName,
-    address,
     city,
     userProfile = "",
     wxCode,
-    background = "https://wechat-config.dakale.net/miniprogram/image/icon495.png",
+    background = "https://wechat-config.dakale.net/miniprogram/image/icon704.png",
     username,
+    buyPrice,
     merchantLogo = "",
-    tag = "https://wechat-config.dakale.net/miniprogram/image/icon496.png",
+    tag = "https://wechat-config.dakale.net/miniprogram/image/icon706.png",
+    saveMoney = 0,
   } = data;
   if (
     !userProfile.includes("resource-new.dakale.net") &&
@@ -28,50 +29,58 @@ export const rssConfigData = (data = {}) => {
     merchantLogo =
       "https://wechat-config.dakale.net/miniprogram/image/conpon_shop.png";
   }
-  console.log(merchantLogo);
-  const priceLength = price.toString().length * 35.18552780151367;
+
   return {
     width: 750, // 画布宽度
     height: 1334, // 画布高度
     backgroundColor: "#108588", // 画布颜色
-    blocks: [
-      {
-        x: 61,
-        y: 720,
-        height: 45,
-        paddingLeft: 15,
-        paddingRight: 0,
-        borderWidth: 1,
-        borderColor: "#EF486F",
-        borderRadius: 4,
-        zIndex: 998,
-        text: {
-          width: 151,
-          lineHeight: 45,
-          text: "卡豆抵扣后", // tag 标签 - 卡豆抵扣后
-          fontSize: 24,
-          color: "#EF486F",
-          zIndex: 999,
-          textAlign: "center",
-          baseLine: "middle",
-        },
-      },
-    ],
+
     texts: [
       {
-        x: 60,
-        y: 610 + topExtraPx,
-        text: name, // 套餐名称
-        fontSize: 40,
+        y: 85,
+        width: 646,
+        height: 32,
+        paddingRight: 32,
+        x: 57,
+        zIndex: 20,
+        text: merchantName,
+        fontSize: 32,
         color: "#333333",
         fontWeight: "bold",
         lineNum: 1,
-        width: 600,
+        zIndex: 999,
+        lineHeight: 32,
+        baseLine: "middle",
+      },
+      {
+        y: 133,
+        width: 646,
+        height: 24,
+        zIndex: 20,
+        x: 57,
+        text: city,
+        fontSize: 24,
+        color: "#999999",
+        fontWeight: "bold",
+        lineNum: 1,
+        zIndex: 999,
+        lineHeight: 24,
+        baseLine: "middle",
+      },
+      {
+        x: 57,
+        y: 754,
+        text: name, // 商品名称
+        lineNum: 1,
+        fontSize: 40,
+        color: "#333333",
+        fontWeight: "bold",
+        width: 415,
         zIndex: 999,
       },
       {
-        x: 61,
-        y: 674 + 15,
+        x: 57,
+        y: 810,
         text: `${time}`, // 结束时间
         fontSize: 24,
         color: "#999999",
@@ -79,66 +88,46 @@ export const rssConfigData = (data = {}) => {
         zIndex: 999,
       },
       {
-        x: 61,
-        y: 840,
-        text: "¥", // ¥
-        fontSize: 32,
-        color: "#EF486F",
-        fontWeight: "bold",
-        zIndex: 999,
-      },
-      {
-        x: 85,
-        y: 840,
-        text: price, // 现价
-        fontSize: 60,
-        color: "#EF486F",
-        fontWeight: "bold",
-        zIndex: 999,
-      },
-      {
-        x: 61,
-        y: 886,
-        text: `原价 ¥${oldPrice}`, // 原价
-        fontSize: 32,
-        color: "#666666",
-        textDecoration: "line-through",
-        zIndex: 999,
-      },
-      {
-        x: 61,
-        y: 1030 + topExtraPx,
-        text: merchantName, // 店铺名称
+        x: 57,
+        y: 868,
+        text: "原价:",
         lineNum: 1,
         fontSize: 32,
+        color: "#999999",
+        fontWeight: "bold",
+        zIndex: 999,
+        addonAfter: {
+          type: "text",
+          text: "¥" + oldPrice, // 用户昵称后缀
+          fontSize: 36,
+          color: "#999999",
+          fontWeight: "bold",
+          marginLeft: 5,
+          zIndex: 999,
+          textDecoration: "line-through",
+        },
+      },
+      {
+        x: 57 + (oldPrice.length + 2) * 32,
+        y: 868,
+        text: "优惠价:",
+        lineNum: 1,
+        fontSize: 36,
         color: "#333333",
-        fontWeight: "bold",
-        width: 415,
         zIndex: 999,
-      },
-      {
-        x: 61,
-        y: 1086 + topExtraPx,
-        text: city, // 所在地
-        lineNum: 1,
-        fontSize: 24,
-        color: "#999999",
-        width: 415,
-        zIndex: 999,
-      },
-      {
-        x: 61,
-        y: 1126 + topExtraPx,
-        text: address, // 地址
-        lineNum: 1,
-        fontSize: 24,
-        color: "#999999",
-        width: 415,
-        zIndex: 999,
+        addonAfter: {
+          type: "text",
+          text: "¥" + buyPrice,
+          fontSize: 40,
+          color: "#333333",
+          fontWeight: "bold",
+          marginLeft: 5,
+          zIndex: 999,
+        },
       },
       {
         x: 139,
-        y: 1212 + 20,
+        y: 1141 + 20,
         text: "来自", // 用户昵称
         fontSize: 24,
         color: "#333333",
@@ -147,7 +136,7 @@ export const rssConfigData = (data = {}) => {
       },
       {
         x: 139 + 50,
-        y: 1212 + 20,
+        y: 1141 + 20,
         text: username, // 用户昵称
         lineNum: 1,
         fontSize: 24,
@@ -164,6 +153,17 @@ export const rssConfigData = (data = {}) => {
           zIndex: 999,
         },
       },
+      {
+        x: 208,
+        y: 948,
+        text: "¥" + saveMoney, // 真实价格
+        lineNum: 1,
+        fontSize: 36,
+        color: "#EF476F",
+        fontWeight: "bold",
+        width: 415,
+        zIndex: 999,
+      },
     ],
     images: [
       {
@@ -175,30 +175,30 @@ export const rssConfigData = (data = {}) => {
         zIndex: 5,
       },
       {
-        url: tag, // 最低到手价
-        width: 181,
-        height: 52,
-        y: 788,
-        x: 95 + priceLength,
-        zIndex: 999,
+        url: tag, // 标签
+        width: 144,
+        height: 48,
+        y: 910,
+        x: 52,
+        zIndex: 10,
       },
       {
         url: merchantLogo, // 封面
-        width: 646,
-        height: 450,
-        y: 128,
-        x: 45,
-        borderRadius: 16,
+        width: 700,
+        height: 525,
+        y: 169,
+        x: 25,
         zIndex: 10,
       },
       {
         url: wxCode, // 小程序码
-        width: 160,
-        height: 160,
-        y: 1014,
-        x: 523,
-        borderRadius: 100,
-        borderWidth: 0,
+        width: 180,
+        height: 180,
+        y: 1005,
+        x: 505,
+        borderRadius: 200,
+        borderColor: "#EF476F",
+        borderWidth: 2,
         zIndex: 111,
       },
       {
@@ -208,8 +208,8 @@ export const rssConfigData = (data = {}) => {
         url: userProfile, // 头像
         width: 64,
         height: 64,
-        y: 1192,
-        x: 61,
+        y: 1122,
+        x: 57,
         borderRadius: 68,
         borderWidth: 0,
         zIndex: 111,

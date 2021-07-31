@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
-import { View, Text, WebView } from "@tarojs/components";
+import { View, Text, WebView, Image } from "@tarojs/components";
 import {
   getAuthStatus,
   scanCard,
@@ -68,35 +68,9 @@ class Index extends Component {
     });
   }
   setCityName(lat, lnt) {
-    getRestapiAddress(
-      {
-        key: resiApiKey,
-        location: `${lat},${lnt}`,
-      },
-      (res) => {
-        const { info, regeocode = {} } = res;
-        if (info === "OK") {
-          const { addressComponent = {} } = regeocode;
-          const { city, adcode = "" } = addressComponent;
-          this.setState(
-            {
-              city: city.slice(0, 2),
-              cityCode: adcode.slice(0, 4),
-            },
-            (res) => {
-              this.fetchGoods();
-              this.fetchSpecailList();
-              this.fetchPlayerList();
-            }
-          );
-        } else {
-          this.fetchGoods();
-          this.fetchSpecailList();
-          this.fetchPlayerList();
-          toast("经纬度解析错误,默认杭州");
-        }
-      }
-    );
+    this.fetchGoods();
+    this.fetchSpecailList();
+    this.fetchPlayerList();
   }
   onchangeInfo(item) {
     const { configUserLevelInfo, userInfo } = this.state;
@@ -205,7 +179,7 @@ class Index extends Component {
     const { userIdString } = userInfo;
     if (res.from === "button") {
       return {
-        title: "达人招募令",
+        title: "哒卡乐88线下消费节",
         path: `/pages/share/mainScene/index?shareUserId=${userIdString}&shareUserType=user`,
       };
     }
@@ -301,7 +275,7 @@ class Index extends Component {
             className="active_Rule"
             onClick={() => this.onRouterInit()}
           ></View>
-
+          <ShareFriend></ShareFriend>
           <View className="mainScene_top">
             <View className="mainScene_box_location">
               <View
@@ -337,6 +311,15 @@ class Index extends Component {
               ></View>
             </View>
           </View>
+          <Image
+            src={
+              "https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_42.png"
+            }
+            mode="widthFix"
+            className="mainScene_pp_box"
+            lazyLoad
+          ></Image>
+
           <View className="mainScene_logo_box">
             <View className="mainScene_card_logo"></View>
           </View>

@@ -6,13 +6,19 @@
 import React, { useEffect, useState } from "react";
 import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { backgroundObj, switchTab } from "@/common/utils";
+import { backgroundObj, switchTab, computedPrice } from "@/common/utils";
 import Router from "@/common/router";
 import ButtonView from "@/components/Button";
 import { scanCode } from "@/common/authority";
 import "./index.scss";
 export default (props) => {
-  const { data, visible, show = false, scan = {} } = props;
+  const {
+    data,
+    visible,
+    show = false,
+    scan = {},
+    configUserLevelInfo = {},
+  } = props;
   const [animate, setAnimated] = useState(null);
   const { scene } = scan;
   const {
@@ -28,6 +34,7 @@ export default (props) => {
     specialActivityIdString,
     otherRealPrice = "",
   } = data;
+  const { payBeanCommission = 50 } = configUserLevelInfo;
   /* guideMomentFlag  为1时显示另外一套特殊携带商品样式，默认为0不管 */
   const animated = () => {
     let animateTem = Taro.createAnimation({
@@ -164,24 +171,39 @@ export default (props) => {
         </View>
         <View className="specal_layer_title font24">
           <Text className="color6">再领{otherBeanAmount}卡豆</Text>
-          <Text className="color10"> 可超值购买</Text>
+          <Text className="color10"> {otherRealPrice}元买</Text>
         </View>
         <View onClick={() => linkToPay()} className="specal_layer_card">
           <View
-            className="specal_layer_img dakale_nullImage"
+            className="specal_layer_img merchant_dakale_logo"
             style={backgroundObj(goodsImg)}
           ></View>
           <View className="specal_layer_font">
             <View className="specal_title font_hide">{goodsName}</View>
-            <View className="specal_getBeanPrice">卡豆抵扣后最低到手价:</View>
-            <View className="specal_orice">
-              <Text className="color1 font24 bold">¥</Text>{" "}
-              <Text className="color1 font28 bold"> {otherRealPrice}</Text>{" "}
-              <Text className="specal_rice_font">¥{oriPrice}</Text>
+            <View className="specal_oldPrice">
+              <View className="color2 font20">原价:</View>
+              <View className="color2 font24 bold text_through price_margin4">
+                {oriPrice}
+              </View>
+            </View>
+            <View className="specal_relPrice">
+              <View className="color1 font20">优惠价:</View>
+              <View className="color1 font28 bold price_margin4">
+                {realPrice}
+              </View>
+            </View>
+            <View
+              style={{ border: "1px solid #ef476f;" }}
+              className="specal_new_bean"
+            >
+              <View className="bean_getBigInfo specal_new_img"></View>
+              <View className="specal_new_pay font_hide">
+                ¥{computedPrice(realPrice, payBeanCommission)}
+              </View>
             </View>
           </View>
           <ButtonView>
-            <View className="specal_btn public_center">立即抢购</View>
+            <View className="specal_btn public_center">抢购</View>
           </ButtonView>
         </View>
         <View className="specal_layer_shareFriend"></View>

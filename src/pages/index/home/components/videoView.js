@@ -31,7 +31,6 @@ export default ({
     setTime(0);
     setWalk(false);
   }, [current]);
-
   const expensive = useMemo(() => {
     const { shareCommission = 0 } = userInfo;
     if (data.length > 0) {

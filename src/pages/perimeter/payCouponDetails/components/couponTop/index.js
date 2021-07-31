@@ -14,7 +14,13 @@ import {
 import classNames from "classnames";
 import ButtonView from "@/components/Button";
 import "./../../index.scss";
-export default ({ data, configUserLevelInfo, setCollection, getShareInfo }) => {
+export default ({
+  data,
+  configUserLevelInfo,
+  setCollection,
+  getShareInfo,
+  onChange,
+}) => {
   const {
     anytimeRefund,
     expireRefund,
@@ -49,50 +55,23 @@ export default ({ data, configUserLevelInfo, setCollection, getShareInfo }) => {
         </View>
         <View className="coupon_top_name  font_noHide">{couponName}</View>
       </View>
-      <View className="coupon_top_view">
-        <View className="coupon_view_left">
-          <View className="color3 font24">¥</View>
-          <View className="color3 font48 bold">{buyPrice}</View>
-          <View className="color2 font28 coupon_margin1 bold">原价</View>
-          <View className="color2 font28 coupon_margin2 coupon_text_thour">
-            ¥{couponPrice}
-          </View>
-        </View>
-        <View className="coupon_view_right">
-          <View className="coupon_pay_logo">
-            {buyUserImageList.map((item, index) => {
-              if (index === 0) {
-                return (
-                  <View
-                    className=".coupon_profile_box dakale_profile"
-                    style={backgroundObj(item)}
-                  ></View>
-                );
-              } else {
-                return (
-                  <View
-                    className=".coupon_profile_box dakale_profile .coupon_profile_left"
-                    style={backgroundObj(item)}
-                  ></View>
-                );
-              }
-            })}
-            <View className=".coupon_left_pay">抢购中</View>
-          </View>
-        </View>
+      <View className="coupon_price_people font_hide">
+        <Text className="font28 color1">优惠价: </Text>
+        <Text className="font48 color1 bold price_margin4">¥{buyPrice}</Text>
+        <Text className="coupon_price_style color2">原价:</Text>
+        <Text className="font36 font_hide price_margin8 color2 bold text_through">
+          ¥{couponPrice}
+        </Text>
       </View>
-      <View className="coupon_top_price">
-        <View className="coupon_top_left">
-          <View className="coupon_bean_hander">
-            <View className="coupon_bean_price">
-              <View className="font22 color6">卡豆抵扣后最低到手价:</View>
-              <View className="font20 color6 coupon_bean_priceLeft">¥</View>
-              <View className="font28 color6 bold coupon_bean_priceLeft">
-                {computedBeanPrice(buyPrice, payBeanCommission)}
-              </View>
-            </View>
-          </View>
+      <View onClick={() => onChange()} className="coupon_bean_showPay">
+        <View className="color3 font24">卡豆再省</View>
+        <View className="color3 font36 bold price_margin8">
+          ¥{computedPrice(buyPrice, payBeanCommission)}
         </View>
+        <View className="coupon_bean_mx">{"卡豆抵扣明细" + " >"}</View>
+      </View>
+
+      <View className="coupon_top_price">
         <View className="coupon_top_right">
           <View className="coupon_getPrice_tag">{templateSelect()}</View>
         </View>

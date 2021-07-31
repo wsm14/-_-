@@ -1,6 +1,6 @@
-const topExtraPx = 40;
 export const rssConfigData = (data = {}) => {
   let {
+    background = "https://wechat-config.dakale.net/miniprogram/image/icon704.png",
     merchantName,
     scenesList = [],
     address,
@@ -24,7 +24,7 @@ export const rssConfigData = (data = {}) => {
       return [
         {
           x: 316,
-          y: 232,
+          y: 137,
           width: 128,
           height: 48,
           backgroundColor: "rgba(16, 133, 136, 0.1)",
@@ -47,7 +47,7 @@ export const rssConfigData = (data = {}) => {
       return [
         {
           x: 239,
-          y: 232,
+          y: 137,
           width: 128,
           height: 48,
           backgroundColor: "rgba(16, 133, 136, 0.1)",
@@ -67,7 +67,7 @@ export const rssConfigData = (data = {}) => {
         },
         {
           x: 383,
-          y: 232,
+          y: 137,
           width: 128,
           height: 48,
           backgroundColor: "rgba(16, 133, 136, 0.1)",
@@ -90,7 +90,7 @@ export const rssConfigData = (data = {}) => {
       return [
         {
           x: 172,
-          y: 232,
+          y: 137,
           width: 128,
           height: 48,
           backgroundColor: "rgba(16, 133, 136, 0.1)",
@@ -110,7 +110,7 @@ export const rssConfigData = (data = {}) => {
         },
         {
           x: 316,
-          y: 232,
+          y: 137,
           width: 128,
           height: 48,
           backgroundColor: "rgba(16, 133, 136, 0.1)",
@@ -130,7 +130,7 @@ export const rssConfigData = (data = {}) => {
         },
         {
           x: 460,
-          y: 232,
+          y: 137,
           width: 128,
           height: 48,
           backgroundColor: "rgba(16, 133, 136, 0.1)",
@@ -159,33 +159,27 @@ export const rssConfigData = (data = {}) => {
     width: 750, // 画布宽度
     height: 1334, // 画布高度
     backgroundColor: "#108588", // 画布颜色
-    blocks: [
-      {
-        y: 160,
-        height: 45,
-        textAlign: "center",
-        zIndex: 998,
-        width: 686,
-        lineNum: 1,
-        x: 32,
-        text: {
-          lineHeight: 56,
-          text: merchantName, // 商家名称
-          fontSize: 40,
-          color: "#333333",
-          zIndex: 999,
-          textAlign: "center",
-          baseLine: "middle",
-          x: 32,
-          lineNum: 1,
-        },
-      },
-      ...filterScenesList(),
-    ],
+    blocks: [...filterScenesList()],
     texts: [
       {
+        y: 85,
+        width: 646,
+        height: 32,
+        paddingRight: 32,
+        x: 57,
+        zIndex: 20,
+        text: merchantName,
+        fontSize: 32,
+        color: "#333333",
+        fontWeight: "bold",
+        lineNum: 1,
+        zIndex: 999,
+        lineHeight: 32,
+        baseLine: "middle",
+      },
+      {
         x: 105,
-        y: 896,
+        y: 802,
         lineHeight: 32,
         text: address, // 地址
         fontSize: 24,
@@ -195,7 +189,7 @@ export const rssConfigData = (data = {}) => {
       },
       {
         x: 105,
-        y: 948,
+        y: 854,
         lineHeight: 32,
         text: businessTime, // 营业时间
         fontSize: 24,
@@ -205,19 +199,18 @@ export const rssConfigData = (data = {}) => {
       },
       {
         x: 105,
-        y: 1000,
+        y: 906,
         lineHeight: 32,
         text: telephone, // 电话
         fontSize: 24,
         color: "#333333",
         width: 380,
         lineNum: 1,
-        
         zIndex: 999,
       },
       {
         x: 61,
-        y: 1048,
+        y: 966,
         lineHeight: 32,
         text: tag, // 标签
         fontSize: 24,
@@ -228,7 +221,7 @@ export const rssConfigData = (data = {}) => {
 
       {
         x: 139,
-        y: 1134,
+        y: 1161,
         text: "来自", // 用户昵称
         fontSize: 24,
         color: "#333333",
@@ -237,7 +230,7 @@ export const rssConfigData = (data = {}) => {
       },
       {
         x: 139 + 50,
-        y: 1134,
+        y: 1161,
         text: username, // 用户昵称
         lineNum: 1,
         fontSize: 24,
@@ -257,20 +250,19 @@ export const rssConfigData = (data = {}) => {
     ],
     images: [
       {
-        url: "https://wechat-config.dakale.net/miniprogram/image/icon576.png", // 背景
+        url: background, // 背景
         width: 750,
         height: 1334,
         y: 0,
         x: 0,
         zIndex: 5,
       },
-
       {
         url: merchantLogo, // 封面
-        width: 646,
-        height: 450,
-        y: 304,
-        x: 45,
+        width: 700,
+        height: 525,
+        y: 217,
+        x: 25,
         borderRadius: 16,
         zIndex: 10,
       },
@@ -278,7 +270,7 @@ export const rssConfigData = (data = {}) => {
         url: "https://wechat-config.dakale.net/miniprogram/image/icon577.png", //图标
         width: 36,
         height: 36,
-        y: 870,
+        y: 777,
         x: 61,
         zIndex: 10,
       },
@@ -286,26 +278,25 @@ export const rssConfigData = (data = {}) => {
         url: "https://wechat-config.dakale.net/miniprogram/image/icon579.png", // 图标
         width: 36,
         height: 36,
-        y: 922,
+        y: 829,
         x: 61,
         zIndex: 10,
       },
       {
         url: "https://wechat-config.dakale.net/miniprogram/image/icon578.png", //图标
-
         width: 36,
         height: 36,
-        y: 974,
+        y: 881,
         x: 61,
         zIndex: 10,
       },
       {
         url: wxCode, // 小程序码
-        width: 160,
-        height: 160,
-        y: 931,
-        x: 523,
-        borderRadius: 100,
+        width: 180,
+        height: 180,
+        y: 1005,
+        x: 505,
+        borderRadius: 200,
         borderWidth: 0,
         zIndex: 111,
       },
@@ -316,8 +307,8 @@ export const rssConfigData = (data = {}) => {
         url: userProfile, // 头像
         width: 64,
         height: 64,
-        y: 1094,
-        x: 61,
+        y: 1121,
+        x: 57,
         borderRadius: 68,
         borderWidth: 0,
         zIndex: 111,

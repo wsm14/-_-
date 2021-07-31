@@ -1,3 +1,4 @@
+const topExtraPx = 40;
 export const rssConfigData = (data = {}) => {
   let {
     hasGoods,
@@ -13,8 +14,12 @@ export const rssConfigData = (data = {}) => {
     goodsName,
     oriPrice,
     realPrice,
-    buyPrice
+    buyPrice,
+    hasCoupon,
+    saveMoney,
+    tag = "https://wechat-config.dakale.net/miniprogram/image/icon706.png",
   } = data;
+
   if (
     !userProfile.includes("resource-new.dakale.net") &&
     !userProfile.includes("wechat-config.dakale.net")
@@ -22,22 +27,63 @@ export const rssConfigData = (data = {}) => {
     userProfile = "https://resource-new.dakale.net/common/default_profile.png";
   }
 
-  if (hasGoods === "1") {
-    console.log(data)
+  if (hasGoods === "1" || hasCoupon === "1") {
     const priceLength = oriPrice.toString().length * 27;
     const priceLengthImg = realPrice.toString().length * 42;
     return {
       width: 750, // 画布宽度
       height: 1334, // 画布高度
       backgroundColor: "#108588", // 画布颜色
+      blocks: [
+        {
+          y: 824,
+          width: 636,
+          height: 1,
+          x: 57,
+          borderColor: "#E5E5E5",
+          borderWidth: 1,
+          zIndex: 20,
+        },
+      ],
       texts: [
         {
-          x: 61,
-          y: 638,
+          y: 85,
+          width: 646,
+          height: 32,
+          paddingRight: 32,
+          x: 57,
+          zIndex: 20,
+          text: merchantName,
+          fontSize: 32,
+          color: "#333333",
+          fontWeight: "bold",
+          lineNum: 1,
+          zIndex: 999,
+          lineHeight: 32,
+          baseLine: "middle",
+        },
+        {
+          y: 133,
+          width: 646,
+          height: 24,
+          zIndex: 20,
+          x: 57,
+          text: cityName,
+          fontSize: 24,
+          color: "#999999",
+          fontWeight: "bold",
+          lineNum: 1,
+          zIndex: 999,
+          lineHeight: 24,
+          baseLine: "middle",
+        },
+        {
+          x: 57,
+          y: 758,
           paddingRight: 81,
           width: 614,
           height: 75,
-          text: message, // 套餐名称
+          text: message, //
           fontSize: 32,
           color: "#333333",
           fontWeight: "bold",
@@ -47,11 +93,11 @@ export const rssConfigData = (data = {}) => {
         },
         {
           x: 209,
-          y: 842,
+          y: 884,
           width: 380,
           height: 40,
           text: goodsName, // 套餐名称
-          fontSize: 28,
+          fontSize: 32,
           color: "#333333",
           fontWeight: "bold",
           lineNum: 1,
@@ -60,105 +106,54 @@ export const rssConfigData = (data = {}) => {
         },
         {
           x: 209,
-          y: 882,
-          text: '原价', // 原价
-          fontSize: 24,
-          color: "#333333",
-          fontWeight: "bold",
+          y: 928,
+          text: "原价:",
           lineNum: 1,
+          fontSize: 28,
+          color: "#999999",
+          fontWeight: "bold",
           zIndex: 999,
-          lineHeight: 40,
           addonAfter: {
             type: "text",
-            text: '¥' + oriPrice, // 用户昵称后缀
-            fontSize: 28,
-            color: "#333333",
+            text: "¥" + oriPrice,
+            fontSize: 32,
+            color: "#999999",
+            fontWeight: "bold",
             marginLeft: 5,
             zIndex: 999,
             textDecoration: "line-through",
-            fontWeight: 'bold'
           },
         },
         {
-          x: 209 + priceLength + 24,
-          y: 882,
-          text: '优惠价', // 优惠价
-          fontSize: 24,
-          color: "#333333",
-          fontWeight: "bold",
+          x: 209 + (oriPrice.length + 2) * 27.5 + 4,
+          y: 928,
+          text: "优惠价:",
           lineNum: 1,
+          fontSize: 28,
+          color: "#333333",
           zIndex: 999,
-          lineHeight: 40,
           addonAfter: {
             type: "text",
-            text: '¥' + buyPrice, // 优惠价
-            fontSize: 28,
+            text: "¥" + buyPrice,
+            fontSize: 32,
             color: "#333333",
+            fontWeight: "bold",
             marginLeft: 5,
             zIndex: 999,
-            fontWeight: 'bold'
           },
         },
         {
-          x: 209,
-          y: 946,
-          text: "¥", // ¥
+          x: 341,
+          y: 976,
+          text: "¥" + saveMoney, // 实际价格, // ¥
           fontSize: 32,
           color: "#EF486F",
           fontWeight: "bold",
           zIndex: 999,
-          addonAfter: {
-            type: "text",
-            text: realPrice, // 实际价格
-            fontSize: 64,
-            color: "#333333",
-            marginLeft: 5,
-            zIndex: 999,
-            fontWeight: 'bold',
-            color: "#EF486F",
-          },
-        },
-
-        {
-          x: 61,
-          y: 1042,
-          width: 416,
-          height: 44,
-          text: merchantName, // 商家名称
-          fontSize: 32,
-          color: "#333333",
-          fontWeight: "bold",
-          lineNum: 1,
-          zIndex: 999,
-          lineHeight: 44,
         },
         {
-          x: 61,
-          y: 1098,
-          width: 416,
-          height: 32,
-          text: cityName, // 地区
-          fontSize: 24,
-          color: "rgba(153, 153, 153, 1)",
-          lineNum: 1,
-          zIndex: 999,
-          lineHeight: 32,
-        },
-        {
-          x: 61,
-          y: 1138,
-          width: 416,
-          height: 32,
-          text: address, // 地区
-          fontSize: 24,
-          color: "rgba(153, 153, 153, 1)",
-          lineNum: 1,
-          zIndex: 999,
-          lineHeight: 32,
-        },
-        {
-          x: 139,
-          y: 1224,
+          x: 135,
+          y: 1162,
           text: "来自", // 用户昵称
           fontSize: 24,
           color: "#333333",
@@ -166,8 +161,8 @@ export const rssConfigData = (data = {}) => {
           zIndex: 999,
         },
         {
-          x: 139 + 50,
-          y: 1224,
+          x: 135 + 50,
+          y: 1162,
           text: username, // 用户昵称
           lineNum: 1,
           fontSize: 24,
@@ -187,7 +182,7 @@ export const rssConfigData = (data = {}) => {
       ],
       images: [
         {
-          url: "https://wechat-config.dakale.net/miniprogram/image/icon580.png", // 背景
+          url: "https://wechat-config.dakale.net/miniprogram/image/icon704.png", // 背景
           width: 750,
           height: 1334,
           y: 0,
@@ -196,34 +191,34 @@ export const rssConfigData = (data = {}) => {
         },
         {
           url: frontImage, // 视频封面图
-          width: 646,
-          height: 450,
-          y: 128,
-          x: 45,
+          width: 700,
+          height: 525,
+          y: 169,
+          x: 25,
           zIndex: 10,
-        },
-        {
-          url: 'https://wechat-config.dakale.net/miniprogram/image/icon642.png', // 最低到手价
-          width: 272,
-          height: 52,
-          y: 897,
-          x: 209 + priceLengthImg,
-          zIndex: 999,
         },
         {
           url: "https://wechat-config.dakale.net/miniprogram/image/icon581.png", // 播放按钮图片
           width: 80,
           height: 80,
-          y: 313,
-          x: 328,
+          y: 392,
+          x: 335,
           zIndex: 15,
         },
         {
-          url: goodsImg, // 播放按钮图片
-          width: 132,
-          height: 132,
-          y: 818,
-          x: 61,
+          url: goodsImg, // 商品圖片
+          width: 128,
+          height: 128,
+          y: 854,
+          x: 57,
+          zIndex: 10,
+        },
+        {
+          url: tag, // 商品圖片
+          width: 120,
+          height: 40,
+          y: 942,
+          x: 209,
           zIndex: 10,
         },
         {
@@ -233,19 +228,19 @@ export const rssConfigData = (data = {}) => {
           url: userProfile, // 头像
           width: 64,
           height: 64,
-          y: 1184,
-          x: 61,
+          y: 1121,
+          x: 57,
           borderRadius: 68,
           borderWidth: 0,
           zIndex: 111,
         },
         {
           url: wxCode, // 小程序码
-          width: 160,
-          height: 160,
-          y: 1006,
-          x: 523,
-          borderRadius: 100,
+          width: 180,
+          height: 180,
+          y: 1005,
+          x: 505,
+          borderRadius: 200,
           borderWidth: 0,
           zIndex: 111,
         },
@@ -258,12 +253,43 @@ export const rssConfigData = (data = {}) => {
       backgroundColor: "#108588", // 画布颜色
       texts: [
         {
-          x: 61,
-          y: 638,
+          y: 85,
+          width: 686,
+          height: 32,
+          paddingRight: 32,
+          x: 57,
+          zIndex: 20,
+          text: merchantName,
+          fontSize: 32,
+          color: "#333333",
+          fontWeight: "bold",
+          lineNum: 1,
+          zIndex: 999,
+          lineHeight: 32,
+          baseLine: "middle",
+        },
+        {
+          y: 133,
+          width: 686,
+          height: 24,
+          zIndex: 20,
+          x: 57,
+          text: cityName,
+          fontSize: 24,
+          color: "#999999",
+          fontWeight: "bold",
+          lineNum: 1,
+          zIndex: 999,
+          lineHeight: 24,
+          baseLine: "middle",
+        },
+        {
+          x: 57,
+          y: 758,
           paddingRight: 81,
           width: 614,
           height: 75,
-          text: message, // 套餐名称
+          text: message, //
           fontSize: 32,
           color: "#333333",
           fontWeight: "bold",
@@ -272,45 +298,8 @@ export const rssConfigData = (data = {}) => {
           lineHeight: 44,
         },
         {
-          x: 61,
-          y: 866,
-          width: 416,
-          height: 44,
-          text: merchantName, // 商家名称
-          fontSize: 32,
-          color: "#333333",
-          fontWeight: "bold",
-          lineNum: 1,
-          zIndex: 999,
-          lineHeight: 44,
-        },
-        {
-          x: 61,
-          y: 922,
-          width: 416,
-          height: 32,
-          text: cityName, // 地区
-          fontSize: 24,
-          color: "rgba(153, 153, 153, 1)",
-          lineNum: 1,
-          zIndex: 999,
-          lineHeight: 32,
-        },
-        {
-          x: 61,
-          y: 962,
-          width: 416,
-          height: 32,
-          text: address, // 地区
-          fontSize: 24,
-          color: "rgba(153, 153, 153, 1)",
-          lineNum: 1,
-          zIndex: 999,
-          lineHeight: 32,
-        },
-        {
-          x: 139,
-          y: 1048,
+          x: 135,
+          y: 994,
           text: "来自", // 用户昵称
           fontSize: 24,
           color: "#333333",
@@ -318,8 +307,8 @@ export const rssConfigData = (data = {}) => {
           zIndex: 999,
         },
         {
-          x: 139 + 50,
-          y: 1048,
+          x: 185,
+          y: 994,
           text: username, // 用户昵称
           lineNum: 1,
           fontSize: 24,
@@ -339,7 +328,7 @@ export const rssConfigData = (data = {}) => {
       ],
       images: [
         {
-          url: "https://wechat-config.dakale.net/miniprogram/image/icon582.png", // 背景
+          url: "https://wechat-config.dakale.net/miniprogram/image/icon705.png", // 背景
           width: 750,
           height: 1334,
           y: 0,
@@ -348,27 +337,27 @@ export const rssConfigData = (data = {}) => {
         },
         {
           url: frontImage, // 视频封面图
-          width: 646,
-          height: 450,
-          y: 128,
-          x: 45,
+          width: 700,
+          height: 525,
+          y: 169,
+          x: 25,
           zIndex: 10,
         },
         {
           url: "https://wechat-config.dakale.net/miniprogram/image/icon581.png", // 播放按钮图片
           width: 80,
           height: 80,
-          y: 313,
-          x: 328,
+          y: 392,
+          x: 335,
           zIndex: 15,
         },
         {
           url: wxCode, // 小程序码
-          width: 160,
-          height: 160,
-          y: 826,
-          x: 523,
-          borderRadius: 100,
+          width: 180,
+          height: 180,
+          y: 838,
+          x: 505,
+          borderRadius: 200,
           borderWidth: 0,
           zIndex: 111,
         },
@@ -379,8 +368,8 @@ export const rssConfigData = (data = {}) => {
           url: userProfile, // 头像
           width: 64,
           height: 64,
-          y: 1004,
-          x: 61,
+          y: 954,
+          x: 57,
           borderRadius: 68,
           borderWidth: 0,
           zIndex: 111,

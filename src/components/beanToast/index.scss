@@ -111,9 +111,19 @@
             text-decoration: line-through;
           }
         }
+        .specal_oldPrice {
+          display: flex;
+          align-items: baseline;
+          margin-top: 14px;
+        }
+        .specal_relPrice {
+          display: flex;
+          align-items: baseline;
+          margin-top: 6px;
+        }
       }
       .specal_btn {
-        width: 128px;
+        width: 88px;
         height: 40px;
         background: #ef476f;
         border-radius: 26px;
@@ -161,6 +171,26 @@
       border: 2px solid #000000;
       color: #000000;
       background: #ffcf3b;
+    }
+    .specal_new_bean {
+      margin-top: 8px;
+      height: 32px;
+      background: #ffffff;
+      box-sizing: border-box;
+      border-radius: 24px;
+      display: inline-flex;
+      align-items: center;
+      .specal_new_img {
+        width: 98px;
+        height: 32px;
+      }
+      .specal_new_pay {
+        font-size: 24px;
+        font-weight: bold;
+        color: #ef476f;
+        max-width: 120px;
+        padding: 0 8px 0 4px;
+      }
     }
   }
 }

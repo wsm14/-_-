@@ -66,11 +66,10 @@ class Index extends Component {
   onShareAppMessage(res) {
     let userInfo = loginStatus() || {};
     const { userIdString } = userInfo;
-
     if (res.from === "button") {
       return {
         title: "达人招募令",
-        path: `/pages/share/invitation/index?shareUserId=${userIdString}&shareUserType=user`,
+        path: `/pages/share/hotActive/index?shareUserId=${userIdString}&shareUserType=user`,
       };
     }
   }

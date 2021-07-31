@@ -1,17 +1,17 @@
 .specialOffer_shop {
   width: 702px;
-  height: 264px;
+  height: 224px;
   margin: 0 auto 32px;
   display: flex;
   position: relative;
 }
 .specialOffer_shop_box {
-  width: 654px;
   margin: 0 auto 32px;
+  line-height: 1;
 }
 .specialOffer_shop_child {
   width: 688px;
-  height: 264px;
+  height: 224px;
   display: flex;
   position: relative;
 }
@@ -47,14 +47,17 @@
   color: #ffffff;
 }
 .specialOffer_shopImg {
-  width: 264px;
-  height: 264px;
+  width: 224px;
+  height: 224px;
   background: #d8d8d8;
   border-radius: 8px;
 }
+.specialOffer_old_height {
+  height: 26px;
+}
 .specialOffer_desc {
   margin-left: 24px;
-  height: 264px;
+  height: 224px;
   width: 398px;
   .specialOffer_coupon_title {
     width: 366px;
@@ -75,7 +78,7 @@
   }
   .specialOffer_title {
     width: 366px;
-    height: 80px;
+    height: 40px;
     font-size: 28px;
     font-weight: 400;
     color: #333333;
@@ -158,12 +161,61 @@
     font-weight: 500;
     color: #ef476f;
   }
+  .specialOffer_hotOld_price {
+    margin-top: 32px;
+    color: rgba(153, 153, 153, 1);
+    display: flex;
+    align-items: center;
+    max-width: 398px;
+  }
+  .specialOffer_real_price {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+  }
+  .specialOffer_bean_price {
+    margin-top: 14px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ef476f;
+    line-height: 20px;
+  }
+  .specialOffer_new_bean {
+    margin-top: 10px;
+    height: 32px;
+    background: #ffffff;
+    box-sizing: border-box;
+    border-radius: 24px;
+    display: inline-flex;
+    align-items: center;
+    .specialOffer_new_img {
+      width: 98px;
+      height: 32px;
+    }
+    .specialOffer_new_pay {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ef476f;
+      max-width: 180px;
+      padding: 0 8px 0 4px;
+    }
+  }
+  .specialOffer_real_max {
+    max-width: 398px;
+  }
+  .specialOffer_bean_show {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    .specialOffer_bean_showText {
+      display: flex;
+      align-items: baseline;
+    }
+  }
   .specialOffer_hot_price {
-    margin-top: 24px;
+    margin-top: 32px;
     display: flex;
     align-items: baseline;
-    .specialOffer_hot_priceMax {
-    }
   }
   .specialOffer_bean_price {
     margin-top: 12px;
@@ -201,11 +253,11 @@
   margin-top: 24px;
 }
 .specialOffer_shop_btn {
-  width: 176px;
+  display: inline-flex;
+  padding: 0 32px;
   height: 52px;
   background: #ef476f;
   border-radius: 26px;
-  display: flex;
   align-items: center;
   justify-content: center;
   font-size: 28px;
@@ -245,7 +297,6 @@
     transform: rotateZ(360deg);
   }
 }
-
 .specialOffer_shop_text::before {
   display: block;
   position: relative;

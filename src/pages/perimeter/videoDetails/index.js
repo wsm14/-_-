@@ -274,12 +274,14 @@ class Index extends React.PureComponent {
         const {
           goodsImg,
           goodsName,
-          hasGoods,
+          hasCoupon = "0",
           oriPrice,
           realPrice,
           qcodeUrl,
           image,
+          hasGoods = "0",
           buyPrice = 0,
+          saveMoney = 0,
         } = res;
         if (player) {
           this.stopVideoPlayerControl();
@@ -293,7 +295,7 @@ class Index extends React.PureComponent {
               frontImage: frontImage,
               message,
               merchantName: username,
-              cityName: cityName + districtName,
+              cityName: cityName + districtName + merchantAddress,
               address: merchantAddress,
               username: userInfo.username,
               userProfile: userInfo.profile,
@@ -303,6 +305,8 @@ class Index extends React.PureComponent {
               oriPrice,
               realPrice,
               buyPrice,
+              hasCoupon,
+              saveMoney,
             }),
           },
         });

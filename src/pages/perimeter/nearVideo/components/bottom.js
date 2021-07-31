@@ -9,7 +9,7 @@ import {
   getLnt,
   backgroundObj,
   computedPrice,
-  computedBeanPrice
+  computedBeanPrice,
 } from "@/common/utils";
 import Taro from "@tarojs/taro";
 import { getPromotionInfo } from "@/server/index";
@@ -59,7 +59,7 @@ export default (props) => {
     username,
     promotionPrice,
     userMomentIdString,
-    userProfile
+    userProfile,
   } = server;
   const getPromotion = (item) => {
     const { promotionType, promotionIdString, userIdString } = item;
@@ -89,10 +89,7 @@ export default (props) => {
         <View className="templateStated_box" onClick={() => callback()}>
           <View
             className="templateStated_img coupon_shop_icon"
-            style={backgroundObj(
-              promotionImg ||
-              userProfile
-            )}
+            style={backgroundObj(promotionImg || userProfile)}
           ></View>
           <View className="templateStated_font">
             <View
@@ -104,10 +101,10 @@ export default (props) => {
               {promotionName}
             </View>
             <View className="templateStated_price font_hide">
-              <Text className="font20">卡豆抵扣后最低到手价:</Text>
+              <Text className="font18">卡豆再省:</Text>
               <Text className="font20 bold templateStated_margin">¥</Text>
               <Text className="font28 bold templateStated_margin">
-                {computedBeanPrice(promotionBuyPrice, payBeanCommission)}
+                {computedBeanPrice(promotionBuyPrice, 100 - payBeanCommission)}
               </Text>
               {shareCommission > 0 && (
                 <Text className="font22 templateStated_margin">

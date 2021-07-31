@@ -57,33 +57,31 @@ export const selectShop = (item, userInfo, linkTo) => {
             </View>
           </View>
         </View>
-        <View className="shopInit_hot_price color1 font_hide">
+        <View className="shopInit_hotOld_price color1 font_hide">
           <View className="font20">原价:</View>
-          <View className="shopInit_hot_priceMax font_hide font24 price_margin4 bold text_through">
+          <View className="font24 bold price_margin4 text_through">
             ¥{oriPrice}
           </View>
-          <View className="font20 price_margin8">优惠价: </View>
-          <View className="font24 price_margin4 bold">¥{realPrice}</View>
         </View>
-        <View className="shopInit_bean_price">卡豆抵扣后最低到手价</View>
-        <View className="shopInit_bean_show">
-          <View className="color3 font36 bold shopInit_bean_showText">
-            <View className="color3 font20 bold">¥</View>
-            <View className="price_margin4">
-              {computedBeanPrice(realPrice, payBeanCommission)}
-            </View>
+        <View className="shopInit_real_price font_hide">
+          <View className="font20 color1">优惠价:</View>
+          <View className="font28 color1 bold price_margin4  real_max font_hide">
+            ¥{realPrice}
           </View>
           {shareCommission > 0 && (
-            <View
-              style={{ border: "1px solid #ef476f" }}
-              className="shopInit_bean_getMoney font_hide"
-            >
-              赚
+            <View className="font22 color3 price_margin4">
+              /赚
               <Text className="bold">
                 ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
               </Text>
             </View>
           )}
+        </View>
+        <View className="shopInit_new_bean">
+          <View className="bean_getBigInfo shopInit_new_img"></View>
+          <View className="shopInit_new_pay font_hide">
+            ¥{computedPrice(realPrice, payBeanCommission)}
+          </View>
         </View>
       </View>
     </View>

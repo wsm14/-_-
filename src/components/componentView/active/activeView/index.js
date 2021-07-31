@@ -92,7 +92,7 @@ export const goodsView = (item, userInfo, fn, type = "toast") => {
               {ownerName}
             </View>
             <View className="price_margin8">
-              {GetDistance(getLat(), getLnt(), lat, lnt)}
+              {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
             </View>
           </View>
         </View>
