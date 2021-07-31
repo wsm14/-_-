@@ -104,7 +104,7 @@ export const rssConfigData = (data = {}) => {
         },
       },
       {
-        x: 57 + (oldPrice.length + 2) * 30,
+        x: 60 + (oldPrice.replace(/\./g, "").length + 2) * 35,
         y: 868,
         text: "优惠价:",
         lineNum: 1,

@@ -184,6 +184,7 @@ export const rssConfigData = (data = {}) => {
         text: address, // 地址
         fontSize: 24,
         color: "#333333",
+        lineNum: 1,
         with: 520,
         zIndex: 999,
       },

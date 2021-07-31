@@ -125,7 +125,7 @@ export const rssConfigData = (data = {}) => {
           },
         },
         {
-          x: 209 + oriPrice.length * 31 + 28,
+          x: 209 + (oriPrice.replace(/\./g, "").length + 2) * 31,
           y: 928,
           text: "优惠价:",
           lineNum: 1,
