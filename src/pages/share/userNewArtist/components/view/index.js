@@ -147,7 +147,10 @@ export const CardView = (item) => {
       }}
     >
       <View className="view_card_content">
-        <View className="view_card_img" style={backgroundObj(headerImg)}></View>
+        <View
+          className="view_card_img merchant_dakale_logo"
+          style={backgroundObj(headerImg)}
+        ></View>
         <View className="view_card_body">
           <View className="view_card_userName font_hide">{merchantName}</View>
           <View className="view_card_data">
@@ -292,22 +295,6 @@ export const meShopView_box = (item) => {
       ></View>
       <View className="meShopView_item_content">
         <View className="meShopView_item_title font_hide">{goodsName}</View>
-        <View className="meShopView_shopContent_user font_hide">
-          <View>
-            <View
-              className="meShopView_shopContent_profile"
-              style={backgroundObj(merchantLogo)}
-            ></View>
-          </View>
-          <View className="meShopView_shopContent_username price_margin8 font_hide">
-            {merchantName}
-          </View>
-          <View className="price_margin4">｜</View>
-          <View className="meShopView_shopContent_limit price_margin4">
-            {GetDistance(getLat(), getLnt(), lat, lnt)}
-          </View>
-        </View>
-
         <View className="meShopView_shopContent_realPrice color1">
           <View className="font18 price_margin4">原价:</View>
           <View className="font20 text_through price_margin4 bold">

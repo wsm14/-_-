@@ -239,7 +239,10 @@ class Index extends Component {
         <View className="specialOffer_banner"></View>
         {template()}
 
-        <View className="specialOffer_content">
+        <View
+          style={noticeList && specialGoodsList ? { marginTop: 24 } : {}}
+          className="specialOffer_content"
+        >
           <View className="specialOffer_content_pay public_center">
             抢购列表
           </View>

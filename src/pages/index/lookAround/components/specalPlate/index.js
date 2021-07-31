@@ -8,8 +8,10 @@ import {
   SwiperItem,
 } from "@tarojs/components";
 import Template from "./../hotTemplate";
+import classNames from "classnames";
 import Router from "@/common/router";
 export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
+  const { shareCommission = 0 } = userInfo;
   const memo = useMemo(() => {
     return (
       <View className="lookAround_specalPlate_box public_auto">
@@ -19,7 +21,12 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
               routerName: "specialOffer",
             })
           }
-          className="lookAround_specalPlate_time"
+          className={classNames(
+            "lookAround_specalPlate_time",
+            shareCommission > 0
+              ? "lookAround_new_heightKol"
+              : "lookAround_new_height"
+          )}
         >
           <View className="lookAround_specalPlate_view">
             <View className="lookAround_specalPlate_topBox">
@@ -36,7 +43,12 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
           </View>
         </View>
         <View
-          className="lookAround_specalPlate_hot"
+          className={classNames(
+            "lookAround_specalPlate_hot",
+            shareCommission > 0
+              ? "lookAround_new_heightKol"
+              : "lookAround_new_height"
+          )}
           style={{ border: "1px solid #e5e5e5;" }}
           onClick={() =>
             Router({
