@@ -108,7 +108,7 @@ export const rssConfigData = (data = {}) => {
         },
       },
       {
-        x: 57 + (oldPrice.length + 2) * 32,
+        x: 60 + (oldPrice.replace(/\./g, "").length + 2) * 35,
         y: 868,
         text: "优惠价:",
         lineNum: 1,
@@ -197,8 +197,6 @@ export const rssConfigData = (data = {}) => {
         y: 1005,
         x: 505,
         borderRadius: 200,
-        borderColor: "#EF476F",
-        borderWidth: 2,
         zIndex: 111,
       },
       {
