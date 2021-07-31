@@ -50,7 +50,7 @@ export const goodsView = (item, userInfo, fn, type = "toast") => {
         return (
           <View className="activeView_btn_box activeView_btn_style2">
             {shareCommission > 0
-              ? `分享赚¥1${computedPrice(commission, shareCommission)}`
+              ? `分享赚¥${computedPrice(commission, shareCommission)}`
               : "立即抢购"}
           </View>
         );
@@ -58,7 +58,7 @@ export const goodsView = (item, userInfo, fn, type = "toast") => {
         return (
           <View className="activeView_btn_box activeView_btn_style2">
             {shareCommission > 0
-              ? `分享赚¥1${computedPrice(commission, shareCommission)}`
+              ? `分享赚¥${computedPrice(commission, shareCommission)}`
               : "分享"}
           </View>
         );
