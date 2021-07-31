@@ -549,6 +549,11 @@ class MerchantDetails extends Component {
               data={specialGoodsInfo}
             ></Card>
             {/*保障*/}
+            <Merchant
+              serviceType={"specialGoods"}
+              data={specialGoodsInfo}
+              ownerServiceId={specialActivityIdString}
+            ></Merchant>
             {goodsType === "package" && (
               <View className="shopdetails_shop_packageGroup">
                 <View className="shopdetails_shop_groupTitle">套餐详情</View>
@@ -579,11 +584,6 @@ class MerchantDetails extends Component {
               </View>
             )}
             {/* 套餐 */}
-            <Merchant
-              serviceType={"specialGoods"}
-              data={specialGoodsInfo}
-              ownerServiceId={specialActivityIdString}
-            ></Merchant>
             {/* 商品详情 */}
             {(goodsDesc || goodsDescImg) && (
               <View className="shopdetails_shop_details">
@@ -617,6 +617,7 @@ class MerchantDetails extends Component {
               current={true}
               userInfo={configUserLevelInfo}
             ></Recommend>
+            {console.log(beanLimitStatus, 1111)}
             <VideoBean
               visible={beanLimitStatus === "1"}
               price={(realPrice * (payBeanCommission / 100))

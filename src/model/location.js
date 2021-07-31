@@ -17,6 +17,7 @@ const locationStore = observable({
   },
   setDistrict(latitude, longitude) {
     this.flag = true;
+    this.locationStatus = true;
     getRestapiAddress(
       {
         key: resiApiKey,
@@ -28,7 +29,6 @@ const locationStore = observable({
           const { addressComponent = {} } = regeocode;
           const { adcode = "" } = addressComponent;
           Taro.setStorageSync("district-code", adcode.slice(0, 4));
-          this.locationStatus = true;
         } else {
           this.flag = false;
           toast(info);
@@ -37,7 +37,7 @@ const locationStore = observable({
     );
   },
   setCity(cityName, cityCode, type) {
-    this.cityName = cityName;
+    this.cityName = cityName; 
     this.cityCode = cityCode;
     Taro.setStorageSync("city", {
       cityCode: cityCode,

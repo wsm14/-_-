@@ -68,34 +68,9 @@ class Index extends Component {
     });
   }
   setCityName(lat, lnt) {
-    getRestapiAddress(
-      {
-        key: resiApiKey,
-        location: `${lat},${lnt}`,
-      },
-      (res) => {
-        const { info, regeocode = {} } = res;
-        if (info === "OK") {
-          const { addressComponent = {} } = regeocode;
-          const { city, adcode = "" } = addressComponent;
-          this.setState(
-            {
-              city: city.slice(0, 2),
-              cityCode: adcode.slice(0, 4),
-            },
-            (res) => {
-              this.fetchGoods();
-              this.fetchSpecailList();
-              this.fetchPlayerList();
-            }
-          );
-        } else {
-          this.fetchGoods();
-          this.fetchSpecailList();
-          this.fetchPlayerList();
-        }
-      }
-    );
+    this.fetchGoods();
+    this.fetchSpecailList();
+    this.fetchPlayerList();
   }
   onchangeInfo(item) {
     const { configUserLevelInfo, userInfo } = this.state;

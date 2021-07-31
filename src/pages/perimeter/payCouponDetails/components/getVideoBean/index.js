@@ -5,8 +5,8 @@ import Router from "@/common/router";
 import "./index.scss";
 
 export default (props) => {
-  const { price, data } = props;
-  const { userBean, userIncomeBean, visible = true } = data;
+  const { price, data, visible = true } = props;
+  const { userBean, userIncomeBean } = data;
   if (price * 100 < userBean || !visible) {
     return null;
   } else

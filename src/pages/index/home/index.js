@@ -959,6 +959,7 @@ class Index extends React.PureComponent {
           data={userMomentsInfo}
           show={beanflag}
           scan={getCurrentInstance().router.params || {}}
+          configUserLevelInfo={configUserLevelInfo}
           visible={() => {
             this.setState({
               beanflag: false,
