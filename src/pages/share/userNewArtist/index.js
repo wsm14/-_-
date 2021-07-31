@@ -213,8 +213,6 @@ class Index extends PureComponent {
     const { status } = infoData;
     if (infoData && status === "1" && type !== "merchant") {
       return [{ ...infoData }];
-    } else if (specialGoodsList.length > 0) {
-      return specialGoodsList;
     } else {
       return goodList;
     }

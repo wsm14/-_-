@@ -617,7 +617,6 @@ class MerchantDetails extends Component {
               current={true}
               userInfo={configUserLevelInfo}
             ></Recommend>
-            {console.log(beanLimitStatus, 1111)}
             <VideoBean
               visible={beanLimitStatus === "1"}
               price={(realPrice * (payBeanCommission / 100))
