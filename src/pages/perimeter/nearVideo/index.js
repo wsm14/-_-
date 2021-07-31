@@ -493,6 +493,65 @@ class Index extends React.PureComponent {
       }
     );
   }
+  onShareAppMessage(res) {
+    const {
+      userMomentsInfo: { frontImage, title, userMomentIdString },
+    } = this.state;
+    updateUserMomentParam(
+      {
+        updateType: "share",
+        id: userMomentIdString,
+      },
+      (res) => {}
+    );
+    let userInfo = loginStatus() || {};
+    if (loginStatus()) {
+      const { userIdString } = userInfo;
+      if (res.from === "button") {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
+        };
+      } else {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
+        };
+      }
+    } else {
+      if (res.from === "button") {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
+        };
+      } else {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
+        };
+      }
+    }
+  }
   render() {
     const {
       userMomentsList,
