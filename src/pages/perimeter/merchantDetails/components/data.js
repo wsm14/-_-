@@ -162,11 +162,11 @@ export const rssConfigData = (data = {}) => {
     blocks: [...filterScenesList()],
     texts: [
       {
+        x: 57,
         y: 85,
         width: 646,
         height: 32,
         paddingRight: 32,
-        x: 57,
         zIndex: 20,
         text: merchantName,
         fontSize: 32,
@@ -179,14 +179,19 @@ export const rssConfigData = (data = {}) => {
       },
       {
         x: 105,
-        y: 802,
-        lineHeight: 32,
-        text: address, // 地址
+        y: 795,
+        width: 520,
+        height: 24,
+        paddingRight: 32,
+        zIndex: 20,
+        text: address,
         fontSize: 24,
         color: "#333333",
+        fontWeight: "bold",
         lineNum: 1,
-        with: 520,
         zIndex: 999,
+        lineHeight: 24,
+        baseLine: "middle",
       },
       {
         x: 105,
