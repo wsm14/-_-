@@ -150,7 +150,7 @@ class Index extends Component {
     const { cityCode } = this.state;
     fetchListActivityGoods({
       activityType: "88activity",
-      activityGoodsType: "hot",
+      activityGoodsType: "player",
       cityCode: cityCode,
       lat: getLat(),
       lnt: getLnt(),
@@ -180,7 +180,7 @@ class Index extends Component {
     if (res.from === "button") {
       return {
         title: "哒卡乐88线下消费节",
-        path: `/pages/share/mainScene/index?shareUserId=${userIdString}&shareUserType=user`,
+        path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user`,
       };
     }
   }

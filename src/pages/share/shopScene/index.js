@@ -98,7 +98,7 @@ class Index extends Component {
     const { cityCode } = this.state;
     fetchListActivityGoods({
       activityType: "88activity",
-      activityGoodsType: "hot",
+      activityGoodsType: "player",
       cityCode: cityCode,
       lat: getLat(),
       lnt: getLnt(),
@@ -158,7 +158,7 @@ class Index extends Component {
     if (res.from === "button") {
       return {
         title: "哒卡乐88线下消费节",
-        path: `/pages/share/mainScene/index?shareUserId=${userIdString}&shareUserType=user`,
+        path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user`,
       };
     }
   }
@@ -191,19 +191,19 @@ class Index extends Component {
           <Toast title={"活动规则"} close={() => this.setRuleVisible(false)}>
             <ScrollView scrollY className="shop_dakale_content">
               <View>
-              1、活动期间，哒卡乐注册用户通过前述活动参与渠道进入活动页面即可根据页面提示参与活动；
+                1、活动期间，哒卡乐注册用户通过前述活动参与渠道进入活动页面即可根据页面提示参与活动；
               </View>
               <View>
-              2、活动期间，每位用户可在分享专区中进行权益商品分享任务，每分享一份权益商品好友购买，即算作完成一次任务，分享出去的商品好友购买的越多，获得卡豆奖励的金额越高；
+                2、活动期间，每位用户可在分享专区中进行权益商品分享任务，每分享一份权益商品好友购买，即算作完成一次任务，分享出去的商品好友购买的越多，获得卡豆奖励的金额越高；
               </View>
               <View>
-              3、完成任务后，活动奖励将在活动结束3天内自动发放到“我的—我的钱包”中，用户可点击“我的钱包”查看卡豆到账情况，具体卡豆使用规则及有效期详见卡豆钱包中卡豆规则；
+                3、完成任务后，活动奖励将在活动结束3天内自动发放到“我的—我的钱包”中，用户可点击“我的钱包”查看卡豆到账情况，具体卡豆使用规则及有效期详见卡豆钱包中卡豆规则；
               </View>
               <View>
-              4、本活动活动期间用户仅能参与一次，若出现已分享好友购买数量超出任务指标，超出的好友购买次数不计入活动奖励；
+                4、本活动活动期间用户仅能参与一次，若出现已分享好友购买数量超出任务指标，超出的好友购买次数不计入活动奖励；
               </View>
               <View>
-              5、本活动中分享的商品仅限活动页面展示的商品计入任务指标统计，其余分享好友购买商品不计入活动任务指标统计。
+                5、本活动中分享的商品仅限活动页面展示的商品计入任务指标统计，其余分享好友购买商品不计入活动任务指标统计。
               </View>
             </ScrollView>
           </Toast>
