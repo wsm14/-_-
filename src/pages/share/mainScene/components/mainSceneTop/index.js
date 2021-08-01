@@ -24,19 +24,19 @@ export default ({ locationStatus, setLocation, city, setTab, cityCode }) => {
       </View>
       <View className="mainScene_box_card mainScene_box_cardbg1">
         <View className="mainScene_box_height"></View>
-        <View className="mainScene_card_box mainScene_card_style1">
-          <View
-            className="mainScene_card_btn mainScene_card_btnStyle1"
-            onClick={() => {
-              if (loginStatus()) {
-                Router({ routerName: "friendScene", args: { cityCode } });
-              } else {
-                Router({
-                  routerName: "login",
-                });
-              }
-            }}
-          ></View>
+        <View
+          onClick={() => {
+            if (loginStatus()) {
+              Router({ routerName: "friendScene", args: { cityCode } });
+            } else {
+              Router({
+                routerName: "login",
+              });
+            }
+          }}
+          className="mainScene_card_box mainScene_card_style1"
+        >
+          <View className="mainScene_card_btn mainScene_card_btnStyle1"></View>
         </View>
         <View
           onClick={() => {

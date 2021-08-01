@@ -101,7 +101,7 @@ class Index extends Component {
     const { cityCode } = this.state;
     fetchListActivityGoods({
       activityType: "88activity",
-      activityGoodsType: "hot",
+      activityGoodsType: "player",
       cityCode: cityCode,
       lat: getLat(),
       lnt: getLnt(),
@@ -191,7 +191,7 @@ class Index extends Component {
     if (res.from === "button") {
       return {
         title: "哒卡乐88线下消费节",
-        path: `/pages/share/mainScene/index?shareUserId=${userIdString}&shareUserType=user`,
+        path: `/pages/index/home/index?shareUserId=${userIdString}&shareUserType=user`,
       };
     }
   }
@@ -221,9 +221,8 @@ class Index extends Component {
           }}
           onLink={() => {
             this.setState({ changeVisible: false }, (res) => {
-              Router({
-                routerName: "friendScene",
-                args: { cityCode },
+              Taro.pageScrollTo({
+                scrollTop: 0,
               });
             });
           }}
@@ -253,17 +252,17 @@ class Index extends Component {
           <Toast title={"活动规则"} close={() => this.setRuleVisible(false)}>
             <ScrollView scrollY className="shop_dakale_content">
               <View>
-              1、活动期间，哒卡乐注册用户通过前述活动参与渠道进入活动页面即可根据页面提示参与活动；
+                1、活动期间，哒卡乐注册用户通过前述活动参与渠道进入活动页面即可根据页面提示参与活动；
               </View>
               <View>
-              2、活动期间，每位用户每日仅有1次拉新用户—赚取卡豆奖励的机会，进入88好友推荐专场，可进行拉好友注册，膨胀卡豆金活动，只需将个人哒卡乐邀请码或本活动页面转发给好友，好友通过邀请码或分享的活动页面注册成功后，即算作成功拉新1人，邀请好友注册人数越多，获得卡豆奖励越多；
+                2、活动期间，每位用户每日仅有1次拉新用户—赚取卡豆奖励的机会，进入88好友推荐专场，可进行拉好友注册，膨胀卡豆金活动，只需将个人哒卡乐邀请码或本活动页面转发给好友，好友通过邀请码或分享的活动页面注册成功后，即算作成功拉新1人，邀请好友注册人数越多，获得卡豆奖励越多；
               </View>
               <View>3、每日0点更新第二日活动；</View>
               <View>
-              4、当日完成拉新任务达到指标后，活动奖励将于次日0点自动发放至“我的一我的钱包”中，具体卡豆使用规则及有效期详见卡豆钱包中卡豆规则；
+                4、当日完成拉新任务达到指标后，活动奖励将于次日0点自动发放至“我的一我的钱包”中，具体卡豆使用规则及有效期详见卡豆钱包中卡豆规则；
               </View>
               <View>
-              5、同一哒卡乐账户、微信账户、身份证、手机号、手机设备，符合以上任一条件，均视为同一用户，同一用户每日仅限参与一次拉新卡豆膨胀金活动。
+                5、同一哒卡乐账户、微信账户、身份证、手机号、手机设备，符合以上任一条件，均视为同一用户，同一用户每日仅限参与一次拉新卡豆膨胀金活动。
               </View>
             </ScrollView>
           </Toast>

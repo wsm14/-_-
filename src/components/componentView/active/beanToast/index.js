@@ -6,6 +6,7 @@ export default ({ show, onClose, onChange, onLink }) => {
   if (show) {
     return (
       <View
+        catchMove
         className="beanToast_layer public_center"
         onClick={(e) => {
           onClose && onClose();
