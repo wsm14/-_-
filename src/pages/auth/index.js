@@ -42,7 +42,7 @@ class Index extends Component {
 
   goUserConceal() {
     const link =
-      "https://web-new.dakale.net/product/page/policy/userConceal.html";
+      "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dakale-web-page/wechant/page/policy/userConceal.html";
     navigateTo(`/pages/share/webView/index?link=${link}&title=用户协议`);
   }
 

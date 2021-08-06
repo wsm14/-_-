@@ -230,7 +230,6 @@ class Index extends Component {
   onPageScroll(res) {
     const { scrollTop } = res;
     console.log(scrollTop);
-    const { size } = this.state;
     this.setState({
       top: scrollTop,
     });
@@ -360,7 +359,6 @@ class Index extends Component {
               configUserLevelInfo={configUserLevelInfo}
               callback={(e) => {
                 this.setState({}, (res) => {
-                  // Taro.nextTick(() => );
                   e & e();
                 });
               }}

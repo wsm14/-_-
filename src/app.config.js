@@ -125,6 +125,8 @@ export default {
         "perimeteRoducts/index",
         "tipView/index", //打卡状态： 超过距离
         "groupMerchant/index", //集团核销列表
+        "bubble/index", //品类风向标
+        "nearPerimeter/index", //附近特惠
       ],
     },
     {

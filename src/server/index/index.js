@@ -182,3 +182,24 @@ export const fetchSpecialForRecommend = (data = {}, fn) => {
   );
 };
 //获取附近热销特惠
+export const fetchListCouponByFilterType = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/merchantMainCoupon/listCouponByFilterType",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取风向标券列表
+
+export const fetchRecommendMerchantList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/mainRecommendMerchantList",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取风向标商家
