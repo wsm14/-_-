@@ -46,8 +46,8 @@ class Index extends Component {
       getBusinessHub({}),
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
-      const { categoryDTOList } = val[0];
-      console.log(categoryDTOList);
+      const { categoryList } = val[0];
+   
       this.setState({
         selectList: [
           {
@@ -90,21 +90,25 @@ class Index extends Component {
               {
                 categoryIdString: "",
                 categoryName: "全部",
-                childList: [],
+                categoryDTOList: [],
                 type: "father",
               },
-              ...categoryDTOList.map((item) => {
-                const { categoryName, categoryIdString, childList = [] } = item;
+              ...categoryList.map((item) => {
+                const {
+                  categoryName,
+                  categoryIdString,
+                  categoryDTOList = [],
+                } = item;
                 return {
                   ...item,
-                  childList: [
+                  categoryDTOList: [
                     {
-                      childList: [],
+                      categoryDTOList: [],
                       fatherId: categoryIdString,
                       categoryName: "全部",
                       type: "all",
                     },
-                    ...childList,
+                    ...categoryDTOList,
                   ],
                 };
               }),

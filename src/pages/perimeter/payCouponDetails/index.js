@@ -120,6 +120,7 @@ class Index extends Component {
         districtName,
         merchantLogo,
       },
+      couponDetail,
     } = this.state;
     const { profile, username } = Taro.getStorageSync("userInfo");
     getShareInfo(
@@ -128,7 +129,6 @@ class Index extends Component {
         shareId: ownerCouponIdString,
       },
       (res) => {
-        console.log(res);
         const {
           oriPrice,
           realPrice,
@@ -155,6 +155,11 @@ class Index extends Component {
               saveMoney,
             }),
           },
+          couponDetail: {
+            ...couponDetail,
+            weChatImg: res.frontImage,
+            weChatTitle: res.title,
+          },
         });
       }
     );
@@ -171,15 +176,20 @@ class Index extends Component {
   }
   onShareAppMessage(res) {
     const {
-      couponDetail: { couponName, merchantLogo },
+      couponDetail: {
+        couponName,
+        merchantLogo,
+        weChatImg = "",
+        weChatTitle = "",
+      },
       httpData: { merchantId, ownerId, ownerCouponId },
     } = this.state;
     let userInfo = loginStatus() || {};
     const { userIdString } = userInfo;
     if (res.from === "button") {
       return {
-        title: couponName,
-        imageUrl: merchantLogo,
+        title: weChatTitle || couponName,
+        imageUrl: weChatImg || merchantLogo,
         path: `/pages/perimeter/payCouponDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&ownerId=${ownerId}&ownerCouponId=${ownerCouponId}`,
       };
     }

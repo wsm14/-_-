@@ -1,11 +1,15 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 import { backgroundObj } from "@/common/utils";
+import {} from "react";
 export default ({ list = [], onChange }) => {
   const width = Taro.getSystemInfoSync().windowWidth / 5;
   const windowWidth = Taro.getSystemInfoSync().windowWidth;
   const [left, setLeft] = useState(0);
+  useEffect(() => {
+    setLeft(0);
+  }, [list]);
   const memo = useMemo(() => {
     if (list.length > 0) {
       if (list.length >= 10) {
@@ -14,14 +18,23 @@ export default ({ list = [], onChange }) => {
             <ScrollView
               onScroll={(e) => {
                 const { scrollLeft, scrollWidth } = e.detail;
-                setLeft((scrollLeft / (scrollWidth - windowWidth)) * 50);
+                if (scrollLeft === 0) {
+                  setLeft(0);
+                } else {
+                  setLeft((scrollLeft / (scrollWidth - windowWidth)) * 50);
+                }
               }}
               scrollX
               className="configWindVane_box"
             >
-              <View>
+              <View style={{ paddingTop: Taro.pxTransform(48) }}>
                 {list.map((item, index) => {
-                  const { image = "", name = "" } = item;
+                  const {
+                    image = "",
+                    name = "",
+                    bubbleFlag,
+                    bubbleContent,
+                  } = item;
                   if (index < list.length / 2) {
                     return (
                       <View
@@ -34,7 +47,13 @@ export default ({ list = [], onChange }) => {
                         <View
                           style={backgroundObj(image)}
                           className="configWindVane_profile"
-                        ></View>
+                        >
+                          {bubbleFlag === "1" && bubbleContent && (
+                            <View className="bubbleContent-info">
+                              {bubbleContent}
+                            </View>
+                          )}
+                        </View>
                         <View className="configWindVane_text">{name}</View>
                       </View>
                     );
@@ -42,15 +61,19 @@ export default ({ list = [], onChange }) => {
                   return null;
                 })}
               </View>
-              <View>
+              <View style={{ paddingTop: Taro.pxTransform(32) }}>
                 {list.map((item, index) => {
-                  const { image = "", name = "" } = item;
+                  const {
+                    image = "",
+                    name = "",
+                    bubbleContent,
+                    bubbleFlag,
+                  } = item;
                   if (index >= list.length / 2) {
                     return (
                       <View
                         onClick={() => onChange(item)}
                         style={{
-                          marginTop: Taro.pxTransform(32),
                           width: width,
                         }}
                         className="configWindVane_user"
@@ -58,7 +81,13 @@ export default ({ list = [], onChange }) => {
                         <View
                           style={backgroundObj(image)}
                           className="configWindVane_profile"
-                        ></View>
+                        >
+                          {bubbleFlag === "1" && bubbleContent && (
+                            <View className="bubbleContent-info">
+                              {bubbleContent}
+                            </View>
+                          )}
+                        </View>
                         <View className="configWindVane_text">{name}</View>
                       </View>
                     );
@@ -83,25 +112,41 @@ export default ({ list = [], onChange }) => {
             <ScrollView
               onScroll={(e) => {
                 const { scrollLeft, scrollWidth } = e.detail;
-                setLeft((scrollLeft / (scrollWidth - windowWidth)) * 50);
+                if (scrollLeft === 0) {
+                  setLeft(0);
+                } else {
+                  setLeft((scrollLeft / (scrollWidth - windowWidth)) * 50);
+                }
               }}
               scrollX
               className="configWindVane_box"
             >
               {list.map((item) => {
-                const { image = "", name = "" } = item;
+                const {
+                  image = "",
+                  name = "",
+                  bubbleContent,
+                  bubbleFlag,
+                } = item;
                 return (
                   <View
                     onClick={() => onChange(item)}
                     style={{
                       width: width,
+                      paddingTop: Taro.pxTransform(48),
                     }}
                     className="configWindVane_user"
                   >
                     <View
                       style={backgroundObj(image)}
                       className="configWindVane_profile"
-                    ></View>
+                    >
+                      {bubbleFlag === "1" && bubbleContent && (
+                        <View className="bubbleContent-info">
+                          {bubbleContent}
+                        </View>
+                      )}
+                    </View>
                     <View className="configWindVane_text">{name}</View>
                   </View>
                 );

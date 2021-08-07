@@ -54,7 +54,6 @@
     text-align: center;
   }
   .bubble_tab_box {
-    position: relative;
     height: 128px;
   }
   .bubble_top {
@@ -94,6 +93,9 @@
     left: 24px;
     right: 24px;
     background: #ffffff;
+  }
+  .bubble_selectSpecal:first-child {
+    margin-left: 24px;
   }
   .bubble_selectSpecal {
     width: 260px;
@@ -282,8 +284,9 @@
     align-items: center;
   }
   .bubble_goods_box {
-    margin: 80px 24px 0;
+    margin: 80px 0px 0;
     .bubble_goods_title {
+      margin: 0 24px;
       height: 36px;
       display: flex;
       align-items: center;
@@ -316,8 +319,9 @@
     }
   }
   .bubble_coupon_box {
-    margin: 43px 24px 0;
+    margin: 43px 0px 0;
     .bubble_coupon_title {
+      margin: 0 24px 0;
       height: 36px;
       display: flex;
       align-items: center;
@@ -350,18 +354,21 @@
     }
   }
   .bubble_goods_content {
-    width: 726px;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     margin: 32px 0 0 0;
     vertical-align: top;
   }
   .bubble_coupon_content {
-    width: 726px;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     margin: 32px 0 0 0;
     vertical-align: top;
+  }
+  .bubble_coupon_descBox:first-child {
+    margin-left: 24px;
   }
   .bubble_coupon_descBox {
     width: 480px;
@@ -505,6 +512,10 @@
   }
   .bubble_merchant_listBox {
     padding: 0px 0px 24px;
+  }
+  .bubble_liner_height{
+    height: 24px;
+    background: #FFFFFF;
   }
   .bubble_merchant_listRelative {
     position: relative;

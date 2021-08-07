@@ -720,7 +720,7 @@ export const filterIndex = (list = [], valKey) => {
           selectIndex: valIndex,
           val: {
             categoryName: "全部",
-            childList: [],
+            categoryDTOList: [],
             fatherId: valKey,
             selectName: categoryName,
             type: "all",
@@ -728,7 +728,6 @@ export const filterIndex = (list = [], valKey) => {
         };
       } else {
         categoryDTOList.forEach((childVal) => {
-          console.log(childVal.categoryIdString, valKey);
           if (childVal.categoryIdString === valKey) {
             obj = {
               selectIndex: valIndex,

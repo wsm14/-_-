@@ -73,7 +73,7 @@ export default ({ list, userInfo, name, categoryIds }) => {
             </View>
             {shareCommission > 0 ? (
               <View className="bubble_coupon_btn">
-                分享赚¥{computedPrice(commission, payBeanCommission)}`
+                分享赚¥{computedPrice(commission, payBeanCommission)}
               </View>
             ) : (
               <View className="bubble_coupon_btn1 public_center">抢购</View>

@@ -26,6 +26,7 @@ export default ({ list, userInfo, height, flag = false }) => {
       {list.map((item) => {
         return <ShopView userInfo={userInfo} data={item}></ShopView>;
       })}
+      <View className="bubble_liner_height"></View>
     </View>
   );
 };

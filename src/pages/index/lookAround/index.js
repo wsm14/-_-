@@ -511,7 +511,6 @@ class Index extends Component {
             boxStyle={bannerContentStyle}
             showNear
           ></Banner>
-
           <View className="lookAround_linder_bottom"></View>
           <View className="lookAround_category_linder"></View>
           <View

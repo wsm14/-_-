@@ -91,82 +91,103 @@ class Index extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchGoods();
     this.fetchMerchantList();
-    this.fetchCoupons();
     this.initSelect();
   }
   initSelect() {
     Promise.all([
       getCategory({ parentId: "0" }, () => {}),
       getBusinessHub({}),
+      fetchSpecialGoods({
+        page: 1,
+        limit: 6,
+        categoryIds: this.state.categoryIds,
+      }),
+      fetchListCouponByFilterType({
+        page: 1,
+        limit: 6,
+        categoryIds: this.state.categoryIds,
+      }),
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
-      const { categoryDTOList } = val[0];
-      this.setState({
-        selectList: [
-          {
-            name: "附近",
-            type: "near",
-            list: [
-              {
-                name: "附近",
-                type: "near",
-                list: [
-                  { value: "", description: "附近" },
-                  { value: "500", description: "500m" },
-                  { value: "1000", description: "1km" },
-                  { value: "2000", description: "2km" },
-                  { value: "5000", description: "5km" },
-                  { value: "10000", description: "10km" },
-                  { value: "20000", description: "20km" },
-                ],
-              },
-            ],
-            hubList: businessHubList.map((item) => {
-              const { businessHubList, districtCode } = item;
-              return {
-                ...item,
-                businessHubList: [
-                  {
-                    districtCode,
-                    businessHubName: "全部",
-                    type: "all",
-                  },
-                  ...businessHubList,
-                ],
-              };
-            }),
-          },
-          {
-            name: "品类",
-            type: "category",
-            list: [
-              {
-                categoryIdString: "",
-                categoryName: "全部",
-                childList: [],
-                type: "father",
-              },
-              ...categoryDTOList.map((item) => {
-                const { categoryName, categoryIdString, childList = [] } = item;
+      const { categoryList = [] } = val[0];
+      const { specialGoodsList } = val[2];
+      const { couponList } = val[3];
+      this.setState(
+        {
+          selectList: [
+            {
+              name: "附近",
+              type: "near",
+              list: [
+                {
+                  name: "附近",
+                  type: "near",
+                  list: [
+                    { value: "", description: "附近" },
+                    { value: "500", description: "500m" },
+                    { value: "1000", description: "1km" },
+                    { value: "2000", description: "2km" },
+                    { value: "5000", description: "5km" },
+                    { value: "10000", description: "10km" },
+                    { value: "20000", description: "20km" },
+                  ],
+                },
+              ],
+              hubList: businessHubList.map((item) => {
+                const { businessHubList, districtCode } = item;
                 return {
                   ...item,
-                  childList: [
+                  businessHubList: [
                     {
-                      childList: [],
-                      fatherId: categoryIdString,
-                      categoryName: "全部",
+                      districtCode,
+                      businessHubName: "全部",
                       type: "all",
                     },
-                    ...childList,
+                    ...businessHubList,
                   ],
                 };
               }),
-            ],
-          },
-        ],
-      });
+            },
+            {
+              name: "品类",
+              type: "category",
+              list: [
+                {
+                  categoryIdString: "",
+                  categoryName: "全部",
+                  categoryDTOList: [],
+                  type: "father",
+                },
+                ...categoryList.map((item) => {
+                  const {
+                    categoryName,
+                    categoryIdString,
+                    categoryDTOList = [],
+                  } = item;
+                  return {
+                    ...item,
+                    categoryDTOList: [
+                      {
+                        categoryDTOList: [],
+                        fatherId: categoryIdString,
+                        categoryName: "全部",
+                        type: "all",
+                      },
+                      ...categoryDTOList,
+                    ],
+                  };
+                }),
+              ],
+            },
+          ],
+          specialGoodsList: specialGoodsList,
+          couponList: couponList,
+        },
+        (res) => {
+          Taro.nextTick(() => this.setNavTop());
+        }
+      );
     });
   }
   onPageScroll(res) {
@@ -198,42 +219,8 @@ class Index extends React.Component {
   }
   componentDidShow() {
     this.fetchUserShare();
-    this.setNavTop();
   }
-  fetchGoods() {
-    const { categoryIds } = this.state;
-    fetchSpecialGoods(
-      {
-        page: 1,
-        limit: 6,
-        categoryIds,
-      },
-      (res) => {
-        const { specialGoodsList = [] } = res;
-        this.setState({
-          specialGoodsList,
-        });
-      }
-    );
-  }
-  //获取商家信息
-  fetchCoupons() {
-    const { categoryIds } = this.state;
-    fetchListCouponByFilterType(
-      {
-        page: 1,
-        limit: 6,
-        categoryIds,
-      },
-      (res) => {
-        const { couponList = [] } = res;
-        this.setState({
-          couponList,
-        });
-      }
-    );
-  }
-  //获取券信息
+
   fetchMerchantList() {
     const { httpData } = this.state;
     fetchRecommendMerchantList({ ...httpData }, (res) => {

@@ -280,7 +280,13 @@ class Index extends React.PureComponent {
   }
   onShareAppMessage(res) {
     const {
-      userMomentsInfo: { frontImage, title, userMomentIdString },
+      userMomentsInfo: {
+        frontImage,
+        title,
+        userMomentIdString,
+        weChatImg = "",
+        weChatTitle = "",
+      },
     } = this.state;
     updateUserMomentParam(
       {
@@ -294,29 +300,45 @@ class Index extends React.PureComponent {
       const { userIdString } = userInfo;
       if (res.from === "button") {
         return {
-          title: title,
-          imageUrl: frontImage,
+          title: weChatTitle || title,
+          imageUrl: weChatImg || frontImage,
           path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
         };
       } else {
         return {
           title: title,
           imageUrl: frontImage,
           path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
         };
       }
     } else {
       if (res.from === "button") {
         return {
-          title: title,
-          imageUrl: frontImage,
+          title: weChatTitle || title,
+          imageUrl: weChatImg || frontImage,
           path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
         };
       } else {
         return {
           title: title,
           imageUrl: frontImage,
           path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
         };
       }
     }
@@ -340,6 +362,7 @@ class Index extends React.PureComponent {
         merchantAddress,
         frontImage,
       },
+      userMomentsInfo,
       player,
     } = this.state;
     getShareInfo(
@@ -386,16 +409,17 @@ class Index extends React.PureComponent {
               saveMoney,
             }),
           },
+          userMomentsInfo: {
+            ...userMomentsInfo,
+            weChatImg: res.frontImage,
+            weChatTitle: res.title,
+          },
         });
       }
     );
   }
-  componentDidHide() {}
-  componentDidShow() {}
-  componentDidMount() {}
   componentWillMount() {
     const { selectObj, list, index } = this.props.store.homeStore;
-    console.log(index);
     if (list.length === 0) {
       toast("参数异常");
     } else {

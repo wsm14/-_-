@@ -408,7 +408,7 @@ page {
     position: absolute;
     left: 0;
     right: 0;
-    top: 64rpx;
+    top: 64px;
     z-index: 1000;
     margin: 0 auto;
     background: #ffffff;
@@ -596,6 +596,7 @@ page {
     .lookAround_specalPlate_content {
       display: flex;
       padding: 24px 16px 0;
+      justify-content: center;
     }
   }
 }
@@ -645,14 +646,28 @@ page {
 }
 .configWindVane_box {
   width: 100%;
-  margin: 30px auto 0;
   white-space: nowrap;
   overflow: hidden;
   display: flex;
+
   .configWindVane_user {
     height: 120px;
     display: inline-block;
     justify-content: center;
+    position: relative;
+    .bubbleContent-info {
+      position: absolute;
+      right: -32px;
+      top: -15px;
+      padding: 5px 8px;
+      background: #ef476f;
+      border-radius: 15px;
+      line-height: normal;
+      font-size: 20px;
+      font-weight: 400;
+      color: #ffffff;
+      z-index: 100;
+    }
   }
   .configWindVane_user:last-child {
     margin-right: 0;
@@ -661,6 +676,7 @@ page {
     width: 80px;
     height: 80px;
     margin: 0 auto;
+    position: relative;
   }
   .configWindVane_text {
     padding-top: 12px;

@@ -34,6 +34,9 @@ page {
   .perimeterList_scroll1 {
     background: #ffffff;
     min-height: 1300px;
+    .perimeterList_liner {
+      height: 24px;
+    }
   }
   .perimeterList_nullStatus {
     width: 300px;

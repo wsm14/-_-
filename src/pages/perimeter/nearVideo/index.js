@@ -443,6 +443,7 @@ class Index extends React.PureComponent {
         merchantAddress,
         frontImage,
       },
+      userMomentsInfo,
       player,
     } = this.state;
     getShareInfo(
@@ -489,13 +490,24 @@ class Index extends React.PureComponent {
               saveMoney,
             }),
           },
+          userMomentsInfo: {
+            ...userMomentsInfo,
+            weChatImg: res.frontImage,
+            weChatTitle: res.title,
+          },
         });
       }
     );
   }
   onShareAppMessage(res) {
     const {
-      userMomentsInfo: { frontImage, title, userMomentIdString },
+      userMomentsInfo: {
+        frontImage,
+        title,
+        userMomentIdString,
+        weChatImg = "",
+        weChatTitle = "",
+      },
     } = this.state;
     updateUserMomentParam(
       {
@@ -509,8 +521,8 @@ class Index extends React.PureComponent {
       const { userIdString } = userInfo;
       if (res.from === "button") {
         return {
-          title: title,
-          imageUrl: frontImage,
+          title: weChatTitle || title,
+          imageUrl: weChatImg || frontImage,
           path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
@@ -531,8 +543,8 @@ class Index extends React.PureComponent {
     } else {
       if (res.from === "button") {
         return {
-          title: title,
-          imageUrl: frontImage,
+          title: weChatTitle || title,
+          imageUrl: weChatImg || frontImage,
           path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）

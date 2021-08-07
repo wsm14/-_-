@@ -77,7 +77,7 @@ export default ({ list, userInfo, name, categoryIds }) => {
           </View>
           {shareCommission > 0 && (
             <View className="font18 color3 price_margin4">
-              /赚
+              赚
               <Text className="bold">
                 ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
               </Text>

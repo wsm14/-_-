@@ -2,7 +2,6 @@ export default {
   pages: [
     "pages/index/home/index", //周边打卡
     // "pages/index/perimeter/index", //视频详情
-    "pages/index/takeCard/index",
     "pages/index/lookAround/index", //逛逛
     "pages/index/goods/index",
     "pages/index/user/index", //首页个人

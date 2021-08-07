@@ -296,7 +296,7 @@ export const couponTemplate = (item, configUserLevelInfo) => {
           {couponName}
         </View>
         <View className="specialOffer_coupon_details font_hide">
-          {thresholdPrice ? `满元${thresholdPrice}可用 ` : "无门槛"}
+          {thresholdPrice ? `满${thresholdPrice}元可用 ` : "无门槛"}
         </View>
         <View className="specialOffer_userDetails font_hide">
           <View

@@ -146,7 +146,7 @@ export const fetchSpecialGoods = (data = {}, fn) => {
       url: "/user/specialGoods/listSpecialGoodsByFilterType",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
 //获取特惠列表

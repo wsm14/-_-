@@ -69,7 +69,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
     },
     {
       coverImg:
-        "https://wechat-config.dakale.net/miniprogram/image/icon661.png",
+        "https://wechat-config.dakale.net/miniprogram/image/icon722.png",
       fn: () => {
         Router({
           routerName: "publicTypeGoods",

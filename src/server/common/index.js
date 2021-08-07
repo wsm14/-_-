@@ -52,7 +52,7 @@ export const getRestapiAddress = (data, fn) => {
 export const getCategory = (data, fn) => {
   return httpGet(
     {
-      url: "/common/category/listCategory",
+      url: "/common/category/listCategoryByParentId",
       data: data,
     },
     (res) => {
@@ -282,7 +282,6 @@ export const fetchBeanBarrage = (data = {}, fn) => {
   );
 };
 //活动卡豆弹幕;
-
 
 export const fetchConfigWindVaneBySizeNew = (data = {}, fn) => {
   return httpGet(

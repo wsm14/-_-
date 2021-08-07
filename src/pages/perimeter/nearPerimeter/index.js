@@ -53,8 +53,7 @@ class Index extends Component {
       getBusinessHub({}),
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
-      const { categoryDTOList } = val[0];
-      console.log(categoryDTOList);
+      const { categoryList } = val[0];
       this.setState({
         selectList: [
           {
@@ -97,21 +96,25 @@ class Index extends Component {
               {
                 categoryIdString: "",
                 categoryName: "全部",
-                childList: [],
+                categoryDTOList: [],
                 type: "father",
               },
-              ...categoryDTOList.map((item) => {
-                const { categoryName, categoryIdString, childList = [] } = item;
+              ...categoryList.map((item) => {
+                const {
+                  categoryName,
+                  categoryIdString,
+                  categoryDTOList = [],
+                } = item;
                 return {
                   ...item,
-                  childList: [
+                  categoryDTOList: [
                     {
-                      childList: [],
+                      categoryDTOList: [],
                       fatherId: categoryIdString,
                       categoryName: "全部",
                       type: "all",
                     },
-                    ...childList,
+                    ...categoryDTOList,
                   ],
                 };
               }),
@@ -173,8 +176,8 @@ class Index extends Component {
     );
   }
   componentWillMount() {
-    const { name } = this.state;
-    setNavTitle(name + "·附近特惠");
+    const { name, type } = this.state;
+    setNavTitle(name + (type === "good" ? "·附近特惠" : "·附近优惠券"));
   }
   componentDidMount() {
     const { categoryIds, httpData } = this.state;
@@ -216,6 +219,7 @@ class Index extends Component {
       height,
       httpData: { categoryIds },
       name,
+      type,
     } = this.state;
 
     return (
@@ -259,7 +263,9 @@ class Index extends Component {
           {list.length === 0 && (
             <>
               <View className="perimeterList_nullStatus"></View>
-              <View className="perimeterList_text">暂无商品</View>
+              <View className="perimeterList_text">
+                暂无{type === "good" ? "商品" : "优惠券"}
+              </View>
             </>
           )}
           {list.map((item) => {

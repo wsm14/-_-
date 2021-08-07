@@ -122,13 +122,7 @@ export default ({
       }
     } else return;
   });
-  useEffect(() => {
-    if (!falg) {
-      setFlag(true);
-    } else {
-      confirm(filterOnChange(selectData));
-    }
-  }, [selectData]);
+
   useEffect(() => {
     if (index !== -1) {
       getDom("#dakale_nav", (res) => {
@@ -141,6 +135,7 @@ export default ({
       <Near
         onChange={(item) => {
           setSelectData({ ...selectData, ...item });
+          confirm(filterOnChange({ ...selectData, ...item }));
           setVisible({
             index: -1,
           });
@@ -153,6 +148,7 @@ export default ({
     1: (
       <Categorys
         onChange={(item) => {
+          confirm(filterOnChange({ ...selectData, ...item }));
           setSelectData({ ...selectData, ...item });
           setVisible({
             index: -1,
@@ -167,6 +163,7 @@ export default ({
       <Selects
         onChange={(item) => {
           setSelectData({ ...selectData, ...item });
+          confirm(filterOnChange({ ...selectData, ...item }));
           setVisible({
             index: -1,
           });
@@ -254,7 +251,6 @@ export default ({
         </View>
         <View
           onClick={() => onClose()}
-          style={{ top: menuLayerHeight }}
           className={classNames(
             "sub-menu-bottom",
             index === -1
