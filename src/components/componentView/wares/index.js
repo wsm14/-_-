@@ -47,7 +47,10 @@ export default (props) => {
                 卡豆抵扣<Text className="color3">{payBeanCommission}%</Text>
               </View>
               <View className="wares_up_bean">
-                ({computedPrice(realPrice || buyPrice, payBeanCommission) * 100}
+                (
+                {parseInt(
+                  computedPrice(realPrice || buyPrice, payBeanCommission) * 100
+                )}
                 卡豆)
               </View>
             </View>
