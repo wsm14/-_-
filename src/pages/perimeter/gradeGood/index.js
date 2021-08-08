@@ -355,7 +355,7 @@ class Index extends Component {
               setTop={{
                 falgNav: true,
                 topNav: size,
-                setNav: computedSize(computedClient().top + 24),
+                setNav: computedSize(computedClient().top + 22),
               }}
               configUserLevelInfo={configUserLevelInfo}
               callback={(e) => {

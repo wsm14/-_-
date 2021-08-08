@@ -220,7 +220,7 @@ export default (props) => {
           className="createGood_title"
           onClick={(e) => {
             e.stopPropagation();
-            goMerchant(merchantIdString || merchantId);
+            goMerchant(orderDesc);
           }}
         >
           <View className="createGood_title_box">
