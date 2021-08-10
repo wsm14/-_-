@@ -17,7 +17,7 @@ import { fetchUserShareCommission } from "@/server/index";
 import Coupons from "@/components/coupon";
 import Recommend from "@/components/specalActive";
 import Coupon from "./components/coupon";
-import Toast from "./components/toast";
+import Toast from "@/components/paySuccess/toast";
 
 const formatTime = (date) => {
   const year = date.getFullYear();
