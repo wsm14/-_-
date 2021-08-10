@@ -156,7 +156,7 @@ class index extends PureComponent {
               title: "商家类型 ",
               only: true,
               children: true,
-              list: val[0].categoryDTOList,
+              list: val[0].categoryList,
               key: "categoryName",
               value: "categoryIdString",
             },

@@ -10,6 +10,7 @@ import Router from "@/common/router";
 
 const goMerchant = (val) => {
   const { ownerType, merchantIdString, ownerIdString } = val;
+  console.log(1111, val);
   if (ownerType !== "group") {
     navigateTo(
       `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
@@ -220,7 +221,7 @@ export default (props) => {
           className="createGood_title"
           onClick={(e) => {
             e.stopPropagation();
-            goMerchant(merchantIdString || merchantId);
+            goMerchant(orderDesc);
           }}
         >
           <View className="createGood_title_box">

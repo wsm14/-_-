@@ -32,12 +32,14 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
     wraparound: "/pages/coupon/wraparound/index", //券包
     //券包
+    bubble: "/pages/perimeter/bubble/index", //跳转风向标
     groupDetails: "/pages/perimeter/kaMerchantDetails/index", //集团详情
     gradeGood: "/pages/perimeter/gradeGood/index", //店铺带搜索通用页面
     publicTypeGoods: "/pages/perimeter/publicTypeGoods/index", //店铺公用页面
     goodList: "/pages/perimeter/perimeterList/index", //店铺列表
     rankInfo: "/pages/perimeter/rankInfo/index", //排行榜
     payCouponDetails: "/pages/perimeter/payCouponDetails/index", //优惠券详情
+    nearPerimeter: "/pages/perimeter/nearPerimeter/index", //附近特惠
     benchmark: "/pages/perimeter/benchmark/index", //逛逛风向标列表
     perimeterShops: "/pages/perimeter/perimeterShops/index", //周边好店
     businessSell: "/pages/perimeter/businessSell/index", //商家简单信息

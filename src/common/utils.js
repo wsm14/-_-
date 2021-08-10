@@ -695,3 +695,52 @@ export const computedWinHeight = () => {
 //首页视频计算比例
 export const resiApiKey = "f390f1e2b0faa95710d00a0801384c41";
 //高德key
+
+export const filterIndex = (list = [], valKey) => {
+  // let a = {
+  //   val: {
+  //     categoryName: "全部",
+  //     childList: [],
+  //     fatherId: categoryIds,
+  //     selectName: categoryName,
+  //     type: "all",
+  //   },
+  // }
+  let obj = {
+    selectIndex: -1,
+    val: {
+      value: "",
+    },
+  };
+  if (list && list.length > 0) {
+    list.forEach((item, valIndex) => {
+      const { categoryName, categoryDTOList = [] } = item;
+      if (item["categoryIdString"] === valKey) {
+        obj = {
+          selectIndex: valIndex,
+          val: {
+            categoryName: "全部",
+            categoryDTOList: [],
+            fatherId: valKey,
+            selectName: categoryName,
+            type: "all",
+          },
+        };
+      } else {
+        categoryDTOList.forEach((childVal) => {
+          if (childVal.categoryIdString === valKey) {
+            obj = {
+              selectIndex: valIndex,
+              val: {
+                ...childVal,
+                selectName:
+                  item["categoryName"] + "/" + childVal["categoryName"],
+              },
+            };
+          }
+        });
+      }
+    });
+  }
+  return obj;
+};

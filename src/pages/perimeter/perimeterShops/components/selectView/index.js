@@ -46,7 +46,7 @@ export default (props) => {
     }
   }, [visible]);
   const onChange = (items, item) => {
-    const { childList = [] } = items;
+    const { categoryDTOList = [] } = items;
     const { key, value, children, only, type } = item;
     if (children === true) {
       if (Object.keys(useData[type]).length !== 0) {
@@ -73,7 +73,7 @@ export default (props) => {
               children: null,
               key: "categoryName",
               value: "categoryIdString",
-              list: childList,
+              list: categoryDTOList,
             })
           );
         }
@@ -93,7 +93,7 @@ export default (props) => {
             children: null,
             key: "categoryName",
             value: "categoryIdString",
-            list: childList,
+            list: categoryDTOList,
           })
         );
       }

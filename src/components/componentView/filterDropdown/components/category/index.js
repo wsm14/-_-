@@ -9,7 +9,6 @@ export default ({ data = [], onChange, defaul, visible }) => {
   const [TikIndex, setTikIndex] = useState(null);
   const [childrenList, setChildrenList] = useState([]);
   const [checked, setChecked] = useState(null);
-  const [top, setTop] = useState(null);
   const marginTags = (list, num, style, components) => {
     return list.map((item, index) => {
       return (
@@ -24,9 +23,9 @@ export default ({ data = [], onChange, defaul, visible }) => {
   };
   useEffect(() => {
     if (dataIndex === -1 || !dataIndex) {
-      setChildrenList(list[0].childList);
+      setChildrenList(list[0].categoryDTOList);
     } else {
-      setChildrenList(list[dataIndex].childList);
+      setChildrenList(list[dataIndex].categoryDTOList);
     }
     Taro.nextTick(() => {
       if (!TikIndex) {
@@ -36,6 +35,7 @@ export default ({ data = [], onChange, defaul, visible }) => {
   }, [dataIndex]);
   useEffect(() => {
     if (visible === 1) {
+      console.log(defaul);
       const { selectIndex, val } = defaul;
       setDataIndex(selectIndex);
       setChecked({ ...val });
@@ -59,6 +59,7 @@ export default ({ data = [], onChange, defaul, visible }) => {
     }
   };
   const change = (item, key) => {
+    console.log(item);
     setChecked(item);
     onChange({
       [type]: {
@@ -113,7 +114,6 @@ export default ({ data = [], onChange, defaul, visible }) => {
             { marginRight: Taro.pxTransform(23) },
             (item, index) => {
               const { fatherId } = item;
-
               return (
                 <View
                   onClick={() => {

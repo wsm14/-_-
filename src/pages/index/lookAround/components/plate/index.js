@@ -9,7 +9,16 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
   const normalList = [
     {
       coverImg:
-        "https://wechat-config.dakale.net/miniprogram/image/icon658.png",
+        "https://wechat-config.dakale.net/miniprogram/image/icon707.png",
+      fn: () => {
+        Router({
+          routerName: "perimeterShops",
+        });
+      },
+    },
+    {
+      coverImg:
+        "https://wechat-config.dakale.net/miniprogram/image/icon708.png",
       fn: () => {
         Router({
           routerName: "publicTypeGoods",
@@ -23,7 +32,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
     },
     {
       coverImg:
-        "https://wechat-config.dakale.net/miniprogram/image/icon659.png",
+        "https://wechat-config.dakale.net/miniprogram/image/icon709.png",
       fn: () => {
         Router({
           routerName: "publicTypeGoods",
@@ -36,13 +45,13 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
     },
     {
       coverImg:
-        "https://wechat-config.dakale.net/miniprogram/image/icon660.png",
+        "https://wechat-config.dakale.net/miniprogram/image/icon710.png",
       fn: () => {
         Router({
           routerName: "download",
           args: {
             type: "todayNew",
-            title: "今日上新",
+            title: "升级达人",
           },
         });
       },
@@ -51,7 +60,16 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
   const kolList = [
     {
       coverImg:
-        "https://wechat-config.dakale.net/miniprogram/image/icon661.png",
+        "https://wechat-config.dakale.net/miniprogram/image/icon707.png",
+      fn: () => {
+        Router({
+          routerName: "perimeterShops",
+        });
+      },
+    },
+    {
+      coverImg:
+        "https://wechat-config.dakale.net/miniprogram/image/icon722.png",
       fn: () => {
         Router({
           routerName: "publicTypeGoods",
@@ -64,7 +82,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
     },
     {
       coverImg:
-        "https://wechat-config.dakale.net/miniprogram/image/icon662.png",
+        "https://wechat-config.dakale.net/miniprogram/image/icon709.png",
       fn: () => {
         Router({
           routerName: "publicTypeGoods",
@@ -77,7 +95,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
     },
     {
       coverImg:
-        "https://wechat-config.dakale.net/miniprogram/image/icon663.png",
+        "https://wechat-config.dakale.net/miniprogram/image/icon711.png",
       fn: () => {
         Router({
           routerName: "gradeGood",

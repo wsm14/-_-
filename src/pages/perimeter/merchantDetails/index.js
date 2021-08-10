@@ -205,6 +205,7 @@ class MerchantDetails extends Component {
         tag,
         merchantId,
       },
+      userMerchantInfo,
     } = this.state;
     getShareInfo(
       {
@@ -230,6 +231,11 @@ class MerchantDetails extends Component {
               wxCode: qcodeUrl,
             }),
           },
+          userMerchantInfo: {
+            ...userMerchantInfo,
+            weChatImg: res.frontImage,
+            weChatTitle: res.title,
+          },
         });
       }
     );
@@ -237,7 +243,7 @@ class MerchantDetails extends Component {
   //获取商家轮播图
   onShareAppMessage(res) {
     const {
-      userMerchantInfo: { merchantName, coverImg },
+      userMerchantInfo: { merchantName, coverImg, weChatImg, weChatTitle },
       merchantHttpData: { merchantId },
     } = this.state;
     let userInfo = loginStatus() || {};
@@ -245,8 +251,8 @@ class MerchantDetails extends Component {
     if (loginStatus()) {
       if (res.from === "button") {
         return {
-          title: merchantName,
-          imageUrl: coverImg,
+          title: weChatTitle || merchantName,
+          imageUrl: weChatImg || coverImg,
           path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）

@@ -1,3 +1,12 @@
+/*
+ *  filterData  类型 Array 渲染的筛选项 confirm
+ *  confirm  类型 function 渲染的筛选项 确定选择项返回对应的数据
+ *  configUserLevelInfo 类型 object 达人等级
+ *  top 类型 boolean 是否置顶
+ *  scrollName 类型 string 打开筛选时卷曲到耨个元素
+ *  setTop 类型 object  打开筛选时置顶的距离
+ *  callback 解决动画问题内部所调用的回调
+ */
 import Taro, { usePageScroll } from "@tarojs/taro";
 import React, { useState, useEffect, Fragment } from "react";
 import { View, Text, ScrollView } from "@tarojs/components";
@@ -6,7 +15,7 @@ import Categorys from "./components/category";
 import Selects from "./components/select";
 import classNames from "classnames";
 import "./index.scss";
-import { getDom, computedSize } from "@/common/utils";
+import { getDom, computedSize, filterIndex } from "@/common/utils";
 const filterOnChange = (item) => {
   const { near, category, select } = item;
   let nearVal = near.val;
@@ -46,6 +55,7 @@ const filterOnChange = (item) => {
 export default ({
   filterData = [],
   confirm,
+  defaultData = null,
   configUserLevelInfo,
   top = false,
   scrollName,
@@ -76,6 +86,9 @@ export default ({
     select: {
       selectIndex: -1,
       val: {
+        description: "按距离排序",
+        name: "距离",
+        selectName: "距离",
         value: "distanceSort",
       },
     },
@@ -88,6 +101,19 @@ export default ({
   const { index } = visible;
   useEffect(() => {
     setData(JSON.parse(JSON.stringify(filterData)));
+    Taro.nextTick(() => {
+      if (defaultData) {
+        setSelectData({
+          ...selectData,
+          category: {
+            ...filterIndex(
+              (filterData[1] && filterData[1].list) || [],
+              defaultData
+            ),
+          },
+        });
+      }
+    });
   }, [filterData]);
   usePageScroll((e) => {
     if (falgNav) {
@@ -99,13 +125,7 @@ export default ({
       }
     } else return;
   });
-  useEffect(() => {
-    if (!falg) {
-      setFlag(true);
-    } else {
-      confirm(filterOnChange(selectData));
-    }
-  }, [selectData]);
+
   useEffect(() => {
     if (index !== -1) {
       getDom("#dakale_nav", (res) => {
@@ -118,6 +138,7 @@ export default ({
       <Near
         onChange={(item) => {
           setSelectData({ ...selectData, ...item });
+          confirm(filterOnChange({ ...selectData, ...item }));
           setVisible({
             index: -1,
           });
@@ -130,6 +151,7 @@ export default ({
     1: (
       <Categorys
         onChange={(item) => {
+          confirm(filterOnChange({ ...selectData, ...item }));
           setSelectData({ ...selectData, ...item });
           setVisible({
             index: -1,
@@ -144,6 +166,7 @@ export default ({
       <Selects
         onChange={(item) => {
           setSelectData({ ...selectData, ...item });
+          confirm(filterOnChange({ ...selectData, ...item }));
           setVisible({
             index: -1,
           });
@@ -231,7 +254,6 @@ export default ({
         </View>
         <View
           onClick={() => onClose()}
-          style={{ top: menuLayerHeight }}
           className={classNames(
             "sub-menu-bottom",
             index === -1

@@ -8,39 +8,32 @@ import "./index.scss";
 export default ({ confirm, onChange, val }) => {
   const [data, setData] = useState([]);
   const [list, setList] = useState([]);
-  const [falg, setFlag] = useState(null);
+
   useEffect(() => {
-    if (falg) {
-      if (val) {
-        fetchGoodsTag({
-          categoryId: val,
-        }).then((res) => {
-          const { configGoodsTagList = [] } = res;
-          setList(configGoodsTagList);
-          setData([]);
-        });
-      } else {
-        setList([]);
+    if (val) {
+      fetchGoodsTag({
+        categoryId: val,
+      }).then((res) => {
+        const { configGoodsTagList = [] } = res;
+        setList(configGoodsTagList);
         setData([]);
-      }
+      });
+    } else {
+      setList([]);
+      setData([]);
     }
   }, [val]);
-  useEffect(() => {
-    if (!falg) {
-      setFlag(true);
-    } else {
-      onChange(data.toString());
-    }
-  }, [data]);
   const setChangeData = (id) => {
     if (data.includes(id)) {
-      setData(
-        data.filter((item) => {
-          return item !== id;
-        })
-      );
+      let val = data.filter((item) => {
+        return item !== id;
+      });
+      setData(val);
+      return val;
     } else {
+      let val = [...data, id];
       setData([...data, id]);
+      return val;
     }
   };
   if (list.length > 0) {
@@ -51,7 +44,9 @@ export default ({ confirm, onChange, val }) => {
             const { configGoodsTagId, tagName } = item;
             return (
               <View
-                onClick={() => setChangeData(configGoodsTagId)}
+                onClick={() => {
+                  onChange(setChangeData(configGoodsTagId).toString());
+                }}
                 className={classNames(
                   "tag_box",
                   data.includes(configGoodsTagId) ? "tag_color2" : "tag_color1"

@@ -8,10 +8,14 @@ import {
   getConfigWindVaneBySize,
   getBusinessHub,
 } from "@/server/common";
-import { fetchUserShareCommission, fetchSpecialGoods } from "@/server/index";
+import {
+  fetchUserShareCommission,
+  fetchSpecialGoods,
+  fetchListCouponByFilterType,
+} from "@/server/index";
 import Tags from "@/components/componentView/goodsTagView";
-import { template } from "@/components/specalTemplate";
-import { toast, computedViewHeight } from "@/common/utils";
+import { template, couponTemplate } from "@/components/specalTemplate";
+import { toast, computedViewHeight, setNavTitle } from "@/common/utils";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -28,8 +32,11 @@ class Index extends Component {
       },
       selectList: [],
       configUserLevelInfo: {},
-      specialGoodsList: [],
+      list: [],
       height: 0,
+      categoryIds: getCurrentInstance().router.params.categoryIds,
+      type: getCurrentInstance().router.params.type,
+      name: getCurrentInstance().router.params.name,
     };
   }
   fetchUserShare() {
@@ -47,7 +54,6 @@ class Index extends Component {
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
       const { categoryList } = val[0];
-
       this.setState({
         selectList: [
           {
@@ -139,10 +145,28 @@ class Index extends Component {
     fetchSpecialGoods(this.state.httpData, (res) => {
       const { specialGoodsList = [] } = res;
       this.setState({
-        specialGoodsList: [...this.state.specialGoodsList, ...specialGoodsList],
+        list: [...this.state.list, ...specialGoodsList],
       });
     });
   }
+  fetchCoupons() {
+    const { httpData } = this.state;
+    fetchListCouponByFilterType(httpData, (res) => {
+      const { couponList = [] } = res;
+      this.setState({
+        list: [...this.state.list, ...couponList],
+      });
+    });
+  }
+  fecthRequest() {
+    const { type } = this.state;
+    if (type === "good") {
+      this.getshopList();
+    } else {
+      this.fetchCoupons();
+    }
+  }
+
   changeSelect(val) {
     const { httpData } = this.state;
     this.setState(
@@ -152,16 +176,31 @@ class Index extends Component {
           ...val,
           page: 1,
         },
-        specialGoodsList: [],
+        list: [],
       },
       (res) => {
-        this.getshopList();
+        this.fecthRequest();
       }
     );
   }
+  componentWillMount() {
+    const { name, type } = this.state;
+    setNavTitle(name + (type === "good" ? "·附近特惠" : "·附近优惠券"));
+  }
   componentDidMount() {
+    const { categoryIds, httpData } = this.state;
     this.initSelect();
-    this.getshopList();
+    this.setState(
+      {
+        httpData: {
+          ...httpData,
+          categoryIds,
+        },
+      },
+      (res) => {
+        this.fecthRequest();
+      }
+    );
   }
   componentDidShow() {
     this.fetchUserShare();
@@ -176,17 +215,19 @@ class Index extends Component {
         },
       },
       (res) => {
-        this.getshopList();
+        this.fecthRequest();
       }
     );
   } //上拉加载
   render() {
     const {
       selectList,
-      specialGoodsList,
+      list,
       configUserLevelInfo,
       height,
       httpData: { categoryIds },
+      name,
+      type,
     } = this.state;
 
     return (
@@ -202,6 +243,7 @@ class Index extends Component {
           confirm={(e) => {
             this.changeSelect(e);
           }}
+          defaultData={this.state.categoryIds}
           configUserLevelInfo={configUserLevelInfo}
           dataFormat="Object"
         ></FilterDropdown>
@@ -226,14 +268,21 @@ class Index extends Component {
           }}
           className="perimeterList_scroll"
         >
-          {specialGoodsList.length === 0 && (
+          {list.length === 0 && (
             <>
               <View className="perimeterList_nullStatus"></View>
-              <View className="perimeterList_text">暂无商品</View>
+              <View className="perimeterList_text">
+                暂无{type === "good" ? "商品" : "优惠券"}
+              </View>
             </>
           )}
-          {specialGoodsList.map((item) => {
-            return template(item, configUserLevelInfo);
+          {list.map((item) => {
+            const { type } = this.state;
+            if (type === "good") {
+              return template(item, configUserLevelInfo);
+            } else {
+              return couponTemplate(item, configUserLevelInfo);
+            }
           })}
         </ScrollView>
       </View>

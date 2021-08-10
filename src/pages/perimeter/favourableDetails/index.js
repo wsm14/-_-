@@ -147,6 +147,7 @@ class MerchantDetails extends Component {
         activityGoodsImg,
         districtName,
       },
+      specialGoodsInfo,
     } = this.state;
     const { profile, username } = Taro.getStorageSync("userInfo");
     getShareInfo(
@@ -185,6 +186,11 @@ class MerchantDetails extends Component {
               saveMoney,
             }),
           },
+          specialGoodsInfo: {
+            ...specialGoodsInfo,
+            weChatImg: res.frontImage,
+            weChatTitle: res.title,
+          },
         });
       }
     );
@@ -192,7 +198,7 @@ class MerchantDetails extends Component {
 
   onShareAppMessage(res) {
     const {
-      specialGoodsInfo: { goodsName },
+      specialGoodsInfo: { goodsName, weChatImg, weChatTitle },
       specialGoodsInfo,
       httpData: { merchantId, specialActivityId },
     } = this.state;
@@ -201,8 +207,8 @@ class MerchantDetails extends Component {
     const { userIdString } = userInfo;
     if (res.from === "button") {
       return {
-        title: goodsName,
-        imageUrl: img,
+        title: weChatTitle || goodsName,
+        imageUrl: weChatImg || img,
         path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     }

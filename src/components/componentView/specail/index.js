@@ -9,7 +9,7 @@ import {
   computedPrice,
 } from "@/common/utils";
 import Router from "@/common/router";
-import Taro from '@tarojs/taro';
+import Taro from "@tarojs/taro";
 import "./index.scss";
 export const specailGoods = (item, val = {}) => {
   const {
@@ -47,9 +47,7 @@ export const specailGoods = (item, val = {}) => {
       ></View>
       <View className="specail_hot_font font_noHide">{goodsName}</View>
       <View className="specails_hot_user">
-        <View
-          className="specails_hot_userProfile"
-        ></View>
+        <View className="specails_hot_userProfile"></View>
         <View className="specails_hot_merchantName font_hide">
           {merchantName}
         </View>
@@ -57,33 +55,27 @@ export const specailGoods = (item, val = {}) => {
           {"| " + GetDistance(getLat(), getLnt(), lat, lnt)}
         </View>
       </View>
-      <View className="specails_hot_price color1 font_hide">
-        <View className='font20'>原价:</View>
-        <View className='specails_hot_priceMax font_hide font24 price_margin4 bold text_through'>¥{oriPrice}</View>
+      <View className="specails_hot_price color2 font_hide">
+        <View className="font18">原价:</View>
+        <View className="specails_hot_priceMax font_hide font20 price_margin4 bold text_through">
+          ¥{oriPrice}
+        </View>
       </View>
       <View className="specails_hot_price1 color1 font_hide">
-        <View className='font20'>优惠价: </View>
-        <View className='font24 price_margin4 bold'>¥{realPrice}</View>
+        <View className="font18">优惠价: </View>
+        <View className="font24 price_margin4 bold">¥{realPrice}</View>
       </View>
-      <View className='specails_bean_price'>
-        卡豆抵扣后最低到手价
-      </View>
-      <View className='specails_bean_show'>
-        <View className='color3 font36 bold specails_bean_showText'>
-          <View className='color3 font20 bold'>¥</View>{' '}
-          {computedBeanPrice(realPrice, payBeanCommission)}
+      <View className="specailOther_new_bean ">
+        <View className="bean_getInfo specailOther_new_img"></View>
+        <View className="specailOther_new_pay font_hide">
+          ¥{computedPrice(realPrice, payBeanCommission)}
         </View>
-        {shareCommission > 0 && (
-          <View
-            style={{ border: "1px solid #ef476f", padding: `0 ${Taro.pxTransform(8)}`, height: Taro.pxTransform(32), lineHeight: Taro.pxTransform(32) }}
-            className="specails_bean_getMoney font_hide"
-          >
-            赚
-            <Text className='bold'>¥{computedPrice(realPrice - merchantPrice, shareCommission)}</Text>
-          </View>
-
-        )}
       </View>
+      {shareCommission > 0 && (
+        <View className="specails_bean_news font_hide">
+          赚¥{computedPrice(realPrice - merchantPrice, shareCommission)}
+        </View>
+      )}
     </View>
   );
 };

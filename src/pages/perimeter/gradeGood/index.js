@@ -110,8 +110,7 @@ class Index extends Component {
       getBusinessHub({}),
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
-      const { categoryDTOList } = val[0];
-
+      const { categoryList } = val[0];
       this.setState({
         selectList: [
           {
@@ -154,21 +153,25 @@ class Index extends Component {
               {
                 categoryIdString: "",
                 categoryName: "全部",
-                childList: [],
+                categoryDTOList: [],
                 type: "father",
               },
-              ...categoryDTOList.map((item) => {
-                const { categoryName, categoryIdString, childList = [] } = item;
+              ...categoryList.map((item) => {
+                const {
+                  categoryName,
+                  categoryIdString,
+                  categoryDTOList = [],
+                } = item;
                 return {
                   ...item,
-                  childList: [
+                  categoryDTOList: [
                     {
-                      childList: [],
+                      categoryDTOList: [],
                       fatherId: categoryIdString,
                       categoryName: "全部",
                       type: "all",
                     },
-                    ...childList,
+                    ...categoryDTOList,
                   ],
                 };
               }),
@@ -178,9 +181,17 @@ class Index extends Component {
             name: "筛选",
             type: "select",
             list: [
-              { value: "distanceSort", description: "按距离排序" },
-              { value: "priceSort", description: "按价格排序" },
-              { value: "commissionSort", description: "按佣金排序" },
+              {
+                value: "distanceSort",
+                description: "按距离排序",
+                name: "距离",
+              },
+              { value: "priceSort", description: "按价格排序", name: "价格" },
+              {
+                value: "commissionSort",
+                description: "按佣金排序",
+                name: "佣金",
+              },
             ],
           },
         ],
@@ -230,7 +241,6 @@ class Index extends Component {
   onPageScroll(res) {
     const { scrollTop } = res;
     console.log(scrollTop);
-    const { size } = this.state;
     this.setState({
       top: scrollTop,
     });
@@ -355,12 +365,11 @@ class Index extends Component {
               setTop={{
                 falgNav: true,
                 topNav: size,
-                setNav: computedSize(computedClient().top + 24),
+                setNav: computedSize(computedClient().top + 22),
               }}
               configUserLevelInfo={configUserLevelInfo}
               callback={(e) => {
                 this.setState({}, (res) => {
-                  // Taro.nextTick(() => );
                   e & e();
                 });
               }}

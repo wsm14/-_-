@@ -80,13 +80,7 @@ export default (props) => {
     >
       <View>
         <View className="pay_bean_box" animation={animate}>
-          <View className="pay_bean_btn public_auto">
-            <View
-              className="pay_bean_btnBox public_center pay_bean_btnLeft"
-              onClick={() => linkToGuang()}
-            >
-              狠心放弃
-            </View>
+          <View className="pay_bean_btn public_center">
             <View
               className="pay_bean_btnBox public_center pay_bean_btnRight"
               onClick={() => linkToGuang()}

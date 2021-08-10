@@ -110,10 +110,8 @@ export const goodsView = (item, userInfo, fn, type = "toast") => {
             <View class="activeView_card_san"></View>
             <View class="activeView_card_right">
               <Text className="activeView_card_maxRight font_hide">
-                ￥{computedPrice(realPrice, payBeanCommission)}+
-                {parseInt(
-                  computedBeanPrice(realPrice, payBeanCommission) * 100
-                )}
+                ￥{computedBeanPrice(realPrice, payBeanCommission)}+
+                {parseInt(computedPrice(realPrice, payBeanCommission) * 100)}
                 卡豆
               </Text>
             </View>

@@ -266,7 +266,7 @@ page {
       }
     }
     .lookAround_active_card {
-      width: 218px;
+      width: 164px;
       height: 104px;
     }
     .lookAround_active_image {
@@ -408,7 +408,7 @@ page {
     position: absolute;
     left: 0;
     right: 0;
-    top: 64rpx;
+    top: 64px;
     z-index: 1000;
     margin: 0 auto;
     background: #ffffff;
@@ -596,6 +596,7 @@ page {
     .lookAround_specalPlate_content {
       display: flex;
       padding: 24px 16px 0;
+      justify-content: center;
     }
   }
 }
@@ -641,5 +642,70 @@ page {
     margin-right: 8px;
   }
   .lookAround_hot_limit {
+  }
+}
+.configWindVane_box {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+
+  .configWindVane_user {
+    height: 120px;
+    display: inline-block;
+    justify-content: center;
+    position: relative;
+    .bubbleContent-info {
+      position: absolute;
+      right: -32px;
+      top: -15px;
+      padding: 0px 8px;
+      height: 30px;
+      line-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ef476f;
+      border-radius: 15px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #ffffff;
+      z-index: 100;
+    }
+  }
+  .configWindVane_user:last-child {
+    margin-right: 0;
+  }
+  .configWindVane_profile {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .configWindVane_text {
+    padding-top: 12px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 24px;
+    text-align: center;
+  }
+}
+.lookAround_category_liner {
+  width: 48px;
+  height: 6px;
+  background: #e5e5e5;
+  border-radius: 3px;
+  margin: 16px auto 0;
+  position: relative;
+  position: relative;
+  .slider-inside {
+    width: 24px;
+    height: 100%;
+    border-radius: 3px;
+    background: #108588;
+    position: absolute;
+    top: 0;
+    bottom: 0;
   }
 }

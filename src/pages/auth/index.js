@@ -42,7 +42,7 @@ class Index extends Component {
 
   goUserConceal() {
     const link =
-      "https://web-new.dakale.net/product/page/policy/userConceal.html";
+      "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dakale-web-page/wechant/page/policy/userConceal.html";
     navigateTo(`/pages/share/webView/index?link=${link}&title=用户协议`);
   }
 
@@ -62,6 +62,7 @@ class Index extends Component {
           this.setState({
             openId: openId,
             unionId: unionId,
+            visible: true,
           });
         }
       }
@@ -204,11 +205,20 @@ class Index extends Component {
     }
   }
   render() {
-    const { btnStatus } = this.state;
+    const { btnStatus, visible } = this.state;
     return (
       <View className="auth_box">
         <View className="auth_login"></View>
         <View className="auth_btn">
+          {visible ? (
+            <View className="auth_animate_toast">
+              <Button
+                openType={"getPhoneNumber"}
+                onGetPhoneNumber={(e) => this.getTelephone(e)}
+                className="clearBtn"
+              ></Button>
+            </View>
+          ) : null}
           <Button
             openType={"getPhoneNumber"}
             onGetPhoneNumber={(e) => this.getTelephone(e)}

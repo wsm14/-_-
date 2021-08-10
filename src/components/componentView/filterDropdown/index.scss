@@ -96,6 +96,7 @@
   }
   .sub-menu-bottom {
     position: fixed;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
@@ -108,7 +109,7 @@
     transform: translateY(0);
   }
   .sub-menu-trantionOut {
-    transform: translateY(-200%);
+    transform: translateY(-500%);
   }
   .sub-menu-trantionShow {
     display: block;
@@ -444,6 +445,10 @@
       justify-content: center;
       margin-bottom: 24px;
       font-size: 24px;
+    }
+    .sub-scorllView-init {
+      width: 120px;
+      text-align: center;
     }
     .sub-scorllView-tagSelect {
       border: 1px solid #07c0c2;

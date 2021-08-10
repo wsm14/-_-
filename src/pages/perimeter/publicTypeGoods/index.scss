@@ -12,9 +12,9 @@ page {
   .publicTypeGoods_view_box {
     position: relative;
     background: #ffffff;
-    padding: 12px 0 0;
+    padding: 16px 0 0;
     border-radius: 20px 20px 0 0;
-    margin-top: -20px;
+    margin-top: -18px;
     z-index: 1000;
   }
   .publicTypeGoods_view_nodeBox {
@@ -34,6 +34,9 @@ page {
   .perimeterList_scroll1 {
     background: #ffffff;
     min-height: 1300px;
+    .perimeterList_liner {
+      height: 24px;
+    }
   }
   .perimeterList_nullStatus {
     width: 300px;

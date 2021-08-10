@@ -84,7 +84,7 @@ class Index extends Component {
       getBusinessHub({}),
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
-      const { categoryDTOList } = val[0];
+      const { categoryList } = val[0];
       this.setState({
         selectList: [
           {
@@ -127,21 +127,25 @@ class Index extends Component {
               {
                 categoryIdString: "",
                 categoryName: "全部",
-                childList: [],
+                categoryDTOList: [],
                 type: "father",
               },
-              ...categoryDTOList.map((item) => {
-                const { categoryName, categoryIdString, childList = [] } = item;
+              ...categoryList.map((item) => {
+                const {
+                  categoryName,
+                  categoryIdString,
+                  categoryDTOList = [],
+                } = item;
                 return {
                   ...item,
-                  childList: [
+                  categoryDTOList: [
                     {
-                      childList: [],
+                      categoryDTOList: [],
                       fatherId: categoryIdString,
                       categoryName: "全部",
                       type: "all",
                     },
-                    ...childList,
+                    ...categoryDTOList,
                   ],
                 };
               }),
@@ -151,9 +155,17 @@ class Index extends Component {
             name: "筛选",
             type: "select",
             list: [
-              { value: "distanceSort", description: "按距离排序" },
-              { value: "priceSort", description: "按价格排序" },
-              { value: "commissionSort", description: "按佣金排序" },
+              {
+                value: "distanceSort",
+                description: "按距离排序",
+                name: "距离",
+              },
+              { value: "priceSort", description: "按价格排序", name: "价格" },
+              {
+                value: "commissionSort",
+                description: "按佣金排序",
+                name: "佣金",
+              },
             ],
           },
         ],
@@ -310,6 +322,7 @@ class Index extends Component {
                 {specialGoodsList.map((item) => {
                   return template(item, configUserLevelInfo, false);
                 })}
+                <View className="perimeterList_liner"></View>
               </View>
             </View>
           </View>
