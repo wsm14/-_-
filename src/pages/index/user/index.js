@@ -208,7 +208,6 @@ class Index extends React.Component {
           status={loginStatus}
           data={userInfo}
         ></UserTitle>
-
         <View className="page_user_liner"></View>
         <UserContent
           levelDetails={levelDetails}
