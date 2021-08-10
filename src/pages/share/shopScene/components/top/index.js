@@ -37,11 +37,24 @@ export default ({ configUserLevelInfo, onShare, orderInfo, userInfo }) => {
       </View>
       <View className="shopScene_btn_box public_auto">
         <View
-          className="shopScene_btn shopScene_btn_left"
+          className={classNames(
+            "shopScene_btn",
+            level === "0" ? "shopScene_btn_left" : "shopScene_btn_left1"
+          )}
           onClick={() => {
-            Router({
-              routerName: "download",
-            });
+            if (level === "0") {
+              Router({
+                routerName: "webView",
+                args: {
+                  link: "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dakale-web-page/wechant/page/interface.html",
+                  title: "关注公众号",
+                },
+              });
+            } else {
+              Router({
+                routerName: "download",
+              });
+            }
           }}
         ></View>
         <View
