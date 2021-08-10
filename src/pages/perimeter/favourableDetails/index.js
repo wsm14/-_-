@@ -230,7 +230,7 @@ class MerchantDetails extends Component {
     const { payBeanCommission = 50 } = configUserLevelInfo;
     const { userBean, realPrice } = specialGoodsInfo;
     if (userBean >= computedPrice(realPrice, payBeanCommission) * 100) {
-      return computedPrice(realPrice, payBeanCommission) * 100;
+      return parseInt(computedPrice(realPrice, payBeanCommission) * 100);
     } else {
       return userBean;
     }

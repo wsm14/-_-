@@ -169,7 +169,9 @@ export default ({ data = [], onChange, defaul, visible }) => {
                           : "sub-scorllView-tagSelectNo"
                       )}
                     >
-                      {businessHubName}
+                      <View className="sub-scorllView-init font_hide">
+                        {businessHubName}
+                      </View>
                     </View>
                   );
                 }

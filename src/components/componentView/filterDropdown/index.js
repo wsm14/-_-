@@ -86,6 +86,9 @@ export default ({
     select: {
       selectIndex: -1,
       val: {
+        description: "按距离排序",
+        name: "距离",
+        selectName: "距离",
         value: "distanceSort",
       },
     },

@@ -71,23 +71,11 @@ export const specailGoods = (item, val = {}) => {
           ¥{computedPrice(realPrice, payBeanCommission)}
         </View>
       </View>
-      {/* <View className='specails_bean_show'>
-        <View className='color3 font36 bold specails_bean_showText'>
-          <View className='color3 font20 bold'>¥</View>{' '}
-          {computedBeanPrice(realPrice, payBeanCommission)}
+      {shareCommission > 0 && (
+        <View className="specails_bean_news font_hide">
+          赚¥{computedPrice(realPrice - merchantPrice, shareCommission)}
         </View>
-        {shareCommission > 0 && (
-          <View
-            style={{ border: "1px solid #ef476f", padding: `0 ${Taro.pxTransform(8)}`, height: Taro.pxTransform(32), lineHeight: Taro.pxTransform(32) }}
-            className="specails_bean_getMoney font_hide"
-          >
-            赚
-            <Text className='bold'>¥{computedPrice(realPrice - merchantPrice, shareCommission)}</Text>
-          </View>
-
-        )}
-      </View>
-    */}
+      )}
     </View>
   );
 };

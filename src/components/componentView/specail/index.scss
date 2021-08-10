@@ -3,6 +3,7 @@
   display: inline-block;
   margin-right: 16px;
   vertical-align: top;
+  line-height: 1;
   .specail_hot_specalImage {
     width: 200px;
     height: 200px;
@@ -45,6 +46,7 @@
     align-items: baseline;
   }
   .specails_hot_price1 {
+    margin-top: 4px;
     display: flex;
     align-items: baseline;
   }
@@ -151,6 +153,13 @@
       padding: 0 8px 0 4px;
     }
   }
+}
+.specails_bean_news {
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #ef476f;
+  line-height: 18px;
 }
 .specail_hot_box:last-child {
   margin-right: 0;

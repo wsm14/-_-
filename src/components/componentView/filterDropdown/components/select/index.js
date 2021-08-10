@@ -16,6 +16,7 @@ export default ({
   useEffect(() => {
     if (visible === 2) {
       const { selectIndex, val } = defaul;
+      console.log(val);
       setChecked({ ...val });
     }
   }, [visible]);
@@ -29,7 +30,7 @@ export default ({
   };
   const scrollTo = () => {};
   return (
-    <View  className="sub-scorllView-box">
+    <View className="sub-scorllView-box">
       <ScrollView scrollY className="sub-scorllView-own">
         <View className="sub-scorllView-ownPad">
           {list.map((item, index) => {
@@ -39,7 +40,7 @@ export default ({
             return (
               <View
                 onClick={() => {
-                  change(item, "description");
+                  change(item, "name");
                 }}
                 className={classNames(
                   ".sub-ownPad-text",

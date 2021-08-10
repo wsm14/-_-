@@ -278,7 +278,7 @@ class Index extends React.Component {
             className="bubble_top_search"
             onClick={() => Router({ routerName: "search_shop" })}
           >
-            {categoryName}
+            搜吃喝玩乐~
           </View>
           <View className="bubble_banner_card">
             <Banner

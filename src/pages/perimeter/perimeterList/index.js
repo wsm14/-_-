@@ -47,7 +47,7 @@ class Index extends Component {
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
       const { categoryList } = val[0];
-   
+
       this.setState({
         selectList: [
           {
@@ -118,9 +118,17 @@ class Index extends Component {
             name: "筛选",
             type: "select",
             list: [
-              { value: "distanceSort", description: "按距离排序" },
-              { value: "priceSort", description: "按价格排序" },
-              { value: "commissionSort", description: "按佣金排序" },
+              {
+                value: "distanceSort",
+                description: "按距离排序",
+                name: "距离",
+              },
+              { value: "priceSort", description: "按价格排序", name: "价格" },
+              {
+                value: "commissionSort",
+                description: "按佣金排序",
+                name: "佣金",
+              },
             ],
           },
         ],

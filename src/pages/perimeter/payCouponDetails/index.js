@@ -169,7 +169,7 @@ class Index extends Component {
     const { payBeanCommission = 50 } = configUserLevelInfo;
     const { userBean, buyPrice } = couponDetail;
     if (userBean >= computedPrice(buyPrice, payBeanCommission) * 100) {
-      return computedPrice(buyPrice, payBeanCommission) * 100;
+      return parseInt(computedPrice(buyPrice, payBeanCommission) * 100);
     } else {
       return userBean;
     }
