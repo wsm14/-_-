@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
-import "./index.scss";
 import classNames from "classnames";
 import { getOrderResult } from "@/server/goods";
 import {
@@ -12,32 +11,18 @@ import {
   redirectTo,
   switchTab,
 } from "@/common/utils";
+import Router from "@/common/router";
 import Lovely from "@/components/lovely";
 import { fetchUserShareCommission } from "@/server/index";
 import Coupons from "@/components/coupon";
 import Recommend from "@/components/specalActive";
 import Coupon from "./components/coupon";
-import Toast from "@/components/paySuccess/toast";
-
-const formatTime = (date) => {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = date.getHours();
-  const minute = date.getMinutes();
-  const second = date.getSeconds();
-  return (
-    month +
-    "月" +
-    day +
-    "日  " +
-    [hour, minute, second].map(formatNumber).join(":")
-  );
-};
-const formatNumber = (n) => {
-  n = n.toString();
-  return n[1] ? n : "0" + n;
-};
+import Toast from "@/components/paySuccess";
+import { getConfigNewcomerOrders } from "@/server/goods";
+import { inject, observer } from "mobx-react";
+import "./index.scss";
+@inject("store")
+@observer
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -48,6 +33,7 @@ class Index extends Component {
       couponList: [],
       configUserLevelInfo: {},
       visible: false,
+      configNewcomerOrdersInfo: {},
     };
   }
 
@@ -64,7 +50,16 @@ class Index extends Component {
       });
     });
   }
-
+  fetchConfigNewcomerOrders() {
+    getConfigNewcomerOrders({}, (res) => {
+      const { configNewcomerOrdersInfo = {} } = res;
+      const { taskStatus = "0" } = configNewcomerOrdersInfo;
+      this.setState({
+        configNewcomerOrdersInfo: { ...configNewcomerOrdersInfo, taskStatus },
+        visible: true,
+      });
+    });
+  }
   getOrderResult() {
     const { orderSn } = this.state;
     getOrderResult(
@@ -75,7 +70,6 @@ class Index extends Component {
         const { orderResult } = res;
         this.setState({
           orderResult,
-          visible: true,
         });
       }
     );
@@ -85,10 +79,32 @@ class Index extends Component {
     this.getOrderResult();
     this.fetchUserShareCommission();
   }
+  componentDidMount() {
+    this.fetchConfigNewcomerOrders();
+  }
 
   errorToast(e) {}
 
   render() {
+    const formatTime = (date) => {
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hour = date.getHours();
+      const minute = date.getMinutes();
+      const second = date.getSeconds();
+      return (
+        month +
+        "月" +
+        day +
+        "日  " +
+        [hour, minute, second].map(formatNumber).join(":")
+      );
+    };
+    const formatNumber = (n) => {
+      n = n.toString();
+      return n[1] ? n : "0" + n;
+    };
     const {
       orderResult: {
         payFee,
@@ -103,7 +119,9 @@ class Index extends Component {
       couponList,
       configUserLevelInfo,
       visible,
+      configNewcomerOrdersInfo,
     } = this.state;
+    const { beanLimitStatus } = this.props.store.homeStore;
     if (Object.keys(orderResult).length > 0) {
       return (
         <View className="code_scanPay_box">
@@ -153,16 +171,50 @@ class Index extends Component {
               </View>
               <View
                 className="code_scanPay_btn btn_style2"
-                onClick={() => switchTab("/pages/index/home/index")}
+                onClick={() =>
+                  Router({
+                    routerName: "nearVideo",
+                    args: {
+                      type: "goods",
+                    },
+                  })
+                }
               >
                 天天捡卡豆
+                <View className="btn_logo"></View>
               </View>
             </View>
+            {beanFee ? (
+              <View className="bean_order color1">
+                <View className="bean_order_logo"></View>
+                <View className="bean_order_bean">
+                  本单卡豆帮您节省
+                  <Text className="color3">
+                    ¥{(Number(beanFee) / 100).toFixed(2)}
+                  </Text>
+                </View>
+                <View
+                  className="bean_order_link color3"
+                  onClick={() =>
+                    Router({
+                      routerName: "nearVideo",
+                      args: {
+                        type: "goods",
+                      },
+                    })
+                  }
+                >
+                  继续捡豆
+                </View>
+              </View>
+            ) : null}
             <Coupon data={orderResult}></Coupon>
           </View>
           <Recommend current={true} userInfo={configUserLevelInfo}></Recommend>
           <Toast
+            data={configNewcomerOrdersInfo}
             show={visible}
+            beanLimitStatus={beanLimitStatus}
             visible={() => {
               this.setState({
                 visible: false,

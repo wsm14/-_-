@@ -8,11 +8,11 @@ import { Image, Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import Router from "@/common/router";
 import ButtonView from "@/components/Button";
-import "./../index.scss";
+import "./index.scss";
 export default (props) => {
   const { data = {}, visible, show = false } = props;
   const [animate, setAnimated] = useState(null);
-
+  const { remainDay, orderNum, finishOrderNum, subsidyBean } = data;
   /* guideMomentFlag  为1时显示另外一套特殊携带商品样式，默认为0不管 */
   const animated = () => {
     let animateTem = Taro.createAnimation({
@@ -63,7 +63,7 @@ export default (props) => {
     setTimeout(() => {
       visible();
       Router({
-        routerName: "download",
+        routerName: "wallet",
         args: {},
       });
     }, 300);
@@ -81,42 +81,40 @@ export default (props) => {
       style={show ? { display: "flex" } : { display: "none" }}
       className="pay_success_toast public_center"
       catchMove
+      animation={animate}
       onClick={(e) => {
         e.stopPropagation();
         onClose();
       }}
     >
-      <View
-        animation={animate}
-        catchMove
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className="pay_toast_box"
-      >
-        <Image
-          className="pay_toast_Image"
-          src={"https://wechat-config.dakale.net/miniprogram/image/icon621.png"}
-        ></Image>
-        <Image
-          className="pay_toast_Image1"
-          src={"https://wechat-config.dakale.net/miniprogram/image/icon624.png"}
-        ></Image>
-        <Image
-          className="pay_toast_Image2"
-          src={"https://wechat-config.dakale.net/miniprogram/image/icon625.png"}
-        ></Image>
-        <Image
-          onClick={linkToDown}
-          className="pay_toast_Image4"
-          src={"https://wechat-config.dakale.net/miniprogram/image/icon622.png"}
-        ></Image>
-        <Image
-          onClick={onClose}
-          className="pay_toast_Image5"
-          src={"https://wechat-config.dakale.net/miniprogram/image/icon623.png"}
-        ></Image>
-        <View className="pay_toast_view">{data.subsidyBean}</View>
+      <View>
+        <View
+          catchMove
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          className="pay_toast_box"
+        >
+          <View className="pay_content_info">
+            <Text className="color15">{remainDay}天内</Text>
+            <Text className="color6">，成功核销</Text>
+            <Text className="color15">{orderNum}单</Text>
+            <Text className="color6">即可获得</Text>
+          </View>
+          <View className="pay_content_bean public_center">
+            <View className="pay_bean_icon"></View>
+
+            <View className="pay_bean_xIcon"></View>
+            <View className="pay_bean_beanNums">{subsidyBean}</View>
+          </View>
+          <View
+            className="pay_content_btn public_center"
+            onClick={() => linkToDown()}
+          >
+            去查看
+          </View>
+        </View>
+        <View className="pay_toas_close" onClick={() => onClose()}></View>
       </View>
     </View>
   );

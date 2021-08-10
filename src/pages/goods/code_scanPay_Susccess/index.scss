@@ -63,28 +63,41 @@ page {
     }
   }
   .code_scanPay_btnBox {
-    padding: 48px 149px;
+    padding: 48px 134px;
     height: 60px;
     display: flex;
     justify-content: space-between;
-    width: 452px;
     .code_scanPay_btn {
-      width: 214px;
-      height: 60px;
       border-radius: 8px;
-      text-align: center;
       line-height: 60px;
       margin-right: 24px;
-
       font-size: 28px;
     }
     .btn_style1 {
+      width: 214px;
+      height: 60px;
       border: 2px solid #06c0c2;
       color: #06c0c2;
+      text-align: center;
     }
     .btn_style2 {
+      width: 240px;
+      height: 60px;
       border: 2px solid #ef476f;
       color: #ef476f;
+      text-indent: 28px;
+      text-align: left;
+      position: relative;
+    }
+    .btn_logo {
+      right: 0;
+      top: -30px;
+      width: 70px;
+      height: 90px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon726.png")
+        no-repeat;
+      background-size: 100% 100%;
+      position: absolute;
     }
     .code_scanPay_btn:last-child {
       margin-right: 0px;
@@ -120,7 +133,6 @@ page {
     border-radius: 8px;
     margin-right: 16px;
     text-align: center;
-
     .goods_coupon_name {
       padding-top: 32px;
       font-size: 24px;

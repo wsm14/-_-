@@ -1,14 +1,18 @@
+/*到店打卡领豆视频领豆组件
+ * show 显示或隐藏组件
+ * data 外部导入数据
+ * visible 外部关闭方法
+ */
 import React, { useEffect, useState } from "react";
-import { Text, View } from "@tarojs/components";
+import { Image, Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { backgroundObj, switchTab } from "@/common/utils";
 import Router from "@/common/router";
 import ButtonView from "@/components/Button";
+import Time from "@/components/dateTime";
 import "./index.scss";
 export default (props) => {
   const { visible, show = false } = props;
   const [animate, setAnimated] = useState(null);
-
   const animated = () => {
     let animateTem = Taro.createAnimation({
       duration: 10,
@@ -46,7 +50,7 @@ export default (props) => {
   };
 
   /* 关闭弹框  */
-  const linkToGuang = () => {
+  const linkToDown = () => {
     let animateTem2 = Taro.createAnimation({
       duration: 300,
       timingFunction: "linear",
@@ -57,39 +61,66 @@ export default (props) => {
     setAnimated(animateTem2);
     setTimeout(() => {
       visible();
-      switchTab("/pages/index/home/index");
+      Router({
+        routerName: "nearVideo",
+        args: {
+          type: "goods",
+        },
+      });
     }, 300);
   };
-  /* 跳转主页捡豆页面  */
+  /* 跳转下载页面  */
 
   useEffect(() => {
     if (show) {
       animated();
     }
   }, [show]);
-
+  const getDate = () => {
+    let timestamp = Date.parse(new Date());
+    let date = new Date(timestamp);
+    //获取年份
+    let Y = date.getFullYear();
+    //获取月份
+    let M =
+      date.getMonth() + 1 < 10
+        ? "0" + (date.getMonth() + 1)
+        : date.getMonth() + 1;
+    //获取当日日期
+    var D = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    return Y + "-" + M + "-" + D;
+  };
   return (
     <View
       style={show ? { display: "flex" } : { display: "none" }}
-      className="date_bean public_center"
+      className="video_success_toast public_center"
       catchMove
+      animation={animate}
       onClick={(e) => {
         e.stopPropagation();
         onClose();
       }}
     >
       <View>
-        <View className="pay_bean_box" animation={animate}>
-          <View className="pay_bean_btn public_center">
-            <View
-              className="pay_bean_btnBox public_center pay_bean_btnRight"
-              onClick={() => linkToGuang()}
-            >
-              立即去领
-            </View>
+        <View
+          catchMove
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          className="video_toast_box"
+        >
+          <View className="video_toast_timesAuto">
+            剩余领取时间{" "}
+            <Time showTimeInfo times={getDate()} fn={() => {}}></Time>
+          </View>
+          <View
+            className="video_toast_btn public_center"
+            onClick={() => linkToDown()}
+          >
+            立即去领豆
           </View>
         </View>
-        <View className="pay_bean_close" onClick={() => onClose()}></View>
+        <View className="video_toast_close" onClick={() => onClose()}></View>
       </View>
     </View>
   );
