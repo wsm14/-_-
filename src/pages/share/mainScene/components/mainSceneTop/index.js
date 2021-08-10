@@ -57,6 +57,7 @@ export default ({ locationStatus, setLocation, city, setTab, cityCode }) => {
             if (loginStatus()) {
               Router({
                 routerName: "home",
+                args: {},
                 type: "switchTab",
               });
             } else {
