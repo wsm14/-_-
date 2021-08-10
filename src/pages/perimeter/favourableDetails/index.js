@@ -36,6 +36,7 @@ import Recommend from "@/components/specalActive";
 import NewToast from "@/components/noviceGuide";
 import Wares from "@/components/componentView/wares";
 import classNames from "classnames";
+import ActiveToast from "@/components/componentView/active/tabbarBox";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
 @inject("store")
@@ -364,6 +365,11 @@ class MerchantDetails extends Component {
       httpData,
       mxVisible,
     } = this.state;
+    const {
+      homeStore = {},
+      authStore = {},
+      activeInfoStore = {},
+    } = this.props.store;
     const { login } = this.props.store.authStore;
     const { beanLimitStatus } = this.props.store.homeStore;
     const shareInfoBtn = () => {
@@ -488,6 +494,7 @@ class MerchantDetails extends Component {
                 this.setState({ cavansObj: { start: false, data: null } })
               }
             ></TaroShareDrawer>
+            <ActiveToast store={activeInfoStore}></ActiveToast>
             <View className="shopDetails_banner dakale_nullImage">
               <Banner
                 autoplay={
