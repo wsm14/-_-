@@ -14,6 +14,7 @@ class Record extends Component {
     this.state = {
       httpData: {
         shareType: "mainPage",
+        backgroundImages: "",
       },
       userInfo: {},
       current: 0,

@@ -11,7 +11,6 @@ import {
 import classNames from "classnames";
 import Router from "@/common/router";
 export default ({ list, userInfo, name, categoryIds }) => {
-  console.log(list);
   const template = (item, userInfo, linkTo) => {
     const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
     const {
@@ -73,7 +72,7 @@ export default ({ list, userInfo, name, categoryIds }) => {
             </View>
             {shareCommission > 0 ? (
               <View className="bubble_coupon_btn">
-                分享赚¥{computedPrice(commission, payBeanCommission)}
+                分享赚¥{computedPrice(commission, shareCommission)}
               </View>
             ) : (
               <View className="bubble_coupon_btn1 public_center">抢购</View>
@@ -105,7 +104,6 @@ export default ({ list, userInfo, name, categoryIds }) => {
           </View>
         )}
       </View>
-
       <ScrollView scrollX className="bubble_coupon_content">
         {list.map((item, index) => {
           if (index < 5) {

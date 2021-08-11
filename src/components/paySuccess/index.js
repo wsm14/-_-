@@ -10,7 +10,7 @@ import VideoGoods from "./videoToast";
 export default (props) => {
   const { data = {}, visible, show = false, beanLimitStatus } = props;
   const { taskStatus } = data;
-  if (taskStatus === "0") {
+  if (taskStatus === "0" || taskStatus === "1") {
     return <ThreeGoods {...props}></ThreeGoods>;
   } else if (beanLimitStatus === "1") {
     return <VideoGoods {...props}></VideoGoods>;

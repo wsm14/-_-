@@ -491,6 +491,7 @@ class MerchantDetails extends Component {
                 this.setState({ cavansObj: { start: false, data: null } })
               }
             ></TaroShareDrawer>
+            <ActiveToast store={activeInfoStore}></ActiveToast>
             <View className="shopDetails_banner dakale_nullImage">
               <Banner
                 autoplay={

@@ -190,7 +190,7 @@ class Index extends Component {
                 <View className="bean_order_bean">
                   本单卡豆帮您节省
                   <Text className="color3">
-                    ¥{(Number(beanFee) / 100).toFixed(2)}
+                    ¥{(Number(beanFee) / 100).toFixed(2)}元
                   </Text>
                 </View>
                 <View

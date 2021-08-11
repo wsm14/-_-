@@ -247,12 +247,14 @@ class Index extends Component {
           configUserLevelInfo={configUserLevelInfo}
           dataFormat="Object"
         ></FilterDropdown>
-        <Tags
-          onChange={(val) => {
-            this.changeSelect({ goodsTags: val });
-          }}
-          val={categoryIds}
-        ></Tags>
+        {type === "good" ? (
+          <Tags
+            onChange={(val) => {
+              this.changeSelect({ goodsTags: val });
+            }}
+            val={categoryIds}
+          ></Tags>
+        ) : null}
         <View className="scroll_margin"></View>
         <ScrollView
           scrollY
