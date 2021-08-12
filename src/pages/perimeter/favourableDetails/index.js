@@ -166,6 +166,7 @@ class MerchantDetails extends Component {
           qcodeUrl,
           buyPrice = 0,
           saveMoney = "",
+          shareImg,
         } = res;
         this.setState({
           cavansObj: {
@@ -185,6 +186,7 @@ class MerchantDetails extends Component {
               merchantLogo: image,
               buyPrice,
               saveMoney,
+              shareImg,
             }),
           },
           specialGoodsInfo: {

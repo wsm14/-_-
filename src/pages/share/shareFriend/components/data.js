@@ -1,19 +1,17 @@
 export const rssConfigData = (data = {}) => {
   console.log(data);
   let {
-    backgroundColor = "",
     background = "",
     wxCode = "", ///
     username = "",
   } = data;
   return {
     width: 750, // 画布宽度
-    height: 1624, // 画布高度
-    backgroundColor: backgroundColor, // 画布颜色
+    height: 1333, // 画布高度
     blocks: [
       {
         x: 0,
-        y: 1418,
+        y: 1243,
         width: 750,
         height: 30,
         zIndex: 998,
@@ -21,7 +19,7 @@ export const rssConfigData = (data = {}) => {
         text: {
           width: 750,
           textAlign: "center",
-          text: username, // 用户昵称
+          text: username + "邀请你加入哒卡乐", // 用户昵称
           lineNum: 1,
           fontSize: 28,
           color: "#ffffff",
@@ -29,39 +27,22 @@ export const rssConfigData = (data = {}) => {
           zIndex: 999,
         },
       },
-      {
-        x: 0,
-        y: 1458,
-        width: 750,
-        height: 28,
-        zIndex: 998,
-        textAlign: "center",
-        text: {
-          width: 750,
-          textAlign: "center",
-          text: "邀请你加入哒卡乐", // 用户昵称
-          lineNum: 1,
-          fontSize: 28,
-          color: "#ffffff",
-          zIndex: 999,
-        },
-      },
     ],
     images: [
       {
-        url: background, // 背景
         width: 750,
-        height: 1140,
-        y: 154,
+        height: 1333,
+        y: 0,
         x: 0,
         zIndex: 5,
+        url: background,
       },
       {
         url: wxCode, // 小程序码
-        width: 228,
-        height: 228,
-        y: 1163,
-        x: 260,
+        width: 215,
+        height: 215,
+        y: 989,
+        x: 267,
         borderRadius: 4,
         borderWidth: 0,
         zIndex: 111,

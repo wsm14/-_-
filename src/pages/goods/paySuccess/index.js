@@ -77,10 +77,21 @@ class Index extends Component {
     getConfigNewcomerOrders({}, (res) => {
       const { configNewcomerOrdersInfo = {} } = res;
       const { taskStatus = "0" } = configNewcomerOrdersInfo;
-      this.setState({
-        configNewcomerOrdersInfo: { ...configNewcomerOrdersInfo, taskStatus },
-        visible: true,
-      });
+      this.setState(
+        {
+          configNewcomerOrdersInfo: { ...configNewcomerOrdersInfo, taskStatus },
+        },
+        (res) => {
+          const { beanLimitStatus } = this.props.store.homeStore;
+          if (
+            taskStatus === "0" ||
+            taskStatus === "1" ||
+            beanLimitStatus === "1"
+          ) {
+            this.setState({ visible: true });
+          }
+        }
+      );
     });
   }
   onError(msg) {}
