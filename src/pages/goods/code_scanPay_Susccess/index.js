@@ -53,7 +53,7 @@ class Index extends Component {
   fetchConfigNewcomerOrders() {
     getConfigNewcomerOrders({}, (res) => {
       const { configNewcomerOrdersInfo = {} } = res;
-      const { taskStatus = "0" } = configNewcomerOrdersInfo;
+      const { taskStatus = "2" } = configNewcomerOrdersInfo;
       this.setState(
         {
           configNewcomerOrdersInfo: { ...configNewcomerOrdersInfo, taskStatus },
