@@ -12,13 +12,14 @@ import {
   switchTab,
   filterGoods,
 } from "@/common/utils";
+import { fetchUserShareCommission } from "@/server/index";
 import Title from "./components/goodsTitle";
 import ShopCard from "./components/descriptionCard";
-import Lovely from "@/components/lovely";
-import CouponLovely from "@/components/couponLovely";
 import Router from "@/common/router";
 import Toast from "@/components/paySuccess";
 import { inject, observer } from "mobx-react";
+import RecommendCoupon from "@/components/couponActive";
+import RecommendSpecal from "@/components/specalActive";
 import "./index.scss";
 @inject("store")
 @observer
@@ -32,6 +33,7 @@ class Index extends Component {
       orderResult: {},
       visible: false,
       configNewcomerOrdersInfo: {},
+      configUserLevelInfo: {},
     };
   }
 
@@ -42,6 +44,7 @@ class Index extends Component {
   }
   componentDidMount() {
     this.fetchConfigNewcomerOrders();
+    this.fetchUserShareCommission();
   }
   componentDidShow() {
     this.getOrderResult();
@@ -73,6 +76,14 @@ class Index extends Component {
       },
     });
   }
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
+  }
   fetchConfigNewcomerOrders() {
     getConfigNewcomerOrders({}, (res) => {
       const { configNewcomerOrdersInfo = {} } = res;
@@ -100,6 +111,7 @@ class Index extends Component {
       orderResult,
       orderResult: { orderType = "specialGoods", beanFee },
       visible,
+      configUserLevelInfo,
       configNewcomerOrdersInfo,
     } = this.state;
     const { beanLimitStatus } = this.props.store.homeStore;
@@ -133,13 +145,17 @@ class Index extends Component {
             });
           }}
         ></Toast>
-        <View className="maybe_love">
-          {orderType === "specialGoods" ? (
-            <Lovely title={"小伙伴们还喜欢"}></Lovely>
-          ) : (
-            <CouponLovely title={"小伙伴们还喜欢"}></CouponLovely>
-          )}
-        </View>
+        {orderType === "specialGoods" ? (
+          <RecommendSpecal
+            current={true}
+            userInfo={configUserLevelInfo}
+          ></RecommendSpecal>
+        ) : (
+          <RecommendCoupon
+            current={true}
+            userInfo={configUserLevelInfo}
+          ></RecommendCoupon>
+        )}
       </View>
     );
   }

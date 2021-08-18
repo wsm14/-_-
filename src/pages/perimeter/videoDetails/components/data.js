@@ -254,7 +254,7 @@ export const rssConfigData = (data = {}) => {
       texts: [
         {
           y: 85,
-          width: 686,
+          width: 646,
           height: 32,
           paddingRight: 32,
           x: 57,
@@ -270,7 +270,7 @@ export const rssConfigData = (data = {}) => {
         },
         {
           y: 133,
-          width: 686,
+          width: 646,
           height: 24,
           zIndex: 20,
           x: 57,

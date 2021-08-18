@@ -140,7 +140,7 @@ class Record extends Component {
         >
           {selectList.map((item, index) => {
             return (
-              <SwiperItem className="share_swiperItem_box">
+              <SwiperItem className={classNames("share_swiperItem_box")}>
                 <View
                   className={classNames(
                     "share_swiperItem",
@@ -151,7 +151,10 @@ class Record extends Component {
                   }}
                 >
                   <View
-                    className="share_bg_style"
+                    className={classNames(
+                      "share_bg_style",
+                      current !== index && "share_swiper_boxScale"
+                    )}
                     style={{
                       ...backgroundObj(item.url),
                       borderRadius: 20,

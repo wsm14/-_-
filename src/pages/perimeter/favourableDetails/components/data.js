@@ -273,8 +273,6 @@ export const rssConfigData = (data = {}) => {
           y: 1005,
           x: 505,
           borderRadius: 200,
-          borderColor: "#EF476F",
-          borderWidth: 2,
           zIndex: 111,
         },
         {
