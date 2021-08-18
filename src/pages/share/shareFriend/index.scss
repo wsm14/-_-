@@ -16,7 +16,6 @@ page {
       display: flex;
       align-items: center;
       justify-content: center;
-
       .share_swiperItem {
         width: 500px;
         height: 890px;
@@ -49,6 +48,10 @@ page {
         height: 890px;
       }
     }
+  }
+  .share_swiper_boxScale {
+    transform: scale(0.9);
+    transition: all 500ms linear;
   }
   .share_slider_box {
     margin-top: 24px;
