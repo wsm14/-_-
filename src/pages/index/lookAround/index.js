@@ -356,7 +356,7 @@ class Index extends Component {
                 : "lookAround_categorys_flag"
             )}
           >
-            <View className="lookAround_topText">周边特惠</View>
+            <View className="lookAround_topText">特惠推荐</View>
             <View
               className={classNames(
                 "lookAround_categorys_iconText",

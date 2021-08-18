@@ -12,9 +12,8 @@ import {
   switchTab,
 } from "@/common/utils";
 import Router from "@/common/router";
-import Lovely from "@/components/lovely";
+import RecommendSpecal from "@/components/specalActive";
 import { fetchUserShareCommission } from "@/server/index";
-import Coupons from "@/components/coupon";
 import Recommend from "@/components/specalActive";
 import Coupon from "./components/coupon";
 import Toast from "@/components/paySuccess";
@@ -221,7 +220,10 @@ class Index extends Component {
             ) : null}
             <Coupon data={orderResult}></Coupon>
           </View>
-          <Recommend current={true} userInfo={configUserLevelInfo}></Recommend>
+          <Recommend
+            current={true}
+            userInfo={configUserLevelInfo}
+          ></Recommend>
           <Toast
             data={configNewcomerOrdersInfo}
             show={visible}

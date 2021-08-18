@@ -206,7 +206,7 @@ export const saveLevelTarget = (data = {}, fn) => {
       url: "/user/user/level/manualUpgrade",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
 //升级哒人等级
