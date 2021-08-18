@@ -373,7 +373,13 @@ class MerchantDetails extends Component {
     const shareInfoBtn = () => {
       if (shareCommission > 0) {
         return (
-          <ButtonView>
+          <ButtonView
+            data={{
+              path: "pages/perimeter/favourableDetails/index",
+              type: "favourableDetails_share",
+              name: "商品详情分享",
+            }}
+          >
             <View
               onClick={() => loginBtn(() => this.getShareInfo())}
               className="shopdetails_shop_btnBox2 shopdetails_shop_btnColor2"
@@ -389,7 +395,13 @@ class MerchantDetails extends Component {
         );
       } else {
         return (
-          <ButtonView>
+          <ButtonView
+            data={{
+              path: "pages/perimeter/favourableDetails/index",
+              type: "favourableDetails_share",
+              name: "商品详情分享",
+            }}
+          >
             <View
               onClick={() => loginBtn(() => this.getShareInfo())}
               className="shopdetails_shop_btnBox2 shopdetails_shop_btnColor2"
@@ -426,8 +438,13 @@ class MerchantDetails extends Component {
       } else if (shareCommission !== 0) {
         return (
           <View className="shopdetails_shop_btnBox">
-            <ButtonView>
-              {" "}
+            <ButtonView
+              data={{
+                path: "pages/perimeter/favourableDetails/index",
+                type: "favourableDetails_share",
+                name: "商品详情购买",
+              }}
+            >
               <View
                 className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"
                 onClick={() => loginBtn(() => this.saveGoodsOrder())}
@@ -446,7 +463,13 @@ class MerchantDetails extends Component {
       } else {
         return (
           <View className="shopdetails_shop_btnBox">
-            <ButtonView>
+            <ButtonView
+              data={{
+                path: "pages/perimeter/favourableDetails/index",
+                type: "favourableDetails_share",
+                name: "商品详情购买",
+              }}
+            >
               {" "}
               <View
                 className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"

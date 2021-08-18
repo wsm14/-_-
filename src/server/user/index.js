@@ -5,7 +5,7 @@ import { httpGet, httpPost } from "@/api/newRequest";
 import { objStatus } from "@/common/utils";
 
 export const getMainPage = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/userInfo/mainPage",
       data: data,
@@ -206,7 +206,7 @@ export const saveLevelTarget = (data = {}, fn) => {
       url: "/user/user/level/manualUpgrade",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
 //升级哒人等级

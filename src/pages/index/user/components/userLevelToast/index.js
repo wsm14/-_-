@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Taro, { useScope } from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import ButtonView from "@/components/Button";
 import classNames from "classnames";
 import Router from "@/common/router";
 export default (props) => {
-  const { visible = false, onClose, canfirm } = props;
+  const { visible = false, onClose, canfirm, data } = props;
+  const { level = "0" } = data;
   if (visible) {
     return (
       <View
@@ -17,17 +18,14 @@ export default (props) => {
         catchMove
       >
         <View>
-          <View
-            className="rules_success_box"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
+          <View className="user_toast_layers">
+            <Image
+              src={`https://wechat-config.dakale.net/miniprogram/image/lever_wechat_${level}.png`}
+              className="user_toast_image"
+            ></Image>
             <View
-              className="rules_success_btn public_center"
-              onClick={() => {
-                canfirm();
-              }}
+              className="user_toast_btnInfo public_center"
+              onClick={() => canfirm()}
             >
               立即下载「哒卡乐」APP
             </View>

@@ -386,7 +386,13 @@ class Index extends Component {
               抵扣：¥
               {this.showBean()}
             </View>
-            <ButtonView>
+            <ButtonView
+              data={{
+                path: "pages/goods/favourOrder/index",
+                type: "favourOrder_pay",
+                name: "商品订单支付",
+              }}
+            >
               <View className="payBtn" onClick={() => this.saveCancel()}>
                 立即支付
               </View>

@@ -3086,7 +3086,7 @@ image {
 .skeleton-row,
 .skeleton-title,
 .skeleton-action {
-  background-color: #796c6c4f !important;
+  background-color: #e5e5e5 !important;
 }
 .active_Rule {
   width: 50px;
@@ -3135,4 +3135,7 @@ image {
     content: "";
     margin-right: 16px;
   }
+}
+.skeleton-avatar {
+  background-color: #e5e5e5 !important;
 }

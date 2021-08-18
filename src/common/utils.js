@@ -744,3 +744,15 @@ export const filterIndex = (list = [], valKey) => {
   }
   return obj;
 };
+export const fetchStorage = (key) => {
+  return Taro.getStorageSync(key);
+};
+//读取微信缓存
+export const fakeStorage = (key, val) => {
+  return Taro.setStorageSync(key, val);
+};
+//设置微信缓存
+export const fakeRemoveStorage = (key) => {
+  return Taro.removeStorageSync(key);
+};
+//删除微信缓存

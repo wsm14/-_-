@@ -6,6 +6,7 @@ import {
   computedPrice,
   computedBeanPrice,
 } from "@/common/utils";
+import ButtonView from "@/components/Button";
 import "./../index.scss";
 export default ({
   val,
@@ -67,49 +68,58 @@ export default ({
     }
   };
   return (
-    <View
-      className="templateCard_box"
-      onClick={(e) => {
-        e.stopPropagation();
-        callback();
+    <ButtonView
+      data={{
+        path: "pages/index/home/index",
+        type: "home_shopcard",
+        name: "首页商品大卡片",
       }}
     >
       <View
-        className="templateCard_close"
+        className="templateCard_box"
         onClick={(e) => {
-          e.stopPropagation();
-          onClose();
+          callback();
         }}
-      ></View>
-      <View className="templateCard_details_box">
+      >
         <View
-          className="templateCard_image coupon_shop_icon"
-          style={backgroundObj(promotionImg || userProfile)}
+          className="templateCard_close"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
         ></View>
-        <View className="templateCard_goods_box">
-          <View className="templateCard_title font_hide">{promotionName}</View>
-          <View className="templateCard_price font_hide">
-            <Text className="font22 bold color6">优惠价:</Text>
-            <Text className="font28 bold color6 templateCard_margin1">
-              ¥{promotionBuyPrice}
-            </Text>
-            <Text className="font20 color6 bold templateCard_margin2 templateCard_opcity">
-              原价:
-            </Text>
-            <Text className="font20 color6 bold templateCard_margin1 templateCard_opcity templateCard_through">
-              ¥{promotionOriPrice}
-            </Text>
-          </View>
-          <View className="templateCard_beanPrice font_hide">
-            <Text className="font20">卡豆再省:</Text>
-            <Text className="font20 bold templateCard_margin1">¥ </Text>
-            <Text className="font28 bold templateCard_margin1">
-              {computedBeanPrice(promotionBuyPrice, 100 - payBeanCommission)}
-            </Text>
+        <View className="templateCard_details_box">
+          <View
+            className="templateCard_image coupon_shop_icon"
+            style={backgroundObj(promotionImg || userProfile)}
+          ></View>
+          <View className="templateCard_goods_box">
+            <View className="templateCard_title font_hide">
+              {promotionName}
+            </View>
+            <View className="templateCard_price font_hide">
+              <Text className="font22 bold color6">优惠价:</Text>
+              <Text className="font28 bold color6 templateCard_margin1">
+                ¥{promotionBuyPrice}
+              </Text>
+              <Text className="font20 color6 bold templateCard_margin2 templateCard_opcity">
+                原价:
+              </Text>
+              <Text className="font20 color6 bold templateCard_margin1 templateCard_opcity templateCard_through">
+                ¥{promotionOriPrice}
+              </Text>
+            </View>
+            <View className="templateCard_beanPrice font_hide">
+              <Text className="font20">卡豆再省:</Text>
+              <Text className="font20 bold templateCard_margin1">¥ </Text>
+              <Text className="font28 bold templateCard_margin1">
+                {computedBeanPrice(promotionBuyPrice, 100 - payBeanCommission)}
+              </Text>
+            </View>
           </View>
         </View>
+        {templateBtn(val)}
       </View>
-      {templateBtn(val)}
-    </View>
+    </ButtonView>
   );
 };

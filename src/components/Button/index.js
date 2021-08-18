@@ -4,8 +4,9 @@
 import React, { useState } from "react";
 import { View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import { fetchStorage, fakeStorage, fakeRemoveStorage } from "@/common/utils";
 export default (props) => {
-  const { children } = props;
+  const { children, data = {} } = props;
   const [animate, setAnimated] = useState(null);
   const animated = () => {
     let animateTem = Taro.createAnimation({
@@ -38,9 +39,23 @@ export default (props) => {
       }, 200);
     }, 200);
   };
-
+  const statistics = () => {
+    let userInfo = fetchStorage("userInfo") || {};
+    let fetchList = fetchStorage("userHandle");
+    const { userIdString = "" } = userInfo;
+    if (fetchList && data) {
+      fakeStorage("userHandle", [...fetchList, { ...data, userIdString }]);
+    } else {
+      fakeStorage("userHandle", [{ ...data, userIdString }]);
+    }
+  };
   return (
-    <View animation={animate} onClick={() => animated()}>
+    <View
+      animation={animate}
+      onClick={() => {
+        statistics();
+      }}
+    >
       {children}
     </View>
   );
