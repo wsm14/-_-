@@ -30,7 +30,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
       }).then((val) => {
         const { newUserFlag = "1", newUserBean = "300" } = val;
         setBeanInfo({
-          newUserFlag: "1",
+          newUserFlag,
           newUserBean,
         });
       });

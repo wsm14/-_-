@@ -106,3 +106,16 @@ export const fetchListActivityGoods = (data, fn) => {
   );
 };
 //获取活动期间家人带货数量
+
+export const saveNewUserBean = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/activity/saveNewUserBean",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//领取卡豆
