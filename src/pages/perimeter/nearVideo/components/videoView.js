@@ -19,7 +19,7 @@ export default ({
   shareInfo,
   beanLimitStatus,
   saveBean,
-  dataInfo
+  dataInfo,
 }) => {
   const [scale, setScale] = useState(0);
   const [player, setPlayer] = useState(false);
@@ -102,7 +102,10 @@ export default ({
                         }}
                       >
                         <Video
-                          src={JSON.parse(videoContent || "{}").url}
+                          src={
+                            JSON.parse(videoContent || "{}").m3u8Url ||
+                            JSON.parse(videoContent || "{}").url
+                          }
                           poster={frontImage}
                           style={{
                             height: "100%",
