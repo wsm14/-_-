@@ -93,14 +93,18 @@ export const ShopView = (item, type = "goods", userInfo) => {
             </View>
           </View>
           <View className="view_shopContent_price font_hide">
-            <View className="view_shopContent_priceTitle">原价:</View>
-            <View className="view_shopContent_priceNum font_hide text_through bold">
+            <View className="view_shopContent_priceTitle color2 font20">
+              原价:
+            </View>
+            <View className="view_shopContent_priceNum font_hide text_through bold color2 font24">
               ¥{oldPrice || couponPrice}
             </View>
-            <View className="view_shopContent_priceTitle price_margin8">
+          </View>
+          <View className="view_shopContent_info font_hide">
+            <View className="view_shopContent_priceTitle color1 font20">
               优惠价:
             </View>
-            <View className="view_shopContent_priceNum bold">
+            <View className="view_shopContent_priceNum bold color1 font28">
               ¥{relPrice || buyPrice}
             </View>
           </View>

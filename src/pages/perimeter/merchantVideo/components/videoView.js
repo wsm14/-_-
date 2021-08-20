@@ -95,7 +95,10 @@ export default ({
                         }}
                       >
                         <Video
-                          src={JSON.parse(videoContent || "{}").url}
+                          src={
+                            JSON.parse(videoContent || "{}").m3u8Url ||
+                            JSON.parse(videoContent || "{}").url
+                          }
                           poster={frontImage}
                           style={{
                             height: "100%",
