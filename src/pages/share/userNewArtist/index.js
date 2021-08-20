@@ -9,6 +9,8 @@ import classNames from "classnames";
 import { ShopView } from "./components/view";
 import Login from "./components/login";
 import Top from "./components/top";
+import evens from "@/common/evens";
+import { getAuthStatus } from "@/common/authority";
 import "./index.scss";
 class Index extends PureComponent {
   constructor() {
@@ -51,20 +53,28 @@ class Index extends PureComponent {
     });
   }
   fakeNewUserBean() {
-    if (loginStatus()) {
-      saveNewUserBean({}).then((val) => {
-        this.setState({
-          newUserFlag: "0",
-        });
-      });
-    } else {
-      this.setState({
-        authFlag: true,
-      });
-    }
+    getAuthStatus({
+      key: "location",
+      success: (res) => {
+        if (loginStatus()) {
+          saveNewUserBean({}).then((val) => {
+            this.setState({
+              newUserFlag: "0",
+            });
+          });
+        } else {
+          this.setState({
+            authFlag: true,
+          });
+        }
+      },
+      fail: (res) => {
+        evens.$emit("setLocation");
+      },
+    });
   }
   fetchNearGoods() {
-    getGoodsByMerchantId({ page: 1, limit: 10 }, (res) => {
+    getGoodsByMerchantId({ page: 1, limit: 5 }, (res) => {
       const { specialGoodsList = [] } = res;
       this.setState(
         {
@@ -86,9 +96,7 @@ class Index extends PureComponent {
       },
     });
   }
-  onPullDownRefresh() {
-    this.fetchNearGoods();
-  }
+  onPullDownRefresh() {}
   onShareAppMessage(res) {}
 
   render() {

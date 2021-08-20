@@ -13,8 +13,7 @@ export const getGoodsByMerchantId = (data, fn) => {
 
 /*
  *search_shop start
- * */
-
+*/
 /*
  * keyword 关键字
  * searchType applets-小程序，app-app端
