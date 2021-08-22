@@ -68,12 +68,11 @@ page {
     padding: 0 32px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-
     .lookAround_navition_left {
       height: 64px;
       display: flex;
       align-items: center;
+      margin-right: 32px;
       .lookAround_nation_cityIcon {
         background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon483.png")
           no-repeat;
@@ -98,7 +97,7 @@ page {
       }
     }
     .lookAround_navition_center {
-      width: 366px;
+      width: 438px;
       height: 64px;
       border-radius: 40px;
       background: #f5f5f5
@@ -115,6 +114,7 @@ page {
       display: flex;
       height: 64px;
       align-items: center;
+      margin-left: auto;
       .lookAround_navition_lookCard {
         width: 48px;
         height: 48px;
@@ -125,7 +125,7 @@ page {
       .lookAround_navition_scanCode {
         width: 48px;
         height: 48px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon487.png")
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon745.png")
           no-repeat;
         background-size: 100% 100%;
         margin-left: 24px;

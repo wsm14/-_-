@@ -31,7 +31,7 @@ export default ({
     <View className="video_stem_layer">
       <View
         style={userProfile ? backgroundObj(userProfile) : {}}
-        className="video_stem_userProfile dakale_profile"
+        className="video_stem_userProfile merchant_dakale_logo"
         onClick={(e) => {
           e.stopPropagation();
           navigateTo(

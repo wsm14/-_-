@@ -40,14 +40,14 @@ export default (props) => {
     }, 200);
   };
   const statistics = () => {
-    let userInfo = fetchStorage("userInfo") || {};
-    let fetchList = fetchStorage("userHandle");
-    const { userIdString = "" } = userInfo;
-    if (fetchList && data) {
-      fakeStorage("userHandle", [...fetchList, { ...data, userIdString }]);
-    } else {
-      fakeStorage("userHandle", [{ ...data, userIdString }]);
-    }
+    // let userInfo = fetchStorage("userInfo") || {};
+    // let fetchList = fetchStorage("userHandle");
+    // const { userIdString = "" } = userInfo;
+    // if (fetchList && data) {
+    //   fakeStorage("userHandle", [...fetchList, { ...data, userIdString }]);
+    // } else {
+    //   fakeStorage("userHandle", [{ ...data, userIdString }]);
+    // }
   };
   return (
     <View

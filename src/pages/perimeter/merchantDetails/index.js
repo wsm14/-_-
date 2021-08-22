@@ -369,7 +369,13 @@ class MerchantDetails extends Component {
           <Banner
             autoplay={imageUrl.split(",").length > 1 ? true : false}
             imgStyle
-            data={imageUrl ? imageUrl.split(",") : []}
+            data={
+              imageUrl
+                ? imageUrl.split(",")
+                : [
+                    "https://wechat-config.dakale.net/miniprogram/image/icon744.png",
+                  ]
+            }
             imgName={"coverImg"}
             style={{ width: "100%", height: Taro.pxTransform(440) }}
             boxStyle={{ width: "100%", height: Taro.pxTransform(440) }}

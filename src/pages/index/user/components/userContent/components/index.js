@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "@tarojs/components";
 import Router from "@/common/router";
-import { toast } from "@/common/utils";
+import { toast, loginStatus } from "@/common/utils";
 export default ({ levelDetails, fetchUserLeverToast, incomeBean }) => {
   const {
     teamUserCount = 0,
@@ -76,7 +76,19 @@ export default ({ levelDetails, fetchUserLeverToast, incomeBean }) => {
       <View
         className="user_card_nextNever"
         onClick={() => {
-          toast("跳转权益中心");
+          if (loginStatus()) {
+            Router({
+              routerName: "webView",
+              args: {
+                link: "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dev/wechant/page/common/agreement.html",
+                title: "权益中心",
+              },
+            });
+          } else {
+            Router({
+              routerName: "login",
+            });
+          }
         }}
       >
         <View className="user_card_nextfont">{nextLevelInfo + " >"}</View>

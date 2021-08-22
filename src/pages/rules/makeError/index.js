@@ -7,6 +7,7 @@ import MakeAuth from "./components/makeAuth";
 import MakeOver from "./components/makeOver";
 import MakeRepeat from "./components/makeRepeat";
 import MakeFail from "./components/makeFail";
+import MakeClose from "./components/MakeClose";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -25,6 +26,7 @@ class Index extends Component {
       3018: <BeyondLimit></BeyondLimit>,
       5029: <MakeRepeat></MakeRepeat>,
       40012: <MakeOver></MakeOver>,
+      1111: <MakeClose></MakeClose>,
       "-1": <MakeFail></MakeFail>,
     }[code];
     return <View className="makeError_box">{template}</View>;

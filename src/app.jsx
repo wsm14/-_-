@@ -79,7 +79,7 @@ class App extends Component {
     // 判断目前微信版本是否支持自动更新
     if (wx.canIUse("getUpdateManager")) {
       const updateManager = wx.getUpdateManager();
-        updateManager.onCheckForUpdate((res) => {
+      updateManager.onCheckForUpdate((res) => {
         //检测是否有新版本
         if (res.hasUpdate) {
           updateManager.onUpdateReady(() => {
@@ -125,7 +125,7 @@ class App extends Component {
     authUpdateGeography(this.fetchUpdataLocation.bind(this));
   }
 
-  fetchUpdataLocation(res) {
+  fetchUpdataLocation(res = {}) {
     const { latitude, longitude } = res;
     Taro.setStorageSync("lat", latitude);
     Taro.setStorageSync("lnt", longitude);

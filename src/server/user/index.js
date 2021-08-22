@@ -220,3 +220,14 @@ export const fetchActiveStatus = (data = {}, fn) => {
   );
 };
 //获取达人等级相关
+
+export const fetchGroupSubMerchant = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/listGroupSubMerchant",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取达人等级相关

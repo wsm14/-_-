@@ -497,7 +497,10 @@ class index extends PureComponent {
           <View className="template_shop_detailsBox">
             <View
               className="template_shop_img"
-              style={backgroundObj(coverImg)}
+              style={backgroundObj(
+                coverImg ||
+                  "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_dakale.png"
+              )}
             ></View>
             <View className="template_shop_font">
               <View className="template_shop_merchantName font_hide">

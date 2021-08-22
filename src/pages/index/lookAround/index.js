@@ -455,16 +455,18 @@ class Index extends Component {
           className="lookAround_category_box"
           onScroll={(e) => {
             getDom(".lookAround_categorys_box", (res) => {
-              const { top } = res[0];
-              if (top) {
-                if (top < 40) {
-                  this.setState({
-                    flagDom: true,
-                  });
-                } else {
-                  this.setState({
-                    flagDom: false,
-                  });
+              if (res[0]) {
+                const { top } = res[0];
+                if (top) {
+                  if (top < 40) {
+                    this.setState({
+                      flagDom: true,
+                    });
+                  } else {
+                    this.setState({
+                      flagDom: false,
+                    });
+                  }
                 }
               }
             });
