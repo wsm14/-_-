@@ -217,7 +217,37 @@ export const httpPost = (obj, fn) => {
     });
   }
 };
-
+const uploadFile = ({ url = "", filePath, formData = {}, name } = {}) => {
+  return new Promise((resolve, reject) => {
+    Taro.uploadFile({
+      url: url,
+      filePath: filePath,
+      name: name,
+      formData: formData,
+      success: (res) => {
+        console.log("上传接口数据", res);
+        const { statusCode } = res;
+        // if (res.code >= 200 && res.code < 300) {
+        if (statusCode === 204) {
+          resolve(res);
+        } else {
+          Taro.showModal({
+            title: "提示",
+            confirmText: "确定",
+            showCancel: false,
+            confirmColor: "#07c0c2",
+            content: `${JSON.stringify(res)}`,
+            success: function (res) {},
+          });
+          reject(res);
+        }
+      },
+      fail: (res) => {
+        toast("网络错误，请重新提交");
+      },
+    });
+  });
+};
 export const httpOtherGet = (obj, fn) => {
   Taro.request({
     ...httpCondition,

@@ -76,6 +76,12 @@ export default {
       ],
     },
     {
+      root: "pages/relay",
+      pages: [
+        'home/index'
+      ],
+    },
+    {
       root: "pages/share",
       pages: [
         "hotActive/index", //8.8前面活动

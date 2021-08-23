@@ -1,0 +1,62 @@
+.relay_box {
+  line-height: 1;
+  .relay_view {
+    padding: 32px 0;
+    position: relative;
+    .relay_view_user {
+      height: 80px;
+      display: flex;
+      align-items: flex-start;
+    }
+    .relay_view_userProfile {
+      width: 80px;
+      height: 80px;
+    }
+    .relay_view_userTitle {
+      margin-left: 20px;
+      .relay_view_username {
+        padding-top: 8px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #333333;
+        width: 378px;
+      }
+      .relay_view_userTime {
+        padding-top: 16px;
+        font-size: 20px;
+        font-weight: 400;
+        color: #999999;
+        width: 378px;
+      }
+    }
+    .relay_view_btn {
+      width: 112px;
+      height: 40px;
+    }
+  }
+}
+
+.relay_tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  border-top: 1px solid #eeeeee;
+  display: flex;
+  .relay_tabbar_icon {
+    flex: 1 1;
+  }
+  .relay_tabbar_bg {
+    width: 48px;
+    height: 48px;
+    margin: 24px auto 0;
+    background: #d00000;
+  }
+  .relay_tabbar_text {
+    padding-top: 12px;
+    text-align: center;
+    color: #333333;
+    font-size: 24px;
+  }
+}

@@ -1,0 +1,47 @@
+@mixin buttonBorderNone {
+  button::after {
+    border: none;
+  }
+}
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flexCenterA {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flexCenterJ {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin whEqual($w, $h: false) {
+  width: $w;
+  height: if($h, $h, $w);
+}
+
+@mixin imgUrl($url) {
+  background: url($url);
+  background-size: 100% 100%;
+}
+
+@mixin fontHideOnly {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin fontNoMany {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: clip !important;
+  word-wrap: break-word;
+  white-space: normal !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
