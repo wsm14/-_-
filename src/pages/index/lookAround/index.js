@@ -29,7 +29,6 @@ import Navition from "./components/navition";
 import Plate from "./components/plate";
 import SelectSpecal from "./components/selectSpecal";
 import SpecalPlate from "./components/specalPlate";
-import ActiveToast from "@/components/componentView/active/tabbarBox";
 import ConfigWind from "./components/configWindVane";
 import "./index.scss";
 @inject("store")
@@ -440,7 +439,6 @@ class Index extends Component {
     return (
       <View className="lookAround_box">
         <Navition city={cityName}></Navition>
-        <ActiveToast store={activeInfoStore}></ActiveToast>
         {num === 0 && (
           <View className="wechant_init color6 font28">
             “添加到我的小程序”，更多优惠抢不停

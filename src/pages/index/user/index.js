@@ -23,7 +23,6 @@ import Toast from "@/components/stopBean";
 import Rules from "./components/retailRules";
 import Success from "./components/successLevel";
 import ReloadBottom from "./components/reloadBottom";
-import ActiveToast from "@/components/componentView/active/tabbarBox";
 import LeverToast from "./components/userLevelToast";
 import Skeleton from "./components/SkeletonView";
 import { inject, observer } from "mobx-react";
@@ -245,7 +244,6 @@ class Index extends React.Component {
             fetchUserLeverToast={this.fetchUserLeverToast.bind(this)}
           ></UserContent>
           <View className="page_user_liner"></View>
-          <ActiveToast store={activeInfoStore}></ActiveToast>
           <UserBottom></UserBottom>
           {visible && (
             <Toast
