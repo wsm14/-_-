@@ -29,20 +29,8 @@ class App extends Component {
 
   componentDidShow() {
     this.fetchCheckUpdate();
-    this.getActiveStatus();
+
     this.getShareType();
-  }
-  getActiveStatus() {
-    fetchActiveStatus({
-      activityType: "88activity",
-    }).then((val) => {
-      const { activityStatus = "0", needCountDown = "0", dayCount = 0 } = val;
-      Store.activeInfoStore.setInfo({
-        activityStatus,
-        needCountDown,
-        dayCount,
-      });
-    });
   }
   getShareType() {
     const {

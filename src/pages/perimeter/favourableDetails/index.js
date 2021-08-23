@@ -35,7 +35,6 @@ import Rule from "@/components/shopView/rule";
 import Recommend from "@/components/specalActive";
 import NewToast from "@/components/noviceGuide";
 import Wares from "@/components/componentView/wares";
-import ActiveToast from "@/components/componentView/active/tabbarBox";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
@@ -508,7 +507,6 @@ class MerchantDetails extends Component {
       if (status !== "0") {
         return (
           <View className="favourable_Details">
-            <ActiveToast store={activeInfoStore}></ActiveToast>
             <TaroShareDrawer
               {...cavansObj}
               onSave={() => console.log("点击保存")}
@@ -516,7 +514,7 @@ class MerchantDetails extends Component {
                 this.setState({ cavansObj: { start: false, data: null } })
               }
             ></TaroShareDrawer>
-            <ActiveToast store={activeInfoStore}></ActiveToast>
+          
             <View className="shopDetails_banner dakale_nullImage">
               <Banner
                 autoplay={

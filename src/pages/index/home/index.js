@@ -8,6 +8,7 @@ import {
   setIntive,
   saveFollow,
   loginStatus,
+  filterPath,
 } from "@/common/utils";
 import { ScrollView, View, Image } from "@tarojs/components";
 import {
@@ -37,9 +38,7 @@ import Router from "@/common/router";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import NearTitle from "./components/nearTitle";
-import GuideView from "./components/guide";
-import Active from "./components/activeToast";
-import ActiveToast from "@/components/componentView/active/tabbarBox";
+import NewToast from "@/components/noviceGuide";
 import "./index.scss";
 @inject("store")
 @observer
@@ -58,10 +57,12 @@ class Index extends React.PureComponent {
         limit: "10",
         newDeviceFlag: Taro.getStorageSync("newDeviceFlag") || "1",
       },
+      shareInfoData: {},
       countStatus: true,
       time: null,
       interval: null,
       visible: false,
+      paramsInfo: getCurrentInstance().router.params,
       distanceList: [
         { value: "", description: "全部" },
         { value: "500", description: "500m" },
@@ -807,6 +808,7 @@ class Index extends React.PureComponent {
       current,
       circular,
       userMomentsInfo = {},
+      userMomentsInfo: { userIdString },
       httpData: { browseType },
       beanflag,
       couponFlag,
@@ -816,6 +818,7 @@ class Index extends React.PureComponent {
       cavansObj,
       triggered,
       showTwoToast,
+      paramsInfo,
     } = this.state;
     const {
       homeStore = {},
@@ -823,7 +826,7 @@ class Index extends React.PureComponent {
       activeInfoStore = {},
     } = this.props.store;
     const { selectObj, beanLimitStatus } = homeStore;
-    const { login } = authStore;
+    const { login, shareType } = authStore;
     const { setCount } = activeInfoStore;
     const templateView = () => {
       if (browseType === "near") {
@@ -970,7 +973,7 @@ class Index extends React.PureComponent {
         <Toast
           data={userMomentsInfo}
           show={beanflag}
-          scan={getCurrentInstance().router.params || {}}
+          scan={paramsInfo || {}}
           configUserLevelInfo={configUserLevelInfo}
           visible={() => {
             this.setState({
@@ -990,66 +993,21 @@ class Index extends React.PureComponent {
           }}
         ></Coupon>
         <Lead beanLimitStatus={beanLimitStatus}></Lead>
-        {showTwoToast && (
-          <GuideView
-            setPlayer={(val) => {
-              this.setState(
-                {
-                  player: val,
-                },
-                (res) => {
-                  if (this.state.player) {
-                    setTimeout(() => {
-                      Taro.createVideoContext(`video${current}`).play();
-                    }, 300);
-                  } else {
-                    setTimeout(() => {
-                      Taro.createVideoContext(`video${current}`).pause();
-                    }, 300);
-                  }
-                }
-              );
+        {filterPath(paramsInfo) && !Taro.getStorageSync("newDeviceFlag") && (
+          <NewToast
+            type={"merchant"}
+            stopVideo={() => {
+              this.setState({ player: false });
             }}
-            proxy={interval}
-            setCount={setCount}
+            initVideo={() => {
+              this.setState({ player: true }, (res) => {
+                Taro.createVideoContext(`video${current}`).play();
+              });
+            }}
             auth={login}
-            data={userMomentsInfo}
-          ></GuideView>
+            data={{ ...shareType, merchantId: userIdString }}
+          ></NewToast>
         )}
-        <Active
-          setPlayer={(val) => {
-            this.setState(
-              {
-                player: val,
-              },
-              (res) => {
-                if (this.state.player) {
-                  setTimeout(() => {
-                    Taro.createVideoContext(`video${current}`).play();
-                  }, 300);
-                } else {
-                  setTimeout(() => {
-                    Taro.createVideoContext(`video${current}`).pause();
-                  }, 300);
-                }
-              }
-            );
-          }}
-          showNewsInfo={() =>
-            this.setState({
-              showTwoToast: true,
-            })
-          }
-          proxy={interval}
-          store={activeInfoStore}
-        ></Active>
-        {!player && (
-          <View
-            onClick={() => this.stopVideoPlayerControl()}
-            className="player_no"
-          ></View>
-        )}
-        <ActiveToast store={activeInfoStore}></ActiveToast>
         <TaroShareDrawer
           {...cavansObj}
           onSave={() => console.log("点击保存")}
