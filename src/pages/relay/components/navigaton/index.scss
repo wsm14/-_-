@@ -1,0 +1,25 @@
+.naviton_box {
+  width: 750px;
+  height: 128px;
+  position: relative;
+  z-index: 100;
+  .naviton_title_fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 128px;
+    background: #ffffff;
+    z-index: 100;
+    .naviton_title_backStyle {
+      width: 21px;
+      height: 38px;
+      position: absolute;
+      left: 32px;
+      z-index: 10086;
+    }
+  }
+  .naviton_title_green {
+    background: #108588 !important;
+  }
+}

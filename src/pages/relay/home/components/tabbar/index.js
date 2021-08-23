@@ -3,7 +3,6 @@
 */
 import React from "react";
 import { View } from "@tarojs/components";
-import { Form } from "@/pages/relay/components/FormCondition";
 
 export default (props) => {
   const { list = [], index, change } = props;

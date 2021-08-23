@@ -3,12 +3,12 @@
 */
 import React from "react";
 import { View } from "@tarojs/components";
-import FormComponents from "./../../../components/FormCondition";
+import UserCard from "@/relay/components/UserCard";
+
 export default (props) => {
   return (
-    <View className="relay_form_data">
-      {/* <FormComponents></FormComponents> */}
-      <View></View>
+    <View className="relay_box_home">
+      <UserCard list={[{}, {}]}></UserCard>
     </View>
   );
 };
