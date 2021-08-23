@@ -10,14 +10,14 @@ export default (props) => {
    select 是否开启导航切换
   */
   const { children, backFlag = false, select = false } = props;
-  const [scroll, onscroll] = useState(false);
+  const [scroll, onscroll] = useState(true);
   usePageScroll((e) => {
     if (select) {
       const { scrollTop } = e;
       if (computedSize(scrollTop) >= 128) {
-        onscroll(true);
-      } else {
         onscroll(false);
+      } else {
+        onscroll(true);
       }
     }
   });

@@ -16,7 +16,7 @@ export default (props) => {
               <View className="user_card_user">
                 <View className="user_card_userProfile">
                   <Image
-                    className="user_card_image"
+                    className="user_card_image user_card_radius"
                     lazyLoad
                     mode={"aspectFill"}
                     src={
@@ -51,7 +51,7 @@ export default (props) => {
               <View className="user_card_rankBox">
                 <View className="user_card_rankleft font_hide">
                   <View className="user_card_ranknum">87</View>
-                  <View className="user_card_rankProfile">
+                  <View className="user_card_rankProfile user_card_radius">
                     <Image
                       className="user_card_image"
                       lazyLoad

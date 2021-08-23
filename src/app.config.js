@@ -77,9 +77,7 @@ export default {
     },
     {
       root: "pages/relay",
-      pages: [
-        'home/index'
-      ],
+      pages: ["home/index", "community/goodInfo/index"],
     },
     {
       root: "pages/share",

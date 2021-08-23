@@ -29,7 +29,6 @@ class App extends Component {
 
   componentDidShow() {
     this.fetchCheckUpdate();
-
     this.getShareType();
   }
   getShareType() {
