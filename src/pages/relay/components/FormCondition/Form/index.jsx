@@ -26,12 +26,15 @@ export const FormBlock = ({
   </Form>
 );
 
-export const Group = ({ title, tip, children }) => (
+export const Group = ({ title, tip, extra, children }) => (
   <View className="form_group">
     {title && (
       <View className="form_group_title">
-        {title}
-        {tip && <Text className="title_exrt">{tip}</Text>}
+        <View style={{ flex: 1 }}>
+          {title}
+          {tip && <Text className="title_exrt">{tip}</Text>}
+        </View>
+        {extra}
       </View>
     )}
     {children}

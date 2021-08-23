@@ -1,0 +1,64 @@
+.dakale_footer_block {
+  height: 128px;
+  .dakale_footer_tip {
+    position: fixed;
+    bottom: 128px;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    color: #333333;
+    background: #fff0f0;
+    z-index: 50;
+    &_text {
+      flex: 1;
+      margin-left: 32px;
+    }
+    &_extra {
+      display: flex;
+      align-items: center;
+      color: #ef476f;
+      margin-right: 32px;
+    }
+    &_close {
+      width: 36px;
+      height: 36px;
+      margin-left: 12px;
+      background: url("https://wechat-config.dakale.net/miniprogram/relay/gc_tip_close.png")
+        100%/100%;
+      z-index: 60;
+    }
+  }
+  .dakale_footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 128px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 50;
+    Button {
+      flex: 1;
+      font-weight: 400;
+    }
+    button::after {
+      border: none !important;
+    }
+    .dakale_footer_btn_box {
+      padding: 0 32px;
+      flex: 1;
+    }
+  }
+  .dakale_footer_submit {
+    height: 80px;
+    background: #07c0c2;
+    border-radius: 12px;
+    font-size: 32px;
+    color: #ffffff;
+  }
+}

@@ -78,7 +78,8 @@ export default {
     {
       root: "pages/relay",
       pages: [
-        'home/index'
+        "home/index",
+        "groupCreate/index", // 一键开团
       ],
     },
     {
