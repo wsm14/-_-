@@ -5,6 +5,10 @@ import classNames from "classnames";
 import { goBack, computedClient, computedSize } from "@/common/utils";
 import "./index.scss";
 export default (props) => {
+  /*
+   backFlag 是否开始导航
+   select 是否开启导航切换
+  */
   const { children, backFlag = false, select = false } = props;
   const [scroll, onscroll] = useState(false);
   usePageScroll((e) => {
@@ -32,7 +36,7 @@ export default (props) => {
               style={{ top: computedSize(computedClient().top + 8) }}
               className={classNames(
                 "naviton_title_backStyle",
-                select && scroll ? "go_back_iconGreen" : "go_back_icon"
+                select && scroll ? "go_back_iconWhite" : "go_back_iconGreen"
               )}
               onClick={() => goBack()}
             ></View>
