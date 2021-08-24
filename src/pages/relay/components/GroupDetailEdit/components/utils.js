@@ -10,12 +10,12 @@ export const uploadImg = (type, onSave) => {
     success: (res) => {
       const { tempFilePaths } = res;
       upload(tempFilePaths, { img: tempFilePaths }).then((res) => {
-        if (type == "smallPicture") {
-          onSave({ type, value: res.img.toString() });
+        if (type == "smallImage") {
+          onSave({ contentType: type, content: res.img.toString() });
           return;
         } else {
           res.img.map((item) => {
-            onSave({ type, value: item });
+            onSave({ contentType: type, content: item });
           });
         }
       });

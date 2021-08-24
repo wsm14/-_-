@@ -62,13 +62,13 @@ export default ({ title, index }) => {
             const { tapIndex } = res;
             switch (tapIndex) {
               case 0:
-                uploadImg("largePicture", addData);
+                uploadImg("image", addData);
                 break;
               case 1:
-                uploadImg("smallPicture", addData);
+                uploadImg("smallImage", addData);
                 break;
               default:
-                addData({ type: "textarea" });
+                addData({ contentType: "text" });
                 break;
             }
           },

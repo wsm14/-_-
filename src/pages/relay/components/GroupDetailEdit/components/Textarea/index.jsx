@@ -7,19 +7,19 @@ import "./index.scss";
 
 /**
  * 编辑模块 - 文字编辑
- * @param {Any} value 数据值
+ * @param {Any} content 数据值
  * @param {Number} index 数据下标
  * @param {Function} setDataArr 数据储存方法
  * @param {Function} setEditStatus 设置文本框编辑状态
  */
-export default ({ value, type, index, setEditStatus }) => {
+export default ({ content, contentType, index, setEditStatus }) => {
   const { setDataArr } = useContext(EditContext);
 
   // 储存数据
   const saveNewData = (val) => {
     setEditStatus(false);
     setDataArr((old) =>
-      update(old, { $splice: [[index, 1, { type, value: val }]] })
+      update(old, { $splice: [[index, 1, { contentType, content: val }]] })
     );
   };
 
@@ -27,13 +27,14 @@ export default ({ value, type, index, setEditStatus }) => {
     <View className="gd_textarea_box">
       <TitleItem title="文字" index={index}></TitleItem>
       <Textarea
-        value={value}
+        value={content}
         placeholder="请输入团购活动内容"
         autoHeight
         disableDefaultPadding
         cursorSpacing={10}
         placeholderClass="gc_edit_default_text"
         className="gd_textarea"
+        maxlength={-1}
         onFocus={() => setEditStatus(true)}
         onBlur={(e) => saveNewData(e.detail.value)}
       ></Textarea>

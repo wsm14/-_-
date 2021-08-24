@@ -7,20 +7,20 @@ import "./index.scss";
 /**
  * 编辑模块 - 大图展示
  */
-export default ({ value, index }) => {
+export default ({ content, index }) => {
   // 点击查看图片
   const handleShowImg = (e) => {
     e.stopPropagation();
     Taro.previewImage({
-      current: value, // 当前显示图片的http链接
-      urls: [value], // 需要预览的图片http链接列表
+      current: content, // 当前显示图片的http链接
+      urls: [content], // 需要预览的图片http链接列表
     });
   };
 
   return (
     <View className="gd_largePicture_box">
       <TitleItem title="大图" index={index}></TitleItem>
-      <Image mode={"widthFix"} src={value} onClick={handleShowImg}></Image>
+      <Image mode={"widthFix"} src={content} onClick={handleShowImg}></Image>
     </View>
   );
 };

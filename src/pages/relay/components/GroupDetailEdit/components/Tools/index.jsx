@@ -11,23 +11,23 @@ export default ({ checkDefaultText, setData }) => {
   const toolsArr = [
     {
       name: "大图",
-      type: "largePicture",
+      type: "image",
       imgClass: "tools_img",
-      onClick: () => uploadImg("largePicture", setData),
+      onClick: () => uploadImg("image", setData),
     },
     {
       name: "小图",
-      type: "smallPicture",
+      type: "smallImage",
       imgClass: "tools_sImg",
-      onClick: () => uploadImg("smallPicture", setData),
+      onClick: () => uploadImg("smallImage", setData),
     },
     {
       name: "文字",
-      type: "textarea",
+      type: "text",
       imgClass: "tools_text",
       onClick: () => {
         checkDefaultText();
-        setData({ type: "textarea" });
+        setData({ contentType: "text" });
       },
     },
   ];
