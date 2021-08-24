@@ -81,6 +81,7 @@ export default {
         "home/index",
         "community/goodInfo/index",
         "community/order/index",
+        "groupCreate/index", // 一键开团
       ],
     },
     {
