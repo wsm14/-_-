@@ -11,7 +11,7 @@ const FormItemGroup = Form.Group;
 /**
  * 一键开团 操作区域
  */
-export default ({ formData, savaFormData }) => {
+export default ({ cRef, formData, savaFormData }) => {
   const [treaty, setTreaty] = useState(false); // 协议按钮
 
   const importGoods = (
@@ -29,7 +29,7 @@ export default ({ formData, savaFormData }) => {
           ></Input>
         </FormItem>
         <FormItem showLabel={false}>
-          <GroupDetailEdit></GroupDetailEdit>
+          <GroupDetailEdit cRef={cRef}></GroupDetailEdit>
         </FormItem>
       </FormItemGroup>
       <FormItemGroup title={"团购商品"} extra={importGoods}>
