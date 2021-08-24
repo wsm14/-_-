@@ -6,8 +6,10 @@ import UserCard from "./components/userAddressCard";
 import ShopCard from "./components/shopCard";
 import SelectBean from "@/components/componentView/selectBean";
 import BottomCard from "./components/bottomPay";
+import { Form, Input } from "@/relay/components/formCondition";
 import { toast } from "@/common/utils";
 import "./index.scss";
+const FormItem = Form.Item;
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -49,6 +51,18 @@ class Index extends Component {
           configUserLevelInfo={{}}
           useBeanStatus={"1"}
         ></SelectBean>
+        <View className="order_shopCard_bz">
+          <Form onSubmit={(e) => console.log(e.detail.value)} footer={false}>
+            <FormItem label={"名称"}>
+              <Input
+                name={"goodsName"}
+                placeholder={"请输入您想要备注的内容"}
+                maxLength={30}
+                style={{ textAligh: "left" }}
+              ></Input>
+            </FormItem>
+          </Form>
+        </View>
 
         <BottomCard></BottomCard>
       </View>

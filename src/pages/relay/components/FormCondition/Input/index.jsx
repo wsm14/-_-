@@ -17,7 +17,7 @@ export default ({
 }) => {
   const [placeholderShow, setPlaceholderShow] = useState(true); // placeholder是否显示问题
   const [data, setData] = useState("");
-
+  console.log(style);
   useEffect(() => {
     setData(value);
     setPlaceholderShow(!value);

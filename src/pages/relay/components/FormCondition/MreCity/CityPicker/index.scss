@@ -1,0 +1,23 @@
+@import "@/assets/css/global.scss";
+
+.cityPickerView_Block {
+  height: 516px;
+  padding-top: 47px;
+  .cityPickerView_tool {
+    width: 100%;
+    height: 400px;
+  }
+  .cityPickerView_indicator {
+    height: 60px;
+    line-height: 60px;
+  }
+  .cityPickerView_Item {
+    @include flexCenter;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    &.select {
+      color: #333333;
+    }
+  }
+}

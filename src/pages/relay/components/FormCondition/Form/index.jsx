@@ -3,7 +3,6 @@
 import React from "react";
 import { View, Text, Form, Button } from "@tarojs/components";
 import "../index.scss";
-
 export const FormBlock = ({
   onSubmit,
   submitClass,
