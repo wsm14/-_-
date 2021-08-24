@@ -10,14 +10,14 @@ import "./index.scss";
  * @param {Any} value 数据值
  * @param {Number} index 数据下标
  * @param {Function} setDataArr 数据储存方法
- * @param {Function} setTextEditStatus 设置文本框编辑状态
+ * @param {Function} setEditStatus 设置文本框编辑状态
  */
-export default ({ value, type, index, setTextEditStatus }) => {
+export default ({ value, type, index, setEditStatus }) => {
   const { setDataArr } = useContext(EditContext);
 
   // 储存数据
   const saveNewData = (val) => {
-    setTextEditStatus(false);
+    setEditStatus(false);
     setDataArr((old) =>
       update(old, { $splice: [[index, 1, { type, value: val }]] })
     );
@@ -34,7 +34,7 @@ export default ({ value, type, index, setTextEditStatus }) => {
         cursorSpacing={10}
         placeholderClass="gc_edit_default_text"
         className="gd_textarea"
-        onFocus={() => setTextEditStatus(true)}
+        onFocus={() => setEditStatus(true)}
         onBlur={(e) => saveNewData(e.detail.value)}
       ></Textarea>
     </View>

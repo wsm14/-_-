@@ -8,9 +8,7 @@ export default ({ value = [], disabled, count, onChange }) => {
 
   useEffect(() => {
     if (value && value.length) {
-      const newArr = Array.isArray(value)
-        ? value
-        : value.split(",").map((item) => ({ url: item }));
+      const newArr = Array.isArray(value) ? value : value.split(",");
       setFileList(newArr || []);
       onChange && onChange(newArr || []);
     }

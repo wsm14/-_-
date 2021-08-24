@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
-import { uploadFile } from "./newRequest";
-import crypto from "@/common/crypto-js";
+import { httpGet, uploadFile } from "./newRequest";
+import crypto from "crypto-js";
 import { Base64 } from "js-base64";
 import { toast } from "@/common/utils";
 
@@ -34,8 +34,11 @@ async function getFormDataParams() {
       ["content-length-range", 0, 1024 * 1024 * 1024],
     ],
   };
-  const credentials = await _get("/common/oss/getOssPolicy", {
-    uploadType: "resource",
+  const credentials = await httpGet({
+    url: "/common/oss/getOssPolicy",
+    data: {
+      uploadType: "resource",
+    },
   });
   const policy = Base64.encode(JSON.stringify(policyText)); // policy必须为base64的string。
   const { accessKeyId, accessKeySecret, securityToken, folder } = credentials;
@@ -58,7 +61,6 @@ function compare(property) {
   };
 }
 const updateList = (list, obj) => {
-  console.log(list, obj);
   let length = 0;
   let newObj = {
     ...obj,
@@ -86,17 +88,16 @@ export const upload = async (fileList = [], obj) => {
       mask: true,
     });
     fileList.forEach((item, index) => {
-      if (item.url.includes("https://")) {
-        imgList.push({ url: item.url, index });
-      } else if (item.url) {
-        const { url } = item;
+      if (item.includes("https://")) {
+        imgList.push({ url: item, index });
+      } else if (item) {
         const { host, folder } = fromData;
-        console.log("上传文件数据:", host, folder, url);
+        console.log("上传文件数据:", host, folder, item);
         imgList[index] = new Promise((resolve) => {
           let imgKey = folder + "/" + uuid() + ".jpg";
           uploadFile({
             url: host,
-            filePath: url,
+            filePath: item,
             name: "file",
             header: {
               "content-type": "multpart/form-data",

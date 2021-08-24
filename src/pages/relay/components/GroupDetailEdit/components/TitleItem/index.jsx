@@ -3,6 +3,7 @@ import update from "immutability-helper";
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { EditContext } from "../../editStore";
+import { uploadImg } from "../utils";
 import "./index.scss";
 
 /**
@@ -10,7 +11,6 @@ import "./index.scss";
  * @param {Boolean} textEditStatus 文本框编辑状态 编辑中不可移动数据
  * @param {Array} dataArr 数据源
  * @param {Function} setDataArr 保存数据源
- *
  */
 export default ({ title, index }) => {
   const { textEditStatus, dataArr, setDataArr } = useContext(EditContext);
@@ -24,6 +24,15 @@ export default ({ title, index }) => {
           [index, 1],
           [newIndex, 0, row],
         ],
+      });
+    });
+  };
+
+  // 数据添加
+  const addData = (data) => {
+    setDataArr((old) => {
+      return update(old, {
+        $splice: [[index + 1, 0, data]],
       });
     });
   };
@@ -46,7 +55,24 @@ export default ({ title, index }) => {
     },
     {
       name: "添加",
-      onClick: () => {},
+      onClick: () =>
+        Taro.showActionSheet({
+          itemList: ["向下添加大图", "向下添加小图", "向下添加文字"],
+          success(res) {
+            const { tapIndex } = res;
+            switch (tapIndex) {
+              case 0:
+                uploadImg("largePicture", addData);
+                break;
+              case 1:
+                uploadImg("smallPicture", addData);
+                break;
+              default:
+                addData({ type: "textarea" });
+                break;
+            }
+          },
+        }),
     },
     {
       name: "删除",

@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "@tarojs/components";
+import { uploadImg } from "../utils";
 import "./index.scss";
 
 /**
@@ -12,13 +13,13 @@ export default ({ checkDefaultText, setData }) => {
       name: "大图",
       type: "largePicture",
       imgClass: "tools_img",
-      onClick: () => {},
+      onClick: () => uploadImg("largePicture", setData),
     },
     {
       name: "小图",
       type: "smallPicture",
       imgClass: "tools_sImg",
-      onClick: () => {},
+      onClick: () => uploadImg("smallPicture", setData),
     },
     {
       name: "文字",

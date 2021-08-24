@@ -11,9 +11,9 @@ import "./index.scss";
  * 商品详情编辑模块
  */
 export default ({}) => {
-  const [textEditStatus, setTextEditStatus] = useState(false); // 文本框编辑状态 编辑中不可移动数据
-  const [defaultText, setDefaultText] = useState(""); // 默认文本数据 用做校验
   const [dataArr, setDataArr] = useState([]); // 可编辑数据暂存处理 { type 类型, value 数据 }
+  const [defaultText, setDefaultText] = useState(""); // 默认文本数据 用做校验
+  const [textEditStatus, setTextEditStatus] = useState(false); // 文本框编辑状态 编辑中不可移动数据
 
   // 储存数据
   const saveData = (data) => setDataArr((old) => old.concat(data));
@@ -38,7 +38,7 @@ export default ({}) => {
         return (
           <TextareaEdit
             {...props}
-            setTextEditStatus={setTextEditStatus}
+            setEditStatus={setTextEditStatus}
           ></TextareaEdit>
         );
       case "smallPicture": // 小图

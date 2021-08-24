@@ -19,9 +19,8 @@ export default ({ count = 5, data = [], onChange }) => {
       sizeType: ["compressed"],
       success: (res) => {
         const { tempFilePaths } = res;
-        let newFilePaths = tempFilePaths.map((item) => ({ url: item }));
-        setList([...list, ...newFilePaths]);
-        onChange([...list, ...newFilePaths]);
+        setList([...list, ...tempFilePaths]);
+        onChange([...list, ...tempFilePaths]);
       },
       fail: (res) => {},
     });
@@ -30,7 +29,7 @@ export default ({ count = 5, data = [], onChange }) => {
   const showImage = (item) => {
     Taro.previewImage({
       current: item, // 当前显示图片的http链接
-      urls: list.map((i) => i.url),
+      urls: list,
     });
   };
 
@@ -39,7 +38,7 @@ export default ({ count = 5, data = [], onChange }) => {
       return index !== countNum;
     });
     setList(newList);
-    onChange(newList);
+    onChange && onChange(newList);
   };
 
   const renderUpload = () => {
@@ -54,9 +53,8 @@ export default ({ count = 5, data = [], onChange }) => {
   };
 
   const renderImg = (item, index) => {
-    const { url } = item;
     return (
-      <View className="upload_img_cell" onClick={() => showImage(url)}>
+      <View className="upload_img_cell" onClick={() => showImage(item)}>
         <View
           className="remove-bar"
           onClick={(e) => {
@@ -66,7 +64,7 @@ export default ({ count = 5, data = [], onChange }) => {
         ></View>
         <Image
           style={{ width: "100%", height: "100%" }}
-          src={url}
+          src={item}
           lazyLoad
           mode={"aspectFill"}
         ></Image>

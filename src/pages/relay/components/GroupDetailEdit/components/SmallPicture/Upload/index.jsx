@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import { upload } from "@/api/upload";
 import "./index.scss";
 
 export default ({ count = 9, data = [], onChange }) => {
@@ -15,13 +16,14 @@ export default ({ count = 9, data = [], onChange }) => {
   const uploadImg = () => {
     Taro.chooseImage({
       count,
-      sourceType: ["album"],
+      sourceType: ["album", "camera"],
       sizeType: ["compressed"],
       success: (res) => {
         const { tempFilePaths } = res;
-        let newFilePaths = tempFilePaths.map((item) => ({ url: item }));
-        setList([...list, ...newFilePaths]);
-        onChange && onChange([...list, ...newFilePaths]);
+        upload(tempFilePaths, { img: tempFilePaths }).then((res) => {
+          setList([...list, ...res.img]);
+          onChange([...list, ...res.img]);
+        });
       },
       fail: (res) => {},
     });
@@ -30,7 +32,7 @@ export default ({ count = 9, data = [], onChange }) => {
   const showImage = (item) => {
     Taro.previewImage({
       current: item, // 当前显示图片的http链接
-      urls: list.map((i) => i.url),
+      urls: list,
     });
   };
 
@@ -54,9 +56,8 @@ export default ({ count = 9, data = [], onChange }) => {
   };
 
   const renderImg = (item, index) => {
-    const { url } = item;
     return (
-      <View className="upload_img_cell" onClick={() => showImage(url)}>
+      <View className="upload_img_cell" onClick={() => showImage(item)}>
         <View
           className="remove-bar"
           onClick={(e) => {
@@ -66,7 +67,7 @@ export default ({ count = 9, data = [], onChange }) => {
         ></View>
         <Image
           style={{ width: "100%", height: "100%" }}
-          src={url}
+          src={item}
           lazyLoad
           mode={"aspectFill"}
         ></Image>
