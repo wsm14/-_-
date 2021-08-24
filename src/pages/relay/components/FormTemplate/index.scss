@@ -1,0 +1,25 @@
+.FormTemplate_box {
+  padding: 32px 32px 0;
+  .TextInfo_interface {
+    height: 263px;
+    font-size: 28px;
+    font-weight: normal;
+    color: #666666;
+    line-height: 42px;
+    padding-bottom: 32px;
+  }
+  .imageInfo_interface {
+    padding-bottom: 32px;
+  }
+  .simImgInfo_interface {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .simImgInfo_interface_box {
+    width: 194px;
+    height: 194px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+}

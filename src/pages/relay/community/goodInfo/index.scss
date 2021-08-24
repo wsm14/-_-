@@ -101,9 +101,9 @@
   }
   .community_after_box {
     width: 750px;
-    height: 383px;
     background: linear-gradient(180deg, #fbfbfb 0%, #ffffff 100%);
     border-radius: 20px 20px 0px 0px;
+    padding-bottom: 248px;
   }
   .community_after_box {
     margin-top: -20px;
@@ -111,7 +111,288 @@
     z-index: 9;
     background: #f5f5f5;
     .community_after_shopHeight {
-      height: 188px;
+      height: 215px;
+    }
+  }
+  .community_goodCard_box {
+    background: #ffffff;
+    padding: 40px 32px 32px;
+    position: relative;
+    .community_goodCard_title {
+      display: flex;
+      align-items: center;
+      .community_goodCard_titlesInfo {
+        max-width: 512px;
+        font-size: 32px;
+        font-weight: 600;
+        color: #333333;
+        line-height: 32px;
+      }
+    }
+    .community_goodCard_tags {
+      background: rgba(7, 192, 194, 0.1);
+      display: block;
+      font-size: 20px;
+      font-weight: 400;
+      color: #07c0c2;
+      padding: 5px 14px;
+      content: "";
+      margin-left: 24px;
+    }
+    .community_goodCard_data {
+      margin-top: 32px;
+      color: #999999;
+      font-size: 20px;
+    }
+    .community_goodCard_count {
+      margin-top: 12px;
+      color: #999999;
+      font-size: 20px;
+    }
+  }
+  .community_goodCard_coby {
+    width: 124px;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid #b5b5b5;
+    position: absolute;
+    right: 32px;
+    top: 110px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #666666;
+  }
+  .community_buyCard_box {
+    width: 100%;
+    height: 242px;
+    background: #ffffff;
+    position: relative;
+    margin-top: 24px;
+    .community_buyCard_order {
+      position: absolute;
+      top: 50px;
+      right: 32px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #ef476f;
+      line-height: 32px;
+    }
+  }
+  .community_buyCard_shopInfo {
+    padding: 40px 32px 0;
+    display: flex;
+    position: relative;
+    .community_buyCard_profile {
+      width: 160px;
+      height: 160px;
+      background: #d8d8d8;
+      border-radius: 8px;
+    }
+    .community_buyCard_content {
+      margin-left: 20px;
+      .community_buyCard_name {
+        width: 414px;
+        max-height: 86px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #333333;
+        line-height: 42px;
+      }
+      .community_buyCard_price {
+        margin-top: 12px;
+      }
+      .community_buyCard_count {
+        margin-top: 30px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+      }
+    }
+  }
+  .community_buyCard_collection {
+    position: absolute;
+    right: 32px;
+    bottom: 46px;
+    display: flex;
+    align-items: center;
+  }
+  .community_buyCard_icon {
+    width: 56px;
+    height: 56px;
+  }
+  .community_buyCard_remove {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_8.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .community_buyCard_add {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_9.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .community_buyCard_text {
+    width: 60px;
+    height: 56px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .community_nodeCard_box {
+    margin-top: 24px;
+    background: #ffffff;
+    .community_nodeCard_title {
+      padding: 32px;
+      border-bottom: 2px solid #e5e5e5;
+      height: 32px;
+      font-size: 28px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 32px;
+    }
+    .community_nodeCard_list {
+      padding: 32px;
+      .community_nodeCard_listBox {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      .community_nodeCard_listBox:last-child {
+        margin-bottom: 0px;
+      }
+      .community_nodeCard_listcount {
+        height: 28px;
+        font-size: 20px;
+        font-weight: 400;
+        color: #999999;
+        line-height: 28px;
+        text-align: center;
+      }
+    }
+    .community_nodeCard_listprofile {
+      width: 60px;
+      height: 60px;
+      border-radius: 4px;
+      margin-left: 16px;
+    }
+    .community_nodeCard_listImage {
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+    }
+    .user_card_content {
+      margin-left: 20px;
+      .user_card_contentTop {
+        display: flex;
+        align-items: baseline;
+        .user_card_top1 {
+          max-width: 486px;
+          height: 28px;
+          font-size: 20px;
+          font-weight: 400;
+          color: #999999;
+          line-height: 28px;
+        }
+        .user_card_top2 {
+          font-size: 20px;
+          font-weight: 400;
+          color: #cccccc;
+          line-height: 28px;
+          flex-shrink: 0;
+          margin-left: 8px;
+        }
+      }
+      .user_card_contentBottom {
+        padding-top: 8px;
+        display: flex;
+        align-items: baseline;
+        .user_card_bottom1 {
+          max-width: 533px;
+          font-size: 20px;
+          font-weight: 400;
+          color: #333333;
+          line-height: 28px;
+        }
+        .user_card_bottom2 {
+          font-size: 20px;
+          font-weight: 400;
+          color: #ef476f;
+          line-height: 28px;
+          flex-shrink: 0;
+          margin-left: 12px;
+        }
+      }
+    }
+    .community_nodeCard_select {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      line-height: 24px;
+      border-top: 2px solid #e5e5e5;
+    }
+    .community_nodeCard_selectBox {
+      width: 24px;
+      height: 24px;
+      margin-left: 8px;
+    }
+    .community_nodeCard_imgScale {
+      width: 100%;
+      height: 100%;
+    }
+    .community_nodeCard_selectIcon1 {
+      background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_10.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .community_nodeCard_selectIcon2 {
+      background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_11.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .community_payCard_box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 128px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+  }
+  .community_payCard_btn {
+    width: 606px;
+    height: 80px;
+    background: #07c0c2;
+    border-radius: 8px;
+    margin-left: 36px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+  .community_payCard_goods {
+    margin-left: 32px;
+    .community_payCard_goodsIcon {
+      width: 48px;
+      height: 48px;
+      background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_12.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .community_payCard_goodsText {
+      font-size: 20px;
+      font-weight: 400;
+      color: #999999;
+      text-align: center;
+      padding-top: 4px;
     }
   }
 }
