@@ -10,10 +10,12 @@ export default (props) => {
         </View>
         <View className="order_userAddressCard_userBox">
           <View className="order_userAddressCard_user">
-            <Text className=""></Text>
-            <Text className=""></Text>
+            <Text className="color1 font28 bold">用户昵</Text>
+            <Text className="color2 font24">18679068769</Text>
           </View>
-          <View className="order_userAddressCard_address"></View>
+          <View className="order_userAddressCard_address font_noHide">
+            浙江省杭州市萧山区宁卫街道萧山区宁卫街道区宁卫街道
+          </View>
           <View className="order_userAddressCard_link"></View>
         </View>
       </View>

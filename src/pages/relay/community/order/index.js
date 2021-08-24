@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-import Nav from "@/relay/components/navigaton";
-import Card from "./components/user";
-import BuyCard from "./components/selectAddressCard";
-import GoodsInfo from "./components/goodCard";
-import NodeCard from "./components/nodeCard";
-import PayCard from "./components/payCard";
+import SelectCard from "./components/selectAddressCard";
+import UserCard from "./components/userAddressCard";
+import ShopCard from "./components/shopCard";
+import SelectBean from "@/components/componentView/selectBean";
+import BottomCard from "./components/bottomPay";
 import { toast } from "@/common/utils";
 import "./index.scss";
 class Index extends Component {
@@ -40,7 +39,18 @@ class Index extends Component {
     const { count } = this.state;
     return (
       <View className="order_info_box">
-         
+        <SelectCard></SelectCard>
+        <UserCard></UserCard>
+        <ShopCard></ShopCard>
+        <SelectBean
+          fn={() => {}}
+          useBeanType={"reward"}
+          data={{}}
+          configUserLevelInfo={{}}
+          useBeanStatus={"1"}
+        ></SelectBean>
+
+        <BottomCard></BottomCard>
       </View>
     );
   }
