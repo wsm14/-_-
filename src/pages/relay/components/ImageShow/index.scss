@@ -1,0 +1,8 @@
+.dakale_wx_cell_img {
+  width: 140px;
+  height: 140px;
+  border-radius: 8px;
+  &.loading {
+    background-color: #e5e5e5;
+  }
+}
