@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRouter, useDidShow } from "@tarojs/taro";
-import { navigateTo } from "@/common/utils";
+import Router from "@/common/router";
 import { navigatePostBack } from "@/relay/common/hooks";
 import { View, Button, Text } from "@tarojs/components";
 import { fetchLiftingCabinetList } from "@/server/relay";
@@ -23,6 +23,7 @@ export default () => {
     fetchGetList();
   });
 
+  // 获取选择列表
   const fetchGetList = () => {
     fetchLiftingCabinetList().then((res) => {
       const { communityLiftingCabinetList: lists } = res;
@@ -35,12 +36,18 @@ export default () => {
     navigatePostBack({ ...value });
   };
 
-  // 点击修改
-  const handleOnEdit = (e) => {
+  // 点击新增/编辑
+  const handleOnEdit = (e, type, data = {}) => {
     e.stopPropagation();
-    navigateTo(
-      `/pages/relay/selfLiftingPointSet/List/index?data=${JSON.stringify({})}`
-    );
+    const { ownerId, communityLiftingCabinetId } = data;
+    Router({
+      routerName: "selfLiftingPointEdit",
+      args: {
+        type,
+        ownerId,
+        communityLiftingCabinetId,
+      },
+    });
   };
 
   // 点击选中取消选中事件
@@ -55,7 +62,9 @@ export default () => {
         <>
           <View className="slp_heard">
             <View className="slp_heard_title">可用自提点</View>
-            <Button className="slp_heard_btn">添加自提点</Button>
+            <Button className="slp_heard_btn" onClick={handleOnEdit}>
+              添加自提点
+            </Button>
           </View>
           <View className="slp_group">
             {list.map((item) => (
@@ -84,13 +93,15 @@ export default () => {
                     <View className="slp_content_right">
                       <View
                         className="slp_content_edit"
-                        onClick={(e) => handleOnEdit(e, item)}
+                        onClick={(e) => handleOnEdit(e, "edit", item)}
                       ></View>
                     </View>
                   </View>
-                  <View className="slp_content_footer">
-                    <ImageShow width={178} src={item.images}></ImageShow>
-                  </View>
+                  {item.images && (
+                    <View className="slp_content_footer">
+                      <ImageShow width={178} src={item.images}></ImageShow>
+                    </View>
+                  )}
                 </View>
               </View>
             ))}
@@ -111,7 +122,9 @@ export default () => {
         <View className="slp_null">
           <View className="slp_tip">没有可用自提点</View>
           <View className="slp_go_add">
-            <Button className="add">添加自提点</Button>
+            <Button className="add" onClick={(e) => handleOnEdit(e, "add")}>
+              添加自提点
+            </Button>
           </View>
         </View>
       )}

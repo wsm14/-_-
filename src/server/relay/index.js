@@ -11,6 +11,28 @@ export const fetchLiftingCabinetCreate = (data, fn) => {
 };
 // 团长自提点 - 创建
 
+export const fetchLiftingCabinetEdit = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/lifting/updateCommunityLiftingCabinet",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团长自提点 - 编辑
+
+export const fetchLiftingCabinetDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/lifting/communityLiftingCabinetDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团长自提点 - 详情
+
 export const fetchLiftingCabinetList = (data = {}, fn) => {
   return httpGet(
     {

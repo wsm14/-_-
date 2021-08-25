@@ -99,6 +99,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     relayHome: "/pages/relay/home/index", //社团首页
     communityGoods: "/pages/relay/community/goodInfo/index", //社团详情页
     communityOrder: "/pages/relay/community/order/index", //社团支付
+    selfLiftingPointEdit: "/pages/relay/selfLiftingPointSet/Edit/index", // 编辑自提点
     //社团
   }[routerName];
   const types = type;
