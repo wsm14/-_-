@@ -80,7 +80,7 @@ export default {
       pages: [
         "home/index",
         "groupCreate/Create/index", // 一键开团
-        "groupCreate/GoodsDepict/index", // 一键开团 商品描述设置
+        "groupCreate/GoodsDepict/index", // 一键开团 商品描述设置2
       ],
     },
     {
