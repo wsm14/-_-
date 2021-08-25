@@ -6,6 +6,7 @@ import EditAddress from "./conponents/editAddress";
 import Template from "./conponents/template";
 import { fakeCreateUserAddress } from "@/server/relay";
 import "./index.scss";
+import { toast } from "@/common/utils";
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -20,11 +21,24 @@ class Index extends Component {
       showAddress: true,
     });
   }
-  fakeAddress(data) {
-    console.log(data);
-    fakeCreateUserAddress(data).then((val) => {
-      console.log(val);
-    });
+  fakeAddress(data, callBack) {
+    fakeCreateUserAddress(data)
+      .then((val) => {
+        toast("添加成功");
+        this.setState(
+          {
+            showAddress: false,
+          },
+          (res) => {
+            
+          }
+        );
+      })
+      .catch((val) => {
+        this.setState({
+          showAddress: false,
+        });
+      });
   }
   render() {
     const { showAddress } = this.state;
