@@ -6,6 +6,7 @@ import {
   Text as TextBlock,
   Textarea,
 } from "@/relay/components/FormCondition";
+import { checkCityName } from "@/relay/common/utils";
 import Drawer from "@/relay/components/layerlayout";
 import CitySelect from "@/relay/components/FormCondition/MreCity/CitySelect";
 import SelectAddress from "@/relay/components/SelectAddress";
@@ -13,12 +14,25 @@ import { computedSize, getLat, getLnt, toast, mapSelect } from "@/common/utils";
 import FooterFixed from "@/relay/components/FooterFixed";
 import { getAuthStatus } from "@/common/authority";
 import evens from "@/common/evens";
+import { useEffect } from "react";
 const FormItem = Form.Item;
 
 export default (props) => {
-  const { show = false, onClose, type = "edit", onSubmit } = props;
+  const {
+    show = false,
+    onClose,
+    type = "edit",
+    onSubmit,
+    defaultData,
+    fakeUpDate,
+    fakeRemove,
+  } = props;
   const [cityVisible, setCityVisible] = useState(false);
   const [data, setData] = useState({});
+  useEffect(() => {
+    setData(defaultData);
+  }, [defaultData]);
+
   const {
     address,
     addressName,
@@ -30,7 +44,7 @@ export default (props) => {
     districtName,
     provinceName,
   } = data;
-  const insertAddress = (e) => {
+  const setAddress = (e) => {
     const { addressName = "", mobile = "", address = "" } = e.detail.value;
     if (
       addressName.length === 0 ||
@@ -40,7 +54,17 @@ export default (props) => {
     ) {
       return toast("请把信息填写完整后提交");
     } else {
-      onSubmit({ lat: getLat(), lnt: getLnt(), ...data, ...e.detail.value });
+      if (type === "edit") {
+        onSubmit({ lat: getLat(), lnt: getLnt(), ...data, ...e.detail.value });
+      } else {
+        console.log(type);
+        fakeUpDate({
+          lat: getLat(),
+          lnt: getLnt(),
+          ...data,
+          ...e.detail.value,
+        });
+      }
     }
   };
   const extra = () => {
@@ -76,16 +100,20 @@ export default (props) => {
     ),
     update: (
       <FooterFixed>
-        <View className="public_auto"></View>
-        <Button className="delivery_submit_twoStyle1 delivery_submit_twoBox public_center">
-          删除
-        </Button>
-        <Button
-          formType="submit"
-          className="delivery_submit_twoStyle2  delivery_submit_twoBox public_center"
-        >
-          重新发布
-        </Button>
+        <View className="public_auto">
+          <View
+            onClick={() => fakeRemove()}
+            className="delivery_submit_twoStyle1 delivery_submit_twoBox public_center"
+          >
+            删除
+          </View>
+          <Button
+            formType="submit"
+            className="delivery_submit_twoStyle2  delivery_submit_twoBox public_center"
+          >
+            重新发布
+          </Button>
+        </View>
       </FooterFixed>
     ),
   }[type];
@@ -98,7 +126,7 @@ export default (props) => {
         overflow={true}
         onClose={() => onClose()}
       >
-        <Form onSubmit={(e) => insertAddress(e)} footer={false}>
+        <Form onSubmit={(e) => setAddress(e)} footer={false}>
           <FormItem linerFlag={false} label={"收货人"}>
             <Input
               name={"addressName"}
@@ -120,7 +148,7 @@ export default (props) => {
           </FormItem>
           <FormItem linerFlag={false} label="位置">
             <TextBlock
-              value={provinceName + cityName + districtName}
+              value={(checkCityName(districtCode) || []).join("")}
               placeholder={"请选择地址"}
               disabled={false}
               style={{ textAlign: "left" }}

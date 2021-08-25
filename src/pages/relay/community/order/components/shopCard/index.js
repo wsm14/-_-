@@ -2,15 +2,16 @@ import React, { useMemo, useState } from "react";
 import { View, Text, Image } from "@tarojs/components";
 export default (props) => {
   const { count, data, onChange } = props;
+  const { realPrice = 0, goodsName } = data;
   return (
     <View className="order_shopCard_box">
       <View className="order_shopCard_paddingBox">
         <View className="order_shopCard_profile dakale_nullImage"></View>
         <View className="order_shopCard_content">
           <View className="order_shopCard_shopTitle font_hide">
-            商品名称商品名称商品名称商品…
+            {goodsName}
           </View>
-          <View className="order_shopCard_price">¥ 69</View>
+          <View className="order_shopCard_price">¥ {realPrice}</View>
         </View>
         <View className="order_buyCard_collection">
           <View
@@ -25,10 +26,10 @@ export default (props) => {
         </View>
       </View>
       <View className="order_shopCard_countBox">
-        <Text className="color2 font20">共2件</Text>
+        <Text className="color2 font20">共{count}件</Text>
         <Text className="font28 color1 bold price_margin4"> 小计：</Text>
         <Text className="price_margin8 font20 color3">¥ </Text>
-        <Text className="font28 color3">108</Text>
+        <Text className="font28 color3">{(count * realPrice).toFixed(2)}</Text>
       </View>
     </View>
   );

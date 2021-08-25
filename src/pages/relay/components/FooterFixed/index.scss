@@ -1,5 +1,8 @@
 .dakale_footer_block {
   height: 132px;
+  button::after {
+    border: none;
+  }
   .dakale_footer_btn_box {
     position: fixed;
     bottom: 0;

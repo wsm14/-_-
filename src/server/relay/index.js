@@ -43,3 +43,47 @@ export const fakeCreateUserAddress = (data, fn) => {
   );
 };
 //团员-新增地址
+
+export const fetchAddressList = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/user/address/listUserAddress",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团员-获取地址列表
+
+export const fakeRemoveAddress = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/user/address/deleteUserAddress",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团员-删除地址
+
+export const fakeUpdateAddress = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/user/address/updateUserAddress",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团员-修改地址
+
+export const fetchGoodsOrderPrice = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/organization/user/getCommunityOrganizationGoodsOrderPrice",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团员-团购商品下单确认页

@@ -147,6 +147,8 @@
     border-radius: 12px;
     font-size: 32px;
     font-weight: 400;
+    flex: none !important;
+    flex-shrink: 0;
   }
   .delivery_submit_twoStyle1 {
     border: 2px solid #07c0c2;
@@ -158,3 +160,6 @@
     color: #ffffff;
   }
 }
+button::after {
+      border: none;
+    }

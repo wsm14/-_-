@@ -42,11 +42,12 @@ class Index extends Component {
     });
   }
   payInit() {
-    const { count } = this.state;
+    const { count, httpData } = this.state;
     Router({
       routerName: "communityOrder",
       args: {
         count,
+        ...httpData,
       },
     });
   }

@@ -8,42 +8,131 @@ import SelectBean from "@/components/componentView/selectBean";
 import BottomCard from "./components/bottomPay";
 import { Form, Input } from "@/relay/components/formCondition";
 import { toast } from "@/common/utils";
+import { fetchAddressList, fetchGoodsOrderPrice } from "@/server/relay";
+import { usePostBackData } from "@/relay/common/hooks";
 import "./index.scss";
 const FormItem = Form.Item;
 class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      count: 1,
+      userAddressList: [],
+      httpData: {
+        ...getCurrentInstance().router.params,
+      },
+      communityOrderInfo: {},
+      fakeGoods: {
+        communityOrganizationGoodsId:
+          getCurrentInstance().router.params.communityOrganizationGoodsId,
+        ownerId: getCurrentInstance().router.params.ownerId,
+        communityLiftingCabinetId: "",
+        writeContactPerson: "",
+        writeMobile: "",
+        writeAddress: "",
+        goodsCount: getCurrentInstance().router.params.count || 1,
+        useBeanType: "",
+        useBeanStatus: "",
+        remark: "",
+      },
+      selectIndex: null,
     };
   }
+  fetchAddress() {
+    fetchAddressList({}).then((val) => {
+      const { userAddressList = [] } = val;
+      this.setState({
+        userAddressList,
+      });
+    });
+  }
   componentWillUnmount() {}
-  componentDidMount() {}
+  componentDidMount() {
+    this.fetchOrder();
+  }
+  componentDidShow() {
+    this.fetchAddress();
+    const pages = Taro.getCurrentPages(); // 获取页面堆栈
+    const currPage = pages[pages.length - 1]; // 获取上一页栈
+    const { data } = currPage.data; // 获取上一页回传数据
+    if (data) {
+      this.setSelectIndex(data);
+    }
+  }
+  setSelectIndex(val) {
+    this.setState({
+      selectIndex: val,
+    });
+  }
+  fetchOrder() {
+    const { httpData } = this.state;
+    fetchGoodsOrderPrice(httpData).then((res) => {
+      const { communityOrderInfo = {} } = res;
+      const { communityLiftingCabinetList = [] } = communityOrderInfo;
+      const { fakeGoods } = this.state;
+      this.setState({
+        communityOrderInfo,
+        fakeGoods: {
+          ...fakeGoods,
+          communityLiftingCabinetId:
+            communityLiftingCabinetList[0].communityLiftingCabinetId,
+        },
+      });
+    });
+  }
   onChange(type = "add") {
-    const { count } = this.state;
+    const { fakeGoods } = this.state;
+    const { goodsCount } = fakeGoods;
     if (type === "add") {
-      if (count === 99) {
+      if (goodsCount === 99) {
         return toast("选择数量已到最大值");
       }
       this.setState({
-        count: count + 1,
+        fakeGoods: { ...fakeGoods, goodsCount: goodsCount + 1 },
       });
     } else {
-      if (count === 1) {
+      if (goodsCount === 1) {
         return toast("选择数量不能为0");
       }
       this.setState({
-        count: count - 1,
+        fakeGoods: { ...fakeGoods, goodsCount: goodsCount - 1 },
       });
     }
   }
   render() {
-    const { count } = this.state;
+    const {
+      fakeGoods = {},
+      communityOrderInfo = {},
+      userAddressList,
+      selectIndex,
+    } = this.state;
+    const { communityLiftingCabinetList } = communityOrderInfo;
+    const {
+      communityOrganizationGoodsId = "",
+      ownerId = "",
+      communityLiftingCabinetId = "",
+      writeContactPerson = "",
+      writeMobile = "",
+      writeAddress = "",
+      goodsCount = 1,
+      useBeanType = "",
+      useBeanStatus = "",
+    } = fakeGoods;
     return (
       <View className="order_info_box">
-        <SelectCard></SelectCard>
-        <UserCard></UserCard>
-        <ShopCard></ShopCard>
+        <SelectCard
+          index={communityLiftingCabinetId}
+          list={communityLiftingCabinetList}
+        ></SelectCard>
+        <UserCard
+          setInfoAddress={(val) => this.setState({ selectIndex: val })}
+          index={selectIndex}
+          list={userAddressList}
+        ></UserCard>
+        <ShopCard
+          count={goodsCount}
+          onChange={this.onChange.bind(this)}
+          data={communityOrderInfo}
+        ></ShopCard>
         <SelectBean
           fn={() => {}}
           useBeanType={"reward"}
@@ -55,15 +144,22 @@ class Index extends Component {
           <Form onSubmit={(e) => console.log(e.detail.value)} footer={false}>
             <FormItem label={"备注"}>
               <Input
-                name={"goodsName"}
+                name={"remark"}
                 placeholder={"请输入您想要备注的内容"}
                 maxLength={30}
+                onInput={(e) => {
+                  this.setState({
+                    fakeGoods: {
+                      ...fakeGoods,
+                      remark: e,
+                    },
+                  });
+                }}
                 style={{ textAlign: "left" }}
               ></Input>
             </FormItem>
           </Form>
         </View>
-
         <BottomCard></BottomCard>
       </View>
     );

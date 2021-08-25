@@ -55,7 +55,6 @@
   .order_userAddressCard_box {
     margin: 24px 32px 0;
     width: 686px;
-    height: 300px;
     background: #ffffff;
     border-radius: 8px;
     .order_userAddressCard_paddingBox {
@@ -74,6 +73,8 @@
         position: relative;
         .order_userAddressCard_user {
           padding: 32px 32px 0;
+          display: flex;
+          align-items: baseline;
         }
         .order_userAddressCard_address {
           width: 502px;
@@ -93,6 +94,30 @@
           position: absolute;
           right: 32px;
           top: 58px;
+        }
+      }
+      .order_userAddressCard_userinfo {
+        width: 622px;
+        height: 104px;
+        background: #fbfbfb;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        text-indent: 32px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #333333;
+        margin-top: 32px;
+        position: relative;
+        .order_userAddressCard_link {
+          width: 24px;
+          height: 24px;
+          background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_16.png")
+            no-repeat;
+          background-size: 100% 100%;
+          position: absolute;
+          right: 32px;
+          top: 40px;
         }
       }
     }

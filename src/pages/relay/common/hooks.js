@@ -18,11 +18,11 @@ export function usePostBackData(onEvnetChange) {
 /**
  * 数据回传
  */
-export function navigatePostBack(data) {
+export function navigatePostBack(data, back = true) {
   const pages = Taro.getCurrentPages(); // 获取当前页面栈
   if (pages.length > 1) {
     const beforePage = pages[pages.length - 2]; // 获取上一个页面实例对象
     beforePage.setData({ data: data }); // 返回参数
   }
-  Taro.navigateBack({ delta: 1 }); //返回上一个页面
+  back && Taro.navigateBack({ delta: 1 }); //返回上一个页面
 }
