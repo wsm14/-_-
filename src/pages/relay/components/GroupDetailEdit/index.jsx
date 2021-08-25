@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useImperativeHandle } from "react";
 import { View, Textarea } from "@tarojs/components";
 import { EditContext } from "./editStore";
 import Tools from "./components/Tools";
@@ -10,25 +10,30 @@ import "./index.scss";
 /**
  * 商品详情编辑模块
  */
-export default ({}) => {
-  const [dataArr, setDataArr] = useState([]); // 可编辑数据暂存处理 { contentType 类型, value 数据 }
+export default ({ cRef }) => {
+  const [dataArr, setDataArr] = useState([]); // 可编辑数据暂存处理 { contentType 类型, content 数据 }
   const [defaultText, setDefaultText] = useState(""); // 默认文本数据 用做校验
   const [textEditStatus, setTextEditStatus] = useState(false); // 文本框编辑状态 编辑中不可移动数据
+
+  // 向父组件暴露方法
+  useImperativeHandle(cRef, () => ({
+    getData: () => dataArr,
+  }));
 
   // 储存数据
   const saveData = (data) => setDataArr((old) => old.concat(data));
 
   // 判断默认输入框是否输入文字 输入则渲染一个 text
-  const checkTextareaContent = (value) => {
-    if (value.length) {
+  const checkTextareaContent = (content) => {
+    if (content.length) {
       setDefaultText("");
-      saveData({ contentType: "text", value });
+      saveData({ contentType: "text", content });
     }
   };
 
   /**
    * 检查渲染的dom结构
-   * @param {Object} data { value 数据, index 当前数据下标 }
+   * @param {Object} data { content 数据, index 当前数据下标 }
    */
   const checkEditDom = ({ data, index }) => {
     const { contentType } = data;

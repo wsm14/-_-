@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Button } from "@tarojs/components";
+import FooterFixed from "@/relay/components/FooterFixed";
 import "./index.scss";
 
 /**
@@ -25,13 +26,11 @@ export default ({}) => {
           </View>
         </View>
       )}
-      <View className={`dakale_footer`}>
-        <View className="dakale_footer_btn_box">
-          <Button formType="submit" className="dakale_footer_submit">
-            发布团购
-          </Button>
-        </View>
-      </View>
+      <FooterFixed>
+        <Button formType="submit" className="submit">
+          发布团购
+        </Button>
+      </FooterFixed>
     </View>
   );
 };

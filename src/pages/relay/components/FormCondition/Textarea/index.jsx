@@ -12,6 +12,10 @@ export default ({
   className,
   TextareaClassName,
   TextExirt,
+  className,
+  placeholderClass,
+  disableDefaultPadding,
+  placeholder,
 }) => {
   // 字数计算
   const [totalNum, setTotalNum] = useState(null);
@@ -39,8 +43,9 @@ export default ({
           className={
             !TextareaClassName ? "form_cell_textarea" : TextareaClassName
           }
-          placeholderClass="form_cell_textarea_placeholder"
+          placeholderClass={`form_cell_textarea_placeholder ${placeholderClass}`}
           adjustPosition
+          disableDefaultPadding={disableDefaultPadding}
           maxlength={maxLength}
           placeholder={placeholder}
           onInput={(e) => {

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import Taro from "@tarojs/taro";
+import React, { useRef, useState, useEffect } from "react";
 import { View } from "@tarojs/components";
-import { Form } from "../components/FormCondition";
+import { Form } from "@/relay/components/FormCondition";
 import Heard from "./components/Heard";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
@@ -12,6 +11,8 @@ import "./index.scss";
  */
 const GroupCreate = () => {
   const [formData, setFormData] = useState({}); // 额外信息储存
+
+  const cRef = useRef();
 
   useEffect(() => {
     wx.enableAlertBeforeUnload({
@@ -33,9 +34,18 @@ const GroupCreate = () => {
     <View className="create_group">
       {/* 一件开团头部 用户信息展示区域 */}
       <Heard></Heard>
-      <Form onSubmit={(e) => console.log(e.detail.value)} footer={false}>
+      <Form
+        onSubmit={(e) => {
+          console.log(e.detail.value, cRef.current.getData());
+        }}
+        footer={false}
+      >
         {/* 一件开团头部 用户信息操作区域 */}
-        <Content formData={formData} savaFormData={savaFormData}></Content>
+        <Content
+          cRef={cRef}
+          formData={formData}
+          savaFormData={savaFormData}
+        ></Content>
         {/* 一件开团底部按钮 确认区域*/}
         <Footer></Footer>
       </Form>
