@@ -53,6 +53,7 @@ export const Item = ({
   after,
   extra,
   left = false,
+  linerFlag = true,
 }) => {
   return (
     <View
@@ -61,7 +62,7 @@ export const Item = ({
         onClick && onClick(e);
       }}
     >
-      <View className="form_cell_item">
+      <View className={linerFlag ? "form_cell_item" : "form_cell_itemFlag"}>
         {showLabel && (
           <View className={`form_cell_title`}>
             {/* 表单名称 */}

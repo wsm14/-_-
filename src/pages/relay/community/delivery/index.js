@@ -4,22 +4,39 @@ import { View, Image } from "@tarojs/components";
 import Bottom from "./conponents/bottomAddress";
 import EditAddress from "./conponents/editAddress";
 import Template from "./conponents/template";
-
+import { fakeCreateUserAddress } from "@/server/relay";
 import "./index.scss";
 class Index extends Component {
   constructor() {
     super(...arguments);
-    this.state = {};
+    this.state = {
+      showAddress: false,
+    };
   }
   componentWillUnmount() {}
   componentDidMount() {}
-
+  onChangeSelect() {
+    this.setState({
+      showAddress: true,
+    });
+  }
+  fakeAddress(data) {
+    console.log(data);
+    fakeCreateUserAddress(data).then((val) => {
+      console.log(val);
+    });
+  }
   render() {
+    const { showAddress } = this.state;
     return (
       <View className="delivery_box">
-        <EditAddress></EditAddress>
+        <EditAddress
+          onSubmit={this.fakeAddress.bind(this)}
+          onClose={() => this.setState({ showAddress: false })}
+          show={showAddress}
+        ></EditAddress>
         <Template></Template>
-        <Bottom></Bottom>
+        <Bottom onChange={this.onChangeSelect.bind(this)}></Bottom>
       </View>
     );
   }

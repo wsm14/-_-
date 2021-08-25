@@ -48,11 +48,12 @@ export default (props) => {
       <ScrollView scrollY className="SelectAddress_scroll">
         <View className="SelectAddress_scroll_padding">
           {pois.map((item) => {
-            const { address } = item;
+            const { address, location = "" } = item;
+            const [lat, lnt] = location.split(",");
             return (
               <View
                 onClick={() => {
-                  onSubmit({ ...item, formatted_address });
+                  onSubmit({ address: address, lat, lnt });
                 }}
                 className="SelectAddress_scroll_template"
               >
