@@ -217,7 +217,12 @@ export const httpPost = (obj, fn) => {
     });
   }
 };
-const uploadFile = ({ url = "", filePath, formData = {}, name } = {}) => {
+export const uploadFile = ({
+  url = "",
+  filePath,
+  formData = {},
+  name,
+} = {}) => {
   return new Promise((resolve, reject) => {
     Taro.uploadFile({
       url: url,

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { View, Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import { upload } from "@/api/upload";
 import "./index.scss";
 
-export default ({ count = 5, data = [], onChange }) => {
+export default ({ count = 9, data = [], onChange }) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -15,12 +16,14 @@ export default ({ count = 5, data = [], onChange }) => {
   const uploadImg = () => {
     Taro.chooseImage({
       count,
-      sourceType: ["album"],
+      sourceType: ["album", "camera"],
       sizeType: ["compressed"],
       success: (res) => {
         const { tempFilePaths } = res;
-        setList([...list, ...tempFilePaths]);
-        onChange([...list, ...tempFilePaths]);
+        upload(tempFilePaths, { img: tempFilePaths }).then((res) => {
+          setList([...list, ...res.img]);
+          onChange([...list, ...res.img]);
+        });
       },
       fail: (res) => {},
     });
@@ -73,7 +76,7 @@ export default ({ count = 5, data = [], onChange }) => {
   };
 
   return (
-    <View className="upload_box">
+    <View className="gd_smallPicture_box_upload_box">
       {list.map((item, index) => {
         return renderImg(item, index);
       })}

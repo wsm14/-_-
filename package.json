@@ -41,6 +41,8 @@
     "@tarojs/runtime": "3.0.21",
     "@tarojs/taro": "3.0.21",
     "classnames": "^2.2.6",
+    "crypto-js": "^4.1.1",
+    "immutability-helper": "^3.1.1",
     "md5": "^2.3.0",
     "mina-painter": "^1.0.0",
     "mobx": "^4.8.0",

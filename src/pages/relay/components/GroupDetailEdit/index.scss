@@ -1,4 +1,19 @@
 .groupdetail_edit {
   width: 100%;
-  padding: 32px 0;
+  padding: 25px 0 32px;
+  .gc_edit_default_text {
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+  }
+  .gc_edit_textarea {
+    font-size: 28px;
+    min-height: 55px;
+    width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .groupdetail_edit_item + .groupdetail_edit_item {
+    margin-top: 32px;
+  }
 }
