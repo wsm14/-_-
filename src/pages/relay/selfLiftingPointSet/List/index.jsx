@@ -14,14 +14,20 @@ import "./index.scss";
 export default () => {
   // 路由获取参数
   const routeParams = useRouter().params;
-  const { data = "{}" } = routeParams;
+  const { type = "select", liftingCabinets } = routeParams;
 
   const [list, setList] = useState([]);
   const [selectId, setSelectId] = useState([]);
 
   useDidShow(() => {
     fetchGetList();
+    setSelectId(liftingCabinets);
   });
+
+  // 保存事件
+  const handleSaveData = () => {
+    navigatePostBack({ liftingCabinets: selectId.toString() });
+  };
 
   // 获取选择列表
   const fetchGetList = () => {
@@ -31,9 +37,13 @@ export default () => {
     });
   };
 
-  // 保存事件
-  const handleSaveData = (value) => {
-    navigatePostBack({ ...value });
+  // 全选事件
+  const handleAllSelect = () => {
+    if (list.length === selectId.length) {
+      setSelectId([]);
+    } else {
+      setSelectId(list.map((i) => i.communityLiftingCabinetId));
+    }
   };
 
   // 点击新增/编辑
@@ -62,7 +72,10 @@ export default () => {
         <>
           <View className="slp_heard">
             <View className="slp_heard_title">可用自提点</View>
-            <Button className="slp_heard_btn" onClick={handleOnEdit}>
+            <Button
+              className="slp_heard_btn"
+              onClick={(e) => handleOnEdit(e, "add")}
+            >
               添加自提点
             </Button>
           </View>
@@ -108,12 +121,21 @@ export default () => {
           </View>
           <FooterFixed>
             <View className="slp_footer">
-              <View className="slp_footer_left">全选</View>
+              <View
+                className={`slp_footer_left ${
+                  list.length === selectId.length ? "select" : ""
+                }`}
+                onClick={handleAllSelect}
+              >
+                全选
+              </View>
               <View className="slp_footer_right">
                 <View className="slp_submit_total">
                   已选<Text>{selectId.length}</Text>项
                 </View>
-                <Button className="slp_submit_btn">确定</Button>
+                <Button className="slp_submit_btn" onClick={handleSaveData}>
+                  确定
+                </Button>
               </View>
             </View>
           </FooterFixed>

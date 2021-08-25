@@ -66,16 +66,18 @@ export default () => {
         : images.split(",")
       : [];
     upload(img, { img: img }).then((res) => {
-      ({ edit: fetchLiftingCabinetEdit, add: fetchLiftingCabinetCreate }
-        [type]({
-          ...formData,
-          ...value,
-          images: res.img.toString(),
-        })
-        .then(() => {
-          toast("编辑成功");
-          Taro.navigateBack({ delta: 1 });
-        }));
+      const fetch = {
+        add: fetchLiftingCabinetCreate, // 新增
+        edit: fetchLiftingCabinetEdit, // 修改
+      }[type];
+      fetch({
+        ...formData,
+        ...value,
+        images: res.img.toString(),
+      }).then(() => {
+        toast("编辑成功");
+        Taro.navigateBack({ delta: 1 });
+      });
     });
   };
 

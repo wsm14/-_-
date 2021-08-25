@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "@tarojs/taro";
 import { navigateTo } from "@/common/utils";
+import Router from "@/common/router";
 import { navigatePostBack } from "@/relay/common/hooks";
 import { View, Button } from "@tarojs/components";
 import { Form, Checkbox, Text } from "@/relay/components/FormCondition";
@@ -16,28 +17,28 @@ const FormItemGroup = Form.Group;
 export default () => {
   // 路由获取参数
   const routeParams = useRouter().params;
-  const { data = "{}" } = routeParams;
+  const { liftingCabinets } = routeParams;
 
-  // 保存事件
-  const handleSaveData = (value) => {
-    navigateTo(
-      `/pages/relay/selfLiftingPointSet/List/index?data=${JSON.stringify({})}`
-    );
+  // 选择自提点页面回显跳转
+  const handleGoPage = (value) => {
+    Router({
+      routerName: "selfLiftingPointList",
+      args: {
+        type: "select",
+        liftingCabinets: liftingCabinets ? liftingCabinets.split(",") : [],
+      },
+    });
   };
 
   return (
     <View className="SelfCommission_Form">
       <Form
         borderRadius={false}
-        onSubmit={(e) => handleSaveData(e.detail.value)}
+        onSubmit={(e) => console.log(e.detail.value)}
         footer={false}
       >
         <FormItem label={"选择自提点"}>
-          <Text
-            value={""}
-            placeholder={"未选择"}
-            onClick={handleSaveData}
-          ></Text>
+          <Text value={""} placeholder={"未选择"} onClick={handleGoPage}></Text>
         </FormItem>
         <View className="slps_group">
           <FormItemGroup title="选择自提点">
