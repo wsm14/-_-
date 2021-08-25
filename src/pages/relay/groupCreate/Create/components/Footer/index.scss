@@ -31,34 +31,4 @@
       z-index: 60;
     }
   }
-  .dakale_footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 128px;
-    background: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 50;
-    Button {
-      flex: 1;
-      font-weight: 400;
-    }
-    button::after {
-      border: none !important;
-    }
-    .dakale_footer_btn_box {
-      padding: 0 32px;
-      flex: 1;
-    }
-  }
-  .dakale_footer_submit {
-    height: 80px;
-    background: #07c0c2;
-    border-radius: 12px;
-    font-size: 32px;
-    color: #ffffff;
-  }
 }

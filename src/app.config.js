@@ -79,7 +79,8 @@ export default {
       root: "pages/relay",
       pages: [
         "home/index",
-        "groupCreate/index", // 一键开团
+        "groupCreate/Create/index", // 一键开团
+        "groupCreate/GoodsDepict/index", // 一键开团 商品描述设置
       ],
     },
     {

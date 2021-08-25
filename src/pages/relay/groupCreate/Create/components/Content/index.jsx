@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { View, Text } from "@tarojs/components";
 import { GOODS_BUY_NUMBER } from "@/relay/common/constant";
-import { Form, Input, Radio, Switch } from "@/relay/components/FormCondition";
+import { navigateTo } from "@/common/utils";
+import {
+  Form,
+  Input,
+  Radio,
+  Switch,
+  Text as TextEra,
+} from "@/relay/components/FormCondition";
 import GroupDetailEdit from "@/relay/components/GroupDetailEdit";
 import "./index.scss";
 
@@ -17,6 +24,11 @@ export default ({ cRef, formData, savaFormData }) => {
   const importGoods = (
     <View className="group_ce_importGoods">从商品库导入</View>
   );
+
+  // 跳转商品描述
+  const goGoodsDepict = () => {
+    navigateTo("/pages/relay/groupCreate/GoodsDepict/index");
+  };
 
   return (
     <View className="group_ce_form">
@@ -39,6 +51,12 @@ export default ({ cRef, formData, savaFormData }) => {
             placeholder={"请输入商品名称"}
             maxLength={30}
           ></Input>
+        </FormItem>
+        <FormItem label={"商品描述"}>
+          <TextEra
+            placeholder={"添加图片及描述"}
+            onClick={goGoodsDepict}
+          ></TextEra>
         </FormItem>
         <FormItem label={"价格(¥)"}>
           <Input

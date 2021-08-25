@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
-import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { Form } from "../components/FormCondition";
+import { Form } from "@/relay/components/FormCondition";
 import Heard from "./components/Heard";
 import Content from "./components/Content";
 import Footer from "./components/Footer";

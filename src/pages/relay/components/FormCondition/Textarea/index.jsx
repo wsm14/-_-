@@ -2,7 +2,18 @@ import React, { useState, useEffect } from "react";
 import { View, Textarea } from "@tarojs/components";
 import "../index.scss";
 
-export default ({ name, value, maxLength, disabled, onInput, placeholder }) => {
+export default ({
+  name,
+  value,
+  maxLength,
+  disabled,
+  onInput,
+  className,
+  bodyClassName,
+  placeholderClass,
+  disableDefaultPadding,
+  placeholder,
+}) => {
   // 字数计算
   const [totalNum, setTotalNum] = useState(null);
   const [data, setData] = useState(data);
@@ -17,7 +28,7 @@ export default ({ name, value, maxLength, disabled, onInput, placeholder }) => {
 
   return (
     <View className="form_cell_textarea_block">
-      <View className="form_cell_content_textarea">
+      <View className={`form_cell_content_textarea ${bodyClassName}`}>
         {maxLength && (
           <View className="form_cell_content_textarea_tip">{dataNum}</View>
         )}
@@ -26,9 +37,10 @@ export default ({ name, value, maxLength, disabled, onInput, placeholder }) => {
           autoHeight
           value={data}
           disabled={disabled}
-          className="form_cell_textarea"
-          placeholderClass="form_cell_textarea_placeholder"
+          className={`form_cell_textarea ${className}`}
+          placeholderClass={`form_cell_textarea_placeholder ${placeholderClass}`}
           adjustPosition
+          disableDefaultPadding={disableDefaultPadding}
           maxlength={maxLength}
           placeholder={placeholder}
           onInput={(e) => {
