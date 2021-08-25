@@ -3,7 +3,7 @@ import { View, Text, Image, Button } from "@tarojs/components";
 import {
   Form,
   Input,
-  Text as TextBlock,
+  TextBlock,
   Textarea,
 } from "@/relay/components/FormCondition";
 import Drawer from "@/relay/components/layerlayout";
