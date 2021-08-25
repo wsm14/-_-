@@ -19,6 +19,7 @@ export default () => {
   const { data = "{}" } = routeParams;
 
   const [logisticsType, setLogisticsType] = useState("");
+  const [infoSelect, setInfoSelect] = useState(false);
 
   // 保存事件
   const handleSaveData = (value) => {
@@ -67,9 +68,26 @@ export default () => {
                     <Text
                       value={""}
                       placeholder={"默认3项"}
-                      onClick={(needOrder) => console.log({ needOrder })}
+                      onClick={() => setInfoSelect(!infoSelect)}
                     ></Text>
                   </FormItem>
+                  {infoSelect && (
+                    <FormItem label={"选择信息"}>
+                      <Checkbox
+                        value={[
+                          "writeContentPerson",
+                          "writeMobile",
+                          "writeAddress",
+                        ]}
+                        list={{
+                          writeContentPerson: "联系人",
+                          writeMobile: "电话",
+                          writeAddress: "地址",
+                        }}
+                        onChange={(e) => console.log(e[0])}
+                      ></Checkbox>
+                    </FormItem>
+                  )}
                   <FormItem label={"开团通知推送"} titleTip="(下单页优先展示)">
                     <Switch
                       value={1}

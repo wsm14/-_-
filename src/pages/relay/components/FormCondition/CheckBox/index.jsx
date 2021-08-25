@@ -27,7 +27,7 @@ export default ({
     return Object.keys(obj).map((item) => ({
       label: obj[item],
       value: `${item}`,
-      checked: item == value,
+      checked: value.includes(item),
     }));
   };
 
@@ -37,13 +37,13 @@ export default ({
       selectList = list.map((item) => ({
         label: item[label],
         value: `${item[key]}`,
-        checked: item[key] == value,
+        checked: value.includes(item[key]),
       }));
     } else
       selectList = list.map((item, index) => ({
         label: item,
         value: `${index}`,
-        checked: index == value,
+        checked: value.includes(index),
       }));
   } else {
     // 若为对象则将遍历成数组赋值
