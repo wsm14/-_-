@@ -8,17 +8,19 @@ import {
 } from "@/relay/components/FormCondition";
 import Drawer from "@/relay/components/layerlayout";
 import CitySelect from "@/relay/components/FormCondition/MreCity/CitySelect";
+import SelectAddress from "@/relay/components/SelectAddress";
 import { computedSize } from "@/common/utils";
 
 const FormItem = Form.Item;
 
 export default (props) => {
   const { show = true, changeCity } = props;
-  const [cityVisible, setCityVisible] = useState();
+  const [cityVisible, setCityVisible] = useState(false);
+  const [addressVisible, setAddressVisible] = useState(false);
   const [data, setData] = useState({});
   const extra = () => {
     return (
-      <View className="extra_address">
+      <View className="extra_address" onClick={() => setAddressVisible(true)}>
         <View className="extra_address_icon"></View>
         <View className="extra_address_text">定位</View>
       </View>
@@ -78,6 +80,7 @@ export default (props) => {
         }}
         onSubmit={(val) => {}}
       ></CitySelect>
+      <SelectAddress show={addressVisible}></SelectAddress>
     </>
   );
 };
