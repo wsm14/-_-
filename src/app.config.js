@@ -83,7 +83,9 @@ export default {
         "community/delivery/index", //收货地址
         "community/order/index", //跟团购买
         "groupCreate/Create/index", // 一键开团
-        "groupCreate/GoodsDepict/index", // 一键开团 商品描述设置2
+        "groupCreate/GoodsDepict/index", // 一键开团 商品描述设置
+        "groupCreate/LogisticsWay/index", // 一键开团 物流方式设置
+        "groupCreate/SelfLiftingPointSet/index", // 一键开团 自提点设置
       ],
     },
     {

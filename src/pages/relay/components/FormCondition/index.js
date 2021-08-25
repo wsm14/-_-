@@ -1,5 +1,6 @@
 import Form from "./Form";
 import Input from "./Input";
+import Checkbox from "./Checkbox";
 import Select from "./Select";
 import Text from "./Text";
 import TextBlock from "./Text";
@@ -12,6 +13,7 @@ import Upload from "./Upload";
 export {
   Form,
   Input,
+  Checkbox,
   Select,
   Text,
   Radio,

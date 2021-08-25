@@ -10,9 +10,15 @@ export const FormBlock = ({
   submitText,
   children,
   footerBtn,
+  borderRadius = true,
 }) => (
   <Form onSubmit={onSubmit}>
-    <View className="form_block">{children}</View>
+    <View
+      className="form_block"
+      style={borderRadius ? {} : { borderRadius: 0 }}
+    >
+      {children}
+    </View>
     {footerBtn
       ? footerBtn
       : footer && (
