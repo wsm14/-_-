@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "@tarojs/taro";
-import { navigateTo } from "@/common/utils";
 import Router from "@/common/router";
-import { navigatePostBack } from "@/relay/common/hooks";
+import { usePostBackData, navigatePostBack } from "@/relay/common/hooks";
 import { View, Button } from "@tarojs/components";
 import { Form, Checkbox, Text } from "@/relay/components/FormCondition";
 import FooterFixed from "@/relay/components/FooterFixed";
@@ -17,15 +16,33 @@ const FormItemGroup = Form.Group;
 export default () => {
   // 路由获取参数
   const routeParams = useRouter().params;
-  const { liftingCabinets } = routeParams;
+  const { liftingCabinets = "", pushFlag } = routeParams;
+
+  const [selectId, setSelectId] = useState([]);
+
+  useEffect(() => {
+    setSelectId(liftingCabinets ? liftingCabinets.split(",") : []);
+  }, []);
+
+  usePostBackData((data) => {
+    setSelectId(data.liftingCabinets);
+  });
+
+  // 保存回传数据
+  const handleOnSave = (val) => {
+    navigatePostBack({
+      liftingCabinets: selectId,
+      pushFlag: val.pushFlag.length,
+    });
+  };
 
   // 选择自提点页面回显跳转
-  const handleGoPage = (value) => {
+  const handleGoPage = () => {
     Router({
       routerName: "selfLiftingPointList",
       args: {
         type: "select",
-        liftingCabinets: liftingCabinets ? liftingCabinets.split(",") : [],
+        liftingCabinets,
       },
     });
   };
@@ -34,18 +51,23 @@ export default () => {
     <View className="SelfCommission_Form">
       <Form
         borderRadius={false}
-        onSubmit={(e) => console.log(e.detail.value)}
+        onSubmit={(e) => handleOnSave(e.detail.value)}
         footer={false}
       >
         <FormItem label={"选择自提点"}>
-          <Text value={""} placeholder={"未选择"} onClick={handleGoPage}></Text>
+          <Text
+            value={selectId.length ? `已设置${selectId.length}个` : null}
+            placeholder={"未选择"}
+            onClick={handleGoPage}
+          ></Text>
         </FormItem>
         <View className="slps_group">
           <FormItemGroup title="选择自提点">
             <FormItem label={"自动发放"} titleTip="提货完成，佣金自动到账">
               <Checkbox
-                list={{ send: "" }}
-                value={""}
+                name="pushFlag"
+                list={{ 1: "" }}
+                value={pushFlag}
                 onChange={(e) => console.log(e[0])}
               ></Checkbox>
             </FormItem>

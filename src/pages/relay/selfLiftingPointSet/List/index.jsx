@@ -21,12 +21,12 @@ export default () => {
 
   useDidShow(() => {
     fetchGetList();
-    setSelectId(liftingCabinets);
+    setSelectId(liftingCabinets ? liftingCabinets.split(",") : []);
   });
 
   // 保存事件
   const handleSaveData = () => {
-    navigatePostBack({ liftingCabinets: selectId.toString() });
+    navigatePostBack({ liftingCabinets: selectId });
   };
 
   // 获取选择列表
