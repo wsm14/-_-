@@ -3,7 +3,7 @@ import { View, Text, Image, Button } from "@tarojs/components";
 import {
   Form,
   Input,
-  TextBlock,
+  Text as TextBlock,
   Textarea,
 } from "@/relay/components/FormCondition";
 import Drawer from "@/relay/components/layerlayout";
@@ -18,7 +18,6 @@ const FormItem = Form.Item;
 export default (props) => {
   const { show = false, onClose, type = "edit", onSubmit } = props;
   const [cityVisible, setCityVisible] = useState(false);
-  const [addressVisible, setAddressVisible] = useState(false);
   const [data, setData] = useState({});
   const {
     address,
@@ -156,16 +155,6 @@ export default (props) => {
           setData({ ...data, ...val.data });
         }}
       ></CitySelect>
-      <SelectAddress
-        onClose={() => {
-          setAddressVisible(false);
-        }}
-        onSubmit={(val) => {
-          setData({ ...data, ...val });
-          setAddressVisible(false);
-        }}
-        show={addressVisible}
-      ></SelectAddress>
     </>
   );
 };
