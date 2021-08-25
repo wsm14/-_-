@@ -3,7 +3,7 @@ import { View, Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.scss";
 
-export default ({ count = 5, data = [], onChange }) => {
+export default ({ count = 9, data = [], onChange }) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {

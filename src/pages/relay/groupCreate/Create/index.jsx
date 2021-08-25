@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { usePostBackData } from "@/relay/common/hooks";
 import { View } from "@tarojs/components";
 import { Form } from "@/relay/components/FormCondition";
 import Heard from "./components/Heard";
@@ -13,6 +14,10 @@ const GroupCreate = () => {
   const [formData, setFormData] = useState({}); // 额外信息储存
 
   const cRef = useRef();
+
+  usePostBackData((data) => {
+    console.log("回传的参数对象", data);
+  });
 
   useEffect(() => {
     wx.enableAlertBeforeUnload({

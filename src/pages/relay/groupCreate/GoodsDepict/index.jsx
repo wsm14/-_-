@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { navigatePostBack } from "@/relay/common/hooks";
+import { upload } from "@/api/upload";
 import { View, Button } from "@tarojs/components";
 import { Form, Upload, Textarea } from "@/relay/components/FormCondition";
 import FooterFixed from "@/relay/components/FooterFixed";
@@ -11,21 +13,24 @@ const FormItemGroup = Form.Group;
  * 编辑图片和描述
  */
 export default () => {
+  const [fileList, setFileList] = useState([]);
+
+  // 保存事件
+  const handleSaveData = (value) => {
+    navigatePostBack(value);
+    // upload();
+  };
+
   return (
     <View className="GoodsDepict_Form">
-      <Form
-        onSubmit={(e) => {
-          console.log(e.detail.value);
-        }}
-        footer={false}
-      >
+      <Form onSubmit={(e) => handleSaveData(e.detail.value)} footer={false}>
         <FormItemGroup>
           <FormItem label={"商品描述"} vertical>
             <Textarea
               name={"goodsName"}
               placeholder="请输入商品描述"
-              bodyClassName="bodyClassName"
-              className="txtarea_className"
+              className="bodyClassName"
+              TextareaClassName="txtarea_className"
               placeholderClass="placeholderClass"
               disableDefaultPadding
               maxLength={2000}
@@ -34,7 +39,10 @@ export default () => {
         </FormItemGroup>
         <FormItemGroup>
           <FormItem label={"商品图片"} titleTip={"最多9张"} vertical>
-            <Upload name={"goodsNasme"}></Upload>
+            <Upload
+              value={fileList}
+              onChange={(files) => setFileList(files)}
+            ></Upload>
           </FormItem>
         </FormItemGroup>
         <FooterFixed>
