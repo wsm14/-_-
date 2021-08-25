@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Taro from "@tarojs/taro";
 import { navigatePostBack } from "@/relay/common/hooks";
 import { upload } from "@/api/upload";
 import { View, Button } from "@tarojs/components";
