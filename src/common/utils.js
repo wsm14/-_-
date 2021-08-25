@@ -756,3 +756,14 @@ export const fakeRemoveStorage = (key) => {
   return Taro.removeStorageSync(key);
 };
 //删除微信缓存
+export const mapSelect = (fn) => {
+  wx.chooseLocation({
+    success: (val) => {
+      const { city, name, latitude, longitude } = val;
+      return fn({ address: name, lat: latitude, lnt: longitude });
+    },
+    fail: () => {
+      toast("获取微信位置失败");
+    },
+  });
+};

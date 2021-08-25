@@ -9,7 +9,7 @@ import {
 import Drawer from "@/relay/components/layerlayout";
 import CitySelect from "@/relay/components/FormCondition/MreCity/CitySelect";
 import SelectAddress from "@/relay/components/SelectAddress";
-import { computedSize, getLat, getLnt, toast } from "@/common/utils";
+import { computedSize, getLat, getLnt, toast, mapSelect } from "@/common/utils";
 import FooterFixed from "@/relay/components/FooterFixed";
 import { getAuthStatus } from "@/common/authority";
 import evens from "@/common/evens";
@@ -52,7 +52,9 @@ export default (props) => {
           getAuthStatus({
             key: "location",
             success: (res) => {
-              setAddressVisible(true);
+              mapSelect((val) => {
+                setData({ ...data, ...val });
+              });
             },
             fail: (res) => {
               evens.$emit("setLocation");
