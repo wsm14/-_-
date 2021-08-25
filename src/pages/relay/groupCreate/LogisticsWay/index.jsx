@@ -27,12 +27,10 @@ export default () => {
     navigatePostBack({ ...value });
   };
 
-  // 跳转自提点设置
-  const goSelfLiftingPointSet = () => {
+  // 跳转自提点佣金设置
+  const goSelfLiftingPointCommissionSet = () => {
     navigateTo(
-      `/pages/relay/groupCreate/SelfLiftingPointSet/index?data=${JSON.stringify(
-        {}
-      )}`
+      `/pages/relay/groupCreate/SelfCommission/index?data=${JSON.stringify({})}`
     );
   };
 
@@ -62,7 +60,7 @@ export default () => {
                     <Text
                       value={""}
                       placeholder={"未设置"}
-                      onClick={goSelfLiftingPointSet}
+                      onClick={goSelfLiftingPointCommissionSet}
                     ></Text>
                   </FormItem>
                   <FormItem label={"需要用户填写信息"}>
