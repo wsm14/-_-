@@ -41,7 +41,7 @@ export default (props) => {
   }, [show]);
 
   return (
-    <View className="PopLayout">
+    <View className="layer_Layout">
       <View
         catchMove
         className={"PopLayout_mask" + (show ? " pop_show" : "pop_hide")}
@@ -51,22 +51,11 @@ export default (props) => {
         className={"PopLayout_content"}
         style={{ transform: `translateY(${!show ? "100%" : "0"})` }}
       >
-        <View className="PopLayout_padding_info">
-          <View className="poplayout_top">
-            <View className="poplayout_left">
-              <Text className="poplayout_close" onClick={onClose}>
-                取消
-              </Text>
-            </View>
-            <View className="poplayout_title">{title}</View>
-            <View className="poplayout_right">
-              <Text className="poplayout_sure" onClick={hanleCLick}>
-                {okText}
-              </Text>
-            </View>
-          </View>
+        <View className="layer_Layout_title">
+          <View>{title}</View>
+          <View className="layer_Layout_close" onClick={() => onClose()}></View>
         </View>
-
+        <View className="larer_layout_liner"></View>
         {childDel && (
           <View className="poplayout_children">
             {typeof children != "function" ? children : children({ onSubmit })}

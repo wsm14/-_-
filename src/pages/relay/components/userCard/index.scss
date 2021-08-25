@@ -151,9 +151,13 @@
     justify-content: space-between;
     .user_card_gloupStatus {
       font-size: 24px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: #07c0c2;
+    }
+    .user_card_gloupNoStatus {
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
     }
     .user_card_gloupbtn {
       width: 120px;

@@ -9,7 +9,7 @@ export default ({
   type,
   placeholder,
   disabled,
-  style,
+  style = {},
   onInput,
   onBlur,
   suffix,

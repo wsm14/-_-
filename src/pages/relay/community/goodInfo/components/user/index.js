@@ -2,6 +2,13 @@ import React, { useMemo, useState } from "react";
 import { View, Text, Image } from "@tarojs/components";
 export default (props) => {
   const { data } = props;
+  const {
+    userName,
+    userProfile,
+    subscribeFlag = "0",
+    teamCount = 0,
+    consumeCount = 0,
+  } = data;
   return (
     <View className="community_card">
       <View className="community_card_user">
@@ -10,17 +17,15 @@ export default (props) => {
             className="community_card_image community_card_radius"
             lazyLoad
             mode={"aspectFill"}
-            src={
-              "https://wechat-config.dakale.net/miniprogram/relay/icon_1.png"
-            }
+            src={userProfile}
           ></Image>
         </View>
         <View className="community_card_userTitle">
-          <View className="community_card_username">
-            西沙西沙西沙西沙西沙西西…
-          </View>
+          <View className="community_card_username">{userName}</View>
           <View className="community_card_userTime">
-            7个月前 | 96人查看｜ 13次跟团{" "}
+            成员{teamCount}
+            {teamCount > 100 && "+"}｜跟团人次{consumeCount}
+            {consumeCount > 100 && "+"}
           </View>
         </View>
       </View>
@@ -38,7 +43,7 @@ export default (props) => {
           <View className="community_card_font">分享</View>
         </View>
       </View>
-      <View className="community_card_btn"></View>
+      {subscribeFlag === "0" && <View className="community_card_btn"></View>}
     </View>
   );
 };

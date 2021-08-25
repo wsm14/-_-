@@ -53,12 +53,12 @@ class Index extends Component {
         ></SelectBean>
         <View className="order_shopCard_bz">
           <Form onSubmit={(e) => console.log(e.detail.value)} footer={false}>
-            <FormItem label={"名称"}>
+            <FormItem label={"备注"}>
               <Input
                 name={"goodsName"}
                 placeholder={"请输入您想要备注的内容"}
                 maxLength={30}
-                style={{ textAligh: "left" }}
+                style={{ textAlign: "left" }}
               ></Input>
             </FormItem>
           </Form>

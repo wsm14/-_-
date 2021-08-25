@@ -2,10 +2,13 @@
  到点打卡,商户暂不支持到店打卡，请联系商户开通设置
 */
 import React from "react";
+
 import { View } from "@tarojs/components";
 
+
 export default (props) => {
-  const { list = [], index, change } = props;
+  const { index, change, list } = props;
+
   return (
     <View className="relay_tabbar">
       {list.map((item) => {

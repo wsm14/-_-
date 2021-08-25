@@ -50,7 +50,9 @@ export const Item = ({
   onClick,
   children,
   verticalForm,
+  after,
   extra,
+  left = false,
 }) => {
   return (
     <View
@@ -72,12 +74,15 @@ export const Item = ({
           </View>
         )}
         {((!vertical && children) || (vertical && verticalForm)) && (
-          <View className={`form_cell_content`}>
+          <View
+            className={!left ? `form_cell_content` : "form_cell_contentLeft"}
+          >
             {/* 表单输入块 */}
             {!vertical && children}
             {vertical && verticalForm}
           </View>
         )}
+        {after && after()}
       </View>
       {titleMsg && <View className="form_cell_title_msg">{titleMsg}</View>}
       {vertical && children}

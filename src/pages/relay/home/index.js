@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import Tabbar from "./components/tabbar";
-import Test from "./components/homeInfo";
+import Home from "./components/homeInfo";
 import Nav from "@/relay/components/navigaton";
+
 import "./index.scss";
 class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      count: 0,
+      count: getCurrentInstance().router.params.count || 0,
     };
   }
   tabbarChange(index) {
@@ -27,6 +28,7 @@ class Index extends Component {
       );
     }
   }
+  componentWillMount() {}
   componentWillUnmount() {}
   componentDidMount() {}
   render() {
@@ -35,7 +37,7 @@ class Index extends Component {
     return (
       <Nav>
         <View className="relay_box">
-          <Test></Test>
+          <Home index={count}></Home>
           <Tabbar
             list={[
               { title: "1", count: 0 },

@@ -96,6 +96,10 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     shopScene: "/pages/share/shopScene/index", //88活动带货会场
     userNewArtist: "/pages/share/userNewArtist/index",
     //规则类
+    relayHome: "/pages/relay/home/index", //社团首页
+    communityGoods: "/pages/relay/community/goodInfo/index", //社团详情页
+    communityOrder: "/pages/relay/community/order/index", //社团支付
+    //社团
   }[routerName];
   const types = type;
 

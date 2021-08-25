@@ -7,17 +7,60 @@ import BuyCard from "./components/buyCard";
 import GoodsInfo from "./components/goodCard";
 import NodeCard from "./components/nodeCard";
 import PayCard from "./components/payCard";
+import FromTemplate from "@/relay/components/navigaton";
+import {
+  fetchOrganizationUserDetail,
+  fetchOrganizationRecord,
+} from "@/server/relay";
 import { toast } from "@/common/utils";
+import Router from "@/common/router";
 import "./index.scss";
 class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
       count: 1,
+      httpData: {
+        ...getCurrentInstance().router.params,
+      },
+      communityOrganizationInfo: {},
+      communityTeamUserInfo: {},
+      consumerRecordList: [],
     };
   }
   componentWillUnmount() {}
-  componentDidMount() {}
+
+  componentDidMount() {
+    this.fecthDetails();
+  }
+  fetchRecord() {
+    fetchOrganizationRecord({ ...httpData, page: 1, limit: 20 }).then((val) => {
+      const { consumerRecordList = [] } = val;
+      this.setState({
+        consumerRecordList,
+      });
+    });
+  }
+  payInit() {
+    const { count } = this.state;
+    Router({
+      routerName: "communityOrder",
+      args: {
+        count,
+      },
+    });
+  }
+  fecthDetails() {
+    const { httpData } = this.state;
+    fetchOrganizationUserDetail(httpData, (res) => {
+      const { communityOrganizationInfo = {}, communityTeamUserInfo = {} } =
+        res;
+      this.setState({
+        communityOrganizationInfo,
+        communityTeamUserInfo,
+      });
+    });
+  }
   onChange(type = "add") {
     const { count } = this.state;
     if (type === "add") {
@@ -37,21 +80,38 @@ class Index extends Component {
     }
   }
   render() {
-    const { count } = this.state;
+    const {
+      count,
+      communityOrganizationInfo,
+      communityTeamUserInfo,
+      consumerRecordList = [],
+    } = this.state;
     return (
       <Nav backFlag select>
         <View className="community_green_box">
           <View className="community_green_height"></View>
           <View className="community_after_box">
-            <Card></Card>
+            <Card
+              data={{ ...communityOrganizationInfo, ...communityTeamUserInfo }}
+            ></Card>
             <View className="community_after_shopHeight"></View>
-            <GoodsInfo></GoodsInfo>
+            <GoodsInfo
+              data={{ ...communityOrganizationInfo, ...communityTeamUserInfo }}
+            ></GoodsInfo>
+            <FromTemplate
+              data={{ ...communityOrganizationInfo, ...communityTeamUserInfo }}
+            ></FromTemplate>
             <BuyCard
               onChange={this.onChange.bind(this)}
               count={count}
+              data={{ ...communityOrganizationInfo, ...communityTeamUserInfo }}
             ></BuyCard>
-            <NodeCard></NodeCard>
-            <PayCard></PayCard>
+            <NodeCard data={consumerRecordList}></NodeCard>
+            <PayCard
+              data={{ ...communityOrganizationInfo, ...communityTeamUserInfo }}
+              count={count}
+              submit={this.payInit.bind(this)}
+            ></PayCard>
           </View>
         </View>
       </Nav>

@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import { uploadFile } from "./newRequest";
-import crypto from "@/common/crypto-js";
+import crypto from "crypto-js";
 import { Base64 } from "js-base64";
 import { toast } from "@/common/utils";
 

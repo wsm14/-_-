@@ -1,81 +1,125 @@
-/*
- 到点打卡,商户暂不支持到店打卡，请联系商户开通设置
-*/
 import React, { useMemo } from "react";
 import { View, Text, Image } from "@tarojs/components";
-import FormComponents from "../FormCondition";
+import { filterStrList } from "@/common/utils";
+import Router from "@/common/router";
 import "./index.scss";
 export default (props) => {
+  const templateTitle = {
+    notStarted: <View className="user_card_gloupStatus">一群人正赶来跟团</View>,
+    start: <View className="user_card_gloupStatus">正在跟团中</View>,
+    end: <View className="user_card_gloupStatus">已结束</View>,
+  };
+
   const { list = [] } = props;
   const memo = useMemo(() => {
     return (
       <View>
         {list.map((item) => {
+          const {
+            communityOrganizationId,
+            ownerId,
+            ownerProfile,
+            ownerName,
+            createTime,
+            viewCount,
+            buyCount,
+            title,
+            price,
+            communityImages,
+            consumerRecordList = [],
+            communityStatus,
+          } = item;
           return (
-            <View className="user_card">
+            <View
+              onClick={(e) => {
+                e.stopPropagation();
+                Router({
+                  routerName: "communityGoods",
+                  args: {
+                    ownerId,
+                    communityOrganizationId,
+                  },
+                });
+              }}
+              className="user_card"
+            >
               <View className="user_card_user">
                 <View className="user_card_userProfile">
                   <Image
                     className="user_card_image user_card_radius"
                     lazyLoad
                     mode={"aspectFill"}
-                    src={
-                      "https://wechat-config.dakale.net/miniprogram/relay/icon_1.png"
-                    }
+                    src={ownerProfile}
                   ></Image>
                 </View>
                 <View className="user_card_userTitle">
-                  <View className="user_card_username">
-                    西沙西沙西沙西沙西沙西西…
-                  </View>
+                  <View className="user_card_username">{ownerName}</View>
                   <View className="user_card_userTime">
-                    7个月前 | 96人查看｜ 13次跟团{" "}
+                    {createTime} {viewCount !== 0 && `| ${viewCount}人查看`}
+                    {buyCount !== 0 && `｜${buyCount}次跟团`}
                   </View>
                 </View>
               </View>
               <View className="user_card_liner"></View>
               <View className="user_card_shopBox">
                 <View className="user_card_shopTitleInfo font_noHide">
-                  优质生鲜搬运工，共享优质生鲜搬运工，共享优质原共享优质…
+                  {title}
                 </View>
                 <View className="user_card_shopPrice font32">
                   <Text className="font20">¥ </Text>
-                  892
+                  {price}
                 </View>
               </View>
-              <View className="user_card_showImg">
-                <View className="user_card_showImgBox"></View>
-                <View className="user_card_showImgBox"></View>
-                <View className="user_card_showImgBox"></View>
-              </View>
-              <View className="user_card_rankBox">
-                <View className="user_card_rankleft font_hide">
-                  <View className="user_card_ranknum">87</View>
-                  <View className="user_card_rankProfile user_card_radius">
-                    <Image
-                      className="user_card_image"
-                      lazyLoad
-                      mode={"aspectFill"}
-                      src={
-                        "https://wechat-config.dakale.net/miniprogram/relay/icon_1.png"
-                      }
-                    ></Image>
-                  </View>
-                  <View className="user_card_rankName font_hide">
-                    庄严庄严严…
-                  </View>
+              {communityImages.length !== 0 && (
+                <View className="user_card_showImg">
+                  {filterStrList(communityImages).map((val) => {
+                    return (
+                      <View className="user_card_showImgBox">
+                        <Image
+                          className="user_card_image"
+                          lazyLoad
+                          mode={"aspectFill"}
+                          src={val}
+                        ></Image>
+                      </View>
+                    );
+                  })}
+                </View>
+              )}
+              {consumerRecordList.length > 0 &&
+                consumerRecordList.map((val = {}, index) => {
+                  const { profile, userName, payTime, goodsInfo, goodsCount } =
+                    val;
+                  return (
+                    <View className="user_card_rankBox">
+                      <View className="user_card_rankleft font_hide">
+                        <View className="user_card_ranknum">{index}</View>
+                        <View className="user_card_rankProfile user_card_radius">
+                          <Image
+                            className="user_card_image"
+                            lazyLoad
+                            mode={"aspectFill"}
+                            src={profile}
+                          ></Image>
+                        </View>
+                        <View className="user_card_rankName font_hide">
+                          {userName}
+                        </View>
 
-                  <View className="user_card_rankTime">3个月前</View>
-                </View>
-                <View className="user_card_rankright font_hide">
-                  <View className="user_card_buyName  font_hide">
-                    现烤鱿鱼须鱼须须…
-                  </View>
-                  <View className="user_card_buyPrice">+4</View>
-                </View>
-              </View>
+                        <View className="user_card_rankTime">{payTime}</View>
+                      </View>
+                      <View className="user_card_rankright font_hide">
+                        <View className="user_card_buyName  font_hide">
+                          {goodsInfo}
+                        </View>
+                        <View className="user_card_buyPrice">{goodsCount}</View>
+                      </View>
+                    </View>
+                  );
+                })}
+
               <View className="user_card_gloupInfo">
-                <View className="user_card_gloupStatus">正在跟团中</View>
+                {templateTitle[communityStatus]}
                 <View className="user_card_gloupbtn"></View>
               </View>
               <View className="user_card_btn"></View>

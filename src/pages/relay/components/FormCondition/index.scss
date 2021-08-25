@@ -75,6 +75,7 @@
     margin-right: 54px;
     height: 92px;
     line-height: 92px;
+    min-width: 118px;
     .cell_title {
       display: inline-block;
     }
@@ -92,6 +93,13 @@
     font-weight: 400;
     color: #999999 !important;
   }
+  .form_cell_contentLeft {
+    @include flexCenterA;
+    @include fontHideOnly;
+    min-height: 92px;
+    flex: 1;
+    font-size: 28px;
+  }
   .form_cell_content {
     @include flexCenterA;
     @include fontHideOnly;
@@ -99,46 +107,46 @@
     justify-content: flex-end;
     flex: 1;
     font-size: 28px;
-    .form_cell_Text {
-      @include flexCenterA;
-      @include fontHideOnly;
-      width: 100%;
-      min-height: 92px;
-      justify-content: flex-end;
-    }
-    .form_cell_input {
-      width: 100%;
-      font-size: 28px;
-      color: #333333;
-      text-align: right;
-    }
-    .input_suffix {
-      font-size: 28px;
-      font-weight: 400;
-      color: #333333;
-      margin-left: 8px;
-    }
-    .form_cell_placeholder {
-      font-size: 28px;
-      color: #999999;
-    }
-    wx-switch .wx-switch-input {
+  }
+  .form_cell_Text {
+    @include flexCenterA;
+    @include fontHideOnly;
+    width: 100%;
+    min-height: 92px;
+    justify-content: flex-end;
+  }
+  .form_cell_input {
+    width: 100%;
+    font-size: 28px;
+    color: #333333;
+    text-align: right;
+  }
+  .input_suffix {
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    margin-left: 8px;
+  }
+  .form_cell_placeholder {
+    font-size: 28px;
+    color: #999999;
+  }
+  wx-switch .wx-switch-input {
+    height: 40px;
+    width: 70px;
+    &::before {
       height: 40px;
       width: 70px;
-      &::before {
-        height: 40px;
-        width: 70px;
-        background-color: #dfdfdf !important;
-      }
-      &::after {
-        width: 30px;
-        height: 30px;
-        transform: translate(5px, 5px);
-      }
+      background-color: #dfdfdf !important;
     }
-    wx-switch .wx-switch-input.wx-switch-input-checked:after {
-      transform: translate(33px, 5px);
+    &::after {
+      width: 30px;
+      height: 30px;
+      transform: translate(5px, 5px);
     }
+  }
+  wx-switch .wx-switch-input.wx-switch-input-checked:after {
+    transform: translate(33px, 5px);
   }
   .form_cell_extra_msg {
     font-size: 24px;
@@ -181,14 +189,13 @@
     background: #f5f5f5;
     border-radius: 4px;
     line-height: 36px;
-    .form_cell_content_textarea_tip {
-      position: absolute;
-      right: 10px;
-      bottom: 5px;
-      color: #bbbbbb;
-    }
   }
-
+  .form_cell_content_textarea_tip {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    color: #bbbbbb;
+  }
   .form_cell_textarea {
     flex: 1;
     width: 100%;

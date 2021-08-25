@@ -1,0 +1,28 @@
+import React, { Component } from "react";
+import Taro, { getCurrentInstance } from "@tarojs/taro";
+import { View, Image } from "@tarojs/components";
+import Bottom from "./conponents/bottomAddress";
+import EditAddress from "./conponents/editAddress";
+import Template from "./conponents/template";
+
+import "./index.scss";
+class Index extends Component {
+  constructor() {
+    super(...arguments);
+    this.state = {};
+  }
+  componentWillUnmount() {}
+  componentDidMount() {}
+
+  render() {
+    return (
+      <View className="delivery_box">
+        <EditAddress></EditAddress>
+        <Template></Template>
+        <Bottom></Bottom>
+      </View>
+    );
+  }
+}
+
+export default Index;

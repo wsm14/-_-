@@ -47,34 +47,14 @@ const CityPicker = (props) => {
   // 选择后的数据
   const [cityIndex, setCityIndex] = useState(nowValue);
 
-  const us = Taro.getStorageSync("userInfo");
-  const { agentCode = "" } = us;
-  const codeType = agentCode.length;
-  const cityCode = {
-    0: [],
-    6: [agentCode.slice(0, 2), agentCode.slice(0, 4), agentCode], // 区
-    4: [agentCode.slice(0, 2), agentCode], // 市
-    2: [agentCode], // 省
-  }[codeType];
-
   // 省数据
-  const citySelect = filterCity().filter((item) => item.value === cityCode[0]);
+  const citySelect = filterCity().filter((item) => item.level === "1");
 
-  // 根据权限 判断 市数据是否筛选过
-  const cityDataNew =
-    cityCode.length > 1
-      ? citySelect[0].children.filter((item) => item.value === cityCode[1])
-      : cityCode.length
-      ? citySelect[0].children
-      : [];
+  // 市数据
+  const cityDataNew = citySelect[cityIndex.value[0]].children;
 
-  // 根据权限 判断 区数据是否筛选过
-  const areaDataNew =
-    cityCode.length === 3
-      ? cityDataNew[0].children.filter((item) => item.value === cityCode[2])
-      : cityCode.length
-      ? cityDataNew[0].children
-      : [];
+  // 区数据
+  const areaDataNew = cityDataNew[cityIndex.value[1]].children;
 
   useEffect(() => {
     // 初始赋值
