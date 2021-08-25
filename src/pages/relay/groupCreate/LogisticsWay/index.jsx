@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "@tarojs/taro";
+import { navigateTo } from "@/common/utils";
 import { navigatePostBack } from "@/relay/common/hooks";
 import { View, Button } from "@tarojs/components";
 import { Form, Checkbox, Switch, Text } from "@/relay/components/FormCondition";
@@ -24,6 +25,15 @@ export default () => {
     console.log(value, logisticsType);
     return;
     navigatePostBack({ ...value });
+  };
+
+  // 跳转自提点设置
+  const goSelfLiftingPointSet = () => {
+    navigateTo(
+      `/pages/relay/groupCreate/SelfLiftingPointSet/index?data=${JSON.stringify(
+        {}
+      )}`
+    );
   };
 
   return (
@@ -52,7 +62,7 @@ export default () => {
                     <Text
                       value={""}
                       placeholder={"未设置"}
-                      onClick={(needOrder) => console.log({ needOrder })}
+                      onClick={goSelfLiftingPointSet}
                     ></Text>
                   </FormItem>
                   <FormItem label={"需要用户填写信息"}>

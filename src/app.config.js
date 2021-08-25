@@ -85,6 +85,7 @@ export default {
         "groupCreate/Create/index", // 一键开团
         "groupCreate/GoodsDepict/index", // 一键开团 商品描述设置
         "groupCreate/LogisticsWay/index", // 一键开团 物流方式设置
+        "groupCreate/SelfLiftingPointSet/index", // 一键开团 自提点设置
       ],
     },
     {
