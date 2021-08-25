@@ -9,13 +9,11 @@ export default ({
   disabled,
   onInput,
   placeholder,
-  className,
   TextareaClassName,
   TextExirt,
   className,
   placeholderClass,
   disableDefaultPadding,
-  placeholder,
 }) => {
   // 字数计算
   const [totalNum, setTotalNum] = useState(null);
