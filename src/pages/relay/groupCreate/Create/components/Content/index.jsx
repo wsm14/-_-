@@ -27,7 +27,12 @@ export default ({ cRef, formData, savaFormData }) => {
 
   // 跳转商品描述
   const goGoodsDepict = () => {
-    navigateTo("/pages/relay/groupCreate/GoodsDepict/index");
+    const { communityGoodsDescObject = {} } = formData;
+    navigateTo(
+      `/pages/relay/groupCreate/GoodsDepict/index?data=${JSON.stringify(
+        communityGoodsDescObject
+      )}`
+    );
   };
 
   return (
@@ -54,6 +59,7 @@ export default ({ cRef, formData, savaFormData }) => {
         </FormItem>
         <FormItem label={"商品描述"}>
           <TextEra
+            value={formData?.communityGoodsDescObject?.desc}
             placeholder={"添加图片及描述"}
             onClick={goGoodsDepict}
           ></TextEra>

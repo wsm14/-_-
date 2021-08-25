@@ -16,6 +16,10 @@ const GroupCreate = () => {
   const cRef = useRef();
 
   usePostBackData((data) => {
+    const { desc, img } = data;
+    if (desc || img) {
+      savaFormData({ communityGoodsDescObject: data });
+    }
     console.log("回传的参数对象", data);
   });
 
