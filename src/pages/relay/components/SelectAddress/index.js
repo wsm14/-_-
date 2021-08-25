@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 import { View, ScrollView } from "@tarojs/components";
-import { getLat, getLnt, resiApiKey } from "@/common/utils";
+import { getLat, getLnt, resiApiKey, toast } from "@/common/utils";
 import { getRestapiAddress } from "@/server/common";
 import Drawer from "@/relay/components/layerlayout";
 import "./index.scss";
 export default (props) => {
   const { show = false, onClose, onSubmit } = props;
   const [data, setData] = useState([]);
+  const { formatted_address = "", pois = [] } = data;
   const setMap = () => {
     const latitude = getLat();
     const longitude = getLnt();
@@ -17,12 +18,15 @@ export default (props) => {
           location: `${longitude},${latitude}`,
           key: resiApiKey,
           extensions: "all",
+          radius: 100,
         },
         (res) => {
           const { info, regeocode = {} } = res;
           if (info === "OK") {
-            console.log(res);
+            setData(regeocode);
           } else {
+            toast("获取地址实时定位失败");
+            onClose && onClose();
           }
         }
       );
@@ -39,17 +43,28 @@ export default (props) => {
       show={show}
       height={586}
       overflow={true}
-      onClose={() => onClose()}
+      onClose={onClose}
     >
       <ScrollView scrollY className="SelectAddress_scroll">
         <View className="SelectAddress_scroll_padding">
-          <View
-            onClick={() => onSubmit()}
-            className="SelectAddress_scroll_template"
-          >
-            <View className="SelectAddress_scroll_name font_hide"></View>
-            <View className="SelectAddress_scroll_name1 font_hide"></View>
-          </View>
+          {pois.map((item) => {
+            const { address } = item;
+            return (
+              <View
+                onClick={() => {
+                  onSubmit({ ...item, formatted_address });
+                }}
+                className="SelectAddress_scroll_template"
+              >
+                <View className="SelectAddress_scroll_name font_hide">
+                  {address}
+                </View>
+                <View className="SelectAddress_scroll_name1 font_hide">
+                  {formatted_address}
+                </View>
+              </View>
+            );
+          })}
         </View>
       </ScrollView>
     </Drawer>

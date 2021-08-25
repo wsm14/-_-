@@ -18,6 +18,8 @@ export default (props) => {
   const [cityVisible, setCityVisible] = useState(false);
   const [addressVisible, setAddressVisible] = useState(false);
   const [data, setData] = useState({});
+  const { address = {} } = data;
+  console.log(address);
   const extra = () => {
     return (
       <View className="extra_address" onClick={() => setAddressVisible(true)}>
@@ -80,7 +82,16 @@ export default (props) => {
         }}
         onSubmit={(val) => {}}
       ></CitySelect>
-      <SelectAddress show={addressVisible}></SelectAddress>
+      <SelectAddress
+        onClose={() => {
+          setAddressVisible(false);
+        }}
+        onSubmit={(val) => {
+          setData({ ...data, address: { ...val } });
+          setAddressVisible(false);
+        }}
+        show={addressVisible}
+      ></SelectAddress>
     </>
   );
 };
