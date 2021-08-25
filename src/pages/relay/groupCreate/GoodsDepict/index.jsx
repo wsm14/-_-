@@ -16,7 +16,7 @@ const FormItemGroup = Form.Group;
 export default () => {
   // 路由获取参数
   const routeParams = useRouter().params;
-  const { data } = routeParams;
+  const { data = "{}" } = routeParams;
 
   const [fileList, setFileList] = useState([]);
 

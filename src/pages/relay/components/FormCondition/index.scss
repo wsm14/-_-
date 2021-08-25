@@ -33,11 +33,21 @@
 }
 
 .form_cell {
+  background-color: #ffffff;
+  padding: 0 32px;
+  .form_cell {
+    padding: 0;
+    .form_cell_title {
+      font-weight: 400;
+    }
+    .form_cell_item {
+      position: initial;
+    }
+  }
   & + .form_group {
     margin-top: 24px;
   }
-  background-color: #ffffff;
-  padding: 0 32px;
+
   .form_cell_item {
     @include flexCenterA;
     position: relative;
@@ -223,6 +233,20 @@
   height: 101px;
   font-size: 24px;
   color: #333333;
+  .wx-checkbox-input {
+    border-radius: 50%;
+    border: 1px solid #cccccc;
+    width: 30px;
+    height: 30px;
+  }
+  wx-checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+    background: #07c0c2;
+    border: 1px solid #07c0c2;
+    &::before {
+      font-size: 24px;
+      transform: translate(-50%, -50%) scale(0.73);
+    }
+  }
   wx-radio {
     display: inline-flex;
     align-items: center;
