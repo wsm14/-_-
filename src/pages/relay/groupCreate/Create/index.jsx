@@ -20,7 +20,6 @@ const GroupCreate = () => {
     if (desc || img) {
       savaFormData({ communityGoodsDescObject: data });
     }
-    console.log("回传的参数对象", data);
   });
 
   useEffect(() => {
