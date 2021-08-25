@@ -11,7 +11,7 @@ const FormItem = Form.Item;
 const FormItemGroup = Form.Group;
 
 /**
- * 编辑图片和描述
+ * 自提点佣金设置
  */
 export default () => {
   // 路由获取参数

@@ -1,5 +1,27 @@
 import { httpGet, httpPost } from "@/api/newRequest";
 
+export const fetchLiftingCabinetCreate = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/lifting/createCommunityLiftingCabinet",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团长自提点 - 创建
+
+export const fetchLiftingCabinetList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/lifting/listCommunityLiftingCabinet",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团长自提点 - 列表
+
 export const fetchCommunityUser = (data, fn) => {
   return httpGet(
     {

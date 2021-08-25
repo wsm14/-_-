@@ -3,7 +3,15 @@ import { View, Text, Image } from "@tarojs/components";
 import right from "@/assets/image/form/right.png";
 import "../index.scss";
 
-export default ({ value, placeholder, disabled, onClick, extra, style }) => {
+export default ({
+  value,
+  placeholder,
+  disabled,
+  onClick,
+  extra,
+  rightIcon = true,
+  style,
+}) => {
   return (
     <View
       className="form_cell_Text"
@@ -18,9 +26,10 @@ export default ({ value, placeholder, disabled, onClick, extra, style }) => {
           {value || placeholder}
         </Text>
       </View>
-      {!disabled && onClick && (
+      {!disabled && onClick && rightIcon && (
         <Image src={right} className="form_i_right"></Image>
       )}
+      {extra && extra}
     </View>
   );
 };
