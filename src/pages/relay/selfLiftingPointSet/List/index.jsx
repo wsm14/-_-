@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useRouter } from "@tarojs/taro";
+import { useRouter, useDidShow } from "@tarojs/taro";
 import { navigateTo } from "@/common/utils";
 import { navigatePostBack } from "@/relay/common/hooks";
 import { View, Button, Text } from "@tarojs/components";
+import { fetchLiftingCabinetList } from "@/server/relay";
 import ImageShow from "@/relay/components/ImageShow";
 import FooterFixed from "@/relay/components/FooterFixed";
 import "./index.scss";
@@ -17,6 +18,17 @@ export default () => {
 
   const [list, setList] = useState([]);
   const [selectId, setSelectId] = useState([]);
+
+  useDidShow(() => {
+    fetchGetList();
+  });
+
+  const fetchGetList = () => {
+    fetchLiftingCabinetList().then((res) => {
+      const { communityLiftingCabinetList: lists } = res;
+      setList(lists);
+    });
+  };
 
   // 保存事件
   const handleSaveData = (value) => {
@@ -39,48 +51,56 @@ export default () => {
 
   return (
     <View className="SelfLiftingPointSet_Form">
-      {!list.length ? (
+      {list.length ? (
         <>
           <View className="slp_heard">
             <View className="slp_heard_title">可用自提点</View>
             <Button className="slp_heard_btn">添加自提点</Button>
           </View>
           <View className="slp_group">
-            <View
-              className={`slp_cell ${selectId.includes(1) ? "select" : ""}`}
-              onClick={() => handleOnSelect(1)}
-            >
-              <View className="slp_select"></View>
-              <View className="slp_content">
-                <View className="slp_content_top">
-                  <View className="slp_content_left">
-                    <View className="slp_content_title">国泰科技大厦</View>
-                    <View className="slp_content_address">
-                      浙江省杭州市萧山区宁卫街道萧山区宁卫街道萧山区宁卫街道萧山区宁卫街道78号
+            {list.map((item) => (
+              <View
+                className={`slp_cell ${
+                  selectId.includes(item.communityLiftingCabinetId)
+                    ? "select"
+                    : ""
+                }`}
+                onClick={() => handleOnSelect(item.communityLiftingCabinetId)}
+              >
+                <View className="slp_select"></View>
+                <View className="slp_content">
+                  <View className="slp_content_top">
+                    <View className="slp_content_left">
+                      <View className="slp_content_title">
+                        {item.liftingName}
+                      </View>
+                      <View className="slp_content_address">
+                        {item.address}
+                      </View>
+                      <View className="slp_content_cont">
+                        联系人：{item.contactPerson} {item.mobile}
+                      </View>
                     </View>
-                    <View className="slp_content_cont">
-                      联系人：刘 18734566767
+                    <View className="slp_content_right">
+                      <View
+                        className="slp_content_edit"
+                        onClick={(e) => handleOnEdit(e, item)}
+                      ></View>
                     </View>
                   </View>
-                  <View className="slp_content_right">
-                    <View
-                      className="slp_content_edit"
-                      onClick={handleOnEdit}
-                    ></View>
+                  <View className="slp_content_footer">
+                    <ImageShow width={178} src={item.images}></ImageShow>
                   </View>
-                </View>
-                <View className="slp_content_footer">
-                  <ImageShow width={178} src={""}></ImageShow>
                 </View>
               </View>
-            </View>
+            ))}
           </View>
           <FooterFixed>
             <View className="slp_footer">
               <View className="slp_footer_left">全选</View>
               <View className="slp_footer_right">
                 <View className="slp_submit_total">
-                  已选<Text>2</Text>项
+                  已选<Text>{selectId.length}</Text>项
                 </View>
                 <Button className="slp_submit_btn">确定</Button>
               </View>

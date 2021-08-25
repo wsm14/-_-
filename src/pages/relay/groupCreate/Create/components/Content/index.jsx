@@ -49,7 +49,8 @@ export default ({ cRef, formData, savaFormData }) => {
           <GroupDetailEdit cRef={cRef}></GroupDetailEdit>
         </FormItem>
       </FormItemGroup>
-      <FormItemGroup title={"团购商品"} extra={importGoods}>
+      {/* extra={importGoods} */}
+      <FormItemGroup title={"团购商品"}>
         <FormItem label={"名称"}>
           <Input
             name={"goodsName"}
