@@ -100,7 +100,11 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     communityGoods: "/pages/relay/community/goodInfo/index", //社团详情页
     communityOrder: "/pages/relay/community/order/index", //社团支付
     delivery: "/pages/relay/community/delivery/index",
-
+    goodsDepict: "/pages/relay/groupCreate/GoodsDepict/index", // 一键开团 商品描述
+    logisticsWay: "/pages/relay/groupCreate/LogisticsWay/index", // 一键开团 物流方式配置
+    selfLiftingPointEdit: "/pages/relay/selfLiftingPointSet/Edit/index", // 编辑自提点
+    selfLiftingPointList: "/pages/relay/selfLiftingPointSet/List/index", // 自提点列表&选择编辑
+    selfLiftingPointCommission: "/pages/relay/groupCreate/SelfCommission/index", // 自提点佣金设置（暂时没有用 无业务）
     //社团
   }[routerName];
   const types = type;

@@ -11,6 +11,28 @@ export const fetchLiftingCabinetCreate = (data, fn) => {
 };
 // 团长自提点 - 创建
 
+export const fetchLiftingCabinetEdit = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/lifting/updateCommunityLiftingCabinet",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团长自提点 - 编辑
+
+export const fetchLiftingCabinetDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/lifting/communityLiftingCabinetDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团长自提点 - 详情
+
 export const fetchLiftingCabinetList = (data = {}, fn) => {
   return httpGet(
     {
@@ -21,6 +43,17 @@ export const fetchLiftingCabinetList = (data = {}, fn) => {
   );
 };
 // 团长自提点 - 列表
+
+export const fetchGroupCreate = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/organization/createCommunityOrganization",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团购 - 创建
 
 export const fetchCommunityUser = (data, fn) => {
   return httpGet(

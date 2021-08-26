@@ -8,6 +8,7 @@ import Textarea from "./Textarea";
 import Switch from "./Switch";
 import MreCity from "./MreCity";
 import Upload from "./Upload";
+import TimeRange from "./TimeRange";
 
 export {
   Form,
@@ -20,4 +21,5 @@ export {
   Upload,
   Switch,
   MreCity,
+  TimeRange,
 };

@@ -43,6 +43,9 @@
       background: #ffffff;
       border-radius: 12px;
       display: flex;
+      & + .slp_cell {
+        margin-top: 24px;
+      }
       &.select {
         .slp_select {
           background-image: url("https://wechat-config.dakale.net/miniprogram/relay/gc_select2.png");
@@ -106,6 +109,11 @@
         background: url("https://wechat-config.dakale.net/miniprogram/relay/gc_noselect2.png");
         background-size: 100%;
         margin-right: 12px;
+      }
+      &.select {
+        &::before {
+          background-image: url("https://wechat-config.dakale.net/miniprogram/relay/gc_select2.png");
+        }
       }
       font-size: 24px;
       color: #333333;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { useRouter } from "@tarojs/taro";
 import evens from "@/common/evens";
@@ -8,7 +8,11 @@ import { Form, Input, Text, Upload } from "@/relay/components/FormCondition";
 import { mapSelect, toast } from "@/common/utils";
 import { upload } from "@/api/upload";
 import FooterFixed from "@/relay/components/FooterFixed";
-import { fetchLiftingCabinetCreate } from "@/server/relay";
+import {
+  fetchLiftingCabinetEdit,
+  fetchLiftingCabinetCreate,
+  fetchLiftingCabinetDetail,
+} from "@/server/relay";
 import "./index.scss";
 
 const FormItem = Form.Item;
@@ -20,8 +24,24 @@ const FormItemGroup = Form.Group;
 export default () => {
   // 路由获取参数
   const routeParams = useRouter().params;
+  const { type, ownerId, communityLiftingCabinetId } = routeParams;
 
   const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    if (type === "edit") {
+      fetchGetDetail();
+    }
+  }, []);
+
+  // 获取详情
+  const fetchGetDetail = () => {
+    fetchLiftingCabinetDetail({ ownerId, communityLiftingCabinetId }).then(
+      (res) => {
+        setFormData(res.communityLiftingCabinetInfo);
+      }
+    );
+  };
 
   // 信息储存
   const savaFormData = (val) => setFormData((old) => ({ ...old, ...val }));
@@ -46,9 +66,13 @@ export default () => {
         : images.split(",")
       : [];
     upload(img, { img: img }).then((res) => {
-      fetchLiftingCabinetCreate({
-        ...value,
+      const fetch = {
+        add: fetchLiftingCabinetCreate, // 新增
+        edit: fetchLiftingCabinetEdit, // 修改
+      }[type];
+      fetch({
         ...formData,
+        ...value,
         images: res.img.toString(),
       }).then(() => {
         toast("编辑成功");
@@ -66,7 +90,11 @@ export default () => {
       >
         <FormItemGroup>
           <FormItem label={"自提点名称"} required>
-            <Input name="liftingName" placeholder="自提点简称"></Input>
+            <Input
+              value={formData.liftingName}
+              name="liftingName"
+              placeholder="自提点简称"
+            ></Input>
           </FormItem>
           <FormItem label={"位置"} required>
             <Text
@@ -109,12 +137,14 @@ export default () => {
         <FormItemGroup>
           <FormItem label={"自提点联系人"}>
             <Input
+              value={formData.contactPerson}
               name="contactPerson"
               placeholder="请输入自提点联系人"
             ></Input>
           </FormItem>
           <FormItem label={"自提点电话"}>
             <Input
+              value={formData.mobile}
               name="mobile"
               type={"number"}
               placeholder="请输入自提点电话"
@@ -130,7 +160,7 @@ export default () => {
         </FormItemGroup>
         <FooterFixed>
           <Button formType="submit" className="submit">
-            确认添加
+            确认{{ edit: "修改", add: "添加" }[type]}
           </Button>
         </FooterFixed>
       </Form>
