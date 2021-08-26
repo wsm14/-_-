@@ -1,0 +1,81 @@
+@import "@/assets/css/global.scss";
+
+.pu_order {
+  background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+  .pu_order_group {
+    padding: 32px 32px 150px;
+    .pu_order_cell {
+      background: #ffffff;
+      border-radius: 12px;
+      .pu_order_heard {
+        @include flexCenterA;
+        padding: 32px;
+        border-bottom: 1px solid #e5e5e5;
+        .pu_heard_date {
+          flex: 1;
+          font-size: 20px;
+          font-weight: 400;
+          color: #999999;
+        }
+        .pu_heard_footer {
+          @include flexCenterA;
+          justify-content: flex-end;
+          flex: 1;
+          .pu_heard_tools {
+            @include flexCenter;
+            width: 76px;
+            height: 40px;
+            border-radius: 4px;
+            border: 1px solid #b5b5b5;
+            font-size: 24px;
+            font-weight: 400;
+            color: #666666;
+            & + .pu_heard_tools {
+              margin-left: 12px;
+            }
+            &.pu_tools_disabled {
+              opacity: 0.4;
+            }
+          }
+        }
+      }
+      .pu_order_info {
+        padding: 0 32px;
+        .pu_order_content {
+          padding: 32px 0;
+          border-bottom: 1px solid #e5e5e5;
+          .pu_order_name {
+            @include flexCenterA;
+            padding-bottom: 24px;
+            .puon_name {
+              flex: 1;
+              font-size: 32px;
+              font-weight: 600;
+              color: #333333;
+            }
+            .puon_price {
+              font-size: 32px;
+              font-weight: 600;
+              color: #ef476f;
+              &::before {
+                content: "￥ ";
+                font-size: 20px;
+              }
+            }
+          }
+          .pu_order_img {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 40px;
+          }
+        }
+        .pu_order_footer {
+          padding: 32px 0 25px;
+          font-size: 20px;
+          font-weight: 400;
+          color: #999999;
+        }
+      }
+    }
+  }
+}

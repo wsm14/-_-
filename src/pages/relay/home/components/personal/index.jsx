@@ -4,6 +4,7 @@ import { View } from "@tarojs/components";
 import UserInfo from "./components/UserInfo";
 import DataCenter from "./components/DataCenter";
 import Tools from "./components/Tools";
+import OrderList from "./components/OrderList";
 import "./index.scss";
 
 export default (props) => {
@@ -16,6 +17,7 @@ export default (props) => {
         <DataCenter></DataCenter>
         <Tools></Tools>
       </View>
+      <OrderList></OrderList>
     </View>
   );
 };
