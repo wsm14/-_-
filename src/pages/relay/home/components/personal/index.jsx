@@ -3,6 +3,7 @@ import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import UserInfo from "./components/UserInfo";
 import DataCenter from "./components/DataCenter";
+import Tools from "./components/Tools";
 import "./index.scss";
 
 export default (props) => {
@@ -13,6 +14,7 @@ export default (props) => {
       <View className="tabBar_personal">
         <UserInfo></UserInfo>
         <DataCenter></DataCenter>
+        <Tools></Tools>
       </View>
     </View>
   );
