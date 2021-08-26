@@ -12,7 +12,6 @@ export default () => {
   return (
     <View className="user_content">
       <View
-        onClick={() => goUser()}
         className="user_avatar dakale_profile"
         style={{
           background: userInfo.profile

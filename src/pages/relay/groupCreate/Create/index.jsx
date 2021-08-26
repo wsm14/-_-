@@ -8,7 +8,6 @@ import { fetchGroupCreate } from "@/server/relay";
 import Heard from "./components/Heard";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
-import "./index.scss";
 
 /**
  * 一键开团
