@@ -44,6 +44,17 @@ export const fetchLiftingCabinetList = (data = {}, fn) => {
 };
 // 团长自提点 - 列表
 
+export const fetchGroupCreate = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/organization/createCommunityOrganization",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团购 - 创建
+
 export const fetchCommunityUser = (data, fn) => {
   return httpGet(
     {

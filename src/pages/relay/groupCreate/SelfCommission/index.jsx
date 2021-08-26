@@ -3,20 +3,19 @@ import { useRouter } from "@tarojs/taro";
 import Router from "@/common/router";
 import { usePostBackData, navigatePostBack } from "@/relay/common/hooks";
 import { View, Button } from "@tarojs/components";
-import { Form, Checkbox, Text } from "@/relay/components/FormCondition";
+import { Form, Text } from "@/relay/components/FormCondition";
 import FooterFixed from "@/relay/components/FooterFixed";
 import "./index.scss";
 
 const FormItem = Form.Item;
-const FormItemGroup = Form.Group;
 
 /**
- * 自提点佣金设置
+ * 自提点佣金设置 （暂时没有用 无业务）
  */
 export default () => {
   // 路由获取参数
   const routeParams = useRouter().params;
-  const { liftingCabinets = "", pushFlag } = routeParams;
+  const { liftingCabinets = "" } = routeParams;
 
   const [selectId, setSelectId] = useState([]);
 
@@ -32,7 +31,7 @@ export default () => {
   const handleOnSave = (val) => {
     navigatePostBack({
       liftingCabinets: selectId,
-      pushFlag: val.pushFlag.length,
+      // pushFlag: val.pushFlag.length,
     });
   };
 
@@ -42,7 +41,7 @@ export default () => {
       routerName: "selfLiftingPointList",
       args: {
         type: "select",
-        liftingCabinets,
+        liftingCabinets: selectId.toString(),
       },
     });
   };
@@ -61,18 +60,17 @@ export default () => {
             onClick={handleGoPage}
           ></Text>
         </FormItem>
-        <View className="slps_group">
+        {/* <View className="slps_group">
           <FormItemGroup title="选择自提点">
             <FormItem label={"自动发放"} titleTip="提货完成，佣金自动到账">
               <Checkbox
                 name="pushFlag"
                 list={{ 1: "" }}
                 value={pushFlag}
-                onChange={(e) => console.log(e[0])}
               ></Checkbox>
             </FormItem>
           </FormItemGroup>
-        </View>
+        </View> */}
         <FooterFixed>
           <Button formType="submit" className="submit">
             确定

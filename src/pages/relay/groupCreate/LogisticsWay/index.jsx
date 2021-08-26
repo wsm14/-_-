@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Router from "@/common/router";
 import { useRouter } from "@tarojs/taro";
-import { navigateTo } from "@/common/utils";
-import { navigatePostBack } from "@/relay/common/hooks";
+import { toast } from "@/common/utils";
+import { LOGISTICS_USER_INFO } from "@/relay/common/constant";
+import { usePostBackData, navigatePostBack } from "@/relay/common/hooks";
 import { View, Button } from "@tarojs/components";
-import { Form, Checkbox, Switch, Text } from "@/relay/components/FormCondition";
+import { Form, Checkbox, Text } from "@/relay/components/FormCondition";
 import FooterFixed from "@/relay/components/FooterFixed";
 import "./index.scss";
 
@@ -18,21 +20,62 @@ export default () => {
   const routeParams = useRouter().params;
   const { data = "{}" } = routeParams;
 
-  const [logisticsType, setLogisticsType] = useState("");
-  const [infoSelect, setInfoSelect] = useState(false);
+  const [logisticsType, setLogisticsType] = useState(""); // 物流方式
+  const [formData, setFormData] = useState({}); // 表单信息保存
 
-  // 保存事件
+  const {
+    liftingCabinets: lcList = [],
+    customerWriteInfo: cInfo = [
+      "writeContentPerson",
+      "writeMobile",
+      "writeAddress",
+    ],
+  } = formData;
+
+  useEffect(() => {
+    console.log(data);
+    setFormData(JSON.parse(data));
+    setLogisticsType(JSON.parse(data).logisticsType);
+  }, []);
+
+  usePostBackData((data) => {
+    savaFormData(data);
+  });
+
+  // 信息储存
+  const savaFormData = (val) => {
+    setFormData((old) => {
+      return { ...old, ...val };
+    });
+  };
+
+  // 保存回传数据
   const handleSaveData = (value) => {
-    console.log(value, logisticsType);
-    return;
-    navigatePostBack({ ...value });
+    if (!logisticsType) {
+      toast("请选择物流方式");
+      return;
+    }
+    if (logisticsType === "self" && !lcList.length) {
+      toast("请设置自提点");
+      return;
+    }
+    const { customerWriteInfo } = value;
+    // 只有自提有额外参数
+    const selfPrams =
+      logisticsType === "self"
+        ? { ...formData, customerWriteInfo }
+        : { customerWriteInfo: "", liftingCabinets: "" };
+    navigatePostBack({ ...selfPrams, logisticsType });
   };
 
   // 跳转自提点佣金设置
   const goSelfLiftingPointCommissionSet = () => {
-    navigateTo(
-      `/pages/relay/groupCreate/SelfCommission/index?data=${JSON.stringify({})}`
-    );
+    Router({
+      routerName: "selfLiftingPointList",
+      args: {
+        liftingCabinets: lcList.toString(),
+      },
+    });
   };
 
   return (
@@ -59,42 +102,32 @@ export default () => {
                 <>
                   <FormItem label={"设置自提点"}>
                     <Text
-                      value={""}
+                      value={lcList.length ? `已设置${lcList.length}个` : null}
                       placeholder={"未设置"}
                       onClick={goSelfLiftingPointCommissionSet}
                     ></Text>
                   </FormItem>
                   <FormItem label={"需要用户填写信息"}>
                     <Text
-                      value={""}
-                      placeholder={"默认3项"}
-                      onClick={() => setInfoSelect(!infoSelect)}
+                      value={cInfo.length ? `已设置${cInfo.length}项` : null}
+                      placeholder={"未设置"}
                     ></Text>
                   </FormItem>
-                  {infoSelect && (
-                    <FormItem label={"选择信息"}>
-                      <Checkbox
-                        value={[
-                          "writeContentPerson",
-                          "writeMobile",
-                          "writeAddress",
-                        ]}
-                        list={{
-                          writeContentPerson: "联系人",
-                          writeMobile: "电话",
-                          writeAddress: "地址",
-                        }}
-                        onChange={(e) => console.log(e[0])}
-                      ></Checkbox>
-                    </FormItem>
-                  )}
-                  <FormItem label={"开团通知推送"} titleTip="(下单页优先展示)">
-                    <Switch
-                      value={1}
-                      name={"needOrder"}
-                      onChange={(needOrder) => console.log({ needOrder })}
-                    ></Switch>
+                  <FormItem label={""}>
+                    <Checkbox
+                      name="customerWriteInfo"
+                      value={cInfo}
+                      list={LOGISTICS_USER_INFO}
+                      onChange={(e) => savaFormData({ customerWriteInfo: e })}
+                    ></Checkbox>
                   </FormItem>
+                  {/* <FormItem label={"设置默认物流"} titleTip="(下单页优先展示)">
+                    <Switch
+                      name={"pushFlag"}
+                      value={formData.pushFlag}
+                      onChange={(pushFlag) => savaFormData({ pushFlag })}
+                    ></Switch>
+                  </FormItem> */}
                 </>
               )}
             </FormItem>

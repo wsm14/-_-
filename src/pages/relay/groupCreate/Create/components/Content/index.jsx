@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import Router from "@/common/router";
 import { View, Text } from "@tarojs/components";
-import { GOODS_BUY_NUMBER } from "@/relay/common/constant";
-import { navigateTo } from "@/common/utils";
+import { GOODS_BUY_NUMBER, GOODS_BY_TYPE } from "@/relay/common/constant";
 import {
   Form,
   Input,
   Radio,
   Switch,
   Text as TextEra,
+  TimeRange,
 } from "@/relay/components/FormCondition";
 import GroupDetailEdit from "@/relay/components/GroupDetailEdit";
 import "./index.scss";
@@ -18,9 +19,7 @@ const FormItemGroup = Form.Group;
 /**
  * 一键开团 操作区域
  */
-export default ({ cRef, formData, savaFormData }) => {
-  const [treaty, setTreaty] = useState(false); // 协议按钮
-
+export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
   const importGoods = (
     <View className="group_ce_importGoods">从商品库导入</View>
   );
@@ -28,11 +27,37 @@ export default ({ cRef, formData, savaFormData }) => {
   // 跳转商品描述
   const goGoodsDepict = () => {
     const { communityGoodsDescObject = {} } = formData;
-    navigateTo(
-      `/pages/relay/groupCreate/GoodsDepict/index?data=${JSON.stringify(
-        communityGoodsDescObject
-      )}`
-    );
+    Router({
+      routerName: "goodsDepict",
+      args: {
+        data: JSON.stringify(communityGoodsDescObject),
+      },
+    });
+  };
+
+  // 跳转物流方式配置
+  const goLogisticsWay = () => {
+    const {
+      logisticsType = "",
+      customerWriteInfo = "",
+      liftingCabinets = "",
+    } = formData;
+    const args = {
+      logisticsType,
+      customerWriteInfo,
+      liftingCabinets,
+    };
+    for (var key in args) {
+      if (args[key] === "") {
+        delete args[key];
+      }
+    }
+    Router({
+      routerName: "logisticsWay",
+      args: {
+        data: JSON.stringify(args),
+      },
+    });
   };
 
   return (
@@ -40,7 +65,7 @@ export default ({ cRef, formData, savaFormData }) => {
       <FormItemGroup title={"团购介绍"}>
         <FormItem showLabel={false}>
           <Input
-            name={"goodsName"}
+            name={"title"}
             className={"group_ce_name"}
             placeholder={"请输入团购活动标题"}
           ></Input>
@@ -67,16 +92,16 @@ export default ({ cRef, formData, savaFormData }) => {
         </FormItem>
         <FormItem label={"价格(¥)"}>
           <Input
-            name={"goodsName"}
+            name={"price"}
             type="digit"
-            className={"group_ce_goodsName"}
+            className={"price"}
             placeholder={"0"}
             maxLength={30}
           ></Input>
         </FormItem>
         <FormItem label={"库存"}>
           <Input
-            name={"goodsName"}
+            name={"total"}
             type="number"
             placeholder={"不限"}
             maxLength={30}
@@ -90,11 +115,11 @@ export default ({ cRef, formData, savaFormData }) => {
             onChange={(buyRule) => savaFormData({ buyRule })}
           ></Radio>
         </FormItem>
-        {formData.buyRule && formData.buyRule == "gain" && (
+        {formData.buyRule && formData.buyRule == "personLimit" && (
           <FormItem label={`每人最高购买份数`}>
             <Input
-              name={"businessStatuss"}
-              value={formData["businessStatuss"]}
+              name={"limitContent"}
+              value={formData["limitContent"]}
               type="number"
               suffix="份"
               placeholder="请输入"
@@ -103,7 +128,7 @@ export default ({ cRef, formData, savaFormData }) => {
         )}
         <FormItem label={"划线价(¥)"}>
           <Input
-            name={"goodsName"}
+            name={"costPrice"}
             type="digit"
             placeholder={"划线价建议高于商品价格"}
             maxLength={30}
@@ -111,7 +136,7 @@ export default ({ cRef, formData, savaFormData }) => {
         </FormItem>
         <FormItem label={"成本价(¥)"}>
           <Input
-            name={"goodsName"}
+            name={"oriPrice"}
             type="digit"
             placeholder={"用于利润核算，仅团长可见"}
             maxLength={30}
@@ -119,12 +144,25 @@ export default ({ cRef, formData, savaFormData }) => {
         </FormItem>
       </FormItemGroup>
       <FormItemGroup title={"团购设置"}>
-        <FormItem label={"物流方式"}></FormItem>
+        <FormItem label={"物流方式"}>
+          <TextEra
+            value={GOODS_BY_TYPE[formData.logisticsType]}
+            placeholder={"未设置"}
+            onClick={goLogisticsWay}
+          ></TextEra>
+        </FormItem>
+        <FormItem label={"团购时间"}>
+          <TimeRange
+            value={formData}
+            onClick={goLogisticsWay}
+            onChange={(val) => savaFormData(val)}
+          ></TimeRange>
+        </FormItem>
         <FormItem label={"开团通知推送"}>
           <Switch
-            name={"needOrder"}
-            value={formData.needOrder}
-            onChange={(needOrder) => savaFormData({ needOrder })}
+            name={"pushFlag"}
+            value={formData.pushFlag}
+            onChange={(pushFlag) => savaFormData({ pushFlag })}
           ></Switch>
         </FormItem>
       </FormItemGroup>

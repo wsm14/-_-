@@ -17,7 +17,7 @@ export default ({
   list = [],
   disabled,
   fieldNames = {},
-  value,
+  value = [],
   onChange,
 }) => {
   const { label = "label", key = "value" } = fieldNames;
