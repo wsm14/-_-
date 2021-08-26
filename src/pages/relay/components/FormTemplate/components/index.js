@@ -25,7 +25,7 @@ export default (props) => {
           return (
             <View className="simImgInfo_interface_box">
               <Image
-                className="user_card_image user_card_radius"
+                className="simImgInfo_interface_imageStyle"
                 lazyLoad
                 mode={"aspectFill"}
                 src={item}
@@ -42,7 +42,7 @@ export default (props) => {
     image: bigImg,
   }[contentType];
   if (template) {
-    template();
+    return template();
   } else {
     return null;
   }

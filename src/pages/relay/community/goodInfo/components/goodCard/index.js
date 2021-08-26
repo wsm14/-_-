@@ -23,15 +23,16 @@ export default (props) => {
         <View className="community_goodCard_tags">{templateType}</View>
       </View>
       <View className="community_goodCard_data">
-        {createTime}天前 发布 ｜{" "}
-        {communityStatus === "end" ? (
-          <Text className="凑lor3">{endTime}</Text>
+        {createTime} 发布 ｜{" "}
+        {communityStatus !== "end" ? (
+          <Text className="color3">{endTime}结束</Text>
         ) : (
           "已结束"
         )}
       </View>
       <View className="community_goodCard_count">
-        {viewCount}人查看 {buyCount !== "0" && `｜ ${buyCount}次跟团`}
+        {viewCount && viewCount + "人查看"}{" "}
+        {buyCount !== "0" && `｜ ${buyCount}次跟团`}
       </View>
       <View className="community_goodCard_coby public_center">复制该团</View>
     </View>

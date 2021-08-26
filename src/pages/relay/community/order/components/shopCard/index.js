@@ -1,12 +1,16 @@
 import React, { useMemo, useState } from "react";
 import { View, Text, Image } from "@tarojs/components";
+import { backgroundObj } from "@/common/utils";
 export default (props) => {
   const { count, data, onChange } = props;
-  const { realPrice = 0, goodsName } = data;
+  const { realPrice = 0, goodsName, goodsImg } = data;
   return (
     <View className="order_shopCard_box">
       <View className="order_shopCard_paddingBox">
-        <View className="order_shopCard_profile dakale_nullImage"></View>
+        <View
+          className="order_shopCard_profile dakale_nullImage"
+          style={backgroundObj(goodsImg)}
+        ></View>
         <View className="order_shopCard_content">
           <View className="order_shopCard_shopTitle font_hide">
             {goodsName}

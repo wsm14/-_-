@@ -18,7 +18,7 @@ export default (props) => {
     type: useBeanType,
   });
   const [show, setShow] = useState(false);
-  const { payBeanCommission, level = "0" } = configUserLevelInfo;
+  const { payBeanCommission = "50", level = "0" } = configUserLevelInfo;
   const { userIncomeBean = "", userBean = "" } = data;
   const { status, type } = selectType;
   const nowal = () => {

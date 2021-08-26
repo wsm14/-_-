@@ -47,7 +47,7 @@ export default (props) => {
                 count === index ? "tabChecked" : "tabNoChecked"
               )}
               style={count === index ? fontStyle : sizeStyle}
-              onClick={() => fn(index)}
+              onClick={(e) => fn(index)}
             >
               {item}
               {count === index && (

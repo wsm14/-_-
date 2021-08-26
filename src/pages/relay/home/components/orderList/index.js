@@ -5,16 +5,16 @@ import { index } from "@/api/api";
 import { httpGet } from "@/api/newRequest";
 import { toast, filterGoodsStatus, loginStatus } from "@/common/utils";
 import Tabs from "@/components/tabs";
-import Goods from "./components/goods";
+import { fetchOrderStatus } from "@/server/relay";
 import { goodsNullStatus } from "@/components/publicShopStyle";
 import Template from "./components/goods";
-import { inject, observer } from "mobx-react";
 import Router from "@/common/router";
 import "./index.scss";
 import { useState } from "react";
+import { useEffect } from "react";
 export default (props) => {
   const { index } = props;
-  const [list, setList] = useState([{}, {}, {}]);
+  const [list, setList] = useState([]);
   const [setting, setSetting] = useState({
     tabList: ["全部订单", "待付款", "可使用", "退款/售后"],
     current: 0,
@@ -22,21 +22,39 @@ export default (props) => {
   const [httpData, setHttpData] = useState({
     page: 1,
     limit: 10,
+    orderStatus: "",
+    orderType: "communityGoods",
+    closeType: "",
   });
   const { current } = setting;
-  const setIndex = (index) => {
-    if (index != current) {
+  const setIndex = (val) => {
+    if (val != current) {
       setList([]);
       let closeType = "";
-      if (index === 3) {
+      if (val === 3) {
         closeType = "expiredRefund,manualRefund";
       }
+      setHttpData({
+        ...httpData,
+        page: 1,
+        orderStatus: filterGoodsStatus(val),
+        closeType,
+      });
       setSetting({
         ...setting,
-        current: index,
+        current: val,
       });
     }
     return;
+  };
+  useEffect(() => {
+    getOrderList();
+  }, [httpData]);
+  const getOrderList = () => {
+    fetchOrderStatus({ ...httpData }).then((val) => {
+      const { orderList = [] } = val;
+      setList([...list, ...orderList]);
+    });
   };
   useReachBottom(() => {
     if (index == 2) {
@@ -44,7 +62,6 @@ export default (props) => {
         ...httpData,
         page: httpData.page + 1,
       });
-      toast("翻页");
     }
   });
   const tabStyle = {
