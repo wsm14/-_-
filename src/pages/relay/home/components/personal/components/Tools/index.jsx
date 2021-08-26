@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Taro from "@tarojs/taro";
+import Router from "@/common/router";
 import { View, Button } from "@tarojs/components";
 import { fetchStorage } from "@/common/utils";
 import "./index.scss";
@@ -7,12 +8,20 @@ import "./index.scss";
 export default (props) => {
   const [groupTools, setGroupTools] = useState(false); // 是否显示团长工具栏
 
+  // 跳转自提点佣金设置
+  const goPage = (routerName, args = {}) => {
+    Router({
+      routerName,
+      args,
+    });
+  };
+
   const toolsArr = [
-    {
-      leble: "商品库",
-      icon: "tools_menu",
-      show: !groupTools,
-    },
+    // {
+    //   leble: "商品库",
+    //   icon: "tools_menu",
+    //   show: !groupTools,
+    // },
     {
       leble: "订单管理",
       icon: "tools_ordermg",
@@ -27,6 +36,7 @@ export default (props) => {
       leble: "自提点管理",
       icon: "tools_shop",
       show: !groupTools,
+      onClick: () => goPage("selfLiftingPointList", { mode: "list" }),
     },
     {
       leble: "收货地址",
@@ -68,7 +78,7 @@ export default (props) => {
           {toolsArr.map(
             (i) =>
               i.show && (
-                <View className="pt_tools_cell">
+                <View className="pt_tools_cell" onClick={i.onClick}>
                   <View className={`${i.icon} tools_text`}>{i.leble}</View>
                 </View>
               )

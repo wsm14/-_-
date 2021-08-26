@@ -40,7 +40,7 @@ export default () => {
     Router({
       routerName: "selfLiftingPointList",
       args: {
-        type: "select",
+        mode: "select",
         liftingCabinets: selectId.toString(),
       },
     });

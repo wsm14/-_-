@@ -12,7 +12,7 @@ export const fetchLiftingCabinetCreate = (data, fn) => {
 // 团长自提点 - 创建
 
 export const fetchLiftingCabinetEdit = (data = {}, fn) => {
-  return httpGet(
+  return httpPost(
     {
       url: "/user/community/lifting/updateCommunityLiftingCabinet",
       data: data,
