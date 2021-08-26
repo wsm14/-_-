@@ -64,13 +64,13 @@ class App extends Component {
   }
   fetchCheckUpdate() {
     // 判断目前微信版本是否支持自动更新
-    if (wx.canIUse("getUpdateManager")) {
-      const updateManager = wx.getUpdateManager();
+    if (Taro.canIUse("getUpdateManager")) {
+      const updateManager = Taro.getUpdateManager();
       updateManager.onCheckForUpdate((res) => {
         //检测是否有新版本
         if (res.hasUpdate) {
           updateManager.onUpdateReady(() => {
-            wx.showModal({
+            Taro.showModal({
               title: "更新提示",
               confirmText: "确定",
               showCancel: false,
@@ -86,7 +86,7 @@ class App extends Component {
         }
       });
     } else {
-      wx.showModal({
+      Taro.showModal({
         title: "提示",
         content:
           "当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。",

@@ -16,3 +16,10 @@ export const GOODS_STATUS_TYPE = {
   start: "进行中",
   end: "已结束",
 };
+
+export const ORDER_STATUS = {
+  a: "待支付",
+  b: "已支付",
+  c: "发货",
+  d: "售后",
+};

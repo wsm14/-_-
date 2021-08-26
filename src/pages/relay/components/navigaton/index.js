@@ -22,7 +22,7 @@ export default (props) => {
     }
   });
   return (
-    <View>
+    <View className="naviton_info">
       <View className="naviton_box">
         <View className="naviton_title"></View>
         <View
