@@ -79,6 +79,19 @@ export default (props) => {
             (i) =>
               i.show && (
                 <View className="pt_tools_cell" onClick={i.onClick}>
+                  {i.icon === "tools_server" && (
+                    <Button
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        border: "none",
+                        background: "none",
+                        position: "absolute",
+                        zIndex: 999,
+                      }}
+                      openType={"contact"}
+                    ></Button>
+                  )}
                   <View className={`${i.icon} tools_text`}>{i.leble}</View>
                 </View>
               )

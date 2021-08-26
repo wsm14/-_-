@@ -53,6 +53,12 @@
         border: 1px solid transparent;
       }
       .pt_tools_cell {
+        button {
+          &::after {
+            border: none;
+          }
+        }
+        position: relative;
         @include flexCenterA;
         width: 25%;
         margin-bottom: 48px;
