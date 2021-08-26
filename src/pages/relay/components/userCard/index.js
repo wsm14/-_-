@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
 import { View, Text, Image } from "@tarojs/components";
-import { filterStrList } from "@/common/utils";
+import { filterStrList, toast } from "@/common/utils";
 import Router from "@/common/router";
+import { fakeSubscribe } from "@/server/relay";
 import "./index.scss";
 export default (props) => {
   const templateTitle = {
@@ -9,8 +10,7 @@ export default (props) => {
     start: <View className="user_card_gloupStatus">正在跟团中</View>,
     end: <View className="user_card_gloupStatus">已结束</View>,
   };
-
-  const { list = [] } = props;
+  const { list = [], upDateList } = props;
   const memo = useMemo(() => {
     return (
       <View>
@@ -28,6 +28,7 @@ export default (props) => {
             communityImages,
             consumerRecordList = [],
             communityStatus,
+            subscribeFlag = "0",
           } = item;
           return (
             <View
@@ -122,7 +123,20 @@ export default (props) => {
                 {templateTitle[communityStatus]}
                 <View className="user_card_gloupbtn"></View>
               </View>
-              <View className="user_card_btn"></View>
+              {subscribeFlag === "0" && (
+                <View
+                  className="user_card_btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    fakeSubscribe({
+                      teamUserId: ownerId,
+                    }).then((val) => {
+                      toast("订阅成功");
+                      upDateList && upDateList(item);
+                    });
+                  }}
+                ></View>
+              )}
             </View>
           );
         })}

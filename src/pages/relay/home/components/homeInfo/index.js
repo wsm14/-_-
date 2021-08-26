@@ -24,11 +24,7 @@ export default (props) => {
     });
   };
   useEffect(() => {
-    if (index === 0) {
-      fetchList();
-    } else {
-      return;
-    }
+    fetchList();
   }, [httpData.page]);
   useReachBottom(() => {
     if (index == 0) {
@@ -39,11 +35,23 @@ export default (props) => {
     }
   });
   return (
-    <View
-      className="relay_box_home"
-      style={{ display: index === 0 ? "block" : "none" }}
-    >
-      <UserCard list={list}></UserCard>
+    <View className="" style={{ display: index === 0 ? "block" : "none" }}>
+      <UserCard
+        upDateList={(item) => {
+          const { ownerId } = item;
+          setList(
+            list.map((val) => {
+              if (val.ownerId === ownerId)
+                return {
+                  ...val,
+                  subscribeFlag: "1",
+                };
+              return val;
+            })
+          );
+        }}
+        list={list}
+      ></UserCard>
     </View>
   );
 };

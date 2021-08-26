@@ -50,12 +50,11 @@ export default (props) => {
       </View>
     );
   };
+
   return (
     <View>
       {communityOrganizationGoodsList.map((item) => {
-        (item) => {
-          return shopCollect(item);
-        };
+        return shopCollect(item);
       })}
     </View>
   );

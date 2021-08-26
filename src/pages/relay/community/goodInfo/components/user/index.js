@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { View, Text, Image } from "@tarojs/components";
+import { fakeSubscribe } from "@/server/relay";
+import { toast } from "@/common/utils";
 export default (props) => {
   const { data } = props;
   const {
@@ -43,7 +45,20 @@ export default (props) => {
           <View className="community_card_font">分享</View>
         </View>
       </View>
-      {subscribeFlag === "0" && <View className="community_card_btn"></View>}
+      {subscribeFlag === "0" && (
+        <View
+          className="community_card_btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            fakeSubscribe({
+              teamUserId: ownerId,
+            }).then((val) => {
+              toast("订阅成功");
+              upDateList && upDateList(item);
+            });
+          }}
+        ></View>
+      )}
     </View>
   );
 };

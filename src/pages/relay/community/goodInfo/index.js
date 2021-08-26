@@ -7,7 +7,8 @@ import BuyCard from "./components/buyCard";
 import GoodsInfo from "./components/goodCard";
 import NodeCard from "./components/nodeCard";
 import PayCard from "./components/payCard";
-import FromTemplate from "@/relay/components/navigaton";
+import FromTemplate from "@/relay/components/FormTemplate";
+
 import {
   fetchOrganizationUserDetail,
   fetchOrganizationRecord,
@@ -42,12 +43,16 @@ class Index extends Component {
     });
   }
   payInit() {
-    const { count, httpData } = this.state;
+    const { count, httpData, communityOrganizationInfo } = this.state;
+    const { ownerId } = httpData;
+    const { communityOrganizationGoodsList = [] } = communityOrganizationInfo;
+    const { communityOrganizationGoodsId } = communityOrganizationGoodsList[0];
     Router({
       routerName: "communityOrder",
       args: {
         count,
-        ...httpData,
+        communityOrganizationGoodsId,
+        ownerId,
       },
     });
   }
@@ -86,6 +91,7 @@ class Index extends Component {
       communityOrganizationInfo,
       communityTeamUserInfo,
       consumerRecordList = [],
+      communityOrganizationInfo: { communityContentObjectList = [] },
     } = this.state;
     return (
       <Nav backFlag select>
@@ -93,15 +99,21 @@ class Index extends Component {
           <View className="community_green_height"></View>
           <View className="community_after_box">
             <Card
+              upDateList={() => {
+                this.setState({
+                  communityTeamUserInfo: {
+                    ...communityTeamUserInfo,
+                    subscribeFlag: "1",
+                  },
+                });
+              }}
               data={{ ...communityOrganizationInfo, ...communityTeamUserInfo }}
             ></Card>
             <View className="community_after_shopHeight"></View>
             <GoodsInfo
               data={{ ...communityOrganizationInfo, ...communityTeamUserInfo }}
             ></GoodsInfo>
-            <FromTemplate
-              data={{ ...communityOrganizationInfo, ...communityTeamUserInfo }}
-            ></FromTemplate>
+            <FromTemplate data={communityContentObjectList}></FromTemplate>
             <BuyCard
               onChange={this.onChange.bind(this)}
               count={count}

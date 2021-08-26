@@ -142,3 +142,47 @@ export const fetchGoodsOrderPrice = (data, fn) => {
   );
 };
 //团员-团购商品下单确认页
+
+export const fakeOrganizationGoods = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/saveCommunityOrganizationGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团员-下单
+
+export const fetchTest = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/wechat/payNotifyTest",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团员-下单
+
+export const fakeSubscribe = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/organization/user/doSubscribe",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团员-订阅/取消订阅
+
+export const fetchOrderStatus = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/order/listOrderOrderStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团员-订阅/取消订阅

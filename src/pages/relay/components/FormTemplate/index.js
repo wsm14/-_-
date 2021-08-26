@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from "react";
 import { View, Text, Image } from "@tarojs/components";
 import Template from "./components/index";
-import "index.scss";
+import "./index.scss";
 export default (props) => {
   const { data = [] } = props;
+  console.log(data, 11111);
   if (data.length > 0) {
     return (
       <View className="FormTemplate_box">

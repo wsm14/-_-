@@ -8,19 +8,35 @@ import Router from "@/common/router";
 import "./index.scss";
 export default (props) => {
   const { data } = props;
-  const { createTime = "2021-8-26 19:19:19", type, a = "a" } = data;
+  console.log(data);
+  const { createTime, status, organizationGoodsOrderDescObject } = data;
+  const {
+    goodsCount,
+    goodsImg,
+    goodsName,
+    goodsPrice,
+    liftingAddress,
+    liftingContentPerson,
+  } = organizationGoodsOrderDescObject;
   //订单支付渲染模板
   const orderTitle = {
-    a: <View className="color3">待支付</View>,
-    b: <View className="color4">已支付</View>,
-  }[a];
+    0: <View className="color3">待支付</View>,
+    1: <View className="color4">已支付</View>,
+    2: <View className="color2">已关闭</View>,
+    3: <View className="color2">已完成</View>,
+  }[status];
   return (
     <View className="relay_order_shopCardInfo">
-      <View className="relay_order_computedTime">
-        请在{" "}
-        <InterTime fn={() => updateStatus(item)} times={createTime}></InterTime>
-        内支付，过期订单自动关闭
-      </View>
+      {status === "0" && (
+        <View className="relay_order_computedTime">
+          请在
+          <InterTime
+            fn={() => updateStatus(item)}
+            times={createTime}
+          ></InterTime>
+          内支付，过期订单自动关闭
+        </View>
+      )}
       <View className="relay_order_cardTop">
         <View className="relay_order_cardTitle">暂无跟团号</View>
         <View className="relay_order_cardTime"></View>
@@ -41,7 +57,7 @@ export default (props) => {
         </View>
         <View className="relay_order_ShopContent">
           <View className="relay_order_contentImg">
-            <ImageShow width={160} src={"sadd"}></ImageShow>
+            <ImageShow width={160} src={goodsImg}></ImageShow>
           </View>
           <View className="relay_order_contentBody">
             <View className="relay_order_BodyText font_noHide">

@@ -8,8 +8,15 @@ import SelectBean from "@/components/componentView/selectBean";
 import BottomCard from "./components/bottomPay";
 import { Form, Input } from "@/relay/components/formCondition";
 import { toast } from "@/common/utils";
-import { fetchAddressList, fetchGoodsOrderPrice } from "@/server/relay";
+import {
+  fetchAddressList,
+  fetchGoodsOrderPrice,
+  fakeOrganizationGoods,
+  fetchTest,
+} from "@/server/relay";
 import { usePostBackData } from "@/relay/common/hooks";
+import PayBean from "@/components/stopBean";
+import { fetchUserShareCommission } from "@/server/index";
 import "./index.scss";
 const FormItem = Form.Item;
 class Index extends Component {
@@ -21,6 +28,7 @@ class Index extends Component {
         ...getCurrentInstance().router.params,
       },
       communityOrderInfo: {},
+      configUserLevelInfo: {},
       fakeGoods: {
         communityOrganizationGoodsId:
           getCurrentInstance().router.params.communityOrganizationGoodsId,
@@ -29,13 +37,24 @@ class Index extends Component {
         writeContactPerson: "",
         writeMobile: "",
         writeAddress: "",
-        goodsCount: getCurrentInstance().router.params.count || 1,
-        useBeanType: "",
-        useBeanStatus: "",
+        goodsCount: parseInt(getCurrentInstance().router.params.count) || 1,
+        useBeanType: "reward",
+        useBeanStatus: "1",
         remark: "",
+        visible: false,
       },
       selectIndex: null,
     };
+  }
+  fetchUserShare() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    }).catch((e) => {
+      this.setState({});
+    });
   }
   fetchAddress() {
     fetchAddressList({}).then((val) => {
@@ -48,6 +67,7 @@ class Index extends Component {
   componentWillUnmount() {}
   componentDidMount() {
     this.fetchOrder();
+    this.fetchUserShare();
   }
   componentDidShow() {
     this.fetchAddress();
@@ -58,9 +78,24 @@ class Index extends Component {
       this.setSelectIndex(data);
     }
   }
+  useBean(val) {
+    const { fakeGoods } = this.state;
+    this.setState({
+      fakeGoods: { ...fakeGoods, ...val },
+    });
+  }
   setSelectIndex(val) {
+    const { fakeGoods } = this.state;
+    console.log(val);
+    const { address, addressName, mobile } = val;
     this.setState({
       selectIndex: val,
+      fakeGoods: {
+        ...fakeGoods,
+        writeContactPerson: addressName,
+        writeMobile: mobile,
+        writeAddress: address,
+      },
     });
   }
   fetchOrder() {
@@ -73,11 +108,20 @@ class Index extends Component {
         communityOrderInfo,
         fakeGoods: {
           ...fakeGoods,
-          communityLiftingCabinetId:
-            communityLiftingCabinetList[0].communityLiftingCabinetId,
         },
       });
     });
+  }
+  setOrganizationGoodsId(id) {
+    const { fakeGoods } = this.state;
+    console.log(id);
+    if (id) {
+      this.setState({
+        fakeGoods: { ...fakeGoods, communityLiftingCabinetId: id },
+      });
+    } else {
+      return;
+    }
   }
   onChange(type = "add") {
     const { fakeGoods } = this.state;
@@ -98,12 +142,54 @@ class Index extends Component {
       });
     }
   }
+  saveSubmit() {
+    const { fakeGoods } = this.state;
+    fakeOrganizationGoods(fakeGoods)
+      .then((val) => {
+        this.setState(
+          {
+            visible: false,
+          },
+          (res) => {
+            const { orderSn } = val;
+            fetchTest({ orderSn }, (res) => {
+              toast("支付成功");
+            });
+          }
+        );
+      })
+      .catch((val) => {
+        this.setState({ visible: false });
+      });
+  }
+  computedRealPrice() {
+    const { fakeGoods, communityOrderInfo } = this.state;
+    const { useBeanStatus, useBeanType } = fakeGoods;
+    const { realPrice, userBean, userIncomeBean } = communityOrderInfo;
+    if (useBeanStatus === "0") {
+      return { realPrice, zk: 0 };
+    } else {
+      if (useBeanType === "reward") {
+        return {
+          realPrice: (parseInt(realPrice) - userBean / 100).toFixed(2),
+          zk: (userBean / 100).toFixed(2),
+        };
+      } else {
+        return {
+          realPrice: (parseInt(realPrice) - userIncomeBean / 100).toFixed(2),
+          zk: (userIncomeBean / 100).toFixed(2),
+        };
+      }
+    }
+  }
   render() {
     const {
       fakeGoods = {},
       communityOrderInfo = {},
       userAddressList,
       selectIndex,
+      configUserLevelInfo,
+      visible,
     } = this.state;
     const { communityLiftingCabinetList } = communityOrderInfo;
     const {
@@ -122,9 +208,10 @@ class Index extends Component {
         <SelectCard
           index={communityLiftingCabinetId}
           list={communityLiftingCabinetList}
+          change={this.setOrganizationGoodsId.bind(this)}
         ></SelectCard>
         <UserCard
-          setInfoAddress={(val) => this.setState({ selectIndex: val })}
+          setInfoAddress={(val) => this.setSelectIndex(val)}
           index={selectIndex}
           list={userAddressList}
         ></UserCard>
@@ -134,11 +221,11 @@ class Index extends Component {
           data={communityOrderInfo}
         ></ShopCard>
         <SelectBean
-          fn={() => {}}
-          useBeanType={"reward"}
-          data={{}}
-          configUserLevelInfo={{}}
-          useBeanStatus={"1"}
+          fn={this.useBean.bind(this)}
+          useBeanType={useBeanType}
+          data={communityOrderInfo}
+          configUserLevelInfo={configUserLevelInfo}
+          useBeanStatus={useBeanStatus}
         ></SelectBean>
         <View className="order_shopCard_bz">
           <Form onSubmit={(e) => console.log(e.detail.value)} footer={false}>
@@ -160,7 +247,28 @@ class Index extends Component {
             </FormItem>
           </Form>
         </View>
-        <BottomCard></BottomCard>
+        <BottomCard
+          data={this.computedRealPrice.bind(this)}
+          onSubmit={() =>
+            this.setState({
+              visible: true,
+            })
+          }
+        ></BottomCard>
+        {visible && (
+          <PayBean
+            cancel={() =>
+              this.setState({
+                visible: false,
+              })
+            }
+            visible={visible}
+            canfirm={() => this.saveSubmit()}
+            content={`支付后资金将进入对方账户，请确定对方信息后支付`}
+            canfirmText="取消"
+            cancelText="去支付"
+          ></PayBean>
+        )}
       </View>
     );
   }
