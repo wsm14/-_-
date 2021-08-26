@@ -14,7 +14,7 @@ export const LOGISTICS_USER_INFO = {
 
 // 商品 - 送货状态
 export const GOODS_BY_TYPE = {
-  self: "自提",
+  self: "顾客自提",
   send: "送货上门",
   noLogistics: "无需物流",
 };

@@ -202,19 +202,23 @@ class Index extends Component {
       goodsCount = 1,
       useBeanType = "",
       useBeanStatus = "",
+      logisticsType,
     } = fakeGoods;
     return (
       <View className="order_info_box">
-        <SelectCard
-          index={communityLiftingCabinetId}
-          list={communityLiftingCabinetList}
-          change={this.setOrganizationGoodsId.bind(this)}
-        ></SelectCard>
+        {logisticsType === "self" && (
+          <SelectCard
+            index={communityLiftingCabinetId}
+            list={communityLiftingCabinetList}
+            change={this.setOrganizationGoodsId.bind(this)}
+          ></SelectCard>
+        )}
         <UserCard
           setInfoAddress={(val) => this.setSelectIndex(val)}
           index={selectIndex}
           list={userAddressList}
         ></UserCard>
+
         <ShopCard
           count={goodsCount}
           onChange={this.onChange.bind(this)}
