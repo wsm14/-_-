@@ -1,0 +1,75 @@
+@import "@/assets/css/global.scss";
+
+.personal_dataCenter {
+  @include whEqual(100%, 296px);
+  background-image: url("https://wechat-config.dakale.net/miniprogram/relay/pu_IDC.png");
+  background-size: 100%;
+  .pud_content {
+    padding: 0 32px;
+    .pud_content_heard {
+      @include flexCenterA;
+      padding: 30px 64px;
+      .pud_content_title {
+        font-size: 32px;
+        color: #ffffff;
+      }
+      .pud_content_time {
+        @include flexCenterA;
+        flex: 1;
+        margin-top: 8px;
+        font-size: 20px;
+        font-weight: 400;
+        color: #ffffff;
+        opacity: 0.6;
+        margin-left: 12px;
+        &::after {
+          content: "";
+          display: inline-block;
+          @include whEqual(24px);
+          background: url("https://wechat-config.dakale.net/miniprogram/relay/pud_refurbish.png");
+          background-size: 100%;
+          margin-left: 4px;
+        }
+      }
+      .pud_content_extra {
+        @include flexCenterA;
+        font-size: 24px;
+        color: #ffffff;
+        &::after {
+          content: "";
+          display: inline-block;
+          @include whEqual(24px);
+          background: url("https://wechat-config.dakale.net/miniprogram/relay/pud_right_white.png");
+          background-size: 100%;
+        }
+      }
+    }
+    .pud_content_data {
+      @include flexCenterA;
+      justify-content: space-between;
+      margin-top: 56px;
+      padding: 0 66px;
+      .pud_data_cell {
+        @include flexCenterA;
+        flex-direction: column;
+        .pud_data_price {
+          font-size: 36px;
+          font-weight: 600;
+          color: #333333;
+          .pud_price_befo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333333;
+            margin-right: 5px;
+          }
+        }
+        .pud_data_text {
+          margin-top: 16px;
+          font-size: 24px;
+          font-weight: 400;
+          color: #999999;
+        }
+      }
+    }
+  }
+}
