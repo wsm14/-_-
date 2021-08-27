@@ -53,11 +53,11 @@ export default (props) => {
       icon: "tools_server",
       show: true,
     },
-    {
-      leble: "反馈与建议",
-      icon: "tools_edit",
-      show: true,
-    },
+    // {
+    //   leble: "反馈与建议",
+    //   icon: "tools_edit",
+    //   show: true,
+    // },
   ];
 
   return (

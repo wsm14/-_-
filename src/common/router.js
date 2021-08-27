@@ -101,6 +101,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     communityOrder: "/pages/relay/community/order/index", //社团支付
     communityPoint: "/pages/relay/community/point/index", //根据商品获取自提点列表
     delivery: "/pages/relay/community/delivery/index",
+    groupCreate: "/pages/relay/groupCreate/Create/index", // 一键开团 创建&修改
     goodsDepict: "/pages/relay/groupCreate/GoodsDepict/index", // 一键开团 商品描述
     logisticsWay: "/pages/relay/groupCreate/LogisticsWay/index", // 一键开团 物流方式配置
     selfLiftingPointEdit: "/pages/relay/selfLiftingPointSet/Edit/index", // 编辑自提点
