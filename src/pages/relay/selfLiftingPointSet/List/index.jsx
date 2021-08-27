@@ -14,7 +14,10 @@ import "./index.scss";
 export default () => {
   // 路由获取参数
   const routeParams = useRouter().params;
-  const { type = "select", liftingCabinets } = routeParams;
+  /**
+   * mode select 选择模式 list 展示管理列表
+   */
+  const { mode = "select", liftingCabinets } = routeParams;
 
   const [list, setList] = useState([]);
   const [selectId, setSelectId] = useState([]);
@@ -70,15 +73,17 @@ export default () => {
     <View className="SelfLiftingPointSet_Form">
       {list.length ? (
         <>
-          <View className="slp_heard">
-            <View className="slp_heard_title">可用自提点</View>
-            <Button
-              className="slp_heard_btn"
-              onClick={(e) => handleOnEdit(e, "add")}
-            >
-              添加自提点
-            </Button>
-          </View>
+          {mode === "select" && (
+            <View className="slp_heard">
+              <View className="slp_heard_title">可用自提点</View>
+              <Button
+                className="slp_heard_btn"
+                onClick={(e) => handleOnEdit(e, "add")}
+              >
+                添加自提点
+              </Button>
+            </View>
+          )}
           <View className="slp_group">
             {list.map((item) => (
               <View
@@ -89,7 +94,7 @@ export default () => {
                 }`}
                 onClick={() => handleOnSelect(item.communityLiftingCabinetId)}
               >
-                <View className="slp_select"></View>
+                {mode === "select" && <View className="slp_select"></View>}
                 <View className="slp_content">
                   <View className="slp_content_top">
                     <View className="slp_content_left">
@@ -120,24 +125,33 @@ export default () => {
             ))}
           </View>
           <FooterFixed>
-            <View className="slp_footer">
-              <View
-                className={`slp_footer_left ${
-                  list.length === selectId.length ? "select" : ""
-                }`}
-                onClick={handleAllSelect}
-              >
-                全选
-              </View>
-              <View className="slp_footer_right">
-                <View className="slp_submit_total">
-                  已选<Text>{selectId.length}</Text>项
+            {mode === "select" ? (
+              <View className="slp_footer">
+                <View
+                  className={`slp_footer_left ${
+                    list.length === selectId.length ? "select" : ""
+                  }`}
+                  onClick={handleAllSelect}
+                >
+                  全选
                 </View>
-                <Button className="slp_submit_btn" onClick={handleSaveData}>
-                  确定
-                </Button>
+                <View className="slp_footer_right">
+                  <View className="slp_submit_total">
+                    已选<Text>{selectId.length}</Text>项
+                  </View>
+                  <Button className="slp_submit_btn" onClick={handleSaveData}>
+                    确定
+                  </Button>
+                </View>
               </View>
-            </View>
+            ) : (
+              <Button
+                className="submit"
+                onClick={(e) => handleOnEdit(e, "add")}
+              >
+                添加自提点
+              </Button>
+            )}
           </FooterFixed>
         </>
       ) : (

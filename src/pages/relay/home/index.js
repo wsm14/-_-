@@ -38,26 +38,25 @@ class Index extends Component {
     const template = {}[count];
     return (
       <View className="home_relay_box">
-        <Nav>
-          <View className="relay_box_home">
-            <View className="relay_box">
-              <Home index={count}></Home>
-              <OrderList index={count}></OrderList>
-              {/* 个人中心 */}
-              <Personal index={count}></Personal>
-              <Tabbar
-                list={[
-                  { title: "首页", count: 0 },
-                  { title: "2", count: 1 },
-                  { title: "订单", count: 2 },
-                  { title: "个人中心", count: 3 },
-                ]}
-                change={this.tabbarChange.bind(this)}
-                index={count}
-              ></Tabbar>
-            </View>
+        <Nav></Nav>
+        <View className="relay_box_home">
+          <View className="relay_box">
+            <Home index={count}></Home>
+            <OrderList index={count}></OrderList>
+            {/* 个人中心 */}
+            <Personal index={count}></Personal>
+            <Tabbar
+              list={[
+                { title: "首页", count: 0 },
+                { title: "2", count: 1 },
+                { title: "订单", count: 2 },
+                { title: "个人中心", count: 3 },
+              ]}
+              change={this.tabbarChange.bind(this)}
+              index={count}
+            ></Tabbar>
           </View>
-        </Nav>
+        </View>
       </View>
     );
   }

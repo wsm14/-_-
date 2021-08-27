@@ -12,7 +12,7 @@ export const fetchLiftingCabinetCreate = (data, fn) => {
 // 团长自提点 - 创建
 
 export const fetchLiftingCabinetEdit = (data = {}, fn) => {
-  return httpGet(
+  return httpPost(
     {
       url: "/user/community/lifting/updateCommunityLiftingCabinet",
       data: data,
@@ -44,6 +44,17 @@ export const fetchLiftingCabinetList = (data = {}, fn) => {
 };
 // 团长自提点 - 列表
 
+export const fetchGroupList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/organization/listCommunityOrganization",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团购 - 列表
+
 export const fetchGroupCreate = (data, fn) => {
   return httpPost(
     {
@@ -54,6 +65,39 @@ export const fetchGroupCreate = (data, fn) => {
   );
 };
 // 团购 - 创建
+
+export const fetchGroupClose = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/organization/closeCommunityOrganization",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团购 - 关闭
+
+export const fetchGroupOpen = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/organization/openCommunityOrganization",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团购 - 开启
+
+export const fetchGroupDelete = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/organization/deleteCommunityOrganization",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团购 - 删除
 
 export const fetchCommunityUser = (data, fn) => {
   return httpGet(
