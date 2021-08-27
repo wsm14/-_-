@@ -1,12 +1,15 @@
 @import "@/assets/css/global.scss";
 
 .pu_order {
-  background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 10%, #f5f5f5 100%);
   .pu_order_group {
-    padding: 32px 32px 150px;
+    padding: 32px 32px 100px;
     .pu_order_cell {
       background: #ffffff;
       border-radius: 12px;
+      & + .pu_order_cell {
+        margin-top: 24px;
+      }
       .pu_order_heard {
         @include flexCenterA;
         padding: 32px;
@@ -45,7 +48,7 @@
           padding: 32px 0;
           border-bottom: 1px solid #e5e5e5;
           .pu_order_name {
-            @include flexCenterA;
+            display: flex;
             padding-bottom: 24px;
             .puon_name {
               flex: 1;
@@ -68,14 +71,65 @@
             justify-content: space-between;
             padding-bottom: 40px;
           }
+          .pu_content_footer {
+            @include flexCenterA;
+            .pu_order_status {
+              flex: 1;
+              font-size: 24px;
+              color: #07c0c2;
+              &.end {
+                color: #999999;
+              }
+            }
+            .pu_order_share {
+              @include whEqual(120px, 40px);
+              background-image: url("https://wechat-config.dakale.net/miniprogram/relay/icon_1.png");
+              background-size: 100%;
+            }
+          }
         }
         .pu_order_footer {
+          @include flexCenterA;
           padding: 32px 0 25px;
           font-size: 20px;
           font-weight: 400;
           color: #999999;
+          .pu_order_income {
+            flex: 1;
+            View + View {
+              margin-top: 24px;
+            }
+            Text + Text {
+              margin-left: 24px;
+            }
+          }
+          .pu_order_tools {
+            @include flexCenterA;
+            padding: 0 4px;
+            justify-content: space-between;
+            width: 31px;
+            height: 23px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            .pu_tools_radio {
+              width: 4px;
+              height: 4px;
+              background: #999999;
+              border-radius: 50%;
+            }
+            &::after {
+              border: none;
+            }
+          }
         }
       }
     }
+  }
+  .pu_order_null {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #cccccc;
+    margin-top: 56px;
   }
 }

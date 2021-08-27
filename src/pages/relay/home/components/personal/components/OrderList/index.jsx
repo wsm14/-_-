@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "@tarojs/components";
+import { View, Text, Button } from "@tarojs/components";
 import ImageShow from "@/relay/components/ImageShow";
 import "./index.scss";
 
@@ -58,10 +58,82 @@ export default (props) => {
               <View className="pu_order_img">
                 <ImageShow width={194} src={""}></ImageShow>
               </View>
+              <View className="pu_content_footer">
+                <View className="pu_order_status end">未发布</View>
+                <View className="pu_order_share"></View>
+              </View>
             </View>
-            <View className="pu_order_footer"></View>
+            <View className="pu_order_footer">
+              <View className="pu_order_income">
+                <View>
+                  <Text>实际收入 ¥19.88</Text>
+                  <Text>退款金额 ¥0</Text>
+                </View>
+                <View>
+                  <Text>已跟团1人次</Text>
+                  <Text>取消跟团0人次</Text>
+                  <Text>查看0人</Text>
+                </View>
+              </View>
+              <Button className="pu_order_tools">
+                <View className="pu_tools_radio"></View>
+                <View className="pu_tools_radio"></View>
+                <View className="pu_tools_radio"></View>
+              </Button>
+            </View>
           </View>
         </View>
+        <View className="pu_order_cell">
+          <View className="pu_order_heard">
+            <View className="pu_heard_date">8月19日</View>
+            <View className="pu_heard_footer">
+              {toolsArr.map((i) => (
+                <View
+                  className={`pu_heard_tools ${
+                    i.disabled ? "pu_tools_disabled" : ""
+                  }`}
+                  onClick={!i.disabled ? i.onClick : () => {}}
+                >
+                  {i.name}
+                </View>
+              ))}
+            </View>
+          </View>
+          <View className="pu_order_info">
+            <View className="pu_order_content">
+              <View className="pu_order_name">
+                <View className="puon_name">优质生鲜搬运工</View>
+                <View className="puon_price">892</View>
+              </View>
+              <View className="pu_order_img">
+                <ImageShow width={194} src={""}></ImageShow>
+              </View>
+              <View className="pu_content_footer">
+                <View className="pu_order_status end">未发布</View>
+                <View className="pu_order_share"></View>
+              </View>
+            </View>
+            <View className="pu_order_footer">
+              <View className="pu_order_income">
+                <View>
+                  <Text>实际收入 ¥19.88</Text>
+                  <Text>退款金额 ¥0</Text>
+                </View>
+                <View>
+                  <Text>已跟团1人次</Text>
+                  <Text>取消跟团0人次</Text>
+                  <Text>查看0人</Text>
+                </View>
+              </View>
+              <Button className="pu_order_tools">
+                <View className="pu_tools_radio"></View>
+                <View className="pu_tools_radio"></View>
+                <View className="pu_tools_radio"></View>
+              </Button>
+            </View>
+          </View>
+        </View>
+        <View className="pu_order_null">没有更多了</View>
       </View>
     </View>
   );
