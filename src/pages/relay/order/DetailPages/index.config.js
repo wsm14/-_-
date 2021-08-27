@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: "送货地址",
+  navigationBarTitleText: "订单详情",
   navigationStyle: "default",
 };

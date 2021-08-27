@@ -6,12 +6,12 @@ import InterTime from "@/components/InterTime";
 import ImageShow from "@/relay/components/ImageShow";
 import Router from "@/common/router";
 import { GOODS_BY_TYPE } from "@/relay/common/constant";
-import "./index.scss";
 import { backgroundObj } from "@/common/utils";
 export default (props) => {
   const { data } = props;
   console.log(data);
-  const { createTime, status, organizationGoodsOrderDescObject } = data;
+  const { createTime, status, organizationGoodsOrderDescObject, orderSn } =
+    data;
   const {
     goodsCount,
     goodsImg,
@@ -45,7 +45,16 @@ export default (props) => {
     }
   };
   return (
-    <View className="relay_order_shopCardInfo">
+    <View
+      onClick={(e) => {
+        e.stopPropagation();
+        Router({
+          routerName: "orderDetails",
+          args: { orderSn },
+        });
+      }}
+      className="relay_order_shopCardInfo"
+    >
       {status === "0" && (
         <View className="relay_order_computedTime">
           请在

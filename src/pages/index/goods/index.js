@@ -8,6 +8,7 @@ import Tabs from "@/components/tabs";
 import Goods from "./components/goods";
 import { goodsNullStatus } from "@/components/publicShopStyle";
 import { inject, observer } from "mobx-react";
+import ActiveToast from "@/components/componentView/active/tabbarBox";
 import Router from "@/common/router";
 import "./index.scss";
 @inject("store")
@@ -187,7 +188,7 @@ class Index extends Component {
           style={tabStyle}
           {...setting}
         ></Tabs>
-       
+        <ActiveToast store={activeInfoStore}></ActiveToast>
         {orderList.length === 0 ? (
           goodsNullStatus()
         ) : (

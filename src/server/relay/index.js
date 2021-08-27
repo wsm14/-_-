@@ -185,4 +185,15 @@ export const fetchOrderStatus = (data, fn) => {
     (res) => fn && fn(res)
   );
 };
-//团员-订阅/取消订阅
+//获取 订单列表
+
+export const fetchOrderDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/order/getOrderDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团员- 订单详情
