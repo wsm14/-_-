@@ -124,6 +124,7 @@ class Index extends Component {
               data={{ ...communityOrganizationInfo, ...communityTeamUserInfo }}
               count={count}
               submit={this.payInit.bind(this)}
+              getDetail={this.fecthDetails}
             ></PayCard>
           </View>
         </View>

@@ -5,6 +5,7 @@ import {
   handleGoGroupEdit,
   handleGroupDelete,
   handleGroupDoTop,
+  handleGoGroupDetail,
 } from "@/relay/common/hooks";
 import { toast } from "@/common/utils";
 import { GROUP_STATUS } from "@/relay/common/constant";
@@ -73,7 +74,24 @@ export default ({ list, navHeight, getNewData }) => {
       </View>
       <View className="pu_order_group">
         {list.map((item) => (
-          <View className="pu_order_cell">
+          <View
+            className="pu_order_cell"
+            onClick={(e) => {
+              e.stopPropagation();
+              const {
+                communityOrganizationId,
+                ownerId,
+                settleAmount,
+                viewCount,
+              } = item;
+              handleGoGroupDetail({
+                communityOrganizationId,
+                ownerId,
+                settleAmount,
+                viewCount,
+              });
+            }}
+          >
             <View className="pu_order_heard">
               {/* 创建时间 */}
               <View className="pu_heard_date">{item.createTime}</View>

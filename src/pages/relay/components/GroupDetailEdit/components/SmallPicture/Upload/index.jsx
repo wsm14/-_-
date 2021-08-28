@@ -4,7 +4,7 @@ import Taro from "@tarojs/taro";
 import { upload } from "@/api/upload";
 import "./index.scss";
 
-export default ({ count = 9, data = [], onChange }) => {
+export default ({ count = 9, maxFile = 50, data = [], onChange }) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -21,8 +21,9 @@ export default ({ count = 9, data = [], onChange }) => {
       success: (res) => {
         const { tempFilePaths } = res;
         upload(tempFilePaths, { img: tempFilePaths }).then((res) => {
-          setList([...list, ...res.img]);
-          onChange([...list, ...res.img]);
+          const newList = [...list, ...res.img].slice(0, maxFile);
+          setList(newList);
+          onChange(newList);
         });
       },
       fail: (res) => {},
@@ -80,7 +81,7 @@ export default ({ count = 9, data = [], onChange }) => {
       {list.map((item, index) => {
         return renderImg(item, index);
       })}
-      {count > list.length && renderUpload()}
+      {maxFile > list.length && renderUpload()}
     </View>
   );
 };

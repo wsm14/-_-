@@ -105,6 +105,7 @@ const GroupCreate = () => {
         { communityGoodsDescObject, ...oval, pushFlag },
       ],
     }).then((res) => {
+      wx.disableAlertBeforeUnload();
       Taro.navigateBack({ delta: 1 });
     });
   };
