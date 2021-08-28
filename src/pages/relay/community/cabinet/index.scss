@@ -21,6 +21,7 @@ page {
     font-weight: 400;
     color: #999999;
     line-height: 36px;
+    margin-top: 24px;
   }
   .cabinet_template_set {
     margin-top: 12px;
@@ -34,12 +35,12 @@ page {
     top: 32px;
   }
   .cabinet_template_check {
-    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/gc_select.png)
+    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/icon_19.png)
       no-repeat;
     background-size: 100% 100%;
   }
   .cabinet_template_noCheck {
-    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/gc_noselect2.png)
+    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/icon20.png)
       no-repeat;
     background-size: 100% 100%;
   }

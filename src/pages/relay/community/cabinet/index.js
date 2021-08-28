@@ -4,6 +4,7 @@ import { View, Image, Text } from "@tarojs/components";
 import { fetchLiftingCabinet } from "@/server/relay";
 import classNames from "classnames";
 import evens from "@/common/evens";
+import { getLat, getLnt, GetDistance } from "@/common/utils";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -14,9 +15,9 @@ class Index extends Component {
       ownerId: getCurrentInstance().router.params.ownerId,
       communityLiftingCabinetId:
         getCurrentInstance().router.params.communityLiftingCabinetId,
+      communityLiftingCabinetList: [],
     };
   }
-  componentWillUnmount() {}
   componentDidMount() {
     this.fetchList();
   }
@@ -24,37 +25,58 @@ class Index extends Component {
   fetchList() {
     const { communityOrganizationId, ownerId } = this.state;
     fetchLiftingCabinet({ communityOrganizationId, ownerId }).then((val) => {
-      console.log(val);
+      const { communityLiftingCabinetList } = val;
+      this.setState({
+        communityLiftingCabinetList,
+      });
     });
   }
   componentWillUnmount() {
-    evens.$on("setCabinetId", this.state.id);
+    evens.$emit("setCabinetId", this.state.communityLiftingCabinetId);
   }
   fetchLiftingCabinet;
   //获取地址列表
   render() {
-    const { id } = this.state;
+    const { communityLiftingCabinetId, communityLiftingCabinetList } =
+      this.state;
     const template = () => {};
     return (
       <View className="cabinet_box">
-        <View className="cabinet_template_box">
-          <View className="cabinet_template_address">
-            <Text className="font28 color1">国泰科技大厦</Text>
-            <Text className="font24 color2">｜22m</Text>
-          </View>
-          <View className="cabinet_template_xxaddress color2 font24">
-            浙江省杭州市萧山区宁卫街道萧山区宁卫街道萧山区宁卫街道萧山区宁卫街道78号
-          </View>
-          <View className="cabinet_template_set font24 color1">
-            联系人：刘 187****6767
-          </View>
-          <View
-            className={classNames(
-              "cabinet_template_checkBox",
-              id === 1 ? "cabinet_template_check" : "cabinet_template_noCheck"
-            )}
-          ></View>
-        </View>
+        {communityLiftingCabinetList.map((item) => {
+          const { address, lat, lnt, mobile, liftingName, contactPerson } =
+            item;
+          return (
+            <View
+              onClick={() => {
+                this.setState({
+                  communityLiftingCabinetId: item.communityLiftingCabinetId,
+                });
+              }}
+              className="cabinet_template_box"
+            >
+              <View className="cabinet_template_address">
+                <Text className="font28 color1">{liftingName}</Text>
+                <Text className="font24 color2">
+                  ｜{GetDistance(getLat(), getLnt(), lat, lnt)}
+                </Text>
+              </View>
+              <View className="cabinet_template_xxaddress color2 font24">
+                {address}
+              </View>
+              <View className="cabinet_template_set font24 color1">
+                联系人：{contactPerson} {mobile}
+              </View>
+              <View
+                className={classNames(
+                  "cabinet_template_checkBox",
+                  communityLiftingCabinetId === item.communityLiftingCabinetId
+                    ? "cabinet_template_check"
+                    : "cabinet_template_noCheck"
+                )}
+              ></View>
+            </View>
+          );
+        })}
       </View>
     );
   }

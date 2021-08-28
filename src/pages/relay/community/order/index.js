@@ -14,10 +14,11 @@ import {
   fakeOrganizationGoods,
   fetchTest,
 } from "@/server/relay";
-import { usePostBackData } from "@/relay/common/hooks";
+
 import PayBean from "@/components/stopBean";
 import evens from "@/common/evens";
 import { fetchUserShareCommission } from "@/server/index";
+import Router from "@/common/router";
 import "./index.scss";
 const FormItem = Form.Item;
 class Index extends Component {
@@ -44,6 +45,7 @@ class Index extends Component {
         remark: "",
         visible: false,
       },
+      orderData: {},
       selectIndex: null,
     };
   }
@@ -70,7 +72,8 @@ class Index extends Component {
   componentDidMount() {
     this.fetchOrder();
     this.fetchUserShare();
-    evens.$emit("setCabinetId", (val) => {
+    evens.$on("setCabinetId", (val) => {
+      console.log(val);
       this.setState({
         fakeGoods: { ...this.state.fakeGoods, communityLiftingCabinetId: val },
       });
@@ -81,7 +84,7 @@ class Index extends Component {
     const pages = Taro.getCurrentPages(); // 获取页面堆栈
     const currPage = pages[pages.length - 1]; // 获取上一页栈
     const { data } = currPage.data; // 获取上一页回传数据
-    console.log(currPage.data);
+
     if (data) {
       this.setSelectIndex(data);
     }
@@ -164,17 +167,10 @@ class Index extends Component {
     const { fakeGoods } = this.state;
     fakeOrganizationGoods(fakeGoods)
       .then((val) => {
-        this.setState(
-          {
-            visible: false,
-          },
-          (res) => {
-            const { orderSn } = val;
-            fetchTest({ orderSn }, (res) => {
-              toast("支付成功");
-            });
-          }
-        );
+        this.setState({
+          visible: true,
+          orderData: val,
+        });
       })
       .catch((val) => {
         this.setState({ visible: false });
@@ -182,19 +178,24 @@ class Index extends Component {
   }
   computedRealPrice() {
     const { fakeGoods, communityOrderInfo } = this.state;
-    const { useBeanStatus, useBeanType } = fakeGoods;
+    const { useBeanStatus, useBeanType, goodsCount } = fakeGoods;
     const { realPrice, userBean, userIncomeBean } = communityOrderInfo;
     if (useBeanStatus === "0") {
-      return { realPrice, zk: 0 };
+      return { realPrice: (realPrice * goodsCount).toFixed(2), zk: 0 };
     } else {
       if (useBeanType === "reward") {
         return {
-          realPrice: (parseInt(realPrice) - userBean / 100).toFixed(2),
+          realPrice: (Number(realPrice) * goodsCount - userBean / 100).toFixed(
+            2
+          ),
           zk: (userBean / 100).toFixed(2),
         };
       } else {
         return {
-          realPrice: (parseInt(realPrice) - userIncomeBean / 100).toFixed(2),
+          realPrice: (
+            Number(realPrice) * goodsCount -
+            userIncomeBean / 100
+          ).toFixed(2),
           zk: (userIncomeBean / 100).toFixed(2),
         };
       }
@@ -275,21 +276,33 @@ class Index extends Component {
         </View>
         <BottomCard
           data={this.computedRealPrice.bind(this)}
-          onSubmit={() =>
-            this.setState({
-              visible: true,
-            })
-          }
+          onSubmit={this.saveSubmit.bind(this)}
         ></BottomCard>
         {visible && (
           <PayBean
             cancel={() =>
-              this.setState({
-                visible: false,
-              })
+              this.setState(
+                {
+                  visible: false,
+                },
+                (res) => {
+                  const { orderData } = this.state;
+                  const { orderSn } = orderData;
+                  Router({
+                    routerName: "orderDetails",
+                    args: { orderSn },
+                  });
+                }
+              )
             }
             visible={visible}
-            canfirm={() => this.saveSubmit()}
+            canfirm={() => {
+              const { orderData } = this.state;
+              const { orderSn } = orderData;
+              fetchTest({ orderSn }, (res) => {
+                toast("支付成功");
+              });
+            }}
             content={`支付后资金将进入对方账户，请确定对方信息后支付`}
             canfirmText="取消"
             cancelText="去支付"
