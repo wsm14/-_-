@@ -3,21 +3,23 @@
 */
 import React, { useMemo } from "react";
 import Taro, { useShareAppMessage } from "@tarojs/taro";
-import { View, Text, Image } from "@tarojs/components";
+import { View, Text, Image, Button } from "@tarojs/components";
 import "./index.scss";
 export default (props) => {
   const { data = {}, show = false, onClose } = props;
-  const { title = "", url = "" } = data;
+  const { title = "", frontImage = "", miniProgramUrl } = data;
   useShareAppMessage((res) => {
     if (res.from === "button") {
       return {
         title: title,
-        path: url,
+        path: miniProgramUrl,
+        imageUrl: frontImage,
       };
     }
     return {
       title: title,
-      path: url,
+      imageUrl: frontImage,
+      path: miniProgramUrl,
     };
   });
   if (show) {
@@ -32,7 +34,21 @@ export default (props) => {
         ></View>
         <View className="share_layer_content">
           <View className="share_layer_shareInfo">
-            <View className="share_layer_shareWechat">
+            <View
+              className="share_layer_shareWechat"
+              onClick={() => {
+                onClose();
+              }}
+            >
+              <Button
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  background: "none",
+                  position: "absolute",
+                }}
+                openType={"share"}
+              ></Button>
               <View className="share_layer_shareWechatIcon"></View>
               <View className="share_layer_shareWechatText">分享到微信</View>
             </View>

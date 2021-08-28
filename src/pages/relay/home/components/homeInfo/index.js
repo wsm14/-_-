@@ -16,8 +16,8 @@ export default (props) => {
     limit: 10,
   });
   const [list, setList] = useState([]);
-  const [visible, serVisible] = useState(false);
-  const [shareData, serShareData] = useState({});
+  const [visible, setVisible] = useState(false);
+  const [shareData, setShareData] = useState({});
   const fetchList = (type = "pageUp") => {
     fetchCommunityUser(httpData).then((res) => {
       const { communityOrganizationList = [] } = res;
@@ -33,7 +33,7 @@ export default (props) => {
   }, [httpData.page]);
   useEffect(() => {
     if (!visible) {
-      serShareData({});
+      setShareData({});
     }
   }, [visible]);
   useReachBottom(() => {
@@ -60,8 +60,8 @@ export default (props) => {
                 shardingKey: ownerId,
               },
               (res) => {
-                serVisible(true);
-                serShareData(res);
+                setVisible(true);
+                setShareData(res);
               }
             );
           }
@@ -85,6 +85,7 @@ export default (props) => {
         onClose={() => {
           setVisible(false);
         }}
+        show={visible}
         data={shareData}
       ></ShareInfo>
     </View>

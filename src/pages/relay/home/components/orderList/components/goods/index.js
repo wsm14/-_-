@@ -90,7 +90,7 @@ export default (props) => {
           </View>
         </View>
         <View className="relay_order_ShopContent">
-          <View className="relay_order_contentImg">
+          <View className="relay_order_contentImg dakale_nullImage">
             <ImageShow width={160} src={goodsImg}></ImageShow>
           </View>
           <View className="relay_order_contentBody">
@@ -99,7 +99,7 @@ export default (props) => {
             </View>
             <View className="relay_order_Bodyfont">×{goodsCount}</View>
           </View>
-          <View className="relay_order_Bodyprice">¥ {goodsPrice}</View>
+          <View className=" font_hide">¥ {goodsPrice}</View>
         </View>
         <View className="relay_order_cardUser">
           <View className="relay_cardUser_title">
