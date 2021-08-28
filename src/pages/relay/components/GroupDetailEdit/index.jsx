@@ -17,7 +17,7 @@ export default ({ cRef, value }) => {
 
   useEffect(() => {
     if (value) {
-      setDataArr(dataArr);
+      setDataArr(value);
     }
   }, [value]);
 

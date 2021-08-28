@@ -66,6 +66,17 @@ export const fetchGroupList = (data = {}, fn) => {
 };
 // 团购 - 列表
 
+export const fetchGroupEdit = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/organization/updateCommunityOrganization",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团购 - 修改
+
 export const fetchGroupCreate = (data, fn) => {
   return httpPost(
     {

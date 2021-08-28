@@ -4,7 +4,11 @@ import { usePostBackData } from "@/relay/common/hooks";
 import { toast } from "@/common/utils";
 import { View } from "@tarojs/components";
 import { Form } from "@/relay/components/FormCondition";
-import { fetchGroupCreate, fetchGroupDetail } from "@/server/relay";
+import {
+  fetchGroupEdit,
+  fetchGroupCreate,
+  fetchGroupDetail,
+} from "@/server/relay";
 import Heard from "./components/Heard";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
@@ -90,11 +94,12 @@ const GroupCreate = () => {
       })
     )
       return;
-    fetchGroupCreate({
+    const fetch = { edit: fetchGroupEdit, add: fetchGroupCreate }[mode];
+    fetch({
+      ...other,
       title,
       liftingCabinets: liftingCabinets.toString(),
       customerWriteInfo: customerWriteInfo.toString(),
-      ...other,
       communityContentObjectList: cRef.current.getData(),
       communityOrganizationGoodsList: [
         { communityGoodsDescObject, ...oval, pushFlag },
