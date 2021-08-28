@@ -107,8 +107,8 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
         </FormItem>
         <FormItem label={"库存"}>
           <Input
-            name={"total"}
-            value={formData["total"]}
+            name={"remain"}
+            value={formData["remain"]}
             type="number"
             placeholder={"不限"}
             maxLength={30}

@@ -25,7 +25,7 @@ export default ({ tabbarChange }) => {
     {
       leble: "订单管理",
       icon: "tools_ordermg",
-      show: !groupTools,
+      show: !groupTools, // 团长
     },
     {
       leble: "商品核销",
@@ -41,7 +41,8 @@ export default ({ tabbarChange }) => {
     {
       leble: "收货地址",
       icon: "tools_loact",
-      show: groupTools,
+      show: groupTools, // 团员
+      onClick: () => goPage("delivery", { mode: "list" }),
     },
     {
       leble: "我的订单",
@@ -59,12 +60,6 @@ export default ({ tabbarChange }) => {
     //   icon: "tools_edit",
     //   show: true,
     // },
-    {
-      leble: "发布商品",
-      icon: "tools_edit",
-      show: true,
-      onClick: () => goPage("groupCreate", { mode: "add" }),
-    },
   ];
 
   return (
