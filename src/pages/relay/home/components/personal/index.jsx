@@ -56,10 +56,14 @@ export default (props) => {
   return (
     <View style={{ display: index == 3 ? "block" : "none" }}>
       <View className="tabBar_personal">
+        {/* 用户信息 */}
         <UserInfo></UserInfo>
+        {/* 数据中心 */}
         <DataCenter></DataCenter>
+        {/* 用户工具栏 */}
         <Tools tabbarChange={tabbarChange}></Tools>
       </View>
+      {/* 订单列表 */}
       {showList && (
         <OrderList
           list={dataList}
