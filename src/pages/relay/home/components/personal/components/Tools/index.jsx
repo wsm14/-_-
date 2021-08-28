@@ -5,8 +5,8 @@ import { View, Button } from "@tarojs/components";
 import { fetchStorage } from "@/common/utils";
 import "./index.scss";
 
-export default (props) => {
-  const [groupTools, setGroupTools] = useState(false); // 是否显示团长工具栏
+export default ({ tabbarChange }) => {
+  const [groupTools, setGroupTools] = useState(true); // 是否显示团员/团长工具栏
 
   // 跳转自提点佣金设置
   const goPage = (routerName, args = {}) => {
@@ -47,6 +47,7 @@ export default (props) => {
       leble: "我的订单",
       icon: "tools_order",
       show: groupTools,
+      onClick: () => tabbarChange(2),
     },
     {
       leble: "官方客服",
@@ -71,13 +72,13 @@ export default (props) => {
       <View className="pt_content">
         <View className="pt_heard">
           <View className="pt_heard_title">
-            {groupTools ? "团长" : "团员"}功能
+            {groupTools ? "团员" : "团长"}功能
           </View>
           <Button
             className="pt_heard_btn"
             onClick={() => setGroupTools(!groupTools)}
           >
-            切换{groupTools ? "团员" : "团长"}功能
+            切换{groupTools ? "团长" : "团员"}功能
           </Button>
         </View>
         <View className="pt_tools_group">

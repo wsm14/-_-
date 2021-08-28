@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
+import Router from "@/common/router";
 import Tabbar from "./components/tabbar";
 import Home from "./components/homeInfo";
 import OrderList from "./components/orderList";
@@ -17,6 +18,16 @@ class Index extends Component {
     };
   }
   tabbarChange(index) {
+    // 一键开团
+    if (index === 1) {
+      Router({
+        routerName: "groupCreate",
+        args: {
+          mode: "add",
+        },
+      });
+      return;
+    }
     const { count } = this.state;
     if (count === index) {
       return;
@@ -37,7 +48,7 @@ class Index extends Component {
   render() {
     const { count, navHeight } = this.state;
     const template = {}[count];
-    const titleArr = ["首页", "2", "订单", "个人中心"];
+    const titleArr = ["首页", "一键开团", "订单", "个人中心"];
     return (
       <View className="home_relay_box">
         <Nav
@@ -49,11 +60,15 @@ class Index extends Component {
             <Home index={count}></Home>
             <OrderList index={count}></OrderList>
             {/* 个人中心 */}
-            <Personal index={count} navHeight={navHeight}></Personal>
+            <Personal
+              index={count}
+              navHeight={navHeight}
+              tabbarChange={this.tabbarChange.bind(this)}
+            ></Personal>
             <Tabbar
               list={[
                 { title: "首页", count: 0 },
-                { title: "2", count: 1 },
+                { title: "一键开团", count: 1 },
                 { title: "订单", count: 2 },
                 { title: "个人中心", count: 3 },
               ]}

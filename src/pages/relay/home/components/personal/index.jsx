@@ -9,7 +9,7 @@ import { fetchGroupList } from "@/server/relay";
 import "./index.scss";
 
 export default (props) => {
-  const { index, navHeight } = props;
+  const { index, navHeight, tabbarChange } = props;
 
   // 请求参数
   const [pages, setPages] = useState({
@@ -58,7 +58,7 @@ export default (props) => {
       <View className="tabBar_personal">
         <UserInfo></UserInfo>
         <DataCenter></DataCenter>
-        <Tools></Tools>
+        <Tools tabbarChange={tabbarChange}></Tools>
       </View>
       {showList && (
         <OrderList
