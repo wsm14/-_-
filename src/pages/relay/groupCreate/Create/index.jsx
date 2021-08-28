@@ -34,7 +34,7 @@ const GroupCreate = () => {
       fetchGroupDetail({ ownerId, communityOrganizationId }).then((res) => {
         const { communityOrganizationGoodsList: obj = [], ...other } =
           res.communityOrganizationDetail;
-        setFormData({ ...other, ...obj[0] });
+        setFormData({ ...other, ...(obj[0] || {}) });
       });
     }
   }, []);
