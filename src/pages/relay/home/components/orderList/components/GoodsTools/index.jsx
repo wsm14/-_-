@@ -1,5 +1,6 @@
 import React from "react";
 import Taro from "@tarojs/taro";
+import Router from "@/common/router";
 import { View } from "@tarojs/components";
 import { toast } from "@/common/utils";
 import { fetchOrderClose } from "@/server/relay";
