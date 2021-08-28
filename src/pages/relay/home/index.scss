@@ -11,7 +11,6 @@ page {
   .relay_tabbar_text {
     padding-top: 12px;
     text-align: center;
-    color: #333333;
     font-size: 24px;
   }
 }
@@ -32,7 +31,41 @@ page {
     width: 48px;
     height: 48px;
     margin: 24px auto 0;
-    background: #d00000;
+  }
+  .home_select {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_nohome.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .home_noSelect {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_home.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .good_select {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_nogood.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .good_noSelect {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_good.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .kaituan_Select {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_kt.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .user_select {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_nouser.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .user_noSelect {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_user.png")
+      no-repeat;
+    background-size: 100% 100%;
   }
 }
 .home_relay_box {

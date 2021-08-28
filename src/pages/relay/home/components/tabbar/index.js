@@ -1,10 +1,7 @@
-/*
- 到点打卡,商户暂不支持到店打卡，请联系商户开通设置
-*/
 import React from "react";
 
 import { View } from "@tarojs/components";
-
+import classNames from "classnames";
 
 export default (props) => {
   const { index, change, list } = props;
@@ -20,8 +17,20 @@ export default (props) => {
               change(count);
             }}
           >
-            <View className="relay_tabbar_bg"></View>
-            <View className="relay_tabbar_text">{title}</View>
+            <View
+              className={classNames(
+                "relay_tabbar_bg",
+                count == index ? selectIcon : icon
+              )}
+            ></View>
+            <View
+              className={classNames(
+                "relay_tabbar_text",
+                count == index ? "color4" : "color2"
+              )}
+            >
+              {title}
+            </View>
           </View>
         );
       })}

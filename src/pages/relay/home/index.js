@@ -67,10 +67,30 @@ class Index extends Component {
             ></Personal>
             <Tabbar
               list={[
-                { title: "首页", count: 0 },
-                { title: "一键开团", count: 1 },
-                { title: "订单", count: 2 },
-                { title: "个人中心", count: 3 },
+                {
+                  title: "首页",
+                  count: 0,
+                  selectIcon: "home_select",
+                  icon: "home_noSelect",
+                },
+                {
+                  title: "一键开团",
+                  count: 1,
+                  selectIcon: "kaituan_Select",
+                  icon: "kaituan_Select",
+                },
+                {
+                  title: "订单",
+                  count: 2,
+                  selectIcon: "good_select",
+                  icon: "good_noSelect",
+                },
+                {
+                  title: "个人中心",
+                  count: 3,
+                  selectIcon: "user_select",
+                  icon: "user_noSelect",
+                },
               ]}
               change={this.tabbarChange.bind(this)}
               index={count}
