@@ -18,6 +18,7 @@ class Index extends Component {
     };
   }
   tabbarChange(index) {
+    // 一键开团
     if (index === 1) {
       Router({
         routerName: "groupCreate",

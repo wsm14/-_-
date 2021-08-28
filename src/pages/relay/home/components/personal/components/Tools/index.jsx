@@ -6,7 +6,7 @@ import { fetchStorage } from "@/common/utils";
 import "./index.scss";
 
 export default ({ tabbarChange }) => {
-  const [groupTools, setGroupTools] = useState(false); // 是否显示团长工具栏
+  const [groupTools, setGroupTools] = useState(true); // 是否显示团员/团长工具栏
 
   // 跳转自提点佣金设置
   const goPage = (routerName, args = {}) => {
