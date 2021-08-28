@@ -1,19 +1,30 @@
 import React, { useState } from "react";
-import Taro from "@tarojs/taro";
+import { useDidShow } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { fetchStorage } from "@/common/utils";
+import { fetchPcUserInfo } from "@/server/relay";
 import "./index.scss";
 
-export default (props) => {
-  const userInfo = fetchStorage("userInfo") || {};
+export default () => {
+  const [userInfo, setUserInfo] = useState({});
+
+  useDidShow(() => {
+    getUserInfo();
+  });
+
+  // 获取用户信息
+  const getUserInfo = () => {
+    fetchPcUserInfo().then((res) => {
+      setUserInfo(res);
+    });
+  };
 
   const toolsArr = [
     {
-      leble: "¥0",
+      leble: `￥${userInfo.cash || 0}`,
       icon: "tools_wallet",
     },
     {
-      leble: "10000卡豆",
+      leble: `￥${userInfo.bean || 0}卡豆`,
       icon: "tools_bean",
     },
     {
@@ -39,7 +50,7 @@ export default (props) => {
         ></View>
         <View className="pu_name">
           <View className="pu_name_text">{userInfo.username}</View>
-          <View className="pu_name_btn">切换身份</View>
+          {/* <View className="pu_name_btn">切换身份</View> */}
         </View>
         <View className="pu_home">主页</View>
       </View>

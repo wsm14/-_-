@@ -1,5 +1,16 @@
 import { httpGet, httpPost } from "@/api/newRequest";
 
+export const fetchPcUserInfo = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/mainPage",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 个人中心 - 用户信息
+
 export const fetchPcDataCenter = (data = {}, fn) => {
   return httpGet(
     {
