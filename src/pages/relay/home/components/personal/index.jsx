@@ -17,6 +17,7 @@ export default (props) => {
     page: 1,
     limit: 10,
   });
+  const [showList, setShowList] = useState(false); // 是否展示底部列表
   const [dataList, setDataList] = useState([]); // 列表数据
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export default (props) => {
 
   // 上拉加载
   useReachBottom(() => {
-    if (index == 0) {
+    if (index == 3) {
       setPages({ ...pages, page: pages.page + 1 });
     }
   });
@@ -35,6 +36,7 @@ export default (props) => {
     fetchGroupList(pages).then((res) => {
       const { communityOrganizationList: list = [] } = res;
       setDataList((old) => [...old, ...list]);
+      !showList && setShowList(!!list.length);
     });
     Taro.stopPullDownRefresh(); // 停止刷新
   };
@@ -58,11 +60,13 @@ export default (props) => {
         <DataCenter></DataCenter>
         <Tools></Tools>
       </View>
-      <OrderList
-        list={dataList}
-        navHeight={navHeight}
-        getNewData={getNewData}
-      ></OrderList>
+      {showList && (
+        <OrderList
+          list={dataList}
+          navHeight={navHeight}
+          getNewData={getNewData}
+        ></OrderList>
+      )}
     </View>
   );
 };

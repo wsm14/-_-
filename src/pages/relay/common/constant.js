@@ -9,6 +9,7 @@ export const GOODS_BUY_NUMBER = { unlimited: "不限", personLimit: "每人限�
 export const GROUP_STATUS = {
   "": "全部",
   start: "跟团中",
+  notStarted: "未开始",
   end: "已结束",
 };
 

@@ -1,10 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
-import Taro from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { usePostBackData } from "@/relay/common/hooks";
 import { toast } from "@/common/utils";
 import { View } from "@tarojs/components";
 import { Form } from "@/relay/components/FormCondition";
-import { fetchGroupCreate } from "@/server/relay";
+import {
+  fetchGroupEdit,
+  fetchGroupCreate,
+  fetchGroupDetail,
+} from "@/server/relay";
 import Heard from "./components/Heard";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
@@ -13,6 +17,10 @@ import Footer from "./components/Footer";
  * 一键开团
  */
 const GroupCreate = () => {
+  // 路由获取参数 mode add 新增 edit 修改
+  const routeParams = useRouter().params;
+  const { mode = "add", ownerId, communityOrganizationId } = routeParams;
+
   const [treaty, setTreaty] = useState(true); // 同意协议按钮
   const [formData, setFormData] = useState({
     limitContent: 1,
@@ -20,6 +28,16 @@ const GroupCreate = () => {
   }); // 额外信息储存
 
   const cRef = useRef();
+
+  useEffect(() => {
+    if (mode === "edit") {
+      fetchGroupDetail({ ownerId, communityOrganizationId }).then((res) => {
+        const { communityOrganizationGoodsList: obj = [], ...other } =
+          res.communityOrganizationDetail;
+        setFormData({ ...other, ...(obj[0] || {}) });
+      });
+    }
+  }, []);
 
   useEffect(() => {
     wx.enableAlertBeforeUnload({
@@ -76,11 +94,12 @@ const GroupCreate = () => {
       })
     )
       return;
-    fetchGroupCreate({
+    const fetch = { edit: fetchGroupEdit, add: fetchGroupCreate }[mode];
+    fetch({
+      ...other,
       title,
       liftingCabinets: liftingCabinets.toString(),
       customerWriteInfo: customerWriteInfo.toString(),
-      ...other,
       communityContentObjectList: cRef.current.getData(),
       communityOrganizationGoodsList: [
         { communityGoodsDescObject, ...oval, pushFlag },

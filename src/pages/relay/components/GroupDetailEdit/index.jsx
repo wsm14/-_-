@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle } from "react";
+import React, { useState, useEffect, useImperativeHandle } from "react";
 import { View, Textarea } from "@tarojs/components";
 import { EditContext } from "./editStore";
 import Tools from "./components/Tools";
@@ -10,10 +10,16 @@ import "./index.scss";
 /**
  * 商品详情编辑模块
  */
-export default ({ cRef }) => {
+export default ({ cRef, value }) => {
   const [dataArr, setDataArr] = useState([]); // 可编辑数据暂存处理 { contentType 类型, content 数据 }
   const [defaultText, setDefaultText] = useState(""); // 默认文本数据 用做校验
   const [textEditStatus, setTextEditStatus] = useState(false); // 文本框编辑状态 编辑中不可移动数据
+
+  useEffect(() => {
+    if (value) {
+      setDataArr(value);
+    }
+  }, [value]);
 
   // 向父组件暴露方法
   useImperativeHandle(cRef, () => ({

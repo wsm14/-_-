@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Router from "@/common/router";
 import { View, Text } from "@tarojs/components";
 import { GOODS_BUY_NUMBER, GOODS_BY_TYPE } from "@/relay/common/constant";
@@ -65,19 +65,24 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
       <FormItemGroup title={"团购介绍"}>
         <FormItem showLabel={false}>
           <Input
+            value={formData["title"]}
             name={"title"}
             className={"group_ce_name"}
             placeholder={"请输入团购活动标题"}
           ></Input>
         </FormItem>
         <FormItem showLabel={false}>
-          <GroupDetailEdit cRef={cRef}></GroupDetailEdit>
+          <GroupDetailEdit
+            cRef={cRef}
+            value={formData?.communityContentObjectList}
+          ></GroupDetailEdit>
         </FormItem>
       </FormItemGroup>
       {/* extra={importGoods} */}
       <FormItemGroup title={"团购商品"}>
         <FormItem label={"名称"}>
           <Input
+            value={formData["goodsName"]}
             name={"goodsName"}
             placeholder={"请输入商品名称"}
             maxLength={30}
@@ -93,6 +98,7 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
         <FormItem label={"价格(¥)"}>
           <Input
             name={"price"}
+            value={formData["price"]}
             type="digit"
             className={"price"}
             placeholder={"0"}
@@ -102,6 +108,7 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
         <FormItem label={"库存"}>
           <Input
             name={"total"}
+            value={formData["total"]}
             type="number"
             placeholder={"不限"}
             maxLength={30}
@@ -129,6 +136,7 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
         <FormItem label={"划线价(¥)"}>
           <Input
             name={"costPrice"}
+            value={formData["costPrice"]}
             type="digit"
             placeholder={"划线价建议高于商品价格"}
             maxLength={30}
@@ -137,6 +145,7 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
         <FormItem label={"成本价(¥)"}>
           <Input
             name={"oriPrice"}
+            value={formData["oriPrice"]}
             type="digit"
             placeholder={"用于利润核算，仅团长可见"}
             maxLength={30}

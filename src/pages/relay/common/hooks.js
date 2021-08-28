@@ -4,6 +4,7 @@ import {
   fetchGroupClose,
   fetchGroupOpen,
   fetchGroupDelete,
+  fetchGroupDoTop,
 } from "@/server/relay";
 
 /**
@@ -33,13 +34,42 @@ export function navigatePostBack(data, back = true) {
   back && Taro.navigateBack({ delta: 1 }); //返回上一个页面
 }
 
-// 跳转修改团
-const goGroupEdit = (params) => {
+// 跳转修改团 { communityOrganizationId, ownerId }
+export const handleGoGroupEdit = (params) => {
   Router({
     routerName: "groupCreate",
     args: {
       mode: "edit",
       ...params,
+    },
+  });
+};
+
+// 置顶/取消 团  { communityOrganizationId, ownerId }
+export const handleGroupDoTop = (params, callback) => {
+  const { topFlag = 0, ...other } = params;
+  Taro.showModal({
+    confirmText: "确定",
+    confirmColor: "#07c0c2",
+    content: `确认${["置顶", "取消置顶"][topFlag]}团购？`,
+    success: function (res) {
+      if (res.confirm) {
+        fetchGroupDoTop(other, callback); // 删除
+      }
+    },
+  });
+};
+
+// 删除团  { communityOrganizationId, ownerId }
+export const handleGroupDelete = (params, callback) => {
+  Taro.showModal({
+    confirmText: "确定",
+    confirmColor: "#07c0c2",
+    content: "确认删除团购？",
+    success: function (res) {
+      if (res.confirm) {
+        fetchGroupDelete(params, callback); // 删除
+      }
     },
   });
 };
@@ -64,7 +94,7 @@ export function handleOrdertools(data = {}, callback) {
       const params = { communityOrganizationId, ownerId };
       switch (tapIndex) {
         case 0:
-          goGroupEdit(params);
+          handleGoGroupEdit(params);
           break;
         case 1:
           if (communityStatus === "start") {
@@ -72,7 +102,7 @@ export function handleOrdertools(data = {}, callback) {
           } else fetchGroupOpen(params, callback); // 展示团
           break;
         default:
-          fetchGroupDelete(params, callback); // 删除
+          handleGroupDelete(params, callback); // 删除
           break;
       }
     },

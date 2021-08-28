@@ -44,6 +44,17 @@ export const fetchLiftingCabinetList = (data = {}, fn) => {
 };
 // 团长自提点 - 列表
 
+export const fetchGroupDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/organization/communityOrganizationDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团购 - 详情
+
 export const fetchGroupList = (data = {}, fn) => {
   return httpGet(
     {
@@ -54,6 +65,17 @@ export const fetchGroupList = (data = {}, fn) => {
   );
 };
 // 团购 - 列表
+
+export const fetchGroupEdit = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/organization/updateCommunityOrganization",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团购 - 修改
 
 export const fetchGroupCreate = (data, fn) => {
   return httpPost(
@@ -87,6 +109,17 @@ export const fetchGroupOpen = (data = {}, fn) => {
   );
 };
 // 团购 - 开启
+
+export const fetchGroupDoTop = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/organization/doTop",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团购 - 置顶/取消置顶
 
 export const fetchGroupDelete = (data = {}, fn) => {
   return httpPost(

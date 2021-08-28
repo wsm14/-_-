@@ -1,38 +1,66 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, Button } from "@tarojs/components";
-import { handleOrdertools } from "@/relay/common/hooks";
+import {
+  handleOrdertools,
+  handleGoGroupEdit,
+  handleGroupDelete,
+  handleGroupDoTop,
+} from "@/relay/common/hooks";
+import { toast } from "@/common/utils";
 import { GROUP_STATUS } from "@/relay/common/constant";
 import ImageShow from "@/relay/components/ImageShow";
 import TabPane from "@/relay/components/TabPane";
 import "./index.scss";
 
 export default ({ list, navHeight, getNewData }) => {
-  const toolsArr = [
-    {
-      name: "置顶",
-      disabled: true,
-      onClick: () => {},
-    },
-    {
-      name: "修改",
-      onClick: () => {},
-    },
-    {
-      name: "删除",
-      onClick: () => {
-        Taro.showModal({
-          confirmText: "确定",
-          confirmColor: "#07c0c2",
-          content: "确认删除该模块内容？",
-          success: function (res) {
-            if (res.confirm) {
-              // setDataArr(update(dataArr, { $splice: [[index, 1]] }));
-            }
-          },
-        });
+  const toolsArr = (item) => {
+    const { communityOrganizationId, ownerId, topFlag } = item;
+    return [
+      {
+        name: "置顶",
+        disabled: topFlag === 1,
+        show: topFlag === 0,
+        onClick: (e) => {
+          e.stopPropagation();
+          handleGroupDoTop({ communityOrganizationId, ownerId }, () => {
+            toast("置顶成功");
+            getNewData();
+          });
+        },
       },
-    },
-  ];
+      {
+        name: "取消置顶",
+        disabled: topFlag === 0,
+        show: topFlag === 1,
+        onClick: (e) => {
+          e.stopPropagation();
+          handleGroupDoTop(
+            { communityOrganizationId, ownerId, topFlag },
+            () => {
+              toast("取消置顶成功");
+              getNewData();
+            }
+          );
+        },
+      },
+      {
+        name: "修改",
+        show: true,
+        onClick: (e) => {
+          e.stopPropagation();
+          handleGoGroupEdit({ communityOrganizationId, ownerId });
+        },
+      },
+      {
+        name: "删除",
+        show: true,
+        onClick: (e) => {
+          e.stopPropagation();
+          handleGroupDelete({ communityOrganizationId, ownerId }, getNewData);
+        },
+      },
+    ];
+  };
 
   return (
     <View className="pu_order">
@@ -50,16 +78,19 @@ export default ({ list, navHeight, getNewData }) => {
               {/* 创建时间 */}
               <View className="pu_heard_date">{item.createTime}</View>
               <View className="pu_heard_footer">
-                {toolsArr.map((i) => (
-                  <View
-                    className={`pu_heard_tools ${
-                      i.disabled ? "pu_tools_disabled" : ""
-                    }`}
-                    onClick={!i.disabled ? i.onClick : () => {}}
-                  >
-                    {i.name}
-                  </View>
-                ))}
+                {toolsArr(item).map(
+                  (i) =>
+                    i.show && (
+                      <View
+                        className={`pu_heard_tools ${
+                          i.disabled ? "pu_tools_disabled" : ""
+                        }`}
+                        onClick={!i.disabled ? i.onClick : () => {}}
+                      >
+                        {i.name}
+                      </View>
+                    )
+                )}
               </View>
             </View>
             <View className="pu_order_info">
@@ -101,7 +132,10 @@ export default ({ list, navHeight, getNewData }) => {
                 </View>
                 <Button
                   className="pu_order_tools"
-                  onClick={() => handleOrdertools(item)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOrdertools(item, getNewData);
+                  }}
                 >
                   <View className="pu_tools_radio"></View>
                   <View className="pu_tools_radio"></View>
@@ -111,6 +145,7 @@ export default ({ list, navHeight, getNewData }) => {
             </View>
           </View>
         ))}
+        {!list.length ? <View className="pu_order_null">没有更多了</View> : ""}
       </View>
     </View>
   );
