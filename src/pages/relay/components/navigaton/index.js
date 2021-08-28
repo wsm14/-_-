@@ -77,7 +77,10 @@ const NavigationBar = ({
           >
             <View
               className="nav_title"
-              style={{ justifyContent: !title ? "flex-start" : "center" }}
+              style={{
+                justifyContent: !title ? "flex-start" : "center",
+                color: `${select && scroll ? "#ffffff" : "#333333"}`,
+              }}
             >
               {backFlag && (
                 <View

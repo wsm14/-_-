@@ -5,6 +5,13 @@
 // 商品 - 可购数量
 export const GOODS_BUY_NUMBER = { unlimited: "不限", personLimit: "每人限购" };
 
+// 团购状态
+export const GROUP_STATUS = {
+  "": "全部",
+  start: "跟团中",
+  end: "已结束",
+};
+
 // 物流方式设置 - 需要用户填写信息
 export const LOGISTICS_USER_INFO = {
   writeContentPerson: "联系人",

@@ -9,7 +9,7 @@ import { fetchGroupList } from "@/server/relay";
 import "./index.scss";
 
 export default (props) => {
-  const { index } = props;
+  const { index, navHeight } = props;
 
   // 请求参数
   const [pages, setPages] = useState({
@@ -58,7 +58,11 @@ export default (props) => {
         <DataCenter></DataCenter>
         <Tools></Tools>
       </View>
-      <OrderList list={dataList}></OrderList>
+      <OrderList
+        list={dataList}
+        navHeight={navHeight}
+        getNewData={getNewData}
+      ></OrderList>
     </View>
   );
 };
