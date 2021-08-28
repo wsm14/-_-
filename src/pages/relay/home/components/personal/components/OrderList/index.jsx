@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, Button } from "@tarojs/components";
 import {
   handleOrdertools,
@@ -20,35 +20,44 @@ export default ({ list, navHeight, getNewData }) => {
         name: "置顶",
         disabled: topFlag === 1,
         show: topFlag === 0,
-        onClick: () =>
+        onClick: (e) => {
+          e.stopPropagation();
           handleGroupDoTop({ communityOrganizationId, ownerId }, () => {
             toast("置顶成功");
             getNewData();
-          }),
+          });
+        },
       },
       {
         name: "取消置顶",
         disabled: topFlag === 0,
         show: topFlag === 1,
-        onClick: () =>
+        onClick: (e) => {
+          e.stopPropagation();
           handleGroupDoTop(
             { communityOrganizationId, ownerId, topFlag },
             () => {
               toast("取消置顶成功");
               getNewData();
             }
-          ),
+          );
+        },
       },
       {
         name: "修改",
         show: true,
-        onClick: () => handleGoGroupEdit({ communityOrganizationId, ownerId }),
+        onClick: (e) => {
+          e.stopPropagation();
+          handleGoGroupEdit({ communityOrganizationId, ownerId });
+        },
       },
       {
         name: "删除",
         show: true,
-        onClick: () =>
-          handleGroupDelete({ communityOrganizationId, ownerId }, getNewData),
+        onClick: (e) => {
+          e.stopPropagation();
+          handleGroupDelete({ communityOrganizationId, ownerId }, getNewData);
+        },
       },
     ];
   };
@@ -123,7 +132,10 @@ export default ({ list, navHeight, getNewData }) => {
                 </View>
                 <Button
                   className="pu_order_tools"
-                  onClick={() => handleOrdertools(item, getNewData)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleOrdertools(item, getNewData);
+                  }}
                 >
                   <View className="pu_tools_radio"></View>
                   <View className="pu_tools_radio"></View>

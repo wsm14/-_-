@@ -34,7 +34,7 @@ export function navigatePostBack(data, back = true) {
   back && Taro.navigateBack({ delta: 1 }); //返回上一个页面
 }
 
-// 跳转修改团
+// 跳转修改团 { communityOrganizationId, ownerId }
 export const handleGoGroupEdit = (params) => {
   Router({
     routerName: "groupCreate",
@@ -45,7 +45,7 @@ export const handleGoGroupEdit = (params) => {
   });
 };
 
-// 置顶/取消 团
+// 置顶/取消 团  { communityOrganizationId, ownerId }
 export const handleGroupDoTop = (params, callback) => {
   const { topFlag = 0, ...other } = params;
   Taro.showModal({
@@ -60,7 +60,7 @@ export const handleGroupDoTop = (params, callback) => {
   });
 };
 
-// 删除团
+// 删除团  { communityOrganizationId, ownerId }
 export const handleGroupDelete = (params, callback) => {
   Taro.showModal({
     confirmText: "确定",
