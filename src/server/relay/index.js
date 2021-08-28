@@ -88,6 +88,17 @@ export const fetchGroupOpen = (data = {}, fn) => {
 };
 // 团购 - 开启
 
+export const fetchGroupDoTop = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/organization/doTop",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团购 - 置顶/取消置顶
+
 export const fetchGroupDelete = (data = {}, fn) => {
   return httpPost(
     {
