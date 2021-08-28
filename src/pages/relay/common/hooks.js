@@ -34,6 +34,17 @@ export function navigatePostBack(data, back = true) {
   back && Taro.navigateBack({ delta: 1 }); //返回上一个页面
 }
 
+// 跳转团详情管理 { communityOrganizationId, ownerId }
+export const handleGoGroupDetail = (params) => {
+  Router({
+    routerName: "communityGoods",
+    args: {
+      mode: "manage",
+      ...params,
+    },
+  });
+};
+
 // 跳转修改团 { communityOrganizationId, ownerId }
 export const handleGoGroupEdit = (params) => {
   Router({

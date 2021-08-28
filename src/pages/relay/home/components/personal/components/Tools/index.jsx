@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Taro from "@tarojs/taro";
 import Router from "@/common/router";
 import { View, Button } from "@tarojs/components";
-import { fetchStorage } from "@/common/utils";
 import "./index.scss";
 
 export default ({ tabbarChange }) => {
@@ -26,6 +25,7 @@ export default ({ tabbarChange }) => {
       leble: "订单管理",
       icon: "tools_ordermg",
       show: !groupTools, // 团长
+      onClick: () => goPage("groupOrderManage"),
     },
     {
       leble: "商品核销",

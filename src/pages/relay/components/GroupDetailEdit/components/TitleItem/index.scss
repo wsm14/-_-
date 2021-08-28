@@ -12,6 +12,7 @@
     @include flexCenterA;
     justify-content: flex-end;
     flex: 1;
+    padding-top: 1px;
     .gedit_tools_cell {
       @include flexCenter;
       width: 76px;

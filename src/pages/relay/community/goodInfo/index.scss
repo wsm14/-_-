@@ -399,4 +399,50 @@
       padding-top: 4px;
     }
   }
+
+  .community_manage_tools {
+    display: flex;
+    align-items: center;
+    .community_manage_group {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+    .community_manage_cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .community_manage_price {
+        color: #07c0c2;
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 14px;
+        &::before {
+          font-weight: 400;
+          content: "￥";
+          font-size: 20px;
+        }
+      }
+      .community_manage_i_order {
+        width: 48px;
+        height: 48px;
+        background-image: url("https://wechat-config.dakale.net/miniprogram/relay/order.png");
+        background-size: 100%;
+        margin-bottom: 4px;
+      }
+      .community_manage_name {
+        font-size: 20px;
+        color: #999999;
+      }
+      & + .community_manage_cell {
+        margin-left: 120px;
+      }
+    }
+    .community_manage_share {
+      width: 120px;
+      height: 40px;
+      background-image: url("https://wechat-config.dakale.net/miniprogram/relay/icon_1.png");
+      background-size: 100%;
+    }
+  }
 }

@@ -109,6 +109,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     selfLiftingPointList: "/pages/relay/selfLiftingPointSet/List/index", // 自提点列表&选择编辑
     selfLiftingPointCommission: "/pages/relay/groupCreate/SelfCommission/index", // 自提点佣金设置（暂时没有用 无业务）
     orderDetails: "/pages/relay/order/DetailPages/index",
+    groupOrderManage: "/pages/relay/order/GroupOrderManage/index", // 团长订单管理
     //社团
   }[routerName];
   const types = type;

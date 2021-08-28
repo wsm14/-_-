@@ -90,6 +90,7 @@ export default {
         "selfLiftingPointSet/List/index", // 设置自提点 编辑 新增 入口 & 一键开团选择
         "selfLiftingPointSet/Edit/index", // 设置自提点 编辑 新增 页面
         "order/DetailPages/index", // 订单详情
+        "order/GroupOrderManage/index", // 订单管理 - 团长
       ],
     },
     {
