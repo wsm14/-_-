@@ -24,7 +24,7 @@ export default () => {
       icon: "tools_wallet",
     },
     {
-      leble: `￥${userInfo.bean || 0}卡豆`,
+      leble: `${userInfo.bean || 0}卡豆`,
       icon: "tools_bean",
     },
     {
