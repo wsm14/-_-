@@ -55,7 +55,7 @@ export default (props) => {
           </View>
         </View>
         <View className="detailPges_order_ShopContent">
-          <View className="detailPges_order_contentImg">
+          <View className="detailPges_order_contentImg dakale_nullImage">
             <ImageShow width={160} src={goodsImg}></ImageShow>
           </View>
           <View className="detailPges_order_contentBody">
@@ -70,15 +70,15 @@ export default (props) => {
           <View>商品金额</View>
           <View>¥{totalFee}</View>
         </View>
-        <View className="detailPges_order_bean public_auto">
-          <View className="color2 font24">卡豆优惠抵扣</View>
-          {beanFee && (
+        {beanFee && (
+          <View className="detailPges_order_bean public_auto">
+            <View className="color2 font24">卡豆优惠抵扣</View>
             <View className="color3 font24">
               -{beanFee + " "}
               {`(¥${(beanFee / 100).toFixed(2)})`}
             </View>
-          )}
-        </View>
+          </View>
+        )}
       </View>
       <View className="detailPges_order_info">
         <Text className="font20 color2">共{goodsCount}件</Text>

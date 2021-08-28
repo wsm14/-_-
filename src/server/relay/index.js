@@ -318,3 +318,5 @@ export const fetchLiftingCabinet = (data, fn) => {
   );
 };
 //团员- 获取团自提点
+
+// /user/community/organization/share

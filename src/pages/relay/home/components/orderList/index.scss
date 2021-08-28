@@ -45,7 +45,7 @@
       line-height: 24px;
       position: absolute;
       right: 32px;
-      top: 42px;
+      top: 52px;
     }
   }
   .relay_order_cardShop {
@@ -98,6 +98,7 @@
         width: 160px;
         height: 160px;
         border-radius: 8px;
+        flex-shrink: 0;
       }
       .relay_order_contentBody {
         margin-left: 24px;
@@ -125,6 +126,7 @@
         color: #333333;
         line-height: 24px;
         margin-left: auto;
+        flex-shrink: 0;
       }
     }
     .relay_order_cardUser {

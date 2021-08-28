@@ -14,14 +14,18 @@ export default ({ list = [] }) => {
     {
       style: "users_setting_icon2",
       font: "商户入驻",
-      fn: () =>
+      fn: () => {
+        // Router({
+        //   routerName: "webView",
+        //   args: {
+        //     title: "商户入驻",
+        //     link: "https://web-new.dakale.net/product/page/registerDownload/merchantRegustration.html",
+        //   },
+        // });
         Router({
-          routerName: "webView",
-          args: {
-            title: "商户入驻",
-            link: "https://web-new.dakale.net/product/page/registerDownload/merchantRegustration.html",
-          },
-        }),
+          routerName: "relayHome",
+        });
+      },
     },
     {
       style: "users_setting_icon3",

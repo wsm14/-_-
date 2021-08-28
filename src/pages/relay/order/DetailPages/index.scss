@@ -270,7 +270,7 @@ page {
     }
   }
   .detailPges_order_cardShop {
-    padding: 32px 0px;
+    padding: 32px 0px 24px;
     background: #ffffff;
     margin: 24px 32px 0;
     border-bottom: 1px solid #e5e5e5;
@@ -326,6 +326,7 @@ page {
         width: 160px;
         height: 160px;
         border-radius: 8px;
+        flex-shrink: 0;
       }
       .detailPges_order_contentBody {
         margin-left: 24px;
@@ -353,6 +354,7 @@ page {
         color: #333333;
         line-height: 24px;
         margin-left: auto;
+        flex-shrink: 0;
       }
     }
     .detailPges_order_price {

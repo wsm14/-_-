@@ -8,9 +8,6 @@ export default (props) => {
   console.log(data);
   const { createTime, status, communityOrganizationGoods = {} } = data;
   const {
-    liftingAddress,
-    liftingContentPerson,
-    liftingMobile,
     logisticsType,
     remark,
     writeAddress,
@@ -20,6 +17,7 @@ export default (props) => {
     mobile,
     address,
   } = communityOrganizationGoods;
+  console.log(communityOrganizationGoods);
 
   //订单支付渲染模板
   return (

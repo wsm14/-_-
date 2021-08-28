@@ -69,7 +69,7 @@ export default (props) => {
           {!organizationNumber ? "暂无跟团号" : `跟团号: `}
           {template()}
         </View>
-        <View className="relay_order_cardTime"></View>
+        <View className="relay_order_cardTime">{createTime}</View>
         <View className="relay_order_status">{orderTitle}</View>
       </View>
       <View className="relay_order_cardShop">
