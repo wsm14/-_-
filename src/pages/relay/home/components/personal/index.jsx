@@ -26,7 +26,7 @@ export default (props) => {
 
   // 上拉加载
   useReachBottom(() => {
-    if (index == 0) {
+    if (index == 3) {
       setPages({ ...pages, page: pages.page + 1 });
     }
   });

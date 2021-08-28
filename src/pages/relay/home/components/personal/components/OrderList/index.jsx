@@ -133,6 +133,7 @@ export default ({ list, navHeight, getNewData }) => {
             </View>
           </View>
         ))}
+        {!list.length ? <View className="pu_order_null">没有更多了</View> : ""}
       </View>
     </View>
   );
