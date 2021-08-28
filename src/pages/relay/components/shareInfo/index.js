@@ -2,14 +2,27 @@
  到点打卡,商户暂不支持到店打卡，请联系商户开通设置
 */
 import React, { useMemo } from "react";
+import Taro, { useShareAppMessage } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import FormComponents from "../FormCondition";
 import "./index.scss";
 export default (props) => {
-  const { data } = props;
-  const memo = useMemo(() => {
+  const { data = {}, show = false } = props;
+  const { title = "", url = "" } = data;
+  useShareAppMessage((res) => {
+    if (res.from === "button") {
+      return {
+        title: title,
+        path: url,
+      };
+    }
+    return {
+      title: title,
+      path: url,
+    };
+  });
+  if (show) {
     return (
-      <View className="share_layer_info">
+      <View className="share_layer_info" catchMove>
         <View className="share_layer_infoBox"></View>
         <View className="share_layer_content">
           <View className="share_layer_shareInfo">
@@ -26,9 +39,10 @@ export default (props) => {
               <View className="share_layer_shareWechatText">复制链接</View>
             </View>
           </View>
+          <View className="share_layer_liner"></View>
         </View>
       </View>
     );
-  }, [data]);
-  return memo;
+  }
+  return null;
 };

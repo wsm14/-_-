@@ -10,7 +10,7 @@ export default (props) => {
     start: <View className="user_card_gloupStatus">正在跟团中</View>,
     end: <View className="user_card_gloupStatus">已结束</View>,
   };
-  const { list = [], upDateList } = props;
+  const { list = [], upDateList, shareInfo } = props;
   const memo = useMemo(() => {
     return (
       <View>
@@ -121,7 +121,13 @@ export default (props) => {
 
               <View className="user_card_gloupInfo">
                 {templateTitle[communityStatus]}
-                <View className="user_card_gloupbtn"></View>
+                <View
+                  className="user_card_gloupbtn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    shareInfo(item);
+                  }}
+                ></View>
               </View>
               {subscribeFlag === "0" && (
                 <View

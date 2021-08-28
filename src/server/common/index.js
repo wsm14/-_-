@@ -236,7 +236,7 @@ export const getShareInfo = (data = {}, fn) => {
   const { authStore } = store;
   const { shareType = {} } = authStore;
   const { sourceKey, sourceType } = shareType;
-  httpGet(
+  return httpGet(
     {
       url: "/common/share/getShareInfo",
       data: {

@@ -9,22 +9,24 @@
     background: rgba(0, 0, 0, 0.6);
   }
   .share_layer_content {
-    width: 750px;
-    height: 348px;
+    width: 100%;
     background: #ffffff;
     border-radius: 20px 20px 0px 0px;
+    position: fixed;
+    bottom: 120px;
     .share_layer_shareInfo {
       padding-top: 40px;
       display: flex;
       align-items: flex-start;
+      justify-content: space-around;
       .share_layer_shareWechat {
-        margin-left: 72px;
         .share_layer_shareWechatIcon {
           width: 96px;
           height: 96px;
           background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_13.png")
             no-repeat;
           background-size: 100% 100%;
+          margin: 0 auto;
         }
         .share_layer_shareWechatText {
           margin-top: 24px;
@@ -35,7 +37,6 @@
         }
       }
       .share_layer_shareWechatFriend {
-        margin-left: 111px;
         .share_layer_shareWechatFriendIcon {
           width: 96px;
           height: 96px;
@@ -59,6 +60,7 @@
         background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_13.png")
           no-repeat;
         background-size: 100% 100%;
+        margin: 0 auto;
       }
       .share_layer_shareWechatText {
         margin-top: 24px;
