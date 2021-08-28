@@ -13,8 +13,8 @@ export default (props) => {
       icon: "tools_wallet",
     },
     {
-      leble: "¥0",
-      icon: "tools_wallet",
+      leble: "10000卡豆",
+      icon: "tools_bean",
     },
     {
       leble: "团员",

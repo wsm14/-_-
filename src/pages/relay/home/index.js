@@ -36,9 +36,10 @@ class Index extends Component {
   render() {
     const { count } = this.state;
     const template = {}[count];
+    const titleArr = ["首页", "2", "订单", "个人中心"];
     return (
       <View className="home_relay_box">
-        <Nav></Nav>
+        <Nav title={titleArr[count]}></Nav>
         <View className="relay_box_home">
           <View className="relay_box">
             <Home index={count}></Home>
