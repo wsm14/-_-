@@ -5,7 +5,7 @@ import { toast } from "@/common/utils";
 import { fetchOrderClose } from "@/server/relay";
 import "./index.scss";
 
-export default ({ data, getNewData }) => {
+export default ({ data }) => {
   const {
     orderSn,
     payFee,
