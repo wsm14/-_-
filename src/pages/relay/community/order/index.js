@@ -107,8 +107,9 @@ class Index extends Component {
     });
   }
   fetchOrder() {
-    const { httpData } = this.state;
-    fetchGoodsOrderPrice(httpData).then((res) => {
+    const { httpData, fakeGoods } = this.state;
+    const { goodsCount } = fakeGoods;
+    fetchGoodsOrderPrice({ ...httpData, goodsCount }).then((res) => {
       const { communityOrderInfo = {} } = res;
       const { communityLiftingCabinetList = [] } = communityOrderInfo;
       const { fakeGoods } = this.state;
@@ -122,7 +123,6 @@ class Index extends Component {
   }
   setOrganizationGoodsId(id) {
     const { fakeGoods } = this.state;
-    console.log(id);
     if (id) {
       this.setState({
         fakeGoods: { ...fakeGoods, communityLiftingCabinetId: id },
@@ -138,16 +138,26 @@ class Index extends Component {
       if (goodsCount === 99) {
         return toast("选择数量已到最大值");
       }
-      this.setState({
-        fakeGoods: { ...fakeGoods, goodsCount: goodsCount + 1 },
-      });
+      this.setState(
+        {
+          fakeGoods: { ...fakeGoods, goodsCount: goodsCount + 1 },
+        },
+        (res) => {
+          this.fetchOrder();
+        }
+      );
     } else {
       if (goodsCount === 1) {
         return toast("选择数量不能为0");
       }
-      this.setState({
-        fakeGoods: { ...fakeGoods, goodsCount: goodsCount - 1 },
-      });
+      this.setState(
+        {
+          fakeGoods: { ...fakeGoods, goodsCount: goodsCount - 1 },
+        },
+        (res) => {
+          this.fetchOrder();
+        }
+      );
     }
   }
   saveSubmit() {
@@ -199,7 +209,11 @@ class Index extends Component {
       configUserLevelInfo,
       visible,
     } = this.state;
-    const { communityLiftingCabinetList } = communityOrderInfo;
+    const {
+      communityLiftingCabinetList,
+      logisticsType,
+      communityOrganizationId,
+    } = communityOrderInfo;
     const {
       communityOrganizationGoodsId = "",
       ownerId = "",
@@ -210,12 +224,12 @@ class Index extends Component {
       goodsCount = 1,
       useBeanType = "",
       useBeanStatus = "",
-      logisticsType,
     } = fakeGoods;
     return (
       <View className="order_info_box">
         {logisticsType === "self" && (
           <SelectCard
+            communityOrganizationId={communityOrganizationId}
             index={communityLiftingCabinetId}
             list={communityLiftingCabinetList}
             change={this.setOrganizationGoodsId.bind(this)}

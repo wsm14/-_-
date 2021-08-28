@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from "react";
 import { View, Text, Image } from "@tarojs/components";
 import { useEffect } from "react";
+import Router from "@/common/router";
 export default (props) => {
-  const { list = [], index, change } = props;
+  const { list = [], index, change, communityOrganizationId } = props;
   const [data, setData] = useState({});
   useEffect(() => {
     if (list.length > 0 && !index) {
@@ -22,7 +23,19 @@ export default (props) => {
   }, [index, list]);
   const { address = "", contactPerson = "", mobile = "", liftingName } = data;
   return (
-    <View className="order_selectAddressCard_box">
+    <View
+      className="order_selectAddressCard_box"
+      onClick={() =>
+        Router({
+          routerName: "communityCabinet",
+          args: {
+            communityOrganizationId: communityOrganizationId,
+            ownerId: data.ownerId,
+            communityLiftingCabinetId: data.communityLiftingCabinetId,
+          },
+        })
+      }
+    >
       <View className="order_selectAddressCard_paddingBox">
         <View className="order_selectAddressCard_select">
           <View className="order_selectAddressCard_left"></View>

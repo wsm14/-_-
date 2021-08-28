@@ -99,7 +99,8 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     relayHome: "/pages/relay/home/index", //社团首页
     communityGoods: "/pages/relay/community/goodInfo/index", //社团详情页
     communityOrder: "/pages/relay/community/order/index", //社团支付
-    communityPoint: "/pages/relay/community/point/index", //根据商品获取自提点列表
+    communityPoint: "/pages/relay/community/point/index", //根据商品地址
+    communityCabinet: "/pages/relay/community/cabinet/index", //根据商品地址
     delivery: "/pages/relay/community/delivery/index",
     groupCreate: "/pages/relay/groupCreate/Create/index", // 一键开团 创建&修改
     goodsDepict: "/pages/relay/groupCreate/GoodsDepict/index", // 一键开团 商品描述

@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
-import {
-  fakeCreateUserAddress,
-  fetchAddressList,
-  fakeRemoveAddress,
-  fakeUpdateAddress,
-} from "@/server/relay";
-import "./index.scss";
-import { toast } from "@/common/utils";
-import { navigatePostBack } from "@/relay/common/hooks";
+import { fetchLiftingCabinet } from "@/server/relay";
 import classNames from "classnames";
 import evens from "@/common/evens";
 import "./index.scss";
@@ -17,18 +9,28 @@ class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      id: "",
+      communityOrganizationId:
+        getCurrentInstance().router.params.communityOrganizationId,
+      ownerId: getCurrentInstance().router.params.ownerId,
+      communityLiftingCabinetId:
+        getCurrentInstance().router.params.communityLiftingCabinetId,
     };
   }
   componentWillUnmount() {}
-  componentDidMount() {}
-  componentDidShow() {
-    this.fetchAddress();
+  componentDidMount() {
+    this.fetchList();
+  }
+  componentDidShow() {}
+  fetchList() {
+    const { communityOrganizationId, ownerId } = this.state;
+    fetchLiftingCabinet({ communityOrganizationId, ownerId }).then((val) => {
+      console.log(val);
+    });
   }
   componentWillUnmount() {
     evens.$on("setCabinetId", this.state.id);
   }
-
+  fetchLiftingCabinet;
   //获取地址列表
   render() {
     const { id } = this.state;

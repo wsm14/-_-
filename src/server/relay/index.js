@@ -285,3 +285,14 @@ export const fetchOrderDetail = (data, fn) => {
   );
 };
 //团员- 订单详情
+
+export const fetchLiftingCabinet = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/lifting/listCommunityOrganizationLiftingCabinet",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团员- 获取团自提点
