@@ -13,6 +13,7 @@ class Index extends Component {
     super(...arguments);
     this.state = {
       count: getCurrentInstance().router.params.count || 0,
+      navHeight: 88,
     };
   }
   tabbarChange(index) {
@@ -34,18 +35,21 @@ class Index extends Component {
   componentWillUnmount() {}
   componentDidMount() {}
   render() {
-    const { count } = this.state;
+    const { count, navHeight } = this.state;
     const template = {}[count];
     const titleArr = ["首页", "2", "订单", "个人中心"];
     return (
       <View className="home_relay_box">
-        <Nav title={titleArr[count]}></Nav>
+        <Nav
+          title={titleArr[count]}
+          getHeight={(h) => this.setState({ navHeight: h })}
+        ></Nav>
         <View className="relay_box_home">
           <View className="relay_box">
             <Home index={count}></Home>
             <OrderList index={count}></OrderList>
             {/* 个人中心 */}
-            <Personal index={count}></Personal>
+            <Personal index={count} navHeight={navHeight}></Personal>
             <Tabbar
               list={[
                 { title: "首页", count: 0 },
