@@ -34,7 +34,7 @@ export default ({ data }) => {
     },
     {
       name: `去支付 ￥${payFee}`,
-      class: "sumbit",
+      class: "sumbit_tools",
       show: status == 0,
       onClick: (e) => {
         e.stopPropagation();
@@ -47,7 +47,7 @@ export default ({ data }) => {
     {
       name: "在来一单",
       show: status != 0 && communityOrganizationId && ownerId,
-      class: "sumbit",
+      class: "sumbit_tools",
       onClick: (e) => {
         e.stopPropagation();
         Router({
