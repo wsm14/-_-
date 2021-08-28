@@ -81,7 +81,12 @@ export default (props) => {
         }}
         list={list}
       ></UserCard>
-      <ShareInfo data={shareData}></ShareInfo>
+      <ShareInfo
+        onClose={() => {
+          setVisible(false);
+        }}
+        data={shareData}
+      ></ShareInfo>
     </View>
   );
 };

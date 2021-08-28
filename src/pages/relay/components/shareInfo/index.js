@@ -6,7 +6,7 @@ import Taro, { useShareAppMessage } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import "./index.scss";
 export default (props) => {
-  const { data = {}, show = false } = props;
+  const { data = {}, show = false, onClose } = props;
   const { title = "", url = "" } = data;
   useShareAppMessage((res) => {
     if (res.from === "button") {
@@ -22,8 +22,14 @@ export default (props) => {
   });
   if (show) {
     return (
-      <View className="share_layer_info" catchMove>
-        <View className="share_layer_infoBox"></View>
+      <View className="share_layer_info animated fadeIn" catchMove>
+        <View
+          className="share_layer_infoBox"
+          onClick={(e) => {
+            e.stopPropagation();
+            onClose();
+          }}
+        ></View>
         <View className="share_layer_content">
           <View className="share_layer_shareInfo">
             <View className="share_layer_shareWechat">
@@ -40,6 +46,9 @@ export default (props) => {
             </View>
           </View>
           <View className="share_layer_liner"></View>
+          <View className="share_layer_close public_center" onClick={onClose}>
+            取消
+          </View>
         </View>
       </View>
     );
