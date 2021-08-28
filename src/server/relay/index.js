@@ -1,5 +1,16 @@
 import { httpGet, httpPost } from "@/api/newRequest";
 
+export const fetchPcDataCenter = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/todayStatistic",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 个人中心 - 数据中心今日订单数据
+
 export const fetchLiftingCabinetCreate = (data, fn) => {
   return httpPost(
     {
