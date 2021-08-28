@@ -32,7 +32,7 @@ const GroupCreate = () => {
   useEffect(() => {
     if (mode === "edit") {
       fetchGroupDetail({ ownerId, communityOrganizationId }).then((res) => {
-        const { communityOrganizationGoodsList: obj, ...other } =
+        const { communityOrganizationGoodsList: obj = [], ...other } =
           res.communityOrganizationDetail;
         setFormData({ ...other, ...obj[0] });
       });
