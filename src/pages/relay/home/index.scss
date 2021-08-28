@@ -24,6 +24,7 @@ page {
   border-top: 1px solid #eeeeee;
   display: flex;
   background: #ffffff;
+  z-index: 9999;
   .relay_tabbar_icon {
     flex: 1 1;
   }
