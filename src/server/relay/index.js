@@ -242,6 +242,17 @@ export const fakeOrganizationGoods = (data, fn) => {
 };
 //团员-下单
 
+export const fetchOrderClose = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/updateOrderStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 订单管理 关闭订单
+
 export const fetchTest = (data, fn) => {
   return httpGet(
     {

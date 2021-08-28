@@ -1,0 +1,25 @@
+@import "@/assets/css/global.scss";
+
+.order_footer {
+  @include flexCenterA;
+  margin-top: 32px;
+  justify-content: flex-end;
+  flex: 1;
+  .order_tools {
+    @include flexCenter;
+    padding: 0 24px;
+    height: 50px;
+    border-radius: 8px;
+    border: 2px solid #b5b5b5;
+    font-size: 24px;
+    font-weight: 400;
+    color: #666666;
+    & + .order_tools {
+      margin-left: 20px;
+    }
+    &.sumbit {
+      background: #07c0c2;
+      border: none;
+    }
+  }
+}

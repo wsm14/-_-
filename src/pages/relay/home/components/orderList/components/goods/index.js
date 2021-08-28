@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Taro from "@tarojs/taro";
-import classNames from "classnames";
-import { ScrollView, Text, View } from "@tarojs/components";
+import React from "react";
+import { Text, View } from "@tarojs/components";
 import InterTime from "@/components/InterTime";
 import ImageShow from "@/relay/components/ImageShow";
 import Router from "@/common/router";
 import { GOODS_BY_TYPE } from "@/relay/common/constant";
 import { backgroundObj } from "@/common/utils";
+import GoodsTools from "../GoodsTools";
+
 export default (props) => {
   const { data } = props;
-  console.log(data);
   const { createTime, status, organizationGoodsOrderDescObject, orderSn } =
     data;
   const {
@@ -141,6 +140,8 @@ export default (props) => {
             )}
           </View>
         </View>
+        {/* 底部工具栏 */}
+        <GoodsTools data={data}></GoodsTools>
       </View>
     </View>
   );
