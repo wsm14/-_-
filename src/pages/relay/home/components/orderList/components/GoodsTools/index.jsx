@@ -18,14 +18,15 @@ export default ({ data }) => {
       show: status == 0,
       onClick: (e) => {
         e.stopPropagation();
-        toast("取消置顶成功");
         Taro.showModal({
           confirmText: "确定",
           confirmColor: "#07c0c2",
           content: `确认关闭订单？`,
           success: function (res) {
             if (res.confirm) {
-              fetchOrderClose({ orderSn, status: "2" });
+              fetchOrderClose({ orderSn, status: "2" }, () => {
+                toast("关闭订单成功");
+              });
             }
           },
         });
