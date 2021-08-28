@@ -62,7 +62,7 @@ export default ({ data }) => {
       {toolsArr.map(
         (i) =>
           i.show && (
-            <View className={`order_tools`} onClick={i.onClick}>
+            <View className={`order_tools ${i.class}`} onClick={i.onClick}>
               {i.name}
             </View>
           )
