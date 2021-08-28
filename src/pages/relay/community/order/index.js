@@ -16,6 +16,7 @@ import {
 } from "@/server/relay";
 import { usePostBackData } from "@/relay/common/hooks";
 import PayBean from "@/components/stopBean";
+import evens from "@/common/evens";
 import { fetchUserShareCommission } from "@/server/index";
 import "./index.scss";
 const FormItem = Form.Item;
@@ -64,16 +65,23 @@ class Index extends Component {
       });
     });
   }
+
   componentWillUnmount() {}
   componentDidMount() {
     this.fetchOrder();
     this.fetchUserShare();
+    evens.$emit("setCabinetId", (val) => {
+      this.setState({
+        fakeGoods: { ...this.state.fakeGoods, communityLiftingCabinetId: val },
+      });
+    });
   }
   componentDidShow() {
     this.fetchAddress();
     const pages = Taro.getCurrentPages(); // 获取页面堆栈
     const currPage = pages[pages.length - 1]; // 获取上一页栈
     const { data } = currPage.data; // 获取上一页回传数据
+    console.log(currPage.data);
     if (data) {
       this.setSelectIndex(data);
     }

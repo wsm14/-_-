@@ -44,14 +44,14 @@ page {
           no-repeat;
         background-size: 100% 100%;
       }
-      .detailPges_order_collecIconBox {
-        font-size: 24px;
-        font-weight: 400;
-        color: #333333;
-        line-height: 24px;
-        text-align: center;
-        margin-top: 12px;
-      }
+    }
+    .detailPges_order_collectText {
+      font-size: 24px;
+      font-weight: 400;
+      color: #333333;
+      line-height: 24px;
+      text-align: center;
+      margin-top: 12px;
     }
   }
   .detailPges_order_snBox {
@@ -511,5 +511,15 @@ page {
       border-radius: 1px;
       margin: 0 16px;
     }
+  }
+  .detailPges_order_close {
+    margin: 24px 32px 0;
+    width: 686px;
+    height: 80px;
+    background: #ffffff;
+    border-radius: 12px;
+    font-size: 32px;
+    font-weight: 400;
+    color: #999999;
   }
 }

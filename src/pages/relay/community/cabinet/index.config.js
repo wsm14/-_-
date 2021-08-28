@@ -1,5 +1,4 @@
 export default {
-  navigationBarTitleText: "跟团购买",
+  navigationBarTitleText: "自提点管理",
   navigationStyle: "default",
-  
 };

@@ -32,7 +32,7 @@ class Index extends Component {
   }
   componentWillUnmount() {
     const { userAddressList, selectIndex } = this.state;
-    navigatePostBack(userAddressList[selectIndex]);
+    navigatePostBack(userAddressList[selectIndex], false);
   }
   onChangeSelect() {
     this.setState({

@@ -58,39 +58,41 @@ const NavigationBar = ({
   });
 
   return (
-    <View className="navBar_block" style={{ height: navBarHeight }}>
-      <View
-        className={`nav-bar ${select && scroll && "title_green"}`}
-        style={{ height: navBarHeight }}
-      >
+    <View>
+      <View className="navBar_block" style={{ height: navBarHeight }}>
         <View
-          style={{
-            position: "absolute",
-            height: menuHeight,
-            minHeight: menuHeight,
-            lineHeight: menuHeight + "px",
-            left: menuRight,
-            right: menuRight,
-            bottom: menuBotton,
-          }}
+          className={`nav-bar ${select && scroll && "title_green"}`}
+          style={{ height: navBarHeight }}
         >
           <View
-            className="nav_title"
-            style={{ justifyContent: !title ? "flex-start" : "center" }}
+            style={{
+              position: "absolute",
+              height: menuHeight,
+              minHeight: menuHeight,
+              lineHeight: menuHeight + "px",
+              left: menuRight,
+              right: menuRight,
+              bottom: menuBotton,
+            }}
           >
-            {backFlag && (
-              <View
-                className={`naviton_title_backStyle ${
-                  select && scroll ? "go_back_iconWhite" : "go_back_iconGreen"
-                }`}
-                onClick={() => goBack()}
-              ></View>
-            )}
-            {title}
-            {children}
+            <View
+              className="nav_title"
+              style={{ justifyContent: !title ? "flex-start" : "center" }}
+            >
+              {backFlag && (
+                <View
+                  className={`naviton_title_backStyle ${
+                    select && scroll ? "go_back_iconWhite" : "go_back_iconGreen"
+                  }`}
+                  onClick={() => goBack()}
+                ></View>
+              )}
+              {title}
+            </View>
           </View>
         </View>
       </View>
+      {children}
     </View>
   );
 };
