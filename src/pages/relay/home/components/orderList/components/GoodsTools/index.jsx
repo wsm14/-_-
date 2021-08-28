@@ -47,6 +47,7 @@ export default ({ data }) => {
     {
       name: "在来一单",
       show: status != 0 && communityOrganizationId && ownerId,
+      class: "sumbit",
       onClick: (e) => {
         e.stopPropagation();
         Router({
