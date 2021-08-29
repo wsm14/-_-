@@ -18,26 +18,21 @@ page {
   z-index: 1000;
   transform: scale(0);
   .shareImage_box {
-    width: 700px;
-    height: 1177px;
+    width: 560px;
+    height: 941px;
     background: #ffffff;
     border-radius: 20px;
   }
-  .share_image_save {
+
+  .shareImage_btn_info {
+    width: 302px;
     height: 94px;
-    margin-top: 29px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .shareImage_btn_info {
-      width: 302px;
-      height: 94px;
-      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon502.png)
-        no-repeat;
-      background-size: 100% 100%;
-      margin: 24px auto 0;
-    }
+    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon502.png)
+      no-repeat;
+    background-size: 100% 100%;
+    margin: 24px auto 0;
   }
+
   &.share_hidden {
     display: none;
   }

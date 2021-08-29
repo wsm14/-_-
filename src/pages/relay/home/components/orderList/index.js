@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Taro, { useReachBottom } from "@tarojs/taro";
+import Taro, { useReachBottom, usePullDownRefresh } from "@tarojs/taro";
 import { View, ScrollView } from "@tarojs/components";
 import { index } from "@/api/api";
 import { httpGet } from "@/api/newRequest";
@@ -56,6 +56,17 @@ export default (props) => {
       setList([...list, ...orderList]);
     });
   };
+  usePullDownRefresh(() => {
+    Taro.stopPullDownRefresh();
+    if (index == 2) {
+      setList([]);
+      setHttpData({
+        ...httpData,
+        page: 1,
+        limit: 10,
+      });
+    }
+  });
   useReachBottom(() => {
     if (index == 2) {
       setHttpData({

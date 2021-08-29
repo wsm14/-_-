@@ -4,9 +4,16 @@
 import React, { useMemo } from "react";
 import Taro, { useShareAppMessage } from "@tarojs/taro";
 import { View, Text, Image, Button } from "@tarojs/components";
+import ShareImage from "./../shareImage";
+import { rssConfigData } from "./../shareImage/components/data";
 import "./index.scss";
+import { useState } from "react";
 export default (props) => {
   const { data = {}, show = false, onClose } = props;
+  const [cavansObj, setCavasObj] = useState({
+    data: null,
+    start: false,
+  });
   const { title = "", frontImage = "", miniProgramUrl } = data;
   useShareAppMessage((res) => {
     if (res.from === "button") {
@@ -52,7 +59,15 @@ export default (props) => {
               <View className="share_layer_shareWechatIcon"></View>
               <View className="share_layer_shareWechatText">分享到微信</View>
             </View>
-            <View className="share_layer_shareWechat">
+            <View
+              className="share_layer_shareWechat"
+              onClick={() => {
+                setCavasObj({
+                  start: true,
+                  data: rssConfigData({ ...data }),
+                });
+              }}
+            >
               <View className="share_layer_shareWechatIcon"></View>
               <View className="share_layer_shareWechatText">发朋友圈海报</View>
             </View>
@@ -66,6 +81,13 @@ export default (props) => {
             取消
           </View>
         </View>
+        <ShareImage
+          {...cavansObj}
+          onSave={() => console.log("点击保存")}
+          onClose={() =>
+            setCavasObj({ cavansObj: { start: false, data: null } })
+          }
+        ></ShareImage>
       </View>
     );
   }

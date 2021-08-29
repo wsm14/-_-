@@ -4,7 +4,6 @@ import Template from "./components/index";
 import "./index.scss";
 export default (props) => {
   const { data = [] } = props;
-  console.log(data, 11111);
   if (data.length > 0) {
     return (
       <View className="FormTemplate_box">

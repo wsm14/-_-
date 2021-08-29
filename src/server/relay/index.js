@@ -319,4 +319,15 @@ export const fetchLiftingCabinet = (data, fn) => {
 };
 //团员- 获取团自提点
 
+export const fetchCommunityOrder = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/order/listRelateOwnerCommunityOrder",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团长订单列表
+
 // /user/community/organization/share

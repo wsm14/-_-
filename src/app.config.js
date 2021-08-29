@@ -91,6 +91,7 @@ export default {
         "selfLiftingPointSet/Edit/index", // 设置自提点 编辑 新增 页面
         "order/DetailPages/index", // 订单详情
         "order/GroupOrderManage/index", // 订单管理 - 团长
+        "order/GroupVerification/index", // 订单管理 - 核销
       ],
     },
     {

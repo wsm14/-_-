@@ -39,7 +39,6 @@ class Index extends Component {
   render() {
     const { communityLiftingCabinetId, communityLiftingCabinetList } =
       this.state;
-    const template = () => {};
     return (
       <View className="cabinet_box">
         {communityLiftingCabinetList.map((item) => {

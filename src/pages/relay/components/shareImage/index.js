@@ -122,7 +122,10 @@ const shareImg = ({ start = false, data = [], onClose, onSave }) => {
             lazy-load
             className="shareImage_box public_image_radius"
           />
-          <View className="shareImage_btn_info"></View>
+          <View
+            className="shareImage_btn_info"
+            onClick={() => saveToAlbum()}
+          ></View>
         </>
       </View>
       {start && ( // 由于部分限制，目前组件通过状态的方式来动态加载

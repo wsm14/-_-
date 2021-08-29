@@ -68,6 +68,7 @@ export default (props) => {
         <OrderList
           list={dataList}
           navHeight={navHeight}
+          index={index}
           getNewData={getNewData}
         ></OrderList>
       )}

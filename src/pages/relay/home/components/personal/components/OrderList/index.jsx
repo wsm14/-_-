@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Button } from "@tarojs/components";
 import {
   handleOrdertools,
@@ -7,13 +7,15 @@ import {
   handleGroupDoTop,
   handleGoGroupDetail,
 } from "@/relay/common/hooks";
-import { toast } from "@/common/utils";
+import { toast, loginStatus } from "@/common/utils";
 import { GROUP_STATUS } from "@/relay/common/constant";
 import ImageShow from "@/relay/components/ImageShow";
 import TabPane from "@/relay/components/TabPane";
+import ShareInfo from "@/relay/components/shareInfo";
+import { getShareInfo } from "@/server/common";
 import "./index.scss";
 
-export default ({ list, navHeight, getNewData }) => {
+export default ({ list, navHeight, getNewData, index }) => {
   const toolsArr = (item) => {
     const { communityOrganizationId, ownerId, topFlag } = item;
     return [
@@ -62,7 +64,30 @@ export default ({ list, navHeight, getNewData }) => {
       },
     ];
   };
-
+  const [visible, setVisible] = useState(false);
+  const [shareData, setShareData] = useState({});
+  useEffect(() => {
+    if (!visible) {
+      setShareData({});
+    }
+  }, [visible]);
+  const shareInfo = (val) => {
+    const { communityOrganizationId, ownerId } = val;
+    if (!loginStatus()) {
+    } else {
+      getShareInfo(
+        {
+          shareType: "communityGoods",
+          shareId: communityOrganizationId,
+          shardingKey: ownerId,
+        },
+        (res) => {
+          setVisible(true);
+          setShareData(res);
+        }
+      );
+    }
+  };
   return (
     <View className="pu_order">
       <View className="pu_order_tab" style={{ top: navHeight }}>
@@ -133,7 +158,13 @@ export default ({ list, navHeight, getNewData }) => {
                   <View className={`pu_order_status ${item.communityStatus}`}>
                     {GROUP_STATUS[item.communityStatus]}
                   </View>
-                  <View className="pu_order_share"></View>
+                  <View
+                    className="pu_order_share"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      shareInfo(item);
+                    }}
+                  ></View>
                 </View>
               </View>
               <View className="pu_order_footer">
@@ -164,6 +195,15 @@ export default ({ list, navHeight, getNewData }) => {
           </View>
         ))}
         {!list.length ? <View className="pu_order_null">没有更多了</View> : ""}
+        {index === 3 && (
+          <ShareInfo
+            onClose={() => {
+              setVisible(false);
+            }}
+            show={visible}
+            data={shareData}
+          ></ShareInfo>
+        )}
       </View>
     </View>
   );

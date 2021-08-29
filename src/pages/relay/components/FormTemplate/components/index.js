@@ -4,7 +4,7 @@ import { filterStrList } from "@/common/utils";
 export default (props) => {
   const { contentType, content } = props;
   const TextInfo = () => {
-    return <View className="textInfo_interface"></View>;
+    return <View className="textInfo_interface">{content}</View>;
   };
   const bigImg = () => {
     return (

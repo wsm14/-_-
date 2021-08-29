@@ -28,7 +28,10 @@ class Index extends PureComponent {
       const { userMerchantList = [] } = res;
       if (userMerchantList.length > 0) {
         this.setState({
-          userMerchantList: [...this.state.userMerchantList, ...userMerchantList],
+          userMerchantList: [
+            ...this.state.userMerchantList,
+            ...userMerchantList,
+          ],
         });
       } else {
         this.setState({
@@ -61,7 +64,9 @@ class Index extends PureComponent {
     }
   }
 
-  onReachBottom() {} //上拉加载
+  onReachBottom() {
+    this.onPage();
+  } //上拉加载
   render() {
     const { userMerchantList } = this.state;
     return (

@@ -3,7 +3,7 @@
 */
 import React, { useState, useEffect } from "react";
 import { View } from "@tarojs/components";
-import { useReachBottom } from "@tarojs/taro";
+import Taro, { useReachBottom, usePullDownRefresh } from "@tarojs/taro";
 import UserCard from "@/relay/components/UserCard";
 import { fetchCommunityUser } from "@/server/relay";
 import ShareInfo from "@/relay/components/shareInfo";
@@ -21,6 +21,7 @@ export default (props) => {
   const fetchList = (type = "pageUp") => {
     fetchCommunityUser(httpData).then((res) => {
       const { communityOrganizationList = [] } = res;
+
       if (type === "pageUp") {
         setList([...list, ...communityOrganizationList]);
       } else {
@@ -30,12 +31,22 @@ export default (props) => {
   };
   useEffect(() => {
     fetchList();
-  }, [httpData.page]);
+  }, [httpData]);
   useEffect(() => {
     if (!visible) {
       setShareData({});
     }
   }, [visible]);
+  usePullDownRefresh(() => {
+    Taro.stopPullDownRefresh();
+    if (index == 0) {
+      setList([]);
+      setHttpData({
+        page: 1,
+        limit: 10,
+      });
+    }
+  });
   useReachBottom(() => {
     if (index == 0) {
       setHttpData({
@@ -44,8 +55,7 @@ export default (props) => {
       });
     }
   });
-  // communityOrganizationId,
-  // ownerId,
+
   return (
     <View className="" style={{ display: index === 0 ? "block" : "none" }}>
       <UserCard
@@ -81,13 +91,15 @@ export default (props) => {
         }}
         list={list}
       ></UserCard>
-      <ShareInfo
-        onClose={() => {
-          setVisible(false);
-        }}
-        show={visible}
-        data={shareData}
-      ></ShareInfo>
+      {index === 0 && (
+        <ShareInfo
+          onClose={() => {
+            setVisible(false);
+          }}
+          show={visible}
+          data={shareData}
+        ></ShareInfo>
+      )}
     </View>
   );
 };

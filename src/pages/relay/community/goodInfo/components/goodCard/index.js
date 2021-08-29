@@ -34,7 +34,7 @@ export default (props) => {
         {viewCount && viewCount + "人查看"}{" "}
         {buyCount !== "0" && `｜ ${buyCount}次跟团`}
       </View>
-      <View className="community_goodCard_coby public_center">复制该团</View>
+      {/* <View className="community_goodCard_coby public_center">复制该团</View> */}
     </View>
   );
 };
