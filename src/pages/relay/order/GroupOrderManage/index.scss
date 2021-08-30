@@ -263,5 +263,22 @@
         }
       }
     }
+
+    .order_null {
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+      text-align: center;
+      &::before {
+        content: "";
+        display: block;
+        margin: 0 auto;
+        @include whEqual(300px);
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/icon_33.png")
+          no-repeat;
+        background-size: 100%;
+        margin-bottom: 32px;
+      }
+    }
   }
 }
