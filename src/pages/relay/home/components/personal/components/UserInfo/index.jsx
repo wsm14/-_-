@@ -1,17 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Router from "@/common/router";
-import { useDidShow } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { fetchPcUserInfo } from "@/server/relay";
 import "./index.scss";
 
-export default () => {
-  const [userInfo, setUserInfo] = useState({});
-
-  useDidShow(() => {
-    getUserInfo();
-  });
-
+export default ({ userInfo }) => {
   // 跳转自提点佣金设置
   const goPage = (routerName, args = {}) => {
     Router({
@@ -20,18 +12,11 @@ export default () => {
     });
   };
 
-  // 获取用户信息
-  const getUserInfo = () => {
-    fetchPcUserInfo().then((res) => {
-      setUserInfo(res);
-    });
-  };
-
   const toolsArr = [
     {
-      leble: `￥${userInfo.cash || 0}`,
+      leble: `￥${userInfo.settlerPrice || 0}`,
       icon: "tools_wallet",
-      onClick: () => goPage("purse", { cash: userInfo.cash }),
+      onClick: () => goPage("purse", { settlerPrice: userInfo.settlerPrice }),
     },
     {
       leble: `${userInfo.bean || 0}卡豆`,
