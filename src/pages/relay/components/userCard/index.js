@@ -13,7 +13,7 @@ export default (props) => {
   const { list = [], upDateList, shareInfo } = props;
   const memo = useMemo(() => {
     return (
-      <View>
+      <View className="userCard_group">
         {list.map((item) => {
           const {
             communityOrganizationId,

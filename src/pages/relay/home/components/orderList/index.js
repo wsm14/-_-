@@ -13,7 +13,7 @@ import "./index.scss";
 import { useState } from "react";
 import { useEffect } from "react";
 export default (props) => {
-  const { index } = props;
+  const { index, navHeight } = props;
   const [list, setList] = useState([]);
   const [setting, setSetting] = useState({
     tabList: ["全部订单", "待付款", "可使用", "退款/售后"],
@@ -86,16 +86,17 @@ export default (props) => {
     position: "fixed",
     left: 0,
     right: 0,
-    top: Taro.pxTransform(98),
+    top: navHeight,
     zIndex: 100,
   };
 
   return (
-    <View
-      style={{ display: index === 2 ? "block" : "none" }}
-      className="relay_orderList_box"
-    >
+    <View style={{ display: index === 2 ? "block" : "none" }}>
       <Tabs fn={setIndex} style={tabStyle} {...setting}></Tabs>
+      {/* Tabs高度占位 */}
+      <View
+        style={{ height: Taro.pxTransform(88), position: "relative" }}
+      ></View>
       {list.length === 0 ? (
         goodsNullStatus()
       ) : (

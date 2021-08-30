@@ -7,7 +7,7 @@ import {
   handleGroupDoTop,
   handleGoGroupDetail,
 } from "@/relay/common/hooks";
-import { toast, loginStatus } from "@/common/utils";
+import { toast } from "@/common/utils";
 import { GROUP_STATUS } from "@/relay/common/constant";
 import ImageShow from "@/relay/components/ImageShow";
 import TabPane from "@/relay/components/TabPane";
@@ -16,6 +16,15 @@ import { getShareInfo } from "@/server/common";
 import "./index.scss";
 
 export default ({ list, navHeight, getNewData, index }) => {
+  const [visible, setVisible] = useState(false);
+  const [shareData, setShareData] = useState({});
+
+  useEffect(() => {
+    if (!visible) {
+      setShareData({});
+    }
+  }, [visible]);
+
   const toolsArr = (item) => {
     const { communityOrganizationId, ownerId, topFlag } = item;
     return [
@@ -64,30 +73,22 @@ export default ({ list, navHeight, getNewData, index }) => {
       },
     ];
   };
-  const [visible, setVisible] = useState(false);
-  const [shareData, setShareData] = useState({});
-  useEffect(() => {
-    if (!visible) {
-      setShareData({});
-    }
-  }, [visible]);
+
   const shareInfo = (val) => {
     const { communityOrganizationId, ownerId } = val;
-    if (!loginStatus()) {
-    } else {
-      getShareInfo(
-        {
-          shareType: "communityGoods",
-          shareId: communityOrganizationId,
-          shardingKey: ownerId,
-        },
-        (res) => {
-          setVisible(true);
-          setShareData(res);
-        }
-      );
-    }
+    getShareInfo(
+      {
+        shareType: "communityGoods",
+        shareId: communityOrganizationId,
+        shardingKey: ownerId,
+      },
+      (res) => {
+        setVisible(true);
+        setShareData(res);
+      }
+    );
   };
+
   return (
     <View className="pu_order">
       <View className="pu_order_tab" style={{ top: navHeight }}>
@@ -195,7 +196,7 @@ export default ({ list, navHeight, getNewData, index }) => {
           </View>
         ))}
         {!list.length ? <View className="pu_order_null">没有更多了</View> : ""}
-        {index === 3 && (
+        {index == 3 && (
           <ShareInfo
             onClose={() => {
               setVisible(false);

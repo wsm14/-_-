@@ -9,6 +9,7 @@ import { fetchCommunityUser } from "@/server/relay";
 import ShareInfo from "@/relay/components/shareInfo";
 import { getShareInfo } from "@/server/common";
 import { loginStatus } from "@/common/utils";
+
 export default (props) => {
   const { index } = props;
   const [httpData, setHttpData] = useState({
@@ -57,7 +58,7 @@ export default (props) => {
   });
 
   return (
-    <View className="" style={{ display: index === 0 ? "block" : "none" }}>
+    <View style={{ display: index === 0 ? "block" : "none" }}>
       <UserCard
         shareInfo={(val) => {
           const { communityOrganizationId, ownerId } = val;
