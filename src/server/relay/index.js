@@ -31,7 +31,18 @@ export const fetchTeamPlayer = (data, fn) => {
     (res) => fn && fn(res)
   );
 };
-// 个人中心 - 我的团圆
+// 个人中心 - 我的团员
+
+export const fetchPurseDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/bean/direct/detail/listIncomeBeanDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 个人中心 - 钱包 - 资产明细
 
 export const fetchLiftingCabinetCreate = (data, fn) => {
   return httpPost(

@@ -1,0 +1,53 @@
+@import "@/assets/css/global.scss";
+
+.PurseDetail_content {
+  padding: 32px;
+  .purseDetail_group {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 0 32px;
+    .purseDetail_cell {
+      @include flexCenterA;
+      padding: 32px 0;
+      & + .purseDetail_cell {
+        border-top: 1px solid #e5e5e5;
+      }
+      .purseDetail_cell_img {
+        @include whEqual(90px);
+        border-radius: 50%;
+        background-color: #07c0c2;
+        margin-right: 24px;
+        background-size: 100%;
+      }
+      .purseDetail_cell_info {
+        flex: 1;
+        overflow: hidden;
+        .purseDetail_cell_head {
+          @include flexCenterA;
+          flex: 1;
+          .purseDetail_cell_title {
+            flex: 1;
+            @include fontHideOnly;
+            line-height: 42px;
+            font-size: 28px;
+            font-weight: 400;
+            color: #333333;
+            margin-right: 28px;
+          }
+          .purseDetail_cell_price {
+            font-size: 32px;
+            font-weight: 600;
+            color: #333333;
+          }
+        }
+
+        .purseDetail_cell_time {
+          font-size: 24px;
+          font-weight: 400;
+          color: #999999;
+          margin-top: 4px;
+        }
+      }
+    }
+  }
+}

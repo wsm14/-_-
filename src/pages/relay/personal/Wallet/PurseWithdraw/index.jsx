@@ -4,7 +4,7 @@ import { View, Text, Form, Button, Input } from "@tarojs/components";
 import "./index.scss";
 
 /**
- * 我的钱包
+ * 我的钱包 - 提现
  */
 export default () => {
   // 路由获取参数

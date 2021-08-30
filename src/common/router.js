@@ -113,6 +113,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     groupOrderVerification: "/pages/relay/order/GroupVerification/index", // 团长订单核销
     purse: "/pages/relay/personal/Wallet/Purse/index", // 个人中心 - 钱包 - 我的钱包
     purseWithdraw: "/pages/relay/personal/Wallet/PurseWithdraw/index", // 个人中心 - 钱包 - 钱包提现
+    purseDetail: "/pages/relay/personal/Wallet/PurseDetail/index", // 个人中心 - 钱包 - 账单明细
     teamPlayer: "/pages/relay/personal/Teamplayer/index", // 个人中心 - 我的团员
     //社团
   }[routerName];

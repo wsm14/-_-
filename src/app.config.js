@@ -94,6 +94,7 @@ export default {
         "order/GroupVerification/index", // 订单管理 - 核销
         "personal/Wallet/Purse/index", // 个人中心 - 钱包 - 我的钱包
         "personal/Wallet/PurseWithdraw/index", // 个人中心 - 钱包 - 钱包提现
+        "personal/Wallet/PurseDetail/index", // 个人中心 - 钱包 - 账单明细
         "personal/Teamplayer/index", // 个人中心 - 我的团员
       ],
     },

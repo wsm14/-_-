@@ -42,7 +42,12 @@ export default () => {
       </View>
       <View className="purse_price_menu">
         <View className="purse_menu_group">
-          <View className="purse_menu_cell">资产明细</View>
+          <View
+            className="purse_menu_cell"
+            onClick={() => Router({ routerName: "purseDetail" })}
+          >
+            资产明细
+          </View>
         </View>
       </View>
       <View className="purse_bottom_tip">哒卡乐支付安全保障中</View>
