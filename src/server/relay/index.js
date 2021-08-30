@@ -351,3 +351,13 @@ export const fetchCommunityGoods = (data, fn) => {
   );
 };
 //团长-核销订单
+
+export const fetchOrganizationShare = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/organization/share",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};

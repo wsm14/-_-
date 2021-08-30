@@ -132,7 +132,7 @@ export default (props) => {
               name={"addressName"}
               placeholder={"请输入收货人姓名"}
               style={{ textAlign: "left" }}
-              maxLength={30}
+              maxLength={20}
               value={addressName}
             ></Input>
           </FormItem>
@@ -140,7 +140,7 @@ export default (props) => {
             <Input
               name={"mobile"}
               placeholder={"请输入联系电话"}
-              maxLength={13}
+              maxLength={11}
               style={{ textAlign: "left" }}
               type={"number"}
               value={mobile}

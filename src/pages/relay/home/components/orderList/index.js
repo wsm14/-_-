@@ -56,6 +56,21 @@ export default (props) => {
       setList([...list, ...orderList]);
     });
   };
+  const updateStatus = (val) => {
+    const { orderSn } = val;
+    setList(
+      list.map((item) => {
+        if (orderSn === item.orderSn) {
+          return {
+            ...item,
+            status: "2",
+          };
+        } else {
+          return { ...item };
+        }
+      })
+    );
+  };
   usePullDownRefresh(() => {
     Taro.stopPullDownRefresh();
     if (index == 2) {
@@ -102,7 +117,9 @@ export default (props) => {
       ) : (
         <View className="goodsView relay_order_box">
           {list.map((item) => {
-            return <Template data={item}></Template>;
+            return (
+              <Template updateStatus={updateStatus} data={item}></Template>
+            );
           })}
         </View>
       )}

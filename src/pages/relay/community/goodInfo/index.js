@@ -8,12 +8,12 @@ import GoodsInfo from "./components/goodCard";
 import NodeCard from "./components/nodeCard";
 import PayCard from "./components/payCard";
 import FromTemplate from "@/relay/components/FormTemplate";
-import ShareImage from "@/relay/components/shareImage";
-import { rssConfigData } from "@/relay/components/shareImage/components/data";
+import ShareInfo from "@/relay/components/shareInfo";
 import { getShareInfo } from "@/server/common";
 import {
   fetchOrganizationUserDetail,
   fetchOrganizationRecord,
+  fetchOrganizationShare,
 } from "@/server/relay";
 import { loginStatus, toast } from "@/common/utils";
 import Router from "@/common/router";
@@ -30,55 +30,63 @@ class Index extends Component {
       communityTeamUserInfo: {},
       consumerRecordList: [],
       visible: false,
-      shareData: null,
-      cavansObj: { data: null, start: false },
+      shareData: {},
     };
   }
   fetchShareInfo() {
     const { communityOrganizationId, ownerId } = this.state.httpData;
     const { shareData } = this.state;
-    if (shareData) {
-      const { shareData } = this.state;
-      this.setState({
-        cavansObj: {
-          start: true,
-          data: rssConfigData({ ...shareData }),
-        },
+    if (!loginStatus()) {
+      return Router({
+        routerName: "login",
       });
     } else {
-      getShareInfo(
-        {
-          shareType: "communityGoods",
-          shareId: communityOrganizationId,
-          shardingKey: ownerId,
-        },
-        (res) => {
-          this.setState(
-            {
-              shareData: { ...res },
-            },
-            (res) => {
-              const { shareData } = this.state;
-              this.setState({
-                cavansObj: {
-                  start: true,
-                  data: rssConfigData({ ...shareData }),
-                },
-              });
-            }
-          );
-        }
-      );
+      if (Object.keys(shareData).length > 0) {
+        this.setState({
+          visible: true,
+        });
+      } else {
+        getShareInfo(
+          {
+            shareType: "communityGoods",
+            shareId: communityOrganizationId,
+            shardingKey: ownerId,
+          },
+          (res) => {
+            this.setState(
+              {
+                shareData: { ...res },
+              },
+              (res) => {
+                this.setState({
+                  visible: true,
+                });
+              }
+            );
+          }
+        );
+      }
     }
   }
+  fetchShareView() {
+    const { communityOrganizationId, ownerId } = this.state;
+    fetchOrganizationShare({ communityOrganizationId, ownerId });
+  }
   onShareAppMessage(res) {
+    const { shareData } = this.state;
+    const { title, miniProgramUrl, frontImage } = shareData;
     if (res.from === "button") {
       return {
-        title: weChatTitle || goodsName,
-        imageUrl: weChatImg || img,
-        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+        title: title,
+        path: miniProgramUrl,
+        imageUrl: frontImage,
       };
     }
+    return {
+      title: title,
+      imageUrl: frontImage,
+      path: miniProgramUrl,
+    };
   }
   componentDidMount() {
     let { scene } = getCurrentInstance().router.params;
@@ -95,14 +103,18 @@ class Index extends Component {
               httpData: { ...httpData, ...param },
             },
             (res) => {
-              const { communityOrganizationId, ownerId } = this.state.httpData;
               this.fecthDetails();
               this.fetchRecord();
+              this.fetchShareView();
             }
           );
         }
       });
     } else {
+      const { shareUserId } = this.state;
+      if (shareUserId) {
+        this.fetchShareView();
+      }
       this.fecthDetails();
       this.fetchRecord();
     }
@@ -166,7 +178,8 @@ class Index extends Component {
       communityTeamUserInfo,
       consumerRecordList = [],
       communityOrganizationInfo: { communityContentObjectList = [] },
-      cavansObj,
+      visible,
+      shareData,
     } = this.state;
     return (
       <View>
@@ -197,13 +210,14 @@ class Index extends Component {
               getDetail={this.fecthDetails}
             ></PayCard>
           </View>
-          <ShareImage
-            {...cavansObj}
-            onSave={() => console.log("点击保存")}
-            onClose={() =>
-              this.setState({ cavansObj: { start: false, data: null } })
-            }
-          ></ShareImage>
+          <ShareInfo
+            onClose={() => {
+              this.setState({ visible: false });
+            }}
+            show={visible}
+            data={shareData}
+            bottomFlag
+          ></ShareInfo>
         </View>
       </View>
     );

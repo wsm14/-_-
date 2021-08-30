@@ -24,55 +24,49 @@ export default (props) => {
           ></Image>
         </View>
         <View className="community_card_userTitle">
-          <View className="community_card_username">{userName}</View>
+          <View className="community_card_usernameInfo">
+            <View className="community_card_username">{userName}</View>
+            {subscribeFlag === "0" ? (
+              <View
+                className="community_card_btn public_center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  fakeSubscribe({
+                    teamUserId: ownerId,
+                  }).then((val) => {
+                    reload();
+                  });
+                }}
+              >
+                + 订阅
+              </View>
+            ) : (
+              <View
+                className="community_card_nobtn public_center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  fakeSubscribe({
+                    teamUserId: ownerId,
+                  }).then((val) => {
+                    reload();
+                  });
+                }}
+              >
+                已订阅{" "}
+              </View>
+            )}
+          </View>
           <View className="community_card_userTime">
             成员{teamCount}
             {teamCount > 100 && "+"}｜跟团人次{consumeCount}
             {consumeCount > 100 && "+"}
           </View>
         </View>
-      </View>
-      <View className="community_card_collected">
-        <View className="community_card_iconBox">
-          <View className="community_card_icon1"></View>
-          <View className="community_card_font">客服</View>
-        </View>
-        <View className="community_card_iconBox" onClick={() => shareInfo()}>
-          <View className="community_card_icon2"></View>
-          <View className="community_card_font">朋友圈</View>
-        </View>
-        <View className="community_card_iconBox">
-          <View className="community_card_icon3"></View>
-          <View className="community_card_font">分享</View>
-        </View>
-      </View>
-      {subscribeFlag === "0" ? (
         <View
-          className="community_card_btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            fakeSubscribe({
-              teamUserId: ownerId,
-            }).then((val) => {
-              reload();
-            });
-          }}
+          className="community_card_share"
+          onClick={() => shareInfo()}
         ></View>
-      ) : (
-        <View
-          className="community_card_nobtn"
-          onClick={(e) => {
-            e.stopPropagation();
-            fakeSubscribe({
-              teamUserId: ownerId,
-            }).then((val) => {
-              reload();
-            });
-          }}
-        >
-          已订阅{" "}
-        </View>
-      )}
+      </View>
     </View>
   );
 };

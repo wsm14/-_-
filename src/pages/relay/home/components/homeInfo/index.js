@@ -9,6 +9,7 @@ import { fetchCommunityUser } from "@/server/relay";
 import ShareInfo from "@/relay/components/shareInfo";
 import { getShareInfo } from "@/server/common";
 import { loginStatus } from "@/common/utils";
+import router from "@/common/router";
 
 export default (props) => {
   const { index } = props;
@@ -62,6 +63,7 @@ export default (props) => {
         shareInfo={(val) => {
           const { communityOrganizationId, ownerId } = val;
           if (!loginStatus()) {
+            router({ routerName: "login" });
           } else {
             getShareInfo(
               {

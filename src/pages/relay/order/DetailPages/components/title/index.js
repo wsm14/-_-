@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { filterPayStatus } from "@/common/utils";
 import InterTime from "@/components/InterTime";
 export default (props) => {
-  const { data } = props;
+  const { data, upDateStatus } = props;
   const { status, closeReason, createTime } = data;
   const filterImage = () => {
     if (status) {
@@ -34,7 +34,13 @@ export default (props) => {
         case "0":
           return (
             <View>
-              请在 <InterTime fn={() => {}} times={createTime}></InterTime>
+              请在{" "}
+              <InterTime
+                fn={() => {
+                  upDateStatus();
+                }}
+                times={createTime}
+              ></InterTime>
               内进行付款，超时订单将自动关闭
             </View>
           );

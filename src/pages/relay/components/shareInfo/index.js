@@ -9,12 +9,13 @@ import { rssConfigData } from "./../shareImage/components/data";
 import "./index.scss";
 import { useState } from "react";
 export default (props) => {
-  const { data = {}, show = false, onClose } = props;
+  const { data = {}, show = false, onClose, bottomFlag = false } = props;
   const [cavansObj, setCavasObj] = useState({
     data: null,
     start: false,
   });
   const { title = "", frontImage = "", miniProgramUrl } = data;
+  
   useShareAppMessage((res) => {
     if (res.from === "button") {
       return {
@@ -39,7 +40,10 @@ export default (props) => {
             onClose();
           }}
         ></View>
-        <View className="share_layer_content">
+        <View
+          style={bottomFlag ? { bottom: 0 } : {}}
+          className="share_layer_content"
+        >
           <View className="share_layer_shareInfo">
             <View
               className="share_layer_shareWechat"

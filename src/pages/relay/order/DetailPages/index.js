@@ -29,7 +29,16 @@ class Index extends Component {
   componentDidMount() {
     this.fetchOrderInfo();
   }
-
+  upDateStatus() {
+    const { orderInfo } = this.state;
+    this.setState({
+      orderInfo: {
+        ...orderInfo,
+        status: "2",
+        closeReason: "付款已超时，订单自动关闭",
+      },
+    });
+  }
   closeSn() {
     const { updateKol } = goods;
     const { httpData } = this.state;
@@ -70,7 +79,10 @@ class Index extends Component {
     } = this.state;
     return (
       <View className="order_detailsPage_box">
-        <Title data={orderInfo}></Title>
+        <Title
+          upDateStatus={this.upDateStatus.bind(this)}
+          data={orderInfo}
+        ></Title>
         <Delivery data={orderInfo}></Delivery>
         <GoodsCard data={orderInfo}></GoodsCard>
         {status === "1" && <Collect></Collect>}

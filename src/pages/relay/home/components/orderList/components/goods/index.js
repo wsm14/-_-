@@ -8,7 +8,7 @@ import { backgroundObj } from "@/common/utils";
 import GoodsTools from "../GoodsTools";
 
 export default (props) => {
-  const { data } = props;
+  const { data, updateStatus } = props;
   const { createTime, status, organizationGoodsOrderDescObject, orderSn } =
     data;
   const {
@@ -58,7 +58,7 @@ export default (props) => {
         <View className="relay_order_computedTime">
           请在
           <InterTime
-            fn={() => updateStatus(item)}
+            fn={() => updateStatus(data)}
             times={createTime}
           ></InterTime>
           内支付，过期订单自动关闭
