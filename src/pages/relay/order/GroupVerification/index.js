@@ -48,6 +48,7 @@ class Index extends Component {
   } //上拉加载
   render() {
     const { orderList, verification } = this.state;
+    console.log(verification);
     const orderTitle = {
       0: <View className="color3">待支付</View>,
       1: <View className="color4">已支付</View>,
@@ -199,7 +200,7 @@ class Index extends Component {
             {orderList.map((item) => template(item))}
             <View className="GroupVerification_init_btn">
               <View className="GroupVerification_init_vtnView public_center">
-                请选择本次核销的商品
+                {verification ? "请选择本次核销的商品" : "确认核销"}
               </View>
             </View>
           </View>
