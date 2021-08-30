@@ -9,10 +9,38 @@ export default (props) => {
   const { submit, data, count, getDetail } = props;
   const { communityOrganizationGoodsList = [{}] } = data;
   const { price = 0 } = communityOrganizationGoodsList[0];
-  console.log(data);
+
   // 路由获取参数
   const routeParams = useRouter().params;
   const { mode = "buy", settleAmount, viewCount } = routeParams;
+
+  const toolsArr = [
+    {
+      name: "订单管理",
+      icon: <View className="community_manage_i_order"></View>,
+      onClick: (e) => {
+        e.stopPropagation();
+        Router({
+          routerName: "groupOrderManage",
+          args: {
+            communityOrganizationId: data.communityOrganizationId,
+          },
+        });
+      },
+    },
+    {
+      name: "团管理",
+      icon: <View className="community_manage_i_order"></View>,
+      onClick: (e) => {
+        e.stopPropagation();
+        handleOrdertools(data, getDetail);
+      },
+    },
+    {
+      name: `${viewCount || 0}人来过`,
+      icon: <View className="community_manage_price">{settleAmount || 0}</View>,
+    },
+  ];
 
   return (
     <>
@@ -30,39 +58,12 @@ export default (props) => {
         <FooterFixed>
           <View className="community_manage_tools">
             <View className="community_manage_group">
-              <View
-                className="community_manage_cell"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  Router({
-                    routerName: "groupOrderManage",
-                    args: {
-                      communityOrganizationId: data.communityOrganizationId,
-                    },
-                  });
-                }}
-              >
-                <View className="community_manage_i_order"></View>
-                <View className="community_manage_name">订单管理</View>
-              </View>
-              <View
-                className="community_manage_cell"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleOrdertools(data, getDetail);
-                }}
-              >
-                <View className="community_manage_i_order"></View>
-                <View className="community_manage_name">团管理</View>
-              </View>
-              <View className="community_manage_cell">
-                <View className="community_manage_price">
-                  {settleAmount || 0}
+              {toolsArr.map((item) => (
+                <View className="community_manage_cell" onClick={item.onClick}>
+                  {item.icon}
+                  <View className="community_manage_name"> {item.name}</View>
                 </View>
-                <View className="community_manage_name">
-                  {viewCount || 0}人来过
-                </View>
-              </View>
+              ))}
             </View>
             <View className="community_manage_share"></View>
           </View>
