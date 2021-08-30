@@ -11,6 +11,7 @@ import {
 import PayBean from "@/components/stopBean";
 import { backgroundObj, toast } from "@/common/utils";
 import "./index.scss";
+import Router from "@/common/router";
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -244,7 +245,15 @@ class Index extends Component {
                 {relateOwnerName}
               </View>
             </View>
-            <View className="GroupVerification_content_goodsBox public_auto">
+            <View
+              className="GroupVerification_content_goodsBox public_auto"
+              onClick={() =>
+                Router({
+                  routerName: "communityGoods",
+                  args: { communityOrganizationId, ownerId },
+                })
+              }
+            >
               <View className="GroupVerification_content_goodsleft font_hide">
                 {title}
               </View>

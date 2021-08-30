@@ -30,7 +30,8 @@ export default ({ tabbarChange }) => {
     {
       leble: "商品核销",
       icon: "tools_code",
-      show: !groupTools,
+      show: groupTools,
+      onClick: () => goPage("groupOrderVerification"),
     },
     {
       leble: "自提点管理",

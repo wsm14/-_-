@@ -95,7 +95,8 @@ const NavigationBar = ({
                       fail: () => {
                         router({
                           routerName: "relayHome",
-                          args: { count: 1 },
+                          args: { count: 0 },
+                          types: "redirectTo",
                         });
                       },
                     });

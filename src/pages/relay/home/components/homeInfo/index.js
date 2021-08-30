@@ -57,7 +57,7 @@ export default (props) => {
   });
 
   return (
-    <View style={{ display: index === 0 ? "block" : "none" }}>
+    <View style={{ display: index == 0 ? "block" : "none" }}>
       <UserCard
         shareInfo={(val) => {
           const { communityOrganizationId, ownerId } = val;
