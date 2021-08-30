@@ -1,16 +1,26 @@
-import React from "react";
-import { useRouter } from "@tarojs/taro";
+import React, { useState } from "react";
+import { useDidShow } from "@tarojs/taro";
 import Router from "@/common/router";
 import { View, Text, Button } from "@tarojs/components";
+import { fetchPcUserInfo } from "@/server/relay";
 import "./index.scss";
 
 /**
  * 我的钱包
  */
 export default () => {
-  // 路由获取参数
-  const routeParams = useRouter().params;
-  const { settlerPrice = "" } = routeParams;
+  const [settlerPrice, setSettlerPrice] = useState(0);
+
+  useDidShow(() => {
+    getUserInfo();
+  });
+
+  // 获取用户信息
+  const getUserInfo = () => {
+    fetchPcUserInfo().then((res) => {
+      setSettlerPrice(res.settlerPrice);
+    });
+  };
 
   return (
     <View className="Purse_content">
@@ -18,7 +28,17 @@ export default () => {
       <View className="purse_price_content">
         <Text className="purse_price_all">总金额</Text>
         <Text className="purse_price">{settlerPrice}</Text>
-        <Button className="purse_price_submit">提现至零钱</Button>
+        <Button
+          className="purse_price_submit"
+          onClick={() => {
+            Router({
+              routerName: "purseWithdraw",
+              args: { settlerPrice },
+            });
+          }}
+        >
+          提现至零钱
+        </Button>
       </View>
       <View className="purse_price_menu">
         <View className="purse_menu_group">

@@ -1,0 +1,27 @@
+@import "@/assets/css/global.scss";
+
+.PurseWithdraw_content {
+  padding: 32px;
+  .purseWithdraw_info {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 0 32px;
+    .purseWithdraw_info_cell {
+      @include flexCenterA;
+      height: 90px;
+      font-size: 28px;
+      font-weight: 600;
+      color: #333333;
+      Text {
+        font-weight: 400;
+        color: #999999;
+      }
+      & + .purseWithdraw_info_cell {
+        border-top: 1px solid #e5e5e5;
+      }
+    }
+  }
+  .purseWithdraw_handle {
+    margin-top: 24px;
+  }
+}

@@ -16,7 +16,7 @@ export default ({ userInfo }) => {
     {
       leble: `￥${userInfo.settlerPrice || 0}`,
       icon: "tools_wallet",
-      onClick: () => goPage("purse", { settlerPrice: userInfo.settlerPrice }),
+      onClick: () => goPage("purse"),
     },
     {
       leble: `${userInfo.bean || 0}卡豆`,
