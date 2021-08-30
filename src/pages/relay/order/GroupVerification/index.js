@@ -17,7 +17,7 @@ class Index extends Component {
         status: 1,
       },
       orderList: [],
-      verification: [],
+      verification: null,
     };
   }
   componentWillUnmount() {}
@@ -99,7 +99,9 @@ class Index extends Component {
               <View
                 className={classNames(
                   "GroupVerification_template_checkBox",
-                  verification.includes() "GroupVerification_template_noCheck"
+                  verification === item.orderSn
+                    ? ""
+                    : "GroupVerification_template_noCheck"
                 )}
               ></View>
             </View>
