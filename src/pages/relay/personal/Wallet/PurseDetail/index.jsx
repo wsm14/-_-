@@ -42,7 +42,10 @@ export default () => {
             <View className="purseDetail_cell_info">
               <View className="purseDetail_cell_head">
                 <View className="purseDetail_cell_title">{i.detailTitle}</View>
-                <View className="purseDetail_cell_price">+{i.cash}</View>
+                <View className="purseDetail_cell_price">
+                  {i.detailType === "add" ? "+" : "-"}
+                  {i.cash}
+                </View>
               </View>
               <View className="purseDetail_cell_time">{i.beanTime}</View>
             </View>
