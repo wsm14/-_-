@@ -1,0 +1,81 @@
+@import "@/assets/css/global.scss";
+
+.Purse_content {
+  .purse_tip {
+    @include flexCenterA;
+    height: 64px;
+    background: #ef486f26;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ef476f;
+    padding: 0 32px;
+    &::before {
+      content: "";
+      display: inline-block;
+      @include whEqual(24px);
+      margin-right: 7px;
+      background: url("https://wechat-config.dakale.net/miniprogram/relay/info_red.png");
+      background-size: 100%;
+    }
+  }
+  .purse_price_content {
+    @include flexCenterA;
+    flex-direction: column;
+    background: #ffffff;
+    padding: 64px 0 56px;
+    .purse_price_all {
+      font-size: 28px;
+      font-weight: 400;
+      color: #333333;
+    }
+    .purse_price {
+      font-size: 72px;
+      font-weight: 600;
+      color: #333333;
+      margin-top: 29px;
+      &::before {
+        content: "¥ ";
+        display: inline;
+        font-size: 36px;
+      }
+    }
+    .purse_price_submit {
+      @include sumbitButton;
+      width: 420px;
+      margin-top: 174px;
+      border-radius: 12px;
+    }
+  }
+  .purse_price_menu {
+    padding: 32px;
+    .purse_menu_group {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 0 32px;
+    }
+    .purse_menu_cell {
+      @include flexCenterA;
+      justify-content: space-between;
+      height: 92px;
+      font-size: 28px;
+      font-weight: 600;
+      color: #333333;
+      &::after {
+        content: "";
+        display: inline-block;
+        @include whEqual(24px);
+        background: url("https://wechat-config.dakale.net/miniprogram/relay/right_black.png");
+        background-size: 100%;
+      }
+    }
+  }
+  .purse_bottom_tip {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0); /* 50%为自身尺寸的一半 */
+    bottom: 60px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+  }
+}

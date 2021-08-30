@@ -1,27 +1,22 @@
-import React, { useState } from "react";
-import { useDidShow } from "@tarojs/taro";
+import React from "react";
+import Router from "@/common/router";
 import { View } from "@tarojs/components";
-import { fetchPcUserInfo } from "@/server/relay";
 import "./index.scss";
 
-export default () => {
-  const [userInfo, setUserInfo] = useState({});
-
-  useDidShow(() => {
-    getUserInfo();
-  });
-
-  // 获取用户信息
-  const getUserInfo = () => {
-    fetchPcUserInfo().then((res) => {
-      setUserInfo(res);
+export default ({ userInfo }) => {
+  // 跳转自提点佣金设置
+  const goPage = (routerName, args = {}) => {
+    Router({
+      routerName,
+      args,
     });
   };
 
   const toolsArr = [
     {
-      leble: `￥${userInfo.cash || 0}`,
+      leble: `￥${userInfo.settlerPrice || 0}`,
       icon: "tools_wallet",
+      onClick: () => goPage("purse"),
     },
     {
       leble: `${userInfo.bean || 0}卡豆`,
@@ -30,6 +25,7 @@ export default () => {
     {
       leble: "团员",
       icon: "tools_member",
+      onClick: () => goPage("teamPlayer"),
     },
     {
       leble: "社群",
@@ -56,7 +52,7 @@ export default () => {
       </View>
       <View className="pu_tools">
         {toolsArr.map((i) => (
-          <View className="pu_tools_cell">
+          <View className="pu_tools_cell" onClick={i.onClick}>
             <View className={`${i.icon} tools_text`}>{i.leble}</View>
           </View>
         ))}

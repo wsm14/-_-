@@ -94,138 +94,147 @@ export default ({}) => {
         onClick={(key) => getNewData({ status: key })}
       ></TabPane>
       <View className="order_manage_group">
-        {dataList.map((item) => {
-          const {
-            organizationGoodsOrderDescObject: orginObj,
-            payTime,
-            status,
-            totalFee,
-          } = item;
-          const { communityOrganizationId, ownerId } = orginObj;
-          const params = { communityOrganizationId, ownerId };
-          return (
-            <View className="order_manage_cell">
-              <View className="order_manage_head">
-                <View className="order_manage_number">
-                  跟团号：<Text>{orginObj.organizationNumber}</Text>
+        {dataList.length ? (
+          dataList.map((item) => {
+            const {
+              organizationGoodsOrderDescObject: orginObj,
+              payTime,
+              status,
+              totalFee,
+            } = item;
+            const { communityOrganizationId, ownerId } = orginObj;
+            const params = { communityOrganizationId, ownerId };
+            return (
+              <View className="order_manage_cell">
+                <View className="order_manage_head">
+                  <View className="order_manage_number">
+                    跟团号：<Text>{orginObj.organizationNumber}</Text>
+                  </View>
+                  <Text
+                    className={`order_manage_status ${
+                      status == 1 ? "pay" : ""
+                    }`}
+                  >
+                    {GROUP_ORDER_STATUS[status]}
+                  </Text>
                 </View>
-                <Text
-                  className={`order_manage_status ${status == 1 ? "pay" : ""}`}
-                >
-                  {GROUP_ORDER_STATUS[status]}
-                </Text>
-              </View>
-              <View className="order_manage_info">
-                <View className="order_info_head">
-                  <View className="order_info_shop">
-                    <View
-                      className="order_info_img"
-                      style={{
-                        backgroundImage: `url(${orginObj.relateOwnerProfile})`,
-                      }}
-                    ></View>
-                    <View className="order_info_shopName">
-                      {orginObj.relateOwnerName}
-                    </View>
-                  </View>
-                  <View className="order_info_title">
-                    <View className="order_title">{orginObj.title}</View>
-                    <View
-                      className="order_title_footer"
-                      onClick={() => goPage("communityGoods", params)}
-                    >
-                      查看
-                    </View>
-                  </View>
-                </View>
-                <View className="order_info_goods">
-                  <View className="order_goods_cell">
-                    <View className="order_goods_name">
-                      {orginObj.goodsName}
-                    </View>
-                    <View className="order_goods_number">
-                      x{orginObj.goodsCount}
-                    </View>
-                    <View className="order_goods_price">
-                      ¥ {orginObj.goodsPrice}
-                    </View>
-                  </View>
-                </View>
-                <View className="order_info_pay">
-                  <View className="order_pay_time">{payTime}</View>
-                  <View className="order_pay_footer">
-                    <Text className="order_pay_total">
-                      共{orginObj.goodsCount}件
-                    </Text>
-                    <View className="order_pay_price">
-                      实收<Text className="order_price_num">{totalFee}</Text>
-                    </View>
-                  </View>
-                </View>
-                <View className="order_info_user">
-                  <View className="order_user_head">
-                    {GOODS_BY_TYPE[orginObj.logisticsType]}订单
-                  </View>
-                  <View className="order_user_content">
-                    <View className="order_user_cell">
-                      <View className="order_user_title">
-                        <View className="order_ui_user"></View>
-                        <View className="order_user_name">
-                          {orginObj.writeContactPerson}
-                        </View>
-                        <View
-                          className="order_user_phone"
-                          onClick={() => handlePhone(orginObj.writeMobile)}
-                        >
-                          {orginObj.writeMobile}
-                        </View>
-                      </View>
-                      <View className="order_user_info">
-                        <View className="order_user_cont">
-                          {orginObj.writeAddress}
-                        </View>
+                <View className="order_manage_info">
+                  <View className="order_info_head">
+                    <View className="order_info_shop">
+                      <View
+                        className="order_info_img"
+                        style={{
+                          backgroundImage: `url(${orginObj.relateOwnerProfile})`,
+                        }}
+                      ></View>
+                      <View className="order_info_shopName">
+                        {orginObj.relateOwnerName}
                       </View>
                     </View>
-                    {orginObj.logisticsType === "self" && (
+                    <View className="order_info_title">
+                      <View className="order_title">{orginObj.title}</View>
+                      <View
+                        className="order_title_footer"
+                        onClick={() => goPage("communityGoods", params)}
+                      >
+                        查看
+                      </View>
+                    </View>
+                  </View>
+                  <View className="order_info_goods">
+                    <View className="order_goods_cell">
+                      <View className="order_goods_name">
+                        {orginObj.goodsName}
+                      </View>
+                      <View className="order_goods_number">
+                        x{orginObj.goodsCount}
+                      </View>
+                      <View className="order_goods_price">
+                        ¥ {orginObj.goodsPrice}
+                      </View>
+                    </View>
+                  </View>
+                  <View className="order_info_pay">
+                    <View className="order_pay_time">{payTime}</View>
+                    <View className="order_pay_footer">
+                      <Text className="order_pay_total">
+                        共{orginObj.goodsCount}件
+                      </Text>
+                      <View className="order_pay_price">
+                        实收
+                        <Text className="order_price_num">{totalFee}</Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View className="order_info_user">
+                    <View className="order_user_head">
+                      {GOODS_BY_TYPE[orginObj.logisticsType]}订单
+                    </View>
+                    <View className="order_user_content">
                       <View className="order_user_cell">
                         <View className="order_user_title">
-                          <View className="order_ui_shop"></View>
-                          <View className="order_address_name">
-                            {orginObj.liftingName}
+                          <View className="order_ui_user"></View>
+                          <View className="order_user_name">
+                            {orginObj.writeContactPerson}
+                          </View>
+                          <View
+                            className="order_user_phone"
+                            onClick={() => handlePhone(orginObj.writeMobile)}
+                          >
+                            {orginObj.writeMobile}
                           </View>
                         </View>
                         <View className="order_user_info">
                           <View className="order_user_cont">
-                            {orginObj.liftingAddress}
-                          </View>
-                          <View
-                            className="order_user_pop"
-                            onClick={() => handlePhone(orginObj.liftingMobile)}
-                          >
-                            联系人： {orginObj.liftingContentPerson}{" "}
-                            {orginObj.liftingMobile}
+                            {orginObj.writeAddress}
                           </View>
                         </View>
                       </View>
-                    )}
-                    {orginObj.remark && (
-                      <View className="order_user_cell">
-                        <View className="order_user_title">
-                          <View className="order_ui_order"></View>
-                          <View className="order_user_remark">
-                            团员备注:<Text>{orginObj.remark}</Text>
+                      {orginObj.logisticsType === "self" && (
+                        <View className="order_user_cell">
+                          <View className="order_user_title">
+                            <View className="order_ui_shop"></View>
+                            <View className="order_address_name">
+                              {orginObj.liftingName}
+                            </View>
+                          </View>
+                          <View className="order_user_info">
+                            <View className="order_user_cont">
+                              {orginObj.liftingAddress}
+                            </View>
+                            <View
+                              className="order_user_pop"
+                              onClick={() =>
+                                handlePhone(orginObj.liftingMobile)
+                              }
+                            >
+                              联系人： {orginObj.liftingContentPerson}{" "}
+                              {orginObj.liftingMobile}
+                            </View>
                           </View>
                         </View>
-                      </View>
-                    )}
+                      )}
+                      {orginObj.remark && (
+                        <View className="order_user_cell">
+                          <View className="order_user_title">
+                            <View className="order_ui_order"></View>
+                            <View className="order_user_remark">
+                              团员备注:<Text>{orginObj.remark}</Text>
+                            </View>
+                          </View>
+                        </View>
+                      )}
+                    </View>
                   </View>
+                  {/* 底部工具栏 */}
+                  <OrderFooterTools data={item}></OrderFooterTools>
                 </View>
-                {/* 底部工具栏 */}
-                <OrderFooterTools data={item}></OrderFooterTools>
               </View>
-            </View>
-          );
-        })}
+            );
+          })
+        ) : (
+          <View className="order_null">暂无待提货订单～</View>
+        )}
       </View>
     </View>
   );

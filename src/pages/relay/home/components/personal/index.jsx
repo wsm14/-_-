@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import Taro, { useReachBottom } from "@tarojs/taro";
+import Taro, {
+  useDidShow,
+  useReachBottom,
+  usePullDownRefresh,
+} from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import UserInfo from "./components/UserInfo";
 import DataCenter from "./components/DataCenter";
 import Tools from "./components/Tools";
 import OrderList from "./components/OrderList";
-import { fetchGroupList } from "@/server/relay";
+import { fetchGroupList, fetchPcUserInfo } from "@/server/relay";
 import "./index.scss";
 
 export default (props) => {
@@ -19,10 +23,23 @@ export default (props) => {
   });
   const [showList, setShowList] = useState(false); // 是否展示底部列表
   const [dataList, setDataList] = useState([]); // 列表数据
+  const [userInfo, setUserInfo] = useState({});
+
+  useDidShow(() => {
+    getUserInfo();
+  });
 
   useEffect(() => {
     fetchGetList();
   }, [pages]);
+
+  usePullDownRefresh(() => {
+    Taro.stopPullDownRefresh();
+    if (index == 3) {
+      getNewData();
+      getUserInfo();
+    }
+  });
 
   // 上拉加载
   useReachBottom(() => {
@@ -30,6 +47,13 @@ export default (props) => {
       setPages({ ...pages, page: pages.page + 1 });
     }
   });
+
+  // 获取用户信息
+  const getUserInfo = () => {
+    fetchPcUserInfo().then((res) => {
+      setUserInfo(res);
+    });
+  };
 
   // 获取数据
   const fetchGetList = () => {
@@ -57,7 +81,7 @@ export default (props) => {
     <View style={{ display: index == 3 ? "block" : "none" }}>
       <View className="tabBar_personal">
         {/* 用户信息 */}
-        <UserInfo></UserInfo>
+        <UserInfo userInfo={userInfo}></UserInfo>
         {/* 数据中心 */}
         <DataCenter></DataCenter>
         {/* 用户工具栏 */}
