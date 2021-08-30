@@ -36,7 +36,9 @@ export default (props) => {
                   e.stopPropagation();
                   Router({
                     routerName: "groupOrderManage",
-                    args: {},
+                    args: {
+                      communityOrganizationId: data.communityOrganizationId,
+                    },
                   });
                 }}
               >
