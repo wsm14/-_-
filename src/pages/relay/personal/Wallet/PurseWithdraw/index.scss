@@ -23,5 +23,54 @@
   }
   .purseWithdraw_handle {
     margin-top: 24px;
+    background: #ffffff;
+    padding: 32px 32px 48px;
+    border-radius: 12px;
+    .purseWithdraw_title {
+      font-size: 28px;
+      font-weight: 400;
+      color: #333333;
+    }
+    .purseWithdraw_form {
+      .purseWithdraw_form_input {
+        padding: 64px 0 25px;
+        display: flex;
+        align-items: baseline;
+        border-bottom: 1px solid #e5e5e5;
+        margin-bottom: 16px;
+        Text {
+          font-size: 40px;
+          font-weight: 600;
+          color: #333333;
+          margin-right: 12px;
+        }
+        .pw_form_input {
+          flex: 1;
+          height: 65px;
+          font-size: 60px;
+          font-weight: 600;
+          color: #333333;
+        }
+      }
+      .purseWithdraw_form_tip {
+        @include flexCenterA;
+        justify-content: space-between;
+        margin-bottom: 64px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+        .error {
+          color: #f55749;
+        }
+        .purseWithdraw_all_price {
+          color: #07c0c2;
+        }
+      }
+      .purseWithdraw_form_sumbit {
+        @include sumbitButton;
+        width: 420px;
+        font-weight: 600;
+      }
+    }
   }
 }
