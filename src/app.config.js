@@ -92,6 +92,8 @@ export default {
         "order/DetailPages/index", // 订单详情
         "order/GroupOrderManage/index", // 订单管理 - 团长
         "order/GroupVerification/index", // 订单管理 - 核销
+        "personal/Wallet/Purse/index", // 钱包 - 我的钱包
+        "personal/Teamplayer/index", // 钱包 - 我的钱包
       ],
     },
     {

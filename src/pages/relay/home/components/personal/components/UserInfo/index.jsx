@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Router from "@/common/router";
 import { useDidShow } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { fetchPcUserInfo } from "@/server/relay";
@@ -11,6 +12,14 @@ export default () => {
     getUserInfo();
   });
 
+  // 跳转自提点佣金设置
+  const goPage = (routerName, args = {}) => {
+    Router({
+      routerName,
+      args,
+    });
+  };
+
   // 获取用户信息
   const getUserInfo = () => {
     fetchPcUserInfo().then((res) => {
@@ -22,6 +31,7 @@ export default () => {
     {
       leble: `￥${userInfo.cash || 0}`,
       icon: "tools_wallet",
+      onClick: () => goPage("purse", { cash: userInfo.cash }),
     },
     {
       leble: `${userInfo.bean || 0}卡豆`,
@@ -30,6 +40,7 @@ export default () => {
     {
       leble: "团员",
       icon: "tools_member",
+      onClick: () => goPage("teamPlayer"),
     },
     {
       leble: "社群",
@@ -56,7 +67,7 @@ export default () => {
       </View>
       <View className="pu_tools">
         {toolsArr.map((i) => (
-          <View className="pu_tools_cell">
+          <View className="pu_tools_cell" onClick={i.onClick}>
             <View className={`${i.icon} tools_text`}>{i.leble}</View>
           </View>
         ))}

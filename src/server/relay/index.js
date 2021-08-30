@@ -22,6 +22,17 @@ export const fetchPcDataCenter = (data = {}, fn) => {
 };
 // 个人中心 - 数据中心今日订单数据
 
+export const fetchTeamPlayer = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/teamList",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 个人中心 - 我的团圆
+
 export const fetchLiftingCabinetCreate = (data, fn) => {
   return httpPost(
     {

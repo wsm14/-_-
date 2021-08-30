@@ -111,6 +111,8 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     orderDetails: "/pages/relay/order/DetailPages/index",
     groupOrderManage: "/pages/relay/order/GroupOrderManage/index", // 团长订单管理
     groupOrderVerification: "/pages/relay/order/GroupVerification/index", // 团长订单核销
+    purse: "/pages/relay/personal/Wallet/Purse/index", // 个人中心 - 钱包 - 我的钱包
+    teamPlayer: "/pages/relay/personal/Teamplayer/index", // 个人中心 - 我的团员
     //社团
   }[routerName];
   const types = type;
