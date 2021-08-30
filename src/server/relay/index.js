@@ -330,4 +330,24 @@ export const fetchCommunityOrder = (data, fn) => {
 };
 //团长订单列表
 
-// /user/community/organization/share
+export const fetchVerificationGoods = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/organization/unVerificationGoodsCount",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团长-订单商品核销数
+
+export const fetchCommunityGoods = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/organization/verificationUserCouponCommunityGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团长-核销订单

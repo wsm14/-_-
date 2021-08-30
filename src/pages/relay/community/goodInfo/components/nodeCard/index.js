@@ -15,14 +15,23 @@ export default (props) => {
       <View className="community_nodeCard_box">
         <View className="community_nodeCard_title">跟团记录</View>
         {data.map((item, index) => {
-          const { userName, profile, payTime, goodsInfo, goodsCount } = item;
+          const {
+            username,
+            profile,
+            payTime,
+            goodsInfo,
+            goodsCount,
+            communityNumber,
+          } = item;
           if (!show && index >= 10) {
             return null;
           }
           return (
             <View className="community_nodeCard_list">
               <View className="community_nodeCard_listBox">
-                <View className="community_nodeCard_listcount">90</View>
+                <View className="community_nodeCard_listcount">
+                  {communityNumber}
+                </View>
                 <View className="community_nodeCard_listprofile">
                   <Image
                     className="community_nodeCard_imgScale"
@@ -33,7 +42,7 @@ export default (props) => {
                 </View>
                 <View className="user_card_content">
                   <View className="user_card_contentTop font_hide">
-                    <View className="user_card_top1 font_hide">{userName}</View>
+                    <View className="user_card_top1 font_hide">{username}</View>
                     <View className="user_card_top2">{payTime}</View>
                   </View>
                   <View className="user_card_contentBottom font_hide">

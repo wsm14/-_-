@@ -8,12 +8,14 @@ import GoodsInfo from "./components/goodCard";
 import NodeCard from "./components/nodeCard";
 import PayCard from "./components/payCard";
 import FromTemplate from "@/relay/components/FormTemplate";
-
+import ShareImage from "@/relay/components/shareImage";
+import { rssConfigData } from "@/relay/components/shareImage/components/data";
+import { getShareInfo } from "@/server/common";
 import {
   fetchOrganizationUserDetail,
   fetchOrganizationRecord,
 } from "@/server/relay";
-import { toast } from "@/common/utils";
+import { loginStatus, toast } from "@/common/utils";
 import Router from "@/common/router";
 import "./index.scss";
 class Index extends Component {
@@ -27,14 +29,86 @@ class Index extends Component {
       communityOrganizationInfo: {},
       communityTeamUserInfo: {},
       consumerRecordList: [],
+      visible: false,
+      shareData: null,
+      cavansObj: { data: null, start: false },
     };
   }
-  componentWillUnmount() {}
-
+  fetchShareInfo() {
+    const { communityOrganizationId, ownerId } = this.state.httpData;
+    const { shareData } = this.state;
+    if (shareData) {
+      const { shareData } = this.state;
+      this.setState({
+        cavansObj: {
+          start: true,
+          data: rssConfigData({ ...shareData }),
+        },
+      });
+    } else {
+      getShareInfo(
+        {
+          shareType: "communityGoods",
+          shareId: communityOrganizationId,
+          shardingKey: ownerId,
+        },
+        (res) => {
+          this.setState(
+            {
+              shareData: { ...res },
+            },
+            (res) => {
+              const { shareData } = this.state;
+              this.setState({
+                cavansObj: {
+                  start: true,
+                  data: rssConfigData({ ...shareData }),
+                },
+              });
+            }
+          );
+        }
+      );
+    }
+  }
+  onShareAppMessage(res) {
+    if (res.from === "button") {
+      return {
+        title: weChatTitle || goodsName,
+        imageUrl: weChatImg || img,
+        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+      };
+    }
+  }
   componentDidMount() {
-    this.fecthDetails();
+    let { scene } = getCurrentInstance().router.params;
+    let { httpData } = this.state;
+    if (scene) {
+      getShareParamInfo({ uniqueKey: scene }, (res) => {
+        let {
+          shareParamInfo: { param },
+        } = res;
+        if (param && JSON.parse(param)) {
+          param = JSON.parse(param);
+          this.setState(
+            {
+              httpData: { ...httpData, ...param },
+            },
+            (res) => {
+              const { communityOrganizationId, ownerId } = this.state.httpData;
+              this.fecthDetails();
+              this.fetchRecord();
+            }
+          );
+        }
+      });
+    } else {
+      this.fecthDetails();
+      this.fetchRecord();
+    }
   }
   fetchRecord() {
+    const { httpData } = this.state;
     fetchOrganizationRecord({ ...httpData, page: 1, limit: 20 }).then((val) => {
       const { consumerRecordList = [] } = val;
       this.setState({
@@ -92,21 +166,17 @@ class Index extends Component {
       communityTeamUserInfo,
       consumerRecordList = [],
       communityOrganizationInfo: { communityContentObjectList = [] },
+      cavansObj,
     } = this.state;
     return (
-      <Nav backFlag select>
+      <View>
+        <Nav backFlag select></Nav>
         <View className="community_green_box">
           <View className="community_green_height"></View>
           <View className="community_after_box">
             <Card
-              upDateList={() => {
-                this.setState({
-                  communityTeamUserInfo: {
-                    ...communityTeamUserInfo,
-                    subscribeFlag: "1",
-                  },
-                });
-              }}
+              reload={this.fecthDetails.bind(this)}
+              shareInfo={this.fetchShareInfo.bind(this)}
               data={{ ...communityOrganizationInfo, ...communityTeamUserInfo }}
             ></Card>
             <View className="community_after_shopHeight"></View>
@@ -127,8 +197,15 @@ class Index extends Component {
               getDetail={this.fecthDetails}
             ></PayCard>
           </View>
+          <ShareImage
+            {...cavansObj}
+            onSave={() => console.log("点击保存")}
+            onClose={() =>
+              this.setState({ cavansObj: { start: false, data: null } })
+            }
+          ></ShareImage>
         </View>
-      </Nav>
+      </View>
     );
   }
 }

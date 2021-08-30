@@ -22,7 +22,6 @@ export default (props) => {
   const fetchList = (type = "pageUp") => {
     fetchCommunityUser(httpData).then((res) => {
       const { communityOrganizationList = [] } = res;
-
       if (type === "pageUp") {
         setList([...list, ...communityOrganizationList]);
       } else {

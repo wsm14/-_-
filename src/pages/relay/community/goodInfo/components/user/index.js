@@ -3,13 +3,14 @@ import { View, Text, Image } from "@tarojs/components";
 import { fakeSubscribe } from "@/server/relay";
 import { toast } from "@/common/utils";
 export default (props) => {
-  const { data } = props;
+  const { data, shareInfo, reload } = props;
   const {
     userName,
     userProfile,
     subscribeFlag = "0",
     teamCount = 0,
     consumeCount = 0,
+    ownerId,
   } = data;
   return (
     <View className="community_card">
@@ -36,7 +37,7 @@ export default (props) => {
           <View className="community_card_icon1"></View>
           <View className="community_card_font">客服</View>
         </View>
-        <View className="community_card_iconBox">
+        <View className="community_card_iconBox" onClick={() => shareInfo()}>
           <View className="community_card_icon2"></View>
           <View className="community_card_font">朋友圈</View>
         </View>
@@ -45,7 +46,7 @@ export default (props) => {
           <View className="community_card_font">分享</View>
         </View>
       </View>
-      {subscribeFlag === "0" && (
+      {subscribeFlag === "0" ? (
         <View
           className="community_card_btn"
           onClick={(e) => {
@@ -53,11 +54,24 @@ export default (props) => {
             fakeSubscribe({
               teamUserId: ownerId,
             }).then((val) => {
-              toast("订阅成功");
-              upDateList && upDateList(item);
+              reload();
             });
           }}
         ></View>
+      ) : (
+        <View
+          className="community_card_nobtn"
+          onClick={(e) => {
+            e.stopPropagation();
+            fakeSubscribe({
+              teamUserId: ownerId,
+            }).then((val) => {
+              reload();
+            });
+          }}
+        >
+          已订阅{" "}
+        </View>
       )}
     </View>
   );

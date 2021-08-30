@@ -3,6 +3,7 @@ import Taro, { useReady, usePageScroll } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { goBack, computedSize } from "@/common/utils";
 import "./index.scss";
+import router from "@/common/router";
 
 /*
    backFlag 是否开始导航
@@ -87,7 +88,18 @@ const NavigationBar = ({
                   className={`naviton_title_backStyle ${
                     select && scroll ? "go_back_iconWhite" : "go_back_iconGreen"
                   }`}
-                  onClick={() => goBack()}
+                  onClick={() => {
+                    Taro.navigateBack({
+                      delta: 1, // 返回上一级页面
+                      success: () => {},
+                      fail: () => {
+                        router({
+                          routerName: "relayHome",
+                          args: { count: 1 },
+                        });
+                      },
+                    });
+                  }}
                 ></View>
               )}
               {title}

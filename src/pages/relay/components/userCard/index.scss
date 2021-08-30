@@ -88,10 +88,9 @@
     }
   }
   .user_card_rankBox {
-    margin: 40px 32px 0;
+    margin: 24px 32px 0;
     display: flex;
     align-items: center;
-    margin-bottom: 24px;
     .user_card_rankleft {
       display: flex;
       align-items: center;
@@ -132,6 +131,7 @@
       display: flex;
       align-items: center;
       height: 48px;
+      justify-content: flex-end;
       flex-shrink: 0;
       .user_card_buyName {
         font-size: 24px;

@@ -300,7 +300,18 @@ class Index extends Component {
               const { orderData } = this.state;
               const { orderSn } = orderData;
               fetchTest({ orderSn }, (res) => {
-                toast("支付成功");
+                fetchTest;
+                this.setState(
+                  {
+                    visible: false,
+                  },
+                  (res) => {
+                    Router({
+                      routerName: "orderDetails",
+                      args: { orderSn },
+                    });
+                  }
+                );
               });
             }}
             content={`支付后资金将进入对方账户，请确定对方信息后支付`}

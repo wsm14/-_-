@@ -65,23 +65,22 @@ page {
           color: #07c0c2;
           line-height: 24px;
         }
-        .GroupVerification_template_checkBox {
-          width: 30px;
-          height: 30px;
-          margin-left: 32px;
-        }
-        .GroupVerification_template_check {
-          background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/icon_19.png)
-            no-repeat;
-          background-size: 100% 100%;
-        }
-        .GroupVerification_template_noCheck {
-          background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/icon_20.png)
-            no-repeat;
-          background-size: 100% 100%;
-        }
       }
     }
+  }
+  .GroupVerification_template_checkBox {
+    width: 30px;
+    height: 30px;
+  }
+  .GroupVerification_template_check {
+    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/icon_19.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .GroupVerification_template_noCheck {
+    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/icon_20.png)
+      no-repeat;
+    background-size: 100% 100%;
   }
   .GroupVerification_template_content {
     padding: 32px;
@@ -130,28 +129,84 @@ page {
     }
     .GroupVerification_content_shop {
       margin: 32px 0 0;
-      display: flex;
-      align-items: center;
-      font-size: 24px;
-      .GroupVerification_content_shop1 {
-        width: 396px;
+      .GroupVerification_shop_top {
         height: 36px;
-        font-size: 24px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        .GroupVerification_shop_name {
+          max-width: 404px;
+          font-size: 24px;
+          font-weight: 400;
+          color: #333333;
+          margin-left: 12px;
+        }
+        .GroupVerification_shop_tags {
+          margin-left: auto;
+          font-size: 24px;
+          font-weight: 400;
+          color: #999999;
+        }
+      }
+      .GroupVerification_shop_collection {
+        margin-top: 18px;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 42px;
+        height: 56px;
+        .GroupVerification_shop_collectCount {
+          font-size: 24px;
+          font-weight: 400;
+          color: #333333;
+        }
+      }
+      .GroupVerification_buyCard_collection {
+        display: flex;
+        align-items: center;
+      }
+      .GroupVerification_buyCard_icon {
+        width: 56px;
+        height: 56px;
+      }
+      .GroupVerification_buyCard_remove {
+        background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_8.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .GroupVerification_buyCard_add {
+        background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_9.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .GroupVerification_buyCard_text {
+        width: 60px;
+        height: 56px;
+        font-size: 28px;
         font-weight: 400;
         color: #333333;
-        line-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-      .GroupVerification_content_shop2 {
-        margin-left: 12px;
+      .GroupVerification_shop_liner {
+        margin-left: 44px;
+        margin-top: 32px;
+        width: 580px;
+        height: 2px;
+        background: #e5e5e5;
+      }
+      .GroupVerification_shop_goods {
+        margin-left: 44px;
+        margin-top: 32px;
+        font-size: 24px;
+        height: 36px;
         color: #999999;
-      }
-      .GroupVerification_content_shop3 {
-        margin-left: auto;
-        color: #333333;
       }
     }
     .GroupVerification_content_price {
-      padding: 32px 0px;
+      padding: 0px 0px 0px 44px;
       display: flex;
       align-items: baseline;
       justify-content: space-between;
@@ -257,7 +312,9 @@ page {
         font-size: 24px;
         font-weight: 400;
         color: #999999;
-        line-height: 36px;
+        display: flex;
+        align-items: center;
+        height: 36px;
       }
       .GroupVerification_cardUser_remark {
         display: flex;
@@ -290,7 +347,7 @@ page {
     left: 0;
     background: #ffffff;
     .GroupVerification_init_vtnView {
-      width: 554px;
+      width: 688px;
       height: 80px;
       background: #07c0c2;
       border-radius: 8px;
@@ -301,5 +358,82 @@ page {
       right: 32px;
       top: 24px;
     }
+  }
+  .GroupVerification_init_toast {
+    width: 420px;
+    height: 165px;
+    background: #f5f5f5;
+    border-radius: 3px;
+    margin: 0 auto;
+    .GroupVerification_init_toastTop {
+      display: flex;
+      align-items: center;
+      padding-left: 24px;
+      height: 96px;
+      .GroupVerification_init_toastTopCount {
+        font-size: 20px;
+        font-weight: 400;
+        color: #999999;
+      }
+      .GroupVerification_init_toastTopProfile {
+        margin-left: 20px;
+        width: 48px;
+        height: 48px;
+        border-radius: 4px;
+      }
+      .GroupVerification_init_toastTopName {
+        margin-left: 12px;
+        max-width: 260px;
+      }
+    }
+    .GroupVerification_init_contents {
+      padding-left: 56px;
+      padding-right: 24px;
+      border-top: 1px solid #e5e5e5;
+      height: 68px;
+      display: flex;
+      align-items: center;
+    }
+    .GroupVerification_init_contentsName {
+      width: 299px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #333333;
+      text-align: left;
+    }
+    .GroupVerification_init_contentsgoodCount {
+      margin-left: auto;
+      width: 21px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #999999;
+    }
+  }
+  .GroupVerification_cardUser_meAddressMax::after {
+    display: inline-block;
+    content: "";
+    width: 24px;
+    height: 24px;
+    background: url(https://wechat-config.dakale.net/miniprogram/relay/icon_25.png)
+      no-repeat;
+    background-size: 100% 100%;
+    margin-left: 12px;
+    vertical-align: bottom;
+  }
+  .GroupVerification_cardUser_userAddress::after {
+    width: 56px;
+    height: 24px;
+    border-radius: 4px;
+    opacity: 0.4;
+    border: 1px solid #07c0c2;
+    display: inline-block;
+    content: "复制";
+    vertical-align: bottom;
+    font-size: 20px;
+    font-weight: 400;
+    color: #07c0c2;
+    line-height: 24px;
+    text-align: center;
+    margin-left: 12px;
   }
 }

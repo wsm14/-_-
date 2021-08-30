@@ -3,9 +3,14 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import classNames from "classnames";
 import { GOODS_BY_TYPE } from "@/relay/common/constant";
-import { fetchCommunityOrder } from "@/server/relay";
+import {
+  fetchCommunityOrder,
+  fetchVerificationGoods,
+  fetchCommunityGoods,
+} from "@/server/relay";
+import PayBean from "@/components/stopBean";
+import { backgroundObj, toast } from "@/common/utils";
 import "./index.scss";
-import { backgroundObj } from "@/common/utils";
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -17,21 +22,140 @@ class Index extends Component {
         status: 1,
       },
       orderList: [],
-      verification: null,
+      verification: {},
+      visible: false,
     };
   }
   componentWillUnmount() {}
   componentDidMount() {
     this.fetchList();
   }
+  select(item) {
+    const { verification } = this.state;
+    const { orderSn } = verification;
+    if (orderSn === item.orderSn) {
+      this.setState({
+        verification: {},
+      });
+    } else {
+      this.setState({
+        verification: { ...item },
+      });
+    }
+  }
+  changeItem(item, type = "add") {
+    const { orderSn, userIdString, organizationGoodsOrderDescObject } = item;
+    const { computedCount } = organizationGoodsOrderDescObject;
+    fetchVerificationGoods({ orderSn, userId: userIdString }).then((val) => {
+      const { count } = val;
+      if (computedCount >= count && type !== "remove") {
+        return toast("已达到最大数量");
+      } else {
+        if (type === "add") {
+          this.setState({
+            orderList: this.state.orderList.map((val) => {
+              if (val.orderSn === orderSn) {
+                return {
+                  ...val,
+                  organizationGoodsOrderDescObject: {
+                    ...organizationGoodsOrderDescObject,
+                    computedCount: computedCount + 1,
+                  },
+                };
+              } else return val;
+            }),
+          });
+        } else {
+          if (computedCount > 1) {
+            this.setState({
+              orderList: this.state.orderList.map((val) => {
+                if (val.orderSn === orderSn) {
+                  return {
+                    ...val,
+                    organizationGoodsOrderDescObject: {
+                      ...organizationGoodsOrderDescObject,
+                      computedCount: computedCount - 1,
+                    },
+                  };
+                } else {
+                  return val;
+                }
+              }),
+            });
+          } else {
+            toast("核销数量不能为0");
+          }
+        }
+      }
+    });
+  }
   fetchList() {
     const { httpData } = this.state;
     fetchCommunityOrder(httpData).then((val) => {
       const { orderList = [] } = val;
       this.setState({
-        orderList: [...this.state.orderList, ...orderList],
+        orderList: [
+          ...this.state.orderList,
+          ...orderList.map((item) => {
+            const { organizationGoodsOrderDescObject = {} } = item;
+            return {
+              ...item,
+              organizationGoodsOrderDescObject: {
+                ...organizationGoodsOrderDescObject,
+                computedCount: 1,
+              },
+            };
+          }),
+        ],
       });
     });
+  }
+  onToast() {
+    this.setState({
+      visible: true,
+    });
+  }
+  onSubmit() {
+    const { verification, httpData } = this.state;
+    const { orderSn, userIdString, organizationGoodsOrderDescObject } =
+      verification;
+    if (orderSn && organizationGoodsOrderDescObject) {
+      const { computedCount } = organizationGoodsOrderDescObject;
+      fetchCommunityGoods({
+        orderSn,
+        userId: userIdString,
+        verificationCount: computedCount,
+      }).then((val) => {
+        this.setState(
+          {
+            httpData: {
+              ...httpData,
+              page: 1,
+              limit: 10,
+            },
+            visible: false,
+            orderList: [],
+          },
+          (res) => {
+            this.fetchList();
+          }
+        );
+      });
+    } else {
+      toast("请选择核销商品");
+    }
+  }
+  onVisible() {
+    const { verification, httpData } = this.state;
+    const { orderSn, userIdString, organizationGoodsOrderDescObject } =
+      verification;
+    if (orderSn && organizationGoodsOrderDescObject) {
+      this.setState({
+        visible: true,
+      });
+    } else {
+      toast("请选择核销商品");
+    }
   }
   onReachBottom() {
     this.setState(
@@ -47,8 +171,16 @@ class Index extends Component {
     );
   } //上拉加载
   render() {
-    const { orderList, verification } = this.state;
-    console.log(verification);
+    const { orderList, verification, visible } = this.state;
+    const { organizationGoodsOrderDescObject = {} } = verification;
+    const {
+      relateOwnerProfile,
+      goodsCount,
+      goodsName,
+      relateOwnerName,
+      title,
+      computedCount,
+    } = organizationGoodsOrderDescObject;
     const orderTitle = {
       0: <View className="color3">待支付</View>,
       1: <View className="color4">已支付</View>,
@@ -82,6 +214,9 @@ class Index extends Component {
         writeContactPerson,
         writeMobile,
         remark = "",
+        computedCount,
+        relateOwnerName,
+        title,
       } = organizationGoodsOrderDescObject;
 
       return (
@@ -97,14 +232,6 @@ class Index extends Component {
               <View className="GroupVerification_template_status">
                 {orderTitle[status]}
               </View>
-              <View
-                className={classNames(
-                  "GroupVerification_template_checkBox",
-                  verification === item.orderSn
-                    ? ""
-                    : "GroupVerification_template_noCheck"
-                )}
-              ></View>
             </View>
           </View>
           <View className="GroupVerification_template_content">
@@ -114,12 +241,12 @@ class Index extends Component {
                 style={backgroundObj(relateOwnerProfile)}
               ></View>
               <View className="GroupVerification_content_username font_hide">
-                二狗烘焙（国泰科技)
+                {relateOwnerName}
               </View>
             </View>
             <View className="GroupVerification_content_goodsBox public_auto">
               <View className="GroupVerification_content_goodsleft font_hide">
-                商品标题标题标题标题标题标题
+                {title}
               </View>
               <View className="GroupVerification_content_goodsright">
                 查看 {">"}
@@ -127,21 +254,54 @@ class Index extends Component {
             </View>
             <View className="GroupVerification_content_liner"></View>
             <View className="GroupVerification_content_shop">
-              <View className="GroupVerification_content_shop1">
-                {goodsName}
+              <View
+                onClick={() => this.select(item)}
+                className="GroupVerification_shop_top"
+              >
+                <View
+                  className={classNames(
+                    "GroupVerification_template_checkBox",
+                    verification.orderSn === item.orderSn
+                      ? "GroupVerification_template_check"
+                      : "GroupVerification_template_noCheck"
+                  )}
+                ></View>
+                <View className="GroupVerification_shop_name font_hide">
+                  {goodsName}
+                </View>
+                <View className="GroupVerification_shop_tags">
+                  本次核销数量
+                </View>
               </View>
-              <View className="GroupVerification_content_shop2">
-                ×{goodsCount}
+              <View className="GroupVerification_shop_collection">
+                <View className="GroupVerification_shop_collectCount">
+                  ×{goodsCount}
+                </View>
+                <View className="GroupVerification_buyCard_collection">
+                  <View
+                    className="GroupVerification_buyCard_icon GroupVerification_buyCard_remove"
+                    onClick={() => this.changeItem(item, "remove")}
+                  ></View>
+                  <View className="GroupVerification_buyCard_text">
+                    {computedCount}
+                  </View>
+                  <View
+                    className="GroupVerification_buyCard_icon GroupVerification_buyCard_add"
+                    onClick={() => this.changeItem(item, "add")}
+                  ></View>
+                </View>
               </View>
-              <View className="GroupVerification_content_shop3">
-                ¥ {goodsPrice}
+              <View className="GroupVerification_shop_liner"></View>
+              <View className="GroupVerification_shop_goods public_auto">
+                <Text>商品总价</Text>
+                <Text>{totalFee}</Text>
               </View>
             </View>
             <View className="GroupVerification_content_price">
               <View className="GroupVerification_content_time">{payTime}</View>
               <View>
-                <Text className="font20 color2">共{goodsCount}件</Text>
-                <Text className="font28 color1 price_margin8">实收</Text>
+                <Text className="font20 color2">已团{goodsCount}件</Text>
+                <Text className="font28 color1 price_margin8">合计</Text>
                 <Text className="font28 color3 price_margin8">¥ {payFee}</Text>
               </View>
             </View>
@@ -162,12 +322,36 @@ class Index extends Component {
                   </View>
                 )}
                 <View className="GroupVerification_cardUser_userDetails">
-                  <View className="GroupVerification_cardUser_meAddressMax font_hide">
+                  <View
+                    className="GroupVerification_cardUser_meAddressMax font_hide"
+                    onClick={() => {
+                      Taro.makePhoneCall({
+                        phoneNumber: writeMobile,
+                        fail: (res) => {
+                          toast("拨打失败");
+                        },
+                        complete: (res) => {},
+                      });
+                    }}
+                  >
                     <Text className="color1">{writeContactPerson + " "}</Text>
                     <Text className="color2">{writeMobile}</Text>
                   </View>
                 </View>
-                <View className="GroupVerification_cardUser_userAddress">
+                <View
+                  className="GroupVerification_cardUser_userAddress"
+                  onClick={() =>
+                    Taro.setClipboardData({
+                      data: writeAddress,
+                      success: function (res) {
+                        toast("已复制");
+                      },
+                      fail: function (res) {
+                        toast("复制失败");
+                      },
+                    })
+                  }
+                >
                   {writeAddress}
                 </View>
                 {remark && (
@@ -184,6 +368,7 @@ class Index extends Component {
         </View>
       );
     };
+
     return (
       <View className="GroupVerification_box">
         {orderList.length === 0 && (
@@ -194,13 +379,53 @@ class Index extends Component {
             </View>
           </View>
         )}
-
+        {visible && (
+          <PayBean
+            cancel={() =>
+              this.setState({
+                visible: false,
+              })
+            }
+            visible={visible}
+            canfirm={() => this.onSubmit()}
+            canfirmText="取消"
+            cancelText="确认核销"
+          >
+            <View className="GroupVerification_init_toast">
+              <View className="GroupVerification_init_toastTop">
+                <View className="GroupVerification_init_toastTopCount">
+                  {goodsCount}
+                </View>
+                <View
+                  className="GroupVerification_init_toastTopProfile"
+                  style={backgroundObj(relateOwnerProfile)}
+                ></View>
+                <View className="GroupVerification_init_toastTopName font_hide">
+                  {relateOwnerName}
+                </View>
+              </View>
+              <View className="GroupVerification_init_contents">
+                <View className="GroupVerification_init_contentsName font_hide">
+                  {goodsName}
+                </View>
+                <View className="GroupVerification_init_contentsgoodCount">
+                  {computedCount}
+                </View>
+              </View>
+            </View>
+          </PayBean>
+        )}
         {orderList.length > 0 && (
           <View className="GroupVerification_init_box">
             {orderList.map((item) => template(item))}
-            <View className="GroupVerification_init_btn">
+            <View
+              className="GroupVerification_init_btn"
+              onClick={() => this.onVisible()}
+            >
               <View className="GroupVerification_init_vtnView public_center">
-                {verification ? "请选择本次核销的商品" : "确认核销"}
+                {Object.keys(verification).length === 0
+                  ? "请选择本次核销的商品"
+                  : "确认核销"}
               </View>
             </View>
           </View>

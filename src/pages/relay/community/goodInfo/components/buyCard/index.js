@@ -3,7 +3,7 @@ import { View, Text, Image } from "@tarojs/components";
 import { backgroundObj } from "@/common/utils";
 export default (props) => {
   const { count, data, onChange } = props;
-  const { communityOrganizationGoodsList = [] } = data;
+  const { communityOrganizationGoodsList = [], buyCount } = data;
   const shopCollect = (item) => {
     const {
       buyRule = "unlimited",
@@ -11,7 +11,6 @@ export default (props) => {
       goodsName,
       goodsImg,
       price,
-      buyCount,
     } = item;
     return (
       <View className="community_buyCard_box">

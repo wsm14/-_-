@@ -83,6 +83,7 @@ export const goBack = function (fn) {
     success: () => {
       fn && fn();
     },
+    
   });
 };
 //返回 上一页

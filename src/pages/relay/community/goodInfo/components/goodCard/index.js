@@ -8,8 +8,8 @@ export default (props) => {
     communityStatus,
     endTime,
     createTime,
-    viewCount,
     buyCount = "0",
+    viewCount,
   } = data;
   const templateType = {
     self: "自提",
@@ -31,8 +31,8 @@ export default (props) => {
         )}
       </View>
       <View className="community_goodCard_count">
-        {viewCount && viewCount + "人查看"}{" "}
-        {buyCount !== "0" && `｜ ${buyCount}次跟团`}
+        {viewCount} 人查看
+        {buyCount !== "0" ? `｜ ${buyCount}次跟团` : null}
       </View>
       {/* <View className="community_goodCard_coby public_center">复制该团</View> */}
     </View>

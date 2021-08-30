@@ -57,6 +57,21 @@
         no-repeat;
       background-size: 100% 100%;
     }
+    .community_card_nobtn {
+      position: absolute;
+      right: 32px;
+      top: 52px;
+      width: 90px;
+      height: 32px;
+      background: #07c0c2;
+      border-radius: 3px;
+      opacity: 0.4;
+      font-size: 19px;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 32px;
+      text-align: center;
+    }
   }
   .community_card_collected {
     padding-left: 398px;
@@ -312,9 +327,8 @@
       .user_card_contentBottom {
         padding-top: 8px;
         display: flex;
-        align-items: baseline;
         .user_card_bottom1 {
-          max-width: 533px;
+          width: 533px;
           font-size: 20px;
           font-weight: 400;
           color: #333333;
@@ -373,7 +387,7 @@
     align-items: center;
   }
   .community_payCard_btn {
-    width: 606px;
+    width: 686px;
     height: 80px;
     background: #07c0c2;
     border-radius: 8px;

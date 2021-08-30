@@ -10,6 +10,7 @@ export default (props) => {
     content,
     cancelText,
     canfirmText,
+    children,
     visible = false,
   } = props;
   const [animate, setAnimated] = useState(null);
@@ -55,9 +56,7 @@ export default (props) => {
     <View className="share">
       <View animation={animate} className="stopBean_prompts">
         <View className="prompts_title">温馨提示</View>
-        <View className="prompts_context">
-          {content ? content : "观看完整视频可获得奖励"}
-        </View>
+        <View className="prompts_context">{children ? children : content}</View>
         <View className="prompts_btn">
           <ButtonView>
             <View className="prompts_btn_out" onClick={() => onClose()}>
