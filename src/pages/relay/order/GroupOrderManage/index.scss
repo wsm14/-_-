@@ -52,6 +52,9 @@
           font-size: 24px;
           font-weight: 400;
           color: #999999;
+          &.pay {
+            color: #07c0c2;
+          }
         }
       }
       .order_manage_info {
@@ -224,14 +227,6 @@
                 }
                 .order_user_remark {
                   @include flexCenterA;
-                  &::after {
-                    content: "";
-                    display: inline-block;
-                    @include whEqual(24px);
-                    background: url("https://wechat-config.dakale.net/miniprogram/relay/edit_low.png");
-                    background-size: 100%;
-                    margin-left: 12px;
-                  }
                   Text {
                     flex: 1;
                     color: #ef476f;
@@ -248,10 +243,19 @@
                   line-height: 36px;
                 }
                 .order_user_pop {
+                  @include flexCenterA;
                   margin-top: 12px;
                   font-size: 24px;
                   font-weight: 400;
                   color: #333333;
+                  &::after {
+                    content: "";
+                    display: inline-block;
+                    @include whEqual(24px);
+                    background: url("https://wechat-config.dakale.net/miniprogram/relay/phone.png");
+                    background-size: 100%;
+                    margin-left: 12px;
+                  }
                 }
               }
             }

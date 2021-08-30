@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Taro, { useReachBottom, usePullDownRefresh } from "@tarojs/taro";
+import Taro, {
+  useRouter,
+  useReachBottom,
+  usePullDownRefresh,
+} from "@tarojs/taro";
+import Router from "@/common/router";
+import { GROUP_ORDER_STATUS, GOODS_BY_TYPE } from "@/relay/common/constant";
 import { View, Text } from "@tarojs/components";
 import { fetchCommunityOrder } from "@/server/relay";
 import TabPane from "@/relay/components/TabPane";
@@ -10,9 +16,16 @@ import "./index.scss";
  * 团长订单管理
  */
 export default ({}) => {
+  // 路由获取参数
+  const routeParams = useRouter().params;
+  /**
+   * communityOrganizationId 团购id
+   */
+  const { communityOrganizationId = "" } = routeParams;
+
   // 请求参数
   const [pages, setPages] = useState({
-    tabKey: "",
+    status: "", // 状态 1-已支付 3-已完成
     page: 1,
     limit: 10,
   });
@@ -46,11 +59,16 @@ export default ({}) => {
 
   // 获取列表参数
   const fetchGetList = () => {
-    fetchCommunityOrder(pages).then((res) => {
+    fetchCommunityOrder({ ...pages, communityOrganizationId }).then((res) => {
       const { orderList } = res;
       setDataList((old) => [...old, ...orderList]);
     });
     Taro.stopPullDownRefresh(); // 停止刷新
+  };
+
+  // 拨打电话
+  const handlePhone = (phoneNumber) => {
+    Taro.makePhoneCall({ phoneNumber });
   };
 
   const tab_select_arr = [
@@ -59,105 +77,155 @@ export default ({}) => {
     { label: "核销", value: 3 },
   ];
 
+  // 跳转页面
+  const goPage = (routerName, args = {}) => {
+    Router({
+      routerName,
+      args,
+    });
+  };
+
   return (
     <View className="group_order_manage">
       {/* tab 选择 */}
       <TabPane
         list={tab_select_arr}
         className="group_order_tab"
-        onClick={(key) => console.log({ communityStatus: key })}
+        onClick={(key) => getNewData({ status: key })}
       ></TabPane>
       <View className="order_manage_group">
-        <View className="order_manage_cell">
-          <View className="order_manage_head">
-            <View className="order_manage_number">
-              跟团号：<Text>1</Text>
-            </View>
-            <Text className="order_manage_status">已取消</Text>
-          </View>
-          <View className="order_manage_info">
-            <View className="order_info_head">
-              <View className="order_info_shop">
-                <View
-                  className="order_info_img"
-                  style={{
-                    backgroundImage: `url(https://wechat-config.dakale.net/miniprogram/relay/icon_13.png)`,
-                  }}
-                ></View>
-                <View className="order_info_shopName">
-                  二狗烘焙（国泰科技)二狗烘焙（国泰科技)二狗烘焙（国泰科技)二狗烘焙（国泰科技)二狗烘焙（国泰科技)二狗烘焙（国泰科技)二狗烘焙（国泰科技)
+        {dataList.map((item) => {
+          const {
+            organizationGoodsOrderDescObject: orginObj,
+            payTime,
+            status,
+            totalFee,
+          } = item;
+          const { communityOrganizationId, ownerId } = orginObj;
+          const params = { communityOrganizationId, ownerId };
+          return (
+            <View className="order_manage_cell">
+              <View className="order_manage_head">
+                <View className="order_manage_number">
+                  跟团号：<Text>{orginObj.organizationNumber}</Text>
                 </View>
+                <Text
+                  className={`order_manage_status ${status == 1 ? "pay" : ""}`}
+                >
+                  {GROUP_ORDER_STATUS[status]}
+                </Text>
               </View>
-              <View className="order_info_title">
-                <View className="order_title">
-                  商品标题标题标题标题标题标题商品标题标题标题标题标题标题
-                </View>
-                <View className="order_title_footer">查看</View>
-              </View>
-            </View>
-            <View className="order_info_goods">
-              <View className="order_goods_cell">
-                <View className="order_goods_name">
-                  商品名称商品名称商品名称商品
-                </View>
-                <View className="order_goods_number">x1</View>
-                <View className="order_goods_price">¥ 69</View>
-              </View>
-            </View>
-            <View className="order_info_pay">
-              <View className="order_pay_time">2021/8/29 11:08</View>
-              <View className="order_pay_footer">
-                <Text className="order_pay_total">共1件</Text>
-                <View className="order_pay_price">
-                  实收<Text className="order_price_num">66.12</Text>
-                </View>
-              </View>
-            </View>
-            <View className="order_info_user">
-              <View className="order_user_head">顾客自提订单</View>
-              <View className="order_user_content">
-                <View className="order_user_cell">
-                  <View className="order_user_title">
-                    <View className="order_ui_user"></View>
-                    <View className="order_user_name">用户昵称昵称昵…</View>
-                    <View className="order_user_phone">18679068769</View>
+              <View className="order_manage_info">
+                <View className="order_info_head">
+                  <View className="order_info_shop">
+                    <View
+                      className="order_info_img"
+                      style={{
+                        backgroundImage: `url(${orginObj.relateOwnerProfile})`,
+                      }}
+                    ></View>
+                    <View className="order_info_shopName">
+                      {orginObj.relateOwnerName}
+                    </View>
                   </View>
-                  <View className="order_user_info">
-                    <View className="order_user_cont">
-                      浙江省杭州市萧山区宁卫街道萧山区宁卫街道区宁卫街道
+                  <View className="order_info_title">
+                    <View className="order_title">{orginObj.title}</View>
+                    <View
+                      className="order_title_footer"
+                      onClick={() => goPage("communityGoods", params)}
+                    >
+                      查看
                     </View>
                   </View>
                 </View>
-                <View className="order_user_cell">
-                  <View className="order_user_title">
-                    <View className="order_ui_shop"></View>
-                    <View className="order_address_name">
-                      国泰科技大厦国泰科技大厦国泰科技大厦国泰科技大厦国泰科技大厦
+                <View className="order_info_goods">
+                  <View className="order_goods_cell">
+                    <View className="order_goods_name">
+                      {orginObj.goodsName}
                     </View>
-                  </View>
-                  <View className="order_user_info">
-                    <View className="order_user_cont">
-                      浙江省杭州市萧山区宁卫街道萧山区宁卫街道区宁卫街道
+                    <View className="order_goods_number">
+                      x{orginObj.goodsCount}
                     </View>
-                    <View className="order_user_pop">
-                      联系人：刘 187****6767
+                    <View className="order_goods_price">
+                      ¥ {orginObj.goodsPrice}
                     </View>
                   </View>
                 </View>
-                <View className="order_user_cell">
-                  <View className="order_user_title">
-                    <View className="order_ui_order"></View>
-                    <View className="order_user_remark">
-                      团长备注:<Text>空间规划法规</Text>
+                <View className="order_info_pay">
+                  <View className="order_pay_time">{payTime}</View>
+                  <View className="order_pay_footer">
+                    <Text className="order_pay_total">
+                      共{orginObj.goodsCount}件
+                    </Text>
+                    <View className="order_pay_price">
+                      实收<Text className="order_price_num">{totalFee}</Text>
                     </View>
                   </View>
                 </View>
+                <View className="order_info_user">
+                  <View className="order_user_head">
+                    {GOODS_BY_TYPE[orginObj.logisticsType]}订单
+                  </View>
+                  <View className="order_user_content">
+                    <View className="order_user_cell">
+                      <View className="order_user_title">
+                        <View className="order_ui_user"></View>
+                        <View className="order_user_name">
+                          {orginObj.writeContactPerson}
+                        </View>
+                        <View
+                          className="order_user_phone"
+                          onClick={() => handlePhone(orginObj.writeMobile)}
+                        >
+                          {orginObj.writeMobile}
+                        </View>
+                      </View>
+                      <View className="order_user_info">
+                        <View className="order_user_cont">
+                          {orginObj.writeAddress}
+                        </View>
+                      </View>
+                    </View>
+                    {orginObj.logisticsType === "self" && (
+                      <View className="order_user_cell">
+                        <View className="order_user_title">
+                          <View className="order_ui_shop"></View>
+                          <View className="order_address_name">
+                            {orginObj.liftingName}
+                          </View>
+                        </View>
+                        <View className="order_user_info">
+                          <View className="order_user_cont">
+                            {orginObj.liftingAddress}
+                          </View>
+                          <View
+                            className="order_user_pop"
+                            onClick={() => handlePhone(orginObj.liftingMobile)}
+                          >
+                            联系人： {orginObj.liftingContentPerson}{" "}
+                            {orginObj.liftingMobile}
+                          </View>
+                        </View>
+                      </View>
+                    )}
+                    {orginObj.remark && (
+                      <View className="order_user_cell">
+                        <View className="order_user_title">
+                          <View className="order_ui_order"></View>
+                          <View className="order_user_remark">
+                            团员备注:<Text>{orginObj.remark}</Text>
+                          </View>
+                        </View>
+                      </View>
+                    )}
+                  </View>
+                </View>
+                {/* 底部工具栏 */}
+                <OrderFooterTools data={item}></OrderFooterTools>
               </View>
             </View>
-            {/* 底部工具栏 */}
-            <OrderFooterTools></OrderFooterTools>
-          </View>
-        </View>
+          );
+        })}
       </View>
     </View>
   );

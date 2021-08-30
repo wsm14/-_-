@@ -7,8 +7,7 @@ import { fetchOrderClose } from "@/server/relay";
 import "./index.scss";
 
 export default ({ data = {} }) => {
-  const { orderSn, organizationGoodsOrderDescObject = {} } = data;
-  const { communityOrganizationId, ownerId } = organizationGoodsOrderDescObject;
+  const { orderSn } = data;
 
   const toolsArr = [
     {
@@ -17,14 +16,14 @@ export default ({ data = {} }) => {
       onClick: (e) => {
         e.stopPropagation();
         Router({
-          routerName: "communityGoods",
-          args: { communityOrganizationId, ownerId },
+          routerName: "orderDetails",
+          args: { orderSn },
         });
       },
     },
     {
       name: "退款",
-      show: true,
+      show: false,
       onClick: (e) => {
         e.stopPropagation();
         Taro.showModal({
@@ -33,9 +32,9 @@ export default ({ data = {} }) => {
           content: `确认退款该订单？`,
           success: function (res) {
             if (res.confirm) {
-              fetchOrderClose({ orderSn, status: "2" }, () => {
-                toast("退款成功");
-              });
+              // fetchOrderClose({ orderSn, status: "2" }, () => {
+              //   toast("退款成功");
+              // });
             }
           },
         });
