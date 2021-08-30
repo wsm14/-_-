@@ -34,6 +34,9 @@ export const GOODS_STATUS_TYPE = {
   end: "已结束",
 };
 
+// 团购订单状态
+export const GROUP_ORDER_STATUS = [false, "已支付", false, "已完成"];
+
 export const ORDER_STATUS = {
   a: "待支付",
   b: "已支付",
