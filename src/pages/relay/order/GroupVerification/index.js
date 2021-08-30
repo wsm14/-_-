@@ -181,6 +181,7 @@ class Index extends Component {
       relateOwnerName,
       title,
       computedCount,
+      organizationNumber,
     } = organizationGoodsOrderDescObject;
     const orderTitle = {
       0: <View className="color3">待支付</View>,
@@ -218,6 +219,7 @@ class Index extends Component {
         computedCount,
         relateOwnerName,
         title,
+        organizationNumber,
       } = organizationGoodsOrderDescObject;
 
       return (
@@ -226,7 +228,7 @@ class Index extends Component {
             <View className="GroupVerification_template_left">
               <View className="GroupVerification_template_count">跟团号：</View>
               <View className="GroupVerification_template_num">
-                {goodsCount}
+                {organizationNumber}
               </View>
             </View>
             <View className="GroupVerification_template_right">
