@@ -1,5 +1,6 @@
 .share_layer_info {
   position: relative;
+  z-index: 9999;
   .share_layer_infoBox {
     position: fixed;
     right: 0;

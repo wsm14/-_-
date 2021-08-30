@@ -58,7 +58,7 @@ class Index extends Component {
         <View className="relay_box_home">
           <View className="relay_box">
             <Home index={count}></Home>
-            <OrderList index={count}></OrderList>
+            <OrderList index={count} navHeight={navHeight}></OrderList>
             {/* 个人中心 */}
             <Personal
               index={count}
