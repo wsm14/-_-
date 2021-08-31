@@ -50,7 +50,7 @@ export default ({
     <Image
       lazyLoad
       mode={mode}
-      src={img.url || img || defaultImg}
+      src={img.url || img}
       className={`dakale_wx_cell_img ${className} ${
         !loading.includes(index) ? "loading" : ""
       }`}

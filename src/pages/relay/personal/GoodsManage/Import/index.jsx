@@ -6,6 +6,7 @@ import {
   fetchGoodsManageNotList,
   fetchGoodsManageStoreImport,
 } from "@/server/relay";
+import ImageShow from "@/relay/components/ImageShow";
 import FooterFixed from "@/relay/components/FooterFixed";
 import "./index.scss";
 
@@ -68,7 +69,11 @@ export default () => {
               className="gm_goods_cell"
               onClick={() => setSelectId(item.communityOrganizationGoodsId)}
             >
-              <View className="gm_goods_img"></View>
+              <ImageShow
+                className="gm_goods_img dakale_nullImage"
+                width={120}
+                src={item?.communityGoodsDescObject?.img?.split(",")[0] || [""]}
+              ></ImageShow>
               <View className="gm_goods_info">
                 <View className="gm_goods_head">
                   <View className="gm_goods_name">{item.goodsName}</View>

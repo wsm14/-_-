@@ -33,6 +33,17 @@ export const fetchTeamPlayer = (data, fn) => {
 };
 // 个人中心 - 我的团员
 
+export const fetchGoodsManageList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/goods/listCommunityCommonGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 商品库 - 商品列表
+
 export const fetchGoodsManageNotCount = (data = {}, fn) => {
   return httpGet(
     {
