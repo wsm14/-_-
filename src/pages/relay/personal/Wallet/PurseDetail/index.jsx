@@ -38,10 +38,16 @@ export default () => {
       <View className="purseDetail_group">
         {dataList.map((i) => (
           <View className="purseDetail_cell">
-            <View className="purseDetail_cell_img"></View>
+            <View
+              className="purseDetail_cell_img"
+              style={{ backgroundImage: `url(${i.detailImg})` }}
+            ></View>
             <View className="purseDetail_cell_info">
               <View className="purseDetail_cell_head">
-                <View className="purseDetail_cell_title">{i.detailTitle}</View>
+                <View className="purseDetail_cell_title">
+                  {i.detailTitle}
+                  {i.detailContent ? `(${i.detailContent})` : ""}
+                </View>
                 <View className="purseDetail_cell_price">
                   {i.detailType === "add" ? "+" : "-"}
                   {i.cash}
