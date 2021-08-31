@@ -110,7 +110,17 @@ class Index extends Component {
     const { orderInfo } = this.state;
     const { orderSn } = orderInfo;
     fetchCommunityOrderQcode({ orderSn }).then((val) => {
-      console.log(val);
+      const { verfivationImage } = val;
+      this.setState(
+        {
+          verfivationImage: verfivationImage,
+        },
+        (res) => {
+          this.setState({
+            verfivationVisible: true,
+          });
+        }
+      );
     });
   }
   onShareAppMessage(res) {
@@ -199,11 +209,24 @@ class Index extends Component {
           bottomFlag
         ></ShareInfo>
         {verfivationVisible && (
-          <View catchMove className="animated  fadeIn  order_verfation_infoBox">
-            <View className="order_verfation_box">
+          <View
+            catchMove
+            className="animated  fadeIn  order_verfation_infoBox"
+            onClick={(e) => {
+              e.stopPropagation();
+              this.setState({
+                verfivationVisible: false,
+              });
+            }}
+          >
+            <View
+              className="order_verfation_box"
+              onClick={(e) => e.stopPropagation()}
+            >
               <View
                 className="order_verfation_close"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   this.setState({
                     verfivationVisible: false,
                   });
