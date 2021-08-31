@@ -14,7 +14,7 @@ export default ({ userInfo }) => {
 
   const toolsArr = [
     {
-      leble: `￥${userInfo.settlerPrice || 0}`,
+      leble: `￥${userInfo.cash || 0}`,
       icon: "tools_wallet",
       onClick: () => goPage("purse"),
     },
