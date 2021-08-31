@@ -19,7 +19,7 @@ export default () => {
     fetchGetList();
   }, [pages]);
 
-  // 下拉加载
+  // 上拉加载
   useReachBottom(() => {
     setPages({ ...pages, page: pages.page + 1 });
   });

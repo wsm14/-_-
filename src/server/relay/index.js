@@ -55,6 +55,17 @@ export const fetchGoodsManageNotList = (data = {}, fn) => {
 };
 // 商品库 - 未导入商品库列表
 
+export const fetchGoodsManageStoreImport = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/goods/introductionGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 商品库 - 导入商品库
+
 export const fetchPurseDetail = (data = {}, fn) => {
   return httpGet(
     {

@@ -1,5 +1,101 @@
 @import "@/assets/css/global.scss";
 
-.GoodsManageList_content{
-  
+.GoodsManageList_content {
+  .gm_group {
+    padding: 32px;
+    .gm_goods_cell {
+      @include flexCenterA;
+      padding: 32px;
+      border-radius: 12px;
+      background: #ffffff;
+      & + .gm_goods_cell {
+        margin-top: 24px;
+      }
+      .gm_goods_img {
+        width: 120px;
+        height: 120px;
+        background: #f5f5f5;
+        border-radius: 12px;
+        margin-right: 16px;
+      }
+      .gm_goods_info {
+        flex: 1;
+        overflow: hidden;
+        .gm_goods_head {
+          @include flexCenterA;
+          .gm_goods_name {
+            @include fontHideOnly;
+            flex: 1;
+            font-size: 28px;
+            font-weight: 600;
+            color: #333333;
+            line-height: 28px;
+          }
+          .gm_goods_select {
+            @include whEqual(36px);
+            background-image: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/no_select.png");
+            background-size: 100%;
+            margin-left: 32px;
+            &.select {
+              background-image: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/gc_select2.png");
+            }
+          }
+        }
+
+        .gm_goods_num {
+          margin-top: 12px;
+          font-size: 24px;
+          font-weight: 400;
+          color: #999999;
+        }
+        .gm_goods_footer {
+          @include flexCenterA;
+          margin-top: 12px;
+          .gm_goods_price {
+            flex: 1;
+            font-size: 32px;
+            font-weight: 600;
+            color: #ef476f;
+            &::before {
+              content: "¥ ";
+              font-size: 20px;
+            }
+          }
+          .gm_goods_btn {
+            display: flex;
+            .gm_goods_tools {
+              @include flexCenter;
+              height: 40px;
+              padding: 0 14px;
+              border-radius: 4px;
+              border: 1px solid #b5b5b5;
+              font-size: 24px;
+              font-weight: 400;
+              color: #666666;
+              & + .gm_goods_tools {
+                margin-left: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .gm_goods_null {
+    margin-top: 56px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    text-align: center;
+    &::before {
+      content: "";
+      display: block;
+      margin: 0 auto;
+      @include whEqual(300px);
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/goods_null.png")
+        no-repeat;
+      background-size: 100%;
+      margin-bottom: 32px;
+    }
+  }
 }

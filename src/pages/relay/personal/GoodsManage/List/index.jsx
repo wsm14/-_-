@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { useRouter, useDidShow } from "@tarojs/taro";
+import React, { useState, useEffect } from "react";
+import { useRouter, useDidShow, useReachBottom } from "@tarojs/taro";
 import Router from "@/common/router";
 import { navigatePostBack } from "@/relay/common/hooks";
 import { View, Button, Text } from "@tarojs/components";
 import { fetchLiftingCabinetList } from "@/server/relay";
 import Head from "./components/Head";
-import ImageShow from "@/relay/components/ImageShow";
 import FooterFixed from "@/relay/components/FooterFixed";
 import "./index.scss";
 
@@ -20,7 +19,12 @@ export default () => {
    */
   const { mode = "list", liftingCabinets } = routeParams;
 
-  const [list, setList] = useState([]);
+  // 请求参数
+  const [pages, setPages] = useState({
+    page: 1,
+    limit: 10,
+  });
+  const [list, setList] = useState([]); // 列表数据
   const [selectId, setSelectId] = useState([]);
 
   useDidShow(() => {
@@ -28,10 +32,14 @@ export default () => {
     setSelectId(liftingCabinets ? liftingCabinets.split(",") : []);
   });
 
-  // 保存事件
-  const handleSaveData = () => {
-    navigatePostBack({ liftingCabinets: selectId });
-  };
+  useEffect(() => {
+    fetchGetList();
+  }, [pages]);
+
+  // 上拉加载
+  useReachBottom(() => {
+    setPages({ ...pages, page: pages.page + 1 });
+  });
 
   // 获取选择列表
   const fetchGetList = () => {
@@ -41,9 +49,63 @@ export default () => {
     });
   };
 
+  // 保存事件
+  const handleSaveData = () => {
+    navigatePostBack({ liftingCabinets: selectId });
+  };
+
   return (
     <View className="GoodsManageList_content">
       <Head></Head>
+      <View className="gm_group">
+        <View className="gm_goods_cell">
+          <View className="gm_goods_img"></View>
+          <View className="gm_goods_info">
+            <View className="gm_goods_head">
+              <View className="gm_goods_name">
+                商品名称商品商品名称商品名称名名称名商品名称商品名称名名称名商品名称商品名称名名称名
+              </View>
+              <View className="gm_goods_select select"></View>
+            </View>
+            <View className="gm_goods_num">库存 不限</View>
+            <View className="gm_goods_footer">
+              <View className="gm_goods_price">100</View>
+              <View className="gm_goods_btn">
+                <View className={`gm_goods_tools`} onClick={() => {}}>
+                  编辑
+                </View>
+                <View className={`gm_goods_tools`} onClick={() => {}}>
+                  删除
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View className="gm_goods_cell">
+          <View className="gm_goods_img"></View>
+          <View className="gm_goods_info">
+            <View className="gm_goods_head">
+              <View className="gm_goods_name">
+                商品名称商品商品名称商品名称名名称名商品名称商品名称名名称名商品名称商品名称名名称名
+              </View>
+              <View className="gm_goods_select select"></View>
+            </View>
+            <View className="gm_goods_num">库存 不限</View>
+            <View className="gm_goods_footer">
+              <View className="gm_goods_price">100</View>
+              <View className="gm_goods_btn">
+                <View className={`gm_goods_tools`} onClick={() => {}}>
+                  编辑
+                </View>
+                <View className={`gm_goods_tools`} onClick={() => {}}>
+                  删除
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View className="gm_goods_null">暂无商品，快去添加商品吧</View>
     </View>
   );
 };
