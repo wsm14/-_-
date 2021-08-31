@@ -109,12 +109,28 @@ class Index extends Component {
     fetchCommunityUser(httpData, (res) => {
       const { communityOrganizationList = [] } = res;
       this.setState({
-        communityOrganizationList: communityOrganizationList.map((item) => {
-          return { ...item, subscribeFlag: "1" };
-        }),
+        communityOrganizationList: [
+          ...this.state.communityOrganizationList,
+          ...communityOrganizationList.map((item) => {
+            return { ...item, subscribeFlag: "1" };
+          }),
+        ],
       });
     });
   }
+  onReachBottom() {
+    this.setState(
+      {
+        httpData: {
+          ...this.state.httpData,
+          page: this.state.httpData.page + 1,
+        },
+      },
+      (res) => {
+        this.fecthDetails();
+      }
+    );
+  } //上拉加载
 
   render() {
     const {

@@ -6,7 +6,7 @@ import Delivery from "./components/Delivery";
 import GoodsCard from "./components/goodsCard";
 import OrderCard from "./components/orderSnDetails";
 import Collect from "./components/collectCard";
-import { fetchOrderDetail } from "@/server/relay";
+import { fetchOrderDetail, fetchCommunityOrderQcode } from "@/server/relay";
 import StopBean from "@/components/stopBean";
 import { goods } from "@/api/api";
 import { httpPost } from "@/api/newRequest";
@@ -15,6 +15,7 @@ import ShareInfo from "@/relay/components/shareInfo";
 import { getShareInfo } from "@/server/common";
 import { loginStatus } from "@/common/utils";
 import { handlePayWechat } from "@/relay/common/hooks";
+import ImageShow from "@/relay/components/ImageShow";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -27,6 +28,8 @@ class Index extends Component {
       closeVisible: false,
       shareData: {},
       visible: false,
+      verfivationVisible: false,
+      verfivationImage: null,
     };
   }
   componentWillUnmount() {}
@@ -103,6 +106,13 @@ class Index extends Component {
       });
     });
   }
+  fetchOrderQcode() {
+    const { orderInfo } = this.state;
+    const { orderSn } = orderInfo;
+    fetchCommunityOrderQcode({ orderSn }).then((val) => {
+      console.log(val);
+    });
+  }
   onShareAppMessage(res) {
     const { shareData } = this.state;
     const { title, miniProgramUrl, frontImage } = shareData;
@@ -126,6 +136,8 @@ class Index extends Component {
       closeVisible,
       shareData,
       visible,
+      verfivationVisible,
+      verfivationImage,
     } = this.state;
     return (
       <View className="order_detailsPage_box">
@@ -141,7 +153,10 @@ class Index extends Component {
             data={orderInfo}
           ></Collect>
         )}
-        <OrderCard data={orderInfo}></OrderCard>
+        <OrderCard
+          fetchOrderQcode={this.fetchOrderQcode.bind(this)}
+          data={orderInfo}
+        ></OrderCard>
         {status === "0" && (
           <View
             className="detailPges_order_close public_center"
@@ -183,7 +198,26 @@ class Index extends Component {
           data={shareData}
           bottomFlag
         ></ShareInfo>
-        
+        {verfivationVisible && (
+          <View catchMove className="animated  fadeIn  order_verfation_infoBox">
+            <View className="order_verfation_box">
+              <View
+                className="order_verfation_close"
+                onClick={() => {
+                  this.setState({
+                    verfivationVisible: false,
+                  });
+                }}
+              ></View>
+              <View className="order_verfation_title">
+                请出示给团长，进行扫码核销
+              </View>
+              <View className="order_verfation_code">
+                <ImageShow width={192} src={verfivationImage}></ImageShow>
+              </View>
+            </View>
+          </View>
+        )}
       </View>
     );
   }

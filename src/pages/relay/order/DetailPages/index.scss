@@ -10,6 +10,48 @@ page {
   background: #f5f5f5;
   padding-bottom: 188px;
   color: #ffffff;
+  .order_verfation_infoBox {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+  }
+
+  .order_verfation_box {
+    width: 400px;
+    height: 382px;
+    background: #ffffff;
+    border-radius: 10px;
+    position: relative;
+    .order_verfation_close {
+      position: absolute;
+      width: 29px;
+      height: 29px;
+      top: 16px;
+      right: 26px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/icon_22.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .order_verfation_title {
+      padding-top: 48px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 500;
+      color: #333333;
+      line-height: 38px;
+    }
+    .order_verfation_code {
+      margin: 32px auto 0;
+      text-align: center;
+    }
+  }
   .detailPges_order_collect {
     margin: 24px 32px 0;
     background: #ffffff;

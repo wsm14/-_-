@@ -100,12 +100,20 @@ export default (props) => {
               )}
               {consumerRecordList.length > 0 &&
                 consumerRecordList.map((val = {}, index) => {
-                  const { profile, userName, payTime, goodsInfo, goodsCount } =
-                    val;
+                  const {
+                    profile,
+                    userName,
+                    communityNumber,
+                    payTime,
+                    goodsInfo,
+                    goodsCount,
+                  } = val;
                   return (
                     <View className="user_card_rankBox">
                       <View className="user_card_rankleft font_hide">
-                        <View className="user_card_ranknum">{index}</View>
+                        <View className="user_card_ranknum">
+                          {communityNumber}
+                        </View>
                         <View className="user_card_rankProfile user_card_radius">
                           <Image
                             className="user_card_image"
@@ -124,7 +132,9 @@ export default (props) => {
                         <View className="user_card_buyName  font_hide">
                           {goodsInfo}
                         </View>
-                        <View className="user_card_buyPrice">{goodsCount}</View>
+                        <View className="user_card_buyPrice">
+                          +{goodsCount}
+                        </View>
                       </View>
                     </View>
                   );

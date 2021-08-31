@@ -6,7 +6,7 @@ import Router from "@/common/router";
 import { backgroundObj } from "@/common/utils";
 
 export default (props) => {
-  const { data = {} } = props;
+  const { data = {}, fetchOrderQcode } = props;
   const {
     orderSn,
     communityOrganizationGoods = {},
@@ -29,7 +29,10 @@ export default (props) => {
     <View className="detailPges_order_snBox">
       <View className="detailPges_order_snTitle public_auto">
         <View className="font32 color1 bold">订单信息</View>
-        <View className="detailPges_order_snType2 color2 font24">
+        <View
+          className="detailPges_order_snType2 color2 font24"
+          onClick={() => fetchOrderQcode()}
+        >
           生成核销码
         </View>
       </View>

@@ -5,7 +5,7 @@ import { GOODS_BY_TYPE } from "@/relay/common/constant";
 import { backgroundObj } from "@/common/utils";
 import Router from "@/common/router";
 export default (props) => {
-  const { data = {}, shareInfo } = props;
+  const { data = {}, shareInfo, fetchOrderQcode } = props;
   const { communityOrganizationGoods = {} } = data;
   const { communityOrganizationId, relateOwnerId } = communityOrganizationGoods;
   const list = [

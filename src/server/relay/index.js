@@ -372,7 +372,7 @@ export const fetchOrganizationShare = (data, fn) => {
     (res) => fn && fn(res)
   );
 };
-
+//添加观看人数
 export const fetchUserCenter = (data, fn) => {
   return httpGet(
     {
@@ -382,3 +382,14 @@ export const fetchUserCenter = (data, fn) => {
     (res) => fn && fn(res)
   );
 };
+//查看他人主页
+export const fetchCommunityOrderQcode = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/order/getCommunityOrderQcode",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//查询核销码
