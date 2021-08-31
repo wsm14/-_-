@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Taro from "@tarojs/taro";
 import Router from "@/common/router";
 import { View, Button } from "@tarojs/components";
 import "./index.scss";
@@ -16,11 +15,12 @@ export default ({ tabbarChange }) => {
   };
 
   const toolsArr = [
-    // {
-    //   leble: "商品库",
-    //   icon: "tools_menu",
-    //   show: !groupTools,
-    // },
+    {
+      leble: "商品库",
+      icon: "tools_menu",
+      show: !groupTools, // 团长
+      onClick: () => goPage("goodsManageList"),
+    },
     {
       leble: "订单管理",
       icon: "tools_ordermg",
@@ -30,13 +30,13 @@ export default ({ tabbarChange }) => {
     {
       leble: "商品核销",
       icon: "tools_code",
-      show: groupTools,
+      show: !groupTools, // 团长
       onClick: () => goPage("groupOrderVerification"),
     },
     {
       leble: "自提点管理",
       icon: "tools_shop",
-      show: !groupTools,
+      show: !groupTools, // 团长
       onClick: () => goPage("selfLiftingPointList", { mode: "list" }),
     },
     {
@@ -48,7 +48,7 @@ export default ({ tabbarChange }) => {
     {
       leble: "我的订单",
       icon: "tools_order",
-      show: groupTools,
+      show: groupTools, // 团员
       onClick: () => tabbarChange(2),
     },
     {

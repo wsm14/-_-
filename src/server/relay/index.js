@@ -31,7 +31,51 @@ export const fetchTeamPlayer = (data, fn) => {
     (res) => fn && fn(res)
   );
 };
-// 个人中心 - 我的团圆
+// 个人中心 - 我的团员
+
+export const fetchGoodsManageNotCount = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/goods/countCommunityOrganizationGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 商品库 - 未导入商品库统计
+
+export const fetchGoodsManageNotList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/goods/listCommunityOrganizationGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 商品库 - 未导入商品库列表
+
+export const fetchGoodsManageStoreImport = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/goods/introductionGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 商品库 - 导入商品库
+
+export const fetchPurseDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/bean/direct/detail/listIncomeBeanDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 个人中心 - 钱包 - 资产明细
 
 export const fetchLiftingCabinetCreate = (data, fn) => {
   return httpPost(

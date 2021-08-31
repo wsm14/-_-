@@ -43,7 +43,7 @@ export default () => {
 
   // 获取列表参数
   const fetchGetList = () => {
-    fetchTeamPlayer({ ...pages }).then((res) => {
+    fetchTeamPlayer(pages).then((res) => {
       const { teamList } = res;
       setDataList((old) => [...old, ...teamList]);
     });

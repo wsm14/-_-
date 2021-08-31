@@ -79,6 +79,7 @@ const GroupCreate = () => {
       liftingCabinets = [],
       customerWriteInfo = [],
       communityGoodsDescObject = [],
+      communityOrganizationGoodsId,
       ...other
     } = formData;
     const { title, ...oval } = value;
@@ -102,7 +103,12 @@ const GroupCreate = () => {
       customerWriteInfo: customerWriteInfo.toString(),
       communityContentObjectList: cRef.current.getData(),
       communityOrganizationGoodsList: [
-        { communityGoodsDescObject, ...oval, pushFlag },
+        {
+          communityGoodsDescObject,
+          communityOrganizationGoodsId,
+          ...oval,
+          pushFlag,
+        },
       ],
     }).then((res) => {
       wx.disableAlertBeforeUnload();

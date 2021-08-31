@@ -88,14 +88,18 @@ export default {
         "groupCreate/GoodsDepict/index", // 一键开团 商品描述设置
         "groupCreate/LogisticsWay/index", // 一键开团 物流方式设置
         "groupCreate/SelfCommission/index", // 一键开团 自提点佣金设置（暂时没有用 无业务）
-        "selfLiftingPointSet/List/index", // 设置自提点 编辑 新增 入口 & 一键开团选择
-        "selfLiftingPointSet/Edit/index", // 设置自提点 编辑 新增 页面
         "order/DetailPages/index", // 订单详情
         "order/GroupOrderManage/index", // 订单管理 - 团长
         "order/GroupVerification/index", // 订单管理 - 核销
         "personal/Wallet/Purse/index", // 个人中心 - 钱包 - 我的钱包
         "personal/Wallet/PurseWithdraw/index", // 个人中心 - 钱包 - 钱包提现
+        "personal/Wallet/PurseDetail/index", // 个人中心 - 钱包 - 账单明细
         "personal/Teamplayer/index", // 个人中心 - 我的团员
+        "personal/SelfLiftingPoint/List/index", // 个人中心自提点管理 & 一键开团选择自提点页面
+        "personal/SelfLiftingPoint/Edit/index", // 设置自提点 编辑 新增
+        "personal/GoodsManage/List/index", // 个人中心 商品库管理 & 一键开团 导入商品库页面
+        "personal/GoodsManage/Edit/index", // 商品库 编辑 新增
+        "personal/GoodsManage/Import/index", // 商品库 导入
       ],
     },
     {
