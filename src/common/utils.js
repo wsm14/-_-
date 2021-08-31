@@ -57,6 +57,7 @@ export const toast = (value) => {
     title: value,
     icon: "none",
     duration: 2000,
+    mask: true,
   });
 };
 //彈窗
@@ -83,7 +84,6 @@ export const goBack = function (fn) {
     success: () => {
       fn && fn();
     },
-    
   });
 };
 //返回 上一页
