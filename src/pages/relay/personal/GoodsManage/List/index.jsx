@@ -42,7 +42,7 @@ export default () => {
   const fetchGetList = () => {
     fetchGoodsManageList(pages).then((res) => {
       const { communityCommonGoodsList: lists } = res;
-      setList((old) => [...old, ...lists]);
+      setList(lists);
     });
   };
 
@@ -62,42 +62,53 @@ export default () => {
       <Head></Head>
       {list.length ? (
         <View className="gm_group">
-          {list.map((item) => (
-            <View
-              className="gm_goods_cell"
-              onClick={() => handleOnSelect(item.communityCommonGoodsId)}
-            >
-              <ImageShow
-                className="gm_goods_img dakale_nullImage"
-                width={120}
-                src={item?.communityGoodsDescObject?.img?.split(",")[0] || [""]}
-              ></ImageShow>
-              <View className="gm_goods_info">
-                <View className="gm_goods_head">
-                  <View className="gm_goods_name">{item.goodsName}</View>
-                  <View
-                    className={`gm_goods_select ${
-                      selectId.includes(item.communityCommonGoodsId)
-                        ? "select"
-                        : ""
-                    }`}
-                  ></View>
-                </View>
-                <View className="gm_goods_num">库存 {item.remain || 0}</View>
-                <View className="gm_goods_footer">
-                  <View className="gm_goods_price">{item.price}</View>
-                  <View className="gm_goods_btn">
-                    <View className={`gm_goods_tools`} onClick={() => {}}>
-                      编辑
-                    </View>
-                    <View className={`gm_goods_tools`} onClick={() => {}}>
-                      删除
+          {list.map((item) => {
+            const { ownerId, communityCommonGoodsId: communityGoodsId } = item;
+            return (
+              <View
+                className="gm_goods_cell"
+                onClick={() => handleOnSelect(item.communityGoodsId)}
+              >
+                <ImageShow
+                  className="gm_goods_img dakale_nullImage"
+                  width={120}
+                  src={
+                    item?.communityGoodsDescObject?.img?.split(",")[0] || [""]
+                  }
+                ></ImageShow>
+                <View className="gm_goods_info">
+                  <View className="gm_goods_head">
+                    <View className="gm_goods_name">{item.goodsName}</View>
+                    <View
+                      className={`gm_goods_select ${
+                        selectId.includes(communityGoodsId) ? "select" : ""
+                      }`}
+                    ></View>
+                  </View>
+                  <View className="gm_goods_num">库存 {item.remain || 0}</View>
+                  <View className="gm_goods_footer">
+                    <View className="gm_goods_price">{item.costPrice}</View>
+                    <View className="gm_goods_btn">
+                      <View
+                        className={`gm_goods_tools`}
+                        onClick={() =>
+                          Router({
+                            routerName: "goodsManageEdit",
+                            args: { type: "edit", ownerId, communityGoodsId },
+                          })
+                        }
+                      >
+                        编辑
+                      </View>
+                      <View className={`gm_goods_tools`} onClick={() => {}}>
+                        删除
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
-            </View>
-          ))}
+            );
+          })}
         </View>
       ) : (
         <View className="gm_goods_null">暂无商品，快去添加商品吧</View>

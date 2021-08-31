@@ -30,7 +30,7 @@ const FormItemGroup = Form.Group;
 export default () => {
   // 路由获取参数
   const routeParams = useRouter().params;
-  const { type, ownerId, communityGoodsId } = routeParams;
+  const { type = "add", ownerId, communityGoodsId } = routeParams;
 
   const [formData, setFormData] = useState({});
 
@@ -97,10 +97,7 @@ export default () => {
             </FormItem>
             <FormItem label={"商品描述"} vertical>
               <Textarea
-                value={
-                  formData.communityGoodsDescObject &&
-                  JSON.parse(formData.communityGoodsDescObject).desc
-                }
+                value={formData?.communityGoodsDescObject?.desc}
                 name={"desc"}
                 placeholder="请输入商品描述"
                 className="bodyClassName"
@@ -117,10 +114,7 @@ export default () => {
             <FormItem label={"商品图片"} titleTip={"最多9张"} vertical>
               <Upload
                 count={9}
-                value={
-                  formData.communityGoodsDescObject &&
-                  JSON.parse(formData.communityGoodsDescObject).img
-                }
+                value={formData?.communityGoodsDescObject?.img}
                 onChange={(file) => savaFormData({ img: file })}
               ></Upload>
             </FormItem>
