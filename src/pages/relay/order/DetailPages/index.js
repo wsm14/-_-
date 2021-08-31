@@ -9,10 +9,12 @@ import Collect from "./components/collectCard";
 import { fetchOrderDetail } from "@/server/relay";
 import StopBean from "@/components/stopBean";
 import { goods } from "@/api/api";
-import { httpGet, httpPost } from "@/api/newRequest";
+import { httpPost } from "@/api/newRequest";
 import PayGo from "@/components/pay_btn";
-import { toast } from "@/common/utils";
-import { navigatePostBack } from "@/relay/common/hooks";
+import ShareInfo from "@/relay/components/shareInfo";
+import { getShareInfo } from "@/server/common";
+import { loginStatus } from "@/common/utils";
+import { handlePayWechat } from "@/relay/common/hooks";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -23,11 +25,41 @@ class Index extends Component {
       },
       orderInfo: {},
       closeVisible: false,
+      shareData: {},
+      visible: false,
     };
   }
   componentWillUnmount() {}
   componentDidMount() {
     this.fetchOrderInfo();
+  }
+  fetchShareInfo(val) {
+    const { communityOrganizationId, ownerId } = val;
+    if (!loginStatus()) {
+      return Router({
+        routerName: "login",
+      });
+    } else {
+      getShareInfo(
+        {
+          shareType: "communityGoods",
+          shareId: communityOrganizationId,
+          shardingKey: ownerId,
+        },
+        (res) => {
+          this.setState(
+            {
+              shareData: { ...res },
+            },
+            (res) => {
+              this.setState({
+                visible: true,
+              });
+            }
+          );
+        }
+      );
+    }
   }
   upDateStatus() {
     const { orderInfo } = this.state;
@@ -71,11 +103,29 @@ class Index extends Component {
       });
     });
   }
+  onShareAppMessage(res) {
+    const { shareData } = this.state;
+    const { title, miniProgramUrl, frontImage } = shareData;
+    if (res.from === "button") {
+      return {
+        title: title,
+        path: miniProgramUrl,
+        imageUrl: frontImage,
+      };
+    }
+    return {
+      title: title,
+      imageUrl: frontImage,
+      path: miniProgramUrl,
+    };
+  }
   render() {
     const {
       orderInfo,
-      orderInfo: { status, payFee },
+      orderInfo: { status, payFee, orderSn },
       closeVisible,
+      shareData,
+      visible,
     } = this.state;
     return (
       <View className="order_detailsPage_box">
@@ -85,7 +135,12 @@ class Index extends Component {
         ></Title>
         <Delivery data={orderInfo}></Delivery>
         <GoodsCard data={orderInfo}></GoodsCard>
-        {status === "1" && <Collect></Collect>}
+        {status === "1" && (
+          <Collect
+            shareInfo={this.fetchShareInfo.bind(this)}
+            data={orderInfo}
+          ></Collect>
+        )}
         <OrderCard data={orderInfo}></OrderCard>
         {status === "0" && (
           <View
@@ -100,7 +155,14 @@ class Index extends Component {
           </View>
         )}
         {status === "0" && (
-          <PayGo content={`立即支付 ￥${payFee}`} click={() => {}}></PayGo>
+          <PayGo
+            content={`立即支付 ￥${payFee}`}
+            click={() => {
+              handlePayWechat({ orderSn }, () => {
+                this.fetchOrderInfo();
+              });
+            }}
+          ></PayGo>
         )}
         {status === "0" && closeVisible && (
           <StopBean
@@ -113,6 +175,15 @@ class Index extends Component {
             canfirmText={"取消"}
           ></StopBean>
         )}
+        <ShareInfo
+          onClose={() => {
+            this.setState({ visible: false });
+          }}
+          show={visible}
+          data={shareData}
+          bottomFlag
+        ></ShareInfo>
+        
       </View>
     );
   }

@@ -3,11 +3,11 @@ import Taro from "@tarojs/taro";
 import { ScrollView, Text, View } from "@tarojs/components";
 import { GOODS_BY_TYPE } from "@/relay/common/constant";
 import { backgroundObj } from "@/common/utils";
+import Router from "@/common/router";
 export default (props) => {
-  const { data = {} } = props;
+  const { data = {}, shareInfo } = props;
   const { communityOrganizationGoods = {} } = data;
-
-  const {} = communityOrganizationGoods;
+  const { communityOrganizationId, relateOwnerId } = communityOrganizationGoods;
   const list = [
     {
       name: "申请退款",
@@ -21,12 +21,25 @@ export default (props) => {
     },
     {
       name: "分享",
-      fn: () => {},
+      fn: () => {
+        shareInfo({
+          communityOrganizationId,
+          ownerId: relateOwnerId,
+        });
+      },
       icon: "detailPges_order_collecIconStyle3",
     },
     {
       name: "再来1单",
-      fn: () => {},
+      fn: () => {
+        Router({
+          routerName: "communityGoods",
+          args: {
+            ownerId: relateOwnerId,
+            communityOrganizationId,
+          },
+        });
+      },
       icon: "detailPges_order_collecIconStyle4",
     },
   ];
@@ -38,7 +51,7 @@ export default (props) => {
           <View
             className="detailPges_order_collectList"
             onClick={() => {
-              fn && fn();
+              item.fn && item.fn();
             }}
           >
             <View

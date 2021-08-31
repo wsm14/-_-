@@ -1,10 +1,11 @@
 import React from "react";
 import { Text, View } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 import InterTime from "@/components/InterTime";
 import ImageShow from "@/relay/components/ImageShow";
 import Router from "@/common/router";
 import { GOODS_BY_TYPE } from "@/relay/common/constant";
-import { backgroundObj } from "@/common/utils";
+import { backgroundObj, mapGo, toast } from "@/common/utils";
 import GoodsTools from "../GoodsTools";
 
 export default (props) => {
@@ -27,6 +28,12 @@ export default (props) => {
     writeAddress,
     writeContactPerson,
     writeMobile,
+    title,
+    communityOrganizationId,
+    ownerId,
+    liftingName,
+    liftingLat,
+    liftingLnt,
   } = organizationGoodsOrderDescObject;
 
   //订单支付渲染模板
@@ -81,10 +88,16 @@ export default (props) => {
           <View className="relay_order_ShopName font_hide">
             {relateOwnerName}
           </View>
-          <View className="relay_order_ShopType">
-            <View className="relay_order_ShopType1  font_hide">
-              【顺丰包邮】优质… 【顺丰包邮】优质…
-            </View>
+          <View
+            className="relay_order_ShopType"
+            onClick={() =>
+              Router({
+                routerName: "communityGoods",
+                args: { communityOrganizationId, ownerId },
+              })
+            }
+          >
+            <View className="relay_order_ShopType1  font_hide">{title}</View>
             <View className="relay_order_ShopType2"></View>
           </View>
         </View>
@@ -98,7 +111,7 @@ export default (props) => {
             </View>
             <View className="relay_order_Bodyfont">×{goodsCount}</View>
           </View>
-          <View className=" font_hide">¥ {goodsPrice}</View>
+          <View className=" font_hide">¥{goodsPrice}</View>
         </View>
         <View className="relay_order_cardUser">
           <View className="relay_cardUser_title">
@@ -111,13 +124,36 @@ export default (props) => {
                 <View className="relay_cardUser_meAddress">
                   <View className="relay_cardUser_meAddressMax font_hide">
                     <Text>自提点：</Text>
-                    <Text className="bold">国泰科技大厦</Text>
+                    <Text className="bold">{liftingName}</Text>
                   </View>
                 </View>
-                <View className="relay_cardUser_teartext">
+                <View
+                  className="relay_cardUser_teartext"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    mapGo({
+                      lat: liftingLat,
+                      lnt: liftingLnt,
+                      address: liftingAddress,
+                      merchantName: liftingName,
+                    });
+                  }}
+                >
                   {liftingAddress}
                 </View>
-                <View className="relay_cardUser_userName">
+                <View
+                  className="relay_cardUser_userName"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Taro.makePhoneCall({
+                      phoneNumber: liftingMobile,
+                      fail: (res) => {
+                        toast("拨打失败");
+                      },
+                      complete: (res) => {},
+                    });
+                  }}
+                >
                   联系人：{liftingContentPerson}
                   {liftingMobile}
                 </View>

@@ -6,7 +6,7 @@ import InterTime from "@/components/InterTime";
 import ImageShow from "@/relay/components/ImageShow";
 import Router from "@/common/router";
 import { GOODS_BY_TYPE } from "@/relay/common/constant";
-import { backgroundObj } from "@/common/utils";
+import { backgroundObj,  } from "@/common/utils";
 export default (props) => {
   const { data } = props;
   const {
@@ -33,6 +33,9 @@ export default (props) => {
     writeAddress,
     writeContactPerson,
     writeMobile,
+    title,
+    communityOrganizationId,
+    relateOwnerId,
   } = communityOrganizationGoods;
 
   return (
@@ -47,9 +50,17 @@ export default (props) => {
           <View className="detailPges_order_ShopName font_hide">
             {relateOwnerName}
           </View>
-          <View className="detailPges_order_ShopType">
+          <View
+            className="detailPges_order_ShopType"
+            onClick={() =>
+              Router({
+                routerName: "communityGoods",
+                args: { communityOrganizationId, ownerId: relateOwnerId },
+              })
+            }
+          >
             <View className="detailPges_order_ShopType1  font_hide">
-              【顺丰包邮】优质… 【顺丰包邮】优质…
+              {title}
             </View>
             <View className="detailPges_order_ShopType2"></View>
           </View>

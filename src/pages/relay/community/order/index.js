@@ -12,9 +12,8 @@ import {
   fetchAddressList,
   fetchGoodsOrderPrice,
   fakeOrganizationGoods,
-  fetchTest,
 } from "@/server/relay";
-
+import { handlePayWechat } from "@/relay/common/hooks";
 import PayBean from "@/components/stopBean";
 import evens from "@/common/evens";
 import { fetchUserShareCommission } from "@/server/index";
@@ -299,8 +298,7 @@ class Index extends Component {
             canfirm={() => {
               const { orderData } = this.state;
               const { orderSn } = orderData;
-              fetchTest({ orderSn }, (res) => {
-                fetchTest;
+              handlePayWechat({ orderSn }, (res) => {
                 this.setState(
                   {
                     visible: false,

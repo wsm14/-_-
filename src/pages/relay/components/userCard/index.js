@@ -45,7 +45,18 @@ export default (props) => {
               className="user_card"
             >
               <View className="user_card_user">
-                <View className="user_card_userProfile">
+                <View
+                  className="user_card_userProfile"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    Router({
+                      routerName: "communityGroup",
+                      args: {
+                        ownerId,
+                      },
+                    });
+                  }}
+                >
                   <Image
                     className="user_card_image user_card_radius"
                     lazyLoad

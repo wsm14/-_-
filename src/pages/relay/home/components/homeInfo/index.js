@@ -93,7 +93,7 @@ export default (props) => {
         }}
         list={list}
       ></UserCard>
-      {index === 0 && (
+      {index == 0 && (
         <ShareInfo
           onClose={() => {
             setVisible(false);

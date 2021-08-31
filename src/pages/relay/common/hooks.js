@@ -5,6 +5,7 @@ import {
   fetchGroupOpen,
   fetchGroupDelete,
   fetchGroupDoTop,
+  fetchTest,
 } from "@/server/relay";
 
 /**
@@ -117,5 +118,11 @@ export function handleOrdertools(data = {}, callback) {
           break;
       }
     },
+  });
+}
+//微信支付
+export function handlePayWechat(data = {}, callback) {
+  fetchTest({ ...data }).then((val) => {
+    callback && callback();
   });
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 import { ScrollView, Text, View } from "@tarojs/components";
 import { GOODS_BY_TYPE } from "@/relay/common/constant";
-import { backgroundObj } from "@/common/utils";
+import { backgroundObj, mapGo, toast } from "@/common/utils";
 export default (props) => {
   const { data } = props;
   console.log(data);
@@ -15,7 +15,12 @@ export default (props) => {
     writeMobile,
     relateOwnerName,
     mobile,
+    contactPerson,
     address,
+    liftingName,
+    liftingAddress,
+    lat,
+    lnt,
   } = communityOrganizationGoods;
   console.log(communityOrganizationGoods);
 
@@ -32,12 +37,37 @@ export default (props) => {
             <View className="detailPges_cardUser_meAddress">
               <View className="detailPges_cardUser_meAddressMax font_hide">
                 <Text>自提点：</Text>
-                <Text className="bold">国泰科技大厦</Text>
+                <Text className="bold">{liftingName}</Text>
               </View>
             </View>
-            <View className="detailPges_cardUser_teartext">{address}</View>
-            <View className="detailPges_cardUser_userName">
-              联系人：{relateOwnerName}
+            <View
+              className="detailPges_cardUser_teartext"
+              onClick={(e) => {
+                e.stopPropagation();
+                mapGo({
+                  lat: lat,
+                  lnt: lnt,
+                  address: address,
+                  merchantName: liftingName,
+                });
+              }}
+            >
+              {address}
+            </View>
+            <View
+              className="detailPges_cardUser_userName"
+              onClick={(e) => {
+                e.stopPropagation();
+                Taro.makePhoneCall({
+                  phoneNumber: mobile,
+                  fail: (res) => {
+                    toast("拨打失败");
+                  },
+                  complete: (res) => {},
+                });
+              }}
+            >
+              联系人：{contactPerson}
               {mobile}
             </View>
           </View>

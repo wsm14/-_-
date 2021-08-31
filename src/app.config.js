@@ -79,6 +79,7 @@ export default {
       root: "pages/relay",
       pages: [
         "home/index", //tabbar页面
+        "community/groupUser/index", //查看他人主页
         "community/goodInfo/index", //商品详情
         "community/delivery/index", //收货地址
         "community/order/index", //跟团购买

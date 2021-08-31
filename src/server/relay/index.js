@@ -372,3 +372,13 @@ export const fetchOrganizationShare = (data, fn) => {
     (res) => fn && fn(res)
   );
 };
+
+export const fetchUserCenter = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/userCenter",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
