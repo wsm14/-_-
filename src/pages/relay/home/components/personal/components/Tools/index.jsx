@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Taro from "@tarojs/taro";
 import Router from "@/common/router";
 import { View, Button } from "@tarojs/components";
 import "./index.scss";
@@ -20,6 +19,7 @@ export default ({ tabbarChange }) => {
       leble: "商品库",
       icon: "tools_menu",
       show: !groupTools, // 团长
+      onClick: () => goPage("goodsManageList"),
     },
     {
       leble: "订单管理",

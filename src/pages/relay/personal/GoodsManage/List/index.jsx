@@ -17,7 +17,7 @@ export default () => {
   /**
    * mode select 选择模式 list 展示管理列表
    */
-  const { mode = "select", liftingCabinets } = routeParams;
+  const { mode = "list", liftingCabinets } = routeParams;
 
   const [list, setList] = useState([]);
   const [selectId, setSelectId] = useState([]);

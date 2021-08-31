@@ -21,8 +21,22 @@ const FormItemGroup = Form.Group;
  */
 export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
   const importGoods = (
-    <View className="group_ce_importGoods">从商品库导入</View>
+    <View className="group_ce_importGoods" onClick={() => goGoodsManage()}>
+      从商品库导入
+    </View>
   );
+
+  // 跳转商品库
+  const goGoodsManage = () => {
+    const { communityGoodsDescObject = {} } = formData;
+    Router({
+      routerName: "goodsManageList",
+      args: {
+        mode: "select",
+        data: JSON.stringify(communityGoodsDescObject),
+      },
+    });
+  };
 
   // 跳转商品描述
   const goGoodsDepict = () => {
@@ -78,8 +92,7 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
           ></GroupDetailEdit>
         </FormItem>
       </FormItemGroup>
-      {/* extra={importGoods} */}
-      <FormItemGroup title={"团购商品"}>
+      <FormItemGroup title={"团购商品"} extra={importGoods}>
         <FormItem label={"名称"}>
           <Input
             value={formData["goodsName"]}
