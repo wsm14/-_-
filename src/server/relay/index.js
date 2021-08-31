@@ -448,3 +448,35 @@ export const fetchCommunityOrderQcode = (data, fn) => {
   );
 };
 //查询核销码
+
+export const fetchCommonGoods = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/goods/createCommunityCommonGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团长商品-创建商品
+
+export const fetchUpdateCommunityGoods = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/goods/updateCommunityCommonGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团长商品-修改商品
+export const fetchCommonGoodsDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/goods/communityCommonGoodsDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//团长商品-修改商品
