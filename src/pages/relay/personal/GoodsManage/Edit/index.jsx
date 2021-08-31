@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { useRouter } from "@tarojs/taro";
-import evens from "@/common/evens";
-import { getAuthStatus } from "@/common/authority";
 import { View, Button } from "@tarojs/components";
 import {
   Form,
   Input,
-  Text,
   Upload,
   Textarea,
 } from "@/relay/components/FormCondition";
-import { mapSelect, toast } from "@/common/utils";
+import { toast } from "@/common/utils";
 import { upload } from "@/api/upload";
 import FooterFixed from "@/relay/components/FooterFixed";
 import {
@@ -52,12 +49,12 @@ export default () => {
 
   // 提交保存
   const handleSaveData = (value) => {
-    const { goodsName, costPrice, desc } = value;
+    const { goodsName, price, desc } = value;
     const { img = [] } = formData;
     if (!goodsName) {
       toast("请填写商品名称");
       return;
-    } else if (!costPrice) {
+    } else if (!price) {
       toast("请填写售价");
       return;
     }
@@ -124,9 +121,9 @@ export default () => {
           <FormItemGroup>
             <FormItem label={"价格(¥) "} required>
               <Input
-                value={formData.costPrice}
+                value={formData.price}
                 style={{ color: "#EF476F" }}
-                name="costPrice"
+                name="price"
                 placeholder="请输入商品价格 "
               ></Input>
             </FormItem>
@@ -139,16 +136,16 @@ export default () => {
             </FormItem>
             <FormItem label={"划线价(¥)"}>
               <Input
-                value={formData.oriPrice}
-                name="oriPrice"
+                value={formData.costPrice}
+                name="costPrice"
                 placeholder="划线价建议高于商品价格 "
               ></Input>
             </FormItem>
 
             <FormItem label={"成本价(¥)"}>
               <Input
-                value={formData.price}
-                name="price"
+                value={formData.oriPrice}
+                name="oriPrice"
                 placeholder="用于利润核算，仅团长可见"
               ></Input>
             </FormItem>

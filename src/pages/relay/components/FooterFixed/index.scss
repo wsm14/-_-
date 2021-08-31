@@ -34,5 +34,8 @@
     font-size: 32px;
     font-weight: 400;
     color: #ffffff;
+    &[disabled] {
+      opacity: 0.4;
+    }
   }
 }

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useRouter, useDidShow, useReachBottom } from "@tarojs/taro";
+import Taro, { useRouter, useDidShow } from "@tarojs/taro";
 import Router from "@/common/router";
 import { navigatePostBack } from "@/relay/common/hooks";
-import { View } from "@tarojs/components";
-import { fetchGoodsManageList } from "@/server/relay";
+import { toast } from "@/common/utils";
+import { View, Button } from "@tarojs/components";
+import { fetchGoodsManageList, fetchGoodsManageStoreDel } from "@/server/relay";
 import Head from "./components/Head";
 import ImageShow from "@/relay/components/ImageShow";
 import FooterFixed from "@/relay/components/FooterFixed";
@@ -18,24 +19,19 @@ export default () => {
   /**
    * mode select 选择模式 list 展示管理列表
    */
-  const { mode = "list", liftingCabinets } = routeParams;
+  const { mode = "list" } = routeParams;
 
   // 请求参数
-  const [pages, setPages] = useState({
+  const [pages] = useState({
     page: 1,
     limit: 100,
   });
   const [list, setList] = useState([]); // 列表数据
-  const [selectId, setSelectId] = useState([]);
+  const [selectId, setSelectId] = useState(false);
+  const [data, setData] = useState({}); // 商品数据
 
   useDidShow(() => {
     fetchGetList();
-    setSelectId(liftingCabinets ? liftingCabinets.split(",") : []);
-  });
-
-  // 上拉加载
-  useReachBottom(() => {
-    setPages({ ...pages, page: pages.page + 1 });
   });
 
   // 获取选择列表
@@ -48,13 +44,30 @@ export default () => {
 
   // 保存事件
   const handleSaveData = () => {
-    navigatePostBack({ liftingCabinets: selectId });
+    navigatePostBack({ goodsData: data });
   };
 
   // 点击选中取消选中事件
   const handleOnSelect = (id) => {
-    if (selectId.includes(id)) setSelectId(selectId.filter((i) => i !== id));
-    else setSelectId([...selectId, id]);
+    if (selectId === id) setSelectId(false);
+    else setSelectId(id);
+  };
+
+  // 删除商品
+  const fetchGoodsDel = (params) => {
+    Taro.showModal({
+      confirmText: "确定",
+      confirmColor: "#07c0c2",
+      content: "确认删除商品？",
+      success: function (res) {
+        if (res.confirm) {
+          fetchGoodsManageStoreDel(params).then(() => {
+            toast("删除成功！");
+            fetchGetList();
+          });
+        }
+      },
+    });
   };
 
   return (
@@ -63,44 +76,61 @@ export default () => {
       {list.length ? (
         <View className="gm_group">
           {list.map((item) => {
-            const { ownerId, communityCommonGoodsId: communityGoodsId } = item;
+            const {
+              ownerId,
+              communityCommonGoodsId: communityGoodsId,
+              communityGoodsDescObject = {},
+            } = item;
             return (
               <View
                 className="gm_goods_cell"
-                onClick={() => handleOnSelect(item.communityGoodsId)}
+                onClick={() => {
+                  handleOnSelect(communityGoodsId);
+                  setData(item);
+                }}
               >
                 <ImageShow
                   className="gm_goods_img dakale_nullImage"
                   width={120}
-                  src={
-                    item?.communityGoodsDescObject?.img?.split(",")[0] || [""]
-                  }
+                  src={communityGoodsDescObject?.img?.split(",")[0] || [""]}
                 ></ImageShow>
                 <View className="gm_goods_info">
                   <View className="gm_goods_head">
                     <View className="gm_goods_name">{item.goodsName}</View>
-                    <View
-                      className={`gm_goods_select ${
-                        selectId.includes(communityGoodsId) ? "select" : ""
-                      }`}
-                    ></View>
+                    {mode == "select" && (
+                      <View
+                        className={`gm_goods_select ${
+                          selectId === communityGoodsId ? "select" : ""
+                        }`}
+                      ></View>
+                    )}
                   </View>
                   <View className="gm_goods_num">库存 {item.remain || 0}</View>
                   <View className="gm_goods_footer">
-                    <View className="gm_goods_price">{item.costPrice}</View>
+                    <View className="gm_goods_price">{item.price}</View>
                     <View className="gm_goods_btn">
                       <View
                         className={`gm_goods_tools`}
-                        onClick={() =>
+                        onClick={(e) => {
+                          e.stopPropagation();
                           Router({
                             routerName: "goodsManageEdit",
                             args: { type: "edit", ownerId, communityGoodsId },
-                          })
-                        }
+                          });
+                        }}
                       >
                         编辑
                       </View>
-                      <View className={`gm_goods_tools`} onClick={() => {}}>
+                      <View
+                        className={`gm_goods_tools`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          fetchGoodsDel({
+                            ownerId,
+                            communityCommonGoodsId: communityGoodsId,
+                          });
+                        }}
+                      >
                         删除
                       </View>
                     </View>
@@ -112,6 +142,17 @@ export default () => {
         </View>
       ) : (
         <View className="gm_goods_null">暂无商品，快去添加商品吧</View>
+      )}
+      {mode === "select" && (
+        <FooterFixed>
+          <Button
+            className="submit"
+            disabled={!selectId}
+            onClick={handleSaveData}
+          >
+            确认选择
+          </Button>
+        </FooterFixed>
       )}
     </View>
   );

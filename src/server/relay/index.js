@@ -66,6 +66,17 @@ export const fetchGoodsManageNotList = (data = {}, fn) => {
 };
 // 商品库 - 未导入商品库列表
 
+export const fetchGoodsManageStoreDel = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/goods/deleteCommunityCommonGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 商品库 - 商品删除
+
 export const fetchGoodsManageStoreImport = (data = {}, fn) => {
   return httpPost(
     {

@@ -50,7 +50,7 @@ const GroupCreate = () => {
 
   // 数据回传获取
   usePostBackData((data) => {
-    const { desc, img, logisticsType } = data;
+    const { desc, img, logisticsType, goodsData } = data;
     // 商品描述配置
     if (desc || img) {
       savaFormData({ communityGoodsDescObject: data });
@@ -58,6 +58,10 @@ const GroupCreate = () => {
     // 物流方式配置
     if (logisticsType) {
       savaFormData(data);
+    }
+    // 商品详情
+    if (goodsData) {
+      savaFormData(goodsData);
     }
   });
 
