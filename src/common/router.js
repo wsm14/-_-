@@ -117,6 +117,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     teamPlayer: "/pages/relay/personal/Teamplayer/index", // 个人中心 - 我的团员
     goodsManageList: "/pages/relay/personal/GoodsManage/List/index", // 个人中心 - 商品库管理 & 导入商品库
     goodsManageEdit: "/pages/relay/personal/GoodsManage/Edit/index", // 商品库 新增编辑商品
+    goodsManageImport: "/pages/relay/personal/GoodsManage/Import/index", // 商品库 导入
     //社团
   }[routerName];
   const types = type;

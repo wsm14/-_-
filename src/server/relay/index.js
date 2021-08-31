@@ -33,6 +33,28 @@ export const fetchTeamPlayer = (data, fn) => {
 };
 // 个人中心 - 我的团员
 
+export const fetchGoodsManageNotCount = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/goods/countCommunityOrganizationGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 商品库 - 未导入商品库统计
+
+export const fetchGoodsManageNotList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/goods/listCommunityOrganizationGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 商品库 - 未导入商品库列表
+
 export const fetchPurseDetail = (data = {}, fn) => {
   return httpGet(
     {

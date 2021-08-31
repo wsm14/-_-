@@ -98,6 +98,7 @@ export default {
         "personal/SelfLiftingPoint/Edit/index", // 设置自提点 编辑 新增
         "personal/GoodsManage/List/index", // 个人中心 商品库管理 & 一键开团 导入商品库页面
         "personal/GoodsManage/Edit/index", // 商品库 编辑 新增
+        "personal/GoodsManage/Import/index", // 商品库 导入
       ],
     },
     {

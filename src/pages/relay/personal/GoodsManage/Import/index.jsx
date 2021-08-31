@@ -4,7 +4,6 @@ import Router from "@/common/router";
 import { navigatePostBack } from "@/relay/common/hooks";
 import { View, Button, Text } from "@tarojs/components";
 import { fetchLiftingCabinetList } from "@/server/relay";
-import Head from "./components/Head";
 import ImageShow from "@/relay/components/ImageShow";
 import FooterFixed from "@/relay/components/FooterFixed";
 import "./index.scss";
@@ -41,9 +40,5 @@ export default () => {
     });
   };
 
-  return (
-    <View className="GoodsManageList_content">
-      <Head></Head>
-    </View>
-  );
+  return <View className="GoodsManageList_content"></View>;
 };
