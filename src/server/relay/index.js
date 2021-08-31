@@ -64,7 +64,7 @@ export const fetchGoodsManageStoreImport = (data = {}, fn) => {
     (res) => fn && fn(res)
   );
 };
-// 商品库 - 导入商品库
+// 商品库 - 未导入商品导入商品库
 
 export const fetchPurseDetail = (data = {}, fn) => {
   return httpGet(
