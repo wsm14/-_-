@@ -30,6 +30,11 @@ const GroupCreate = () => {
   const cRef = useRef();
 
   useEffect(() => {
+    if (mode == "add") {
+      // 获取上一次自提点信息
+      const logisticsType = Taro.getStorageSync("logisticsType") || {};
+      savaFormData(logisticsType);
+    }
     if (mode === "edit") {
       fetchGroupDetail({ ownerId, communityOrganizationId }).then((res) => {
         const { communityOrganizationGoodsList: obj = [], ...other } =

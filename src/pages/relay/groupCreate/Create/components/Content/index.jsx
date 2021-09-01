@@ -52,7 +52,7 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
   // 跳转物流方式配置
   const goLogisticsWay = () => {
     const {
-      logisticsType = "",
+      logisticsType = "self", // 顾客自提
       customerWriteInfo = "",
       liftingCabinets = "",
     } = formData;

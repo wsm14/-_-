@@ -105,8 +105,12 @@ export default () => {
                   key: "location",
                   success: () => {
                     mapSelect((val) => {
-                      const { address, ...other } = val;
-                      savaFormData(other);
+                      const {
+                        address: location,
+                        location: address,
+                        ...other
+                      } = val;
+                      savaFormData({ ...other, location, address });
                     });
                   },
                   fail: () => {
@@ -119,19 +123,25 @@ export default () => {
             ></Text>
           </FormItem>
           <FormItem label={"详细地址"} required>
-            <Text
+            <Input
+              name={"address"}
               value={formData.address}
               placeholder="详细地址"
-              rightIcon={false}
-              onClick={() =>
-                Taro.chooseAddress({
-                  success({ detailInfo }) {
-                    savaFormData({ address: detailInfo });
-                  },
-                })
+              suffix={
+                <Button
+                  className="slp_wx_local"
+                  onClick={() =>
+                    Taro.chooseAddress({
+                      success({ detailInfo }) {
+                        savaFormData({ address: detailInfo });
+                      },
+                    })
+                  }
+                >
+                  从微信读取
+                </Button>
               }
-              extra={<Button className="slp_wx_local">从微信读取</Button>}
-            ></Text>
+            ></Input>
           </FormItem>
         </FormItemGroup>
         <FormItemGroup>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Router from "@/common/router";
-import { useRouter } from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { toast } from "@/common/utils";
 import { LOGISTICS_USER_INFO } from "@/relay/common/constant";
 import { usePostBackData, navigatePostBack } from "@/relay/common/hooks";
@@ -65,6 +65,8 @@ export default () => {
       logisticsType === "self"
         ? { ...formData, customerWriteInfo }
         : { customerWriteInfo: "", liftingCabinets: "" };
+    // 储存本次自提点信息
+    Taro.setStorageSync("logisticsType", { ...selfPrams, logisticsType });
     navigatePostBack({ ...selfPrams, logisticsType });
   };
 

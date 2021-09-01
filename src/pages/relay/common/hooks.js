@@ -57,32 +57,49 @@ export const handleGoGroupEdit = (params) => {
   });
 };
 
-// 置顶/取消 团  { communityOrganizationId, ownerId }
-export const handleGroupDoTop = (params, callback) => {
-  const { topFlag = 0, ...other } = params;
+const showModal = ({ content, callback }) => {
   Taro.showModal({
     confirmText: "确定",
     confirmColor: "#07c0c2",
-    content: `确认${["置顶", "取消置顶"][topFlag]}团购？`,
+    content,
     success: function (res) {
       if (res.confirm) {
-        fetchGroupDoTop(other, callback); // 删除
+        callback();
       }
     },
   });
 };
 
+// 置顶/取消 团  { communityOrganizationId, ownerId }
+export const handleGroupDoTop = (params, callback) => {
+  const { topFlag = 0, ...other } = params;
+  showModal({
+    content: `确认${["置顶", "取消置顶"][topFlag]}团购？`,
+    callback: fetchGroupDoTop(other, callback),
+  });
+};
+
 // 删除团  { communityOrganizationId, ownerId }
 export const handleGroupDelete = (params, callback) => {
-  Taro.showModal({
-    confirmText: "确定",
-    confirmColor: "#07c0c2",
+  showModal({
     content: "确认删除团购？",
-    success: function (res) {
-      if (res.confirm) {
-        fetchGroupDelete(params, callback); // 删除
-      }
-    },
+    callback: fetchGroupDelete(params, callback),
+  });
+};
+
+// 结束团  { communityOrganizationId, ownerId }
+export const handleGroupEnd = (params, callback) => {
+  showModal({
+    content: "确认结束该团购活动吗？",
+    callback: fetchGroupClose(params, callback),
+  });
+};
+
+// 开始团  { communityOrganizationId, ownerId }
+export const handleGroupStart = (params, callback) => {
+  showModal({
+    content: "确认开始该团购活动吗？",
+    callback: fetchGroupOpen(params, callback),
   });
 };
 
@@ -110,8 +127,8 @@ export function handleOrdertools(data = {}, callback) {
           break;
         case 1:
           if (communityStatus === "start") {
-            fetchGroupClose(params, callback); // 结束团
-          } else fetchGroupOpen(params, callback); // 展示团
+            handleGroupEnd(params, callback); // 结束团
+          } else handleGroupStart(params, callback); // 展示团
           break;
         default:
           handleGroupDelete(params, callback); // 删除
