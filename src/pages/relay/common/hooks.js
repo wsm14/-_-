@@ -75,7 +75,7 @@ export const handleGroupDoTop = (params, callback) => {
   const { topFlag = 0, ...other } = params;
   showModal({
     content: `确认${["置顶", "取消置顶"][topFlag]}团购？`,
-    callback: fetchGroupDoTop(other, callback),
+    callback: () => fetchGroupDoTop(other, callback),
   });
 };
 
@@ -83,7 +83,7 @@ export const handleGroupDoTop = (params, callback) => {
 export const handleGroupDelete = (params, callback) => {
   showModal({
     content: "确认删除团购？",
-    callback: fetchGroupDelete(params, callback),
+    callback: () => fetchGroupDelete(params, callback),
   });
 };
 
@@ -91,7 +91,7 @@ export const handleGroupDelete = (params, callback) => {
 export const handleGroupEnd = (params, callback) => {
   showModal({
     content: "确认结束该团购活动吗？",
-    callback: fetchGroupClose(params, callback),
+    callback: () => fetchGroupClose(params, callback),
   });
 };
 
@@ -99,7 +99,7 @@ export const handleGroupEnd = (params, callback) => {
 export const handleGroupStart = (params, callback) => {
   showModal({
     content: "确认开始该团购活动吗？",
-    callback: fetchGroupOpen(params, callback),
+    callback: () => fetchGroupOpen(params, callback),
   });
 };
 
