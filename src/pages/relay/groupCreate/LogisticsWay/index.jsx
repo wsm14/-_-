@@ -64,7 +64,7 @@ export default () => {
     const selfPrams =
       logisticsType === "self"
         ? { ...formData, customerWriteInfo }
-        : { customerWriteInfo: "", liftingCabinets: "" };
+        : { customerWriteInfo, liftingCabinets: "" };
     // 储存本次自提点信息
     Taro.setStorageSync("logisticsType", { ...selfPrams, logisticsType });
     navigatePostBack({ ...selfPrams, logisticsType });
@@ -78,6 +78,14 @@ export default () => {
         liftingCabinets: lcList.toString(),
       },
     });
+  };
+
+  // 切换选项
+  const changeSelect = (e) => {
+    savaFormData({
+      customerWriteInfo: ["writeContentPerson", "writeMobile", "writeAddress"],
+    });
+    setLogisticsType(e[0]);
   };
 
   return (
@@ -94,9 +102,9 @@ export default () => {
               vertical
               verticalForm={
                 <Checkbox
-                  list={{ self: "" }}
                   value={logisticsType}
-                  onChange={(e) => setLogisticsType(e[0])}
+                  list={{ self: "" }}
+                  onChange={changeSelect}
                 ></Checkbox>
               }
             >
@@ -133,19 +141,65 @@ export default () => {
                 </>
               )}
             </FormItem>
-            <FormItem label={"无需物流"}>
-              <Checkbox
-                value={logisticsType}
-                list={{ noLogistics: "" }}
-                onChange={(e) => setLogisticsType(e[0])}
-              ></Checkbox>
+            <FormItem
+              label={"无需物流"}
+              vertical
+              verticalForm={
+                <Checkbox
+                  value={logisticsType}
+                  list={{ noLogistics: "" }}
+                  onChange={changeSelect}
+                ></Checkbox>
+              }
+            >
+              {logisticsType === "noLogistics" && (
+                <>
+                  <FormItem label={"需要用户填写信息"}>
+                    <Text
+                      value={cInfo.length ? `已设置${cInfo.length}项` : null}
+                      placeholder={"未设置"}
+                    ></Text>
+                  </FormItem>
+                  <FormItem label={""}>
+                    <Checkbox
+                      name="customerWriteInfo"
+                      value={cInfo}
+                      list={LOGISTICS_USER_INFO}
+                      onChange={(e) => savaFormData({ customerWriteInfo: e })}
+                    ></Checkbox>
+                  </FormItem>
+                </>
+              )}
             </FormItem>
-            <FormItem label={"送货上门"}>
-              <Checkbox
-                list={{ send: "" }}
-                value={logisticsType}
-                onChange={(e) => setLogisticsType(e[0])}
-              ></Checkbox>
+            <FormItem
+              label={"送货上门"}
+              vertical
+              verticalForm={
+                <Checkbox
+                  value={logisticsType}
+                  list={{ send: "" }}
+                  onChange={changeSelect}
+                ></Checkbox>
+              }
+            >
+              {logisticsType === "send" && (
+                <>
+                  <FormItem label={"需要用户填写信息"}>
+                    <Text
+                      value={cInfo.length ? `已设置${cInfo.length}项` : null}
+                      placeholder={"未设置"}
+                    ></Text>
+                  </FormItem>
+                  <FormItem label={""}>
+                    <Checkbox
+                      name="customerWriteInfo"
+                      value={cInfo}
+                      list={LOGISTICS_USER_INFO}
+                      onChange={(e) => savaFormData({ customerWriteInfo: e })}
+                    ></Checkbox>
+                  </FormItem>
+                </>
+              )}
             </FormItem>
           </FormItemGroup>
           <FooterFixed>
