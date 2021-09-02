@@ -52,23 +52,29 @@ export default () => {
 
   return (
     <View className="Teamplayer_content">
-      <View className="teamPlayer_group">
-        {dataList.map((item) => (
-          <View className="teamPlayer_cell">
-            <View
-              className="teamPlayer_head"
-              style={{
-                backgroundImage: `url(${item.profile})`,
-              }}
-            ></View>
-            <View
-              className={`teamPlayer_name ${item.subsribe == 1 ? "take" : ""}`}
-            >
-              {item.username}
+      {dataList.length ? (
+        <View className="teamPlayer_group">
+          {dataList.map((item) => (
+            <View className="teamPlayer_cell">
+              <View
+                className="teamPlayer_head"
+                style={{
+                  backgroundImage: `url(${item.profile})`,
+                }}
+              ></View>
+              <View
+                className={`teamPlayer_name ${
+                  item.subsribe == 1 ? "take" : ""
+                }`}
+              >
+                {item.username}
+              </View>
             </View>
-          </View>
-        ))}
-      </View>
+          ))}
+        </View>
+      ) : (
+        <View className="teamPlayer_null">暂无团员</View>
+      )}
     </View>
   );
 };
