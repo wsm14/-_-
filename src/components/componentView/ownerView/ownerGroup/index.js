@@ -104,14 +104,16 @@ export default ({ data }) => {
               </View>
               <View className="ownerGroup_info_icon"></View>
             </View>
-            <View className="ownerGroup_info_contentbox  font_hide">
-              <View className="ownerGroup_info_address font_hide">
-                {address}
+            {Object.keys(userMerchantInfo).length ? (
+              <View className="ownerGroup_info_contentbox  font_hide">
+                <View className="ownerGroup_info_address font_hide">
+                  {address}
+                </View>
+                <View className="ownerGroup_info_limit">
+                  {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
+                </View>
               </View>
-              <View className="ownerGroup_info_limit">
-                {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
-              </View>
-            </View>
+            ) : null}
           </View>
         </View>
         {filterStrList(brandPublicityImage)[0] && (
