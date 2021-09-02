@@ -35,7 +35,7 @@
       .purseWithdraw_form_input {
         padding: 64px 0 25px;
         display: flex;
-        align-items: baseline;
+        align-items: flex-end;
         border-bottom: 1px solid #e5e5e5;
         margin-bottom: 16px;
         Text {
@@ -50,6 +50,7 @@
           font-size: 60px;
           font-weight: 600;
           color: #333333;
+          padding: 0;
         }
       }
       .purseWithdraw_form_tip {

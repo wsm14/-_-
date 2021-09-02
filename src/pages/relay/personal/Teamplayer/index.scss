@@ -43,4 +43,22 @@
       }
     }
   }
+
+  .teamPlayer_null {
+    margin-top: 56px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    text-align: center;
+    &::before {
+      content: "";
+      display: block;
+      margin: 0 auto;
+      @include whEqual(300px);
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/relay/null_one.png")
+        no-repeat;
+      background-size: 100%;
+      margin-bottom: 32px;
+    }
+  }
 }

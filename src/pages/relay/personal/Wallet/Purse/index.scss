@@ -22,7 +22,7 @@
     @include flexCenterA;
     flex-direction: column;
     background: #ffffff;
-    padding: 64px 0 56px;
+    padding: 120px 0 56px;
     .purse_price_all {
       font-size: 28px;
       font-weight: 400;
@@ -42,7 +42,7 @@
     .purse_price_submit {
       @include sumbitButton;
       width: 420px;
-      margin-top: 174px;
+      margin-top: 118px;
       border-radius: 12px;
     }
   }
