@@ -123,6 +123,7 @@ export default () => {
               <Input
                 value={formData.price}
                 style={{ color: "#EF476F" }}
+                type="digit"
                 name="price"
                 placeholder="请输入商品价格 "
               ></Input>
@@ -130,6 +131,7 @@ export default () => {
             <FormItem label={"库存"}>
               <Input
                 value={formData.total}
+                type="number"
                 name="total"
                 placeholder="不限"
               ></Input>
@@ -137,6 +139,7 @@ export default () => {
             <FormItem label={"划线价(¥)"}>
               <Input
                 value={formData.costPrice}
+                type="digit"
                 name="costPrice"
                 placeholder="划线价建议高于商品价格 "
               ></Input>
@@ -145,6 +148,7 @@ export default () => {
             <FormItem label={"成本价(¥)"}>
               <Input
                 value={formData.oriPrice}
+                type="digit"
                 name="oriPrice"
                 placeholder="用于利润核算，仅团长可见"
               ></Input>
