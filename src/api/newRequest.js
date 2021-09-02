@@ -95,8 +95,8 @@ export const httpGet = (obj, fn) => {
       ...obj.data,
     };
   }
-  obj.data.token =
-    "cZ1zUFWQAPCJLt9IsUwYYFMDZaGckTWEFvDZyhgvQjsNNpwrTvKIrfnLz8IaeqzT";
+  // obj.data.token =
+  //   "cZ1zUFWQAPCJLt9IsUwYYFMDZaGckTWEFvDZyhgvQjsNNpwrTvKIrfnLz8IaeqzT";
   return new Promise((resolve, reject) => {
     Taro.request({
       ...httpCondition,
@@ -163,8 +163,8 @@ export const httpPost = (obj, fn) => {
       ...obj.data,
     };
   }
-  obj.data.token =
-    "cZ1zUFWQAPCJLt9IsUwYYFMDZaGckTWEFvDZyhgvQjsNNpwrTvKIrfnLz8IaeqzT";
+  // obj.data.token =
+  //   "cZ1zUFWQAPCJLt9IsUwYYFMDZaGckTWEFvDZyhgvQjsNNpwrTvKIrfnLz8IaeqzT";
   if (requestUrl.includes(obj.url)) {
     return;
   } else {
