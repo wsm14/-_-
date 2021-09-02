@@ -92,7 +92,7 @@ export default () => {
     <View className="LogisticsWay_Contnet">
       <View className="lgWay_heard">
         <View className="lgWay_title">请选择物流方式</View>
-        <View className="lgWay_tip">可同时选择快递/同城配送/顾客自提</View>
+        <View className="lgWay_tip">可选择顾客自提/无须物流/送货上门</View>
       </View>
       <View className="lgWay_form">
         <Form onSubmit={(e) => handleSaveData(e.detail.value)} footer={false}>
