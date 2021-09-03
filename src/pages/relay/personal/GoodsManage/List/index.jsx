@@ -58,7 +58,8 @@ export default () => {
     Taro.showModal({
       confirmText: "确定",
       confirmColor: "#07c0c2",
-      content: "确认删除商品？",
+      title: "确定从商品库删除此商品吗？",
+      content: "已经发布此商品的团购不受影响",
       success: function (res) {
         if (res.confirm) {
           fetchGoodsManageStoreDel(params).then(() => {
