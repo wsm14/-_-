@@ -3,7 +3,15 @@ import ImagePicker from "./Upload";
 import { View } from "@tarojs/components";
 import "../index.scss";
 
-export default ({ value = [], disabled, count, onChange }) => {
+export default ({
+  value = [],
+  disabled,
+  count,
+  onChange,
+  className,
+  classChangeName,
+  toast,
+}) => {
   const [fileList, setFileList] = useState([]);
 
   useEffect(() => {
@@ -19,6 +27,9 @@ export default ({ value = [], disabled, count, onChange }) => {
       <ImagePicker
         data={fileList}
         count={count}
+        toast={toast}
+        className={className}
+        classChangeName={classChangeName}
         onChange={(file) => {
           return setTimeout(() => {
             onChange(file.slice(0, count || 9));

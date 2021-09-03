@@ -42,7 +42,7 @@ const filterCity = () => {
 };
 
 const CityPicker = (props) => {
-  const { onSelect = () => {}, inValue = false } = props;
+  const { onSelect = () => {}, inValue = false, cityFlag = true } = props;
 
   // 选择后的数据
   const [cityIndex, setCityIndex] = useState(nowValue);
@@ -125,7 +125,7 @@ const CityPicker = (props) => {
     setCityIndex(cityPorps);
     onSelect(cityPorps);
   };
-
+  console.log(cityFlag);
   return (
     <View className="cityPickerView_Block">
       <PickerView
@@ -165,20 +165,22 @@ const CityPicker = (props) => {
             );
           })}
         </PickerViewColumn>
-        <PickerViewColumn>
-          {areaDataNew.map((item, i) => {
-            return (
-              <View
-                className={
-                  "cityPickerView_Item" +
-                  (cityIndex.value[2] == i ? " select" : "")
-                }
-              >
-                {item.label}
-              </View>
-            );
-          })}
-        </PickerViewColumn>
+        {cityFlag && (
+          <PickerViewColumn>
+            {areaDataNew.map((item, i) => {
+              return (
+                <View
+                  className={
+                    "cityPickerView_Item" +
+                    (cityIndex.value[2] == i ? " select" : "")
+                  }
+                >
+                  {item.label}
+                </View>
+              );
+            })}
+          </PickerViewColumn>
+        )}
       </PickerView>
     </View>
   );

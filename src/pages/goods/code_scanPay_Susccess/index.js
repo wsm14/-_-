@@ -132,6 +132,7 @@ class Index extends Component {
       configNewcomerOrdersInfo,
     } = this.state;
     const { beanLimitStatus } = this.props.store.homeStore;
+    const { beanLimit } = this.props.store.commonStore;
     if (Object.keys(orderResult).length > 0) {
       return (
         <View className="code_scanPay_box">
@@ -220,13 +221,11 @@ class Index extends Component {
             ) : null}
             <Coupon data={orderResult}></Coupon>
           </View>
-          <Recommend
-            current={true}
-            userInfo={configUserLevelInfo}
-          ></Recommend>
+          <Recommend current={true} userInfo={configUserLevelInfo}></Recommend>
           <Toast
             data={configNewcomerOrdersInfo}
             show={visible}
+            beanLimit={beanLimit}
             beanLimitStatus={beanLimitStatus}
             visible={() => {
               this.setState({

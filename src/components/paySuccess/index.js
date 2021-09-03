@@ -8,7 +8,13 @@ import { Image, Text, View } from "@tarojs/components";
 import ThreeGoods from "./threeToast";
 import VideoGoods from "./videoToast";
 export default (props) => {
-  const { data = {}, visible, show = false, beanLimitStatus } = props;
+  const {
+    data = {},
+    visible,
+    show = false,
+    beanLimitStatus,
+    beanLimit,
+  } = props;
   const { taskStatus } = data;
   if (taskStatus === "0" || taskStatus === "1") {
     return <ThreeGoods {...props}></ThreeGoods>;

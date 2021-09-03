@@ -6,16 +6,12 @@ import {
   getLnt,
   GetDistance,
   backgroundObj,
-  loginStatus,
-  mapGo,
-  navigateTo,
   toast,
   filterStrList,
 } from "@/common/utils";
 import { scanCode } from "@/common/authority";
 import { getMerchantLat } from "@/server/index";
 import { getCategory, getConfigWindVaneBySize } from "@/server/common";
-import Banner from "@/components/banner";
 import ShopView from "./components/shopView";
 import SelectList from "./components/selectView";
 import Router from "@/common/router";
@@ -480,6 +476,7 @@ class index extends PureComponent {
         address,
         merchantId,
         businessTime,
+        businessStatus,
         tag,
       } = item;
       return (
@@ -498,7 +495,7 @@ class index extends PureComponent {
             <View
               className="template_shop_img"
               style={backgroundObj(
-                coverImg ||
+                logoImg ||
                   "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_dakale.png"
               )}
             ></View>
@@ -506,12 +503,28 @@ class index extends PureComponent {
               <View className="template_shop_merchantName font_hide">
                 {merchantName}
               </View>
-              <View className="template_shop_bussionTime">
+              <View className="template_shop_bussionTime font_hide">
                 {businessTime && (
-                  <View className="bussionTime_tag">
-                    <Text className="font22 bold color9">营业时间</Text>
-                    <Text className="bussionTime_liner bussionTime_margin"></Text>
-                    <Text className="bussionTime_margin font22 bold  color9">
+                  <View
+                    className={classNames(
+                      "bussionTime_tag",
+                      businessStatus === "1"
+                        ? "bussionTime_tag_color1"
+                        : "bussionTime_tag_color2"
+                    )}
+                  >
+                    <Text className="font22 bold">
+                      {businessStatus === "1" ? "营业中" : "暂停营业"}
+                    </Text>
+                    <Text
+                      className={classNames(
+                        "bussionTime_liner bussionTime_margin",
+                        businessStatus === "1"
+                          ? "bussionTime_liner_color1"
+                          : "bussionTime_liner_color2"
+                      )}
+                    ></Text>
+                    <Text className="bussionTime_margin font22 bold">
                       {businessTime}
                     </Text>
                   </View>

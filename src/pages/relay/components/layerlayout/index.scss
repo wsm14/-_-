@@ -75,7 +75,6 @@
       }
     }
     .poplayout_children {
-      overflow-y: auto;
       max-height: 600px;
       &::-webkit-scrollbar {
         display: none;

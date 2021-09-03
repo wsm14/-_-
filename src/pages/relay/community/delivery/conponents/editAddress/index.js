@@ -9,7 +9,6 @@ import {
 import { checkCityName } from "@/relay/common/utils";
 import Drawer from "@/relay/components/layerlayout";
 import CitySelect from "@/relay/components/FormCondition/MreCity/CitySelect";
-import SelectAddress from "@/relay/components/SelectAddress";
 import { computedSize, getLat, getLnt, toast, mapSelect } from "@/common/utils";
 import FooterFixed from "@/relay/components/FooterFixed";
 import { getAuthStatus } from "@/common/authority";

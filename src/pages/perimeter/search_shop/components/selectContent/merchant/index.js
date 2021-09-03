@@ -61,9 +61,6 @@ export default ({ keyword, current, configUserLevelInfo }) => {
 
         {list.length > 0 ? (
           <View className="xixihaha">
-            <View className="search_merchant_title  font_hide">
-              相关商家-{keyword}
-            </View>
             {list.map((item) => {
               return (
                 <ShopView userInfo={configUserLevelInfo} data={item}></ShopView>

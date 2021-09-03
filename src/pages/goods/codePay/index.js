@@ -229,7 +229,7 @@ class Index extends Component {
           <View className="codePay_top">
             <View className="codePay_merchantDetails">
               <View
-                className="codePay_merchantDetail_shopIcon dakale_nullImage"
+                className="codePay_merchantDetail_shopIcon merchant_dakale_logo"
                 style={merchantImg ? backgroundObj(merchantImg) : {}}
               ></View>
               <View className="codePay_merchantDetail_font">

@@ -491,3 +491,57 @@ export const fetchCommonGoodsDetail = (data, fn) => {
   );
 };
 //团长商品-修改商品
+
+export const fetchBankList = (data, fn) => {
+  return httpGet(
+    {
+      url: "/common/bankBranch/listBankBranch",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//我的-绑定银行卡-查询银行支行列表
+
+export const fetchbankCard = (data, fn) => {
+  return httpGet(
+    {
+      url: "/common/ocr/bankCard",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//我的-绑定银行卡-银行卡扫描识别
+
+export const fetchCardFront = (data, fn) => {
+  return httpGet(
+    {
+      url: "/common/ocr/idCardFront",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//我的-绑定银行卡-身份证认证 正面
+
+export const fetchCardBack = (data, fn) => {
+  return httpGet(
+    {
+      url: "/common/ocr/idCardBack",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//我的-绑定银行卡-身份证认证 反面
+export const fetchPersonAccount = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/bank/user/createAdapayPersonAccount",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户创建汇付个人账号

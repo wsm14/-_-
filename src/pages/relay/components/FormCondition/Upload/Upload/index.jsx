@@ -3,7 +3,14 @@ import { View, Image } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.scss";
 
-export default ({ count = 9, data = [], onChange }) => {
+export default ({
+  count = 9,
+  data = [],
+  onChange,
+  className,
+  classChangeName,
+  toast,
+}) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -43,10 +50,14 @@ export default ({ count = 9, data = [], onChange }) => {
 
   const renderUpload = () => {
     return (
-      <View className="upload_img_box" onClick={() => uploadImg()}>
+      <View
+        className={className ? className : "upload_img_box"}
+        onClick={() => uploadImg()}
+      >
         <>
           <View className="add-bar_1"></View>
           <View className="add-bar-2"></View>
+          {toast && <View className="add-bar-toast">{toast}</View>}
         </>
       </View>
     );
@@ -54,7 +65,10 @@ export default ({ count = 9, data = [], onChange }) => {
 
   const renderImg = (item, index) => {
     return (
-      <View className="upload_img_cell" onClick={() => showImage(item)}>
+      <View
+        className={classChangeName ? classChangeName : "upload_img_cell"}
+        onClick={() => showImage(item)}
+      >
         <View
           className="remove-bar"
           onClick={(e) => {

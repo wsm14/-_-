@@ -26,7 +26,8 @@ page {
         .order_merchant_userProfile {
           width: 50px;
           height: 50px;
-          background: #e6e6e6;
+          flex-shrink: 0;
+          border-radius: 50%;
         }
         .order_name {
           max-width: 560px;

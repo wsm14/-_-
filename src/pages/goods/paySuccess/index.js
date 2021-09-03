@@ -115,6 +115,7 @@ class Index extends Component {
       configNewcomerOrdersInfo,
     } = this.state;
     const { beanLimitStatus } = this.props.store.homeStore;
+    const { beanLimit } = this.props.store.commonStore;
     return (
       <View className="pay_details_payDetails">
         <Title></Title>
@@ -138,6 +139,7 @@ class Index extends Component {
         <Toast
           data={configNewcomerOrdersInfo}
           show={visible}
+          beanLimit={beanLimit}
           beanLimitStatus={beanLimitStatus}
           visible={() => {
             this.setState({

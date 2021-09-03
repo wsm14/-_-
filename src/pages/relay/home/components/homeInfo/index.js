@@ -7,6 +7,7 @@ import Taro, { useReachBottom, usePullDownRefresh } from "@tarojs/taro";
 import UserCard from "@/relay/components/UserCard";
 import { fetchCommunityUser } from "@/server/relay";
 import ShareInfo from "@/relay/components/shareInfo";
+import Empty from "@/relay/components/Empty";
 import { getShareInfo } from "@/server/common";
 import { loginStatus } from "@/common/utils";
 import router from "@/common/router";
@@ -59,6 +60,7 @@ export default (props) => {
 
   return (
     <View style={{ display: index == 0 ? "block" : "none" }}>
+      <Empty show={list.length === 0} toast={"暂时还没有发布的团购～"}></Empty>
       <UserCard
         shareInfo={(val) => {
           const { communityOrganizationId, ownerId } = val;

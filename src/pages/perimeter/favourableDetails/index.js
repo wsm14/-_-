@@ -257,7 +257,7 @@ class MerchantDetails extends Component {
               },
             },
             (res) => {
-              toast("收藏成功");
+              toast("收藏成功,请打开「哒卡乐APP」查看收藏详情");
             }
           );
         }
@@ -366,9 +366,9 @@ class MerchantDetails extends Component {
       httpData,
       mxVisible,
     } = this.state;
-    const { activeInfoStore = {} } = this.props.store;
     const { login } = this.props.store.authStore;
     const { beanLimitStatus } = this.props.store.homeStore;
+    const { beanLimit } = this.props.store.commonStore;
     const shareInfoBtn = () => {
       if (shareCommission > 0) {
         return (
@@ -514,7 +514,7 @@ class MerchantDetails extends Component {
                 this.setState({ cavansObj: { start: false, data: null } })
               }
             ></TaroShareDrawer>
-          
+
             <View className="shopDetails_banner dakale_nullImage">
               <Banner
                 autoplay={
@@ -652,6 +652,7 @@ class MerchantDetails extends Component {
             ></Recommend>
             <VideoBean
               visible={beanLimitStatus === "1"}
+              beanLimit={beanLimit}
               price={(realPrice * (payBeanCommission / 100))
                 .toFixed(3)
                 .substring(

@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import CityPicker from "../CityPicker";
 import Poplayout from "@/relay/components/Poplayout";
 
-const CitySelect = ({ value = null, onSubmit, show = false, onClose }) => {
+const CitySelect = ({
+  value = null,
+  onSubmit,
+  show = false,
+  onClose,
+  cityFlag = true,
+}) => {
   // 暂存数据
   const [saveData, setSaveData] = useState({});
 
@@ -24,7 +30,13 @@ const CitySelect = ({ value = null, onSubmit, show = false, onClose }) => {
         onClose();
       }}
     >
-      {show && <CityPicker inValue={value} onSelect={setSaveData}></CityPicker>}
+      {show && (
+        <CityPicker
+          cityFlag={cityFlag}
+          inValue={value}
+          onSelect={setSaveData}
+        ></CityPicker>
+      )}
     </Poplayout>
   );
 };

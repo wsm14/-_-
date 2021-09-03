@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { Text, View } from "@tarojs/components";
+import { Text, View, Image } from "@tarojs/components";
 import Coupon from "./components/couponTop";
 import { getOwnerCouponDetail } from "@/server/perimeter";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
@@ -31,6 +31,7 @@ import VideoBean from "./components/getVideoBean";
 import Recommend from "@/components/couponActive";
 import NewToast from "@/components/noviceGuide";
 import Wares from "@/components/componentView/wares";
+import { filterStrList } from "@/common/utils";
 import "./index.scss";
 @inject("store")
 @observer
@@ -321,6 +322,7 @@ class Index extends Component {
         expireRefund,
         ownerCouponIdString,
         userBean,
+        couponDetailImg = "",
       },
       visible,
       httpData,
@@ -328,6 +330,7 @@ class Index extends Component {
     } = this.state;
     const { login } = this.props.store.authStore;
     const { beanLimitStatus } = this.props.store.homeStore;
+    const { beanLimit } = this.props.store.commonStore;
     const shareInfoBtn = () => {
       if (shareCommission > 0) {
         return (
@@ -442,6 +445,28 @@ class Index extends Component {
             ownerServiceId={ownerCouponIdString}
             data={couponDetail}
           ></Merchant>
+          {(couponDetail.couponDetail || couponDetailImg) && (
+            <View className="shopdetails_shop_details">
+              <View className="shopdetails_shop_merchantDetails">商品描述</View>
+              {couponDetail.couponDetail && (
+                <View className="shopdetails_dec">
+                  <Text>{couponDetail.couponDetail.replace(/\\n/g, "\n")}</Text>
+                </View>
+              )}
+              <View className="shopdetails_Image">
+                {couponDetailImg &&
+                  filterStrList(couponDetailImg).map((item) => {
+                    return (
+                      <Image
+                        mode="widthFix"
+                        src={item}
+                        style={{ width: "100%" }}
+                      ></Image>
+                    );
+                  })}
+              </View>
+            </View>
+          )}
           {/*使用须知*/}
           {knowPay(couponDetail, "coupon")}
           {/*使用方法*/}
@@ -456,6 +481,7 @@ class Index extends Component {
                 0,
                 (buyPrice * (payBeanCommission / 100)).toFixed(3).length - 1
               )}
+            beanLimit={beanLimit}
             visible={beanLimitStatus === "1"}
             data={couponDetail}
           ></VideoBean>

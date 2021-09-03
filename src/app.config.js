@@ -94,6 +94,7 @@ export default {
         "personal/Wallet/Purse/index", // 个人中心 - 钱包 - 我的钱包
         "personal/Wallet/PurseWithdraw/index", // 个人中心 - 钱包 - 钱包提现
         "personal/Wallet/PurseDetail/index", // 个人中心 - 钱包 - 账单明细
+        "personal/Wallet/BankForm/index", // 绑定银行卡
         "personal/Teamplayer/index", // 个人中心 - 我的团员
         "personal/SelfLiftingPoint/List/index", // 个人中心自提点管理 & 一键开团选择自提点页面
         "personal/SelfLiftingPoint/Edit/index", // 设置自提点 编辑 新增

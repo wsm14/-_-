@@ -95,7 +95,7 @@ export const getBanner = (data, fn) => {
 parent：activity
 child：hideStatus*/
 export const getDictionary = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       data: data,
       url: "/common/dictionary/getDictionaryByParentAndChild",

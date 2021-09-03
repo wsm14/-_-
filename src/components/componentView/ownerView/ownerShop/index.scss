@@ -307,17 +307,29 @@
         height: 32px;
         display: flex;
         align-items: center;
-        background: rgba(16, 133, 136, 0.1);
         border-radius: 4px;
-        margin-right: 16px;
-        max-width: 290px;
+      }
+      .bussionTime_tag_color1 {
+        background: rgba(16, 133, 136, 0.1);
+        color: rgba(16, 133, 136, 1);
+      }
+      .bussionTime_tag_color2 {
+        background: rgba(153, 153, 153, 0.1);
+        color: rgba(153, 153, 153, 1);
       }
       .bussionTime_liner {
         width: 1px;
         height: 20px;
-        background: #108588;
         border-radius: 1px;
-        opacity: 0.3;
+      }
+      .bussionTime_liner_color1 {
+        background: rgba(16, 133, 136, 0.3);
+      }
+      .bussionTime_liner_color2 {
+        background: rgba(153, 153, 153, 0.3);
+      }
+      .bussionTime_margin {
+        margin-left: 8px;
       }
       .bussionTime_margin {
         margin-left: 8px;
@@ -328,6 +340,7 @@
         font-weight: 400;
         color: #333333;
         line-height: 26px;
+        flex: 1;
       }
     }
 

@@ -6,17 +6,34 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.6);
   z-index: 100000;
+  .video_toast_index1 {
+    padding-top: 42px;
+    text-align: center;
+    font-size: 34px;
+    line-height: 50px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .video_toast_indexfont {
+    font-size: 70px;
+    color: rgba(255, 207, 59, 1);
+  }
   .video_toast_box {
     width: 560px;
     height: 632px;
     position: relative;
     z-index: 100000;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon724.png")
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon746.png")
       no-repeat;
     background-size: 100% 100%;
   }
+  .video_toast_index2 {
+    font-size: 34px;
+    text-align: center;
+    color: #ffffff;
+  }
   .video_toast_timesAuto {
-    padding-top: 192px;
+    padding-top: 32px;
     text-align: center;
     font-size: 24px;
     font-weight: 400;

@@ -22,7 +22,17 @@
     border-radius: 8px;
     overflow: hidden;
   }
-
+  .add-bar-toast {
+    position: absolute;
+    top: 80%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    color: #999999;
+    font-size: 24px;
+    font-weight: 400;
+  }
   .upload_img_cell {
     border: none;
     width: 193px;

@@ -147,7 +147,7 @@ export default (props) => {
         className="user_content_card"
       >
         <View className="public_auto user_card_box">
-          <View className="user_card_left">卡都余额</View>
+          <View className="user_card_left">卡豆余额</View>
           <View className="user_card_right">
             <View className="user_card_beanNum">{bean}</View>
             <View className="user_card_bean">卡豆</View>

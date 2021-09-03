@@ -3,7 +3,7 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import Store from "./model/index";
 import { Provider } from "mobx-react";
 import { authUpdateGeography } from "@/common/authority";
-import { getShareParamInfo } from "@/server/common";
+import { getShareParamInfo, getDictionary } from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
 import { fetchActiveStatus } from "@/server/user";
@@ -25,6 +25,7 @@ class App extends Component {
     this.fetchNetwork();
     authWxLogin(this.fetchOpenId.bind(this));
     evens.$on("setLocation", this.fetchLocation.bind(this));
+    this.fetchDictionary();
   }
 
   componentDidShow() {
@@ -118,7 +119,18 @@ class App extends Component {
     Taro.setStorageSync("lnt", longitude);
     Store.locationStore.setLocation(latitude, longitude);
   }
-
+  fetchDictionary() {
+    getDictionary({
+      parent: "moments",
+      child: "preventSizeBeanNum",
+    }).then((val) => {
+      const { keyValueInfo = {} } = val;
+      const { extraParam = "{}" } = keyValueInfo;
+      const { beanLimit } = JSON.parse(extraParam) || {};
+      console.log(val);
+      Store.commonStore.setBean(beanLimit);
+    });
+  }
   fetchNetwork() {
     Taro.onNetworkStatusChange((res) => {
       const { isConnected, networkType } = res;

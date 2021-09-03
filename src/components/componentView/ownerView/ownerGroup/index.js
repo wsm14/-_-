@@ -20,7 +20,7 @@ export default ({ data }) => {
     brandPublicityImage = "",
     userMerchantInfo = {},
   } = data;
-  const { lat, lnt, address } = userMerchantInfo;
+  const { lat, lnt, address, merchantName } = userMerchantInfo;
   const ownerShopActivity = (item) => {
     const {
       specialGoodsFlag,
@@ -31,11 +31,7 @@ export default ({ data }) => {
       markBean,
       activityGoodsNum,
     } = item;
-    if (
-      markFlag !== "1" &&
-      couponList.length === 0 &&
-      specialActivityList.length === 0
-    ) {
+    if (markFlag !== "1" && couponList.length === 0 && activityGoodsNum == 0) {
       return null;
     } else {
       return (
@@ -107,9 +103,9 @@ export default ({ data }) => {
             {Object.keys(userMerchantInfo).length ? (
               <View className="ownerGroup_info_contentbox  font_hide">
                 <View className="ownerGroup_info_address font_hide">
-                  {address}
+                  附近 {merchantName}
                 </View>
-                <View className="ownerGroup_info_limit">
+                <View className="ownerGroup_info_limit price_margin8">
                   {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
                 </View>
               </View>

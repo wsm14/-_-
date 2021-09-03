@@ -11,7 +11,7 @@ import ButtonView from "@/components/Button";
 import Time from "@/components/dateTime";
 import "./index.scss";
 export default (props) => {
-  const { visible, show = false } = props;
+  const { visible, show = false, beanLimit } = props;
   const [animate, setAnimated] = useState(null);
   const animated = () => {
     let animateTem = Taro.createAnimation({
@@ -109,6 +109,14 @@ export default (props) => {
           }}
           className="video_toast_box"
         >
+          <View className="video_toast_index1">
+            <Text>您还有</Text>
+            <Text className="video_toast_indexfont">
+              {Number(beanLimit / 100)}元
+            </Text>
+            <Text>未领取</Text>
+          </View>
+          <View className="video_toast_index2">快去领取</View>
           <View className="video_toast_timesAuto">
             剩余领取时间{" "}
             <Time showTimeInfo times={getDate()} fn={() => {}}></Time>
