@@ -126,6 +126,7 @@ export default () => {
                 type="digit"
                 name="price"
                 placeholder="请输入商品价格 "
+                maxLength={6}
               ></Input>
             </FormItem>
             <FormItem label={"库存"}>
@@ -134,6 +135,7 @@ export default () => {
                 type="number"
                 name="total"
                 placeholder="不限"
+                maxLength={6}
               ></Input>
             </FormItem>
             <FormItem label={"划线价(¥)"}>
@@ -142,6 +144,7 @@ export default () => {
                 type="digit"
                 name="costPrice"
                 placeholder="划线价建议高于商品价格 "
+                maxLength={6}
               ></Input>
             </FormItem>
 
@@ -151,6 +154,7 @@ export default () => {
                 type="digit"
                 name="oriPrice"
                 placeholder="用于利润核算，仅团长可见"
+                maxLength={6}
               ></Input>
             </FormItem>
           </FormItemGroup>

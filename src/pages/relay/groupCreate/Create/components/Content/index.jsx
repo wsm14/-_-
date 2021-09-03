@@ -98,7 +98,7 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
             value={formData["goodsName"]}
             name={"goodsName"}
             placeholder={"请输入商品名称"}
-            maxLength={30}
+            maxLength={28}
           ></Input>
         </FormItem>
         <FormItem label={"商品描述"}>
@@ -115,7 +115,7 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
             type="digit"
             className={"price"}
             placeholder={"0"}
-            maxLength={30}
+            maxLength={6}
           ></Input>
         </FormItem>
         <FormItem label={"库存"}>
@@ -124,7 +124,7 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
             value={formData["remain"]}
             type="number"
             placeholder={"不限"}
-            maxLength={30}
+            maxLength={6}
           ></Input>
         </FormItem>
         <FormItem label={"可购数量"}>
@@ -152,7 +152,7 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
             value={formData["costPrice"]}
             type="digit"
             placeholder={"划线价建议高于商品价格"}
-            maxLength={30}
+            maxLength={6}
           ></Input>
         </FormItem>
         <FormItem label={"成本价(¥)"}>
@@ -161,7 +161,7 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
             value={formData["oriPrice"]}
             type="digit"
             placeholder={"用于利润核算，仅团长可见"}
-            maxLength={30}
+            maxLength={6}
           ></Input>
         </FormItem>
       </FormItemGroup>
