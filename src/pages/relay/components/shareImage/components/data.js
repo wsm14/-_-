@@ -10,6 +10,7 @@ export const rssConfigData = (data = {}) => {
     ownerProfile,
     title,
     qcodeUrl,
+    price,
   } = data;
 
   if (
@@ -93,7 +94,7 @@ export const rssConfigData = (data = {}) => {
         zIndex: 999,
         addonAfter: {
           type: "text",
-          text: 12323132,
+          text: price,
           fontSize: 32,
           color: "#EF476F",
           fontWeight: "bold",
@@ -129,19 +130,19 @@ export const rssConfigData = (data = {}) => {
         borderWidth: 0,
         zIndex: 111,
       },
-      // {
-      //   /**
-      //    * 二维码
-      //    */
-      //   url: qcodeUrl, // 二维码
-      //   width: 180,
-      //   height: 180,
-      //   y: 957,
-      //   x: 480,
-      //   borderRadius: 68,
-      //   borderWidth: 0,
-      //   zIndex: 111,
-      // },
+      {
+        /**
+         * 二维码
+         */
+        url: qcodeUrl, // 二维码
+        width: 180,
+        height: 180,
+        y: 957,
+        x: 480,
+        borderRadius: 68,
+        borderWidth: 0,
+        zIndex: 111,
+      },
     ],
   };
 };

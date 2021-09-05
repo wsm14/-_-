@@ -15,6 +15,7 @@ import ShareInfo from "@/relay/components/shareInfo";
 import { getShareInfo } from "@/server/common";
 import { loginStatus } from "@/common/utils";
 import { handlePayWechat } from "@/relay/common/hooks";
+import { authWxLogin } from "@/common/authority";
 import ImageShow from "@/relay/components/ImageShow";
 import "./index.scss";
 class Index extends Component {
@@ -29,7 +30,7 @@ class Index extends Component {
       shareData: {},
       visible: false,
       verfivationVisible: false,
-      verfivationImage: null,
+      verificationQcodeUrl: null,
     };
   }
   componentWillUnmount() {}
@@ -110,10 +111,10 @@ class Index extends Component {
     const { orderInfo } = this.state;
     const { orderSn } = orderInfo;
     fetchCommunityOrderQcode({ orderSn }).then((val) => {
-      const { verfivationImage } = val;
+      const { verificationQcodeUrl } = val;
       this.setState(
         {
-          verfivationImage: verfivationImage,
+          verificationQcodeUrl: verificationQcodeUrl,
         },
         (res) => {
           this.setState({
@@ -147,7 +148,7 @@ class Index extends Component {
       shareData,
       visible,
       verfivationVisible,
-      verfivationImage,
+      verificationQcodeUrl,
     } = this.state;
     return (
       <View className="order_detailsPage_box">
@@ -183,8 +184,16 @@ class Index extends Component {
           <PayGo
             content={`立即支付 ￥${payFee}`}
             click={() => {
-              handlePayWechat({ orderSn }, () => {
-                this.fetchOrderInfo();
+              authWxLogin((val) => {
+                handlePayWechat(
+                  { orderSn, payType: "wx_lite", wechatCode: val },
+                  (res) => {
+                    const { result_status } = res;
+                    if (result_status === "succeeded") {
+                      this.fetchOrderInfo();
+                    }
+                  }
+                );
               });
             }}
           ></PayGo>
@@ -236,7 +245,7 @@ class Index extends Component {
                 请出示给团长，进行扫码核销
               </View>
               <View className="order_verfation_code">
-                <ImageShow width={192} src={verfivationImage}></ImageShow>
+                <ImageShow width={192} src={verificationQcodeUrl}></ImageShow>
               </View>
             </View>
           </View>

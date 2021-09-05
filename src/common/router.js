@@ -116,9 +116,11 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     purseWithdraw: "/pages/relay/personal/Wallet/PurseWithdraw/index", // 个人中心 - 钱包 - 钱包提现
     purseDetail: "/pages/relay/personal/Wallet/PurseDetail/index", // 个人中心 - 钱包 - 账单明细
     teamPlayer: "/pages/relay/personal/Teamplayer/index", // 个人中心 - 我的团员
+    dicPlayer: "/pages/relay/personal/DicPlayer/index", // 个人中心 - 我的社区
     goodsManageList: "/pages/relay/personal/GoodsManage/List/index", // 个人中心 - 商品库管理 & 导入商品库
     goodsManageEdit: "/pages/relay/personal/GoodsManage/Edit/index", // 商品库 新增编辑商品
     goodsManageImport: "/pages/relay/personal/GoodsManage/Import/index", // 商品库 导入
+
     //社团
   }[routerName];
   const types = type;

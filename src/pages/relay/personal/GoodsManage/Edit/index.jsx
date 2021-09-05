@@ -60,7 +60,7 @@ export default () => {
     }
 
     const imgs = img ? (Array.isArray(img) ? img : img.split(",")) : [];
-    upload(imgs, { img: imgs }).then((res) => {
+    upload(imgs, { img: imgs }).then((res = {}) => {
       const fetch = {
         add: fetchCommonGoods, // 新增
         edit: fetchUpdateCommunityGoods, // 修改
@@ -68,7 +68,7 @@ export default () => {
       fetch({
         ...formData,
         ...value,
-        communityGoodsDescObject: { img: img.toString(), desc },
+        communityGoodsDescObject: { img: res.img.toString(), desc },
       }).then(() => {
         toast("编辑成功");
         Taro.navigateBack({ delta: 1 });

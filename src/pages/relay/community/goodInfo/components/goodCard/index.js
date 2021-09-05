@@ -18,10 +18,11 @@ export default (props) => {
   }[logisticsType];
   return (
     <View className="community_goodCard_box">
-      <View className="community_goodCard_title font_hide">
-        <View className="community_goodCard_titlesInfo">{title}</View>
+      <View className="community_goodCard_titlesInfo">
+        {title}
         <View className="community_goodCard_tags">{templateType}</View>
       </View>
+
       <View className="community_goodCard_data">
         {createTime} 发布 ｜{" "}
         {communityStatus !== "end" ? (

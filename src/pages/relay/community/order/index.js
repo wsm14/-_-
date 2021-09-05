@@ -17,6 +17,7 @@ import { handlePayWechat } from "@/relay/common/hooks";
 import PayBean from "@/components/stopBean";
 import evens from "@/common/evens";
 import { fetchUserShareCommission } from "@/server/index";
+import { authWxLogin } from "@/common/authority";
 import Router from "@/common/router";
 import "./index.scss";
 const FormItem = Form.Item;
@@ -164,6 +165,10 @@ class Index extends Component {
   }
   saveSubmit() {
     const { fakeGoods } = this.state;
+    const { writeContactPerson, writeMobile, writeAddress } = fakeGoods;
+    if (!writeContactPerson) {
+      return toast("请选择收货地址");
+    }
     fakeOrganizationGoods(fakeGoods)
       .then((val) => {
         this.setState({
@@ -298,16 +303,24 @@ class Index extends Component {
             canfirm={() => {
               const { orderData } = this.state;
               const { orderSn } = orderData;
-              handlePayWechat({ orderSn }, (res) => {
-                this.setState(
-                  {
-                    visible: false,
-                  },
+              authWxLogin((val) => {
+                handlePayWechat(
+                  { orderSn, payType: "wx_lite", wechatCode: val },
                   (res) => {
-                    Router({
-                      routerName: "orderDetails",
-                      args: { orderSn },
-                    });
+                    const { result_status } = res;
+                    if (result_status === "succeeded") {
+                      this.setState(
+                        {
+                          visible: false,
+                        },
+                        (res) => {
+                          Router({
+                            routerName: "orderDetails",
+                            args: { orderSn },
+                          });
+                        }
+                      );
+                    }
                   }
                 );
               });

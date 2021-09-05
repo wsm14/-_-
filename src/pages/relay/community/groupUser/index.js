@@ -20,6 +20,7 @@ class Index extends Component {
         limit: 10,
       },
       communityOrganizationInfo: {},
+      communityOrganizationList: [],
       visible: false,
       shareData: {},
     };
@@ -70,30 +71,8 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    let { scene } = getCurrentInstance().router.params;
-    let { httpData } = this.state;
-    if (scene) {
-      getShareParamInfo({ uniqueKey: scene }, (res) => {
-        let {
-          shareParamInfo: { param },
-        } = res;
-        if (param && JSON.parse(param)) {
-          param = JSON.parse(param);
-          this.setState(
-            {
-              httpData: { ...httpData, ...param },
-            },
-            (res) => {
-              this.fecthDetails();
-              this.fetchUser();
-            }
-          );
-        }
-      });
-    } else {
-      this.fecthDetails();
-      this.fetchUser();
-    }
+    this.fecthDetails();
+    this.fetchUser();
   }
   fetchUser() {
     const { httpData } = this.state;
@@ -155,7 +134,7 @@ class Index extends Component {
             <UserCard
               shareInfo={(val) => {
                 if (!loginStatus()) {
-                  router({ routerName: "login" });
+                  Router({ routerName: "login" });
                 } else {
                   this.fetchShareInfo(val);
                 }

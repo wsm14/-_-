@@ -25,7 +25,9 @@ export default (props) => {
         </View>
         <View className="community_card_userTitle">
           <View className="community_card_usernameInfo">
-            <View className="community_card_username">{userName}</View>
+            <View className="community_card_username font_hide">
+              {userName}
+            </View>
             {subscribeFlag === "0" ? (
               <View
                 className="community_card_btn public_center"

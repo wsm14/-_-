@@ -33,6 +33,17 @@ export const fetchTeamPlayer = (data, fn) => {
 };
 // 个人中心 - 我的团员
 
+export const fetchDicPlayer = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/communityUserList",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 个人中心 - 我的社区
+
 export const fetchGoodsManageList = (data = {}, fn) => {
   return httpGet(
     {
@@ -341,10 +352,10 @@ export const fetchOrderClose = (data, fn) => {
 };
 // 订单管理 关闭订单
 
-export const fetchTest = (data, fn) => {
-  return httpGet(
+export const fetchUserPay = (data, fn) => {
+  return httpPost(
     {
-      url: "/user/wechat/payNotifyTest",
+      url: "/user/pay/adapay/payDelayOrder",
       data: data,
     },
     (res) => fn && fn(res)

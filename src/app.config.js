@@ -96,6 +96,7 @@ export default {
         "personal/Wallet/PurseDetail/index", // 个人中心 - 钱包 - 账单明细
         "personal/Wallet/BankForm/index", // 绑定银行卡
         "personal/Teamplayer/index", // 个人中心 - 我的团员
+        "personal/DicPlayer/index", // 个人中心 - 钱包 - 账单明细
         "personal/SelfLiftingPoint/List/index", // 个人中心自提点管理 & 一键开团选择自提点页面
         "personal/SelfLiftingPoint/Edit/index", // 设置自提点 编辑 新增
         "personal/GoodsManage/List/index", // 个人中心 商品库管理 & 一键开团 导入商品库页面

@@ -31,6 +31,7 @@ class Index extends Component {
       consumerRecordList: [],
       visible: false,
       shareData: {},
+      index: 0,
     };
   }
   fetchShareInfo() {
@@ -88,7 +89,8 @@ class Index extends Component {
       path: miniProgramUrl,
     };
   }
-  componentDidMount() {
+
+  componentDidShow() {
     let { scene } = getCurrentInstance().router.params;
     let { httpData } = this.state;
     if (scene) {

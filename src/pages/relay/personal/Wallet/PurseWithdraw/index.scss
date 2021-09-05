@@ -74,4 +74,45 @@
       }
     }
   }
+  .PurseWithdraw_card {
+    padding: 32px;
+    background: #ffffff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    .PurseWithdraw_bankIcon {
+      width: 88px;
+      height: 88px;
+      background: #07c0c2;
+    }
+    .PurseWithdraw_text {
+      height: 88px;
+      flex: 1;
+      margin-left: 16px;
+      .PurseWithdraw_bankName {
+        padding-top: 12px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #333333;
+        line-height: 28px;
+      }
+      .PurseWithdraw_address {
+        padding-top: 16px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+        line-height: 24px;
+      }
+    }
+  }
+  .purseWithdraw_toast {
+    padding: 40px 32px 0;
+    .purseWithdraw_info_content {
+      padding-top: 16px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      line-height: 36px;
+    }
+  }
 }

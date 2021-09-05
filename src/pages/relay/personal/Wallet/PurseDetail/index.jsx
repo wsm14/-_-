@@ -34,7 +34,7 @@ export default () => {
   };
 
   return (
-    <View className="PurseDetail_content">
+    <View className="PurseDetail_content">  
       <View className="purseDetail_group">
         {dataList.map((i) => (
           <View className="purseDetail_cell">

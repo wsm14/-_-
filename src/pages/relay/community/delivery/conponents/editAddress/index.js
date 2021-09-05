@@ -29,7 +29,7 @@ export default (props) => {
   const [cityVisible, setCityVisible] = useState(false);
   const [data, setData] = useState({});
   useEffect(() => {
-    setData(defaultData);
+    setData({ ...defaultData });
   }, [defaultData]);
 
   const {
@@ -110,7 +110,7 @@ export default (props) => {
             formType="submit"
             className="delivery_submit_twoStyle2  delivery_submit_twoBox public_center"
           >
-            重新发布
+            保存并使用
           </Button>
         </View>
       </FooterFixed>

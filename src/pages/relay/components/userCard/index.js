@@ -5,10 +5,18 @@ import Router from "@/common/router";
 import { fakeSubscribe } from "@/server/relay";
 import "./index.scss";
 export default (props) => {
-  const templateTitle = {
-    notStarted: <View className="user_card_gloupStatus">一群人正赶来跟团</View>,
-    start: <View className="user_card_gloupStatus">正在跟团中</View>,
-    end: <View className="user_card_gloupStatus">已结束</View>,
+  const templateTitle = (type, list = []) => {
+    if (type === "notStarted") {
+      return <View className="user_card_gloupStatus">一群人正赶来跟团</View>;
+    } else if (type === "start") {
+      return (
+        <View className="user_card_gloupStatus">
+          {list.length > 0 ? "正在跟团中" : "一群人正赶来跟团"}
+        </View>
+      );
+    } else {
+      return <View className="user_card_gloupStatus">已结束</View>;
+    }
   };
   const { list = [], upDateList, shareInfo } = props;
   const memo = useMemo(() => {
@@ -102,7 +110,7 @@ export default (props) => {
                 consumerRecordList.map((val = {}, index) => {
                   const {
                     profile,
-                    userName,
+                    username,
                     communityNumber,
                     payTime,
                     goodsInfo,
@@ -123,7 +131,7 @@ export default (props) => {
                           ></Image>
                         </View>
                         <View className="user_card_rankName font_hide">
-                          {userName}
+                          {username}
                         </View>
 
                         <View className="user_card_rankTime">{payTime}</View>
@@ -141,7 +149,7 @@ export default (props) => {
                 })}
 
               <View className="user_card_gloupInfo">
-                {templateTitle[communityStatus]}
+                {templateTitle(communityStatus, consumerRecordList)}
                 <View
                   className="user_card_gloupbtn"
                   onClick={(e) => {

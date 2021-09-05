@@ -49,9 +49,12 @@ export default () => {
   useDidShow(() => {});
   const saveForm = (val) => {
     let data = val.detail.value;
+    const { provinceCode, cityCode } = formData;
     fetchPersonAccount({
-      ...data,
       ...formData,
+      ...data,
+      provCode: provinceCode,
+      areaCode: cityCode,
     });
   };
   return (
@@ -197,10 +200,8 @@ export default () => {
             <FormItem label={"有效时间"} required>
               <TimeRange
                 value={formData}
-                onClick={(e) => {
-                  console.log(e);
-                }}
-                onChange={(val) => saveData(val)}
+                onClick={(e) => {}}
+                onChange={(val) => saveData({ certExpireDate: val })}
               ></TimeRange>
             </FormItem>
           </FormItemGroup>

@@ -10,6 +10,7 @@ import {
 } from "@/server/relay";
 import PayBean from "@/components/stopBean";
 import { backgroundObj, toast } from "@/common/utils";
+import { getShareInfo } from "@/server/common";
 import "./index.scss";
 import Router from "@/common/router";
 class Index extends Component {
@@ -22,14 +23,42 @@ class Index extends Component {
         limit: 10,
         status: 1,
       },
+      index: 0,
       orderList: [],
       verification: {},
       visible: false,
     };
   }
-  componentWillUnmount() {}
   componentDidMount() {
-    this.fetchList();
+    let { scene } = getCurrentInstance().router.params;
+    let { httpData } = this.state;
+    if (scene) {
+      getShareParamInfo({ uniqueKey: scene }, (res) => {
+        let {
+          shareParamInfo: { param },
+        } = res;
+        if (param && JSON.parse(param)) {
+          param = JSON.parse(param);
+          this.setState(
+            {
+              httpData: { ...httpData, ...param },
+            },
+            (res) => {
+              this.fetchList();
+            }
+          );
+        }
+      });
+    } else {
+      this.fetchList();
+    }
+  }
+
+  componentDidShow() {
+    const { index } = this.state;
+    if (index !== 0) {
+      this.fetchList();
+    }
   }
   select(item) {
     const { verification } = this.state;
@@ -95,6 +124,7 @@ class Index extends Component {
     fetchCommunityOrder(httpData).then((val) => {
       const { orderList = [] } = val;
       this.setState({
+        index: 1,
         orderList: [
           ...this.state.orderList,
           ...orderList.map((item) => {
@@ -111,6 +141,7 @@ class Index extends Component {
       });
     });
   }
+
   onToast() {
     this.setState({
       visible: true,
@@ -220,6 +251,7 @@ class Index extends Component {
         relateOwnerName,
         title,
         organizationNumber,
+        liftingName,
       } = organizationGoodsOrderDescObject;
 
       return (
@@ -327,7 +359,7 @@ class Index extends Component {
                     <View className="GroupVerification_cardUser_meAddress">
                       <View className="GroupVerification_cardUser_meAddressMax font_hide">
                         <Text>自提点：</Text>
-                        <Text className="bold">国泰科技大厦</Text>
+                        <Text className="bold">{liftingName}</Text>
                       </View>
                     </View>
                   </View>

@@ -2,6 +2,9 @@
   border-top: 1px solid #e5e5e5;
   padding: 32px 32px 0;
   background: #ffffff;
+  .textInfo_interface {
+    padding-bottom: 24px;
+  }
   .TextInfo_interface {
     height: 263px;
     font-size: 28px;
@@ -15,8 +18,8 @@
   }
   .simImgInfo_interface {
   }
-  .simImgInfo_interface_box:first-child {
-    margin-left: 0px;
+  .simImgInfo_interface_box:last-child {
+    margin-right: 0px;
   }
   .simImgInfo_interface_box {
     width: 194px;
@@ -24,7 +27,7 @@
     border-radius: 8px;
     margin-bottom: 24px;
     display: inline-block;
-    margin-left: 20px;
+    margin-right: 32px;
   }
   .simImgInfo_interface_imageStyle {
     width: 100%;

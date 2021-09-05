@@ -77,7 +77,6 @@
   .user_card_showImg {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     margin: 24px 32px 0;
     .user_card_showImgBox {
       width: 194px;
@@ -85,6 +84,10 @@
       border-radius: 8px;
       background: #333333;
       margin-top: 24px;
+      margin-right: 20px;
+    }
+    .user_card_showImgBox:last-child {
+      margin-right: 0px;
     }
   }
   .user_card_rankBox {
@@ -109,6 +112,7 @@
         margin-left: 20px;
         border-radius: 50%;
         overflow: hidden;
+        flex-shrink: 0;
       }
 
       .user_card_rankName {

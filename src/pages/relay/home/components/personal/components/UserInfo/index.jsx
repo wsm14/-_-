@@ -14,13 +14,9 @@ export default ({ userInfo }) => {
 
   const toolsArr = [
     {
-      leble: `￥${userInfo.cash || 0}`,
-      icon: "tools_wallet",
-      onClick: () => goPage("purse"),
-    },
-    {
       leble: `${userInfo.bean || 0}卡豆`,
       icon: "tools_bean",
+      onClick: () => goPage("purse"),
     },
     {
       leble: "团员",
@@ -30,6 +26,7 @@ export default ({ userInfo }) => {
     {
       leble: "社群",
       icon: "tools_group",
+      onClick: () => goPage("dicPlayer"),
     },
   ];
 

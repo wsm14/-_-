@@ -40,14 +40,11 @@ export default () => {
 
   return (
     <View className="PurseWithdraw_content">
-      <View className="purseWithdraw_info">
-        <View className="purseWithdraw_info_cell">
-          <View style={{ flex: 1 }}>到账账户</View>
-          <Text>微信零钱</Text>
-        </View>
-        <View className="purseWithdraw_info_cell">
-          <View style={{ flex: 1 }}>账户实名</View>
-          <Text>某某某</Text>
+      <View className="PurseWithdraw_card">
+        <View className="PurseWithdraw_bankIcon"></View>
+        <View className="PurseWithdraw_text">
+          <View className="PurseWithdraw_bankName">中国邮政储蓄银行</View>
+          <View className="PurseWithdraw_address">尾号 8888 储蓄卡</View>
         </View>
       </View>
       <View className="purseWithdraw_handle">
@@ -68,7 +65,7 @@ export default () => {
               <Text className={priceError ? `error` : ""}>
                 {priceError
                   ? "输入金额超过可提现金额"
-                  : `当前可提现金额 ¥${settlerPrice}`}
+                  : `可最高提现 ¥${settlerPrice}（${settlerPrice * 100}卡豆）`}
               </Text>
               <Text
                 className="purseWithdraw_all_price"
@@ -81,6 +78,17 @@ export default () => {
               确认提现
             </Button>
           </Form>
+        </View>
+      </View>
+      <View className="purseWithdraw_toast">
+        <View className="font28 color8">提现说明</View>
+        <View className="purseWithdraw_info_content">
+          <View> 1.单笔提现金额最低为20元人民币（2000卡豆）</View>
+          <View> 2.提现申请将在7个工作日内审核到账，请耐心等待）</View>
+          <View> 3.每日可申请提现一次，若当日次数已满，请次日申请）</View>
+          <View>
+            4.提现金额不满2000元人民币（200000卡豆），每次提现手续费为2元人民币，超过或包含2000元人民（200000卡豆）免提现手续费。）
+          </View>
         </View>
       </View>
     </View>

@@ -150,26 +150,22 @@
     background: #ffffff;
     padding: 40px 32px 32px;
     position: relative;
-    .community_goodCard_title {
-      display: flex;
-      align-items: center;
-      .community_goodCard_titlesInfo {
-        max-width: 512px;
-        font-size: 32px;
-        font-weight: 600;
-        color: #333333;
-        line-height: 32px;
-      }
+    .community_goodCard_titlesInfo {
+      font-size: 26px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 38px;
+      display: inline-block;
     }
     .community_goodCard_tags {
       background: rgba(7, 192, 194, 0.1);
-      display: block;
       font-size: 20px;
       font-weight: 400;
       color: #07c0c2;
       padding: 5px 14px;
-      content: "";
       margin-left: 24px;
+      display: inline-block;
+      line-height: 1;
     }
     .community_goodCard_data {
       margin-top: 32px;

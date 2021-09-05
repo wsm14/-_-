@@ -11,7 +11,7 @@ import {
   fakeUpdateAddress,
 } from "@/server/relay";
 import "./index.scss";
-import { toast } from "@/common/utils";
+import { goBack, toast } from "@/common/utils";
 import { navigatePostBack } from "@/relay/common/hooks";
 
 class Index extends Component {
@@ -23,6 +23,7 @@ class Index extends Component {
       selectIndex: getCurrentInstance().router.params.selectIndex || 0,
       defaultData: {},
       type: "edit",
+      mode: getCurrentInstance().router.params.mode,
     };
   }
   componentWillUnmount() {}
@@ -101,6 +102,7 @@ class Index extends Component {
         this.setState(
           {
             showAddress: false,
+            defaultData: {},
           },
           (res) => {
             this.fetchAddress();
@@ -110,16 +112,24 @@ class Index extends Component {
       .catch((val) => {
         this.setState({
           showAddress: false,
+          defaultData: {},
         });
       });
   }
   //获取新增地址
   changeSelect(index) {
-    const { selectIndex } = this.state;
+    const { selectIndex, mode } = this.state;
     if (selectIndex !== index) {
-      this.setState({
-        selectIndex: index,
-      });
+      this.setState(
+        {
+          selectIndex: index,
+        },
+        (res) => {
+          if (mode !== "list") {
+            goBack();
+          }
+        }
+      );
     }
   }
   //选择地址

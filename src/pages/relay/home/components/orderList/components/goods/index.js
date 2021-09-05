@@ -39,7 +39,7 @@ export default (props) => {
   //订单支付渲染模板
   const orderTitle = {
     0: <View className="color3">待支付</View>,
-    1: <View className="color4">已支付</View>,
+    1: <View className="color4">待核销</View>,
     2: <View className="color2">已关闭</View>,
     3: <View className="color2">已完成</View>,
   }[status];
@@ -90,12 +90,13 @@ export default (props) => {
           </View>
           <View
             className="relay_order_ShopType"
-            onClick={() =>
+            onClick={(e) => {
+              e.stopPropagation();
               Router({
                 routerName: "communityGoods",
                 args: { communityOrganizationId, ownerId },
-              })
-            }
+              });
+            }}
           >
             <View className="relay_order_ShopType1  font_hide">{title}</View>
             <View className="relay_order_ShopType2"></View>

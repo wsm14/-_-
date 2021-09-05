@@ -5,8 +5,10 @@ import {
   fetchGroupOpen,
   fetchGroupDelete,
   fetchGroupDoTop,
-  fetchTest,
+  fetchUserPay,
 } from "@/server/relay";
+import { toast } from "@/common/utils.js";
+const AdaPay = require("./../../payPrice/adaPay.js");
 
 /**
  * 数据回传监听
@@ -139,7 +141,16 @@ export function handleOrdertools(data = {}, callback) {
 }
 //微信支付
 export function handlePayWechat(data = {}, callback) {
-  fetchTest({ ...data }).then((val) => {
-    callback && callback();
+  fetchUserPay({ ...data }).then((val) => {
+    const { status, error_msg } = val;
+    if (status === "succeeded") {
+      AdaPay.doPay(val, (payRes) => {
+        if (payRes.result_status == "succeeded") {
+          callback && callback(payRes);
+        }
+      });
+    } else {
+      toast(error_msg || "支付失败");
+    }
   });
 }
