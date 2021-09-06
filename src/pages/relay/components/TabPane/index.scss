@@ -1,0 +1,32 @@
+@import "@/assets/css/global.scss";
+
+.tab_content {
+  @include flexCenterA;
+  justify-content: space-between;
+  position: relative;
+  color: #666666;
+  font-size: 24px;
+  flex: 1;
+  .tabFont {
+    position: relative;
+    text-align: center;
+  }
+
+  .active {
+    font-weight: 600;
+    color: #333333;
+    font-size: 28px;
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      width: 32px;
+      height: 8px;
+      background: #07c0c2;
+      border-radius: 4px;
+      transform: translate(-50%, 0);
+    }
+  }
+}

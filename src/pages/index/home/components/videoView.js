@@ -59,6 +59,7 @@ export default ({
                 watchStatus,
                 beanFlag,
               } = item;
+
               if (
                 index === current ||
                 index === current + 1 ||
@@ -101,14 +102,16 @@ export default ({
                         }}
                       >
                         <Video
-                          src={JSON.parse(videoContent || "{}").url}
-                          poster={frontImage}
+                          src={
+                            JSON.parse(videoContent || "{}").m3u8Url ||
+                            JSON.parse(videoContent || "{}").url
+                          }
                           style={{
                             height: "100%",
                             width: "100%",
                           }}
                           controls={false}
-                          // custom-cache={false}
+                          custom-cache={false}
                           enableProgressGesture={false}
                           autoplay={index === current ? true : false}
                           showFullscreenBtn={false}

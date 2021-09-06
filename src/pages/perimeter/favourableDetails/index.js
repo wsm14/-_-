@@ -165,6 +165,7 @@ class MerchantDetails extends Component {
           qcodeUrl,
           buyPrice = 0,
           saveMoney = "",
+          shareImg,
         } = res;
         this.setState({
           cavansObj: {
@@ -184,6 +185,7 @@ class MerchantDetails extends Component {
               merchantLogo: image,
               buyPrice,
               saveMoney,
+              shareImg,
             }),
           },
           specialGoodsInfo: {
@@ -255,7 +257,7 @@ class MerchantDetails extends Component {
               },
             },
             (res) => {
-              toast("收藏成功");
+              toast("收藏成功,请打开「哒卡乐APP」查看收藏详情");
             }
           );
         }
@@ -302,7 +304,6 @@ class MerchantDetails extends Component {
       buyRule === "personLimit" &&
       personLimit === boughtActivityGoodsNum
     ) {
-      console.log(222);
       this.setState({
         visible: true,
       });
@@ -366,10 +367,17 @@ class MerchantDetails extends Component {
     } = this.state;
     const { login } = this.props.store.authStore;
     const { beanLimitStatus } = this.props.store.homeStore;
+    const { beanLimit } = this.props.store.commonStore;
     const shareInfoBtn = () => {
       if (shareCommission > 0) {
         return (
-          <ButtonView>
+          <ButtonView
+            data={{
+              path: "pages/perimeter/favourableDetails/index",
+              type: "favourableDetails_share",
+              name: "商品详情分享",
+            }}
+          >
             <View
               onClick={() => loginBtn(() => this.getShareInfo())}
               className="shopdetails_shop_btnBox2 shopdetails_shop_btnColor2"
@@ -385,7 +393,13 @@ class MerchantDetails extends Component {
         );
       } else {
         return (
-          <ButtonView>
+          <ButtonView
+            data={{
+              path: "pages/perimeter/favourableDetails/index",
+              type: "favourableDetails_share",
+              name: "商品详情分享",
+            }}
+          >
             <View
               onClick={() => loginBtn(() => this.getShareInfo())}
               className="shopdetails_shop_btnBox2 shopdetails_shop_btnColor2"
@@ -422,8 +436,13 @@ class MerchantDetails extends Component {
       } else if (shareCommission !== 0) {
         return (
           <View className="shopdetails_shop_btnBox">
-            <ButtonView>
-              {" "}
+            <ButtonView
+              data={{
+                path: "pages/perimeter/favourableDetails/index",
+                type: "favourableDetails_share",
+                name: "商品详情购买",
+              }}
+            >
               <View
                 className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"
                 onClick={() => loginBtn(() => this.saveGoodsOrder())}
@@ -442,7 +461,13 @@ class MerchantDetails extends Component {
       } else {
         return (
           <View className="shopdetails_shop_btnBox">
-            <ButtonView>
+            <ButtonView
+              data={{
+                path: "pages/perimeter/favourableDetails/index",
+                type: "favourableDetails_share",
+                name: "商品详情购买",
+              }}
+            >
               {" "}
               <View
                 className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"
@@ -488,6 +513,7 @@ class MerchantDetails extends Component {
                 this.setState({ cavansObj: { start: false, data: null } })
               }
             ></TaroShareDrawer>
+
             <View className="shopDetails_banner dakale_nullImage">
               <Banner
                 autoplay={
@@ -625,6 +651,7 @@ class MerchantDetails extends Component {
             ></Recommend>
             <VideoBean
               visible={beanLimitStatus === "1"}
+              beanLimit={beanLimit}
               price={(realPrice * (payBeanCommission / 100))
                 .toFixed(3)
                 .substring(
@@ -682,7 +709,7 @@ class MerchantDetails extends Component {
               status={beanLimitStatus}
             ></Wares>
             {filterPath(getCurrentInstance().router.params) &&
-              !Taro.getStorageSync("newDeviceFlag") && (
+              !Taro.getStorageSync("deviceFlag") && (
                 <NewToast
                   type={"goods"}
                   auth={login}
@@ -695,7 +722,7 @@ class MerchantDetails extends Component {
         return (
           <ActivityStatus userInfo={configUserLevelInfo}>
             {filterPath(getCurrentInstance().router.params) &&
-              !Taro.getStorageSync("newDeviceFlag") && (
+              !Taro.getStorageSync("deviceFlag") && (
                 <NewToast
                   type={"goods"}
                   auth={login}

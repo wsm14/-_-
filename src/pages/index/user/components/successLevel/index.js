@@ -9,38 +9,30 @@ export default (props) => {
   if (visible) {
     return (
       <View
-        className="rules_box public_center"
+        className="rules_box animated fadeIn public_center"
         onClick={(e) => {
           e.stopPropagation();
           onClose();
         }}
         catchMove
       >
-        <View
-          className="rules_success_box"
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <View className="rules_success_btn public_auto">
+        <View>
+          <View
+            className="rules_success_box"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <View
-              className="rules_success_btnLeft public_center"
-              onClick={(e) => {
-                e.stopPropagation();
-                onClose();
-              }}
-            >
-              取消
-            </View>
-            <View
-              className="rules_success_btnRight public_center"
+              className="rules_success_btn public_center"
               onClick={() => {
                 canfirm();
               }}
             >
-              打开APP查看权益
+              立即下载「哒卡乐」APP
             </View>
           </View>
+          <View className="user_toast_close" onClick={() => onClose()}></View>
         </View>
       </View>
     );

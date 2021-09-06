@@ -3,8 +3,7 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
 import { goods } from "@/api/api";
 import { httpGet, httpPost } from "@/api/newRequest";
-import { getNuwUserFirstOrderInfo } from "@/server/goods";
-
+import { getConfigNewcomerOrders } from "@/server/goods";
 import {
   toast,
   backgroundObj,
@@ -13,13 +12,17 @@ import {
   switchTab,
   filterGoods,
 } from "@/common/utils";
+import { fetchUserShareCommission } from "@/server/index";
 import Title from "./components/goodsTitle";
 import ShopCard from "./components/descriptionCard";
-import Lovely from "@/components/lovely";
-import CouponLovely from "@/components/couponLovely";
 import Router from "@/common/router";
-import Toast from "./components/paySuccessToast";
+import Toast from "@/components/paySuccess";
+import { inject, observer } from "mobx-react";
+import RecommendCoupon from "@/components/couponActive";
+import RecommendSpecal from "@/components/specalActive";
 import "./index.scss";
+@inject("store")
+@observer
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -30,6 +33,7 @@ class Index extends Component {
       orderResult: {},
       visible: false,
       configNewcomerOrdersInfo: {},
+      configUserLevelInfo: {},
     };
   }
 
@@ -39,7 +43,8 @@ class Index extends Component {
     }
   }
   componentDidMount() {
-    this.getOwnToast();
+    this.fetchConfigNewcomerOrders();
+    this.fetchUserShareCommission();
   }
   componentDidShow() {
     this.getOrderResult();
@@ -71,26 +76,46 @@ class Index extends Component {
       },
     });
   }
-  getOwnToast() {
-    getNuwUserFirstOrderInfo({}, (res) => {
-      const { configNewcomerOrdersInfo } = res;
-      if (configNewcomerOrdersInfo) {
-        this.setState({
-          visible: true,
-          configNewcomerOrdersInfo,
-        });
-      }
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
     });
   }
-  onError(msg) {
+  fetchConfigNewcomerOrders() {
+    getConfigNewcomerOrders({}, (res) => {
+      const { configNewcomerOrdersInfo = {} } = res;
+      const { taskStatus = "2" } = configNewcomerOrdersInfo;
+      this.setState(
+        {
+          configNewcomerOrdersInfo: { ...configNewcomerOrdersInfo, taskStatus },
+        },
+        (res) => {
+          const { beanLimitStatus } = this.props.store.homeStore;
+          if (
+            taskStatus === "0" ||
+            taskStatus === "1" ||
+            beanLimitStatus === "1"
+          ) {
+            this.setState({ visible: true });
+          }
+        }
+      );
+    });
   }
+  onError(msg) {}
   render() {
     const {
       orderResult,
-      orderResult: { orderType = "specialGoods" },
+      orderResult: { orderType = "specialGoods", beanFee },
       visible,
+      configUserLevelInfo,
       configNewcomerOrdersInfo,
     } = this.state;
+    const { beanLimitStatus } = this.props.store.homeStore;
+    const { beanLimit } = this.props.store.commonStore;
     return (
       <View className="pay_details_payDetails">
         <Title></Title>
@@ -99,7 +124,6 @@ class Index extends Component {
           fn={() => this.getOrderResult()}
           data={orderResult}
         ></ShopCard>
-
         <View className="pay_goGoods public_center">
           <View className="color8 font24">
             可在卡包和订单详情中查看
@@ -113,21 +137,27 @@ class Index extends Component {
           </View>
         </View>
         <Toast
+          data={configNewcomerOrdersInfo}
+          show={visible}
+          beanLimit={beanLimit}
+          beanLimitStatus={beanLimitStatus}
           visible={() => {
             this.setState({
               visible: false,
             });
           }}
-          data={configNewcomerOrdersInfo}
-          show={visible}
         ></Toast>
-        <View className="maybe_love">
-          {orderType === "specialGoods" ? (
-            <Lovely title={"小伙伴们还喜欢"}></Lovely>
-          ) : (
-            <CouponLovely title={"小伙伴们还喜欢"}></CouponLovely>
-          )}
-        </View>
+        {orderType === "specialGoods" ? (
+          <RecommendSpecal
+            current={true}
+            userInfo={configUserLevelInfo}
+          ></RecommendSpecal>
+        ) : (
+          <RecommendCoupon
+            current={true}
+            userInfo={configUserLevelInfo}
+          ></RecommendCoupon>
+        )}
       </View>
     );
   }

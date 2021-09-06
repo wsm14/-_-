@@ -3,120 +3,97 @@ page {
   height: 100%;
   background: #ffffff;
 }
+.kaMerchantDetails_new_infoBox {
+  padding-bottom: 24px;
+}
 .kaMerchantDetails_box {
   width: 100%;
   background: #ffffff;
   .kaMerchantDetails_bg {
     width: 750px;
-    height: 320px;
+    height: 440px;
     position: relative;
-    .kaMerchantDetails_bg_gs {
+  }
+  .kaMerchantDetails_top_content {
+    margin: 32px 24px 0;
+    display: flex;
+    position: relative;
+    .kaMerchantDetails_order_link {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
       right: 0;
-      bottom: 0;
-      overflow: hidden;
-      .kaMerchantDetails_bg_gsImge {
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        position: relative;
-      }
-      .kaMerchantDetails_gs {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          180deg,
-          rgba(0, 0, 0, 0.5) 0%,
-          #000000 100%
-        );
-        opacity: 0.4;
-        z-index: 2;
-      }
-    }
-
-    .kaMerchantDetails_top_box {
-      padding-top: 186px;
-      position: relative;
-      z-index: 10;
-    }
-    .kaMerchantDetails_top_content {
-      padding: 0 32px;
+      top: 17px;
       display: flex;
+      font-size: 24px;
+      font-weight: 400;
+      color: #07c0c2;
+      line-height: 24px;
       align-items: center;
-      .kaMerchantDetails_top_profile {
-        width: 102px;
-        height: 102px;
-        border-radius: 4px;
+    }
+    .kaMerchantDetails_top_profile {
+      width: 102px;
+      height: 102px;
+      border-radius: 4px;
+    }
+    .kaMerchantDetails_top_body {
+      margin-left: 16px;
+      padding-top: 11px;
+      .kaMerchantDetails_top_nameBox {
+        display: flex;
+        align-items: center;
       }
-      .kaMerchantDetails_top_body {
-        margin-left: 16px;
-        padding-top: 11px;
-        .kaMerchantDetails_top_nameBox {
-          display: flex;
-          align-items: center;
+      .kaMerchantDetails_top_name {
+        font-size: 32px;
+        font-weight: 600;
+        color: #333333;
+        max-width: 412px;
+      }
+      .kaMerchantDetails_top_icon::after {
+        display: block;
+        content: "";
+        width: 50px;
+        height: 28px;
+        background: url(https://wechat-config.dakale.net/miniprogram/image/icon684.png)
+          no-repeat;
+        background-size: 100% 100%;
+        margin-left: 8px;
+      }
+      .kaMerchantDetails_top_addressBox {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+        margin-top: 16px;
+      }
+      .kaMerchantDetails_top_address {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+        .kaMerchantDetails_top_addressMax {
+          max-width: 410px;
         }
-        .kaMerchantDetails_top_name {
-          font-size: 32px;
-          font-weight: 600;
-          color: #ffffff;
-          max-width: 432px;
-        }
-        .kaMerchantDetails_top_icon::after {
-          display: block;
-          content: "";
-          width: 50px;
-          height: 28px;
-          background: url(https://wechat-config.dakale.net/miniprogram/image/icon684.png)
-            no-repeat;
-          background-size: 100% 100%;
-          margin-left: 8px;
-        }
-        .kaMerchantDetails_top_addressBox {
-          display: flex;
-          align-items: center;
-          font-size: 24px;
-          font-weight: 400;
-          color: #ffffff;
-          margin-top: 16px;
-        }
-        .kaMerchantDetails_top_address {
-          display: flex;
-          align-items: center;
-          font-size: 24px;
-          font-weight: 400;
-          color: #ffffff;
-          .kaMerchantDetails_top_addressMax {
-            max-width: 410px;
-          }
-        }
-        .kaMerchantDetails_top_address::before {
-          display: block;
-          content: "";
-          width: 32px;
-          height: 32px;
-          background: url(https://wechat-config.dakale.net/miniprogram/image/icon687.png)
-            no-repeat;
-          background-size: 100% 100%;
-        }
-        .kaMerchantDetails_top_address::after {
-          display: block;
-          content: "";
-          width: 24px;
-          height: 24px;
-          background: url(https://wechat-config.dakale.net/miniprogram/image/icon688.png)
-            no-repeat;
-          background-size: 100% 100%;
-          margin-left: 8px;
-        }
+      }
+      .kaMerchantDetails_top_addressBox::before {
+        display: block;
+        content: "";
+        width: 32px;
+        height: 32px;
+        background: url(https://wechat-config.dakale.net/miniprogram/image/icon739.png)
+          no-repeat;
+        background-size: 100% 100%;
+        margin-right: 8px;
+      }
+      .kaMerchantDetails_top_addressBox::after {
+        display: block;
+        content: "";
+        width: 24px;
+        height: 24px;
+        background: url(https://wechat-config.dakale.net/miniprogram/image/icon740.png)
+          no-repeat;
+        background-size: 100% 100%;
+        margin-left: 8px;
       }
     }
   }
@@ -203,5 +180,43 @@ page {
   }
   .kaMerchantDetails_coupon_list {
     margin: 40px auto 0;
+  }
+  .brand_details {
+    width: 702px;
+    height: 47px;
+    margin: 47px 24px 0;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon741.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .brand_details_desc {
+    margin: 32px 24px 0px;
+    font-size: 26px;
+    font-weight: 400;
+    color: #666666;
+    line-height: 48px;
+  }
+  .brand_details_descMax {
+    max-height: 140px;
+    overflow: hidden;
+  }
+  .brand_details_btn {
+    width: 40px;
+    height: 40px;
+    margin: 21px auto 0px;
+  }
+  .brand_details_btnStyle1 {
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon743.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .brand_details_btnStyle2 {
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon742.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .brand_details_liner {
+    background: #f5f5f5;
+    height: 16px;
   }
 }

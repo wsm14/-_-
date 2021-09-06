@@ -1,10 +1,9 @@
 import React from "react";
 import Taro from "@tarojs/taro";
 import { View, Button } from "@tarojs/components";
-import Banner from "@/components/banner";
+
 import { navigateTo, toast } from "@/common/utils";
 import Router from "@/common/router";
-import "./../../index.scss";
 
 export default ({ list = [] }) => {
   const listTem = [
@@ -14,8 +13,16 @@ export default ({ list = [] }) => {
     },
     {
       style: "users_setting_icon2",
-      font: "意见反馈",
-      fn: () => navigateTo("/pages/share/download/index"),
+      font: "商户入驻",
+      fn: () => {
+        Router({
+          routerName: "webView",
+          args: {
+            title: "商户入驻",
+            link: "https://web-new.dakale.net/product/page/registerDownload/merchantRegustration.html",
+          },
+        });
+      },
     },
     {
       style: "users_setting_icon3",
@@ -68,23 +75,8 @@ export default ({ list = [] }) => {
           <View className="share_link public_center">去推店</View>
         </View>
       </View>
-      {list.length > 0 && (
-        <View className="banner_view">
-          <Banner
-            showNear={true}
-            autoplay={list.length > 1 ? true : false}
-            imgStyle
-            data={list}
-            imgName={"coverImg"}
-            style={{ width: "100%", height: "100%" }}
-            boxStyle={{ width: "100%", height: "100%" }}
-            bottom={{ bottom: Taro.pxTransform(104) }}
-          ></Banner>
-        </View>
-      )}
-
       <View className="users_ourSetting">
-        <View className="users_ourSetting_title font40 color1 bold">
+        <View className="users_ourSetting_title font36 color1 bold">
           更多功能
         </View>
         <View className="users_ourSetting_bg">

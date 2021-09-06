@@ -95,7 +95,7 @@ export const getBanner = (data, fn) => {
 parent：activity
 child：hideStatus*/
 export const getDictionary = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       data: data,
       url: "/common/dictionary/getDictionaryByParentAndChild",
@@ -236,7 +236,7 @@ export const getShareInfo = (data = {}, fn) => {
   const { authStore } = store;
   const { shareType = {} } = authStore;
   const { sourceKey, sourceType } = shareType;
-  httpGet(
+  return httpGet(
     {
       url: "/common/share/getShareInfo",
       data: {

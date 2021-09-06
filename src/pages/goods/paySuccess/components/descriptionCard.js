@@ -9,12 +9,12 @@ import {
   Image,
 } from "@tarojs/components";
 import QR from "wxmp-qrcode";
-import "./../index.scss";
 import classNames from "classnames";
 import { backgroundObj, filterWeek } from "@/common/utils";
 import drawQrcode from "weapp-qrcode";
 import Taro from "@tarojs/taro";
-
+import Router from "@/common/router";
+import "./../index.scss";
 export default (props) => {
   const { data, fn, visible } = props;
   const [orderResult, setOrderResult] = useState({});
@@ -33,6 +33,7 @@ export default (props) => {
     goodsName,
     specialGoods = {},
     reduceCoupon = {},
+    beanFee,
   } = orderResult;
   useEffect(() => {
     setTimeout(() => {
@@ -86,7 +87,6 @@ export default (props) => {
             );
           })}
         </Swiper>
-
         <View
           onClick={() => onChangeLeft()}
           className="code_left codeLeft_icon codePosition"
@@ -110,7 +110,6 @@ export default (props) => {
     }
     return setCurrent(current + 1);
   };
-
   return (
     <View className="paySuccess_box">
       <View
@@ -144,6 +143,33 @@ export default (props) => {
         <View className="onReadly_icon onReadly_iconBox"></View>
         如果券码不显示，点这里刷新
       </View>
+      {beanFee ? (
+        <View
+          style={{ marginTop: Taro.pxTransform(40) }}
+          className="bean_order color1"
+        >
+          <View className="bean_order_logo"></View>
+          <View className="bean_order_bean">
+            本单卡豆帮您节省
+            <Text className="color3">
+              ¥{(Number(beanFee) / 100).toFixed(2)}元
+            </Text>
+          </View>
+          <View
+            className="bean_order_link color3"
+            onClick={() =>
+              Router({
+                routerName: "nearVideo",
+                args: {
+                  type: "goods",
+                },
+              })
+            }
+          >
+            继续捡豆
+          </View>
+        </View>
+      ) : null}
       <View className="pay_goLiner"></View>
     </View>
   );

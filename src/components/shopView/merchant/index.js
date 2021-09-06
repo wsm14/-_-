@@ -8,6 +8,7 @@ import {
   filterStrList,
   mapGo,
   filterWeek,
+  backgroundObj,
 } from "@/common/utils";
 import MakePhone from "@/components/payTelephone";
 import classNames from "classnames";
@@ -49,12 +50,10 @@ export default (props) => {
       >
         <View className="merchant_card_link">进店看看 {" >"}</View>
         <View className="merchant_card_box">
-          <View className="merchant_card_img merchant_dakale_logo">
-            <Image
-              style={{ width: "100%", height: "100%", borderRadius: "4px" }}
-              src={merchantLogo}
-            ></Image>
-          </View>
+          <View
+            style={backgroundObj(merchantLogo)}
+            className="merchant_card_img merchant_dakale_logo"
+          ></View>
           <View className="merchant_card_right">
             <View className="merchant_card_name  font_hide">
               <View className="merchant_card_user bold color1 font_hide">

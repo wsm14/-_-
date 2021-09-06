@@ -369,7 +369,13 @@ class MerchantDetails extends Component {
           <Banner
             autoplay={imageUrl.split(",").length > 1 ? true : false}
             imgStyle
-            data={imageUrl ? imageUrl.split(",") : []}
+            data={
+              imageUrl
+                ? imageUrl.split(",")
+                : [
+                    "https://wechat-config.dakale.net/miniprogram/image/icon744.png",
+                  ]
+            }
             imgName={"coverImg"}
             style={{ width: "100%", height: Taro.pxTransform(440) }}
             boxStyle={{ width: "100%", height: Taro.pxTransform(440) }}
@@ -708,7 +714,7 @@ class MerchantDetails extends Component {
             ></Coupons>
           )}
           {filterPath(getCurrentInstance().router.params) &&
-            !Taro.getStorageSync("newDeviceFlag") && (
+            !Taro.getStorageSync("deviceFlag") && (
               <NewToast
                 type={"merchant"}
                 auth={login}
@@ -721,7 +727,7 @@ class MerchantDetails extends Component {
       return (
         <NullStatus data={userMerchantInfo}>
           {filterPath(getCurrentInstance().router.params) &&
-            !Taro.getStorageSync("newDeviceFlag") && (
+            !Taro.getStorageSync("deviceFlag") && (
               <NewToast
                 type={"merchant"}
                 auth={login}

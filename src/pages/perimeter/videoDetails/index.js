@@ -449,7 +449,7 @@ class Index extends React.PureComponent {
           }
         ></TaroShareDrawer>
         {filterPath(getCurrentInstance().router.params) &&
-          !Taro.getStorageSync("newDeviceFlag") && (
+          !Taro.getStorageSync("deviceFlag") && (
             <NewToast
               type={"merchant"}
               stopVideo={() => {

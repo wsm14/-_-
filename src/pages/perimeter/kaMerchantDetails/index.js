@@ -90,6 +90,7 @@ class Index extends Component {
     return (
       <View className="kaMerchantDetails_box">
         <Top data={{ ...userMerchantInfo, ...merchantGroupInfo }}></Top>
+        <View className="brand_details_liner"></View>
         <Goods
           list={specialGoodsList}
           merchantGroupId={merchantGroupId}

@@ -29,7 +29,6 @@ import Navition from "./components/navition";
 import Plate from "./components/plate";
 import SelectSpecal from "./components/selectSpecal";
 import SpecalPlate from "./components/specalPlate";
-import ActiveToast from "@/components/componentView/active/tabbarBox";
 import ConfigWind from "./components/configWindVane";
 import "./index.scss";
 @inject("store")
@@ -356,7 +355,7 @@ class Index extends Component {
                 : "lookAround_categorys_flag"
             )}
           >
-            <View className="lookAround_topText">周边特惠</View>
+            <View className="lookAround_topText">特惠推荐</View>
             <View
               className={classNames(
                 "lookAround_categorys_iconText",
@@ -440,7 +439,6 @@ class Index extends Component {
     return (
       <View className="lookAround_box">
         <Navition city={cityName}></Navition>
-        <ActiveToast store={activeInfoStore}></ActiveToast>
         {num === 0 && (
           <View className="wechant_init color6 font28">
             “添加到我的小程序”，更多优惠抢不停
@@ -455,16 +453,18 @@ class Index extends Component {
           className="lookAround_category_box"
           onScroll={(e) => {
             getDom(".lookAround_categorys_box", (res) => {
-              const { top } = res[0];
-              if (top) {
-                if (top < 40) {
-                  this.setState({
-                    flagDom: true,
-                  });
-                } else {
-                  this.setState({
-                    flagDom: false,
-                  });
+              if (res[0]) {
+                const { top } = res[0];
+                if (top) {
+                  if (top < 40) {
+                    this.setState({
+                      flagDom: true,
+                    });
+                  } else {
+                    this.setState({
+                      flagDom: false,
+                    });
+                  }
                 }
               }
             });

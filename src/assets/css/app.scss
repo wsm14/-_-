@@ -3052,7 +3052,6 @@ image {
   background: rgba(0, 0, 0, 0.6);
 }
 .public_image_radius {
-  border-radius: 8px;
 }
 @keyframes loading {
   0% {
@@ -3086,7 +3085,7 @@ image {
 .skeleton-row,
 .skeleton-title,
 .skeleton-action {
-  background-color: #796c6c4f !important;
+  background-color: #e5e5e5 !important;
 }
 .active_Rule {
   width: 50px;
@@ -3097,4 +3096,45 @@ image {
   top: 40px;
   right: 0;
   z-index: 1000;
+}
+.bean_order {
+  margin: 0px 32px 0;
+  display: flex;
+  align-items: center;
+  background: #fef4f7;
+  height: 70px;
+  .bean_order_logo {
+    width: 54px;
+    height: 54px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon727.png);
+    background-size: 100% 100%;
+    margin-left: 12px;
+  }
+  .bean_order_bean {
+    font-size: 26px;
+    font-weight: 400;
+    color: #333333;
+    margin-left: 16px;
+  }
+  .bean_order_link {
+    margin-left: auto;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ef476f;
+    display: flex;
+    align-items: center;
+  }
+  .bean_order_link::after {
+    width: 24px;
+    height: 24px;
+    margin-left: 4px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon728.png);
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+    margin-right: 16px;
+  }
+}
+.skeleton-avatar {
+  background-color: #e5e5e5 !important;
 }

@@ -10,7 +10,6 @@ import Router from "@/common/router";
 
 const goMerchant = (val) => {
   const { ownerType, merchantIdString, ownerIdString } = val;
-  console.log(1111, val);
   if (ownerType !== "group") {
     navigateTo(
       `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
@@ -239,7 +238,7 @@ export default (props) => {
         >
           <View className="createdGood_details_box">
             <View
-              className="createdGood_details_image dakale_nullImage"
+              className="createdGood_details_image merchant_dakale_logo"
               style={merchantImg ? backgroundObj(merchantImg) : {}}
             ></View>
             <View className="createdGood_details_setting">

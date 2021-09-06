@@ -1,0 +1,83 @@
+page {
+  width: 100%;
+  min-height: 100%;
+}
+.relay_box_home {
+  line-height: 1;
+  padding: 0 0px 128px;
+  .relay_tabbar_text {
+    padding-top: 12px;
+    text-align: center;
+    font-size: 24px;
+  }
+}
+.relay_gif {
+  position: fixed;
+  right: 32px;
+  bottom: 368px;
+  width: 140px;
+  height: 140px;
+  z-index: 1112;
+  background: url("https://wechat-config.dakale.net/miniprogram/relay/relay_video.gif")
+    no-repeat;
+  background-size: 100% 100%;
+}
+.relay_tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  border-top: 1px solid #eeeeee;
+  display: flex;
+  background: #ffffff;
+  z-index: 9999;
+  .relay_tabbar_icon {
+    flex: 1 1;
+  }
+  .relay_tabbar_bg {
+    width: 48px;
+    height: 48px;
+    margin: 24px auto 0;
+  }
+  .home_select {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_nohome.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .home_noSelect {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_home.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .good_select {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_nogood.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .good_noSelect {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_good.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .kaituan_Select {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_kt.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .user_select {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_nouser.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .user_noSelect {
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_user.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+}
+.home_relay_box {
+  width: 100%;
+  min-height: 100%;
+  background: #f5f5f5;
+}

@@ -291,7 +291,7 @@ class Index extends Component {
                 }
               >
                 <View
-                  className="order_merchant_userProfile dakale_profile merchant_dakale_logo"
+                  className="order_merchant_userProfile merchant_dakale_logo"
                   style={{ ...backgroundObj(merchantLogo) }}
                 ></View>
                 <View className="order_name font_hide">
@@ -386,7 +386,13 @@ class Index extends Component {
               抵扣：¥
               {this.showBean()}
             </View>
-            <ButtonView>
+            <ButtonView
+              data={{
+                path: "pages/goods/favourOrder/index",
+                type: "favourOrder_pay",
+                name: "商品订单支付",
+              }}
+            >
               <View className="payBtn" onClick={() => this.saveCancel()}>
                 立即支付
               </View>

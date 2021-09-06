@@ -16,7 +16,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
   const { newUserFlag, newUserBean } = beanInfo;
   useEffect(() => {
     const { shareUserId } = data;
-    if (shareUserId && !Object.keys(userInfo).length) {
+    if (shareUserId && !Object.keys(userInfo).length && type !== "index") {
       getShareInfo({ userId: shareUserId }, (res) => {
         const { userInfo } = res;
         setUserInfo(userInfo);
@@ -30,7 +30,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
       }).then((val) => {
         const { newUserFlag = "1", newUserBean = "300" } = val;
         setBeanInfo({
-          newUserFlag: newUserFlag,
+          newUserFlag,
           newUserBean,
         });
       });
@@ -39,7 +39,6 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
 
   useEffect(() => {
     if (newUserFlag === "1" && visible) {
-      console.log(newUserFlag);
       animated();
     }
   }, [beanInfo]);
@@ -116,9 +115,9 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
         }}
       >
         <View className="noviceGuide_Box">
-          <View className="noviceGuide_image">
+          <View className="noviceGuide_image" onClick={() => login()}>
             <View className="noviceGuide_user font_hide">
-              @{username + " "}送你
+              {type !== "index" && `@${username + " "}送你`}
             </View>
             <View className="noviceGuide_font1"></View>
             <View className="noviceGuide_font2 public_center">
@@ -130,16 +129,11 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
               成功领取 立减
               <Text className="color14">{newUserBean / 100}元</Text>
             </View>
-            <View
-              className="noviceGuide_font4 public_center"
-              onClick={() => {
-                login();
-              }}
-            >
-              立即领取
-            </View>
           </View>
-          <View className="noviceGuide_Box_close"></View>
+          <View
+            className="noviceGuide_Box_close"
+            onClick={() => onClose()}
+          ></View>
         </View>
       </View>
     );

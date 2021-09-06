@@ -1,0 +1,11 @@
+.TimeRange {
+  width: 100%;
+  padding: 10px;
+  .shwoTime {
+    text-align: right;
+    padding: 10px;
+    & + .shwoTime {
+      margin-top: 5px;
+    }
+  }
+}

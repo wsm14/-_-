@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Taro from "@tarojs/taro";
 import { Swiper, SwiperItem, View, Image } from "@tarojs/components";
 import { getShareInfo } from "@/server/common";
-import { backgroundObj } from "@/common/utils";
+import { backgroundObj, filterStrList } from "@/common/utils";
 import { rssConfigData } from "./components/data";
 import Router from "@/common/router";
 import classNames from "classnames";
@@ -14,6 +14,7 @@ class Record extends Component {
     this.state = {
       httpData: {
         shareType: "mainPage",
+        needHyaline: "1",
       },
       userInfo: {},
       current: 0,
@@ -25,27 +26,27 @@ class Record extends Component {
       qcodeUrl: "",
       selectList: [
         {
-          url: "https://wechat-config.dakale.net/miniprogram/image/icon554.png",
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_1.png",
           color: "#EF476F",
         },
         {
-          url: "https://wechat-config.dakale.net/miniprogram/image/icon555.png",
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_2.png",
           color: "#FCC336",
         },
         {
-          url: "https://wechat-config.dakale.net/miniprogram/image/icon556.png",
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_3.png",
           color: "#07C0C2",
         },
         {
-          url: "https://wechat-config.dakale.net/miniprogram/image/icon557.png",
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_4.png",
           color: "#943EA3",
         },
         {
-          url: "https://wechat-config.dakale.net/miniprogram/image/icon558.png",
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_5.png",
           color: "#0061A8",
         },
         {
-          url: "https://wechat-config.dakale.net/miniprogram/image/icon559.png",
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_6.png",
           color: "#E83D3D",
         },
       ],
@@ -62,10 +63,19 @@ class Record extends Component {
   fetchShareInfo() {
     const { httpData } = this.state;
     getShareInfo(httpData, (res) => {
-      const { qcodeUrl } = res;
-      this.setState({
-        qcodeUrl,
-      });
+      const { qcodeUrl, backgroundImages } = res;
+      if (backgroundImages) {
+        this.setState({
+          selectList: filterStrList(backgroundImages).map((item) => {
+            return { url: item };
+          }),
+          qcodeUrl,
+        });
+      } else {
+        this.setState({
+          qcodeUrl,
+        });
+      }
     });
   }
   getShareInfo(type) {
@@ -82,7 +92,6 @@ class Record extends Component {
         data: rssConfigData({
           wxCode: qcodeUrl,
           username,
-          backgroundColor: selectList[current].color,
           background: selectList[current].url,
         }),
       },
@@ -131,7 +140,7 @@ class Record extends Component {
         >
           {selectList.map((item, index) => {
             return (
-              <SwiperItem className="share_swiperItem_box">
+              <SwiperItem className={classNames("share_swiperItem_box")}>
                 <View
                   className={classNames(
                     "share_swiperItem",
@@ -142,7 +151,10 @@ class Record extends Component {
                   }}
                 >
                   <View
-                    className="share_bg_style"
+                    className={classNames(
+                      "share_bg_style",
+                      current !== index && "share_swiper_boxScale"
+                    )}
                     style={{
                       ...backgroundObj(item.url),
                       borderRadius: 20,

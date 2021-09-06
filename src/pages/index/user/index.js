@@ -23,7 +23,8 @@ import Toast from "@/components/stopBean";
 import Rules from "./components/retailRules";
 import Success from "./components/successLevel";
 import ReloadBottom from "./components/reloadBottom";
-import ActiveToast from "@/components/componentView/active/tabbarBox";
+import LeverToast from "./components/userLevelToast";
+import Skeleton from "./components/SkeletonView";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
 @inject("store")
@@ -48,6 +49,9 @@ class Index extends React.Component {
         ruleStatus: false,
         successToast: false,
       },
+      levelToast: false,
+      loading: false,
+      size: 0,
     };
   }
   onPullDownRefresh() {
@@ -87,6 +91,13 @@ class Index extends React.Component {
     });
   }
   getUserDetails() {
+    const { size } = this.state;
+    if (size === 0) {
+      this.setState({
+        size: 1,
+        loading: true,
+      });
+    }
     getMainPage({}, (res) => {
       const { userInfo } = res;
       if (!userInfo) {
@@ -94,6 +105,7 @@ class Index extends React.Component {
         this.setState({
           userInfo: {},
           loginStatus: 0,
+          loading: false,
         });
         return;
       } else {
@@ -101,6 +113,7 @@ class Index extends React.Component {
           {
             loginStatus: 1,
             userInfo: { ...userInfo },
+            loading: false,
           },
           (res) => {
             this.getLevel();
@@ -108,6 +121,10 @@ class Index extends React.Component {
           }
         );
       }
+    }).catch((e) => {
+      this.setState({
+        loading: false,
+      });
     });
   }
   fetchCollect() {
@@ -119,7 +136,6 @@ class Index extends React.Component {
       },
     });
   }
-
   fetchLoad() {
     Router({
       routerName: "webView",
@@ -134,13 +150,6 @@ class Index extends React.Component {
       collectStatus,
       collectStatus: { toastClick, ruleStatus },
     } = this.state;
-    // if (!toastClick) {
-    //   this.setState({
-    //     collectStatus: {
-    //       ...collectStatus,
-    //       toastVisible: true,
-    //     },
-    //   });
     if (!ruleStatus) {
       this.setState({
         collectStatus: {
@@ -171,6 +180,17 @@ class Index extends React.Component {
       });
     });
   }
+
+  fetchUserLeverToast() {
+    const { level = "0" } = this.state.userInfo;
+    if (level === "0") {
+      this.fetchLoad();
+    } else {
+      this.setState({
+        levelToast: true,
+      });
+    }
+  }
   componentDidMount() {
     this.getBannerList();
   }
@@ -190,6 +210,8 @@ class Index extends React.Component {
       visible,
       collectStatus,
       collectStatus: { toastVisible, ruleVisible, successToast },
+      levelToast,
+      loading,
     } = this.state;
     const {
       homeStore = {},
@@ -197,93 +219,120 @@ class Index extends React.Component {
       activeInfoStore = {},
     } = this.props.store;
     return (
-      <View className="page_userBox">
-        <UserTitle
-          reload={() => {
-            this.getUserDetails();
-            this.setState({
-              visible: true,
-            });
-          }}
-          status={loginStatus}
-          data={userInfo}
-        ></UserTitle>
-
-        <View className="page_user_liner"></View>
-        <UserContent
-          levelDetails={levelDetails}
-          nextLevel={nextLevel}
-          status={loginStatus}
-          data={userInfo}
-          fetchLoad={this.fetchLoad.bind(this)}
-          infoCollect={this.fetchCollect.bind(this)}
-          fetchLever={this.fetchLever.bind(this)}
-        ></UserContent>
-        <View className="page_user_liner"></View>
-        <ActiveToast store={activeInfoStore}></ActiveToast>
-        <UserBottom list={bannerList}></UserBottom>
-        {visible && (
-          <Toast
-            cancel={() =>
+      <Skeleton loading={loading}>
+        <View className="page_userBox">
+          <UserTitle
+            reload={() => {
+              this.getUserDetails();
               this.setState({
-                visible: false,
-              })
-            }
-            visible={visible}
-            title={"账号已授权成功"}
-            canfirm={() => {
-              this.setState(
-                {
-                  visible: false,
-                },
-                (res) => {
-                  this.fetchCollect();
-                }
-              );
+                visible: true,
+              });
             }}
-            content={`更多福利通知建议关注「哒卡乐DAKALE」公众号`}
-            canfirmText="取消"
-            cancelText="去关注"
-          ></Toast>
-        )}
-        {toastVisible && (
-          <Toast
-            cancel={() =>
-              this.setState({
-                collectStatus: {
-                  ...collectStatus,
-                  toastVisible: false,
-                },
-              })
-            }
-            visible={toastVisible}
-            title={"恭喜您达到哒人的解锁条件"}
-            canfirm={() => {
-              this.setState(
-                {
+            status={loginStatus}
+            data={userInfo}
+          ></UserTitle>
+          <View className="page_user_liner"></View>
+          <UserContent
+            bannerList={bannerList}
+            levelDetails={levelDetails}
+            nextLevel={nextLevel}
+            status={loginStatus}
+            data={userInfo}
+            fetchLoad={this.fetchLoad.bind(this)}
+            infoCollect={this.fetchCollect.bind(this)}
+            fetchLever={this.fetchLever.bind(this)}
+            fetchUserLeverToast={this.fetchUserLeverToast.bind(this)}
+          ></UserContent>
+          <View className="page_user_liner"></View>
+          <UserBottom></UserBottom>
+          {visible && (
+            <Toast
+              cancel={() =>
+                this.setState({
+                  visible: false,
+                })
+              }
+              visible={visible}
+              title={"账号已授权成功"}
+              canfirm={() => {
+                this.setState(
+                  {
+                    visible: false,
+                  },
+                  (res) => {
+                    this.fetchCollect();
+                  }
+                );
+              }}
+              content={`更多福利通知建议关注「哒卡乐DAKALE」公众号`}
+              canfirmText="取消"
+              cancelText="去关注"
+            ></Toast>
+          )}
+          {toastVisible && (
+            <Toast
+              cancel={() =>
+                this.setState({
                   collectStatus: {
                     ...collectStatus,
                     toastVisible: false,
-                    toastClick: true,
                   },
-                },
-                (res) => {
-                  this.fetchCollect();
-                }
-              );
-            }}
-            content={`请先关注「哒卡乐DAKALE」公众号，收益到账立即知道`}
-            canfirmText="取消"
-            cancelText="去关注"
-          ></Toast>
-        )}
-        {ruleVisible && (
-          <Rules
+                })
+              }
+              visible={toastVisible}
+              title={"恭喜您达到哒人的解锁条件"}
+              canfirm={() => {
+                this.setState(
+                  {
+                    collectStatus: {
+                      ...collectStatus,
+                      toastVisible: false,
+                      toastClick: true,
+                    },
+                  },
+                  (res) => {
+                    this.fetchCollect();
+                  }
+                );
+              }}
+              content={`请先关注「哒卡乐DAKALE」公众号，收益到账立即知道`}
+              canfirmText="取消"
+              cancelText="去关注"
+            ></Toast>
+          )}
+          {ruleVisible && (
+            <Rules
+              onClose={() =>
+                this.setState({
+                  collectStatus: {
+                    ...collectStatus,
+                    ruleVisible: false,
+                  },
+                })
+              }
+              canfirm={() =>
+                this.setState(
+                  {
+                    collectStatus: {
+                      ...collectStatus,
+                      ruleVisible: false,
+                      ruleStatus: true,
+                    },
+                  },
+                  (res) => {
+                    this.fetchLever();
+                  }
+                )
+              }
+              visible={ruleVisible}
+            ></Rules>
+          )}
+          <Success
             onClose={() =>
               this.setState({
                 collectStatus: {
                   ...collectStatus,
-                  ruleVisible: false,
+                  successToast: false,
                 },
               })
             }
@@ -292,46 +341,43 @@ class Index extends React.Component {
                 {
                   collectStatus: {
                     ...collectStatus,
-                    ruleVisible: false,
-                    ruleStatus: true,
+                    successToast: false,
                   },
                 },
                 (res) => {
-                  this.fetchLever();
+                  Router({
+                    routerName: "download",
+                  });
                 }
               )
             }
-            visible={ruleVisible}
-          ></Rules>
-        )}
-        <Success
-          onClose={() =>
-            this.setState({
-              collectStatus: {
-                ...collectStatus,
-                successToast: false,
-              },
-            })
-          }
-          canfirm={() =>
-            this.setState(
-              {
-                collectStatus: {
-                  ...collectStatus,
-                  successToast: false,
+            visible={successToast}
+          ></Success>
+          <ReloadBottom onChange={this.fetchCollect.bind(this)}></ReloadBottom>
+          <LeverToast
+            data={userInfo}
+            onClose={() =>
+              this.setState({
+                levelToast: false,
+              })
+            }
+            canfirm={() =>
+              this.setState(
+                {
+                  levelToast: false,
                 },
-              },
-              (res) => {
-                Router({
-                  routerName: "download",
-                });
-              }
-            )
-          }
-          visible={successToast}
-        ></Success>
-        <ReloadBottom onChange={this.fetchCollect.bind(this)}></ReloadBottom>
-      </View>
+                (res) => {
+                  Router({
+                    routerName: "download",
+                  });
+                }
+              )
+            }
+            visible={levelToast}
+          ></LeverToast>
+          <View className="users_ourcard"></View>
+        </View>
+      </Skeleton>
     );
   }
 }

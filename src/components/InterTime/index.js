@@ -53,11 +53,9 @@ export default (props) => {
     let setTime = setInterval(() => {
       i++;
       setIntervals((mint ? parseInt(mint) * 60 : 300) - time - i);
-      if (controller === false) {
+      if (300 - time === i || controller === false) {
         clearInterval(setTime);
-      } else {
         if (300 - time === i) {
-          clearInterval(setTime, 111);
           fn && fn();
         }
       }

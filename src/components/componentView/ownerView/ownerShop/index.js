@@ -10,6 +10,7 @@ import {
 } from "@/common/utils";
 import Router from "@/common/router";
 import SpecalList from "./components/specalList";
+import classNames from "classnames";
 import "./index.scss";
 export default ({ data, type = "any", userInfo }) => {
   const {
@@ -20,7 +21,6 @@ export default ({ data, type = "any", userInfo }) => {
     markFlag,
     markBean,
     coverImg,
-    logoImg,
     specialGoodsFlag,
     specialActivityList = [],
     brandFlag,
@@ -33,6 +33,8 @@ export default ({ data, type = "any", userInfo }) => {
     businessTime,
     tag,
     userMerchantIdString,
+    logoImg,
+    businessStatus,
   } = data;
   const ownerShopActivity = (item) => {
     const {
@@ -101,18 +103,34 @@ export default ({ data, type = "any", userInfo }) => {
       <View className="ownerShop_shop_detailsBox">
         <View
           className="ownerShop_shop_img merchant_dakale_logo"
-          style={backgroundObj(coverImg)}
+          style={backgroundObj(logoImg)}
         ></View>
         <View className="ownerShop_shop_font">
           <View className="ownerShop_shop_merchantName font_hide">
             {merchantName}
           </View>
-          <View className="ownerShop_shop_bussionTime">
+          <View className="ownerShop_shop_bussionTime font_hide">
             {businessTime && (
-              <View className="bussionTime_tag font_hide">
-                <Text className="font22 bold color9">营业时间</Text>
-                <Text className="bussionTime_liner bussionTime_margin"></Text>
-                <Text className="bussionTime_margin font_hide font22 bold  color9">
+              <View
+                className={classNames(
+                  "bussionTime_tag",
+                  businessStatus === "1"
+                    ? "bussionTime_tag_color1"
+                    : "bussionTime_tag_color2"
+                )}
+              >
+                <Text className="font22 bold">
+                  {businessStatus === "1" ? "营业中" : "暂停营业"}
+                </Text>
+                <Text
+                  className={classNames(
+                    "bussionTime_liner bussionTime_margin",
+                    businessStatus === "1"
+                      ? "bussionTime_liner_color1"
+                      : "bussionTime_liner_color2"
+                  )}
+                ></Text>
+                <Text className="bussionTime_margin font22 bold font_hide">
                   {businessTime}
                 </Text>
               </View>

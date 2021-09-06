@@ -76,6 +76,36 @@ export default {
       ],
     },
     {
+      root: "pages/relay",
+      pages: [
+        "home/index", //tabbar页面
+        "community/groupUser/index", //查看他人主页
+        "community/goodInfo/index", //商品详情
+        "community/delivery/index", //收货地址
+        "community/order/index", //跟团购买
+        "community/cabinet/index", // 团员自提点选择
+        "groupCreate/Create/index", // 一键开团
+        "groupCreate/GoodsDepict/index", // 一键开团 商品描述设置
+        "groupCreate/LogisticsWay/index", // 一键开团 物流方式设置
+        "groupCreate/SelfCommission/index", // 一键开团 自提点佣金设置（暂时没有用 无业务）
+        "order/DetailPages/index", // 订单详情
+        "order/GroupOrderManage/index", // 订单管理 - 团长
+        "order/GroupVerification/index", // 订单管理 - 核销
+        "personal/Wallet/Purse/index", // 个人中心 - 钱包 - 我的钱包
+        "personal/Wallet/PurseWithdraw/index", // 个人中心 - 钱包 - 钱包提现
+        "personal/Wallet/PurseDetail/index", // 个人中心 - 钱包 - 账单明细
+        "personal/Wallet/BankForm/index", // 绑定银行卡
+        "personal/Teamplayer/index", // 个人中心 - 我的团员
+        "personal/DicPlayer/index", // 个人中心 - 钱包 - 账单明细
+        "personal/SelfLiftingPoint/List/index", // 个人中心自提点管理 & 一键开团选择自提点页面
+        "personal/SelfLiftingPoint/Edit/index", // 设置自提点 编辑 新增
+        "personal/GoodsManage/List/index", // 个人中心 商品库管理 & 一键开团 导入商品库页面
+        "personal/GoodsManage/Edit/index", // 商品库 编辑 新增
+        "personal/GoodsManage/Import/index", // 商品库 导入
+        "nearVideo/index", // 看视频领豆
+      ],
+    },
+    {
       root: "pages/share",
       pages: [
         "hotActive/index", //8.8前面活动
@@ -107,6 +137,7 @@ export default {
         "benchmark/index", //逛逛风向标列表
         "specialOffer/index", //逛逛限时秒杀内层列表
         "speciaMaterial/index", //逛逛爆品福利内层列表
+        "groupChild/index", //集团子门店
         "groupList/index", //特惠集团搜索
         "merchantVideo/index", //商家主页视频
         "nearVideo/index", //附近主页视频

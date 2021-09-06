@@ -1,0 +1,23 @@
+@import "@/assets/css/global.scss";
+
+.SelfLiftingPointEdit_Form {
+  padding: 32px;
+  .slp_edit_local {
+    display: inline-block;
+    @include whEqual(36px);
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/local.png");
+    background-size: 100%;
+    margin-left: 12px;
+  }
+  .slp_wx_local {
+    @include sumbitButton;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 4px;
+    border: 1px solid #07c0c2;
+    background: #ffffff;
+    font-size: 24px;
+    color: #07c0c2;
+    margin-left: 12px;
+  }
+}

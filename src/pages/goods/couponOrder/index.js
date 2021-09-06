@@ -153,7 +153,7 @@ class Index extends Component {
         shareUserId,
         useBeanType,
         sourceKey,
-        sourceType
+        sourceType,
       },
       (res) => {
         const { orderSn, status, orderType } = res;
@@ -248,8 +248,9 @@ class Index extends Component {
     } = this.state;
     const templateTime = () => {
       if (activeDays) {
-        return `购买后${delayDays === 0 ? "立刻" : delayDays + "天"
-          }生效，有效期${activeDays}天`;
+        return `购买后${
+          delayDays === 0 ? "立刻" : delayDays + "天"
+        }生效，有效期${activeDays}天`;
       } else if (activeDate) {
         return `${activeDate}至${endDate}`;
       } else {
@@ -271,7 +272,7 @@ class Index extends Component {
                 }
               >
                 <View
-                  className="order_merchant_userProfile coupon_shop_icon"
+                  className="order_merchant_userProfile merchant_dakale_logo"
                   style={{ ...backgroundObj(merchantLogo) }}
                 ></View>
                 <View className="order_name font_hide">
@@ -373,8 +374,9 @@ class Index extends Component {
               }
               visible={visible}
               canfirm={() => this.saveKolGoodsOrder()}
-              content={`是否确认使用${useBeanType === "reward" ? userBean : userIncomeBean
-                }卡豆支付？`}
+              content={`是否确认使用${
+                useBeanType === "reward" ? userBean : userIncomeBean
+              }卡豆支付？`}
               canfirmText="再想想"
               cancelText="确定"
             ></PayBean>

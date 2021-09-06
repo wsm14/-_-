@@ -1,11 +1,11 @@
 import React from "react";
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import "./../../index.scss";
-import { navigateTo, loginStatus } from "@/common/utils";
+import { navigateTo, loginStatus, toast } from "@/common/utils";
 import { loginBtn } from "@/common/authority";
 import Router from "@/common/router";
 import Download from "./components/index";
+import Banner from "@/components/banner";
 export default (props) => {
   const {
     status,
@@ -15,57 +15,25 @@ export default (props) => {
     infoCollect,
     fetchLever,
     fetchLoad,
+    bannerList = [],
+    fetchUserLeverToast,
   } = props;
-  const { informCount, level = "0" } = data;
+  const { informCount, level = "0", incomeBean = 0 } = data;
   const { bean } = data;
-  const {
+  let {
     teamUserCount = 0,
-    nextLevelInfo,
+    nextLevelInfo = "",
     monthIncome = 0,
     monthToIncome = 0,
     totalIncome = 0,
   } = levelDetails;
-  const { levelProgress = {}, processInfo, currentProgress = {} } = nextLevel;
+  const {
+    levelProgress = {},
+    processInfo = "",
+    currentProgress = {},
+    nextLevelUnlockBean = 0,
+  } = nextLevel;
   const { normal } = levelProgress;
-  const list = [
-    {
-      style: "user_tab_icon1",
-      font: "我的券包",
-      fn: () => navigateTo("/pages/coupon/wraparound/index"),
-    },
-    {
-      style: "user_tab_icon2",
-      font: "关注店铺",
-      fn: () =>
-        Router({
-          routerName: "download",
-        }),
-    },
-    {
-      style: "user_tab_icon3",
-      font: "商品收藏",
-      fn: () =>
-        Router({
-          routerName: "download",
-        }),
-    },
-    {
-      style: "user_tab_icon4",
-      font: "打卡足迹",
-      fn: () =>
-        Router({
-          routerName: "download",
-        }),
-    },
-    {
-      style: "user_tab_icon5",
-      font: "我的圈层",
-      fn: () =>
-        Router({
-          routerName: "download",
-        }),
-    },
-  ];
   const templateKol = () => {
     if (level === "0") {
       return (
@@ -74,20 +42,37 @@ export default (props) => {
             <View className="user_kol_lever public_auto">
               <View className="user_kol_leverLeft">
                 <View className="user_kol_leverIcon"></View>
-                <View className="user_kol_leverTitle">升级哒人</View>
-                <View className="user_kol_leverDesc">自购省 分享赚</View>
               </View>
+              <View className="user_kol_leverContent">
+                <View className="user_kol_leverTitle">解锁哒人</View>
+                <View className="user_kol_leverDesc">
+                  自购省分享赚，{nextLevelUnlockBean}卡豆免费领
+                </View>
+              </View>
+
               <View
                 className="user_kol_leverRight public_center"
                 onClick={() => {
                   if (currentProgress.normal >= normal) {
                     fetchLever();
                   } else {
-                    fetchLoad();
+                    if (loginStatus()) {
+                      Router({
+                        routerName: "webView",
+                        args: {
+                          link: "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dev/wechant/page/common/agreement.html",
+                          title: "权益中心",
+                        },
+                      });
+                    } else {
+                      Router({
+                        routerName: "login",
+                      });
+                    }
                   }
                 }}
               >
-                解锁哒人
+                {currentProgress.normal >= normal ? "解锁哒人" : "权益中心"}
               </View>
             </View>
 
@@ -108,16 +93,46 @@ export default (props) => {
               </React.Fragment>
             )}
           </View>
+          {loginStatus() && nextLevelInfo && (
+            <View
+              className="user_card_nextNever"
+              onClick={() => {
+                if (loginStatus()) {
+                  Router({
+                    routerName: "webView",
+                    args: {
+                      link: "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dev/wechant/page/common/agreement.html",
+                      title: "权益中心",
+                    },
+                  });
+                } else {
+                  Router({
+                    routerName: "login",
+                  });
+                }
+              }}
+            >
+              <View className="user_card_nextfont">{nextLevelInfo + " >"}</View>
+              <View
+                className="user_card_nextBtn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  fetchUserLeverToast();
+                }}
+              ></View>
+            </View>
+          )}
         </View>
       );
     } else {
-      return <Download levelDetails={levelDetails}></Download>;
+      return (
+        <Download
+          fetchUserLeverToast={fetchUserLeverToast}
+          incomeBean={incomeBean}
+          levelDetails={levelDetails}
+        ></Download>
+      );
     }
-  };
-  const linkTo = (item) => {
-    if (item.fn) {
-      item.fn();
-    } else return;
   };
   return (
     <View className="user_content">
@@ -132,15 +147,42 @@ export default (props) => {
         className="user_content_card"
       >
         <View className="public_auto user_card_box">
-          <View className="user_card_left">我的钱包</View>
+          <View className="user_card_left">卡豆余额</View>
           <View className="user_card_right">
-            <View className="user_card_bean">卡豆余额</View>
             <View className="user_card_beanNum">{bean}</View>
+            <View className="user_card_bean">卡豆</View>
             <View className="user_card_goLink"></View>
           </View>
         </View>
       </View>
       {templateKol()}
+      {bannerList.length > 0 && (
+        <View className="banner_view">
+          <Banner
+            showNear={true}
+            autoplay={bannerList.length > 1 ? true : false}
+            imgStyle
+            data={bannerList}
+            imgName={"coverImg"}
+            style={{ width: "100%", height: "100%" }}
+            boxStyle={{ width: "100%", height: "100%" }}
+          ></Banner>
+        </View>
+      )}
+      <View
+        className="user_card_relay"
+        onClick={() => {
+          if (loginStatus()) {
+            Router({
+              routerName: "relayHome",
+            });
+          } else {
+            Router({
+              routerName: "login",
+            });
+          }
+        }}
+      ></View>
     </View>
   );
 };

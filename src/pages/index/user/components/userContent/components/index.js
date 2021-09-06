@@ -1,7 +1,8 @@
 import React from "react";
 import { View } from "@tarojs/components";
 import Router from "@/common/router";
-export default ({ levelDetails }) => {
+import { toast, loginStatus } from "@/common/utils";
+export default ({ levelDetails, fetchUserLeverToast, incomeBean }) => {
   const {
     teamUserCount = 0,
     nextLevelInfo,
@@ -13,41 +14,92 @@ export default ({ levelDetails }) => {
     <View
       className="user_content_kolBox"
       onClick={(e) => {
-        console.log(123);
         e.stopPropagation();
-        Router({
-          routerName: "download",
-        });
       }}
     >
-      <View className="user_parentBox">
-        <View className="user_ParentTitle">
-          <View>你已累计赚取</View>
-        </View>
-        <View className="user_parent_money">
-          {(totalIncome / 100).toFixed(2)}
-        </View>
-        <View className="user_parent_mx">
-          <View className="user_mx_left">
-            <View className="user_mx_top">
-              {(monthIncome / 100).toFixed(2)}
-            </View>
-            <View className="user_mx_center">本月累计分佣/元</View>
+      <View className="user_newkol_box">
+        <View className="user_newkol_left font_hide">
+          <View className="user_newkol_pay">可提现金额(元)</View>
+          <View className="user_newkol_money font_hide">
+            {(incomeBean / 100).toFixed(2)}
           </View>
-          <View className="user_mx_right">
-            <View className="user_mx_top">
-              {(monthToIncome / 100).toFixed(2)}
-            </View>
-            <View className="user_mx_center">本月待分佣/元</View>
+          <View
+            className="user_newkol_btnBox user_newkol_btn1 public_center"
+            style={{ border: " 1px solid #ef476f" }}
+            onClick={() =>
+              Router({
+                routerName: "download",
+              })
+            }
+          >
+            查看
           </View>
-          <View className="user_max_liner"></View>
+        </View>
+        <View className="user_newkol_right font_hide">
+          <View className="user_newkol_pay">我的团队(人)</View>
+          <View className="user_newkol_money font_hide">{teamUserCount}</View>
+          <View
+            className="user_newkol_btnBox user_newkol_btn2 public_center"
+            style={{ border: " 1px solid #07c0c2" }}
+            onClick={() =>
+              Router({
+                routerName: "download",
+              })
+            }
+          >
+            查看
+          </View>
         </View>
       </View>
-      <View className="user_lever_desc">
-        {nextLevelInfo}
-        <View className="user_lever_wxRight"></View>
+      <View className="user_newkol_otherdetails">
+        <View className="user_newkol_other1">
+          <View className="user_newkol_otherMoney">
+            {(totalIncome / 100).toFixed(2)}
+          </View>
+          <View className="user_newkol_otherToast">总收益/元</View>
+        </View>
+        <View className="user_newkol_liner"></View>
+        <View className="user_newkol_other2">
+          <View className="user_newkol_otherMoney">
+            {(monthIncome / 100).toFixed(2)}
+          </View>
+          <View className="user_newkol_otherToast">本月累计收益/元</View>
+        </View>
+        <View className="user_newkol_liner"></View>
+        <View className="user_newkol_other3">
+          <View className="user_newkol_otherMoney">
+            {(monthToIncome / 100).toFixed(2)}
+          </View>
+          <View className="user_newkol_otherToast">本月待收益/元</View>
+        </View>
       </View>
-      <View className="user_group_people">团队人数：{teamUserCount}</View>
+      <View
+        className="user_card_nextNever"
+        onClick={() => {
+          if (loginStatus()) {
+            Router({
+              routerName: "webView",
+              args: {
+                link: "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dev/wechant/page/common/agreement.html",
+                title: "权益中心",
+              },
+            });
+          } else {
+            Router({
+              routerName: "login",
+            });
+          }
+        }}
+      >
+        <View className="user_card_nextfont">{nextLevelInfo + " >"}</View>
+        <View
+          className="user_card_nextBtn"
+          onClick={(e) => {
+            e.stopPropagation();
+            fetchUserLeverToast();
+          }}
+        ></View>
+      </View>
     </View>
   );
 };

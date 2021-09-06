@@ -57,6 +57,7 @@ export const toast = (value) => {
     title: value,
     icon: "none",
     duration: 2000,
+    mask: true,
   });
 };
 //彈窗
@@ -743,4 +744,32 @@ export const filterIndex = (list = [], valKey) => {
     });
   }
   return obj;
+};
+export const fetchStorage = (key) => {
+  return Taro.getStorageSync(key);
+};
+//读取微信缓存
+export const fakeStorage = (key, val) => {
+  return Taro.setStorageSync(key, val);
+};
+//设置微信缓存
+export const fakeRemoveStorage = (key) => {
+  return Taro.removeStorageSync(key);
+};
+//删除微信缓存
+export const mapSelect = (fn) => {
+  wx.chooseLocation({
+    success: (val) => {
+      const { address, name, latitude, longitude } = val;
+      return fn({
+        address: name,
+        lat: latitude,
+        lnt: longitude,
+        location: address,
+      });
+    },
+    fail: () => {
+      toast("获取微信位置失败");
+    },
+  });
 };

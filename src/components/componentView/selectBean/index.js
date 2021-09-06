@@ -18,7 +18,7 @@ export default (props) => {
     type: useBeanType,
   });
   const [show, setShow] = useState(false);
-  const { payBeanCommission, level = "0" } = configUserLevelInfo;
+  const { payBeanCommission = "50", level = "0" } = configUserLevelInfo;
   const { userIncomeBean = "", userBean = "" } = data;
   const { status, type } = selectType;
   const nowal = () => {
@@ -94,7 +94,7 @@ export default (props) => {
               ></View>
             </View>
             <View className="order_pay_font">
-              可用{userBean}卡豆抵扣卡豆{parseInt(userBean) / 100}元
+              可用{parseInt(userBean)}卡豆抵扣卡豆{parseInt(userBean) / 100}元
             </View>
             <View
               className={classNames(
@@ -162,7 +162,8 @@ export default (props) => {
                   </View>
                   {userBean ? (
                     <View className="public_center order_select_title2">
-                      可用{userBean}卡豆优惠抵扣{(userBean / 100).toFixed(2)}元
+                      可用{parseInt(userBean)}卡豆优惠抵扣
+                      {(userBean / 100).toFixed(2)}元
                     </View>
                   ) : (
                     <View className="public_center order_select_title3">
@@ -195,7 +196,7 @@ export default (props) => {
                   </View>
                   {userIncomeBean ? (
                     <View className="public_center order_select_title2">
-                      可用{userIncomeBean}卡豆优惠抵扣
+                      可用{parseInt(userIncomeBean)}卡豆优惠抵扣
                       {(userIncomeBean / 100).toFixed(2)}元
                     </View>
                   ) : (

@@ -1,0 +1,33 @@
+@import "@/assets/css/global.scss";
+
+.gd_edit_title_tools {
+  @include flexCenterA;
+  margin-bottom: 32px;
+  .gd_edit_title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+  }
+  .gedit_title_tools {
+    @include flexCenterA;
+    justify-content: flex-end;
+    flex: 1;
+    padding-top: 1px;
+    .gedit_tools_cell {
+      @include flexCenter;
+      width: 76px;
+      height: 40px;
+      border-radius: 4px;
+      border: 1px solid #b5b5b5;
+      font-size: 24px;
+      font-weight: 400;
+      color: #666666;
+      & + .gedit_tools_cell {
+        margin-left: 12px;
+      }
+      &.gedit_tools_disabled {
+        opacity: 0.4;
+      }
+    }
+  }
+}

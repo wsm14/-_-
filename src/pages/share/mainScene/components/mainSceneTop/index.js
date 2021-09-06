@@ -56,8 +56,10 @@ export default ({ locationStatus, setLocation, city, setTab, cityCode }) => {
           onClick={() => {
             if (loginStatus()) {
               Router({
-                routerName: "home",
-                type: "switchTab",
+                routerName: "nearVideo",
+                args: {
+                  type: "goods",
+                },
               });
             } else {
               Router({

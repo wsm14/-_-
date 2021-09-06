@@ -1,0 +1,43 @@
+@import "@/assets/css/global.scss";
+
+@mixin gdIcon($url) {
+  &::before {
+    content: "";
+    display: block;
+    @include whEqual(48px);
+    background: url($url);
+    background-size: 100%;
+    margin-bottom: 8px;
+  }
+}
+
+.gd_edit_tools {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 20px;
+  font-weight: 400;
+  color: #999999;
+  margin-top: 60px;
+  &_item {
+    @include flexCenterA;
+    flex-direction: column;
+    & + .gd_edit_tools_item {
+      margin-left: 40px;
+    }
+  }
+  .tools_img {
+    @include gdIcon(
+      "https://wechat-config.dakale.net/miniprogram/relay/gc_tool_img.png"
+    );
+  }
+  .tools_sImg {
+    @include gdIcon(
+      "https://wechat-config.dakale.net/miniprogram/relay/gc_tool_sImg.png"
+    );
+  }
+  .tools_text {
+    @include gdIcon(
+      "https://wechat-config.dakale.net/miniprogram/relay/gc_tool_text.png"
+    );
+  }
+}

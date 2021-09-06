@@ -20,11 +20,9 @@
   }
   .select_top_tagColor1 {
     color: #999999;
-    
   }
   .select_top_tagColor2 {
     color: #07c0c2;
-   
   }
   .perimeter_shop_searchTitle {
     width: 688px;
@@ -159,15 +157,27 @@
           height: 32px;
           display: flex;
           align-items: center;
-          background: rgba(16, 133, 136, 0.1);
           border-radius: 4px;
+        }
+        .bussionTime_tag_color1 {
+          background: rgba(16, 133, 136, 0.1);
+          color: rgba(16, 133, 136, 1);
+        }
+        .bussionTime_tag_color2 {
+          background: rgba(153, 153, 153, 0.1);
+          color: rgba(153, 153, 153, 1);
         }
         .bussionTime_liner {
           width: 1px;
           height: 20px;
-          background: #108588;
+        
           border-radius: 1px;
-          opacity: 0.3;
+        }
+        .bussionTime_liner_color1 {
+          background: rgba(16, 133, 136, 0.3);
+        }
+        .bussionTime_liner_color2 {
+          background: rgba(153, 153, 153, 0.3);
         }
         .bussionTime_margin {
           margin-left: 8px;

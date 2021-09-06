@@ -1,0 +1,243 @@
+.order_info_box {
+  line-height: 1;
+  padding-bottom: 180px;
+  .order_selectAddressCard_box {
+    margin: 32px auto 0;
+    background: #ffffff;
+    border-radius: 8px;
+    width: 686px;
+    position: relative;
+  }
+  .order_selectAddressCard_paddingBox {
+    padding: 32px;
+    .order_selectAddressCard_select {
+      display: flex;
+      align-items: center;
+      .order_selectAddressCard_left {
+        width: 48px;
+        height: 48px;
+        background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_17.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .order_selectAddressCard_center {
+        margin-left: 24px;
+        font-size: 28px;
+        color: #333333;
+        width: 480px;
+      }
+      .order_selectAddressCard_right {
+        margin-left: auto;
+        width: 24px;
+        height: 24px;
+        background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_16.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .order_selectAddressCard_address {
+      max-height: 72px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      line-height: 36px;
+      margin-left: 72px;
+    }
+    .order_selectAddressCard_telephone {
+      margin: 12px 0 0 72px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #333333;
+      line-height: 36px;
+    }
+  }
+  .order_userAddressCard_box {
+    margin: 24px 32px 0;
+    width: 686px;
+    background: #ffffff;
+    border-radius: 8px;
+    .order_userAddressCard_paddingBox {
+      padding: 32px;
+      .order_userAddressCard_title {
+        font-size: 28px;
+        font-weight: 600;
+        line-height: 28px;
+      }
+      .order_userAddressCard_userBox {
+        width: 622px;
+        height: 176px;
+        background: #fbfbfb;
+        border-radius: 8px;
+        margin: 32px auto 0;
+        position: relative;
+        .order_userAddressCard_user {
+          padding: 32px 32px 0;
+          display: flex;
+          align-items: baseline;
+        }
+        .order_userAddressCard_address {
+          width: 502px;
+          max-height: 72px;
+          font-size: 24px;
+          font-weight: 400;
+          color: #333333;
+          line-height: 36px;
+          margin: 12px 32px 0;
+        }
+        .order_userAddressCard_link {
+          width: 24px;
+          height: 24px;
+          background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_16.png")
+            no-repeat;
+          background-size: 100% 100%;
+          position: absolute;
+          right: 32px;
+          top: 58px;
+        }
+      }
+      .order_userAddressCard_userinfo {
+        width: 622px;
+        height: 104px;
+        background: #fbfbfb;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        text-indent: 32px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #333333;
+        margin-top: 32px;
+        position: relative;
+        .order_userAddressCard_link {
+          width: 24px;
+          height: 24px;
+          background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_16.png")
+            no-repeat;
+          background-size: 100% 100%;
+          position: absolute;
+          right: 32px;
+          top: 40px;
+        }
+      }
+    }
+  }
+  .order_shopCard_box {
+    width: 686px;
+    height: 317px;
+    background: #ffffff;
+    border-radius: 8px;
+    margin: 24px 32px 0;
+    .order_shopCard_paddingBox {
+      padding: 32px;
+      display: flex;
+      align-items: flex-start;
+      border-bottom: 1px solid #e5e5e5;
+      position: relative;
+      .order_shopCard_profile {
+        width: 160px;
+        height: 160px;
+        border-radius: 8px;
+      }
+      .order_shopCard_content {
+        height: 160px;
+        margin-left: 24px;
+        .order_shopCard_shopTitle {
+          padding-top: 8px;
+          width: 438px;
+          height: 28px;
+          font-size: 28px;
+          font-weight: 600;
+          color: #333333;
+          line-height: 28px;
+        }
+        .order_shopCard_price {
+          padding-top: 80px;
+          font-size: 24px;
+          font-weight: 400;
+          color: #333333;
+          line-height: 24px;
+        }
+      }
+      .order_buyCard_collection {
+        position: absolute;
+        right: 32px;
+        bottom: 36px;
+        display: flex;
+        align-items: center;
+      }
+      .order_buyCard_icon {
+        width: 56px;
+        height: 56px;
+      }
+      .order_buyCard_remove {
+        background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_8.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .order_buyCard_add {
+        background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_9.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .order_buyCard_text {
+        width: 60px;
+        height: 56px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #333333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .order_shopCard_countBox {
+      padding: 32px;
+      display: flex;
+      align-items: baseline;
+      justify-content: flex-end;
+    }
+  }
+  .order_bottomPay_Box {
+    width: 100%;
+    height: 128px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    z-index: 100;
+    .order_bottomPay_payOne {
+      padding-top: 32px;
+      color: #333333;
+      display: flex;
+      align-items: baseline;
+      margin-left: 32px;
+    }
+    .order_bottomPay_payTwo {
+      padding-top: 12px;
+      display: flex;
+      font-size: 20px;
+      font-weight: 400;
+      color: #ef476f;
+      line-height: 29px;
+      margin-left: 32px;
+    }
+    .order_bottomPay_btn {
+      width: 380px;
+      height: 80px;
+      background: #07c0c2;
+      border-radius: 8px;
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      font-size: 32px;
+      font-weight: 400;
+      color: #ffffff;
+    }
+  }
+  .order_shopCard_bz {
+    margin: 24px 32px 0;
+    text-align: left;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, PickerView, WebView } from "@tarojs/components";
-
+import { getLat, getLnt } from "@/common/utils";
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -22,11 +22,20 @@ class Index extends Component {
   filterUrl() {
     const { url = "" } = this.state;
     const { token = "" } = Taro.getStorageSync("userInfo") || {};
-
     let str = "";
     str = url.replace(/\|/g, "=");
     str = str.replace(/\+/g, "&");
-    str = str + "&" + "token=" + token;
+    str =
+      str +
+      "&" +
+      "token=" +
+      token +
+      "&" +
+      "lat=" +
+      getLat() +
+      "&" +
+      "lnt=" +
+      getLnt();
     return str;
   }
 

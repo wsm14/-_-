@@ -1,10 +1,119 @@
 page {
   width: 100%;
   height: 100%;
-  background: rgba(239, 71, 111, 1);
+  background: #f0597d;
 }
 .userNewArtist_box {
   padding-bottom: 180px;
+  .userNewArtist_topCard {
+    width: 100%;
+    height: 1044px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon730.png")
+      no-repeat;
+    background-size: 100% 100%;
+    .userNewArtist_font2 {
+      padding-top: 705px;
+      .userNewArtist_bean_icon {
+        width: 105px;
+        height: 105px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon573.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .userNewArtist_num_icon {
+        width: 64px;
+        height: 64px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon572.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .userNewArtist_num {
+        font-size: 50px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 50px;
+      }
+    }
+    .userOwn_btn {
+      width: 436px;
+      height: 80px;
+      background: #ffcf3b;
+      border-radius: 41px;
+      border: 2px solid #000000;
+      margin: 32px auto 0;
+      font-size: 32px;
+      font-weight: 600;
+    }
+    .userOwn_bean {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 36px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 54px;
+      text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1);
+    }
+  }
+  .userNewArtist_infoCard {
+    width: 100%;
+    height: 1044px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon731.png")
+      no-repeat;
+    background-size: 100% 100%;
+    .userNewArtist_font2 {
+      padding-top: 592px;
+      .userNewArtist_bean_icon {
+        width: 105px;
+        height: 105px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon573.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .userNewArtist_num_icon {
+        width: 64px;
+        height: 64px;
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon733.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .userNewArtist_num {
+        font-size: 50px;
+        font-weight: 600;
+        color: #ef476f;
+        line-height: 50px;
+      }
+    }
+    .userOwn_bean {
+      text-align: center;
+      margin-top: 66px;
+      font-size: 36px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 54px;
+      text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.1);
+    }
+    .userOwn_toast {
+      margin: 25px 0 0 119px;
+      width: 211px;
+      height: 68px;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon734.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .userown_btnBox {
+      margin: 0 83px;
+    }
+    .userown_btn {
+      width: 282px;
+      height: 80px;
+      background: #ffcf3b;
+      border-radius: 41px;
+      border: 2px solid #000000;
+      font-size: 32px;
+      font-weight: 600;
+      color: #000000;
+    }
+  }
   .userNewArtist_image {
     width: 100%;
     height: 500px;
@@ -115,13 +224,14 @@ page {
     margin: 32px 32px 0;
   }
   .shop_info {
-    margin: 40px 0px 0;
+    margin: 30px 0px 0;
     .shop_info_title {
-      font-size: 36px;
-      font-weight: 600;
-      color: #ffffff;
-      line-height: 36px;
-      padding: 0px 32px;
+      width: 252px;
+      height: 38px;
+      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon732.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 0 auto;
     }
     .shop_info_pay {
       padding: 32px 32px 0;

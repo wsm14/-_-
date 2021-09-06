@@ -1,0 +1,180 @@
+.userCard_group {
+  padding-top: 32px;
+}
+.user_card {
+  padding: 32px 0;
+  position: relative;
+  margin: 0 32px 32px;
+  background: #ffffff;
+  .user_card_radius {
+    border-radius: 50%;
+  }
+  .user_card_image {
+    width: 100%;
+    height: 100%;
+  }
+  .user_card_user {
+    height: 80px;
+    display: flex;
+    align-items: flex-start;
+    padding: 0 32px;
+  }
+  .user_card_userProfile {
+    width: 80px;
+    height: 80px;
+  }
+  .user_card_userTitle {
+    margin-left: 20px;
+    .user_card_username {
+      padding-top: 8px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #333333;
+      width: 378px;
+    }
+    .user_card_userTime {
+      padding-top: 16px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #999999;
+      width: 378px;
+    }
+  }
+  .user_card_btn {
+    width: 112px;
+    height: 40px;
+    position: absolute;
+    right: 32px;
+    top: 52px;
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_2.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .user_card_liner {
+    width: 686px;
+    height: 2px;
+    background: #e5e5e5;
+    margin-top: 32px;
+  }
+  .user_card_shopBox {
+    padding: 24px 32px 0;
+    display: flex;
+    align-items: flex-start;
+    .user_card_shopTitleInfo {
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 48px;
+      max-height: 96px;
+      width: 462px;
+    }
+    .user_card_shopPrice {
+      color: #ef476f;
+      margin-left: auto;
+      line-height: 48px;
+    }
+  }
+  .user_card_showImg {
+    display: flex;
+    align-items: center;
+    margin: 24px 32px 0;
+    .user_card_showImgBox {
+      width: 194px;
+      height: 194px;
+      border-radius: 8px;
+      background: #333333;
+      margin-top: 24px;
+      margin-right: 20px;
+    }
+    .user_card_showImgBox:last-child {
+      margin-right: 0px;
+    }
+  }
+  .user_card_rankBox {
+    margin: 24px 32px 0;
+    display: flex;
+    align-items: center;
+    .user_card_rankleft {
+      display: flex;
+      align-items: center;
+      height: 48px;
+      width: 360px;
+      .user_card_ranknum {
+        font-size: 20px;
+        font-weight: 400;
+        color: #999999;
+        flex-shrink: 0;
+      }
+      .user_card_rankProfile {
+        width: 48px;
+        height: 48px;
+        border-radius: 4px;
+        margin-left: 20px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .user_card_rankName {
+        font-size: 24px;
+        font-weight: 300;
+        color: #333333;
+        margin-left: 12px;
+        max-width: 144px;
+      }
+      .user_card_rankTime {
+        margin-left: 8px;
+        font-size: 20px;
+        font-weight: 400;
+        color: #999999;
+      }
+    }
+    .user_card_rankright {
+      width: 272px;
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      height: 48px;
+      justify-content: flex-end;
+      flex-shrink: 0;
+      .user_card_buyName {
+        font-size: 24px;
+        font-weight: 400;
+        color: #333333;
+      }
+      .user_card_buyPrice {
+        margin-left: 20px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #ef476f;
+      }
+    }
+  }
+  .user_card_gloupInfo {
+    padding: 0 32px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .user_card_gloupStatus {
+      font-size: 24px;
+      font-weight: 400;
+      color: #07c0c2;
+    }
+    .user_card_gloupNoStatus {
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+    }
+    .user_card_gloupbtn {
+      width: 120px;
+      height: 40px;
+      background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_1.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .user_card_rankBox:last-child {
+    margin-bottom: 0px;
+  }
+}

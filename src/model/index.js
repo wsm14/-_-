@@ -1,6 +1,6 @@
 import authStore from "./auth";
 import beanStore from "./beanMark";
-import shareStore from "./shareImage";
+import commonStore from "./common";
 import goodsStore from "./goods";
 import locationStore from "./location";
 import activeStore from "./activeStatus";
@@ -9,7 +9,7 @@ import activeInfoStore from "./active";
 export default {
   authStore,
   beanStore,
-  shareStore,
+  commonStore,
   goodsStore,
   locationStore,
   activeStore,

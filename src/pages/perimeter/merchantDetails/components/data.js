@@ -167,7 +167,6 @@ export const rssConfigData = (data = {}) => {
         width: 646,
         height: 32,
         paddingRight: 32,
-        zIndex: 20,
         text: merchantName,
         fontSize: 32,
         color: "#333333",
@@ -180,10 +179,9 @@ export const rssConfigData = (data = {}) => {
       {
         x: 105,
         y: 795,
-        width: 520,
+        width: 600,
         height: 24,
         paddingRight: 32,
-        zIndex: 20,
         text: address,
         fontSize: 24,
         color: "#333333",
@@ -200,7 +198,7 @@ export const rssConfigData = (data = {}) => {
         text: businessTime, // 营业时间
         fontSize: 24,
         color: "#333333",
-        with: 520,
+        width: 600,
         zIndex: 999,
       },
       {
@@ -210,7 +208,8 @@ export const rssConfigData = (data = {}) => {
         text: telephone, // 电话
         fontSize: 24,
         color: "#333333",
-        width: 380,
+        width: 600,
+        height: 32,
         lineNum: 1,
         zIndex: 999,
       },
@@ -221,7 +220,8 @@ export const rssConfigData = (data = {}) => {
         text: tag, // 标签
         fontSize: 24,
         color: "rgba(153, 153, 153, 1)",
-        with: 520,
+        width: 600,
+        lineNum: 1,
         zIndex: 999,
       },
 

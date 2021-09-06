@@ -43,6 +43,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     benchmark: "/pages/perimeter/benchmark/index", //逛逛风向标列表
     perimeterShops: "/pages/perimeter/perimeterShops/index", //周边好店
     businessSell: "/pages/perimeter/businessSell/index", //商家简单信息
+    groupChild: "/pages/perimeter/groupChild/index", //集团子门店列表
     groupList: "/pages/perimeter/groupList/index", //集团列表
     specialOffer: "/pages/perimeter/specialOffer/index", //逛逛内层列表
     speciaMaterial: "/pages/perimeter/speciaMaterial/index", //逛逛内层爆品列表
@@ -95,6 +96,33 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     shopScene: "/pages/share/shopScene/index", //88活动带货会场
     userNewArtist: "/pages/share/userNewArtist/index",
     //规则类
+    relayHome: "/pages/relay/home/index", //社团首页
+    communityGoods: "/pages/relay/community/goodInfo/index", //社团详情页
+    communityOrder: "/pages/relay/community/order/index", //社团支付
+    communityPoint: "/pages/relay/community/point/index", //根据商品地址
+    communityCabinet: "/pages/relay/community/cabinet/index", //根据商品地址
+    communityGroup: "/pages/relay/community/groupUser/index", //查看团长主页
+    delivery: "/pages/relay/community/delivery/index",
+    groupCreate: "/pages/relay/groupCreate/Create/index", // 一键开团 创建&修改
+    goodsDepict: "/pages/relay/groupCreate/GoodsDepict/index", // 一键开团 商品描述
+    logisticsWay: "/pages/relay/groupCreate/LogisticsWay/index", // 一键开团 物流方式配置
+    selfLiftingPointEdit: "/pages/relay/personal/SelfLiftingPoint/Edit/index", // 编辑自提点
+    selfLiftingPointList: "/pages/relay/personal/SelfLiftingPoint/List/index", // 自提点列表&选择编辑
+    bankForm: "/pages/relay/personal/Wallet/BankForm/index", // 绑定银行卡
+    selfLiftingPointCommission: "/pages/relay/groupCreate/SelfCommission/index", // 自提点佣金设置（暂时没有用 无业务）
+    orderDetails: "/pages/relay/order/DetailPages/index",
+    groupOrderManage: "/pages/relay/order/GroupOrderManage/index", // 团长订单管理
+    groupOrderVerification: "/pages/relay/order/GroupVerification/index", // 团长订单核销
+    purse: "/pages/relay/personal/Wallet/Purse/index", // 个人中心 - 钱包 - 我的钱包
+    purseWithdraw: "/pages/relay/personal/Wallet/PurseWithdraw/index", // 个人中心 - 钱包 - 钱包提现
+    purseDetail: "/pages/relay/personal/Wallet/PurseDetail/index", // 个人中心 - 钱包 - 账单明细
+    teamPlayer: "/pages/relay/personal/Teamplayer/index", // 个人中心 - 我的团员
+    dicPlayer: "/pages/relay/personal/DicPlayer/index", // 个人中心 - 我的社区
+    goodsManageList: "/pages/relay/personal/GoodsManage/List/index", // 个人中心 - 商品库管理 & 导入商品库
+    goodsManageEdit: "/pages/relay/personal/GoodsManage/Edit/index", // 商品库 新增编辑商品
+    goodsManageImport: "/pages/relay/personal/GoodsManage/Import/index", // 商品库 导入
+    relayVideo: "/pages/relay/nearVideo/index",
+    //社团
   }[routerName];
   const types = type;
 
