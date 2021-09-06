@@ -3,8 +3,9 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import { fetchLiftingCabinet } from "@/server/relay";
 import classNames from "classnames";
-import evens from "@/common/evens";
+import ImageShow from "@/relay/components/ImageShow";
 import { getLat, getLnt, GetDistance } from "@/common/utils";
+import evens from "@/common/evens";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -73,6 +74,11 @@ class Index extends Component {
                     : "cabinet_template_noCheck"
                 )}
               ></View>
+              <ImageShow
+                className="cabinet_template_image"
+                width={160}
+                src={item.images}
+              ></ImageShow>
             </View>
           );
         })}

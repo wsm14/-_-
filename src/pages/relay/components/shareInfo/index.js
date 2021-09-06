@@ -15,7 +15,7 @@ export default (props) => {
     start: false,
   });
   const { title = "", frontImage = "", miniProgramUrl } = data;
-  
+
   useShareAppMessage((res) => {
     if (res.from === "button") {
       return {
@@ -64,7 +64,7 @@ export default (props) => {
               <View className="share_layer_shareWechatText">分享到微信</View>
             </View>
             <View
-              className="share_layer_shareWechat"
+              className="share_layer_shareWechatFriend"
               onClick={() => {
                 setCavasObj({
                   start: true,
@@ -72,13 +72,13 @@ export default (props) => {
                 });
               }}
             >
-              <View className="share_layer_shareWechatIcon"></View>
+              <View className="share_layer_shareWechatFriendIcon"></View>
               <View className="share_layer_shareWechatText">发朋友圈海报</View>
             </View>
-            <View className="share_layer_shareWechat">
-              <View className="share_layer_shareWechatIcon"></View>
+            {/* <View className="share_layer_shareWechat">
+              <View className="share_layer_shareWechatLink"></View>
               <View className="share_layer_shareWechatText">复制链接</View>
-            </View>
+            </View> */}
           </View>
           <View className="share_layer_liner"></View>
           <View className="share_layer_close public_center" onClick={onClose}>

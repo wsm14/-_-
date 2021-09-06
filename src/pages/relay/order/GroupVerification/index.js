@@ -55,8 +55,8 @@ class Index extends Component {
   }
 
   componentDidShow() {
-    const { index } = this.state;
-    if (index !== 0) {
+    const { index, orderList } = this.state;
+    if (index !== 0 && orderList.length === 0) {
       this.fetchList();
     }
   }
@@ -437,7 +437,7 @@ class Index extends Component {
             <View className="GroupVerification_init_toast">
               <View className="GroupVerification_init_toastTop">
                 <View className="GroupVerification_init_toastTopCount">
-                  {goodsCount}
+                  {organizationNumber}
                 </View>
                 <View
                   className="GroupVerification_init_toastTopProfile"
@@ -452,7 +452,7 @@ class Index extends Component {
                   {goodsName}
                 </View>
                 <View className="GroupVerification_init_contentsgoodCount">
-                  {computedCount}
+                  x{computedCount}
                 </View>
               </View>
             </View>

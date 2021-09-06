@@ -5,6 +5,13 @@ page {
 }
 .cabinet_box {
   padding: 24px 32px;
+  .cabinet_template_image {
+    margin-top: 24px;
+    margin-right: 20px;
+  }
+  .cabinet_template_image:last-child {
+    margin-right: 0px;
+  }
   .cabinet_template_box {
     margin-bottom: 24px;
     padding: 32px;
