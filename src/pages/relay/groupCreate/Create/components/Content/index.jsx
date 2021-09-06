@@ -202,12 +202,12 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
           ></Switch>
         </FormItem>
       </FormItemGroup>
-      <View
+      {/* <View
         onClick={() => setTreaty(!treaty)}
         className={`group_ce_treaty_option ${treaty ? "select" : ""}`}
       >
         同意 <Text>《哒卡乐用户服务协议》</Text>
-      </View>
+      </View> */}
     </View>
   );
 };
