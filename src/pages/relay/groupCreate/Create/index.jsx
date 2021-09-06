@@ -115,7 +115,7 @@ const GroupCreate = () => {
       communityOrganizationGoodsList: [
         {
           communityGoodsDescObject,
-          communityCommonGoodsId,
+          commonGoodsId: communityCommonGoodsId,
           communityOrganizationGoodsId,
           ...oval,
           pushFlag,
