@@ -51,13 +51,16 @@ export default () => {
 
   // 提交保存
   const handleSaveData = (value) => {
-    const { goodsName, price, desc } = value;
+    const { goodsName, price, desc, unlimitFlag, total } = value;
     const { img = [] } = formData;
     if (!goodsName) {
       toast("请填写商品名称");
       return;
     } else if (!price) {
       toast("请填写售价");
+      return;
+    } else if (unlimitFlag == 1 && !total) {
+      toast("请填写库存数量");
       return;
     }
 
@@ -140,7 +143,7 @@ export default () => {
               ></Radio>
             </FormItem>
             {formData.unlimitFlag == "1" && (
-              <FormItem label={"库存数量"}>
+              <FormItem label={"库存数量"} required>
                 <Input
                   name={"total"}
                   value={formData["total"]}
