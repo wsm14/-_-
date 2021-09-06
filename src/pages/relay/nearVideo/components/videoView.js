@@ -156,7 +156,7 @@ export default ({
                               saveBean();
                             }
                           }}
-                          id={`nearVideo${index}`}
+                          id={`relay${index}`}
                           muted={false}
                         ></Video>
                         {index === current && (

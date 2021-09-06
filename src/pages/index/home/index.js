@@ -992,6 +992,12 @@ class Index extends React.PureComponent {
             });
           }}
         ></Coupon>
+        {!player && (
+          <View
+            onClick={() => this.stopVideoPlayerControl()}
+            className="player_no"
+          ></View>
+        )}
         <Lead beanLimitStatus={beanLimitStatus}></Lead>
         {!Taro.getStorageSync("deviceFlag") && (
           <NewToast

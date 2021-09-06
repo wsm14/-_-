@@ -93,12 +93,12 @@ class Index extends React.PureComponent {
       this.setState({
         player: false,
       });
-      Taro.createVideoContext(`nearVideo${current}`).pause();
+      Taro.createVideoContext(`relay${current}`).pause();
     } else {
       this.setState({
         player: true,
       });
-      Taro.createVideoContext(`nearVideo${current}`).play();
+      Taro.createVideoContext(`relay${current}`).play();
     }
   }
   onInterSwper(e) {
@@ -266,10 +266,10 @@ class Index extends React.PureComponent {
     const list = [current - 1, current, current + 1];
     for (const item of list) {
       if (item >= 0) {
-        Taro.createVideoContext(`nearVideo${item}`).stop();
+        Taro.createVideoContext(`relay${item}`).stop();
       }
     }
-    Taro.createVideoContext(`nearVideo${current}`).play();
+    Taro.createVideoContext(`relay${current}`).play();
   }
   followStatus(e) {
     e.stopPropagation();
