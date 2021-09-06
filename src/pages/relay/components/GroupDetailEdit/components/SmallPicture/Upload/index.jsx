@@ -23,7 +23,7 @@ export default ({ count = 9, maxFile = 50, data = [], onChange }) => {
         upload(tempFilePaths, { img: tempFilePaths }).then((res) => {
           const newList = [...list, ...res.img].slice(0, maxFile);
           setList(newList);
-          onChange(newList);
+          onChange(newList.toString());
         });
       },
       fail: (res) => {},
