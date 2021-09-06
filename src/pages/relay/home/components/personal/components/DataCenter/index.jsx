@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Taro from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { fetchPcDataCenter } from "@/server/relay";
 import "./index.scss";
 
 export default (props) => {
+  const { index } = props;
   const [data, setData] = useState({});
 
-  useEffect(() => {
-    handleGetData();
-  }, []);
+  useDidShow(() => {
+    if (index == 3) {
+      handleGetData();
+    }
+  });
 
   // 获取统计数据
   const handleGetData = () => {

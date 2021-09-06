@@ -84,7 +84,7 @@ export default () => {
               >
                 {item.username}
               </View>
-              {item.subscribeFlag === "0" ? (
+              {item.subscribe === "0" ? (
                 <View
                   className="teamPlayer_card_btn public_center"
                   onClick={(e) => {
@@ -97,7 +97,7 @@ export default () => {
                           if (val.teamUserId === item.teamUserId) {
                             return {
                               ...val,
-                              subscribeFlag: "1",
+                              subscribe: "1",
                             };
                           } else {
                             return { ...val };
@@ -122,7 +122,7 @@ export default () => {
                           if (val.teamUserId === item.teamUserId) {
                             return {
                               ...val,
-                              subscribeFlag: "0",
+                              subscribe: "0",
                             };
                           } else {
                             return { ...val };

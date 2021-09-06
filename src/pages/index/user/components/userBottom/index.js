@@ -15,15 +15,12 @@ export default ({ list = [] }) => {
       style: "users_setting_icon2",
       font: "商户入驻",
       fn: () => {
-        // Router({
-        //   routerName: "webView",
-        //   args: {
-        //     title: "商户入驻",
-        //     link: "https://web-new.dakale.net/product/page/registerDownload/merchantRegustration.html",
-        //   },
-        // });
         Router({
-          routerName: "relayHome",
+          routerName: "webView",
+          args: {
+            title: "商户入驻",
+            link: "https://web-new.dakale.net/product/page/registerDownload/merchantRegustration.html",
+          },
         });
       },
     },

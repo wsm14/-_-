@@ -113,7 +113,15 @@ export default (props) => {
       )}
       <View
         className="user_coupon"
-        onClick={() => navigateTo("/pages/coupon/wraparound/index")}
+        onClick={() => {
+          if (loginStatus()) {
+            navigateTo("/pages/coupon/wraparound/index");
+          } else {
+            Router({
+              routerName: "login",
+            });
+          }
+        }}
       ></View>
       <View className="user_scan" onClick={() => scanCode()}></View>
     </View>

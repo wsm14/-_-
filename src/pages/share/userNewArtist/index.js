@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image, Text, Video, ScrollView } from "@tarojs/components";
 import { getUserMomentcheckNew, saveNewUserBean } from "@/server/share";
-import { loginStatus, toast } from "@/common/utils";
+import { loginStatus, toast, fakeStorage } from "@/common/utils";
 import { getGoodsByMerchantId } from "@/server/perimeter";
 import Router from "@/common/router";
 import classNames from "classnames";
@@ -61,6 +61,7 @@ class Index extends PureComponent {
             this.setState({
               newUserFlag: "0",
             });
+            fakeStorage("newUserFlag", "0");
           });
         } else {
           this.setState({

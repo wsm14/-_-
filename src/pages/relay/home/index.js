@@ -79,6 +79,7 @@ class Index extends Component {
     return (
       <View className="home_relay_box">
         <Nav
+          backFlag={Taro.getCurrentPages().length !== "1"}
           title={titleArr[count]}
           getHeight={(h) => this.setState({ navHeight: h })}
         ></Nav>

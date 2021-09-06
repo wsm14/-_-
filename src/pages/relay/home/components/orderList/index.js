@@ -48,8 +48,15 @@ export default (props) => {
     return;
   };
   useEffect(() => {
-    getOrderList();
+    if (index == 2) {
+      getOrderList();
+    }
   }, [httpData]);
+  useEffect(() => {
+    if (index == 2 && list.length === 0) {
+      getOrderList();
+    }
+  }, [index]);
   const getOrderList = () => {
     fetchOrderStatus({ ...httpData }).then((val) => {
       const { orderList = [] } = val;

@@ -126,8 +126,7 @@ class Index extends Component {
           <View className="groupUser_green_height"></View>
           <View className="groupUser_after_box">
             <Card
-              reload={this.fecthDetails.bind(this)}
-              shareInfo={this.fetchShareInfo.bind(this)}
+              reload={this.fetchUser.bind(this)}
               data={communityOrganizationInfo}
             ></Card>
             <View className="groupUser_after_shopHeight"></View>

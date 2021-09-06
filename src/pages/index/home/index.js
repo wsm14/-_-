@@ -993,9 +993,9 @@ class Index extends React.PureComponent {
           }}
         ></Coupon>
         <Lead beanLimitStatus={beanLimitStatus}></Lead>
-        {filterPath(paramsInfo) && !Taro.getStorageSync("newDeviceFlag") && (
+        {!Taro.getStorageSync("newDeviceFlag") && (
           <NewToast
-            type={"merchant"}
+            type={"index"}
             stopVideo={() => {
               this.setState({ player: false });
             }}
@@ -1005,7 +1005,7 @@ class Index extends React.PureComponent {
               });
             }}
             auth={login}
-            data={{ ...shareType, merchantId: userIdString }}
+            data={{ ...shareType }}
           ></NewToast>
         )}
         <TaroShareDrawer

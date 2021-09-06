@@ -16,7 +16,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
   const { newUserFlag, newUserBean } = beanInfo;
   useEffect(() => {
     const { shareUserId } = data;
-    if (shareUserId && !Object.keys(userInfo).length) {
+    if (shareUserId && !Object.keys(userInfo).length && type !== "index") {
       getShareInfo({ userId: shareUserId }, (res) => {
         const { userInfo } = res;
         setUserInfo(userInfo);
@@ -117,7 +117,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
         <View className="noviceGuide_Box">
           <View className="noviceGuide_image" onClick={() => login()}>
             <View className="noviceGuide_user font_hide">
-              @{username + " "}送你
+              {type !== "index" && `@${username + " "}送你`}
             </View>
             <View className="noviceGuide_font1"></View>
             <View className="noviceGuide_font2 public_center">

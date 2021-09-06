@@ -188,7 +188,15 @@ class Index extends React.PureComponent {
       }
       this.setState(
         {
-          userMomentsList: [...this.state.userMomentsList, ...userMomentsList],
+          userMomentsList: [
+            ...this.state.userMomentsList,
+            ...userMomentsList.map((item) => {
+              return {
+                ...item,
+                guideMomentFlag: "0",
+              };
+            }),
+          ],
         },
         (res) => {
           fn && fn();

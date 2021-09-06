@@ -169,6 +169,20 @@ export default (props) => {
           ></Banner>
         </View>
       )}
+      <View
+        className="user_card_relay"
+        onClick={() => {
+          if (loginStatus()) {
+            Router({
+              routerName: "relayHome",
+            });
+          } else {
+            Router({
+              routerName: "login",
+            });
+          }
+        }}
+      ></View>
     </View>
   );
 };

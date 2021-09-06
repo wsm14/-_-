@@ -25,12 +25,11 @@ export default (props) => {
   const [dataList, setDataList] = useState([]); // 列表数据
   const [userInfo, setUserInfo] = useState({});
 
-  useDidShow(() => {
+  useEffect(() => {
     if (index == 3) {
       getUserInfo();
     }
-  });
-
+  }, [index]);
   useEffect(() => {
     fetchGetList();
   }, [pages]);
@@ -85,7 +84,7 @@ export default (props) => {
         {/* 用户信息 */}
         <UserInfo userInfo={userInfo}></UserInfo>
         {/* 数据中心 */}
-        <DataCenter></DataCenter>
+        <DataCenter index={index}></DataCenter>
         {/* 用户工具栏 */}
         <Tools tabbarChange={tabbarChange}></Tools>
       </View>

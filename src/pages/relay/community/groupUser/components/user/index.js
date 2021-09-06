@@ -11,7 +11,7 @@ export default (props) => {
     consumeCount = 0,
     organizationCount,
     profile,
-    ownerId,
+    userId,
   } = data;
   return (
     <View className="groupUser_card">
@@ -33,7 +33,7 @@ export default (props) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   fakeSubscribe({
-                    teamUserId: ownerId,
+                    teamUserId: userId,
                   }).then((val) => {
                     reload();
                   });
@@ -47,7 +47,7 @@ export default (props) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   fakeSubscribe({
-                    teamUserId: ownerId,
+                    teamUserId: userId,
                   }).then((val) => {
                     reload();
                   });

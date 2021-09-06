@@ -65,24 +65,23 @@
       color: #999999;
       line-height: 24px;
       position: relative;
-
-      .purse_bank_add {
-        padding-top: 22px;
-        font-size: 32px;
-        font-weight: 600;
-        color: #333333;
-        display: flex;
-        align-items: center;
-      }
-      .purse_bank_add::after {
-        content: "";
-        display: inline-block;
-        width: 36px;
-        height: 36px;
-        margin-left: 4px;
-        background: url("https://wechat-config.dakale.net/miniprogram/relay/pure_info.png");
-        background-size: 100%;
-      }
+    }
+    .purse_bank_add {
+      padding-top: 22px;
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+      display: flex;
+      align-items: center;
+    }
+    .purse_bank_add::after {
+      content: "";
+      display: inline-block;
+      width: 36px;
+      height: 36px;
+      margin-left: 4px;
+      background: url("https://wechat-config.dakale.net/miniprogram/relay/pure_info.png");
+      background-size: 100%;
     }
     .purse_bank_link {
       width: 24px;
