@@ -45,7 +45,7 @@ export default ({ userInfo }) => {
           <View className="pu_name_text">{userInfo.username}</View>
           {/* <View className="pu_name_btn">切换身份</View> */}
         </View>
-        <View className="pu_home">主页</View>
+        {/* <View className="pu_home">主页</View> */}
       </View>
       <View className="pu_tools">
         {toolsArr.map((i) => (
