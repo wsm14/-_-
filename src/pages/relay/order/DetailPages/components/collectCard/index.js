@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 import { ScrollView, Text, View } from "@tarojs/components";
 import { GOODS_BY_TYPE } from "@/relay/common/constant";
-import { backgroundObj } from "@/common/utils";
+import { backgroundObj, toast } from "@/common/utils";
 import Router from "@/common/router";
 export default (props) => {
   const { data = {}, shareInfo, fetchOrderQcode } = props;
@@ -11,12 +11,28 @@ export default (props) => {
   const list = [
     {
       name: "申请退款",
-      fn: () => {},
+      fn: () => {
+        Taro.makePhoneCall({
+          phoneNumber: "4008005881",
+          fail: (res) => {
+            toast("拨打失败，请手动联系400-800-5881");
+          },
+          complete: (res) => {},
+        });
+      },
       icon: "detailPges_order_collecIconStyle1",
     },
     {
       name: "联系团长",
-      fn: () => {},
+      fn: () => {
+        Taro.makePhoneCall({
+          phoneNumber: "4008005881",
+          fail: (res) => {
+            toast("拨打失败，请手动联系400-800-5881");
+          },
+          complete: (res) => {},
+        });
+      },
       icon: "detailPges_order_collecIconStyle2",
     },
     {
