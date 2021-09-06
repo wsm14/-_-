@@ -24,6 +24,7 @@ const GroupCreate = () => {
   const [treaty, setTreaty] = useState(true); // 同意协议按钮
   const [formData, setFormData] = useState({
     limitContent: 1,
+    unlimitFlag: 0,
     buyRule: "unlimited",
   }); // 额外信息储存
 
@@ -92,7 +93,7 @@ const GroupCreate = () => {
       communityOrganizationGoodsId,
       ...other
     } = formData;
-    const { title, ...oval } = value;
+    const { title, unlimitFlag, remain, ...oval } = value;
     if (!treaty) {
       toast("请确认《哒卡乐用户服务协议》");
       return;
@@ -103,8 +104,12 @@ const GroupCreate = () => {
         if (!data[i]) toast(checkArr[i]);
         return !data[i];
       })
-    )
+    ) {
       return;
+    } else if (unlimitFlag == 1 && !remain) {
+      toast("请输入库存数量");
+      return;
+    }
     const fetch = { edit: fetchGroupEdit, add: fetchGroupCreate }[mode];
     fetch({
       ...other,
@@ -115,8 +120,10 @@ const GroupCreate = () => {
       communityOrganizationGoodsList: [
         {
           communityGoodsDescObject,
-          communityCommonGoodsId,
+          commonGoodsId: communityCommonGoodsId,
           communityOrganizationGoodsId,
+          unlimitFlag,
+          remain,
           ...oval,
           pushFlag,
         },
