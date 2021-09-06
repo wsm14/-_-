@@ -77,8 +77,13 @@
           }
           .pu_order_img {
             display: flex;
-            justify-content: space-between;
             padding-bottom: 40px;
+            .pu_order_imgMargin {
+              margin-right: 24px;
+            }
+            .pu_order_imgMargin:last-child {
+              margin-right: 0px;
+            }
           }
           .pu_content_footer {
             @include flexCenterA;

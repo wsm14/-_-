@@ -108,6 +108,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     logisticsWay: "/pages/relay/groupCreate/LogisticsWay/index", // 一键开团 物流方式配置
     selfLiftingPointEdit: "/pages/relay/personal/SelfLiftingPoint/Edit/index", // 编辑自提点
     selfLiftingPointList: "/pages/relay/personal/SelfLiftingPoint/List/index", // 自提点列表&选择编辑
+    bankForm: "/pages/relay/personal/Wallet/BankForm/index", // 绑定银行卡
     selfLiftingPointCommission: "/pages/relay/groupCreate/SelfCommission/index", // 自提点佣金设置（暂时没有用 无业务）
     orderDetails: "/pages/relay/order/DetailPages/index",
     groupOrderManage: "/pages/relay/order/GroupOrderManage/index", // 团长订单管理

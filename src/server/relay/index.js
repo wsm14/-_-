@@ -102,7 +102,7 @@ export const fetchGoodsManageStoreImport = (data = {}, fn) => {
 export const fetchPurseDetail = (data = {}, fn) => {
   return httpGet(
     {
-      url: "/user/bean/direct/detail/listIncomeBeanDetail",
+      url: "/user/community/listIncomeBeanDetail",
       data: data,
     },
     (res) => fn && fn(res)
@@ -556,3 +556,24 @@ export const fetchPersonAccount = (data = {}, fn) => {
   );
 };
 //用户创建汇付个人账号
+export const fetchBankInfo = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/community/userBankInfo",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户创建汇付个人账号
+
+export const fakeUserWithdraw = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/community/saveUserWithdraw",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 团长提现

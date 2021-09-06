@@ -70,7 +70,8 @@ export default (props) => {
     return (
       <View
         className="extra_address"
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           getAuthStatus({
             key: "location",
             success: (res) => {

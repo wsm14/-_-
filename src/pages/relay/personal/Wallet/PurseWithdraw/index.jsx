@@ -1,30 +1,50 @@
 import React, { useState } from "react";
 import { useRouter } from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import { View, Text, Form, Button, Input } from "@tarojs/components";
+import { fetchBankInfo, fakeUserWithdraw } from "@/server/relay";
+import { backgroundObj, toast } from "@/common/utils";
 import "./index.scss";
-
 /**
  * 我的钱包 - 提现
  */
 export default () => {
   // 路由获取参数
-  const routeParams = useRouter().params;
-  const { settlerPrice = 0 } = routeParams;
 
-  const [price, setPrice] = useState(); // 提现金额
+  const [data, setData] = useState({});
+  const [price, setPrice] = useState(0);
   const [priceError, setPriceError] = useState(false); // 提现金额检查
 
+  useDidShow(() => {
+    getUserInfo();
+  });
+  const {
+    incomeCash = 0,
+    bankName,
+    bankIcon,
+    bankImg,
+    bankHideNumber = "",
+  } = data;
   // 检查金额是否超出
   const checkPrice = (val) => {
     setPrice(val);
-    if (val > Number(settlerPrice)) {
+    if (val > Number(incomeCash)) {
       setPriceError(true);
     } else setPriceError(false);
+  };
+  const getUserInfo = () => {
+    fetchBankInfo().then((res) => {
+      const { incomeCash, bankBindingInfo, bankStatus } = res;
+      setData({ incomeCash, ...bankBindingInfo, bankStatus });
+    });
   };
 
   // 提交数据
   const handleOnSumbit = (val) => {
-    console.log(val);
+    if (!priceError && price != 0) {
+    } else {
+      toast("请输入正确的金额");
+    }
     Taro.showModal({
       title: "提示",
       confirmText: "确认",
@@ -41,10 +61,20 @@ export default () => {
   return (
     <View className="PurseWithdraw_content">
       <View className="PurseWithdraw_card">
-        <View className="PurseWithdraw_bankIcon"></View>
+        <View
+          className="PurseWithdraw_bankIcon"
+          style={backgroundObj(bankIcon)}
+        ></View>
         <View className="PurseWithdraw_text">
-          <View className="PurseWithdraw_bankName">中国邮政储蓄银行</View>
-          <View className="PurseWithdraw_address">尾号 8888 储蓄卡</View>
+          <View className="PurseWithdraw_bankName">{bankName}</View>
+          <View className="PurseWithdraw_address">
+            尾号{" "}
+            {bankHideNumber.slice(
+              bankHideNumber.length - 4,
+              bankHideNumber.length
+            )}{" "}
+            储蓄卡
+          </View>
         </View>
       </View>
       <View className="purseWithdraw_handle">
@@ -65,11 +95,11 @@ export default () => {
               <Text className={priceError ? `error` : ""}>
                 {priceError
                   ? "输入金额超过可提现金额"
-                  : `可最高提现 ¥${settlerPrice}（${settlerPrice * 100}卡豆）`}
+                  : `可最高提现 ¥${incomeCash}（${incomeCash * 100}卡豆）`}
               </Text>
               <Text
                 className="purseWithdraw_all_price"
-                onClick={() => setPrice(Number(settlerPrice))}
+                onClick={() => setPrice(Number(incomeCash))}
               >
                 全部提现
               </Text>

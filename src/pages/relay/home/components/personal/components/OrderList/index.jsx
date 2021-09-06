@@ -150,6 +150,7 @@ export default ({ list, navHeight, getNewData, index }) => {
                   <View className="pu_order_img">
                     <ImageShow
                       width={194}
+                      className="pu_order_imgMargin"
                       src={item.communityImages}
                     ></ImageShow>
                   </View>

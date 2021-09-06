@@ -127,7 +127,6 @@ class App extends Component {
       const { keyValueInfo = {} } = val;
       const { extraParam = "{}" } = keyValueInfo;
       const { beanLimit } = JSON.parse(extraParam) || {};
-      console.log(val);
       Store.commonStore.setBean(beanLimit);
     });
   }

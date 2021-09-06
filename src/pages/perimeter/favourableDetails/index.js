@@ -304,7 +304,6 @@ class MerchantDetails extends Component {
       buyRule === "personLimit" &&
       personLimit === boughtActivityGoodsNum
     ) {
-      console.log(222);
       this.setState({
         visible: true,
       });

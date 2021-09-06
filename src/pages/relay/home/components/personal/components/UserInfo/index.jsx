@@ -14,7 +14,7 @@ export default ({ userInfo }) => {
 
   const toolsArr = [
     {
-      leble: `${userInfo.bean || 0}卡豆`,
+      leble: `${userInfo.incomeBean || 0}卡豆`,
       icon: "tools_bean",
       onClick: () => goPage("purse"),
     },

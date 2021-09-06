@@ -34,7 +34,7 @@ export default () => {
   };
 
   return (
-    <View className="PurseDetail_content">  
+    <View className="PurseDetail_content">
       <View className="purseDetail_group">
         {dataList.map((i) => (
           <View className="purseDetail_cell">
@@ -50,7 +50,7 @@ export default () => {
                 </View>
                 <View className="purseDetail_cell_price">
                   {i.detailType === "add" ? "+" : "-"}
-                  {i.cash}
+                  {i.beanCash}
                 </View>
               </View>
               <View className="purseDetail_cell_time">{i.beanTime}</View>

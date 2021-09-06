@@ -13,7 +13,9 @@ export default (props) => {
 
   // 获取统计数据
   const handleGetData = () => {
-    fetchPcDataCenter().then((res) => {});
+    fetchPcDataCenter().then((res) => {
+      setData(res);
+    });
   };
 
   const dataArr = [
