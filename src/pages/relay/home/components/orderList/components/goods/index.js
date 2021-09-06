@@ -149,7 +149,7 @@ export default (props) => {
                     Taro.makePhoneCall({
                       phoneNumber: liftingMobile,
                       fail: (res) => {
-                        toast("拨打失败");
+                        toast("团长暂未设置联系电话");
                       },
                       complete: (res) => {},
                     });

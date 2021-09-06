@@ -73,7 +73,7 @@ export default () => {
       fetch({
         ...formData,
         ...value,
-        images: res.img.toString(),
+        images: res.img.toString() || " ",
       }).then(() => {
         toast("编辑成功");
         Taro.navigateBack({ delta: 1 });

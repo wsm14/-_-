@@ -113,9 +113,9 @@ export function handleOrdertools(data = {}, callback) {
 
   const item = {
     "": ["修改团信息"],
-    notStarted: ["修改团信息", "展示团", "删除团"], // 未开始
+    notStarted: ["修改团信息", "结束团", "删除团"], // 未开始
     start: ["修改团信息", "结束团", "删除团"], // 开始
-    end: ["修改团信息", "展示团", "删除团"], // 已结束
+    end: ["修改团信息", "开启团购", "删除团"], // 已结束
   }[communityStatus];
 
   Taro.showActionSheet({
@@ -128,7 +128,7 @@ export function handleOrdertools(data = {}, callback) {
           handleGoGroupEdit(params);
           break;
         case 1:
-          if (communityStatus === "start") {
+          if (["notStarted", "start"].includes(communityStatus)) {
             handleGroupEnd(params, callback); // 结束团
           } else handleGroupStart(params, callback); // 展示团
           break;
