@@ -1,3 +1,4 @@
+import { toast } from "@/common/utils";
 import cityJson from "./cityJson";
 const getCityName = (code) => {
   const cityIndex = cityJson.findIndex((item) => item.id === code);
@@ -19,4 +20,17 @@ export const checkCityName = (code) => {
       getCityName(codeStr),
     ];
   }
+};
+export const filterFrom = (rule, data) => {
+  let falg = false;
+  Object.keys(rule).forEach((item) => {
+    if (!falg) {
+      if (data[item] === null || !data[item]) {
+        toast(rule[item]);
+        falg = true;
+      }
+    } else {
+      return;
+    }
+  });
 };

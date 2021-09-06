@@ -42,20 +42,22 @@ export default () => {
   // 提交数据
   const handleOnSumbit = (val) => {
     if (!priceError && price != 0) {
+      fakeUserWithdraw({ withdrawalFee: price }).then((val) => {
+        Taro.showModal({
+          title: "提示",
+          confirmText: "确认",
+          showCancel: false,
+          content: "提现成功",
+          success: function (res) {
+            if (res.confirm) {
+              Taro.navigateBack({ delta: 1 });
+            }
+          },
+        });
+      });
     } else {
       toast("请输入正确的金额");
     }
-    Taro.showModal({
-      title: "提示",
-      confirmText: "确认",
-      showCancel: false,
-      content: "提现成功",
-      success: function (res) {
-        if (res.confirm) {
-          Taro.navigateBack({ delta: 1 });
-        }
-      },
-    });
   };
 
   return (

@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { View, Text, Image } from "@tarojs/components";
+import { format } from "@/common/utils";
 export default (props) => {
   const { data = {} } = props;
   const {
@@ -10,6 +11,7 @@ export default (props) => {
     createTime,
     buyCount = "0",
     viewCount,
+    beginTime,
   } = data;
   const templateType = {
     self: "自提",
@@ -24,8 +26,10 @@ export default (props) => {
       </View>
 
       <View className="community_goodCard_data">
-        {createTime} 发布 ｜{" "}
-        {communityStatus !== "end" ? (
+        {createTime} 发布 ｜
+        {!format(beginTime) ? (
+          `活动${beginTime}开始`
+        ) : communityStatus !== "end" ? (
           <Text className="color3">{endTime}结束</Text>
         ) : (
           "已结束"
