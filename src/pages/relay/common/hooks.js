@@ -115,7 +115,7 @@ export function handleOrdertools(data = {}, callback) {
     "": ["修改团信息"],
     notStarted: ["修改团信息", "结束团", "删除团"], // 未开始
     start: ["修改团信息", "结束团", "删除团"], // 开始
-    end: ["修改团信息", "展示团", "删除团"], // 已结束
+    end: ["修改团信息", "开启团购", "删除团"], // 已结束
   }[communityStatus];
 
   Taro.showActionSheet({
