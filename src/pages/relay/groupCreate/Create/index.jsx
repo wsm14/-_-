@@ -88,6 +88,7 @@ const GroupCreate = () => {
       liftingCabinets = [],
       customerWriteInfo = [],
       communityGoodsDescObject = [],
+      communityCommonGoodsId,
       communityOrganizationGoodsId,
       ...other
     } = formData;
@@ -114,6 +115,7 @@ const GroupCreate = () => {
       communityOrganizationGoodsList: [
         {
           communityGoodsDescObject,
+          communityCommonGoodsId,
           communityOrganizationGoodsId,
           ...oval,
           pushFlag,
