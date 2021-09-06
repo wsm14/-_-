@@ -714,7 +714,7 @@ class MerchantDetails extends Component {
             ></Coupons>
           )}
           {filterPath(getCurrentInstance().router.params) &&
-            !Taro.getStorageSync("newDeviceFlag") && (
+            !Taro.getStorageSync("deviceFlag") && (
               <NewToast
                 type={"merchant"}
                 auth={login}
@@ -727,7 +727,7 @@ class MerchantDetails extends Component {
       return (
         <NullStatus data={userMerchantInfo}>
           {filterPath(getCurrentInstance().router.params) &&
-            !Taro.getStorageSync("newDeviceFlag") && (
+            !Taro.getStorageSync("deviceFlag") && (
               <NewToast
                 type={"merchant"}
                 auth={login}

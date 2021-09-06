@@ -25,11 +25,13 @@ export default (props) => {
   const [dataList, setDataList] = useState([]); // 列表数据
   const [userInfo, setUserInfo] = useState({});
 
-  useEffect(() => {
+  useDidShow(() => {
     if (index == 3) {
+      getNewData();
       getUserInfo();
     }
-  }, [index]);
+  });
+
   useEffect(() => {
     fetchGetList();
   }, [pages]);

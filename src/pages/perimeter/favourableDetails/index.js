@@ -709,7 +709,7 @@ class MerchantDetails extends Component {
               status={beanLimitStatus}
             ></Wares>
             {filterPath(getCurrentInstance().router.params) &&
-              !Taro.getStorageSync("newDeviceFlag") && (
+              !Taro.getStorageSync("deviceFlag") && (
                 <NewToast
                   type={"goods"}
                   auth={login}
@@ -722,7 +722,7 @@ class MerchantDetails extends Component {
         return (
           <ActivityStatus userInfo={configUserLevelInfo}>
             {filterPath(getCurrentInstance().router.params) &&
-              !Taro.getStorageSync("newDeviceFlag") && (
+              !Taro.getStorageSync("deviceFlag") && (
                 <NewToast
                   type={"goods"}
                   auth={login}

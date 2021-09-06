@@ -61,7 +61,7 @@ class Index extends PureComponent {
             this.setState({
               newUserFlag: "0",
             });
-            fakeStorage("newUserFlag", "0");
+            fakeStorage("deviceFlag", "0");
           });
         } else {
           this.setState({

@@ -10,6 +10,7 @@ import ShareInfo from "@/relay/components/shareInfo";
 import Empty from "@/relay/components/Empty";
 import { getShareInfo } from "@/server/common";
 import { loginStatus } from "@/common/utils";
+import evens from "@/common/evens";
 import router from "@/common/router";
 
 export default (props) => {
@@ -31,6 +32,15 @@ export default (props) => {
       }
     });
   };
+  const reload = () => {
+    setHttpData(() => {
+      setList([]);
+      return {
+        page: 1,
+        limit: 10,
+      };
+    });
+  };
   useEffect(() => {
     fetchList();
   }, [httpData]);
@@ -39,6 +49,10 @@ export default (props) => {
       setShareData({});
     }
   }, [visible]);
+
+  useEffect(() => {
+    evens.$on("reloadRelay", reload);
+  }, []);
   usePullDownRefresh(() => {
     Taro.stopPullDownRefresh();
     if (index == 0) {

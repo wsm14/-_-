@@ -533,7 +533,7 @@ class Index extends Component {
             </Toast>
           )}
           {filterPath(getCurrentInstance().router.params) &&
-            !Taro.getStorageSync("newDeviceFlag") && (
+            !Taro.getStorageSync("deviceFlag") && (
               <NewToast type={"coupon"} auth={login} data={httpData}></NewToast>
             )}
         </View>
@@ -542,7 +542,7 @@ class Index extends Component {
       return (
         <NullStatus userInfo={configUserLevelInfo}>
           {filterPath(getCurrentInstance().router.params) &&
-            !Taro.getStorageSync("newDeviceFlag") && (
+            !Taro.getStorageSync("deviceFlag") && (
               <NewToast type={"coupon"} auth={login} data={httpData}></NewToast>
             )}
         </NullStatus>

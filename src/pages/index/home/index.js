@@ -993,7 +993,7 @@ class Index extends React.PureComponent {
           }}
         ></Coupon>
         <Lead beanLimitStatus={beanLimitStatus}></Lead>
-        {!Taro.getStorageSync("newDeviceFlag") && (
+        {!Taro.getStorageSync("deviceFlag") && (
           <NewToast
             type={"index"}
             stopVideo={() => {
