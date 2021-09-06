@@ -9,7 +9,7 @@ import NodeCard from "./components/nodeCard";
 import PayCard from "./components/payCard";
 import FromTemplate from "@/relay/components/FormTemplate";
 import ShareInfo from "@/relay/components/shareInfo";
-import { getShareInfo } from "@/server/common";
+import { getShareInfo, getShareParamInfo } from "@/server/common";
 import {
   fetchOrganizationUserDetail,
   fetchOrganizationRecord,

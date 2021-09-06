@@ -10,7 +10,7 @@ import {
 } from "@/server/relay";
 import PayBean from "@/components/stopBean";
 import { backgroundObj, toast } from "@/common/utils";
-import { getShareInfo } from "@/server/common";
+import { getShareInfo, getShareParamInfo } from "@/server/common";
 import "./index.scss";
 import Router from "@/common/router";
 class Index extends Component {
