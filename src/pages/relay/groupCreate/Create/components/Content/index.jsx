@@ -194,13 +194,13 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
             onChange={(val) => savaFormData(val)}
           ></TimeRange>
         </FormItem>
-        <FormItem label={"开团通知推送"}>
+        {/* <FormItem label={"开团通知推送"}>
           <Switch
             name={"pushFlag"}
             value={formData.pushFlag}
             onChange={(pushFlag) => savaFormData({ pushFlag })}
           ></Switch>
-        </FormItem>
+        </FormItem> */}
       </FormItemGroup>
       {/* <View
         onClick={() => setTreaty(!treaty)}

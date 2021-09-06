@@ -84,7 +84,7 @@ const GroupCreate = () => {
   const handleUpData = (value) => {
     const {
       buyRule,
-      pushFlag = 0,
+      // pushFlag = 0,
       liftingCabinets = [],
       customerWriteInfo = [],
       communityGoodsDescObject = [],
@@ -120,7 +120,7 @@ const GroupCreate = () => {
           unlimitFlag,
           remain,
           ...oval,
-          pushFlag,
+          // pushFlag,
         },
       ],
     }).then((res) => {
