@@ -21,7 +21,6 @@ const GroupCreate = () => {
   const routeParams = useRouter().params;
   const { mode = "add", ownerId, communityOrganizationId } = routeParams;
 
-  const [treaty, setTreaty] = useState(true); // 同意协议按钮
   const [formData, setFormData] = useState({
     limitContent: 1,
     unlimitFlag: 0,
@@ -94,10 +93,6 @@ const GroupCreate = () => {
       ...other
     } = formData;
     const { title, unlimitFlag, remain, ...oval } = value;
-    if (!treaty) {
-      toast("请确认《哒卡乐用户服务协议》");
-      return;
-    }
     if (
       Object.keys(checkArr).some((i) => {
         const data = { ...value, ...formData };
@@ -142,8 +137,6 @@ const GroupCreate = () => {
         {/* 一件开团头部 用户信息操作区域 */}
         <Content
           cRef={cRef}
-          treaty={treaty}
-          setTreaty={setTreaty}
           formData={formData}
           savaFormData={savaFormData}
         ></Content>
