@@ -2,12 +2,10 @@ import React from "react";
 import Taro from "@tarojs/taro";
 import Router from "@/common/router";
 import { View } from "@tarojs/components";
-import { toast } from "@/common/utils";
-import { fetchOrderClose } from "@/server/relay";
 import "./index.scss";
 
 export default ({ data = {} }) => {
-  const { orderSn } = data;
+  const { orderSn, userIdString: userId } = data;
 
   const toolsArr = [
     {
@@ -17,7 +15,7 @@ export default ({ data = {} }) => {
         e.stopPropagation();
         Router({
           routerName: "orderDetails",
-          args: { orderSn },
+          args: { orderSn, userId },
         });
       },
     },
