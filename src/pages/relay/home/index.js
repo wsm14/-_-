@@ -21,6 +21,13 @@ class Index extends Component {
   tabbarChange(index) {
     // 一键开团
     if (index === 1) {
+      Router({
+        routerName: "groupCreate",
+        args: {
+          mode: "add",
+        },
+      });
+      return;
       if (loginStatus()) {
         let bankInfo = fetchStorage("bankInfo");
         if (bankInfo === "3") {
