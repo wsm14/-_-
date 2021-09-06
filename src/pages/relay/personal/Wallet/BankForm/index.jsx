@@ -19,9 +19,9 @@ import {
   fetchPersonAccount,
 } from "@/server/relay";
 import { filterFrom } from "@/relay/common/utils";
+import { goBack, toast } from "@/common/utils";
 import Router from "@/common/router";
 import "./index.scss";
-
 /**
  * 添加银行卡
  */
@@ -50,12 +50,36 @@ export default () => {
   const saveForm = (val) => {
     let data = val.detail.value;
     const { provinceCode, cityCode } = formData;
-    fetchPersonAccount({
-      ...formData,
-      ...data,
-      provCode: provinceCode,
-      areaCode: cityCode,
-    });
+    if (
+      filterFrom(
+        {
+          cardId: "请输入银行卡号",
+          bankBranchName: "请选择开户行",
+          provCode: "请选择开户城市",
+          telNo: "请输入银行预留号码",
+          certFrontPhoto: "请上传身份证正面照",
+          certReversePhoto: "请上传身份证反面照",
+          cardName: "请输入姓名",
+          certId: "请输入身份证号码",
+          certExpireDate: "请选择身份证有效期",
+        },
+        {
+          ...formData,
+          ...data,
+          provCode: provinceCode,
+          areaCode: cityCode,
+        }
+      )
+    ) {
+      fetchPersonAccount({
+        ...formData,
+        ...data,
+        provCode: provinceCode,
+        areaCode: cityCode,
+      }).then((val) => {
+        goBack(() => toast("绑定成功"));
+      });
+    }
   };
   return (
     <View className="BankForm_info_box">

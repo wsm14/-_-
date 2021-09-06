@@ -7,7 +7,8 @@ import Home from "./components/homeInfo";
 import OrderList from "./components/orderList";
 import Personal from "./components/personal";
 import Nav from "@/relay/components/navigaton";
-
+import { fetchUserBankStatus } from "@/server/relay";
+import { loginStatus, fetchStorage, fakeStorage } from "@/common/utils";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -20,12 +21,38 @@ class Index extends Component {
   tabbarChange(index) {
     // 一键开团
     if (index === 1) {
-      Router({
-        routerName: "groupCreate",
-        args: {
-          mode: "add",
-        },
-      });
+      if (loginStatus()) {
+        let bankInfo = fetchStorage("bankInfo");
+        if (bankInfo === "3") {
+          Router({
+            routerName: "groupCreate",
+            args: {
+              mode: "add",
+            },
+          });
+        } else {
+          fetchUserBankStatus().then((val) => {
+            const { bankStatus = "0" } = val;
+            if (bankStatus !== "3") {
+              Router({
+                routerName: "bankForm",
+              });
+            } else {
+              fakeStorage("bankInfo", "3");
+              Router({
+                routerName: "groupCreate",
+                args: {
+                  mode: "add",
+                },
+              });
+            }
+          });
+        }
+      } else {
+        Router({
+          routerName: "login",
+        });
+      }
       return;
     }
     const { count } = this.state;
@@ -65,6 +92,14 @@ class Index extends Component {
               navHeight={navHeight}
               tabbarChange={this.tabbarChange.bind(this)}
             ></Personal>
+            <View
+              className="relay_gif"
+              onClick={() =>
+                Router({
+                  routerName: "relayVideo",
+                })
+              }
+            ></View>
             <Tabbar
               list={[
                 {

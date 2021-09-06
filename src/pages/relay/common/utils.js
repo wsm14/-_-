@@ -22,15 +22,16 @@ export const checkCityName = (code) => {
   }
 };
 export const filterFrom = (rule, data) => {
-  let falg = false;
+  let falg = true;
   Object.keys(rule).forEach((item) => {
-    if (!falg) {
+    if (falg) {
       if (data[item] === null || !data[item]) {
         toast(rule[item]);
-        falg = true;
+        falg = false;
       }
     } else {
       return;
     }
   });
+  return falg;
 };

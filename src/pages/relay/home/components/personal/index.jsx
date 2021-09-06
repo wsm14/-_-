@@ -26,7 +26,9 @@ export default (props) => {
   const [userInfo, setUserInfo] = useState({});
 
   useDidShow(() => {
-    getUserInfo();
+    if (index == 3) {
+      getUserInfo();
+    }
   });
 
   useEffect(() => {

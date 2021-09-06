@@ -102,6 +102,7 @@ export default {
         "personal/GoodsManage/List/index", // 个人中心 商品库管理 & 一键开团 导入商品库页面
         "personal/GoodsManage/Edit/index", // 商品库 编辑 新增
         "personal/GoodsManage/Import/index", // 商品库 导入
+        "nearVideo/index", // 看视频领豆
       ],
     },
     {

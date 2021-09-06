@@ -565,7 +565,7 @@ export const fetchBankInfo = (data = {}, fn) => {
     (res) => fn && fn(res)
   );
 };
-//用户创建汇付个人账号
+//用户錢包信息
 
 export const fakeUserWithdraw = (data, fn) => {
   return httpPost(
@@ -577,3 +577,14 @@ export const fakeUserWithdraw = (data, fn) => {
   );
 };
 // 团长提现
+
+export const fetchUserBankStatus = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/bank/user/getUserBankStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//绑卡状态
