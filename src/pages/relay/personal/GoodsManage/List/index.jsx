@@ -107,7 +107,7 @@ export default () => {
                     )}
                   </View>
                   <View className="gm_goods_num">
-                    库存 {item.remain || "不限"}
+                    库存 {item.unlimitFlag == 0 ? "不限" : item.remain}
                   </View>
                   <View className="gm_goods_footer">
                     <View className="gm_goods_price">{item.price}</View>
