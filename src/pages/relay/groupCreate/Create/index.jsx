@@ -12,7 +12,7 @@ import {
 import Heard from "./components/Heard";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
-
+import evens from "@/common/evens";
 /**
  * 一键开团
  */
@@ -125,6 +125,7 @@ const GroupCreate = () => {
       ],
     }).then((res) => {
       wx.disableAlertBeforeUnload();
+      evens.$emit("reloadRelay", "ok");
       Taro.navigateBack({ delta: 1 });
     });
   };

@@ -208,6 +208,7 @@ class Index extends Component {
             <PayCard
               data={{ ...communityOrganizationInfo, ...communityTeamUserInfo }}
               count={count}
+              shareInfo={this.fetchShareInfo.bind(this)}
               submit={this.payInit.bind(this)}
               getDetail={this.fecthDetails}
             ></PayCard>

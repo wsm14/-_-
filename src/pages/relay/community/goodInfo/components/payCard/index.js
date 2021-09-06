@@ -6,7 +6,7 @@ import { View } from "@tarojs/components";
 import FooterFixed from "@/relay/components/FooterFixed";
 
 export default (props) => {
-  const { submit, data, count, getDetail } = props;
+  const { submit, data, count, getDetail, shareInfo } = props;
   const { communityOrganizationGoodsList = [{}] } = data;
   const { price = 0 } = communityOrganizationGoodsList[0];
 
@@ -65,7 +65,10 @@ export default (props) => {
                 </View>
               ))}
             </View>
-            <View className="community_manage_share"></View>
+            <View
+              className="community_manage_share"
+              onClick={() => shareInfo()}
+            ></View>
           </View>
         </FooterFixed>
       )}

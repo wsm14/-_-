@@ -28,9 +28,14 @@ export default (props) => {
   useDidShow(() => {
     if (index == 3) {
       getNewData();
-      getUserInfo();
     }
   });
+  useEffect(() => {
+    if (index == 3) {
+      getNewData();
+      getUserInfo();
+    }
+  }, [index]);
 
   useEffect(() => {
     fetchGetList();

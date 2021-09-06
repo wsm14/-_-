@@ -7,7 +7,7 @@ export default (props) => {
   const {
     userName,
     userProfile,
-    subscribeFlag = "0",
+    subscribeFlag,
     teamCount = 0,
     consumeCount = 0,
     ownerId,
@@ -28,7 +28,7 @@ export default (props) => {
             <View className="community_card_username font_hide">
               {userName}
             </View>
-            {subscribeFlag === "0" ? (
+            {subscribeFlag && subscribeFlag === "0" && (
               <View
                 className="community_card_btn public_center"
                 onClick={(e) => {
@@ -42,7 +42,8 @@ export default (props) => {
               >
                 + 订阅
               </View>
-            ) : (
+            )}
+            {subscribeFlag && subscribeFlag === "1" && (
               <View
                 className="community_card_nobtn public_center"
                 onClick={(e) => {
