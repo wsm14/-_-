@@ -85,7 +85,9 @@ export default () => {
                     }`}
                   ></View>
                 </View>
-                <View className="gm_goods_num">库存 {item.remain || 0}</View>
+                <View className="gm_goods_num">
+                  库存 {item.remain || "不限"}
+                </View>
                 <View className="gm_goods_footer">
                   <View className="gm_goods_price">{item.price}</View>
                 </View>

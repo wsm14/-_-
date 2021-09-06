@@ -1,7 +1,11 @@
 import React from "react";
 import Router from "@/common/router";
 import { View, Text } from "@tarojs/components";
-import { GOODS_BUY_NUMBER, GOODS_BY_TYPE } from "@/relay/common/constant";
+import {
+  GOODS_BUY_NUMBER,
+  GOODS_REMAIN_NUMBER,
+  GOODS_BY_TYPE,
+} from "@/relay/common/constant";
 import {
   Form,
   Input,
@@ -119,14 +123,24 @@ export default ({ cRef, formData, savaFormData, treaty, setTreaty }) => {
           ></Input>
         </FormItem>
         <FormItem label={"库存"}>
-          <Input
-            name={"remain"}
-            value={formData["remain"]}
-            type="number"
-            placeholder={"不限"}
-            maxLength={6}
-          ></Input>
+          <Radio
+            name="unlimitFlag"
+            value={formData.unlimitFlag}
+            list={GOODS_REMAIN_NUMBER}
+            onChange={(unlimitFlag) => savaFormData({ unlimitFlag })}
+          ></Radio>
         </FormItem>
+        {formData.unlimitFlag == "1" && (
+          <FormItem label={"库存数量"}>
+            <Input
+              name={"remain"}
+              value={formData["remain"]}
+              type="number"
+              placeholder={"请输入数量"}
+              maxLength={6}
+            ></Input>
+          </FormItem>
+        )}
         <FormItem label={"可购数量"}>
           <Radio
             name="buyRule"

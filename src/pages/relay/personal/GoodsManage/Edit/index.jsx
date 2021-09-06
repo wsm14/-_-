@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { useRouter } from "@tarojs/taro";
 import { View, Button } from "@tarojs/components";
+import { GOODS_REMAIN_NUMBER } from "@/relay/common/constant";
 import {
   Form,
+  Radio,
   Input,
   Upload,
   Textarea,
@@ -29,7 +31,7 @@ export default () => {
   const routeParams = useRouter().params;
   const { type = "add", ownerId, communityGoodsId } = routeParams;
 
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({ unlimitFlag: 0 });
 
   useEffect(() => {
     if (type === "edit") {
@@ -130,14 +132,24 @@ export default () => {
               ></Input>
             </FormItem>
             <FormItem label={"库存"}>
-              <Input
-                value={formData.total}
-                type="number"
-                name="total"
-                placeholder="不限"
-                maxLength={6}
-              ></Input>
+              <Radio
+                name="unlimitFlag"
+                value={formData["unlimitFlag"]}
+                list={GOODS_REMAIN_NUMBER}
+                onChange={(unlimitFlag) => savaFormData({ unlimitFlag })}
+              ></Radio>
             </FormItem>
+            {formData.unlimitFlag == "1" && (
+              <FormItem label={"库存数量"}>
+                <Input
+                  name={"total"}
+                  value={formData["total"]}
+                  type="number"
+                  placeholder={"请输入数量"}
+                  maxLength={6}
+                ></Input>
+              </FormItem>
+            )}
             <FormItem label={"划线价(¥)"}>
               <Input
                 value={formData.costPrice}
@@ -147,7 +159,6 @@ export default () => {
                 maxLength={6}
               ></Input>
             </FormItem>
-
             <FormItem label={"成本价(¥)"}>
               <Input
                 value={formData.oriPrice}

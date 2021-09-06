@@ -24,6 +24,7 @@ const GroupCreate = () => {
   const [treaty, setTreaty] = useState(true); // 同意协议按钮
   const [formData, setFormData] = useState({
     limitContent: 1,
+    unlimitFlag: 0,
     buyRule: "unlimited",
   }); // 额外信息储存
 

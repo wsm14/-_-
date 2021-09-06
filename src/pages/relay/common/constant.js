@@ -5,6 +5,9 @@
 // 商品 - 可购数量
 export const GOODS_BUY_NUMBER = { unlimited: "不限", personLimit: "每人限购" };
 
+// 商品 - 库存数量
+export const GOODS_REMAIN_NUMBER = ["不限", "有限"];
+
 // 团购状态
 export const GROUP_STATUS = {
   "": "全部",
