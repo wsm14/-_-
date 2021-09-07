@@ -109,20 +109,23 @@ class Index extends Component {
   }
   fetchOrderQcode() {
     const { orderInfo } = this.state;
-    const { orderSn } = orderInfo;
-    fetchCommunityOrderQcode({ orderSn }).then((val) => {
-      const { verificationQcodeUrl } = val;
-      this.setState(
-        {
-          verificationQcodeUrl: verificationQcodeUrl,
-        },
-        (res) => {
-          this.setState({
-            verfivationVisible: true,
-          });
-        }
-      );
-    });
+    const { orderSn, communityOrganizationGoods } = orderInfo;
+    const { communityOrganizationId } = communityOrganizationGoods;
+    fetchCommunityOrderQcode({ orderSn, communityOrganizationId }).then(
+      (val) => {
+        const { verificationQcodeUrl } = val;
+        this.setState(
+          {
+            verificationQcodeUrl: verificationQcodeUrl,
+          },
+          (res) => {
+            this.setState({
+              verfivationVisible: true,
+            });
+          }
+        );
+      }
+    );
   }
   onShareAppMessage(res) {
     const { shareData } = this.state;

@@ -33,7 +33,7 @@ class Index extends Component {
     let { scene } = getCurrentInstance().router.params;
     let { httpData } = this.state;
     if (scene) {
-      getShareParamInfo({ uniqueKey: scene }, (res) => {
+      getShareParamInfo({ uniqueKey: scene, type: "verification" }, (res) => {
         let {
           shareParamInfo: { param },
         } = res;
