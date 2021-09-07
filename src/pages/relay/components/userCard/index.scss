@@ -156,6 +156,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .user_card_beanStatus {
+      font-size: 24px;
+      font-weight: 400;
+      color: rgba(239, 71, 111, 1);
+    }
     .user_card_gloupStatus {
       font-size: 24px;
       font-weight: 400;

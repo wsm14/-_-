@@ -7,7 +7,7 @@ import "./index.scss";
 export default (props) => {
   const templateTitle = (type, list = []) => {
     if (type === "notStarted") {
-      return <View className="user_card_gloupStatus">一群人正赶来跟团</View>;
+      return <View className="user_card_gloupStatus">未开始</View>;
     } else if (type === "start") {
       return (
         <View className="user_card_gloupStatus">
