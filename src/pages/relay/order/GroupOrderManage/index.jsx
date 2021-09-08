@@ -101,6 +101,8 @@ export default ({}) => {
               payTime,
               status,
               totalFee,
+              userName,
+              userProfile,
             } = item;
             const { communityOrganizationId, ownerId } = orginObj;
             const params = { communityOrganizationId, ownerId };
@@ -124,12 +126,10 @@ export default ({}) => {
                       <View
                         className="order_info_img"
                         style={{
-                          backgroundImage: `url(${orginObj.relateOwnerProfile})`,
+                          backgroundImage: `url(${userProfile})`,
                         }}
                       ></View>
-                      <View className="order_info_shopName">
-                        {orginObj.relateOwnerName}
-                      </View>
+                      <View className="order_info_shopName">{userName}</View>
                     </View>
                     <View className="order_info_title">
                       <View className="order_title">{orginObj.title}</View>
