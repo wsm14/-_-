@@ -12,7 +12,7 @@ import "./index.scss";
  * @param {ClassName}   className 图片className
  */
 export default ({
-  src = [],
+  src = '',
   mode = "aspectFill",
   width,
   look = true,
@@ -26,7 +26,7 @@ export default ({
     if (!src || !src.length) setUrlArr([]);
     else if (typeof src === "string") setUrlArr(src.split(","));
     else setUrlArr(src);
-  }, [src.length]);
+  }, [src]);
 
   // 图片宽度 高度
   const styleProps = width

@@ -74,7 +74,6 @@ class Index extends Component {
   componentDidMount() {}
   render() {
     const { count, navHeight } = this.state;
-    const template = {}[count];
     const titleArr = ["首页", "一键开团", "订单", "个人中心"];
     return (
       <View className="home_relay_box">

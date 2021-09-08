@@ -40,8 +40,8 @@ export default () => {
       (res) => {
         const { images } = res.communityLiftingCabinetInfo;
         setFormData({
-          images: images === " " ? "" : images,
           ...res.communityLiftingCabinetInfo,
+          images: images === " " ? "" : images,
         });
       }
     );

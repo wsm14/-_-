@@ -37,8 +37,8 @@ export default () => {
   // 获取选择列表
   const fetchGetList = () => {
     fetchGoodsManageList(pages).then((res) => {
-      const { communityCommonGoodsList: lists } = res;
-      setList(lists);
+      const { communityCommonGoodsList = [] } = res;
+      setList(communityCommonGoodsList);
     });
   };
 

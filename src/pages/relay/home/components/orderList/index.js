@@ -79,7 +79,6 @@ export default (props) => {
     );
   };
   usePullDownRefresh(() => {
-    Taro.stopPullDownRefresh();
     if (index == 2) {
       setList([]);
       setHttpData({

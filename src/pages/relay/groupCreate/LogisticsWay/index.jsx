@@ -34,7 +34,12 @@ export default () => {
 
   useEffect(() => {
     console.log(data);
-    setFormData(JSON.parse(data));
+    const routrData = JSON.parse(data);
+    const { liftingCabinets } = routrData;
+    setFormData({
+      ...routrData,
+      liftingCabinets: liftingCabinets ? liftingCabinets.split(",") : [],
+    });
     setLogisticsType(JSON.parse(data).logisticsType);
   }, []);
 

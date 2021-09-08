@@ -11,10 +11,10 @@ export default ({ userInfo }) => {
       args,
     });
   };
-
+  const { bean = 0, incomeBean = 0 } = userInfo;
   const toolsArr = [
     {
-      leble: `${userInfo.bean || 0}卡豆`,
+      leble: `${incomeBean + bean || 0}卡豆`,
       icon: "tools_bean",
       onClick: () => goPage("purse"),
     },
