@@ -156,4 +156,84 @@
     font-weight: 400;
     color: #999999;
   }
+  .purse_beanBox {
+    width: 686px;
+    height: 288px;
+    background: #ffffff;
+    border-radius: 8px;
+    margin: 32px 32px 0;
+    .purse_beanDec {
+      padding: 0 26px 0 32px;
+      .purse_money {
+        height: 143px;
+        position: relative;
+        .purse_moneyPad1 {
+          padding-top: 32px;
+        }
+        .purse_moneyPad2 {
+          padding-top: 24px;
+        }
+        .purse_moneyBox {
+          height: 24px;
+          display: flex;
+          align-items: center;
+          font-size: 24px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #666666;
+          .purse_title {
+          }
+          .purse_question {
+            margin-left: 8px;
+            width: 24px;
+            height: 24px;
+            background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon329.png")
+              no-repeat;
+            background-size: 100% 100%;
+          }
+        }
+        .purse_fonts {
+          margin-top: 24px;
+          height: 40px;
+        }
+        .purse_linkGo {
+          top: 32px;
+          right: 0;
+          position: absolute;
+          width: 24px;
+          height: 24px;
+        }
+        .purse_linkGo1 {
+          top: 24px;
+          right: 0;
+          position: absolute;
+          width: 24px;
+          height: 24px;
+        }
+        .purse_linkGoIcon {
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon330.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+        .purse_btn {
+          width: 96px;
+          height: 48px;
+          background: #07c0c2;
+          border-radius: 8px;
+          position: absolute;
+          right: 6px;
+          bottom: 28px;
+          text-align: center;
+          line-height: 48px;
+        }
+      }
+      .purse_liner {
+        width: 622px;
+        height: 1px;
+        background: #e5e5e5;
+        border-radius: 1px;
+        margin: 0 auto;
+      }
+    }
+  }
 }

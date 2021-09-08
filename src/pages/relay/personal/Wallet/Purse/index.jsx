@@ -3,7 +3,7 @@ import { useDidShow } from "@tarojs/taro";
 import Router from "@/common/router";
 import { View, Text, Button } from "@tarojs/components";
 import { fetchBankInfo } from "@/server/relay";
-import { backgroundObj } from "@/common/utils";
+import { backgroundObj, navigateTo } from "@/common/utils";
 import "./index.scss";
 /**
  * 我的钱包
@@ -18,8 +18,8 @@ export default () => {
   // 获取用户信息
   const getUserInfo = () => {
     fetchBankInfo().then((res) => {
-      const { incomeCash, bankBindingInfo, bankStatus } = res;
-      setData({ incomeCash, ...bankBindingInfo, bankStatus });
+      const { incomeCash, bankBindingInfo, bankStatus, beanCash } = res;
+      setData({ incomeCash, ...bankBindingInfo, bankStatus, beanCash });
     });
   };
   const {
@@ -29,6 +29,7 @@ export default () => {
     bankImg,
     bankHideNumber,
     bankStatus,
+    beanCash = 0,
   } = data;
 
   return (
@@ -37,15 +38,54 @@ export default () => {
       <View className="purse_price_content">
         <View className="purse_bean_iconBox"></View>
         <Text className="purse_price_all">卡豆余额</Text>
-        <Text className="purse_price">{parseInt(incomeCash * 100)}</Text>
+        <Text className="purse_price">
+          {parseInt(incomeCash * 100) + parseInt(beanCash * 100)}
+        </Text>
       </View>
-      <View className="purse_price_menu">
-        <View className="purse_menu_group">
+      <View className="purse_beanBox">
+        <View className="purse_beanDec">
           <View
-            className="purse_menu_cell"
-            onClick={() => Router({ routerName: "purseDetail" })}
+            onClick={() => navigateTo("/pages/newUser/rewardDetails/index")}
+            className="purse_money purse_moneyPad1"
           >
-            资产明细
+            <View className="purse_moneyBox  purse_moneyPad1">奖励卡豆</View>
+            <View className="purse_fonts color1 font40 bold">
+              {parseInt(beanCash * 100)}
+            </View>
+            <View
+              className="purse_linkGo purse_linkGoIcon"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigateTo("/pages/newUser/rewardDetails/index");
+              }}
+            ></View>
+          </View>
+          <View className="purse_liner"></View>
+          <View className="purse_money">
+            <View
+              className="purse_moneyBox  purse_moneyPad2"
+              onClick={(e) => {
+                e.stopPropagation();
+                Router({ routerName: "purseDetail" });
+              }}
+            >
+              收益卡豆
+            </View>
+            <View className="purse_fonts color1 font40 bold">
+              {parseInt(incomeCash * 100)}
+            </View>
+            <View className="purse_linkGo1 purse_linkGoIcon"></View>
+            {bankStatus === "3" && (
+              <View
+                className="purse_btn font24 color6"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  Router({ routerName: "purseWithdraw" });
+                }}
+              >
+                提现
+              </View>
+            )}
           </View>
         </View>
       </View>

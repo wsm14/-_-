@@ -115,7 +115,7 @@ export default () => {
                       ></View>
                     </View>
                   </View>
-                  {item.images && (
+                  {item.images && item.images !== " " && (
                     <View className="slp_content_footer">
                       <ImageShow width={178} src={item.images}></ImageShow>
                     </View>

@@ -21,13 +21,6 @@ class Index extends Component {
   tabbarChange(index) {
     // 一键开团
     if (index === 1) {
-      Router({
-        routerName: "groupCreate",
-        args: {
-          mode: "add",
-        },
-      });
-      return;
       if (loginStatus()) {
         let bankInfo = fetchStorage("bankInfo");
         if (bankInfo === "3") {
@@ -81,7 +74,6 @@ class Index extends Component {
   componentDidMount() {}
   render() {
     const { count, navHeight } = this.state;
-    const template = {}[count];
     const titleArr = ["首页", "一键开团", "订单", "个人中心"];
     return (
       <View className="home_relay_box">

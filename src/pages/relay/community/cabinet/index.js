@@ -43,8 +43,15 @@ class Index extends Component {
     return (
       <View className="cabinet_box">
         {communityLiftingCabinetList.map((item) => {
-          const { address, lat, lnt, mobile, liftingName, contactPerson } =
-            item;
+          const {
+            address,
+            lat,
+            lnt,
+            mobile,
+            liftingName,
+            contactPerson,
+            images = "",
+          } = item;
           return (
             <View
               onClick={() => {
@@ -74,11 +81,13 @@ class Index extends Component {
                     : "cabinet_template_noCheck"
                 )}
               ></View>
-              <ImageShow
-                className="cabinet_template_image"
-                width={160}
-                src={item.images}
-              ></ImageShow>
+              {images && images !== " " && (
+                <ImageShow
+                  className="cabinet_template_image"
+                  width={160}
+                  src={images}
+                ></ImageShow>
+              )}
             </View>
           );
         })}

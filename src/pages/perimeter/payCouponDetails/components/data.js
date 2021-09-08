@@ -34,7 +34,6 @@ export const rssConfigData = (data = {}) => {
     width: 750, // 画布宽度
     height: 1334, // 画布高度
     backgroundColor: "#108588", // 画布颜色
-
     texts: [
       {
         y: 85,

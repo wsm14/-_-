@@ -70,7 +70,6 @@ export default (props) => {
       setDataList((old) => [...old, ...list]);
       !showList && setShowList(!!list.length);
     });
-    Taro.stopPullDownRefresh(); // 停止刷新
   };
 
   // 获取新数据

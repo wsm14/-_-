@@ -165,12 +165,12 @@ export default () => {
                     if (file.length > 0) {
                       upload(file, { img: file }).then((res) => {
                         const { img = [] } = res;
+                        saveData({ certFrontPhoto: img[0] });
                         fetchCardFront({ imageUrl: img[0] }).then((val) => {
                           const { name, num } = val;
                           saveData({
                             cardName: name,
                             certId: num,
-                            certFrontPhoto: img[0],
                           });
                         });
                       });
@@ -187,13 +187,13 @@ export default () => {
                     if (file.length > 0) {
                       upload(file, { img: file }).then((res) => {
                         const { img = [] } = res;
+                        saveData({ certReversePhoto: img[0] });
                         fetchCardBack({ imageUrl: img[0] }).then((val) => {
                           let { endDate, startDate } = val;
                           if (endDate === "长期有效") {
                             endDate = "29991231";
                           }
                           saveData({
-                            certReversePhoto: img[0],
                             certExpireDate: endDate,
                           });
                         });

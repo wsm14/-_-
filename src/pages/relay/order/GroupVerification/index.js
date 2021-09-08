@@ -33,7 +33,7 @@ class Index extends Component {
     let { scene } = getCurrentInstance().router.params;
     let { httpData } = this.state;
     if (scene) {
-      getShareParamInfo({ uniqueKey: scene }, (res) => {
+      getShareParamInfo({ uniqueKey: scene, type: "verification" }, (res) => {
         let {
           shareParamInfo: { param },
         } = res;
@@ -166,6 +166,7 @@ class Index extends Component {
               limit: 10,
             },
             visible: false,
+            verification: {},
             orderList: [],
           },
           (res) => {
@@ -204,7 +205,11 @@ class Index extends Component {
   } //上拉加载
   render() {
     const { orderList, verification, visible } = this.state;
-    const { organizationGoodsOrderDescObject = {} } = verification;
+    const {
+      organizationGoodsOrderDescObject = {},
+      userName,
+      userProfile,
+    } = verification;
     const {
       relateOwnerProfile,
       goodsCount,
@@ -231,6 +236,8 @@ class Index extends Component {
         totalFee,
         userIdString,
         payFee,
+        userName,
+        userProfile,
       } = item;
       const {
         communityOrganizationGoodsId,
@@ -273,10 +280,10 @@ class Index extends Component {
             <View className="GroupVerification_content_top">
               <View
                 className="GroupVerification_content_profile merchant_dakale_logo"
-                style={backgroundObj(relateOwnerProfile)}
+                style={backgroundObj(userProfile)}
               ></View>
               <View className="GroupVerification_content_username font_hide">
-                {relateOwnerName}
+                {userName}
               </View>
             </View>
             <View
@@ -441,10 +448,10 @@ class Index extends Component {
                 </View>
                 <View
                   className="GroupVerification_init_toastTopProfile"
-                  style={backgroundObj(relateOwnerProfile)}
+                  style={backgroundObj(userProfile)}
                 ></View>
                 <View className="GroupVerification_init_toastTopName font_hide">
-                  {relateOwnerName}
+                  {userName}
                 </View>
               </View>
               <View className="GroupVerification_init_contents">
