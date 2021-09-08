@@ -107,16 +107,11 @@ class Index extends Component {
             (res) => {
               this.fecthDetails();
               this.fetchRecord();
-              this.fetchShareView();
             }
           );
         }
       });
     } else {
-      const { shareUserId } = this.state;
-      if (shareUserId) {
-        this.fetchShareView();
-      }
       this.fecthDetails();
       this.fetchRecord();
     }

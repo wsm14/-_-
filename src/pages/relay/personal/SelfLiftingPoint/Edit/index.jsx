@@ -38,7 +38,11 @@ export default () => {
   const fetchGetDetail = () => {
     fetchLiftingCabinetDetail({ ownerId, communityLiftingCabinetId }).then(
       (res) => {
-        setFormData(res.communityLiftingCabinetInfo);
+        const { images } = res.communityLiftingCabinetInfo;
+        setFormData({
+          images: images === " " ? "" : images,
+          ...res.communityLiftingCabinetInfo,
+        });
       }
     );
   };
