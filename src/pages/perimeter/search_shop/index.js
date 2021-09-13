@@ -7,10 +7,10 @@ import {
   getSearchDataStatistic,
   getSearchRecommend,
   getSearchConditions,
+  fetchMultiSearchData,
 } from "@/server/perimeter";
 import { fetchUserShareCommission } from "@/server/index";
 import ContentData from "./components/selectContent/index";
-import Router from "@/common/router";
 import { inject, observer } from "mobx-react";
 @inject("store")
 @observer
@@ -113,7 +113,8 @@ export default class Index extends React.Component {
         },
         (res) => {
           if (this.state.statistic.keyword) {
-            getSearchDataStatistic(this.state.statistic, (res) => {
+            fetchMultiSearchData(this.state.statistic, (res) => {
+              console.log(res);
               this.setState({
                 searchInfo: res,
                 status: "1",

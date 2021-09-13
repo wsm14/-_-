@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Canvas, Swiper, SwiperItem, View } from "@tarojs/components";
+import { Canvas, Swiper, SwiperItem, View, Button } from "@tarojs/components";
 import "./../../index.scss";
 import classNames from "classnames";
 import {
@@ -18,19 +18,11 @@ export default (props) => {
   const [current, setCurrent] = useState(0);
   const [list, setList] = useState([]);
   const qrwh = (304 / 750) * Taro.getSystemInfoSync().windowWidth;
-
   const goMerchant = (val) => {
     const { ownerType, merchantIdString, ownerIdString } = val;
     navigateTo(
       `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
     );
-    // if (ownerType !== "group") {
-
-    // } else {
-    //   navigateTo(
-    //     `/pages/perimeter/kaMerchantDetails/index?merchantGroupId=${ownerIdString}`
-    //   );
-    // }
   };
 
   useEffect(() => {
@@ -170,7 +162,12 @@ export default (props) => {
     });
   };
   //商品详情
-  const { ownerIdString, ownerCouponIdString, merchantCount } = orderResult;
+  const {
+    ownerIdString,
+    ownerCouponIdString,
+    merchantCount,
+    merchantIdString,
+  } = orderResult;
   return (
     <View className="couponDetails_title" style={style ? style : {}}>
       <View className="couponDetails_box">
@@ -243,7 +240,10 @@ export default (props) => {
             </View>
           </>
         )}
-        <View className="couponDetails_merchantShop">
+        <View
+          onClick={() => goShopGoods()}
+          className="couponDetails_merchantShop"
+        >
           <View
             className="couponDetails_merchantLogo dakale_nullImage"
             style={backgroundObj(orderResult.couponImg)}
@@ -294,12 +294,23 @@ export default (props) => {
               </View>
             </View>
             <View className="kolgoods_go_right public_center">
-              <View
-                className="kolgoods_go_rightBox public_center"
-                onClick={() => goShopGoods()}
-              >
-                <View className="kolgoods_goIcon_box shop_merchant_icon"></View>
-                商品详情
+              <Button
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: "100%",
+                  height: "100%",
+                  border: "none",
+                  background: "none",
+                }}
+                openType={"contact"}
+              ></Button>
+              <View className="kolgoods_go_rightBox public_center">
+                <View className="kolgoods_goIcon_box cannet_icon"></View>
+                联系客服
               </View>
             </View>
           </View>

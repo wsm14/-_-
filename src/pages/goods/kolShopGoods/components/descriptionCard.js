@@ -74,6 +74,7 @@ export default (props) => {
     ownerIdString,
     activityIdString,
     ownerCouponIdString,
+    merchantLogoImg,
   } = orderResult;
   console.log(orderResult);
   const goSpeGoods = () => {
@@ -198,7 +199,7 @@ export default (props) => {
         >
           <View
             className="descriptionCard_profile dakale_nullImage"
-            style={backgroundObj(merchantImg)}
+            style={backgroundObj(merchantLogoImg)}
           ></View>
           <View className="descriptionCard_merchantTitle font_hide">
             {merchantName}
@@ -218,7 +219,7 @@ export default (props) => {
         >
           <View
             className="descriptionCard_profile dakale_nullImage"
-            style={backgroundObj(merchantImg)}
+            style={backgroundObj(merchantLogoImg)}
           ></View>
           <View className="descriptionCard_merchantTitle font_hide">
             {merchantName}
@@ -245,7 +246,10 @@ export default (props) => {
     <View className="descriptionCard_title" style={style ? style : {}}>
       <View className="descriptionCard_box">
         {filterTopMerchant(merchantCount)}
-        <View className="descriptionCard_merchantShop">
+        <View
+          className="descriptionCard_merchantShop"
+          onClick={() => goSpeGoods()}
+        >
           <View
             className={classNames(
               "descriptionCard_merchantLogo",
@@ -344,13 +348,24 @@ export default (props) => {
                   到这里去
                 </View>
               </View>
-              <View
-                className="kolgoods_go_center public_center"
-                onClick={() => goSpeGoods()}
-              >
+              <View className="kolgoods_go_center public_center">
+                <Button
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: "100%",
+                    height: "100%",
+                    border: "none",
+                    background: "none",
+                  }}
+                  openType={"contact"}
+                ></Button>
                 <View className="kolgoods_go_leftBox public_center">
-                  <View className="kolgoods_goIcon_box kol_shop_icon"></View>
-                  商品详情
+                  <View className="kolgoods_goIcon_box cannet_icon"></View>
+                  联系客服
                 </View>
               </View>
               <View

@@ -123,7 +123,7 @@ export default (props) => {
   };
 
   const createBottom = (item) => {
-    let { status, createTime, orderSn, orderDesc, orderType } = item;
+    let { status, createTime, orderSn, orderDesc, orderType, beanFee } = item;
     orderDesc = (orderDesc && JSON.parse(orderDesc)) || {};
     return {
       0: (
@@ -152,7 +152,14 @@ export default (props) => {
       1: (
         <View className="createGood_bottom">
           <View className="createGood_btn_style">
-            <View className="createGood_btn_left"></View>
+            <View className="createGood_btn_left">
+              {beanFee > 0 && (
+                <View className="createdGood_details_order">
+                  卡豆帮省{" "}
+                  <Text className="bold">¥{(beanFee / 100).toFixed(2)}</Text>
+                </View>
+              )}
+            </View>
             <View
               className="createGood_btn_right createGood_btn_color1"
               onClick={() => goGoodDetails(orderSn)}
@@ -179,7 +186,12 @@ export default (props) => {
         <View className="createGood_bottom">
           <View className="createGood_btn_style">
             <View className="createGood_btn_left">
-              {/*待付款：<Text style={{color: 'rgba(51, 51, 51, 1)'}}>13 : 23</Text>*/}
+              {beanFee > 0 && (
+                <View className="createdGood_details_order">
+                  卡豆帮省{" "}
+                  <Text className="bold">¥{(beanFee / 100).toFixed(2)}</Text>
+                </View>
+              )}
             </View>
             <View
               className="createGood_btn_right createGood_btn_color1"
@@ -193,9 +205,7 @@ export default (props) => {
       6: (
         <View className="createGood_bottom">
           <View className="createGood_btn_style">
-            <View className="createGood_btn_left">
-              {/*待付款：<Text style={{color: 'rgba(51, 51, 51, 1)'}}>13 : 23</Text>*/}
-            </View>
+            <View className="createGood_btn_left"></View>
             <View
               className="createGood_btn_right createGood_btn_color2"
               onClick={() => goGoodDetails(orderSn)}
@@ -210,7 +220,7 @@ export default (props) => {
   //按钮
 
   const createCodeGoods = (item) => {
-    let { payFee, orderDesc, orderSn, createTime } = item;
+    let { payFee, orderDesc, orderSn, createTime, beanFee = "" } = item;
     orderDesc = JSON.parse(orderDesc) || {};
     const { merchantName, merchantImg, merchantId, merchantIdString } =
       orderDesc;
@@ -242,9 +252,18 @@ export default (props) => {
               style={merchantImg ? backgroundObj(merchantImg) : {}}
             ></View>
             <View className="createdGood_details_setting">
-              <View className="createdGood_details_title font_noHide">
+              <View className="createdGood_details_title bold font_hide">
                 {merchantName}
               </View>
+              <View className="createdGood_details_time">
+                支付时间：{createTime}
+              </View>
+              {beanFee > 0 && (
+                <View className="createdGood_details_color">
+                  卡豆帮省{" "}
+                  <Text className="bold">¥{(beanFee / 100).toFixed(2)}</Text>
+                </View>
+              )}
             </View>
             <View className="createdGood_details_price">
               <Text className="createdGood_details_priceFont1">¥</Text>
@@ -255,13 +274,6 @@ export default (props) => {
                 {payFee.split(".")[1] && `.${payFee.split(".")[1]}`}
               </Text>
             </View>
-          </View>
-          <View className="createdGood_details_timeBox">
-            <View className="time_color1">支付时间：{createTime}</View>
-            {/*<View className='createdGood_time_look'>*/}
-            {/*  查看*/}
-            {/*  <View className='createdGood_time_lookIcon'></View>*/}
-            {/*</View>*/}
           </View>
         </View>
       </View>

@@ -8,7 +8,7 @@ import Tabs from "@/components/tabs";
 import Goods from "./components/goods";
 import { goodsNullStatus } from "@/components/publicShopStyle";
 import { inject, observer } from "mobx-react";
-import ActiveToast from "@/components/componentView/active/tabbarBox";
+import { fetchOrderTotalBean } from "@/server/goods";
 import Router from "@/common/router";
 import "./index.scss";
 @inject("store")
@@ -26,10 +26,10 @@ class Index extends Component {
         limit: 10,
         // orderType: 'kolGoods,scan'
       },
+      saveBean: "0",
       countStatus: true,
     };
   }
-
   setIndex(index) {
     const that = this;
     if (index != this.state.setting.current) {
@@ -59,9 +59,13 @@ class Index extends Component {
     }
     return;
   }
-
-  componentDidMount() {
-    // this.getOrder()
+  getOrderTotalBean() {
+    fetchOrderTotalBean().then((val) => {
+      const { saveBean = "0" } = val;
+      this.setState({
+        saveBean,
+      });
+    });
   }
   componentDidShow() {
     const {
@@ -69,9 +73,11 @@ class Index extends Component {
         goodsStore: { orderList },
       },
     } = this.props;
-    console.log(orderList.length);
     if (orderList.length === 0 && loginStatus()) {
       this.getOrder();
+    }
+    if (loginStatus()) {
+      this.getOrderTotalBean();
     }
   }
   getOrder() {
@@ -105,7 +111,6 @@ class Index extends Component {
       Taro.stopPullDownRefresh();
     });
   }
-
   errorToast(e) {
     this.setState({
       Toast: {
@@ -115,7 +120,6 @@ class Index extends Component {
       },
     });
   }
-
   onPullDownRefresh() {
     let that = this;
     const { httpData } = this.state;
@@ -139,42 +143,36 @@ class Index extends Component {
       });
     }
   }
-
   onReachBottom() {
     const { httpData, countStatus } = this.state;
-    if (countStatus) {
-      this.setState(
-        {
-          httpData: {
-            ...httpData,
-            page: httpData.page + 1,
-          },
+    this.setState(
+      {
+        httpData: {
+          ...httpData,
+          page: httpData.page + 1,
         },
-        (res) => {
-          this.getOrder();
-        }
-      );
-    } else {
-      toast("暂无数据");
-    }
+      },
+      (res) => {
+        this.getOrder();
+      }
+    );
   } //上拉加载
-
   render() {
-    const { setting } = this.state;
+    const { setting, saveBean } = this.state;
+    const { current } = setting;
     const {
       store: {
         goodsStore: { orderList },
       },
     } = this.props;
-    const { activeInfoStore = {} } = this.props.store;
+
     const tabStyle = {
       height: Taro.pxTransform(88),
-      borderRadius: "0px 0px 20px 20px",
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
       background: "#FFFFFF",
-      padding: `0 ${Taro.pxTransform(38)}`,
+      padding: `0 ${Taro.pxTransform(48)}`,
       position: "fixed",
       left: 0,
       right: 0,
@@ -185,12 +183,37 @@ class Index extends Component {
       <View className="goods_tabbar_box">
         <Tabs
           fn={this.setIndex.bind(this)}
+          lineStyle={{
+            background: "#07C0C2",
+            width: Taro.pxTransform(40),
+            height: Taro.pxTransform(4),
+            borderRadius: Taro.pxTransform(2),
+          }}
+          fontStyle={{ color: "#07C0C2", fontSize: Taro.pxTransform(32) }}
+          sizeStyle={{ fontSize: Taro.pxTransform(32), color: "#999999" }}
           style={tabStyle}
           {...setting}
         ></Tabs>
-        <ActiveToast store={activeInfoStore}></ActiveToast>
+        {current === 0 && (
+          <View className="goods_tags_box">
+            <View className="goods_tags_icon"></View>
+            <View className="goods_tags_title">卡豆累计为您节省</View>
+            <View className="goods_tags_beanInfo">
+              ¥{(saveBean / 100).toFixed(2)}
+            </View>
+          </View>
+        )}
         {orderList.length === 0 ? (
-          goodsNullStatus()
+          <View>
+            <View className="goods_nullState_box"></View>
+            <View className="goods_nullState_toast">您还没有下单</View>
+            <View
+              className="goods_nullState_btn public_center"
+              onClick={() => Router({ routerName: "specialOffer" })}
+            >
+              去下单
+            </View>
+          </View>
         ) : (
           <Goods pageDown={() => {}} list={orderList}></Goods>
         )}

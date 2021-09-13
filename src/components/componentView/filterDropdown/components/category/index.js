@@ -41,8 +41,8 @@ export default ({ data = [], onChange, defaul, visible }) => {
       setChecked({ ...val });
     }
   }, [visible]);
-  const setMenu = (item, val, key) => {
-    if (item[key] == val[key]) {
+  const setMenu = (item = {}, val, key) => {
+    if (val && val[key] && val[key].includes(item[key])) {
       return true;
     } else return false;
   };
@@ -52,21 +52,55 @@ export default ({ data = [], onChange, defaul, visible }) => {
     }
   };
   const filterFont = (val, key) => {
-    if (val && val.type !== "all") {
-      return list[dataIndex]["categoryName"] + "/" + val[key];
+    // if (val && val.type !== "all") {
+    //   return list[dataIndex]["categoryName"] + "/" + val[key];
+    // } else {
+    return list[dataIndex]["categoryName"];
+    // }
+  };
+  const filterDefault = (item = {}) => {
+    const { categoryIdString = "" } = item;
+    const { fatherId } = checked;
+    if (fatherId && checked.type === "all") {
+      return categoryIdString;
     } else {
-      return list[dataIndex]["categoryName"];
+      if (checked && checked.categoryIdString) {
+        const changeList = checked.categoryIdString.split(",");
+        if (changeList.includes(categoryIdString)) {
+          return changeList
+            .filter((val) => {
+              return val !== categoryIdString;
+            })
+            .toString();
+        } else {
+        }
+      } else {
+        return categoryIdString;
+      }
     }
   };
   const change = (item, key) => {
-    console.log(item);
-    setChecked(item);
-    onChange({
-      [type]: {
-        selectIndex: dataIndex,
-        val: { ...item, selectName: filterFont(item, key) },
-      },
-    });
+    const { fatherId, categoryIdString } = item;
+    if (fatherId && item.type === "all") {
+      setChecked(item);
+      onChange({
+        [type]: {
+          selectIndex: dataIndex,
+          val: { ...item, selectName: filterFont(item, key) },
+        },
+      });
+    } else {
+      setChecked({ categoryIdString: filterDefault(item) });
+      onChange({
+        [type]: {
+          selectIndex: dataIndex,
+          val: {
+            categoryIdString: filterDefault(item),
+            selectName: filterFont(item, key),
+          },
+        },
+      });
+    }
   };
   return (
     <View className="sub-scorllView-box">

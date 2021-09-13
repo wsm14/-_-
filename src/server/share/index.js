@@ -119,3 +119,29 @@ export const saveNewUserBean = (data, fn) => {
   );
 };
 //领取卡豆
+
+export const getRedEnvelopesDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/userRedEnvelopes/getRedEnvelopesDetail",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//领取卡豆
+
+export const saveUserRedEnvelopes = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/userRedEnvelopes/acquire",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//领取卡豆

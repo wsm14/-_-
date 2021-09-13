@@ -120,6 +120,7 @@ export default {
         "mPay_wx_lite/index", //商家端支付页面
         "userNewArtist/index", //新人福利頁面
         "userNewGift/index", //新人红包頁面
+        "Grab/index", //领取他人发送红包页
       ],
     },
     {
@@ -187,6 +188,7 @@ export default {
       pages: [
         "interests/index", //券包
         "makeError/index", //打卡失败
+        "realName/index", //实名认证
       ],
     },
   ],

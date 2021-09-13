@@ -340,3 +340,13 @@ export const fetchServiceMerchants = (data = {}, fn) => {
 };
 //获取集团商品适用门店
 
+export const fetchMultiSearchData = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/multiSearchDataByKeyword",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取搜索数据统计

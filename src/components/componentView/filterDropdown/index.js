@@ -153,9 +153,6 @@ export default ({
         onChange={(item) => {
           confirm(filterOnChange({ ...selectData, ...item }));
           setSelectData({ ...selectData, ...item });
-          setVisible({
-            index: -1,
-          });
         }}
         visible={index}
         defaul={category}

@@ -231,3 +231,25 @@ export const fetchGroupSubMerchant = (data = {}, fn) => {
   );
 };
 //获取达人等级相关
+
+export const fetchRealNameInfo = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/realName/getRealNameInfo",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取用户实名认证状态
+
+export const fakeSubmitRealName = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/realName/submitRealName",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//提交用户提名
