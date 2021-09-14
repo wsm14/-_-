@@ -1,76 +1,107 @@
 import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
-import { getLat, getLnt, loginStatus } from "@/common/utils";
+import { getLat, getLnt, loginStatus, toast } from "@/common/utils";
 import Router from "@/common/router";
-import { View, Text, WebView } from "@tarojs/components";
-export default ({ locationStatus, setLocation, city, setTab, cityCode }) => {
+import { getUserMomentcheckNew, saveNewUserBean } from "@/server/share";
+import { View, Text, Image } from "@tarojs/components";
+export default ({
+  auth,
+  shareInfo,
+  onRouterInit,
+  locationStatus,
+  setLocation,
+}) => {
+  console.log(locationStatus);
+  const [beanInfo, setBeanInfo] = useState({
+    newUserFlag: "0",
+  });
+  useEffect(() => {
+    if (auth !== 0) {
+      getUserMomentcheckNew({
+        newDeviceFlag: Taro.getStorageSync("newDeviceFlag") || "1",
+      }).then((val) => {
+        const { newUserFlag = "1" } = val;
+        setBeanInfo({
+          newUserFlag,
+        });
+      });
+    }
+  }, [auth]);
   useEffect(() => {
     if (locationStatus) {
-      setLocation(getLnt(), getLat());
+      setLocation();
     }
   }, [locationStatus]);
+  const { newUserFlag } = beanInfo;
+  const fakeNewUserBean = () => {
+    if (loginStatus()) {
+      saveNewUserBean({}).then((val) => {
+        setBeanInfo({
+          newUserFlag: "0",
+        });
+        toast("领取成功");
+        fakeStorage("deviceFlag", "0");
+      });
+    } else {
+      Router({
+        routerName: "login",
+      });
+    }
+  };
   return (
     <View className="mainScene_top">
-      <View className="mainScene_box_location">
-        {/* <View className="mainScene_box_scene">
-          <View className="color3 font26  bold">当前城市:{city}</View>
-          <View
-            className="mainScene_location_btn public_center"
-            onClick={() => setTab()}
-          >
-            切换
-          </View>
-        </View> */}
+      <View className="mainScene_bg_box">
+        <Image
+          className="mainScene_image"
+          lazyLoad
+          mode={"aspectFill"}
+          src={
+            "https://wechat-config.dakale.net/miniprogram/active/midautumn/midautumn_1.png"
+          }
+        ></Image>
+        <View
+          className="mainScene_bg_rule public_center"
+          onClick={onRouterInit}
+        >
+          活动规则
+        </View>
+        <View className="mainScene_bg_share public_center" onClick={shareInfo}>
+          分享
+        </View>
       </View>
-      <View className="mainScene_box_card mainScene_box_cardbg1">
-        <View className="mainScene_box_height"></View>
-        <View
-          onClick={() => {
-            if (loginStatus()) {
-              Router({ routerName: "friendScene", args: { cityCode } });
-            } else {
-              Router({
-                routerName: "login",
-              });
-            }
-          }}
-          className="mainScene_card_box mainScene_card_style1"
-        >
-          <View className="mainScene_card_btn mainScene_card_btnStyle1"></View>
-        </View>
-        <View
-          onClick={() => {
-            if (loginStatus()) {
-              Router({ routerName: "shopScene", args: { cityCode } });
-            } else {
-              Router({
-                routerName: "login",
-              });
-            }
-          }}
-          className="mainScene_card_box mainScene_card_style2"
-        >
-          <View className="mainScene_card_btn mainScene_card_btnStyle2"></View>
-        </View>
-        <View
-          onClick={() => {
-            if (loginStatus()) {
-              Router({
-                routerName: "nearVideo",
-                args: {
-                  type: "goods",
-                },
-              });
-            } else {
-              Router({
-                routerName: "login",
-              });
-            }
-          }}
-          className="mainScene_card_box mainScene_card_style3"
-        >
-          <View className="mainScene_card_btn mainScene_card_btnStyle3"></View>
-        </View>
+      <View className="mainScene_btn_box">
+        {newUserFlag !== "0" ? (
+          <View className="mainScene_btn_box" onClick={fakeNewUserBean}>
+            <Image
+              className="mainScene_image"
+              lazyLoad
+              mode={"aspectFill"}
+              src={
+                "https://wechat-config.dakale.net/miniprogram/active/midautumn/midautumn_2.png"
+              }
+            ></Image>
+            <Image
+              className="mainScene_btn"
+              lazyLoad
+              mode={"aspectFill"}
+              src={
+                "https://wechat-config.dakale.net/miniprogram/active/midautumn/midautumn_btn.gif"
+              }
+            ></Image>
+          </View>
+        ) : (
+          <View className="mainScene_btn_box">
+            {" "}
+            <Image
+              className="mainScene_image"
+              lazyLoad
+              mode={"aspectFill"}
+              src={
+                "https://wechat-config.dakale.net/miniprogram/active/midautumn/midautumn_btnNo.png"
+              }
+            ></Image>
+          </View>
+        )}
       </View>
     </View>
   );
