@@ -42,6 +42,7 @@ export default ({ data = [], onChange, defaul, visible }) => {
     }
   }, [visible]);
   const setMenu = (item = {}, val, key) => {
+    let flag = false;
     if (val && val[key] && val[key].includes(item[key])) {
       return true;
     } else return false;
@@ -90,15 +91,17 @@ export default ({ data = [], onChange, defaul, visible }) => {
         },
       });
     } else {
-      setChecked({ categoryIdString: filterDefault(item) });
-      onChange({
-        [type]: {
-          selectIndex: dataIndex,
-          val: {
-            categoryIdString: filterDefault(item),
-            selectName: filterFont(item, key),
+      setChecked(() => {
+        onChange({
+          [type]: {
+            selectIndex: dataIndex,
+            val: {
+              categoryIdString: filterDefault(item),
+              selectName: filterFont(item, key),
+            },
           },
-        },
+        });
+        return { categoryIdString: filterDefault(item) };
       });
     }
   };
