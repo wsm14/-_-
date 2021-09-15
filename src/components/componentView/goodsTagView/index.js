@@ -10,9 +10,11 @@ export default ({ confirm, defaultProps, onChange, val }) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    const { goodsTags } = defaultProps;
-    if (goodsTags && typeof goodsTags === "string") {
-      setData([...goodsTags.split(",")]);
+    if (defaultProps) {
+      const { goodsTags } = defaultProps;
+      if (goodsTags && typeof goodsTags === "string") {
+        setData([...goodsTags.split(",")]);
+      }
     }
   }, [defaultProps]);
 
@@ -38,7 +40,7 @@ export default ({ confirm, defaultProps, onChange, val }) => {
       return val;
     }
   };
-  if (list.length > 0) {  
+  if (list.length > 0) {
     return (
       <View className="tag_view_box">
         <ScrollView

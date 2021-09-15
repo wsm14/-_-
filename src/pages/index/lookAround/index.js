@@ -431,11 +431,6 @@ class Index extends Component {
       bottom: Taro.pxTransform(-12),
       justifyContent: "center",
     };
-    const {
-      homeStore = {},
-      authStore = {},
-      activeInfoStore = {},
-    } = this.props.store;
     return (
       <View className="lookAround_box">
         <Navition city={cityName}></Navition>
