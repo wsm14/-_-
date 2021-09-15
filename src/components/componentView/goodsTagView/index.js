@@ -5,17 +5,24 @@ import classNames from "classnames";
 import { fetchGoodsTag } from "@/server/common";
 import "./index.scss";
 
-export default ({ confirm, onChange, val }) => {
+export default ({ confirm, defaultProps, onChange, val }) => {
   const [data, setData] = useState([]);
   const [list, setList] = useState([]);
 
   useEffect(() => {
+    const { goodsTags } = defaultProps;
+    if (goodsTags && typeof goodsTags === "string") {
+      setData([...goodsTags.split(",")]);
+    }
+  }, [defaultProps]);
+
+  useEffect(() => {
+    setData([]);
     fetchGoodsTag({
       categoryIds: val,
     }).then((res) => {
       const { configGoodsTagList = [] } = res;
       setList(configGoodsTagList);
-      setData([]);
     });
   }, [val]);
   const setChangeData = (id) => {
@@ -31,14 +38,19 @@ export default ({ confirm, onChange, val }) => {
       return val;
     }
   };
-  if (list.length > 0) {
+  if (list.length > 0) {  
     return (
       <View className="tag_view_box">
-        <ScrollView scrollX className="tag_view_scroll">
+        <ScrollView
+          scrollIntoView={`tag_${data[0]}`}
+          scrollX
+          className="tag_view_scroll"
+        >
           {list.map((item) => {
             const { configGoodsTagId, tagName } = item;
             return (
               <View
+                id={`tag_${configGoodsTagId}`}
                 onClick={() => {
                   onChange(setChangeData(configGoodsTagId).toString());
                 }}

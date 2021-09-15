@@ -4,18 +4,26 @@ import Taro, { useReachBottom } from "@tarojs/taro";
 import Waterfall from "@/components/waterfall";
 import { fetchSearchGoods } from "@/server/perimeter";
 import { selectShop } from "@/components/componentView/selectShop";
-import { backgroundObj } from "@/common/utils";
+import Tags from "@/components/componentView/goodsTagView";
+import {
+  getCategory,
+  getConfigWindVaneBySize,
+  getBusinessHub,
+} from "@/server/common";
+import FilterDropdown from "@/components/componentView/filterDropdown";
 import Router from "@/common/router";
-import "./../../../index.scss";
-const kolView = ({ keyword, current, configUserLevelInfo }) => {
+const kolView = ({ keyword, current, configUserLevelInfo, child }) => {
   const [data, setData] = useState({
     page: 1,
     limit: 10,
   });
   const [list, setList] = useState([]);
+  const [selectList, setSelectList] = useState([]);
   const [countStatus, setCountStatus] = useState(true);
+  const { categoryIds, goodsTags } = data;
   useEffect(() => {
     setData({
+      ...data,
       page: 1,
       limit: 10,
       keyword: keyword,
@@ -25,6 +33,16 @@ const kolView = ({ keyword, current, configUserLevelInfo }) => {
   useEffect(() => {
     getSearchGoods();
   }, [data]);
+  useEffect(() => {
+    setData({
+      ...data,
+      page: 1,
+      goodsTags: child,
+    });
+  }, [child]);
+  useEffect(() => {
+    initSelect();
+  }, []);
   const getSearchGoods = () => {
     const { keyword } = data;
     if (keyword) {
@@ -37,6 +55,98 @@ const kolView = ({ keyword, current, configUserLevelInfo }) => {
         }
       });
     }
+  };
+  const initSelect = () => {
+    Promise.all([
+      getCategory({ parentId: "0" }, () => {}),
+      getBusinessHub({}),
+    ]).then((val = []) => {
+      const { businessHubList = [] } = val[1];
+      const { categoryList } = val[0];
+      setSelectList([
+        {
+          name: "附近",
+          type: "near",
+          list: [
+            {
+              name: "附近",
+              type: "near",
+              list: [
+                { value: "", description: "附近" },
+                { value: "500", description: "500m" },
+                { value: "1000", description: "1km" },
+                { value: "2000", description: "2km" },
+                { value: "5000", description: "5km" },
+                { value: "10000", description: "10km" },
+                { value: "20000", description: "20km" },
+              ],
+            },
+          ],
+          hubList: businessHubList.map((item) => {
+            const { businessHubList, districtCode } = item;
+            return {
+              ...item,
+              businessHubList: [
+                {
+                  districtCode,
+                  businessHubName: "全部",
+                  type: "all",
+                },
+                ...businessHubList,
+              ],
+            };
+          }),
+        },
+        {
+          name: "品类",
+          type: "category",
+          list: [
+            {
+              categoryIdString: "",
+              categoryName: "全部",
+              categoryDTOList: [],
+              type: "father",
+            },
+            ...categoryList.map((item) => {
+              const {
+                categoryName,
+                categoryIdString,
+                categoryDTOList = [],
+              } = item;
+              return {
+                ...item,
+                categoryDTOList: [
+                  {
+                    categoryDTOList: [],
+                    fatherId: categoryIdString,
+                    categoryName: "全部",
+                    type: "all",
+                  },
+                  ...categoryDTOList,
+                ],
+              };
+            }),
+          ],
+        },
+        {
+          name: "筛选",
+          type: "select",
+          list: [
+            {
+              value: "distanceSort",
+              description: "按距离排序",
+              name: "距离",
+            },
+            { value: "priceSort", description: "按价格排序", name: "价格" },
+            {
+              value: "commissionSort",
+              description: "按佣金排序",
+              name: "佣金",
+            },
+          ],
+        },
+      ]);
+    });
   };
   const createView = (item) => {
     return selectShop(item, configUserLevelInfo, (activityId, merchantId) =>
@@ -59,7 +169,39 @@ const kolView = ({ keyword, current, configUserLevelInfo }) => {
   });
   return (
     <View style={current == 0 ? { display: "block" } : { display: "none" }}>
-      <View className="flex_auto">
+      <View className="flex_auto_select">
+        <FilterDropdown
+          filterData={selectList}
+          confirm={(e) => {
+            setData(() => {
+              setList([]);
+              return {
+                ...data,
+                ...e,
+                goodsTags: "",
+                page: 1,
+              };
+            });
+          }}
+          configUserLevelInfo={configUserLevelInfo}
+          dataFormat="Object"
+        ></FilterDropdown>
+        <Tags
+          onChange={(val) => {
+            setData(() => {
+              setList([]);
+              return {
+                ...data,
+                page: 1,
+                goodsTags: val,
+              };
+            });
+          }}
+          defaultProps={data}
+          val={categoryIds}
+        ></Tags>
+      </View>
+      <View className="flex_auto_fav">
         {list.length > 0 ? (
           <View className="search_shopPubu">
             {

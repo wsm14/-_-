@@ -9,6 +9,17 @@ page {
   background: #ffffff;
   line-height: 1;
   overflow: auto;
+  .search_shopInfo_close {
+    width: 48px;
+    height: 48px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon765.png")
+      no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    right: 48px;
+    top: 20px;
+    z-index: 1080;
+  }
   .search_shop_padding {
     padding: 0 32px;
     .search_shop_inputBox {
@@ -22,22 +33,21 @@ page {
       top: 0;
       padding: 0 32px;
       background: #ffffff;
-      z-index: 100;
-      .search_shop_input {
-        width: 686px;
-        height: 64px;
-        border-radius: 32px;
-        background: #f5f5f5
-          url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon336.png")
-          no-repeat;
-        background-size: 36px 36px;
-        background-position: 32px 14px;
-        display: block;
-        padding-left: 80px;
-        font-size: 24px;
-      }
+      z-index: 1050;
     }
-
+    .search_shop_input {
+      width: 686px;
+      height: 64px;
+      border-radius: 32px;
+      background: #f5f5f5
+        url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon336.png")
+        no-repeat;
+      background-size: 36px 36px;
+      background-position: 32px 14px;
+      display: block;
+      padding-left: 80px;
+      font-size: 24px;
+    }
     .search_shop_orderTags {
       height: 48px;
       display: flex;
@@ -172,6 +182,24 @@ page {
         margin-left: auto;
       }
     }
+  }
+  .flex_auto_select {
+    position: fixed;
+    top: 168px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 18px 0 12px;
+    z-index: 100;
+    background: #ffffff;
+  }
+  .flex_auto_fav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 354px;
+    z-index: 11;
   }
   .flex_auto {
     position: absolute;
@@ -330,6 +358,34 @@ page {
 }
 .fixed_padding {
   padding-top: 88px;
+  .fixed_padding_tag {
+    display: flex;
+    align-items: center;
+    height: 99px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .fixed_padding_tag::before {
+    width: 36px;
+    height: 36px;
+    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon762.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+  }
+  .fixed_tag_name {
+    max-width: 480px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    margin-left: 12px;
+  }
+  .fixed_tag_count {
+    margin-left: auto;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+  }
   .fixed_padding_info {
     height: 98px;
     display: flex;
@@ -360,6 +416,70 @@ page {
     color: #333333;
     line-height: 28px;
     margin-left: 16px;
+  }
+  .fixed_all_jg {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    margin-top: 40px;
+  }
+  .fixed_padding_merchant {
+    height: 135px;
+    border-bottom: 1px solid #e5e5e5;
+    .fixed_merchant_title {
+      padding-top: 32px;
+      display: flex;
+      align-items: center;
+    }
+
+    .fixed_merchant_name {
+      margin-left: 16px;
+      font-size: 28px;
+      max-width: 480px;
+    }
+    .fixed_merchant_specalIcon {
+      width: 106px;
+      height: 28px;
+      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon763.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin-left: 8px;
+    }
+    .fixed_merchant_title::before {
+      width: 36px;
+      height: 36px;
+      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon338.png)
+        no-repeat;
+      background-size: 100% 100%;
+      display: block;
+      content: "";
+    }
+
+    .fixed_merchant_goods {
+      padding-top: 32px;
+      display: flex;
+      align-items: center;
+    }
+    .fixed_merchant_goods::before {
+      width: 36px;
+      height: 36px;
+      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon591.png)
+        no-repeat;
+      background-size: 100% 100%;
+      display: block;
+      content: "";
+    }
+    .fixed_merchant_text {
+      font-size: 24px;
+      padding: 16px 0 0 52px;
+      font-weight: 400;
+      color: #999999;
+      display: flex;
+      align-items: center;
+      .fixed_merchant_limit {
+        flex: 1;
+      }
+    }
   }
 }
 .search_merchant_box {
