@@ -145,11 +145,15 @@ class Index extends Component {
     if (res.from === "button") {
       return {
         title: "中秋9.9元抢肯德基下午茶套餐",
+        imageUrl:
+          "https://wechat-config.dakale.net/miniprogram/active/midautumn/midautumn_shareImage.png",
         path: `/pages/share/mainScene/index?shareUserId=${userIdString}&shareUserType=user`,
       };
     } else {
       return {
         title: "中秋9.9元抢肯德基下午茶套餐",
+        imageUrl:
+          "https://wechat-config.dakale.net/miniprogram/active/midautumn/midautumn_shareImage.png",
         path: `/pages/share/mainScene/index`,
       };
     }

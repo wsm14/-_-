@@ -39,7 +39,7 @@ export default ({
         setBeanInfo({
           newUserFlag: "0",
         });
-        toast("领取成功");
+        toast("领取成功，已自动存入卡豆余额");
         fakeStorage("deviceFlag", "0");
       });
     } else {
