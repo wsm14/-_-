@@ -199,6 +199,7 @@ export default class Index extends React.Component {
         userMerchantNum = 0,
         userNum = 0,
         userMomentNum = 0,
+        merchantGroupList = [],
       },
       status,
       userMerchantList,
@@ -259,6 +260,31 @@ export default class Index extends React.Component {
       ),
       1: (
         <View className="fixed_padding">
+          {/* 集团卡片 - start */}
+          {merchantGroupList.map((item) => {
+            return (
+              <View
+                className="fixed_padding_info"
+                onClick={() => {
+                  this.setState({
+                    setting: {
+                      tabList: ["商品", "商家", "视频", "用户"],
+                      current: 1,
+                    },
+                  });
+                  this.changeClick(keyword);
+                }}
+              >
+                <View className="fixed_padding_iconBox fixed_padding_iconShop"></View>
+                <View className="fixed_padding_title font_hide">
+                  {item.brandName}
+                </View>
+                <View className="fixed_padding_pp"></View>
+              </View>
+            );
+          })}
+
+          {/* 集团卡片  - end */}
           <View
             className="search_shop_layer"
             onClick={() => {

@@ -33,6 +33,7 @@ const GroupCreate = () => {
     if (mode == "add") {
       // 获取上一次自提点信息
       const logisticsType = Taro.getStorageSync("logisticsType") || {};
+      console.log(logisticsType)
       savaFormData(logisticsType);
     }
     if (mode === "edit") {

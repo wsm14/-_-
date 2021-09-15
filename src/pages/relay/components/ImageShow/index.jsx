@@ -12,7 +12,7 @@ import "./index.scss";
  * @param {ClassName}   className 图片className
  */
 export default ({
-  src = '',
+  src = "",
   mode = "aspectFill",
   width,
   look = true,
@@ -39,7 +39,8 @@ export default ({
   // 点击查看图片
   const handleShowImg = (e, urlItem) => {
     e.stopPropagation();
-    if (!urlArr.length || !look) return;
+
+    if (!urlArr.length || !look || urlItem.length < 10) return;
     Taro.previewImage({
       current: urlItem, // 当前显示图片的http链接
       urls: urlArr.map((item) => item.url || item), // 需要预览的图片http链接列表

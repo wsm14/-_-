@@ -35,17 +35,21 @@ export default ({ data = [], onChange, defaul, visible }) => {
   }, [dataIndex]);
   useEffect(() => {
     if (visible === 1) {
-      console.log(defaul);
       const { selectIndex, val } = defaul;
       setDataIndex(selectIndex);
       setChecked({ ...val });
     }
   }, [visible]);
-  const setMenu = (item = {}, val, key) => {
+  const setMenu = (item = {}, data) => {
     let flag = false;
-    if (val && val[key] && val[key].includes(item[key])) {
-      return true;
-    } else return false;
+    if (data && data.categoryIdString) {
+      data.categoryIdString.split(",").forEach((value) => {
+        if (value === item.categoryIdString) {
+          flag = true;
+        }
+      });
+    }
+    return flag;
   };
   const selectIndex = (index) => {
     if (index !== dataIndex) {
@@ -59,28 +63,31 @@ export default ({ data = [], onChange, defaul, visible }) => {
     return list[dataIndex]["categoryName"];
     // }
   };
-  const filterDefault = (item = {}) => {
+  const filterDefault = (item = {}, data) => {
     const { categoryIdString = "" } = item;
-    const { fatherId } = checked;
-    if (fatherId && checked.type === "all") {
+    const { fatherId } = data;
+    if (fatherId && data.type === "all") {
       return categoryIdString;
     } else {
-      if (checked && checked.categoryIdString) {
-        const changeList = checked.categoryIdString.split(",");
-        if (changeList.includes(categoryIdString)) {
+      if (data && data.categoryIdString) {
+        const changeList = data.categoryIdString.split(",");
+        if (setMenu(item, data)) {
           return changeList
             .filter((val) => {
               return val !== categoryIdString;
             })
             .toString();
         } else {
+          console.log([...changeList, item.categoryIdString]);
+          return [...changeList, item.categoryIdString].toString();
         }
       } else {
+        console.log(data, 333);
         return categoryIdString;
       }
     }
   };
-  const change = (item, key) => {
+  const change = (item, key, data) => {
     const { fatherId, categoryIdString } = item;
     if (fatherId && item.type === "all") {
       setChecked(item);
@@ -91,17 +98,15 @@ export default ({ data = [], onChange, defaul, visible }) => {
         },
       });
     } else {
-      setChecked(() => {
-        onChange({
-          [type]: {
-            selectIndex: dataIndex,
-            val: {
-              categoryIdString: filterDefault(item),
-              selectName: filterFont(item, key),
-            },
+      setChecked({ categoryIdString: filterDefault(item, data) });
+      onChange({
+        [type]: {
+          selectIndex: dataIndex,
+          val: {
+            categoryIdString: filterDefault(item, data),
+            selectName: filterFont(item, key),
           },
-        });
-        return { categoryIdString: filterDefault(item) };
+        },
       });
     }
   };
@@ -154,7 +159,7 @@ export default ({ data = [], onChange, defaul, visible }) => {
               return (
                 <View
                   onClick={() => {
-                    change(item, "categoryName");
+                    change(item, "categoryName", checked);
                   }}
                   className={classNames(
                     "sub-scorllView-tag",
@@ -162,7 +167,7 @@ export default ({ data = [], onChange, defaul, visible }) => {
                       ? fatherId === checked.fatherId
                         ? "sub-scorllView-tagSelect"
                         : "sub-scorllView-tagSelectNo"
-                      : setMenu(item, checked, "categoryIdString")
+                      : setMenu(item, checked)
                       ? "sub-scorllView-tagSelect"
                       : "sub-scorllView-tagSelectNo"
                   )}

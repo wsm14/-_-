@@ -330,6 +330,37 @@ page {
 }
 .fixed_padding {
   padding-top: 88px;
+  .fixed_padding_info {
+    height: 98px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .fixed_padding_iconBox {
+    width: 36px;
+    height: 36px;
+  }
+  .fixed_padding_iconShop {
+    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon338.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .fixed_padding_pp {
+    width: 50px;
+    height: 28px;
+    background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon764.png)
+      no-repeat;
+    background-size: 100% 100%;
+    margin-left: 8px;
+  }
+  .fixed_padding_title {
+    font-size: 28px;
+    max-width: 480px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 28px;
+    margin-left: 16px;
+  }
 }
 .search_merchant_box {
   width: 686px;

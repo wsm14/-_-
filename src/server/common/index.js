@@ -264,7 +264,7 @@ export const getBusinessHub = (data = {}, fn) => {
 export const fetchGoodsTag = (data = {}, fn) => {
   return httpGet(
     {
-      url: "/common/config/goods/tag/listGoodsTagByCategoryId",
+      url: "/common/config/goods/tag/listGoodsTag",
       data: data,
     },
     (res) => fn && fn(res)

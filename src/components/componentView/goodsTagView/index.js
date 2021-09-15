@@ -10,18 +10,13 @@ export default ({ confirm, onChange, val }) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    if (val) {
-      fetchGoodsTag({
-        categoryId: val,
-      }).then((res) => {
-        const { configGoodsTagList = [] } = res;
-        setList(configGoodsTagList);
-        setData([]);
-      });
-    } else {
-      setList([]);
+    fetchGoodsTag({
+      categoryIds: val,
+    }).then((res) => {
+      const { configGoodsTagList = [] } = res;
+      setList(configGoodsTagList);
       setData([]);
-    }
+    });
   }, [val]);
   const setChangeData = (id) => {
     if (data.includes(id)) {

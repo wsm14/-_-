@@ -12,7 +12,6 @@ export default (props) => {
   const { list, userInfo } = props;
   const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
   const linkTo = (specialActivityId, ownerId) => {
-    console.log(specialActivityId, ownerId);
     Router({
       routerName: "favourableDetails",
       args: {
@@ -41,7 +40,6 @@ export default (props) => {
         merchantPrice,
         ownerIdString,
       } = item;
-      console.log(ownerIdString, specialActivityIdString);
       return (
         <View
           onClick={(e) => {
