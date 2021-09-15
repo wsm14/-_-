@@ -516,6 +516,12 @@ export default class Index extends React.Component {
               className="search_shop_input"
               placeholder={"搜索附近好玩的内容"}
             ></Input>
+            <View
+              className="search_shopInfo_close"
+              onClick={() => {
+                this.searchDetails({ detail: { value: "" } });
+              }}
+            ></View>
           </View>
           {hasListObj}
         </View>
