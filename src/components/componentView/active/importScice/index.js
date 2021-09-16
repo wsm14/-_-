@@ -6,7 +6,6 @@ import "./index.scss";
 export default ({ list = [], userInfo = {}, onChange, type = "toast" }) => {
   return (
     <View className="importScice_box">
-      <View className="importScice_title"></View>
       <View className="importScice_shop_good"></View>
       <View className="importScice_goods_box">
         {list.map((item) => {
