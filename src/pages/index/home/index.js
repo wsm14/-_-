@@ -34,11 +34,12 @@ import Waterfall from "@/components/waterfall";
 import Coupon from "@/components/freeCoupon";
 import Lead from "@/components/lead";
 import evens from "@/common/evens";
-import Router from "@/common/router";
+import Comment from "@/components/componentView/comment";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import NearTitle from "./components/nearTitle";
 import NewToast from "@/components/noviceGuide";
+import Router from "@/common/router";
 import "./index.scss";
 @inject("store")
 @observer
@@ -52,7 +53,7 @@ class Index extends React.PureComponent {
       circular: false,
       userMomentsInfo: {},
       httpData: {
-        browseType: "commend",
+        browseType: "pickUp",
         page: 1,
         limit: "10",
         newDeviceFlag: Taro.getStorageSync("newDeviceFlag") || "1",
@@ -909,23 +910,23 @@ class Index extends React.PureComponent {
             </>
           );
         } else {
-          if (!loginStatus() && browseType === "follow") {
-            return (
-              <View className="home_order_box">
-                <View className="home_order_followImg home_new_login"></View>
-                <View className="home_order_font">您还未登录</View>
-                <View className="home_order_font1">
-                  登录之后，可以查看您关注的精彩内容
-                </View>
-                <View
-                  className="home_order_followBtn"
-                  onClick={() => Router({ routerName: "login" })}
-                >
-                  去登录
-                </View>
-              </View>
-            );
-          }
+          // if (!loginStatus() && browseType === "follow") {
+          //   return (
+          //     <View className="home_order_box">
+          //       <View className="home_order_followImg home_new_login"></View>
+          //       <View className="home_order_font">您还未登录</View>
+          //       <View className="home_order_font1">
+          //         登录之后，可以查看您关注的精彩内容
+          //       </View>
+          //       <View
+          //         className="home_order_followBtn"
+          //         onClick={() => Router({ routerName: "login" })}
+          //       >
+          //         去登录
+          //       </View>
+          //     </View>
+          //   );
+          // }
           return (
             <ScrollView
               scrollY
@@ -946,12 +947,10 @@ class Index extends React.PureComponent {
                   <View className="home_order_font">
                     {browseType === "commend"
                       ? "我们正在努力探索更多城市，敬请期待"
-                      : "您还没任何关注"}
+                      : "暂无捡豆视频"}
                   </View>
                   <View className="home_order_font1">
-                    {browseType === "commend"
-                      ? "若无数据请下拉刷新试试"
-                      : "去关注想关注的人，实时了解精彩内容"}
+                    若无数据请下拉刷新试试
                   </View>
                 </View>
               </View>
@@ -1021,6 +1020,7 @@ class Index extends React.PureComponent {
             this.setState({ cavansObj: { start: false, data: null } })
           }
         ></TaroShareDrawer>
+        <Comment></Comment>
       </View>
     );
   }

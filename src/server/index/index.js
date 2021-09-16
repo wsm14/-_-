@@ -77,7 +77,7 @@ export const deleteMomentsLikeAmount = (data, fn) => {
 export const getUserMomentList = (data = {}, fn) => {
   return httpGet(
     {
-      url: "/user/userMoment/listMomentDetailByType",
+      url: "/user/moment/listMainMoment",
       data: data,
     },
     (res) => fn(res)

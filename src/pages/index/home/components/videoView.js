@@ -31,6 +31,7 @@ export default ({
     setTime(0);
     setWalk(false);
   }, [current]);
+  console.log(data);
   const expensive = useMemo(() => {
     const { shareCommission = 0 } = userInfo;
     if (data.length > 0) {
@@ -59,7 +60,6 @@ export default ({
                 watchStatus,
                 beanFlag,
               } = item;
-
               if (
                 index === current ||
                 index === current + 1 ||
