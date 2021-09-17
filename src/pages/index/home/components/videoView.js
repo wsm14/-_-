@@ -21,6 +21,7 @@ export default ({
   saveBean,
   dataInfo,
   initVideo,
+  changeComment,
 }) => {
   const [scale, setScale] = useState(0);
   const [time, setTime] = useState(0);
@@ -31,7 +32,6 @@ export default ({
     setTime(0);
     setWalk(false);
   }, [current]);
-  console.log(data);
   const expensive = useMemo(() => {
     const { shareCommission = 0 } = userInfo;
     if (data.length > 0) {
@@ -90,6 +90,7 @@ export default ({
                         time={time}
                         show={index === current}
                         dataInfo={dataInfo}
+                        changeComment={changeComment}
                       ></InterVal>
                       <View
                         style={{

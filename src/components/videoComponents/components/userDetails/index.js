@@ -3,6 +3,7 @@ import Taro from "@tarojs/taro";
 import { Button, Text, View, Canvas } from "@tarojs/components";
 import classNames from "classnames";
 import { setPeople, navigateTo, backgroundObj } from "@/common/utils";
+
 import Router from "@/common/router";
 import "./../../index.scss";
 export default ({
@@ -14,19 +15,20 @@ export default ({
   time = 0,
   show,
   initBean,
+  changeComment,
 }) => {
   const {
-    merchantFollowStatus,
+    collectionStatus,
     shareAmount,
     collectionAmount,
     guideMomentFlag,
     userProfile,
     userIdString,
-    merchantCollectionStatus,
     watchStatus,
     length,
+    followStatus,
+    commentAmount = 0,
   } = data;
-  const { shareCommission = 0 } = userInfo;
   return (
     <View className="video_stem_layer">
       <View
@@ -39,32 +41,33 @@ export default ({
           );
         }}
       >
-        {merchantFollowStatus === "0" && (
+        {followStatus === "0" && (
           <View
             onClick={(e) => follow(e)}
             className={classNames("video_stem_fallStatus video_stem_status1")}
           ></View>
         )}
       </View>
-      {guideMomentFlag === "0" && (
-        <>
-          <View
-            onClick={() => collection()}
-            className={classNames(
-              "collected_box",
-              merchantCollectionStatus === "0"
-                ? "share_shoucang_icon1"
-                : "share_shoucang_icon2"
-            )}
-          ></View>
-          <View className="collected_font">{setPeople(collectionAmount)}</View>
-        </>
-      )}
+      {/* {guideMomentFlag === "0" && ( */}
+      <>
+        <View
+          onClick={() => collection()}
+          className={classNames(
+            "collected_box",
+            collectionStatus === "0" ? "video_stem_sc1" : "video_stem_sc2"
+          )}
+        ></View>
+        <View className="collected_font">{setPeople(collectionAmount)}</View>
+      </>
+      {/* )} */}
+      {/* 评论区按钮 - start */}
+      <View onClick={changeComment} className="video_comment_box"></View>
+      <View className="video_comment_font">{commentAmount}</View>
+      {/* 评论区按钮 - end */}
       <View
         onClick={() => shareInfo()}
         className={classNames("video_share_wechat")}
       ></View>
-
       <View className="collected_font">{shareAmount}</View>
 
       {initBean && (

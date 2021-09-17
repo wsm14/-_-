@@ -9,41 +9,33 @@ const scale = () => {
   return Taro.getSystemInfoSync().windowWidth / 375;
 };
 export default (props) => {
-  const {
-    data,
-    current,
-    beanLimitStatus,
-    index,
-    initBean = true,
-    dataInfo,
-  } = props;
+  const { data, current, beanLimitStatus, index, initBean = true } = props;
   const [toast, setToast] = useState(1);
-  const [moment, setMoment] = useState({});
   const [timeOut, setTimeOut] = useState(null);
   const {
     watchStatus,
-    beanAmount,
+    tippingBean,
     couponTitlesJson = [],
     beanFlag,
     guideMomentFlag,
   } = data;
   useEffect(() => {
-    setMoment(data);
     if (current === index) {
       setToast(1);
       if (beanLimitStatus === "0" || beanFlag === 0) {
         return;
       }
       if (!timeOut) {
-        let val = setTimeout(() => setToast(0), 3000);
+        let val = setTimeout(() => setToast(0), 10000);
         setTimeOut(val);
       } else {
         clearTimeout(timeOut);
-        let val = setTimeout(() => setToast(0), 3000);
+        let val = setTimeout(() => setToast(0), 10000);
         setTimeOut(val);
       }
     }
   }, [current]);
+
   const renderToast = () => {
     let str = "";
     if (couponTitlesJson.length > 0) {
@@ -54,12 +46,12 @@ export default (props) => {
     } else if (beanFlag === 0) {
       return "卡豆被领完啦！";
     } else if (watchStatus === "1") {
-      return `已领取${beanAmount}卡豆`;
+      return `已领取${tippingBean}卡豆`;
     } else {
       if (guideMomentFlag === "1") {
-        return `新手福利 +${beanAmount}`;
+        return `新手福利 +${tippingBean}`;
       } else {
-        return `看完可捡${beanAmount}卡豆${str}`;
+        return `看完可捡${tippingBean}卡豆${str}`;
       }
     }
   };

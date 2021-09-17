@@ -6,10 +6,10 @@
   left: 0;
   right: 0;
   top: 0;
-
   background: transparent;
   display: flex;
   align-items: flex-end;
+  line-height: 1;
   .comment_content_box {
     border-radius: 20px 20px 0px 0px;
     position: absolute;
@@ -26,6 +26,7 @@
       .temPlateComment_profile {
         width: 80px;
         height: 80px;
+        border-radius: 50%;
       }
       .temPlateComment_content {
         width: 582px;
@@ -37,6 +38,7 @@
         font-size: 28px;
         font-weight: 600;
         color: #666666;
+        padding-bottom: 16px;
       }
       .temPlateComment_desc {
         width: 582px;
@@ -61,9 +63,12 @@
       color: #ffffff;
       text-align: center;
     }
-    .comment_content_top::before {
+    .comment_content_scroll {
+      max-height: 680px;
+      padding: 8px 32px 24px;
+    }
+    .comment_content_close {
       position: absolute;
-      content: "";
       display: block;
       top: 24px;
       right: 24px;
@@ -73,6 +78,14 @@
         no-repeat;
       background-size: 100% 100%;
     }
+  }
+  .comment_content_root {
+    margin: 64px auto 24px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #666666;
+    line-height: 24px;
+    text-align: center;
   }
   .comment_bottom_box {
     position: absolute;
@@ -105,7 +118,7 @@
       position: absolute;
       left: 24px;
       right: 24px;
-      top: 12px;
+      top: 20px;
       line-height: 45px;
       overflow-y: hidden;
       word-wrap: break-word;
@@ -118,11 +131,13 @@
     }
   }
   .comment_text_info {
-    padding: 24px;
+    padding: 16px 24px;
     display: block;
     visibility: hidden;
     word-break: break-all;
     word-wrap: break-word;
     line-height: 45px;
+    font-size: 32px;
+    min-height: 45px;
   }
 }

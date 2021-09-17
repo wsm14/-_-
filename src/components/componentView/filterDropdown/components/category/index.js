@@ -6,6 +6,7 @@ import { getDom } from "@/common/utils";
 export default ({ data = [], onChange, defaul, visible }) => {
   const { list = [], type } = data;
   const [dataIndex, setDataIndex] = useState(null);
+  const [father, SetFather] = useState(null);
   const [TikIndex, setTikIndex] = useState(null);
   const [childrenList, setChildrenList] = useState([]);
   const [checked, setChecked] = useState(null);
@@ -38,6 +39,7 @@ export default ({ data = [], onChange, defaul, visible }) => {
       const { selectIndex, val } = defaul;
       setDataIndex(selectIndex);
       setChecked({ ...val });
+      SetFather({ ...val });
     }
   }, [visible]);
   const setMenu = (item = {}, data) => {
@@ -56,6 +58,36 @@ export default ({ data = [], onChange, defaul, visible }) => {
       setDataIndex(index);
     }
   };
+  const saveChange = () => {
+    const { categoryIdString, categoryName } = father;
+    console.log(father, 333333333333333333333);
+    if (checked && checked.categoryIdString) {
+      onChange({
+        [type]: {
+          selectIndex: dataIndex,
+          val: {
+            categoryIdString: checked.categoryIdString,
+            selectName: categoryName,
+            fatherId: categoryIdString,
+            categoryName: categoryName,
+          },
+        },
+      });
+    } else {
+      console.log(checked);
+      onChange({
+        [type]: {
+          selectIndex: dataIndex,
+          val: {
+            categoryIdString: categoryIdString,
+            selectName: categoryName,
+            fatherId: categoryIdString,
+            categoryName: categoryName,
+          },
+        },
+      });
+    }
+  };
   const filterFont = (val, key) => {
     // if (val && val.type !== "all") {
     //   return list[dataIndex]["categoryName"] + "/" + val[key];
@@ -65,120 +97,117 @@ export default ({ data = [], onChange, defaul, visible }) => {
   };
   const filterDefault = (item = {}, data) => {
     const { categoryIdString = "" } = item;
-    const { fatherId } = data;
-    if (fatherId && data.type === "all") {
-      return categoryIdString;
-    } else {
-      if (data && data.categoryIdString) {
-        const changeList = data.categoryIdString.split(",");
-        if (setMenu(item, data)) {
-          return changeList
-            .filter((val) => {
-              return val !== categoryIdString;
-            })
-            .toString();
-        } else {
-          console.log([...changeList, item.categoryIdString]);
-          return [...changeList, item.categoryIdString].toString();
-        }
+    if (data && data.categoryIdString) {
+      const changeList = data.categoryIdString.split(",");
+      if (setMenu(item, data)) {
+        return changeList
+          .filter((val) => {
+            return val !== categoryIdString;
+          })
+          .toString();
       } else {
-        console.log(data, 333);
-        return categoryIdString;
+        return [...changeList, item.categoryIdString].toString();
       }
+    } else {
+      return categoryIdString;
     }
   };
   const change = (item, key, data) => {
-    const { fatherId, categoryIdString } = item;
-    if (fatherId && item.type === "all") {
-      setChecked(item);
-      onChange({
-        [type]: {
-          selectIndex: dataIndex,
-          val: { ...item, selectName: filterFont(item, key) },
-        },
-      });
-    } else {
-      setChecked({ categoryIdString: filterDefault(item, data) });
-      onChange({
-        [type]: {
-          selectIndex: dataIndex,
-          val: {
-            categoryIdString: filterDefault(item, data),
-            selectName: filterFont(item, key),
-          },
-        },
-      });
-    }
+    setChecked({ categoryIdString: filterDefault(item, data) });
   };
   return (
-    <View className="sub-scorllView-box">
-      <ScrollView
-        scrollIntoView={`menu${TikIndex}`}
-        scrollY
-        className="sub-scorllView-left"
-      >
-        {list.map((item, index) => {
-          const { categoryName } = item;
-          return (
-            <View
-              onClick={() => {
-                if (item.type === "father") {
-                  setChecked({});
-                  onChange({
-                    [type]: {
-                      selectIndex: -1,
-                      val: {},
-                    },
-                  });
-                } else {
-                  selectIndex(index);
-                }
-              }}
-              id={`menu${index}`}
-              className={classNames(
-                "sub-scorll-btn",
-                ((!dataIndex || dataIndex === -1) && index === 0) ||
-                  dataIndex === index
-                  ? "sub-scorll-btnSelect"
-                  : "sub-scorll-btnSelectFlase"
-              )}
-            >
-              {categoryName}
-            </View>
-          );
-        })}
-      </ScrollView>
-      <ScrollView scrollY className="sub-scorllView-right">
-        <View className="sub-scorllView-rightbox">
-          {marginTags(
-            childrenList,
-            3,
-            { marginRight: Taro.pxTransform(23) },
-            (item, index) => {
-              const { fatherId } = item;
-              return (
-                <View
-                  onClick={() => {
-                    change(item, "categoryName", checked);
-                  }}
-                  className={classNames(
-                    "sub-scorllView-tag",
-                    fatherId
-                      ? fatherId === checked.fatherId
+    <View>
+      <View className="sub-scorllView-box">
+        <ScrollView
+          scrollIntoView={`menu${TikIndex}`}
+          scrollY
+          className="sub-scorllView-left1"
+        >
+          {list.map((item, index) => {
+            const { categoryName } = item;
+            return (
+              <View
+                onClick={() => {
+                  if (item.type === "father") {
+                    setDataIndex(null);
+                    setChecked({});
+                    SetFather(null);
+                    onChange({
+                      [type]: {
+                        selectIndex: -1,
+                        val: {},
+                      },
+                    });
+                  } else {
+                    SetFather(item);
+                    setChecked({});
+                    selectIndex(index);
+                  }
+                }}
+                id={`menu${index}`}
+                className={classNames(
+                  "sub-scorll-btn",
+                  ((!dataIndex || dataIndex === -1) && index === 0) ||
+                    dataIndex === index
+                    ? "sub-scorll-btnSelect"
+                    : "sub-scorll-btnSelectFlase"
+                )}
+              >
+                {categoryName}
+              </View>
+            );
+          })}
+        </ScrollView>
+        <ScrollView scrollY className="sub-scorllView-right1">
+          <View className="sub-scorllView-rightbox">
+            {marginTags(
+              childrenList,
+              3,
+              { marginRight: Taro.pxTransform(23) },
+              (item, index) => {
+                return (
+                  <View
+                    onClick={() => {
+                      change(item, "categoryName", checked);
+                    }}
+                    className={classNames(
+                      "sub-scorllView-tag",
+                      setMenu(item, checked)
                         ? "sub-scorllView-tagSelect"
                         : "sub-scorllView-tagSelectNo"
-                      : setMenu(item, checked)
-                      ? "sub-scorllView-tagSelect"
-                      : "sub-scorllView-tagSelectNo"
-                  )}
-                >
-                  {item.categoryName}
-                </View>
-              );
-            }
-          )}
+                    )}
+                  >
+                    {item.categoryName}
+                  </View>
+                );
+              }
+            )}
+          </View>
+        </ScrollView>
+      </View>
+      <View className="sub-scorllView-btnBox public_auto">
+        <View
+          className="sub-scorllView-btn sub-scorllView-btnStyle1 public_center"
+          onClick={() => {
+            onChange({
+              [type]: {
+                selectIndex: -1,
+                val: {
+                  value: "",
+                },
+              },
+            });
+          }}
+        >
+          重置
         </View>
-      </ScrollView>
+        <View
+          className="sub-scorllView-btn sub-scorllView-btnStyle2 public_center"
+          onClick={() => saveChange()}
+        >
+          确定
+        </View>
+      </View>
     </View>
   );
 };

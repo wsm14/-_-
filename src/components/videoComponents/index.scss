@@ -48,12 +48,29 @@
         background-size: 100% 100%;
       }
     }
+    .video_stem_sc1 {
+      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon768.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .video_stem_sc2 {
+      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon769.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
     .collected_box {
       width: 72px;
       height: 72px;
-      margin: 56px auto 0;
+      margin: 32px auto 0;
     }
     .collected_font {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 33px;
+    }
+    .video_comment_font {
       text-align: center;
       font-size: 24px;
       font-weight: 400;
@@ -81,6 +98,14 @@
       animation-iteration-count: infinite;
       animation-fill-mode: both;
     }
+  }
+  .video_comment_box {
+    width: 72px;
+    height: 72px;
+    margin: 32px auto 0;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon770.png")
+      no-repeat;
+    background-size: 100% 100%;
   }
   .bean_animate {
     margin: 56px auto 0;

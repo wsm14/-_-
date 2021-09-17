@@ -9,19 +9,19 @@ export default ({ confirm, defaultProps, onChange, val }) => {
   const [data, setData] = useState([]);
   const [list, setList] = useState([]);
 
-  useEffect(() => {
-    if (defaultProps) {
-      const { goodsTags } = defaultProps;
-      if (goodsTags && typeof goodsTags === "string") {
-        setData([...goodsTags.split(",")]);
-      }
-    }
-  }, [defaultProps]);
+  // useEffect(() => {
+  //   if (defaultProps) {
+  //     const { goodsTags } = defaultProps;
+  //     if (goodsTags && typeof goodsTags === "string") {
+  //       setData([...goodsTags.split(",")]);
+  //     }
+  //   }
+  // }, [defaultProps]);
 
   useEffect(() => {
     setData([]);
     fetchGoodsTag({
-      categoryIds: val,
+      categoryId: val,
     }).then((res) => {
       const { configGoodsTagList = [] } = res;
       setList(configGoodsTagList);

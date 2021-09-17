@@ -203,3 +203,25 @@ export const fetchRecommendMerchantList = (data = {}, fn) => {
   );
 };
 //获取风向标商家
+
+export const fetchMomentComment = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/momentComment/listMomentComment",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取视频评论
+
+export const fakeMomentComment = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/momentComment/saveMomentComment",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取视频评论

@@ -1,31 +1,85 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { View, Textarea, Text, Image, RichText } from "@tarojs/components";
+import {
+  View,
+  Textarea,
+  Text,
+  Image,
+  RichText,
+  ScrollView,
+} from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import classNames from "classnames";
+import { fetchMomentComment, fakeMomentComment } from "@/server/index";
 import "./index.scss";
-export default ({ show = false, close, data }) => {
+export default ({ show = false, close, data, current }) => {
   const [keyword, setWord] = useState(null);
-  const [comment, setComment] = useState({});
+  const [comment, setComment] = useState([]);
+  const [root, setRoot] = useState(true);
+  const [page, setPage] = useState({
+    page: 1,
+    limit: 10,
+  });
   useEffect(() => {
     if (show) {
       Taro.hideTabBar();
+      !comment.length && getComment();
     } else {
       Taro.showTabBar();
     }
   }, [show]);
+  useEffect(() => {
+    setComment([]);
+    setPage({
+      page: 1,
+      limit: 10,
+    });
+    setRoot(true);
+  }, [current]);
+  useEffect(() => {
+    if (page.page !== 1) {
+      getComment();
+    }
+  }, [page.page]);
   const setKeyWord = (val) => {
     const { value } = val.detail;
     setWord(value);
   };
+  const getComment = () => {
+    fetchMomentComment({ ...page, momentId: data.momentId }).then((val) => {
+      const { momentCommentList = [] } = val;
+      if (!momentCommentList.length) {
+        return setRoot(false);
+      }
+      setComment([...comment, ...momentCommentList]);
+    });
+  };
+  const saveComment = () => {
+    fakeMomentComment({
+      momentId: data.momentId,
+      content: keyword,
+      ownerId: data.ownerId,
+    }).then((val) => {
+      const { momentCommentInfo } = val;
+      setComment([momentCommentInfo, ...comment]);
+      setWord("");
+    });
+  };
   const temPlateComment = (item) => {
-    const {} = item;
+    const { content = "", username, profile = "", createTime } = item;
     return (
       <View className="temPlateComment_box">
-        <View className="temPlateComment_profile"></View>
+        <View className="temPlateComment_profile">
+          <Image
+            className="temPlateComment_profile"
+            lazyLoad
+            mode={"aspectFill"}
+            src={profile}
+          ></Image>
+        </View>
         <View className="temPlateComment_content">
-          <View className="temPlateComment_username font_hide">用户昵称 </View>
+          <View className="temPlateComment_username font_hide">{username}</View>
           <RichText
-            nodes={"adadasdasdasda[微笑]asdasdasddsf的点点滴滴多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多多asdd[吃瓜]".replace(
+            nodes={content.replace(
               /\[(.*?)]/g,
               `<img
                width=${Taro.pxTransform(24)}
@@ -34,13 +88,12 @@ export default ({ show = false, close, data }) => {
             )}
             className="temPlateComment_desc"
           ></RichText>
-          <View className="temPlateComment_time">2小时前</View>
+          <View className="temPlateComment_time">{createTime}</View>
         </View>
       </View>
     );
   };
   const memo = useMemo(() => {
-    console.log(show);
     return (
       <View
         className="comment_box"
@@ -56,22 +109,56 @@ export default ({ show = false, close, data }) => {
             e.stopPropagation();
           }}
         >
-          <View className="comment_content_top">3条评论</View>
-          {temPlateComment({})}
+          <View className="comment_content_top">
+            {comment.length}条评论
+            <View
+              className="comment_content_close"
+              onClick={(e) => {
+                e.stopPropagation();
+                close();
+              }}
+            ></View>
+          </View>
+          <ScrollView
+            onScrollToLower={() => {
+              root &&
+                setPage({
+                  ...page,
+                  page: page.page + 1,
+                });
+            }}
+            scrollY
+            className="comment_content_scroll"
+          >
+            {comment.map((item) => {
+              return temPlateComment(item);
+            })}
+            {!root && (
+              <View className="comment_content_root">没有更多了...</View>
+            )}
+          </ScrollView>
+
           <View className="comment_bottom_box">
             <View className="comment_input_text">
               <Text className="comment_text_info">{keyword}</Text>
               <Textarea
+                placeholder={"快来发表你的评论吧"}
                 maxlength={100}
                 onInput={setKeyWord}
+                value={keyword}
                 className="Textarea_box"
               ></Textarea>
             </View>
-            <View className="comment_bottom_btn public_center">发表</View>
+            <View
+              className="comment_bottom_btn public_center"
+              onClick={() => saveComment()}
+            >
+              发表
+            </View>
           </View>
         </View>
       </View>
     );
-  }, [keyword, comment, show]);
+  }, [keyword, comment, show, root]);
   return memo;
 };

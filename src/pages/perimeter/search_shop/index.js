@@ -37,7 +37,7 @@ export default class Index extends React.Component {
         tabList: ["商品", "商家", "视频", "用户"],
         current: 0,
       },
-      childRef: null,
+      // childRef: null,
     };
   }
 
@@ -383,9 +383,8 @@ export default class Index extends React.Component {
                       tabList: ["商品", "商家", "视频", "用户"],
                       current: 0,
                     },
-                    childRef: configGoodsTagId,
                   });
-                  this.changeClick(keyword);
+                  this.changeClick(tagName);
                 }}
               >
                 <View className="fixed_tag_name font_hide">{tagName}</View>
@@ -497,7 +496,7 @@ export default class Index extends React.Component {
           setting={this.state.setting}
           configUserLevelInfo={configUserLevelInfo}
           store={this.props.store}
-          childRef={childRef}
+          // childRef={childRef}
         ></ContentData>
       ),
     }[status];

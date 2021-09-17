@@ -17,18 +17,21 @@ import classNames from "classnames";
 import "./index.scss";
 import { getDom, computedSize, filterIndex } from "@/common/utils";
 const filterOnChange = (item) => {
-  const { near, category, select } = item;
+  const { near, category, select, fatherId = "" } = item;
   let nearVal = near.val;
   let categoryVal = category.val;
   let selectVal = select.val;
   let distance = "";
   let districtCode = "";
   let businessHubId = "";
+  let fatherIds = "";
   let categoryIds = "";
-  if (categoryVal.categoryIdString || categoryVal.fatherId) {
-    categoryIds = categoryVal.categoryIdString || categoryVal.fatherId;
+  if (categoryVal.categoryIdString) {
+    categoryIds = categoryVal.categoryIdString;
   }
-
+  if (categoryVal.fatherId) {
+    fatherIds = categoryVal.fatherId;
+  }
   if (nearVal.type === "all") {
     distance = "";
     businessHubId = "";
@@ -50,6 +53,7 @@ const filterOnChange = (item) => {
     distance,
     businessHubId,
     districtCode,
+    fatherId,
   };
 };
 export default ({
@@ -153,6 +157,9 @@ export default ({
         onChange={(item) => {
           confirm(filterOnChange({ ...selectData, ...item }));
           setSelectData({ ...selectData, ...item });
+          setVisible({
+            index: -1,
+          });
         }}
         visible={index}
         defaul={category}

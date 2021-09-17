@@ -11,7 +11,7 @@ export default ({
   keyword,
   configUserLevelInfo,
   store,
-  childRef,
+  // childRef,
 }) => {
   const [keywords, setKeyword] = useState("");
   const [count, setCount] = useState(0);
@@ -63,7 +63,7 @@ export default ({
           current={count}
           configUserLevelInfo={configUserLevelInfo}
           keyword={keywords}
-          child={childRef}
+          // child={childRef}
         ></ShopView>
       }
       {<UserView current={count} keyword={keywords}></UserView>}

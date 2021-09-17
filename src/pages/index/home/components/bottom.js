@@ -49,17 +49,15 @@ export default (props) => {
     message,
     cityName,
     categoryName,
-    lat,
-    lnt,
+    addressContentObject = {},
     merchantAddress,
     userIdString,
-    merchantLnt,
-    merchantLat,
     username,
     promotionPrice,
     userMomentIdString,
     userProfile,
   } = server;
+  const { address, lat, lnt } = addressContentObject;
   const getPromotion = (item) => {
     const { promotionType, promotionIdString, userIdString } = item;
     if (promotionIdString) {
@@ -239,7 +237,7 @@ export default (props) => {
               mapGo({
                 lat: lat,
                 lnt: lnt,
-                address: merchantAddress,
+                address: address,
                 merchantName: username,
               })
             }
@@ -247,13 +245,7 @@ export default (props) => {
             <View className="home_city_icon"></View>
             <View className="home_desc_text font_hide">
               {cityName}·{categoryName}｜
-              {GetDistance(
-                getLat(),
-                getLnt(),
-                merchantLat || lat,
-                merchantLnt || lnt
-              )}
-              ｜{merchantAddress}
+              {GetDistance(getLat(), getLnt(), lat, lnt)}｜{address}
             </View>
           </View>
         </View>
@@ -272,7 +264,7 @@ export default (props) => {
               mapGo({
                 lat: lat,
                 lnt: lnt,
-                address: merchantAddress,
+                address: address,
                 merchantName: username,
               })
             }
@@ -280,13 +272,7 @@ export default (props) => {
             <View className="home_city_icon"></View>
             <View className="home_desc_text font_hide">
               {cityName}·{categoryName}｜
-              {GetDistance(
-                getLat(),
-                getLnt(),
-                merchantLat || lat,
-                merchantLnt || lnt
-              )}
-              ｜{merchantAddress}
+              {GetDistance(getLat(), getLnt(), lat, lnt)}｜{address}
             </View>
           </View>
         </View>

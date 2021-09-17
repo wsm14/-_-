@@ -89,15 +89,16 @@ class Index extends React.PureComponent {
       },
       showTwoToast: false,
       triggered: false,
+      commentShow: false,
     };
     this.interReload = null;
     this.interSwper = null;
   }
   saveMomentType() {
     const {
-      userMomentsInfo: { userMomentIdString },
+      userMomentsInfo: { momentId },
     } = this.state;
-    saveMomentType({ updateType: "view", id: userMomentIdString }, (res) => {
+    saveMomentType({ updateType: "view", id: momentId }, (res) => {
       toast("分享成功");
     });
   }
@@ -288,7 +289,7 @@ class Index extends React.PureComponent {
   } //设置定时器领取卡豆
   saveBean() {
     const {
-      userMomentsInfo: { userMomentIdString, guideMomentFlag },
+      userMomentsInfo: { momentId, guideMomentFlag },
       userMomentsInfo,
     } = this.state;
     const { homeStore } = this.props.store;
@@ -297,7 +298,7 @@ class Index extends React.PureComponent {
       if (beanLimitStatus === "1") {
         saveWatchBean(
           {
-            momentId: userMomentIdString,
+            momentId: momentId,
           },
           (res) => {
             const {
@@ -319,7 +320,7 @@ class Index extends React.PureComponent {
                   otherRealPrice,
                 },
                 userMomentsList: this.state.userMomentsList.map((item) => {
-                  if (item.userMomentIdString === userMomentIdString) {
+                  if (item.momentId === momentId) {
                     return {
                       ...item,
                       watchStatus: "1",
@@ -348,7 +349,7 @@ class Index extends React.PureComponent {
                 beanFlag: 0,
               },
               userMomentsList: this.state.userMomentsList.map((item) => {
-                if (item.userMomentIdString === userMomentIdString) {
+                if (item.momentId === momentId) {
                   return {
                     ...item,
                     beanFlag: 0,
@@ -409,28 +410,28 @@ class Index extends React.PureComponent {
     let that = this;
     const {
       userMomentsInfo,
-      userMomentsInfo: { merchantFollowStatus, userIdString },
+      userMomentsInfo: { followStatus, ownerId, ownerType },
     } = this.state;
-    if (merchantFollowStatus === "1") {
+    if (followStatus === "1") {
       return;
     } else {
       saveFollow(
         {
-          followType: "merchant",
-          followUserId: userIdString,
+          followType: ownerType,
+          followUserId: ownerId,
         },
         () =>
           that.setState(
             {
               userMomentsInfo: {
                 ...userMomentsInfo,
-                merchantFollowStatus: "1",
+                followStatus: "1",
               },
               userMomentsList: this.state.userMomentsList.map((item) => {
-                if (item.userIdString === userIdString) {
+                if (item.ownerId === ownerId) {
                   return {
                     ...item,
-                    merchantFollowStatus: "1",
+                    followStatus: "1",
                   };
                 }
                 return item;
@@ -446,26 +447,26 @@ class Index extends React.PureComponent {
   collection() {
     let that = this;
     const {
-      userMomentsInfo: { userMomentIdString, merchantCollectionStatus },
+      userMomentsInfo: { momentId, collectionStatus },
       userMomentsInfo,
     } = this.state;
-    if (merchantCollectionStatus === "1") {
+    if (collectionStatus === "1") {
       closeMerchantCollection(
         {
-          collectionId: userMomentIdString,
+          collectionId: momentId,
         },
         () => {
           that.setState({
             userMomentsInfo: {
               ...userMomentsInfo,
-              merchantCollectionStatus: "0",
+              collectionStatus: "0",
               collectionAmount: parseInt(userMomentsInfo.collectionAmount) - 1,
             },
             userMomentsList: this.state.userMomentsList.map((item) => {
-              if (item.userMomentIdString === userMomentIdString) {
+              if (item.momentId === momentId) {
                 return {
                   ...userMomentsInfo,
-                  merchantCollectionStatus: "0",
+                  collectionStatus: "0",
                   collectionAmount:
                     parseInt(userMomentsInfo.collectionAmount) - 1,
                 };
@@ -478,20 +479,20 @@ class Index extends React.PureComponent {
     } else {
       saveMerchantCollection(
         {
-          collectionId: userMomentIdString,
+          collectionId: momentId,
         },
         () => {
           that.setState({
             userMomentsInfo: {
               ...userMomentsInfo,
-              merchantCollectionStatus: "1",
+              collectionStatus: "1",
               collectionAmount: parseInt(userMomentsInfo.collectionAmount) + 1,
             },
             userMomentsList: this.state.userMomentsList.map((item) => {
-              if (item.userMomentIdString === userMomentIdString) {
+              if (item.momentId === momentId) {
                 return {
                   ...userMomentsInfo,
-                  merchantCollectionStatus: "1",
+                  collectionStatus: "1",
                   collectionAmount:
                     parseInt(userMomentsInfo.collectionAmount) + 1,
                 };
@@ -674,7 +675,7 @@ class Index extends React.PureComponent {
   shareImageInfo() {
     const {
       userMomentsInfo: {
-        userMomentIdString,
+        momentId,
         message,
         username,
         cityName,
@@ -688,7 +689,7 @@ class Index extends React.PureComponent {
     getShareInfo(
       {
         shareType: "video",
-        shareId: userMomentIdString,
+        shareId: momentId,
       },
       (res) => {
         const {
@@ -743,7 +744,7 @@ class Index extends React.PureComponent {
       userMomentsInfo: {
         frontImage,
         title,
-        userMomentIdString,
+        momentId,
         weChatImg = "",
         weChatTitle = "",
       },
@@ -751,18 +752,18 @@ class Index extends React.PureComponent {
     updateUserMomentParam(
       {
         updateType: "share",
-        id: userMomentIdString,
+        id: momentId,
       },
       (res) => {}
     );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {
-      const { userIdString } = userInfo;
+      const { ownerId } = userInfo;
       if (res.from === "button") {
         return {
           title: weChatTitle || title,
           imageUrl: weChatImg || frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${ownerId}&shareUserType=user&momentId=${momentId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -772,7 +773,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${ownerId}&shareUserType=user&momentId=${momentId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -784,7 +785,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -794,7 +795,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -809,7 +810,7 @@ class Index extends React.PureComponent {
       current,
       circular,
       userMomentsInfo = {},
-      userMomentsInfo: { userIdString },
+      userMomentsInfo: { ownerId },
       httpData: { browseType },
       beanflag,
       couponFlag,
@@ -820,6 +821,7 @@ class Index extends React.PureComponent {
       triggered,
       showTwoToast,
       paramsInfo,
+      commentShow,
     } = this.state;
     const {
       homeStore = {},
@@ -899,6 +901,7 @@ class Index extends React.PureComponent {
                 userInfo={configUserLevelInfo}
                 shareInfo={this.shareImageInfo.bind(this)}
                 beanLimitStatus={beanLimitStatus}
+                changeComment={() => this.setState({ commentShow: true })}
                 saveBean={this.saveBean.bind(this)}
                 initVideo={() => {
                   if (!player && !this.interSwper) {
@@ -1020,7 +1023,16 @@ class Index extends React.PureComponent {
             this.setState({ cavansObj: { start: false, data: null } })
           }
         ></TaroShareDrawer>
-        <Comment></Comment>
+        <Comment
+          data={userMomentsInfo}
+          current={current}
+          close={() => {
+            this.setState({
+              commentShow: false,
+            });
+          }}
+          show={commentShow}
+        ></Comment>
       </View>
     );
   }

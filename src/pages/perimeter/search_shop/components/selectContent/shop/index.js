@@ -12,11 +12,12 @@ import {
 } from "@/server/common";
 import FilterDropdown from "@/components/componentView/filterDropdown";
 import Router from "@/common/router";
-const kolView = ({ keyword, current, configUserLevelInfo, child }) => {
+const kolView = ({ keyword, current, configUserLevelInfo }) => {
   const [data, setData] = useState({
     page: 1,
     limit: 10,
   });
+  const [fatherId, setFatherId] = useState("");
   const [list, setList] = useState([]);
   const [selectList, setSelectList] = useState([]);
   const [countStatus, setCountStatus] = useState(true);
@@ -33,13 +34,6 @@ const kolView = ({ keyword, current, configUserLevelInfo, child }) => {
   useEffect(() => {
     getSearchGoods();
   }, [data]);
-  useEffect(() => {
-    setData({
-      ...data,
-      page: 1,
-      goodsTags: child,
-    });
-  }, [child]);
   useEffect(() => {
     initSelect();
   }, []);
@@ -107,25 +101,7 @@ const kolView = ({ keyword, current, configUserLevelInfo, child }) => {
               categoryDTOList: [],
               type: "father",
             },
-            ...categoryList.map((item) => {
-              const {
-                categoryName,
-                categoryIdString,
-                categoryDTOList = [],
-              } = item;
-              return {
-                ...item,
-                categoryDTOList: [
-                  {
-                    categoryDTOList: [],
-                    fatherId: categoryIdString,
-                    categoryName: "全部",
-                    type: "all",
-                  },
-                  ...categoryDTOList,
-                ],
-              };
-            }),
+            ...categoryList,
           ],
         },
         {
@@ -173,6 +149,9 @@ const kolView = ({ keyword, current, configUserLevelInfo, child }) => {
         <FilterDropdown
           filterData={selectList}
           confirm={(e) => {
+            const { fatherId } = e;
+            console.log(e);
+            setFatherId(fatherId);
             setData(() => {
               setList([]);
               return {
@@ -186,6 +165,7 @@ const kolView = ({ keyword, current, configUserLevelInfo, child }) => {
           configUserLevelInfo={configUserLevelInfo}
           dataFormat="Object"
         ></FilterDropdown>
+        {console.log(fatherId)}
         <Tags
           onChange={(val) => {
             setData(() => {
@@ -197,8 +177,7 @@ const kolView = ({ keyword, current, configUserLevelInfo, child }) => {
               };
             });
           }}
-          defaultProps={data}
-          val={categoryIds}
+          val={fatherId}
         ></Tags>
       </View>
       <View className="flex_auto_fav">
