@@ -149,9 +149,8 @@ const kolView = ({ keyword, current, configUserLevelInfo }) => {
         <FilterDropdown
           filterData={selectList}
           confirm={(e) => {
-            const { fatherId } = e;
-            console.log(e);
-            setFatherId(fatherId);
+            const { fatherIds } = e;
+            setFatherId(fatherIds);
             setData(() => {
               setList([]);
               return {
@@ -165,7 +164,6 @@ const kolView = ({ keyword, current, configUserLevelInfo }) => {
           configUserLevelInfo={configUserLevelInfo}
           dataFormat="Object"
         ></FilterDropdown>
-        {console.log(fatherId)}
         <Tags
           onChange={(val) => {
             setData(() => {

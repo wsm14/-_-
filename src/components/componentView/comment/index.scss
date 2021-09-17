@@ -115,29 +115,15 @@
       margin-top: 8px;
     }
     .Textarea_box {
-      position: absolute;
-      left: 24px;
-      right: 24px;
-      top: 20px;
-      line-height: 45px;
-      overflow-y: hidden;
-      word-wrap: break-word;
-      word-break: break-all;
+      width: 446px;
+      height: 80px;
+      background: #151515;
+      border-radius: 8px;
       font-size: 32px;
       font-weight: 400;
       color: #666666;
-      width: 432px;
-      height: 100%;
+      line-height: 80px;
+      padding-left: 24px;
     }
-  }
-  .comment_text_info {
-    padding: 16px 24px;
-    display: block;
-    visibility: hidden;
-    word-break: break-all;
-    word-wrap: break-word;
-    line-height: 45px;
-    font-size: 32px;
-    min-height: 45px;
   }
 }

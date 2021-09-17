@@ -6,6 +6,7 @@ import {
   Image,
   RichText,
   ScrollView,
+  Input,
 } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import classNames from "classnames";
@@ -139,16 +140,16 @@ export default ({ show = false, close, data, current }) => {
           </ScrollView>
 
           <View className="comment_bottom_box">
-            <View className="comment_input_text">
-              <Text className="comment_text_info">{keyword}</Text>
-              <Textarea
-                placeholder={"快来发表你的评论吧"}
-                maxlength={100}
-                onInput={setKeyWord}
-                value={keyword}
-                className="Textarea_box"
-              ></Textarea>
-            </View>
+            <Input
+              placeholder={"快来发表你的评论吧"}
+              type="text"
+              maxlength={100}
+              onInput={setKeyWord}
+              value={keyword}
+              className="Textarea_box"
+              confirmType={"done"}
+            ></Input>
+
             <View
               className="comment_bottom_btn public_center"
               onClick={() => saveComment()}

@@ -160,25 +160,7 @@ class Index extends React.Component {
                   categoryDTOList: [],
                   type: "father",
                 },
-                ...categoryList.map((item) => {
-                  const {
-                    categoryName,
-                    categoryIdString,
-                    categoryDTOList = [],
-                  } = item;
-                  return {
-                    ...item,
-                    categoryDTOList: [
-                      {
-                        categoryDTOList: [],
-                        fatherId: categoryIdString,
-                        categoryName: "全部",
-                        type: "all",
-                      },
-                      ...categoryDTOList,
-                    ],
-                  };
-                }),
+                ...categoryList,
               ],
             },
           ],

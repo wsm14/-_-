@@ -59,8 +59,8 @@ export default ({ data = [], onChange, defaul, visible }) => {
     }
   };
   const saveChange = () => {
-    const { categoryIdString, categoryName } = father;
-    console.log(father, 333333333333333333333);
+    const { fatherId, categoryName } = father;
+    console.log(father, checked);
     if (checked && checked.categoryIdString) {
       onChange({
         [type]: {
@@ -68,20 +68,19 @@ export default ({ data = [], onChange, defaul, visible }) => {
           val: {
             categoryIdString: checked.categoryIdString,
             selectName: categoryName,
-            fatherId: categoryIdString,
+            fatherId: fatherId,
             categoryName: categoryName,
           },
         },
       });
     } else {
-      console.log(checked);
       onChange({
         [type]: {
           selectIndex: dataIndex,
           val: {
-            categoryIdString: categoryIdString,
+            categoryIdString: fatherId,
             selectName: categoryName,
-            fatherId: categoryIdString,
+            fatherId: fatherId,
             categoryName: categoryName,
           },
         },
@@ -139,7 +138,7 @@ export default ({ data = [], onChange, defaul, visible }) => {
                       },
                     });
                   } else {
-                    SetFather(item);
+                    SetFather({ ...item, fatherId: item.categoryIdString });
                     setChecked({});
                     selectIndex(index);
                   }

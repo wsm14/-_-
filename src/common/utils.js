@@ -698,6 +698,7 @@ export const resiApiKey = "f390f1e2b0faa95710d00a0801384c41";
 //高德key
 
 export const filterIndex = (list = [], valKey) => {
+  console.log(valKey);
   const setMenu = (item = {}, data) => {
     let flag = false;
     if (data) {
@@ -722,11 +723,11 @@ export const filterIndex = (list = [], valKey) => {
         obj = {
           selectIndex: valIndex,
           val: {
-            categoryName: "全部",
+            categoryName: item["categoryName"],
             categoryDTOList: [],
             fatherId: valKey,
             selectName: categoryName,
-            type: "all",
+            categoryIdString: item.categoryIdString,
           },
         };
       } else {
@@ -736,7 +737,10 @@ export const filterIndex = (list = [], valKey) => {
               selectIndex: valIndex,
               val: {
                 ...childVal,
+                categoryIdString: valKey,
+                categoryName: item["categoryName"],
                 selectName: item["categoryName"],
+                fatherId: item.categoryIdString,
               },
             };
           }

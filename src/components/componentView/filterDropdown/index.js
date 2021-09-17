@@ -17,7 +17,8 @@ import classNames from "classnames";
 import "./index.scss";
 import { getDom, computedSize, filterIndex } from "@/common/utils";
 const filterOnChange = (item) => {
-  const { near, category, select, fatherId = "" } = item;
+  console.log(item);
+  const { near, category, select } = item;
   let nearVal = near.val;
   let categoryVal = category.val;
   let selectVal = select.val;
@@ -53,7 +54,7 @@ const filterOnChange = (item) => {
     distance,
     businessHubId,
     districtCode,
-    fatherId,
+    fatherIds,
   };
 };
 export default ({

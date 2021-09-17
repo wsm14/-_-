@@ -30,6 +30,7 @@ class Index extends Component {
       configUserLevelInfo: {},
       specialGoodsList: [],
       height: 0,
+      fatherId: "",
     };
   }
   fetchUserShare() {
@@ -93,25 +94,7 @@ class Index extends Component {
                 categoryDTOList: [],
                 type: "father",
               },
-              ...categoryList.map((item) => {
-                const {
-                  categoryName,
-                  categoryIdString,
-                  categoryDTOList = [],
-                } = item;
-                return {
-                  ...item,
-                  categoryDTOList: [
-                    {
-                      categoryDTOList: [],
-                      fatherId: categoryIdString,
-                      categoryName: "全部",
-                      type: "all",
-                    },
-                    ...categoryDTOList,
-                  ],
-                };
-              }),
+              ...categoryList,
             ],
           },
           {
@@ -187,6 +170,7 @@ class Index extends Component {
       configUserLevelInfo,
       height,
       httpData: { categoryIds },
+      fatherId,
     } = this.state;
 
     return (
@@ -200,6 +184,7 @@ class Index extends Component {
         <FilterDropdown
           filterData={selectList}
           confirm={(e) => {
+            this.setState({ fatherId: e.fatherIds });
             this.changeSelect(e);
           }}
           configUserLevelInfo={configUserLevelInfo}
@@ -209,7 +194,7 @@ class Index extends Component {
           onChange={(val) => {
             this.changeSelect({ goodsTags: val });
           }}
-          val={categoryIds}
+          val={fatherId}
         ></Tags>
         <View className="scroll_margin"></View>
         <ScrollView
