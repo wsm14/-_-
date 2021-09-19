@@ -10,7 +10,9 @@ page {
   color: #ffffff;
   line-height: 32px;
   margin-top: 16px;
-  width: 558px;
+  width: 518px;
+  display: flex;
+  align-items: center;
 }
 .home_box {
   width: 100%;
@@ -435,11 +437,11 @@ page {
 }
 .templateCard_box {
   position: absolute;
-  bottom: 42px;
+  bottom: 90px;
   left: 32px;
   right: 32px;
-  width: 558px;
-  height: 200px;
+  width: 520px;
+  height: 218px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   z-index: 10;
@@ -455,7 +457,7 @@ page {
       margin-left: 12px;
       height: 112px;
       .templateCard_title {
-        width: 354px;
+        width: 316px;
         font-size: 28px;
         font-weight: 400;
         color: #ffffff;

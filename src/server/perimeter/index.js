@@ -39,7 +39,7 @@ export const getSearchDataStatistic = (data, fn) => {
 export const getListUserMomentBySearch = (data, fn) => {
   httpGet(
     {
-      url: "/user/userMoment/listUserMomentBySearch",
+      url: "/user/moment/listMomentBySearch",
       data: data,
     },
     (res) => fn(res)

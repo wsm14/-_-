@@ -20,7 +20,6 @@ export default (props) => {
     if (count) {
       getLovely();
     } else {
-      toast("暂无数据");
     }
   }, [httpData]);
   useReachBottom(() => {
@@ -42,7 +41,7 @@ export default (props) => {
         ...httpData,
         page: httpData.page + 1,
       });
-    } else return toast("暂无数据");
+    } else return ;
   };
   if (data.length > 0) {
     return (

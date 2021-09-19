@@ -11,8 +11,8 @@ import {
 } from "@/common/utils";
 import { View } from "@tarojs/components";
 import {
-  saveMerchantCollection,
-  closeMerchantCollection,
+  fakeInsertUserCollectionMoment,
+  fakeDeleteUserCollection,
   updateUserMomentParam,
   fetchUserShareCommission,
 } from "@/server/index";
@@ -25,6 +25,7 @@ import { getListUserMomentBySearch } from "@/server/perimeter";
 import { getShareInfo } from "@/server/common";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
+import Comment from "@/components/componentView/comment";
 import "./index.scss";
 @inject("store")
 @observer
@@ -51,6 +52,7 @@ class Index extends React.PureComponent {
         data: null,
         start: false,
       },
+      commentShow: false,
     };
   }
 
@@ -80,7 +82,7 @@ class Index extends React.PureComponent {
           );
         } else {
           if (current === this.state.userMomentsList.length - 1) {
-            return toast("暂无数据");
+          
           }
         }
       }
@@ -184,28 +186,28 @@ class Index extends React.PureComponent {
     let that = this;
     const {
       userMomentsInfo,
-      userMomentsInfo: { merchantFollowStatus, userIdString },
+      userMomentsInfo: { followStatus, ownerId, ownerType },
     } = this.state;
-    if (merchantFollowStatus === "1") {
+    if (followStatus === "1") {
       return;
     } else {
       saveFollow(
         {
-          followType: "merchant",
-          followUserId: userIdString,
+          followType: ownerType,
+          followUserId: ownerId,
         },
         () =>
           that.setState(
             {
               userMomentsInfo: {
                 ...userMomentsInfo,
-                merchantFollowStatus: "1",
+                followStatus: "1",
               },
               userMomentsList: this.state.userMomentsList.map((item) => {
-                if (item.userIdString === userIdString) {
+                if (item.ownerId === ownerId) {
                   return {
                     ...item,
-                    merchantFollowStatus: "1",
+                    followStatus: "1",
                   };
                 }
                 return item;
@@ -221,26 +223,29 @@ class Index extends React.PureComponent {
   collection() {
     let that = this;
     const {
-      userMomentsInfo: { userMomentIdString, merchantCollectionStatus },
+      userMomentsInfo: { momentId, collectionStatus, ownerId, ownerType },
       userMomentsInfo,
     } = this.state;
-    if (merchantCollectionStatus === "1") {
-      closeMerchantCollection(
+    if (collectionStatus === "1") {
+      fakeDeleteUserCollection(
         {
-          collectionId: userMomentIdString,
+          collectionType: "moment",
+          collectionId: momentId,
+          ownerId,
+          ownerType,
         },
         () => {
           that.setState({
             userMomentsInfo: {
               ...userMomentsInfo,
-              merchantCollectionStatus: "0",
+              collectionStatus: "0",
               collectionAmount: parseInt(userMomentsInfo.collectionAmount) - 1,
             },
             userMomentsList: this.state.userMomentsList.map((item) => {
-              if (item.userMomentIdString === userMomentIdString) {
+              if (item.momentId === momentId) {
                 return {
                   ...userMomentsInfo,
-                  merchantCollectionStatus: "0",
+                  collectionStatus: "0",
                   collectionAmount:
                     parseInt(userMomentsInfo.collectionAmount) - 1,
                 };
@@ -251,22 +256,25 @@ class Index extends React.PureComponent {
         }
       );
     } else {
-      saveMerchantCollection(
+      fakeInsertUserCollectionMoment(
         {
-          collectionId: userMomentIdString,
+          collectionType: "moment",
+          collectionId: momentId,
+          ownerId,
+          ownerType,
         },
         () => {
           that.setState({
             userMomentsInfo: {
               ...userMomentsInfo,
-              merchantCollectionStatus: "1",
+              collectionStatus: "1",
               collectionAmount: parseInt(userMomentsInfo.collectionAmount) + 1,
             },
             userMomentsList: this.state.userMomentsList.map((item) => {
-              if (item.userMomentIdString === userMomentIdString) {
+              if (item.momentId === momentId) {
                 return {
                   ...userMomentsInfo,
-                  merchantCollectionStatus: "1",
+                  collectionStatus: "1",
                   collectionAmount:
                     parseInt(userMomentsInfo.collectionAmount) + 1,
                 };
@@ -278,83 +286,10 @@ class Index extends React.PureComponent {
       );
     }
   }
-  onShareAppMessage(res) {
-    const {
-      userMomentsInfo: {
-        frontImage,
-        title,
-        userMomentIdString,
-        weChatImg = "",
-        weChatTitle = "",
-      },
-    } = this.state;
-    updateUserMomentParam(
-      {
-        updateType: "share",
-        id: userMomentIdString,
-      },
-      (res) => {}
-    );
-    let userInfo = loginStatus() || {};
-    if (loginStatus()) {
-      const { userIdString } = userInfo;
-      if (res.from === "button") {
-        return {
-          title: weChatTitle || title,
-          imageUrl: weChatImg || frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
-          complete: function () {
-            // 转发结束之后的回调（转发成不成功都会执行）
-            console.log("---转发完成---");
-          },
-        };
-      } else {
-        return {
-          title: title,
-          imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
-          complete: function () {
-            // 转发结束之后的回调（转发成不成功都会执行）
-            console.log("---转发完成---");
-          },
-        };
-      }
-    } else {
-      if (res.from === "button") {
-        return {
-          title: weChatTitle || title,
-          imageUrl: weChatImg || frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
-          complete: function () {
-            // 转发结束之后的回调（转发成不成功都会执行）
-            console.log("---转发完成---");
-          },
-        };
-      } else {
-        return {
-          title: title,
-          imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
-          complete: function () {
-            // 转发结束之后的回调（转发成不成功都会执行）
-            console.log("---转发完成---");
-          },
-        };
-      }
-    }
-  }
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
-    });
-  }
   shareImageInfo() {
     const {
       userMomentsInfo: {
-        userMomentIdString,
+        momentId,
         message,
         username,
         cityName,
@@ -368,7 +303,7 @@ class Index extends React.PureComponent {
     getShareInfo(
       {
         shareType: "video",
-        shareId: userMomentIdString,
+        shareId: momentId,
       },
       (res) => {
         const {
@@ -418,6 +353,81 @@ class Index extends React.PureComponent {
       }
     );
   }
+  onShareAppMessage(res) {
+    const {
+      userMomentsInfo: {
+        frontImage,
+        title,
+        momentId,
+        weChatImg = "",
+        weChatTitle = "",
+        ownerId,
+      },
+    } = this.state;
+    updateUserMomentParam(
+      {
+        updateType: "share",
+        id: momentId,
+      },
+      (res) => {}
+    );
+    let userInfo = loginStatus() || {};
+    if (loginStatus()) {
+      const { userIdString } = userInfo;
+      if (res.from === "button") {
+        return {
+          title: weChatTitle || title,
+          imageUrl: weChatImg || frontImage,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${momentId}&ownerId=${ownerId}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
+        };
+      } else {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${momentId}&ownerId=${ownerId}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
+        };
+      }
+    } else {
+      if (res.from === "button") {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}&ownerId=${ownerId}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
+        };
+      } else {
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}&ownerId=${ownerId}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
+        };
+      }
+    }
+  }
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
+  }
+
   componentWillMount() {
     const { selectObj, list, index } = this.props.store.homeStore;
     if (list.length === 0) {
@@ -448,6 +458,8 @@ class Index extends React.PureComponent {
       player,
       configUserLevelInfo,
       cavansObj,
+      commentShow,
+      userMomentsInfo,
     } = this.state;
 
     const templateView = () => {
@@ -457,11 +469,13 @@ class Index extends React.PureComponent {
             <VideoView
               circular={circular}
               data={userMomentsList}
+              dataInfo={userMomentsInfo}
               current={current}
               onChange={this.onChange.bind(this)}
               follow={this.followStatus.bind(this)}
               collection={this.collection.bind(this)}
               stop={this.stopVideoPlayerControl.bind(this)}
+              changeComment={() => this.setState({ commentShow: true })}
               userInfo={configUserLevelInfo}
               shareInfo={this.shareImageInfo.bind(this)}
             ></VideoView>
@@ -486,6 +500,16 @@ class Index extends React.PureComponent {
             className="player_no"
           ></View>
         )}
+        <Comment
+          data={userMomentsInfo}
+          current={current}
+          close={() => {
+            this.setState({
+              commentShow: false,
+            });
+          }}
+          show={commentShow}
+        ></Comment>
         <TaroShareDrawer
           {...cavansObj}
           onSave={() => console.log("点击保存")}

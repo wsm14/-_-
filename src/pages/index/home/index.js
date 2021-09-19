@@ -14,8 +14,8 @@ import { ScrollView, View, Image } from "@tarojs/components";
 import {
   getUserMomentList,
   saveWatchBean,
-  saveMerchantCollection,
-  closeMerchantCollection,
+  fakeInsertUserCollectionMoment,
+  fakeDeleteUserCollection,
   saveMomentType,
   getUserMomentDetailById,
   checkPuzzleBeanLimitStatus,
@@ -447,13 +447,16 @@ class Index extends React.PureComponent {
   collection() {
     let that = this;
     const {
-      userMomentsInfo: { momentId, collectionStatus },
+      userMomentsInfo: { momentId, collectionStatus, ownerId, ownerType },
       userMomentsInfo,
     } = this.state;
     if (collectionStatus === "1") {
-      closeMerchantCollection(
+      fakeDeleteUserCollection(
         {
+          collectionType: "moment",
           collectionId: momentId,
+          ownerId,
+          ownerType,
         },
         () => {
           that.setState({
@@ -477,9 +480,12 @@ class Index extends React.PureComponent {
         }
       );
     } else {
-      saveMerchantCollection(
+      fakeInsertUserCollectionMoment(
         {
+          collectionType: "moment",
           collectionId: momentId,
+          ownerId,
+          ownerType,
         },
         () => {
           that.setState({
@@ -516,58 +522,21 @@ class Index extends React.PureComponent {
     }
   }
   componentWillMount() {
-    const { momentId, scene } = getCurrentInstance().router.params;
-    if (scene || momentId) {
-      if (scene) {
-        getShareParamInfo({ uniqueKey: scene }, (res) => {
-          const {
-            shareParamInfo: { param },
-          } = res;
-          if (param && JSON.parse(param)) {
-            const { momentId } = JSON.parse(param);
-            if (momentId) {
-              this.getUserMomentDetailById(momentId);
-            } else {
-              this.getVideoList(() => {
-                const { userMomentsList } = this.state;
-                if (userMomentsList.length > 0) {
-                  this.setState(
-                    {
-                      userMomentsInfo: this.state.userMomentsList[0],
-                    },
-                    (res) => {
-                      this.setState({
-                        interval: true,
-                      });
-                    }
-                  );
-                }
-              });
-            }
+    this.getVideoList(() => {
+      const { userMomentsList } = this.state;
+      if (userMomentsList.length > 0) {
+        this.setState(
+          {
+            userMomentsInfo: this.state.userMomentsList[0],
+          },
+          (res) => {
+            this.setState({
+              interval: true,
+            });
           }
-        });
-      } else if (momentId) {
-        this.getUserMomentDetailById(momentId);
-      } else {
-        return;
+        );
       }
-    } else {
-      this.getVideoList(() => {
-        const { userMomentsList } = this.state;
-        if (userMomentsList.length > 0) {
-          this.setState(
-            {
-              userMomentsInfo: this.state.userMomentsList[0],
-            },
-            (res) => {
-              this.setState({
-                interval: true,
-              });
-            }
-          );
-        }
-      });
-    }
+    });
   }
   updateList(list = []) {
     const { userMomentsList } = this.state;
@@ -669,7 +638,6 @@ class Index extends React.PureComponent {
         }
       );
     } else {
-      toast("暂无数据");
     }
   } //上拉加载
   shareImageInfo() {
@@ -747,6 +715,7 @@ class Index extends React.PureComponent {
         momentId,
         weChatImg = "",
         weChatTitle = "",
+        ownerId,
       },
     } = this.state;
     updateUserMomentParam(
@@ -758,12 +727,12 @@ class Index extends React.PureComponent {
     );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {
-      const { ownerId } = userInfo;
+      const { userIdString } = userInfo;
       if (res.from === "button") {
         return {
           title: weChatTitle || title,
           imageUrl: weChatImg || frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${ownerId}&shareUserType=user&momentId=${momentId}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -773,7 +742,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${ownerId}&shareUserType=user&momentId=${momentId}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -785,7 +754,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -795,7 +764,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");

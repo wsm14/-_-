@@ -20,6 +20,7 @@ export default ({
   beanLimitStatus,
   saveBean,
   dataInfo,
+  changeComment,
 }) => {
   const [scale, setScale] = useState(0);
   const [player, setPlayer] = useState(false);
@@ -90,6 +91,7 @@ export default ({
                         time={time}
                         show={index === current}
                         dataInfo={dataInfo}
+                        changeComment={changeComment}
                       ></InterVal>
                       <View
                         style={{

@@ -556,7 +556,10 @@ class MerchantDetails extends Component {
               </View>
 
               <View className="shopdetails_beanTitleName public_auto">
-                <View className="shopdetails_beanTitle_name"> {goodsName}</View>
+                <View className="shopdetails_beanTitle_name font_fourHide">
+                  {" "}
+                  {goodsName}
+                </View>
 
                 <View
                   onClick={() => this.setCollection()}
@@ -634,6 +637,11 @@ class MerchantDetails extends Component {
                         <Image
                           mode="widthFix"
                           src={item}
+                          onClick={() => {
+                            Taro.previewImage({
+                              urls: [item],
+                            });
+                          }}
                           style={{ width: "100%" }}
                         ></Image>
                       );

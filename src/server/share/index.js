@@ -131,7 +131,7 @@ export const getRedEnvelopesDetail = (data, fn) => {
     }
   );
 };
-//领取卡豆
+//获取卡豆
 
 export const saveUserRedEnvelopes = (data, fn) => {
   return httpGet(

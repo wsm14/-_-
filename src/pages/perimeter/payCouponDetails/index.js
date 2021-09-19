@@ -460,6 +460,11 @@ class Index extends Component {
                       <Image
                         mode="widthFix"
                         src={item}
+                        onClick={() => {
+                          Taro.previewImage({
+                            urls: [item],
+                          });
+                        }}
                         style={{ width: "100%" }}
                       ></Image>
                     );

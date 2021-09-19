@@ -18,6 +18,7 @@ export default (props) => {
     couponTitlesJson = [],
     beanFlag,
     guideMomentFlag,
+    freeCouponFlag = "0",
   } = data;
   useEffect(() => {
     if (current === index) {
@@ -43,7 +44,7 @@ export default (props) => {
     }
     if (beanLimitStatus === "0") {
       return "今日卡豆领取已达上限";
-    } else if (beanFlag === 0) {
+    } else if (beanFlag === 0 || beanFlag === "0") {
       return "卡豆被领完啦！";
     } else if (watchStatus === "1") {
       return `已领取${tippingBean}卡豆`;

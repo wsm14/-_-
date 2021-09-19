@@ -75,7 +75,6 @@ class Record extends Component {
         this.setState({
           countStatus: false,
         });
-        toast("暂无数据");
       }
     });
   }
@@ -103,7 +102,6 @@ class Record extends Component {
         }
       );
     } else {
-      toast("暂无数据");
     }
   } //上拉加载
 

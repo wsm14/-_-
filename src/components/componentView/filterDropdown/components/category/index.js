@@ -60,7 +60,6 @@ export default ({ data = [], onChange, defaul, visible }) => {
   };
   const saveChange = () => {
     const { fatherId, categoryName } = father;
-    console.log(father, checked);
     if (checked && checked.categoryIdString) {
       onChange({
         [type]: {
@@ -96,7 +95,8 @@ export default ({ data = [], onChange, defaul, visible }) => {
   };
   const filterDefault = (item = {}, data) => {
     const { categoryIdString = "" } = item;
-    if (data && data.categoryIdString) {
+    const { fatherId } = father;
+    if (data && data.categoryIdString && data.categoryIdString !== fatherId) {
       const changeList = data.categoryIdString.split(",");
       if (setMenu(item, data)) {
         return changeList
@@ -188,11 +188,15 @@ export default ({ data = [], onChange, defaul, visible }) => {
         <View
           className="sub-scorllView-btn sub-scorllView-btnStyle1 public_center"
           onClick={() => {
+            const { fatherId, categoryName } = father;
             onChange({
               [type]: {
-                selectIndex: -1,
+                selectIndex: dataIndex,
                 val: {
-                  value: "",
+                  categoryIdString: fatherId,
+                  selectName: categoryName,
+                  fatherId: fatherId,
+                  categoryName: categoryName,
                 },
               },
             });

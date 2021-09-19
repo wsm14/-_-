@@ -102,7 +102,6 @@ class Index extends Component {
               countStatus: false,
             },
             (res) => {
-              toast("暂无数据");
             }
           );
         }

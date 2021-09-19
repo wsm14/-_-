@@ -9,12 +9,11 @@ import {
   getLnt,
   backgroundObj,
   computedPrice,
-  computedBeanPrice,
 } from "@/common/utils";
 import Taro from "@tarojs/taro";
-import { getPromotionInfo } from "@/server/index";
+import { fetchMomentRelate } from "@/server/index";
 import Router from "@/common/router";
-import { mapGo } from "@/common/utils";
+import { mapGo, computedBeanPrice } from "@/common/utils";
 import TemplateCard from "./shopcard";
 import "./../index.scss";
 export default (props) => {
@@ -36,9 +35,9 @@ export default (props) => {
   }, []);
 
   useEffect(() => {
-    const { promotionIdString } = server;
+    const { promotionFlag } = server;
     setShowFlag(false);
-    if (promotionIdString && current === index) {
+    if (promotionFlag === "1" && current === index) {
       let time = setTimeout(() => {
         clearTimeout(time);
         setShowFlag(true);
@@ -50,84 +49,152 @@ export default (props) => {
     message,
     cityName,
     categoryName,
-    lat,
-    lnt,
-    merchantAddress,
-    userIdString,
-    merchantLnt,
-    merchantLat,
-    username,
-    promotionPrice,
-    userMomentIdString,
-    userProfile,
+    addressContentObject = {},
+    ownerName,
+    momentId,
+    ownerImg,
+    momentType,
   } = server;
+  const { address, lat, lnt } = addressContentObject;
   const getPromotion = (item) => {
-    const { promotionType, promotionIdString, userIdString } = item;
-    if (promotionIdString) {
-      getPromotionInfo(
+    const { promotionFlag, ownerId, promotionNum, momentId } = item;
+    if (promotionFlag === "1" && promotionNum > 0) {
+      fetchMomentRelate(
         {
-          promotionId: promotionIdString,
-          promotionType,
-          merchantId: userIdString,
+          ownerId,
+          momentId,
         },
         (res) => {
-          const { promotionInfo } = res;
-          setCouponInfo(promotionInfo);
+          const { momentRelateInfo } = res;
+          setCouponInfo(momentRelateInfo);
         }
       );
     }
   };
   const templateStated = (val, callback) => {
-    const {
-      promotionName,
-      promotionBuyPrice,
-      promotionMerchantPrice,
-      promotionImg,
-    } = val;
-    return (
-      <View className="test_debug">
-        <View className="templateStated_box" onClick={() => callback()}>
-          <View
-            className="templateStated_img coupon_shop_icon"
-            style={backgroundObj(promotionImg || userProfile)}
-          ></View>
-          <View className="templateStated_font">
-            <View
-              style={
-                shareCommission > 0 ? { maxWidth: Taro.pxTransform(336) } : {}
-              }
-              className="templateStated_title font_hide"
-            >
-              {promotionName}
+    const { activityGoodsList, ownerCouponList } = val;
+    if (activityGoodsList.length > 0) {
+      return activityGoodsList.map((item, index) => {
+        const {
+          activityGoodsId,
+          goodsImg,
+          goodsName,
+          realPrice,
+          commission,
+          oriPrice,
+        } = item;
+        if (index === 0) {
+          return (
+            <View className="test_debug">
+              <View
+                className="templateStated_box"
+                onClick={() => callback(item)}
+              >
+                <View
+                  className="templateStated_img coupon_shop_icon"
+                  style={backgroundObj(goodsImg)}
+                ></View>
+                <View className="templateStated_font">
+                  <View
+                    style={
+                      shareCommission > 0
+                        ? { maxWidth: Taro.pxTransform(336) }
+                        : {}
+                    }
+                    className="templateStated_title font_hide"
+                  >
+                    {goodsName}
+                  </View>
+                  <View className="templateStated_price font_hide">
+                    <Text className="font18">卡豆再省:</Text>
+                    <Text className="font20 bold templateStated_margin">¥</Text>
+                    <Text className="font28 bold templateStated_margin">
+                      {computedBeanPrice(realPrice, 100 - payBeanCommission)}
+                    </Text>
+                    {shareCommission > 0 && (
+                      <Text className="font22 templateStated_margin">
+                        /赚¥
+                        {computedPrice(commission, shareCommission)}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+                <View
+                  style={
+                    shareCommission === 0
+                      ? {}
+                      : { width: Taro.pxTransform(112) }
+                  }
+                  className="templateStated_pay public_center"
+                >
+                  {shareCommission === 0 ? "抢购" : "分享赚"}
+                </View>
+              </View>
             </View>
-            <View className="templateStated_price font_hide">
-              <Text className="font18">卡豆再省:</Text>
-              <Text className="font20 bold templateStated_margin">¥</Text>
-              <Text className="font28 bold templateStated_margin">
-                {computedBeanPrice(promotionBuyPrice, 100 - payBeanCommission)}
-              </Text>
-              {shareCommission > 0 && (
-                <Text className="font22 templateStated_margin">
-                  /赚¥
-                  {computedPrice(
-                    promotionBuyPrice - promotionMerchantPrice,
-                    shareCommission
-                  )}
-                </Text>
-              )}
+          );
+        }
+        return null;
+      });
+    } else {
+      return ownerCouponList.map((item, index) => {
+        const {
+          couponName,
+          reduceObject: { couponPrice },
+          commission,
+          buyPrice,
+        } = item;
+        if (index === 0) {
+          return (
+            <View className="test_debug">
+              <View
+                className="templateStated_box"
+                onClick={() => callback(item)}
+              >
+                <View
+                  className="templateStated_img coupon_shop_icon"
+                  style={backgroundObj(ownerImg)}
+                ></View>
+                <View className="templateStated_font">
+                  <View
+                    style={
+                      shareCommission > 0
+                        ? { maxWidth: Taro.pxTransform(336) }
+                        : {}
+                    }
+                    className="templateStated_title font_hide"
+                  >
+                    {couponName}
+                  </View>
+                  <View className="templateStated_price font_hide">
+                    <Text className="font18">卡豆再省:</Text>
+                    <Text className="font20 bold templateStated_margin">¥</Text>
+                    <Text className="font28 bold templateStated_margin">
+                      {computedBeanPrice(buyPrice, 100 - payBeanCommission)}
+                    </Text>
+                    {shareCommission > 0 && (
+                      <Text className="font22 templateStated_margin">
+                        /赚¥
+                        {computedPrice(commission, shareCommission)}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+                <View
+                  style={
+                    shareCommission === 0
+                      ? {}
+                      : { width: Taro.pxTransform(112) }
+                  }
+                  className="templateStated_pay public_center"
+                >
+                  {shareCommission === 0 ? "抢购" : "分享赚"}
+                </View>
+              </View>
             </View>
-          </View>
-          <View
-            style={
-              shareCommission === 0 ? {} : { width: Taro.pxTransform(112) }
-            }
-            className="templateStated_pay public_center"
-          >
-            {shareCommission === 0 ? "抢购" : "分享赚"}
-          </View>
-        </View>
-      </View>
-    );
+          );
+        } else return null;
+      });
+    }
   };
 
   const descView = () => {
@@ -185,53 +252,81 @@ export default (props) => {
       boolean: !boolean,
     });
   };
-  const {
-    promotionType,
-    promotionImg = "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png",
-    promotionName,
-    promotionBuyPrice,
-    promotionIdString,
-    promotionOriPrice,
-    promotionMerchantPrice,
-  } = couponInfo;
-  const linkTo = () => {
-    if (promotionType === "special") {
-      Router({
-        routerName: "favourableDetails",
-        args: {
-          specialActivityId: promotionIdString,
-          merchantId: userIdString,
-          momentId: userMomentIdString,
-        },
-      });
-    } else {
-      const { ownerIdString, promotionIdString } = couponInfo;
+  const { activityGoodsList = [], ownerCouponList = [] } = couponInfo;
+  const linkTo = (val) => {
+    console.log(val);
+    if (val.couponName) {
+      const { ownerIdString, ownerCouponIdString } = val;
       Router({
         routerName: "payCouponDetails",
         args: {
-          merchantId: userIdString,
+          merchantId: ownerIdString,
           ownerId: ownerIdString,
-          ownerCouponId: promotionIdString,
+          ownerCouponId: ownerCouponIdString,
+        },
+      });
+    } else {
+      const { ownerIdString, activityGoodsId } = val;
+      Router({
+        routerName: "favourableDetails",
+        args: {
+          specialActivityId: activityGoodsId,
+          merchantId: ownerIdString,
+          momentId: momentId,
         },
       });
     }
   };
-  if (Object.keys(couponInfo).length > 0 && showFlag === true) {
+  if (
+    (activityGoodsList.length > 0 || ownerCouponList.length > 0) &&
+    showFlag === true
+  ) {
     return (
-      <TemplateCard
-        shareCommission={shareCommission}
-        val={couponInfo}
-        callback={linkTo}
-        payBeanCommission={payBeanCommission}
-        userProfile={userProfile}
-        onClose={() => setShowFlag(false)}
-      ></TemplateCard>
+      <View className="test">
+        <TemplateCard
+          shareCommission={shareCommission}
+          payBeanCommission={payBeanCommission}
+          val={couponInfo}
+          callback={linkTo}
+          ownerImg={ownerImg}
+          onClose={() => setShowFlag(false)}
+        ></TemplateCard>
+        <View className="home_bottom">
+          <View className="home_desc_coll public_auto">
+            <View
+              className="color6 home_desc_city"
+              onClick={() =>
+                mapGo({
+                  lat: lat,
+                  lnt: lnt,
+                  address: address,
+                  merchantName: ownerName,
+                })
+              }
+            >
+              <View className="home_city_icon"></View>
+              <View className="home_desc_text font_hide">
+                {cityName}·{categoryName}｜
+                {GetDistance(getLat(), getLnt(), lat, lnt)}｜{address}
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
     );
-  } else if (Object.keys(couponInfo).length > 0 && !showFlag) {
+  } else if (
+    (activityGoodsList.length > 0 || ownerCouponList.length > 0) &&
+    !showFlag
+  ) {
     return (
       <View className="home_bottom">
         {templateStated(couponInfo, linkTo)}
-        <View className="home_username font_hide">@{username}</View>
+        <View className="home_username font_hide">
+          <View className="font_hide"> @{ownerName} </View>
+          {momentType === "platform" && (
+            <View className="home_momentType public_center">广告</View>
+          )}
+        </View>
         {descView()}
         <View className="home_desc_coll public_auto">
           <View
@@ -240,21 +335,15 @@ export default (props) => {
               mapGo({
                 lat: lat,
                 lnt: lnt,
-                address: merchantAddress,
-                merchantName: username,
+                address: address,
+                merchantName: ownerName,
               })
             }
           >
             <View className="home_city_icon"></View>
             <View className="home_desc_text font_hide">
               {cityName}·{categoryName}｜
-              {GetDistance(
-                getLat(),
-                getLnt(),
-                merchantLat || lat,
-                merchantLnt || lnt
-              )}
-              ｜{merchantAddress}
+              {GetDistance(getLat(), getLnt(), lat, lnt)}｜{address}
             </View>
           </View>
         </View>
@@ -264,7 +353,7 @@ export default (props) => {
     return (
       <View className="home_bottom">
         {children}
-        <View className="home_username font_hide">@{username}</View>
+        <View className="home_username font_hide">@{ownerName}</View>
         {descView()}
         <View className="home_desc_coll public_auto">
           <View
@@ -273,21 +362,15 @@ export default (props) => {
               mapGo({
                 lat: lat,
                 lnt: lnt,
-                address: merchantAddress,
-                merchantName: username,
+                address: address,
+                merchantName: ownerName,
               })
             }
           >
             <View className="home_city_icon"></View>
             <View className="home_desc_text font_hide">
               {cityName}·{categoryName}｜
-              {GetDistance(
-                getLat(),
-                getLnt(),
-                merchantLat || lat,
-                merchantLnt || lnt
-              )}
-              ｜{merchantAddress}
+              {GetDistance(getLat(), getLnt(), lat, lnt)}｜{address}
             </View>
           </View>
         </View>

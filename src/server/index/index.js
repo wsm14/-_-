@@ -13,7 +13,7 @@ export const getMerchantLat = (data, fn) => {
 export const getUserMomentDetailById = (data, fn) => {
   return httpGet(
     {
-      url: "/user/userMoment/getUserMomentDetailById",
+      url: "/user/moment/ownerMomentDetail",
       data: data,
     },
     (res) => fn(res)
@@ -23,7 +23,7 @@ export const getUserMomentDetailById = (data, fn) => {
 export const saveWatchBean = (data, fn) => {
   return httpPost(
     {
-      url: "/user/beanDetail/saveWatchBeanDetailByUserId",
+      url: "/user/moment/watch/acquireMomentTipping",
       data: data,
     },
     (res) => fn(res)
@@ -51,6 +51,27 @@ export const closeMerchantCollection = (data, fn) => {
   );
 };
 //取消收藏商家
+
+export const fakeInsertUserCollectionMoment = (data, fn) => {
+  httpPost(
+    {
+      url: "/user/userCollection/saveUserCollection",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//收藏视频
+export const fakeDeleteUserCollection = (data, fn) => {
+  httpPost(
+    {
+      url: "/user/userCollection/deleteUserCollection",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//取消收藏视频
 
 export const updateMomentsLikeAmount = (data, fn) => {
   httpPost(
@@ -225,3 +246,14 @@ export const fakeMomentComment = (data = {}, fn) => {
   );
 };
 //获取视频评论
+
+export const fetchMomentRelate = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/moment/relate/listMomentRelate",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取视频关联数据

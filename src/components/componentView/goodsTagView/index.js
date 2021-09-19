@@ -44,15 +44,15 @@ export default ({ confirm, defaultProps, onChange, val }) => {
     return (
       <View className="tag_view_box">
         <ScrollView
-          scrollIntoView={`tag_${data[0]}`}
+          scrollIntoView={`tag_0`}
           scrollX
           className="tag_view_scroll"
         >
-          {list.map((item) => {
+          {list.map((item, index) => {
             const { configGoodsTagId, tagName } = item;
             return (
               <View
-                id={`tag_${configGoodsTagId}`}
+                id={`tag_${index}`}
                 onClick={() => {
                   onChange(setChangeData(configGoodsTagId).toString());
                 }}

@@ -14,8 +14,8 @@ import InterVal from "@/components/videoComponents";
 import {
   getUserMomentList,
   saveWatchBean,
-  saveMerchantCollection,
-  closeMerchantCollection,
+  fakeInsertUserCollectionMoment,
+  fakeDeleteUserCollection,
   checkPuzzleBeanLimitStatus,
   updateUserMomentParam,
   fetchUserShareCommission,
@@ -29,6 +29,7 @@ import Lead from "@/components/lead";
 import { getShareInfo } from "@/server/common";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
+import Comment from "@/components/componentView/comment";
 import "./index.scss";
 @inject("store")
 @observer
@@ -42,7 +43,7 @@ class Index extends React.PureComponent {
       circular: false,
       userMomentsInfo: {},
       httpData: {
-        browseType: "commend",
+        browseType: "pickUp",
         page: 1,
         limit: "10",
       },
@@ -58,6 +59,7 @@ class Index extends React.PureComponent {
         data: null,
         start: false,
       },
+      commentShow: false,
     };
     this.interReload = null;
     this.interSwper = null;
@@ -71,12 +73,10 @@ class Index extends React.PureComponent {
         player: true,
         current,
         userMomentsInfo: userMomentsList[current],
-        time: null,
         couponFlag: false,
       },
       (res) => {
         this.videoPlayerControl();
-
         if (current >= this.state.userMomentsList.length - 3 && countStatus) {
           this.setState(
             {
@@ -205,32 +205,56 @@ class Index extends React.PureComponent {
 
   saveBean() {
     const {
-      userMomentsInfo: { userMomentIdString, guideMomentFlag },
+      userMomentsInfo: { momentId, guideMomentFlag },
       userMomentsInfo,
     } = this.state;
     const { homeStore } = this.props.store;
     checkPuzzleBeanLimitStatus({}, (res) => {
-      const { beanLimitStatus } = res;
+      const { beanLimitStatus = "1" } = res;
       if (beanLimitStatus === "1") {
         saveWatchBean(
           {
-            momentId: userMomentIdString,
+            momentId: momentId,
           },
           (res) => {
-            this.setState({
-              beanflag: true,
-              time: null,
-              userMomentsInfo: { ...userMomentsInfo, watchStatus: "1" },
-              userMomentsList: this.state.userMomentsList.map((item) => {
-                if (item.userMomentIdString === userMomentIdString) {
-                  return {
-                    ...item,
-                    watchStatus: "1",
-                  };
-                }
-                return item;
-              }),
-            });
+            const {
+              specialGoodsList = [{}],
+              otherBeanAmount = "",
+              otherRealPrice = "",
+            } = res;
+            if (guideMomentFlag === "1") {
+              Taro.setStorageSync("newDeviceFlag", "0");
+            }
+            this.setState(
+              {
+                time: null,
+                userMomentsInfo: {
+                  ...userMomentsInfo,
+                  watchStatus: "1",
+                  ...specialGoodsList[0],
+                  otherBeanAmount,
+                  otherRealPrice,
+                },
+                userMomentsList: this.state.userMomentsList.map((item) => {
+                  if (item.momentId === momentId) {
+                    return {
+                      ...item,
+                      watchStatus: "1",
+                      ...specialGoodsList[0],
+                      otherBeanAmount,
+                      otherRealPrice,
+                    };
+                  }
+                  return item;
+                }),
+              },
+              (res) => {
+                this.setState({
+                  beanflag: true,
+                  beanLimitStatus,
+                });
+              }
+            );
           }
         ).catch((res) => {
           const { resultCode } = res;
@@ -241,7 +265,7 @@ class Index extends React.PureComponent {
                 beanFlag: 0,
               },
               userMomentsList: this.state.userMomentsList.map((item) => {
-                if (item.userMomentIdString === userMomentIdString) {
+                if (item.momentId === momentId) {
                   return {
                     ...item,
                     beanFlag: 0,
@@ -274,28 +298,28 @@ class Index extends React.PureComponent {
     let that = this;
     const {
       userMomentsInfo,
-      userMomentsInfo: { merchantFollowStatus, userIdString },
+      userMomentsInfo: { followStatus, ownerId, ownerType },
     } = this.state;
-    if (merchantFollowStatus === "1") {
+    if (followStatus === "1") {
       return;
     } else {
       saveFollow(
         {
-          followType: "merchant",
-          followUserId: userIdString,
+          followType: ownerType,
+          followUserId: ownerId,
         },
         () =>
           that.setState(
             {
               userMomentsInfo: {
                 ...userMomentsInfo,
-                merchantFollowStatus: "1",
+                followStatus: "1",
               },
               userMomentsList: this.state.userMomentsList.map((item) => {
-                if (item.userIdString === userIdString) {
+                if (item.ownerId === ownerId) {
                   return {
                     ...item,
-                    merchantFollowStatus: "1",
+                    followStatus: "1",
                   };
                 }
                 return item;
@@ -311,26 +335,29 @@ class Index extends React.PureComponent {
   collection() {
     let that = this;
     const {
-      userMomentsInfo: { userMomentIdString, merchantCollectionStatus },
+      userMomentsInfo: { momentId, collectionStatus, ownerId, ownerType },
       userMomentsInfo,
     } = this.state;
-    if (merchantCollectionStatus === "1") {
-      closeMerchantCollection(
+    if (collectionStatus === "1") {
+      fakeDeleteUserCollection(
         {
-          collectionId: userMomentIdString,
+          collectionType: "moment",
+          collectionId: momentId,
+          ownerId,
+          ownerType,
         },
         () => {
           that.setState({
             userMomentsInfo: {
               ...userMomentsInfo,
-              merchantCollectionStatus: "0",
+              collectionStatus: "0",
               collectionAmount: parseInt(userMomentsInfo.collectionAmount) - 1,
             },
             userMomentsList: this.state.userMomentsList.map((item) => {
-              if (item.userMomentIdString === userMomentIdString) {
+              if (item.momentId === momentId) {
                 return {
                   ...userMomentsInfo,
-                  merchantCollectionStatus: "0",
+                  collectionStatus: "0",
                   collectionAmount:
                     parseInt(userMomentsInfo.collectionAmount) - 1,
                 };
@@ -341,22 +368,25 @@ class Index extends React.PureComponent {
         }
       );
     } else {
-      saveMerchantCollection(
+      fakeInsertUserCollectionMoment(
         {
-          collectionId: userMomentIdString,
+          collectionType: "moment",
+          collectionId: momentId,
+          ownerId,
+          ownerType,
         },
         () => {
           that.setState({
             userMomentsInfo: {
               ...userMomentsInfo,
-              merchantCollectionStatus: "1",
+              collectionStatus: "1",
               collectionAmount: parseInt(userMomentsInfo.collectionAmount) + 1,
             },
             userMomentsList: this.state.userMomentsList.map((item) => {
-              if (item.userMomentIdString === userMomentIdString) {
+              if (item.momentId === momentId) {
                 return {
                   ...userMomentsInfo,
-                  merchantCollectionStatus: "1",
+                  collectionStatus: "1",
                   collectionAmount:
                     parseInt(userMomentsInfo.collectionAmount) + 1,
                 };
@@ -387,7 +417,7 @@ class Index extends React.PureComponent {
         this.setState(
           {
             httpData: {
-              browseType: "commend",
+              browseType: "pickUp",
               page: 1,
               limit: "10",
             },
@@ -435,7 +465,7 @@ class Index extends React.PureComponent {
   shareImageInfo() {
     const {
       userMomentsInfo: {
-        userMomentIdString,
+        momentId,
         message,
         username,
         cityName,
@@ -449,7 +479,7 @@ class Index extends React.PureComponent {
     getShareInfo(
       {
         shareType: "video",
-        shareId: userMomentIdString,
+        shareId: momentId,
       },
       (res) => {
         const {
@@ -504,15 +534,16 @@ class Index extends React.PureComponent {
       userMomentsInfo: {
         frontImage,
         title,
-        userMomentIdString,
+        momentId,
         weChatImg = "",
         weChatTitle = "",
+        ownerId,
       },
     } = this.state;
     updateUserMomentParam(
       {
         updateType: "share",
-        id: userMomentIdString,
+        id: momentId,
       },
       (res) => {}
     );
@@ -523,7 +554,7 @@ class Index extends React.PureComponent {
         return {
           title: weChatTitle || title,
           imageUrl: weChatImg || frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -533,7 +564,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -543,9 +574,9 @@ class Index extends React.PureComponent {
     } else {
       if (res.from === "button") {
         return {
-          title: weChatTitle || title,
-          imageUrl: weChatImg || frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -555,7 +586,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -577,6 +608,7 @@ class Index extends React.PureComponent {
       couponFlag,
       player,
       cavansObj,
+      commentShow,
     } = this.state;
     const { beanLimitStatus } = this.props.store.homeStore;
     const templateView = () => {
@@ -596,6 +628,7 @@ class Index extends React.PureComponent {
               userInfo={configUserLevelInfo}
               shareInfo={this.shareImageInfo.bind(this)}
               beanLimitStatus={beanLimitStatus}
+              changeComment={() => this.setState({ commentShow: true })}
               saveBean={this.saveBean.bind(this)}
             ></VideoView>
           </>
@@ -652,6 +685,16 @@ class Index extends React.PureComponent {
             className="player_no"
           ></View>
         )}
+        <Comment
+          data={userMomentsInfo}
+          current={current}
+          close={() => {
+            this.setState({
+              commentShow: false,
+            });
+          }}
+          show={commentShow}
+        ></Comment>
         <TaroShareDrawer
           {...cavansObj}
           onSave={() => console.log("点击保存")}
