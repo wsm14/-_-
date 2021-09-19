@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { ScrollView, View } from "@tarojs/components";
 import Taro, { useReachBottom } from "@tarojs/taro";
@@ -9,7 +8,7 @@ import { toast } from "@/common/utils";
 import classNames from "classnames";
 import "./index.scss";
 export default (props) => {
-  const { title, current = false, userInfo, page } = props;
+  const { title, current = false, userInfo, page, defaultData = null } = props;
   /*
     为你推荐 商品组件  
     current @params {boolean} false 开启翻页  true  最多两条数据  
@@ -19,16 +18,18 @@ export default (props) => {
   const [httpData, setHttpData] = useState(null);
   const [count, countType] = useState(true);
   useEffect(() => {
-    if (current) {
-      setHttpData({
-        page: 1,
-        limit: 10,
-      });
-    } else {
-      setHttpData({
-        page: 1,
-        limit: 2,
-      });
+    if (!defaultData) {
+      if (current) {
+        setHttpData({
+          page: 1,
+          limit: 10,
+        });
+      } else {
+        setHttpData({
+          page: 1,
+          limit: 2,
+        });
+      }
     }
   }, []);
   useEffect(() => {
@@ -36,6 +37,17 @@ export default (props) => {
       getLovely();
     }
   }, [httpData]);
+  useEffect(() => {
+    if (defaultData) {
+      const { categoryId } = defaultData;
+      setData([]);
+      setHttpData({
+        page: 1,
+        limit: 10,
+        categoryId,
+      });
+    }
+  }, [defaultData]);
   useReachBottom(() => {
     getDown();
   });

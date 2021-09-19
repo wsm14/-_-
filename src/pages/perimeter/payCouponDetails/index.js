@@ -477,7 +477,11 @@ class Index extends Component {
           {/*使用方法*/}
           <Rule></Rule>
           {/*使用规则*/}
-          <Recommend current={true} userInfo={configUserLevelInfo}></Recommend>
+          <Recommend
+            defaultData={couponDetail}
+            current={true}
+            userInfo={configUserLevelInfo}
+          ></Recommend>
 
           <VideoBean
             price={(buyPrice * (payBeanCommission / 100))

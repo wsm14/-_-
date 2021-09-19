@@ -655,6 +655,7 @@ class MerchantDetails extends Component {
             <Rule></Rule>
             <Recommend
               current={true}
+              defaultData={specialGoodsInfo}
               userInfo={configUserLevelInfo}
             ></Recommend>
             <VideoBean
