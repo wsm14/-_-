@@ -27,13 +27,13 @@ export default ({ data }) => {
     merchantGroupIdString,
     brandLogo,
     brandStory = "",
+    brandName,
   } = data;
   const [visible, setVisible] = useState(false);
   const [visibleBtn, serVisibleBtn] = useState(null);
   useEffect(() => {
     Taro.nextTick(() => {
       getDom(".brand_details_childDesc", (res = []) => {
-        console.log(res);
         if (res.length > 0) {
           if (res[0].height > computedSize(70)) {
             serVisibleBtn(true);
@@ -66,7 +66,7 @@ export default ({ data }) => {
         <View className="kaMerchantDetails_top_body">
           <View className="kaMerchantDetails_top_nameBox">
             <View className="kaMerchantDetails_top_name font_hide">
-              {groupName}
+              {brandName}
             </View>
             <View className="kaMerchantDetails_top_icon"></View>
           </View>

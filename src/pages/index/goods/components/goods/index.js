@@ -365,7 +365,70 @@ export default (props) => {
       </View>
     );
   };
+  const createVirtualProduct = (item) => {
+    let {
+      payFee,
+      orderDesc,
+      orderSn,
+      createTime,
+      beanFee = "",
+      totalFee,
+    } = item;
+    orderDesc = JSON.parse(orderDesc) || {};
+    const {
+      virtualProductType,
+      virtualProductImage,
+      virtualProductName,
+      virtualProductAccount,
+    } = orderDesc;
+    return (
+      <View className="createGood_box">
+        <View className="createGood_title">
+          <View className="createGood_title_box">
+            <View className="createGood_iconBox createGood_bg1">
+              {virtualProductType === "phoneBill" ? "话费充值" : "会员充值"}
+            </View>
 
+            <View className="createGood_status status_color1">已完成</View>
+          </View>
+        </View>
+        <View
+          className="createGood_content"
+          onClick={() => goCodeDetails(orderSn)}
+        >
+          <View className="createdGood_details_box">
+            <View
+              className="createdGood_details_image merchant_dakale_logo"
+              style={backgroundObj(virtualProductImage)}
+            ></View>
+            <View className="createdGood_details_setting">
+              <View className="createdGood_details_title bold font_hide">
+                {totalFee + "元 " + virtualProductName}-{virtualProductAccount}
+              </View>
+              <View className="createdGood_details_time">
+                支付时间：{createTime}
+              </View>
+              {beanFee > 0 && (
+                <View className="createdGood_details_color">
+                  卡豆帮省{" "}
+                  <Text className="bold">¥{(beanFee / 100).toFixed(2)}</Text>
+                </View>
+              )}
+            </View>
+            <View className="createdGood_details_price">
+              <Text className="createdGood_details_priceFont1">¥</Text>
+              <Text className="createdGood_details_priceFont2">
+                {" " + payFee.split(".")[0]}
+              </Text>
+              <Text className="createdGood_details_priceFont3">
+                {payFee.split(".")[1] && `.${payFee.split(".")[1]}`}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  };
   //订单支付渲染模板
   return (
     <ScrollView
@@ -379,6 +442,8 @@ export default (props) => {
           return createShopGoods(item);
         } else if (orderType === "scan") {
           return createCodeGoods(item);
+        } else if (orderType === "virtualProduct") {
+          return createVirtualProduct(item);
         }
       })}
     </ScrollView>

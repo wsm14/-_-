@@ -23,11 +23,13 @@ export default ({
     collectionAmount,
     guideMomentFlag,
     userProfile,
-    userIdString,
+    relateId,
     watchStatus,
     length,
     followStatus,
     commentAmount = 0,
+    momentType,
+    relateType,
   } = data;
   return (
     <View className="video_stem_layer">
@@ -37,29 +39,30 @@ export default ({
         onClick={(e) => {
           e.stopPropagation();
           navigateTo(
-            `/pages/perimeter/merchantDetails/index?merchantId=${userIdString}`
+            `/pages/perimeter/merchantDetails/index?merchantId=${relateId}`
           );
         }}
       >
-        {followStatus === "0" && (
-          <View
-            onClick={(e) => follow(e)}
-            className={classNames("video_stem_fallStatus video_stem_status1")}
-          ></View>
-        )}
-      </View>
-      {/* {guideMomentFlag === "0" && ( */}
-      <>
-        <View
-          onClick={() => collection()}
-          className={classNames(
-            "collected_box",
-            collectionStatus === "0" ? "video_stem_sc1" : "video_stem_sc2"
+        {followStatus === "0" &&
+          (relateType === "user" || relateType === "merchant") && (
+            <View
+              onClick={(e) => follow(e)}
+              className={classNames("video_stem_fallStatus video_stem_status1")}
+            ></View>
           )}
-        ></View>
-        <View className="collected_font">{setPeople(collectionAmount)}</View>
-      </>
-      {/* )} */}
+      </View>
+      {guideMomentFlag === "0" && (
+        <>
+          <View
+            onClick={() => collection()}
+            className={classNames(
+              "collected_box",
+              collectionStatus === "0" ? "video_stem_sc1" : "video_stem_sc2"
+            )}
+          ></View>
+          <View className="collected_font">{setPeople(collectionAmount)}</View>
+        </>
+      )}
       {/* 评论区按钮 - start */}
       <View onClick={changeComment} className="video_comment_box"></View>
       <View className="video_comment_font">{commentAmount}</View>

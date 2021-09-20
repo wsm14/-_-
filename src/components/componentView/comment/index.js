@@ -12,6 +12,8 @@ import Taro from "@tarojs/taro";
 import classNames from "classnames";
 import { fetchMomentComment, fakeMomentComment } from "@/server/index";
 import "./index.scss";
+import { toast } from "@/common/utils";
+import Router from "@/common/router";
 export default ({ show = false, close, data, current }) => {
   const [keyword, setWord] = useState(null);
   const [comment, setComment] = useState([]);
@@ -55,6 +57,9 @@ export default ({ show = false, close, data, current }) => {
     });
   };
   const saveComment = () => {
+    if (!keyword) {
+      return toast("请输入评论内容");
+    }
     fakeMomentComment({
       momentId: data.momentId,
       content: keyword,
@@ -68,7 +73,19 @@ export default ({ show = false, close, data, current }) => {
   const temPlateComment = (item) => {
     const { content = "", username, profile = "", createTime } = item;
     return (
-      <View className="temPlateComment_box">
+      <View
+        onClick={() => {
+          Taro.showActionSheet({
+            itemList: ["举报"],
+            success: (count) => {
+              Router({
+                routerName: "download",
+              });
+            },
+          });
+        }}
+        className="temPlateComment_box"
+      >
         <View className="temPlateComment_profile">
           <Image
             className="temPlateComment_profile"

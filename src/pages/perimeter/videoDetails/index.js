@@ -133,15 +133,15 @@ class Index extends React.PureComponent {
     let that = this;
     const {
       userMomentsInfo,
-      userMomentsInfo: { followStatus, ownerId, ownerType },
+      userMomentsInfo: { followStatus, relateId, relateType },
     } = this.state;
     if (followStatus === "1") {
       return;
     } else {
       saveFollow(
         {
-          followType: ownerType,
-          followUserId: ownerId,
+          followType: relateType,
+          followUserId: relateId,
         },
         () =>
           that.setState(
@@ -269,19 +269,21 @@ class Index extends React.PureComponent {
       userMomentsInfo: {
         momentId,
         message,
-        username,
-        cityName,
-        districtName,
-        merchantAddress,
+        ownerName,
         frontImage,
+        momentType,
+        addressContentObject: { address },
+        ownerId,
       },
       userMomentsInfo,
       player,
     } = this.state;
     getShareInfo(
       {
-        shareType: "video",
+        shareType: "newVideo",
         shareId: momentId,
+        subType: momentType,
+        shardingKey: ownerId,
       },
       (res) => {
         const {
@@ -307,9 +309,9 @@ class Index extends React.PureComponent {
               hasGoods,
               frontImage: frontImage,
               message,
-              merchantName: username,
-              cityName: cityName + districtName + merchantAddress,
-              address: merchantAddress,
+              merchantName: ownerName,
+              cityName: address,
+              address: address,
               username: userInfo.username,
               userProfile: userInfo.profile,
               wxCode: qcodeUrl,

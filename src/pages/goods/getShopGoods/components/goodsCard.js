@@ -6,7 +6,9 @@ import classNames from "classnames";
 import { toast } from "@/common/utils";
 export default (props) => {
   const { data = {} } = props;
-  const { orderSn, payType, payTime } = data;
+  let { orderSn, payType, payTime, orderType, orderDesc = "", totalFee } = data;
+  orderDesc = JSON.parse(orderDesc);
+  const { virtualProductName, virtualProductAccount } = orderDesc;
   const filterStyle = (str) => {
     switch (str) {
       case "wx_lite":
@@ -34,6 +36,14 @@ export default (props) => {
     <View className="goods_card">
       <View className="goods_cardBox">
         <View className="font32 color1 bold">订单信息</View>
+        {orderType === "virtualProduct" && (
+          <View className="font24 public_auto goods_cardHeight">
+            <View className="color2">商品</View>
+            <View className="color1">
+              {totalFee + "元" + virtualProductName}-{virtualProductAccount}
+            </View>
+          </View>
+        )}
         <View className="font24 public_auto goods_cardHeight">
           <View className="color2">订单号码</View>
           <View
@@ -45,10 +55,15 @@ export default (props) => {
             <Text className="color4">复制</Text>
           </View>
         </View>
-        <View className="font24 public_auto goods_cardHeight">
-          <View className="color2">支付类型</View>
-          <View className="color1">到店支付</View>
-        </View>
+        {orderType !== "virtualProduct" && (
+          <View className="font24 public_auto goods_cardHeight">
+            <View className="color2">支付类型</View>
+            <View className="color1">
+              <View className="color1">到店支付</View>
+            </View>
+          </View>
+        )}
+
         <View className="font24 public_auto goods_payHeight">
           <View className="color2">支付方式</View>
           <View className="color1 public_center">

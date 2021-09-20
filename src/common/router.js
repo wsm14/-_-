@@ -71,6 +71,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     couponOrder: "/pages/goods/couponOrder/index",
     favourableOrder: "/pages/goods/favourOrder/index",
     pay: "/pages/goods/payWeex/index", //支付页
+    rechargeOrder: "/pages/goods/rechargeOrder/index", //话费支付页
 
     //订单  goods
     legal: "/pages/kol/legal/index", //达人等级

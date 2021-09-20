@@ -122,6 +122,8 @@ class Index extends Component {
         totalFee,
         beanFee,
         deductFeeObject = [],
+        orderType,
+        orderDesc,
       },
       orderResult,
       orderSn,
@@ -147,7 +149,16 @@ class Index extends Component {
                 {" " + totalFee}
               </Text>
             </View>
-            <View className="code_scanPay_decBox  code_scanPay_decMargin public_auto font24">
+            {orderType === "virtualProduct" && typeof orderDesc === "string" && (
+              <View className="code_scanPay_decBox  code_scanPay_decMargin public_auto font24">
+                <View className="color2">商品</View>
+                <View className="color1">
+                  {totalFee}元手机话费-
+                  {JSON.parse(orderDesc).virtualProductAccount}
+                </View>
+              </View>
+            )}
+            <View className="code_scanPay_decBox  code_scanPay_decMargin1 public_auto font24">
               <View className="color2">实付金额</View>
               <View className="color1">{"¥  " + payFee}</View>
             </View>

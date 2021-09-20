@@ -68,7 +68,7 @@ class Index extends Component {
     if (Object.keys(orderInfo).length > 0) {
       return (
         <View className="goods_details_goodsDetails">
-          <Title></Title>
+          <Title data={orderInfo}></Title>
           <ShopCard data={orderInfo}></ShopCard>
           <View>
             <ShopDetails data={orderInfo}></ShopDetails>

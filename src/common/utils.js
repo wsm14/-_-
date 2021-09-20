@@ -482,7 +482,7 @@ export const filterPayfont = (string) => {
 export const filterPayColor = (string) => {
   switch (string) {
     case "0":
-      return "status_color2";
+      return "  _color2";
     case "1":
       return "status_color2";
     case "2":

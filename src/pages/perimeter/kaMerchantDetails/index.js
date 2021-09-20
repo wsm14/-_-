@@ -66,6 +66,10 @@ class Index extends Component {
       },
       (res) => {
         const { merchantGroupInfo = {}, userMerchantInfo = {} } = res;
+        const { brandName } = merchantGroupInfo;
+        Taro.setNavigationBarTitle({
+          title: brandName,
+        });
         this.setState({
           merchantGroupInfo,
           userMerchantInfo,

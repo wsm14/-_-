@@ -1,8 +1,9 @@
 .friendScene_barrage_box {
-  height: 72px;
-  background: rgba(245, 115, 103, 1);
+  height: 70px;
+  background: rgba(252, 249, 239, 1);
   margin-top: 18px;
   position: relative;
+  border-radius: 8px;
   .friendScene_barrage_touchClose {
     position: absolute;
     z-index: 888;
@@ -18,7 +19,7 @@
 .friendScene_barrage_content {
   display: flex;
   align-items: center;
-  padding: 0 32px;
+  padding: 0 24px;
   height: 100%;
   .friendScene_barrage_profile {
     width: 48px;
@@ -30,7 +31,7 @@
   .friendScene_barrage_font {
     font-size: 24px;
     font-weight: 400;
-    color: #ffffff;
+    color: #333333;
     margin-left: 16px;
   }
 }

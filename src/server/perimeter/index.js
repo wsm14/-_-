@@ -350,3 +350,27 @@ export const fetchMultiSearchData = (data, fn) => {
   );
 };
 //获取搜索数据统计
+/*
+ *params phoneMoney type of string
+ */
+export const fetchProductOrderPrice = (data, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/getPhoneBillVirtualProductOrderPrice",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取话费价格
+
+export const fakeVirtual = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/saveVirtualProductOrder",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//保存虚拟商品支付订单

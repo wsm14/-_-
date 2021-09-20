@@ -57,12 +57,13 @@ export default (props) => {
   } = server;
   const { address, lat, lnt } = addressContentObject;
   const getPromotion = (item) => {
-    const { promotionFlag, ownerId, promotionNum, momentId } = item;
+    const { promotionFlag, ownerId, promotionNum, momentId, momentType } = item;
     if (promotionFlag === "1" && promotionNum > 0) {
       fetchMomentRelate(
         {
           ownerId,
           momentId,
+          momentType,
         },
         (res) => {
           const { momentRelateInfo } = res;

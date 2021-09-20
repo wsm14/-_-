@@ -1,5 +1,6 @@
 const topExtraPx = 40;
 export const rssConfigData = (data = {}) => {
+  console.log(data);
   let {
     hasGoods,
     userProfile = "",

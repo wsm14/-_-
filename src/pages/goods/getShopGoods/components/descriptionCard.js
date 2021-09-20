@@ -10,6 +10,7 @@ export default (props) => {
     beanFee,
     totalFee,
     deductFeeObject = [],
+    orderType,
   } = data;
   orderDesc = JSON.parse(orderDesc);
   const { merchantImg, merchantName, merchantIdString, merchantId } = orderDesc;
@@ -21,19 +22,22 @@ export default (props) => {
   return (
     <View className="descriptionCard_title">
       <View className="descriptionCard_box">
-        <View
-          className="descriptionCard_merchant"
-          onClick={() => goMerchant(merchantIdString || merchantId)}
-        >
+        {orderType !== "virtualProduct" && (
           <View
-            className="descriptionCard_profile dakale_nullImage"
-            style={merchantImg ? backgroundObj(merchantImg) : {}}
-          ></View>
-          <View className="descriptionCard_merchantTitle font_hide">
-            {merchantName}
+            className="descriptionCard_merchant"
+            onClick={() => goMerchant(merchantIdString || merchantId)}
+          >
+            <View
+              className="descriptionCard_profile dakale_nullImage"
+              style={merchantImg ? backgroundObj(merchantImg) : {}}
+            ></View>
+            <View className="descriptionCard_merchantTitle font_hide">
+              {merchantName}
+            </View>
+            <View className="descriptionCard_goIcon"></View>
           </View>
-          <View className="descriptionCard_goIcon"></View>
-        </View>
+        )}
+
         <View className="descriptionCard_dec">
           <View className="descriptionCard_discount">
             <View>订单金额</View>
