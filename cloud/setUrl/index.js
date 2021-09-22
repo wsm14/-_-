@@ -7,7 +7,6 @@ cloud.init();
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
   const { path, query } = event;
-  console.log(event);
   switch (event.action) {
     case "setWxUrl": {
       return setWxUrl(path, query);
@@ -18,7 +17,6 @@ exports.main = async (event, context) => {
 };
 
 async function setWxUrl(path, query) {
-  console.log(path, query);
   return cloud.openapi.urllink.generate({
     path: path,
     query: query,

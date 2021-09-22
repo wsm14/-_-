@@ -51,18 +51,18 @@ export default ({
             ></View>
           )}
       </View>
-      {guideMomentFlag === "0" && (
-        <>
-          <View
-            onClick={() => collection()}
-            className={classNames(
-              "collected_box",
-              collectionStatus === "0" ? "video_stem_sc1" : "video_stem_sc2"
-            )}
-          ></View>
-          <View className="collected_font">{setPeople(collectionAmount)}</View>
-        </>
-      )}
+
+      <>
+        <View
+          onClick={() => collection()}
+          className={classNames(
+            "collected_box",
+            collectionStatus === "0" ? "video_stem_sc1" : "video_stem_sc2"
+          )}
+        ></View>
+        <View className="collected_font">{setPeople(collectionAmount)}</View>
+      </>
+
       {/* 评论区按钮 - start */}
       <View onClick={changeComment} className="video_comment_box"></View>
       <View className="video_comment_font">{commentAmount}</View>

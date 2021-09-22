@@ -159,7 +159,7 @@ export default {
         "bubble/index", //品类风向标
         "nearPerimeter/index", //附近特惠
         "prefecture/index", //卡豆专区
-        "recharge/index", //卡豆专区
+        "recharge/index", //话费充值
       ],
     },
     {

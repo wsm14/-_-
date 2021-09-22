@@ -43,7 +43,6 @@ const shareImg = ({ start = false, data = [], type, onClose, onSave }) => {
     } else {
       onCreateFail();
       Taro.showToast({ icon: "none", title: errMsg || "出现错误" });
-      console.log(errMsg);
     }
   };
 

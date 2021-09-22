@@ -174,7 +174,6 @@ class Index extends Component {
       goodsList,
       cityCode,
     } = this.state;
-    console.log(configUserLevelInfo);
     return (
       <View className="shopScene_box">
         <View

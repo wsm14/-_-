@@ -942,6 +942,14 @@ class Index extends React.PureComponent {
             session={() => this.setState({ visible: true })}
           ></TopView>
         </View>
+        <View
+          className="home_bean_info"
+          onClick={() => {
+            Router({
+              routerName: "prefecture",
+            });
+          }}
+        ></View>
         <View className="home_video_box">{templateView()}</View>
         <Toast
           data={userMomentsInfo}

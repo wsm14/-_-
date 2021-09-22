@@ -13,7 +13,7 @@ export default (props) => {
   } else
     return (
       <View
-        className="videoBean_liner"
+        className="videoBean_liner font_hide"
         onClick={() =>
           Router({
             routerName: "nearVideo",

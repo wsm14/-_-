@@ -33,12 +33,139 @@ page {
     padding: 40px 24px 48px;
     background: #ffffff;
     border-radius: 20px;
+    .prefecture_select_box {
+      width: 540px;
+      height: 80px;
+      margin: 0 auto;
+      display: flex;
+      .prefecture_select_left {
+        flex: 1;
+      }
+      .prefecture_select_right {
+        flex: 1;
+      }
+      .prefecture_template_box {
+        margin-top: 40px;
+      }
+    }
+    .prefecture_fure_box {
+      display: flex;
+      margin-bottom: 24px;
+      position: relative;
+      .prefecture_fure_img {
+        width: 224px;
+        height: 224px;
+        border-radius: 8px;
+      }
+      .prefecture_fure_content {
+        margin-left: 16px;
+        width: 414px;
+        .prefecture_fure_title {
+          padding-top: 4px;
+          font-size: 28px;
+          font-weight: 400;
+          color: #333333;
+          line-height: 40px;
+        }
+        .prefecture_fure_user {
+          padding-top: 16px;
+          display: flex;
+          align-items: center;
+          .prefecture_fure_userProfile {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            flex-shrink: 0;
+          }
+          .prefecture_fure_userName {
+            font-size: 24px;
+            font-weight: 400;
+            color: #999999;
+            margin-left: 8px;
+          }
+          .prefecture_fure_limit {
+            font-size: 24px;
+            font-weight: 400;
+            color: #999999;
+            margin-left: 8px;
+          }
+        }
+        .prefecture_fure_price {
+          padding-top: 28px;
+          color: #999999;
+        }
+        .prefecture_fure_tag {
+          margin-top: 12px;
+          width: 70px;
+          height: 28px;
+          border-radius: 4px;
+          background: url(https://wechat-config.dakale.net/miniprogram/image/icon776.png)
+            no-repeat;
+          background-size: 100% 100%;
+        }
+        .prefecture_fure_bean {
+          margin-top: 6px;
+          font-size: 28px;
+          font-weight: bold;
+          color: #ef476f;
+          display: flex;
+          align-items: center;
+        }
+        .prefecture_fure_bean::after {
+          width: 32px;
+          height: 32px;
+          background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon462.png)
+            no-repeat;
+          background-size: 100% 100%;
+          margin-left: 8px;
+          display: block;
+          content: "";
+        }
+      }
+    }
+    .prefecture_tabbar1 {
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon773.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .prefecture_tabbar2 {
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon774.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .prefecture_btn {
+      width: 160px;
+      height: 52px;
+      background: #ef476f;
+      border-radius: 26px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #ffffff;
+      position: absolute;
+      right: 0;
+      bottom: 4px;
+    }
   }
-  .prefecture_content {
-    width: 540px;
-    height: 80px;
-    margin: 0 auto;
-    
+  .prefecture_null_start {
+    margin: 64px auto 105px;
+    .prefecture_null_image {
+      width: 300px;
+      height: 300px;
+      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon339.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 0 auto;
+    }
+    .prefecture_null_desc {
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+      text-align: center;
+      margin-top: 32px;
+    }
+  }
+  .prefecture_content_top {
+    padding-top: 40px;
   }
 }
 

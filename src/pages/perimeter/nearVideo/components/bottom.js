@@ -73,7 +73,7 @@ export default (props) => {
     }
   };
   const templateStated = (val, callback) => {
-    const { activityGoodsList, ownerCouponList } = val;
+    const { activityGoodsList = [], ownerCouponList = [] } = val;
     if (activityGoodsList.length > 0) {
       return activityGoodsList.map((item, index) => {
         const {

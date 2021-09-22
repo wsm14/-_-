@@ -32,6 +32,8 @@ import Recommend from "@/components/couponActive";
 import NewToast from "@/components/noviceGuide";
 import Wares from "@/components/componentView/wares";
 import { filterStrList } from "@/common/utils";
+import Drawer from "@/components/Drawer";
+import RightFlag from "@/components/componentView/rightFlagView";
 import "./index.scss";
 @inject("store")
 @observer
@@ -51,6 +53,7 @@ class Index extends Component {
       },
       visible: false,
       mxVisible: false,
+      drawerVisible: false,
     };
   }
   componentWillMount() {
@@ -120,6 +123,8 @@ class Index extends Component {
         cityName,
         districtName,
         merchantLogo,
+        rightFlag = "0",
+        paymentModeObject = {},
       },
       couponDetail,
     } = this.state;
@@ -154,6 +159,8 @@ class Index extends Component {
               city: cityName + districtName + address,
               merchantLogo: image,
               saveMoney,
+              rightFlag,
+              paymentModeObject,
             }),
           },
           couponDetail: {
@@ -217,6 +224,9 @@ class Index extends Component {
         dayMaxBuyAmount,
         boughtCouponNum,
         buyRule,
+        rightFlag,
+        paymentModeObject = {},
+        userBean,
       },
     } = this.state;
     if (buyRule === "dayLimit" && dayMaxBuyAmount === boughtCouponNum) {
@@ -229,6 +239,14 @@ class Index extends Component {
         visible: true,
       });
       return;
+    } else if (rightFlag === "1") {
+      const { bean, cash } = paymentModeObject;
+      if (userBean < bean) {
+        this.setState({
+          drawerVisible: true,
+        });
+        return;
+      }
     }
     Router({
       routerName: "couponOrder",
@@ -323,16 +341,21 @@ class Index extends Component {
         ownerCouponIdString,
         userBean,
         couponDetailImg = "",
+        paymentModeObject = {},
+        couponName,
+        rightFlag,
       },
       visible,
       httpData,
       mxVisible,
+      drawerVisible,
     } = this.state;
+    const { bean = "", cash = "" } = paymentModeObject;
     const { login } = this.props.store.authStore;
     const { beanLimitStatus } = this.props.store.homeStore;
     const { beanLimit } = this.props.store.commonStore;
     const shareInfoBtn = () => {
-      if (shareCommission > 0) {
+      if (shareCommission > 0 && rightFlag !== "1") {
         return (
           <ButtonView>
             <View
@@ -373,7 +396,7 @@ class Index extends Component {
             {shareInfoBtn()}
           </View>
         );
-      } else if (shareCommission) {
+      } else if (shareCommission && rightFlag !== "1") {
         return (
           <View className="shopdetails_shop_btnBox">
             <ButtonView>
@@ -522,6 +545,25 @@ class Index extends Component {
             data={couponDetail}
             status={beanLimitStatus}
           ></Wares>
+          {drawerVisible && (
+            <Drawer
+              show={drawerVisible}
+              close={() => {
+                this.setState({
+                  drawerVisible: false,
+                });
+              }}
+            >
+              <RightFlag
+                data={{
+                  img: couponDetailImg,
+                  name: couponName,
+                  price: cash,
+                  bean: bean - userBean,
+                }}
+              ></RightFlag>
+            </Drawer>
+          )}
           {visible && (
             <Toast
               title={"哒卡乐温馨提示"}

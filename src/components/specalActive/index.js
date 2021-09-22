@@ -44,7 +44,7 @@ export default (props) => {
       setHttpData({
         page: 1,
         limit: 10,
-        categoryId,
+        categoryIds: categoryId,
       });
     }
   }, [defaultData]);

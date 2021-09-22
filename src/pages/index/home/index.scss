@@ -14,7 +14,17 @@ page {
   display: flex;
   align-items: center;
 }
-
+.home_bean_info {
+  width: 110px;
+  height: 98px;
+  position: fixed;
+  top: 200px;
+  left: 36px;
+  z-index: 105;
+  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon779.png")
+    no-repeat;
+  background-size: 100% 100%;
+}
 .home_box {
   width: 100%;
   height: 100%;

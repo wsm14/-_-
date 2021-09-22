@@ -257,3 +257,25 @@ export const fetchMomentRelate = (data = {}, fn) => {
   );
 };
 //获取视频关联数据
+
+export const fetchRightGoods = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/rightGoods/rightGoodsList",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//权益商品列表
+
+export const fetchRightCoupon = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/rightGoods/rightCouponList",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//权益券列表

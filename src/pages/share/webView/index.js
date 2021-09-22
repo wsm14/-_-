@@ -40,7 +40,6 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    console.log(getCurrentInstance().router.params);
     this.setTitle();
   }
   render() {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View } from "@tarojs/components";
 import Router from "@/common/router";
 import { fetchSpecialForRecommend } from "@/server/index";
+import { getBanner } from "@/server/common";
 import "./index.scss";
 import {
   backgroundObj,
@@ -12,6 +13,7 @@ import {
 export default (props) => {
   const { reload, configUserLevelInfo } = props;
   const [list, setList] = useState([]);
+  const [bannerList, setBannerList] = useState([]);
   const { payBeanCommission = 50 } = configUserLevelInfo;
   const fetchGoods = () => {
     fetchSpecialForRecommend(
@@ -26,12 +28,21 @@ export default (props) => {
       }
     );
   };
+  const fetchBanner = () => {
+    getBanner({ bannerType: "popularityRanking" }, (res) => {
+      const { bannerList = [] } = res;
+      setBannerList(bannerList);
+    });
+  };
+
   useEffect(() => {
     fetchGoods();
+    fetchBanner();
   }, []);
   useEffect(() => {
     if (reload) {
       fetchGoods();
+      fetchBanner();
     }
   }, [reload]);
 
@@ -85,6 +96,7 @@ export default (props) => {
         </View>
         <View className="nearTitle_right">
           <View
+            style={backgroundObj(bannerList[0] && bannerList[0].coverImg)}
             className="nearTitle_right_activeBox nearTitle_right_activeIcon1"
             onClick={() =>
               Router({
