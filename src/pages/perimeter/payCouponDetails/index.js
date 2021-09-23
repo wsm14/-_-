@@ -343,7 +343,7 @@ class Index extends Component {
         couponDetailImg = "",
         paymentModeObject = {},
         couponName,
-        rightFlag,
+        rightFlag = "0",
       },
       visible,
       httpData,
@@ -560,6 +560,11 @@ class Index extends Component {
                   name: couponName,
                   price: cash,
                   bean: bean - userBean,
+                }}
+                close={(e) => {
+                  this.setState({ drawerVisible: false }, (res) => {
+                    e && e();
+                  });
                 }}
               ></RightFlag>
             </Drawer>

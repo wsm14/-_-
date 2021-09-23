@@ -60,12 +60,24 @@ page {
       .prefecture_fure_content {
         margin-left: 16px;
         width: 414px;
+        .prefecture_fure_quan {
+          padding-top: 8px;
+          font-size: 24px;
+          font-weight: 400;
+          color: #999999;
+        }
         .prefecture_fure_title {
           padding-top: 4px;
           font-size: 28px;
           font-weight: 400;
           color: #333333;
           line-height: 40px;
+        }
+        .prefecture_fure_margin1 {
+          margin-top: 12px;
+        }
+        .prefecture_fure_margin2 {
+          margin-top: 36px;
         }
         .prefecture_fure_user {
           padding-top: 16px;
@@ -95,7 +107,6 @@ page {
           color: #999999;
         }
         .prefecture_fure_tag {
-          margin-top: 12px;
           width: 70px;
           height: 28px;
           border-radius: 4px;
@@ -111,16 +122,16 @@ page {
           display: flex;
           align-items: center;
         }
-        .prefecture_fure_bean::after {
-          width: 32px;
-          height: 32px;
-          background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon462.png)
-            no-repeat;
-          background-size: 100% 100%;
-          margin-left: 8px;
-          display: block;
-          content: "";
-        }
+        // .prefecture_fure_bean::after {
+        //   width: 32px;
+        //   height: 32px;
+        //   background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon462.png)
+        //     no-repeat;
+        //   background-size: 100% 100%;
+        //   margin-left: 8px;
+        //   display: block;
+        //   content: "";
+        // }
       }
     }
     .prefecture_tabbar1 {

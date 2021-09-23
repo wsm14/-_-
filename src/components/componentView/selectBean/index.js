@@ -83,7 +83,7 @@ export default (props) => {
                 style={{ border: "1px solid #ef476f" }}
                 className="order_payType_six"
               >
-                {rightFlag === "1" ? `特惠专区` : `${payBeanCommission}%`}
+                {rightFlag === "1" ? `专区优惠` : `${payBeanCommission}%`}
               </View>
               {rightFlag !== "1" && (
                 <View
@@ -140,17 +140,20 @@ export default (props) => {
                   className="order_payType_six"
                   style={{ border: "1px solid #ef476f" }}
                 >
-                  {payBeanCommission}%
+                  {rightFlag === "1" ? `专区优惠` : `${payBeanCommission}%`}
                 </View>
-                <View
-                  className="order_payType_question"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShow(true);
-                  }}
-                ></View>
+                {rightFlag !== "1" && (
+                  <View
+                    className="order_payType_question"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShow(true);
+                    }}
+                  ></View>
+                )}
               </View>
             </View>
+
             <View className="order_paybug_box">
               <View
                 className="order_select_top1 public_auto"

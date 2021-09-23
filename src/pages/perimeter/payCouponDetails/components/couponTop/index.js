@@ -58,7 +58,7 @@ export default ({
         </View>
         <View className="coupon_top_name  font_noHide">{couponName}</View>
       </View>
-      {rightFlag !== "1" ? (
+      {rightFlag === "1" ? (
         <>
           <View className="couponInfo_box">
             <View className="couponInfo_box_left">卡豆价:</View>

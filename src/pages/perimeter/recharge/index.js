@@ -61,19 +61,19 @@ class Index extends Component {
     } else {
       if (new RegExp(yd).test(val)) {
         this.setState({
-          teleForm: "(移动)",
+          teleForm: "(中国移动)",
           teleType: true,
           telephone: val,
         });
       } else if (new RegExp(lt).test(val)) {
         this.setState({
-          teleForm: "(联通)",
+          teleForm: "(中国联通)",
           teleType: true,
           telephone: val,
         });
       } else if (new RegExp(dx).test(val)) {
         this.setState({
-          teleForm: "(电信)",
+          teleForm: "(中国电信)",
           teleType: true,
           telephone: val,
         });
@@ -146,7 +146,7 @@ class Index extends Component {
             type={"number"}
           />
           <View className="recharge_content_liner"></View>
-          {!teleType && <View className="recharge_wrong">号码类型有误</View>}
+          {!teleType && <View className="recharge_wrong">充值号码有误</View>}
           <View className="recharge_title">充值金额</View>
           <Barrage></Barrage>
           <View className="recharge_select_info">

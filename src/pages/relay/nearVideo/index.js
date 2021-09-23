@@ -10,17 +10,16 @@ import {
   loginStatus,
 } from "@/common/utils";
 import {
-  getUserMomentList,
-  saveWatchBean,
   saveMerchantCollection,
   closeMerchantCollection,
   checkPuzzleBeanLimitStatus,
   updateUserMomentParam,
   fetchUserShareCommission,
 } from "@/server/index";
+import { getRelayMomentList, saveRelayWatchBean } from "@/server/relay";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
-import Toast from "@/components/beanToast";
+import Toast from "./components/beanToast";
 import Coupon from "@/components/freeCoupon";
 import Lead from "@/components/lead";
 import "./index.scss";
@@ -178,7 +177,7 @@ class Index extends React.PureComponent {
 
   getVideoList(fn) {
     const { httpData, current } = this.state;
-    getUserMomentList(httpData, (res) => {
+    getRelayMomentList(httpData, (res) => {
       let { userMomentsList = [], beanLimitStatus = "1" } = res;
       if (userMomentsList.length === 0) {
         this.setState({
@@ -214,7 +213,7 @@ class Index extends React.PureComponent {
     checkPuzzleBeanLimitStatus({}, (res) => {
       const { beanLimitStatus } = res;
       if (beanLimitStatus === "1") {
-        saveWatchBean(
+        saveRelayWatchBean(
           {
             momentId: userMomentIdString,
           },

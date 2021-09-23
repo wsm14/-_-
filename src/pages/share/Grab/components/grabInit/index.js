@@ -12,6 +12,7 @@ export default ({ data = {}, list = [], configUserLevelInfo }) => {
     envelopesType,
     personAmount,
     content,
+    status,
   } = data;
   const { profile, username } = sendUser;
 
@@ -64,7 +65,9 @@ export default ({ data = {}, list = [], configUserLevelInfo }) => {
   const notHandleBean = () => {
     return (
       <>
-        <View className="Grab_notHandleBean_num"> 手慢了，卡豆领完了</View>
+        <View className="Grab_notHandleBean_num">
+          {status == "2" ? "该红包已超过领取时间" : "手慢了，卡豆领完了"}
+        </View>
         <View className="Grab_notHandleBean_btn">
           <View
             className="Grab_showBean_btnBox Grab_showBean_btnBg3"

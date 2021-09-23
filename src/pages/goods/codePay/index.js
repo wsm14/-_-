@@ -77,7 +77,6 @@ class Index extends Component {
           },
         },
         (res) => {
-          console.log();
           this.getUserDetails();
         }
       );

@@ -213,9 +213,9 @@ class Index extends React.PureComponent {
         ...this.state.httpData,
       },
       (res) => {
-        const { userMomentsInfo } = res;
+        const { moment = {} } = res;
         this.setState({
-          userMomentsInfo,
+          userMomentsInfo: moment,
         });
       }
     );
@@ -402,7 +402,7 @@ class Index extends React.PureComponent {
   render() {
     const {
       userMomentsInfo,
-      userMomentsInfo: { length = "", userIdString },
+      userMomentsInfo: { ownerId },
       time,
       configUserLevelInfo,
       beanflag,
@@ -478,7 +478,7 @@ class Index extends React.PureComponent {
                 });
               }}
               auth={login}
-              data={{ ...httpData, merchantId: userIdString }}
+              data={{ ...httpData, merchantId: ownerId }}
             ></NewToast>
           )}
         <Comment

@@ -14,8 +14,6 @@ import classNames from "classnames";
 import "./index.scss";
 export const nearList = (item = {}, list = [], store) => {
   const {
-    lat = "",
-    lnt = "",
     categoryName = "",
     watchStatus = "0",
     length,
@@ -33,7 +31,9 @@ export const nearList = (item = {}, list = [], store) => {
     promotionNum,
     freeCouponFlag,
     beanFlag,
+    addressContentObject = {},
   } = item;
+  const { lat, lnt } = addressContentObject;
   const linkTo = () => {
     store.homeStore.setNavitory(list, momentIndex);
     Router({ routerName: "nearVideo" });
@@ -125,6 +125,7 @@ export const searchList = (item = {}, list = [], store) => {
     promotionFlag,
     promotionNum,
     freeCouponFlag,
+    keyword,
   } = item;
   const linkTo = () => {
     store.homeStore.setNavitory(list, momentIndex);

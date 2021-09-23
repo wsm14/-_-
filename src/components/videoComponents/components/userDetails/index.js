@@ -22,7 +22,7 @@ export default ({
     shareAmount,
     collectionAmount,
     guideMomentFlag,
-    userProfile,
+    relateImg,
     relateId,
     watchStatus,
     length,
@@ -30,26 +30,62 @@ export default ({
     commentAmount = 0,
     momentType,
     relateType,
+    jumpUrl = "",
   } = data;
+
+  const linkTo = () => {
+    if (jumpUrl) {
+      Router({
+        routerName: "webView",
+        args: {
+          link: jumpUrl,
+        },
+      });
+    } else if (relateType === "user") {
+      Router({
+        routerName: "download",
+      });
+    } else if (relateType === "group") {
+      Router({
+        routerName: "groupDetails",
+        args: {
+          merchantGroupId: relateId,
+        },
+      });
+    } else if (relateType === "merchant") {
+      Router({
+        routerName: "merchantDetails",
+        args: {
+          merchantId: relateId,
+        },
+      });
+    } else {
+      return;
+    }
+  };
   return (
     <View className="video_stem_layer">
       <View
-        style={userProfile ? backgroundObj(userProfile) : {}}
+        style={backgroundObj(relateImg)}
         className="video_stem_userProfile merchant_dakale_logo"
         onClick={(e) => {
           e.stopPropagation();
-          navigateTo(
-            `/pages/perimeter/merchantDetails/index?merchantId=${relateId}`
-          );
+          linkTo();
         }}
       >
         {followStatus === "0" &&
-          (relateType === "user" || relateType === "merchant") && (
+          (relateType === "user" || relateType === "merchant") &&
+          !jumpUrl && (
             <View
               onClick={(e) => follow(e)}
               className={classNames("video_stem_fallStatus video_stem_status1")}
             ></View>
           )}
+        {jumpUrl.length > 0 && (
+          <View
+            className={classNames("video_stem_fallStatus video_stem_status2")}
+          ></View>
+        )}
       </View>
 
       <>

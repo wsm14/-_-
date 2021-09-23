@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { View, Image, Swiper, SwiperItem } from "@tarojs/components";
 import Barrage from "@/components/componentView/active/barrage";
-import { getRestapiAddress, fetchBeanBarrage } from "@/server/common";
+import { getRestapiAddress, fetchSpecialBarrage } from "@/server/common";
 import "./index.scss";
 import { backgroundObj } from "@/common/utils";
 export default ({}) => {
@@ -11,9 +11,9 @@ export default ({}) => {
     getBeanBarrage();
   }, []);
   const getBeanBarrage = () => {
-    fetchBeanBarrage({ size: 50 }, (res) => {
-      const { markBarrageList = [] } = res;
-      setList(markBarrageList);
+    fetchSpecialBarrage({ size: 50 }, (res) => {
+      const { momentBarrageList = [] } = res;
+      setList(momentBarrageList);
     });
   };
   return (
@@ -26,7 +26,7 @@ export default ({}) => {
         className="friendScene_barrage_autoPlay"
       >
         {list.map((item) => {
-          const { barrageDesc, userProfile } = item;
+          const { barrageDesc, userProfile, username, barrageTime } = item;
           return (
             <SwiperItem>
               <View className="friendScene_barrage_content">
@@ -34,7 +34,9 @@ export default ({}) => {
                   className="friendScene_barrage_profile"
                   style={backgroundObj(userProfile)}
                 ></View>
-                <View className="friendScene_barrage_font">{barrageDesc}</View>
+                <View className="friendScene_barrage_font">
+                  {username + barrageTime + barrageDesc}
+                </View>
               </View>
             </SwiperItem>
           );

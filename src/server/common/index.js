@@ -293,3 +293,13 @@ export const fetchConfigWindVaneBySizeNew = (data = {}, fn) => {
   );
 };
 //活动卡豆弹幕;
+export const fetchSpecialBarrage = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/listSpecialBarrage",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//活动卡豆弹幕;

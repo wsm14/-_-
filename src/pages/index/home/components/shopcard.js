@@ -189,18 +189,20 @@ export default ({
               onClose();
             }}
           ></View>
-          <View className="banner_slider_box">
-            {[...activityGoodsList, ...ownerCouponList].map((item, index) => {
-              return (
-                <View
-                  key={index}
-                  className={classNames(
-                    index == current ? "banner_slider" : "banner_slider_false"
-                  )}
-                ></View>
-              );
-            })}
-          </View>
+          {[...activityGoodsList, ...ownerCouponList].length > 1 && (
+            <View className="banner_slider_box">
+              {[...activityGoodsList, ...ownerCouponList].map((item, index) => {
+                return (
+                  <View
+                    key={index}
+                    className={classNames(
+                      index == current ? "banner_slider" : "banner_slider_false"
+                    )}
+                  ></View>
+                );
+              })}
+            </View>
+          )}
         </View>
       </ButtonView>
     );

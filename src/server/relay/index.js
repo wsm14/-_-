@@ -441,7 +441,7 @@ export const fetchCommunityGoods = (data, fn) => {
 //团长-核销订单
 
 export const fetchOrganizationShare = (data, fn) => {
-  return httpPost(  
+  return httpPost(
     {
       url: "/user/community/organization/share",
       data: data,
@@ -588,3 +588,23 @@ export const fetchUserBankStatus = (data = {}, fn) => {
   );
 };
 //绑卡状态
+export const getRelayMomentList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMoment/listMomentDetailByType",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取连刷视频动态
+export const saveRelayWatchBean = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/beanDetail/saveWatchBeanDetailByUserId",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//看动态领取卡豆

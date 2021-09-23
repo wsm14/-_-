@@ -121,7 +121,7 @@ class Index extends Component {
             style={backgroundObj(goodsImg)}
           ></View>
           <View className="prefecture_fure_content">
-            <View className="prefecture_fure_title">{goodsName}</View>
+            <View className="prefecture_fure_title font_hide">{goodsName}</View>
             <View className="prefecture_fure_user  font_hide">
               <View
                 className="prefecture_fure_userProfile merchant_dakale_logo"
@@ -139,9 +139,9 @@ class Index extends Component {
               <Text className="font20">原价:</Text>
               <Text className="font24 text_through">{oriPrice}</Text>
             </View>
-            <View className="prefecture_fure_tag"></View>
+            <View className="prefecture_fure_tag prefecture_fure_margin1"></View>
             <View className="prefecture_fure_bean">
-              ¥{cash}+{bean}
+              ¥{cash}+{bean}卡豆
             </View>
           </View>
           <View className="prefecture_btn  public_center">立即抢购</View>
@@ -182,7 +182,10 @@ class Index extends Component {
             style={backgroundObj(couponImg)}
           ></View>
           <View className="prefecture_fure_content">
-            <View className="prefecture_fure_title">{couponName}</View>
+            <View className="prefecture_fure_title font_hide">
+              {couponName}
+            </View>
+            <View className="prefecture_fure_quan font_hide">{"无门槛"}</View>
             <View className="prefecture_fure_user font_hide">
               <View
                 className="prefecture_fure_userProfile merchant_dakale_logo"
@@ -194,13 +197,9 @@ class Index extends Component {
                 {GetDistance(getLat(), getLnt(), lat, lnt)}
               </View>
             </View>
-            <View className="prefecture_fure_price">
-              <Text className="font20">原价:</Text>
-              <Text className="font24 text_through">{oriPrice}</Text>
-            </View>
-            <View className="prefecture_fure_tag"></View>
+            <View className="prefecture_fure_tag prefecture_fure_margin2" ></View>
             <View className="prefecture_fure_bean">
-              ¥{cash}+{bean}
+              ¥{cash}+{bean}卡豆
             </View>
           </View>
           <View className="prefecture_btn  public_center">立即抢购</View>

@@ -789,6 +789,11 @@ class MerchantDetails extends Component {
                     price: cash,
                     bean: bean - userBean,
                   }}
+                  close={(e) => {
+                    this.setState({ drawerVisible: false }, (res) => {
+                      e && e();
+                    });
+                  }}
                 ></RightFlag>
               </Drawer>
             )}

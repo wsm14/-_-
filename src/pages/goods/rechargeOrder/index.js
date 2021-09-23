@@ -43,14 +43,7 @@ class Index extends Component {
       visible: false,
     };
   }
-  componentWillUnmount() {
-    if (
-      !getCurrentInstance().router.params.totalFee ||
-      !getCurrentInstance().router.params.telephone
-    ) {
-      goBack(() => toast("参数缺失"));
-    }
-  }
+  componentWillUnmount() {}
 
   componentDidShow() {
     this.fetchProductOrder();

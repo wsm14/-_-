@@ -945,9 +945,16 @@ class Index extends React.PureComponent {
         <View
           className="home_bean_info"
           onClick={() => {
-            Router({
-              routerName: "prefecture",
-            });
+            let a = Math.random() * 2;
+            if (a > 1) {
+              Router({
+                routerName: "prefecture",
+              });
+            } else {
+              Router({
+                routerName: "recharge",
+              });
+            }
           }}
         ></View>
         <View className="home_video_box">{templateView()}</View>

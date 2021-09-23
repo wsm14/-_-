@@ -54,6 +54,7 @@ export default (props) => {
     momentId,
     ownerImg,
     momentType,
+    cityCode,
   } = server;
   const { address, lat, lnt } = addressContentObject;
   const getPromotion = (item) => {
@@ -306,10 +307,15 @@ export default (props) => {
               }
             >
               <View className="home_city_icon"></View>
-              <View className="home_desc_text font_hide">
-                {cityName}·{categoryName}｜
-                {GetDistance(getLat(), getLnt(), lat, lnt)}｜{address}
-              </View>
+              <ScrollView scrollX className="home_desc_text font_hide">
+                {cityCode === "3301"
+                  ? "杭州"
+                  : cityCode === "4331"
+                  ? "湘西"
+                  : "全国"}
+                ·{categoryName}｜{GetDistance(getLat(), getLnt(), lat, lnt)}｜
+                {address}
+              </ScrollView>
             </View>
           </View>
         </View>
@@ -342,10 +348,15 @@ export default (props) => {
             }
           >
             <View className="home_city_icon"></View>
-            <View className="home_desc_text font_hide">
-              {cityName}·{categoryName}｜
-              {GetDistance(getLat(), getLnt(), lat, lnt)}｜{address}
-            </View>
+            <ScrollView scrollX className="home_desc_text font_hide">
+              {cityCode === "3301"
+                ? "杭州"
+                : cityCode === "4331"
+                ? "湘西"
+                : "全国"}
+              ·{categoryName}｜{GetDistance(getLat(), getLnt(), lat, lnt)}｜
+              {address}
+            </ScrollView>
           </View>
         </View>
       </View>
@@ -354,7 +365,12 @@ export default (props) => {
     return (
       <View className="home_bottom">
         {children}
-        <View className="home_username font_hide">@{ownerName}</View>
+        <View className="home_username font_hide">
+          <View className="font_hide"> @{ownerName} </View>
+          {momentType === "platform" && (
+            <View className="home_momentType public_center">广告</View>
+          )}
+        </View>
         {descView()}
         <View className="home_desc_coll public_auto">
           <View
@@ -369,10 +385,15 @@ export default (props) => {
             }
           >
             <View className="home_city_icon"></View>
-            <View className="home_desc_text font_hide">
-              {cityName}·{categoryName}｜
-              {GetDistance(getLat(), getLnt(), lat, lnt)}｜{address}
-            </View>
+            <ScrollView scrollX className="home_desc_text font_hide">
+              {cityCode === "3301"
+                ? "杭州"
+                : cityCode === "4331"
+                ? "湘西"
+                : "全国"}
+              ·{categoryName}｜{GetDistance(getLat(), getLnt(), lat, lnt)}｜
+              {address}
+            </ScrollView>
           </View>
         </View>
       </View>

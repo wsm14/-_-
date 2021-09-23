@@ -36,11 +36,6 @@ class Index extends Component {
     };
   }
 
-  componentWillMount() {
-    if (!getCurrentInstance().router.params.orderSn) {
-      goBack(() => toast("参数缺失"));
-    }
-  }
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
       const { configUserLevelInfo = {} } = res;

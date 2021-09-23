@@ -23,7 +23,7 @@ export default (props) => {
   useEffect(() => {
     if (current === index) {
       setToast(1);
-      if (beanLimitStatus === "0" || beanFlag === 0) {
+      if (beanLimitStatus === "0" || beanFlag != "1") {
         return;
       }
       if (!timeOut) {
@@ -58,7 +58,7 @@ export default (props) => {
   };
   return (
     <View className="video_layer_box">
-      {toast === 1 && initBean ? (
+      {toast === 1 && beanFlag == 1 && initBean ? (
         <View
           className={classNames(
             "video_layer_toast",

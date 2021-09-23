@@ -34,7 +34,7 @@ class Index extends Component {
     const {
       httpData: { orderSn, orderType },
     } = this.state;
-    if (!orderSn || !orderType) {
+    if (!orderSn) {
       goBack(() => toast("参数缺失"));
     }
   }
