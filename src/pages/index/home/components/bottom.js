@@ -334,7 +334,7 @@ export default (props) => {
   } else if (
     (activityGoodsList.length > 0 || ownerCouponList.length > 0) &&
     !showFlag
-  ) {
+  ) { 
     return (
       <View className="home_bottom">
         {templateStated(couponInfo, linkTo)}

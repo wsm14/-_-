@@ -305,7 +305,6 @@ export const GetDistance = function (lat1, lng1, lat2, lng2) {
   s = s * 6378.137; // EARTH_RADIUS;
   s = Math.round(s * 10000) / 10000; //输出为公里
   s = s.toFixed(2);
-  console.log(s)
   if (s && s !== "NaN") {
     return filterLimit(s);
   } else {
