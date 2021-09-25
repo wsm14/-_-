@@ -205,7 +205,7 @@ class Index extends React.PureComponent {
 
   saveBean() {
     const {
-      userMomentsInfo: { momentId, guideMomentFlag },
+      userMomentsInfo: { momentId, guideMomentFlag, ownerId },
       userMomentsInfo,
     } = this.state;
     const { homeStore } = this.props.store;
@@ -215,6 +215,7 @@ class Index extends React.PureComponent {
         saveWatchBean(
           {
             momentId: momentId,
+            ownerId,
           },
           (res) => {
             const {

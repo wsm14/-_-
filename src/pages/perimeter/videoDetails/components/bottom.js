@@ -55,6 +55,7 @@ export default (props) => {
     ownerImg,
     momentType,
     cityCode,
+    relateType,
   } = server;
   const { address, lat, lnt } = addressContentObject;
   const getPromotion = (item) => {
@@ -313,7 +314,12 @@ export default (props) => {
                   : cityCode === "4331"
                   ? "湘西"
                   : "全国"}
-                ·{categoryName}｜{GetDistance(getLat(), getLnt(), lat, lnt)}｜
+                {categoryName && relateType !== "user" && relateType !== "brank"
+                  ? `·${categoryName}`
+                  : ""}
+                {GetDistance(getLat(), getLnt(), lat, lnt)
+                  ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
+                  : ""}
                 {address}
               </ScrollView>
             </View>
@@ -354,7 +360,12 @@ export default (props) => {
                 : cityCode === "4331"
                 ? "湘西"
                 : "全国"}
-              ·{categoryName}｜{GetDistance(getLat(), getLnt(), lat, lnt)}｜
+              {categoryName && relateType !== "user" && relateType !== "brank"
+                ? `·${categoryName}`
+                : ""}
+              {GetDistance(getLat(), getLnt(), lat, lnt)
+                ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
+                : ""}
               {address}
             </ScrollView>
           </View>
@@ -391,7 +402,12 @@ export default (props) => {
                 : cityCode === "4331"
                 ? "湘西"
                 : "全国"}
-              ·{categoryName}｜{GetDistance(getLat(), getLnt(), lat, lnt)}｜
+              {categoryName && relateType !== "user" && relateType !== "brank"
+                ? `·${categoryName}`
+                : ""}
+              {GetDistance(getLat(), getLnt(), lat, lnt)
+                ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
+                : ""}
               {address}
             </ScrollView>
           </View>

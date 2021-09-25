@@ -260,6 +260,7 @@ page {
       background-size: 100% 100%;
       margin-right: 4px;
       vertical-align: middle;
+      flex-shrink: 0;
     }
     .home_desc_text {
       max-width: 538px;

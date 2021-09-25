@@ -39,9 +39,7 @@ export default (props) => {
 
   const renderToast = () => {
     let str = "";
-    if (couponTitlesJson.length > 0) {
-      str = `+${couponTitlesJson[0].couponPrice}元优惠券`;
-    }
+    freeCouponFlag === "1" ? (str += "+免费券") : "";
     if (beanLimitStatus === "0") {
       return "今日卡豆领取已达上限";
     } else if (beanFlag === 0 || beanFlag === "0") {

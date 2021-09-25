@@ -63,7 +63,7 @@ export default ({
           <View className="couponInfo_box">
             <View className="couponInfo_box_left">卡豆价:</View>
             <View className="couponInfo_box_right">
-              ¥{cash.toFixed(2)}+{bean}
+              ¥{cash.toFixed(2)}+{bean}卡豆 
             </View>
           </View>
           <View className="couponInfo_rel">

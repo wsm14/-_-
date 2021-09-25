@@ -98,11 +98,20 @@ export default (props) => {
           <View
             style={backgroundObj(bannerList[0] && bannerList[0].coverImg)}
             className="nearTitle_right_activeBox nearTitle_right_activeIcon1"
-            onClick={() =>
+            onClick={() => {
+              if (bannerList[0] && bannerList[0].jumpUrl) {
+                Router({
+                  routerName: "webView",
+                  args: {
+                    link: bannerList[0].jumpUrl.split("?")[0],
+                    url: bannerList[0].jumpUrl.split("?")[1] || "",
+                  },
+                });
+              }
               Router({
                 routerName: "rankInfo",
-              })
-            }
+              });
+            }}
           >
             <View className="nearTitle_right_rank">人气排行榜</View>
             <View className="nearTitle_right_details">吃喝玩乐指南榜单</View>

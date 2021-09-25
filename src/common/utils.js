@@ -305,7 +305,12 @@ export const GetDistance = function (lat1, lng1, lat2, lng2) {
   s = s * 6378.137; // EARTH_RADIUS;
   s = Math.round(s * 10000) / 10000; //输出为公里
   s = s.toFixed(2);
-  return filterLimit(s);
+  console.log(s)
+  if (s && s !== "NaN") {
+    return filterLimit(s);
+  } else {
+    return null;
+  }
 };
 ////地理位置
 
@@ -482,7 +487,7 @@ export const filterPayfont = (string) => {
 export const filterPayColor = (string) => {
   switch (string) {
     case "0":
-      return "  _color2";
+      return "status_color2";
     case "1":
       return "status_color2";
     case "2":
@@ -565,8 +570,20 @@ export const getDom = (id, fn) => {
 export const filterGoods = (data) => {
   let { orderDesc = {}, orderType } = data;
   orderDesc = JSON.parse(orderDesc);
-  const { reduceCoupon = {}, specialGoods = {} } = orderDesc;
-  return { ...reduceCoupon, ...specialGoods, ...orderDesc, ...data };
+  const {
+    reduceCoupon = {},
+    specialGoods = {},
+    rightCoupon,
+    rightGoods,
+  } = orderDesc;
+  return {
+    ...reduceCoupon,
+    ...specialGoods,
+    ...rightGoods,
+    ...rightCoupon,
+    ...orderDesc,
+    ...data,
+  };
 };
 export const removeLogin = () =>
   Taro.removeStorage({
@@ -777,4 +794,19 @@ export const mapSelect = (fn) => {
       toast("获取微信位置失败");
     },
   });
+};
+export const plTimeFilter = (val) => {
+  if (val) {
+    let time =
+      parseInt(new Date().getTime() / 1000) -
+      parseInt(new Date(val.replace(/-/g, "/")).getTime() / 1000);
+    if (time < 3600) {
+      return parseInt(time / 60) + "分钟前";
+    } else if (time > 3600 && time < 86400) {
+      return parseInt(parseInt(time / 60) / 60) + "小时前";
+    } else if (time > 86400 && time < 31536000) {
+      const dateTime = val.split(" ")[0].split("-");
+      return dateTime[1] + "月" + dateTime[2] + "日";
+    } else return val.split(" ")[0];
+  } else return val;
 };

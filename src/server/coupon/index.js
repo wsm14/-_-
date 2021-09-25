@@ -50,3 +50,14 @@ export const acquireCoupon = (data, fn) => {
     }
   );
 };
+
+export const getNewAvailableCoupon = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/userCoupon/listNewAvailableCouponByChannel",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//查看多渠道可用券列表(打卡/消费/看视频)

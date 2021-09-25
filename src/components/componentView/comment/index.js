@@ -12,7 +12,7 @@ import Taro from "@tarojs/taro";
 import classNames from "classnames";
 import { fetchMomentComment, fakeMomentComment } from "@/server/index";
 import "./index.scss";
-import { toast } from "@/common/utils";
+import { toast, plTimeFilter } from "@/common/utils";
 import Router from "@/common/router";
 export default ({ show = false, close, data, current }) => {
   const [keyword, setWord] = useState(null);
@@ -106,7 +106,9 @@ export default ({ show = false, close, data, current }) => {
             )}
             className="temPlateComment_desc"
           ></RichText>
-          <View className="temPlateComment_time">{createTime}</View>
+          <View className="temPlateComment_time">
+            {plTimeFilter(createTime)}
+          </View>
         </View>
       </View>
     );

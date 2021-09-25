@@ -46,14 +46,9 @@ export const nearList = (item = {}, list = [], store) => {
     if (promotionFlag === "1" || freeCouponFlag === "1") {
       return (
         <View className="nearList_bottom_avtiveBox">
-          {couponTitlesJson.length > 0 &&
-            couponTitlesJson.map((item) => {
-              return (
-                <View className="nearList_dakale_coupon public_center">
-                  领券
-                </View>
-              );
-            })}
+          {freeCouponFlag === "1" && (
+            <View className="nearList_dakale_coupon public_center">领券</View>
+          )}
           {promotionFlag === "1" && (
             <View className="nearList_dakale_active">
               {promotionNum}款特惠带货中
@@ -141,14 +136,9 @@ export const searchList = (item = {}, list = [], store) => {
     if (promotionFlag === "1" || freeCouponFlag === "1") {
       return (
         <View className="nearList_bottom_avtiveBox">
-          {couponTitlesJson.length > 0 &&
-            couponTitlesJson.map((item) => {
-              return (
-                <View className="nearList_dakale_coupon public_center">
-                  领券
-                </View>
-              );
-            })}
+          {freeCouponFlag === "1" && (
+            <View className="nearList_dakale_coupon public_center">领券</View>
+          )}
           {promotionFlag === "1" && (
             <View className="nearList_dakale_active">
               {promotionNum}款特惠带货中

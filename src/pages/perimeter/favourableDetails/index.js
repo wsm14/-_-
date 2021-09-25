@@ -586,7 +586,7 @@ class MerchantDetails extends Component {
                   <View className="favourInfo_box">
                     <View className="favourInfo_box_left">卡豆价:</View>
                     <View className="favourInfo_box_right">
-                      ¥{cash.toFixed(2)}+{bean}
+                      ¥{cash.toFixed(2)}+{bean}卡豆
                     </View>
                   </View>
                   <View className="favourInfo_rel">

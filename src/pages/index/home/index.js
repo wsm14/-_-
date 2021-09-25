@@ -289,7 +289,7 @@ class Index extends React.PureComponent {
   } //设置定时器领取卡豆
   saveBean() {
     const {
-      userMomentsInfo: { momentId, guideMomentFlag },
+      userMomentsInfo: { momentId, guideMomentFlag, ownerId },
       userMomentsInfo,
     } = this.state;
     const { homeStore } = this.props.store;
@@ -299,6 +299,7 @@ class Index extends React.PureComponent {
         saveWatchBean(
           {
             momentId: momentId,
+            ownerId,
           },
           (res) => {
             const {
@@ -945,16 +946,9 @@ class Index extends React.PureComponent {
         <View
           className="home_bean_info"
           onClick={() => {
-            let a = Math.random() * 2;
-            if (a > 1) {
-              Router({
-                routerName: "prefecture",
-              });
-            } else {
-              Router({
-                routerName: "recharge",
-              });
-            }
+            Router({
+              routerName: "prefecture",
+            });
           }}
         ></View>
         <View className="home_video_box">{templateView()}</View>

@@ -75,8 +75,9 @@ export default (props) => {
     activityIdString,
     ownerCouponIdString,
     merchantLogoImg,
+    relateId,
+    relateType,
   } = orderResult;
-  console.log(orderResult);
   const goSpeGoods = () => {
     const {
       ownerIdString,
@@ -186,17 +187,55 @@ export default (props) => {
     }
     return false;
   };
+  const linkInfo = () => {
+    if (orderType === "rightGoods" || orderType === "rightCoupon") {
+      if (relateType === "group") {
+        Router({
+          routerName: "groupDetails",
+          args: {
+            merchantGroupId: relateId,
+          },
+        });
+        return;
+      }
+      Router({
+        routerName: "merchantDetails",
+        args: {
+          merchantId: relateId,
+        },
+      });
+    } else {
+      Router({
+        routerName: "merchantDetails",
+        args: {
+          merchantId: merchantIdString,
+        },
+      });
+    }
+  };
+  const orderGroup = () => {
+    if (orderType === "rightGoods" || orderType === "rightCoupon") {
+      Router({
+        routerName: "groupList",
+        args: {
+          ownerServiceId: activityIdString || ownerCouponIdString,
+          ownerId: relateId,
+        },
+      });
+    } else {
+      Router({
+        routerName: "groupList",
+        args: {
+          ownerServiceId: activityIdString || ownerCouponIdString,
+          ownerId: ownerIdString,
+        },
+      });
+    }
+  };
   const filterTopMerchant = (count = 1) => {
-    if (count === 1) {
+    if (count <= 1) {
       return (
-        <View
-          onClick={() =>
-            navigateTo(
-              `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
-            )
-          }
-          className="descriptionCard_merchant"
-        >
+        <View onClick={() => linkInfo()} className="descriptionCard_merchant">
           <View
             className="descriptionCard_profile dakale_nullImage"
             style={backgroundObj(merchantLogoImg)}
@@ -209,14 +248,7 @@ export default (props) => {
       );
     } else
       return (
-        <View
-          onClick={() =>
-            navigateTo(
-              `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
-            )
-          }
-          className="descriptionCard_merchant"
-        >
+        <View onClick={() => linkInfo()} className="descriptionCard_merchant">
           <View
             className="descriptionCard_profile dakale_nullImage"
             style={backgroundObj(merchantLogoImg)}
@@ -228,13 +260,7 @@ export default (props) => {
             className="descriptionCard_group_liner"
             onClick={(e) => {
               e.stopPropagation();
-              Router({
-                routerName: "groupList",
-                args: {
-                  ownerServiceId: activityIdString || ownerCouponIdString,
-                  ownerId: ownerIdString,
-                },
-              });
+              orderGroup();
             }}
           >
             更多{count}家门店可用

@@ -14,7 +14,7 @@ export default ({
   callback,
   shareCommission,
   onClose,
-  payBeanCommission,
+  payBeanCommission = 50,
   ownerImg,
 }) => {
   const { activityGoodsList = [], ownerCouponList = [] } = val;

@@ -15,7 +15,6 @@ import {
   filterWeek,
 } from "@/common/utils";
 import PayBean from "@/components/stopBean";
-import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import ButtonView from "@/components/Button";
 import { fetchUserShareCommission } from "@/server/index";
@@ -72,8 +71,21 @@ class Index extends Component {
     const {
       httpData,
       httpData: { goodsCount },
+      specialGoodsInfo,
     } = this.state;
+    const { maxBuyAmount, dayMaxBuyAmount, buyRule } = specialGoodsInfo;
     if (type === "add") {
+      if (buyRule !== "unlimited") {
+        if (buyRule === "personLimit") {
+          if (goodsCount === maxBuyAmount) {
+            return toast("已超出限购限制");
+          }
+        } else if (buyRule === "dayLimit") {
+          if (goodsCount === dayMaxBuyAmount) {
+            return toast("已超出限购限制");
+          }
+        }
+      }
       this.setState(
         {
           httpData: {
@@ -150,7 +162,7 @@ class Index extends Component {
       useBeanStatus,
       useBeanType,
       momentId,
-      specialGoodsInfo: { ownerIdString },
+      specialGoodsInfo: { ownerIdString, rightFlag },
       httpData: { merchantId, specialActivityId, goodsCount },
     } = this.state;
     const { shareType } = this.props.store.authStore;
@@ -173,6 +185,7 @@ class Index extends Component {
           shareUserType,
           sourceKey,
           sourceType,
+          rightFlag,
         },
         url: saveSpecialGoods,
       },
