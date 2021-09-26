@@ -56,8 +56,33 @@ export default (props) => {
     momentType,
     cityCode,
     relateType,
+    relateId,
   } = server;
   const { address, lat, lnt } = addressContentObject;
+  const routerInfo = () => {
+    console.log(relateType);
+    if (relateType === "user") {
+      Router({
+        routerName: "download",
+      });
+    } else if (relateType === "group") {
+      Router({
+        routerName: "groupDetails",
+        args: {
+          merchantGroupId: relateId,
+        },
+      });
+    } else if (relateType === "merchant") {
+      Router({
+        routerName: "merchantDetails",
+        args: {
+          merchantId: relateId,
+        },
+      });
+    } else {
+      return;
+    }
+  };
   const getPromotion = (item) => {
     const { promotionFlag, ownerId, promotionNum, momentId, momentType } = item;
     if (promotionFlag === "1" && promotionNum > 0) {
@@ -308,20 +333,22 @@ export default (props) => {
               }
             >
               <View className="home_city_icon"></View>
-              <ScrollView scrollX className="home_desc_text font_hide">
-                {cityCode === "3301"
-                  ? "杭州"
-                  : cityCode === "4331"
-                  ? "湘西"
-                  : "全国"}
-                {categoryName && relateType !== "user" && relateType !== "brank"
-                  ? `·${categoryName}`
-                  : ""}
-                {GetDistance(getLat(), getLnt(), lat, lnt)
-                  ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
-                  : ""}
-                {address}
-              </ScrollView>
+              {relateType === "user" || relateType === "brank" ? (
+                <ScrollView className="home_desc_text font_hide"></ScrollView>
+              ) : (
+                <ScrollView scrollX className="home_desc_text font_hide">
+                  {cityCode === "3301"
+                    ? "杭州"
+                    : cityCode === "4331"
+                    ? "湘西"
+                    : "全国"}
+                  ·{categoryName}
+                  {GetDistance(getLat(), getLnt(), lat, lnt)
+                    ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
+                    : ""}
+                  {address}
+                </ScrollView>
+              )}
             </View>
           </View>
         </View>
@@ -334,7 +361,7 @@ export default (props) => {
     return (
       <View className="home_bottom">
         {templateStated(couponInfo, linkTo)}
-        <View className="home_username font_hide">
+        <View className="home_username font_hide" onClick={() => routerInfo()}>
           <View className="font_hide"> @{ownerName} </View>
           {momentType === "platform" && (
             <View className="home_momentType public_center">广告</View>
@@ -354,20 +381,22 @@ export default (props) => {
             }
           >
             <View className="home_city_icon"></View>
-            <ScrollView scrollX className="home_desc_text font_hide">
-              {cityCode === "3301"
-                ? "杭州"
-                : cityCode === "4331"
-                ? "湘西"
-                : "全国"}
-              {categoryName && relateType !== "user" && relateType !== "brank"
-                ? `·${categoryName}`
-                : ""}
-              {GetDistance(getLat(), getLnt(), lat, lnt)
-                ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
-                : ""}
-              {address}
-            </ScrollView>
+            {relateType === "user" || relateType === "brank" ? (
+              <ScrollView className="home_desc_text font_hide"></ScrollView>
+            ) : (
+              <ScrollView scrollX className="home_desc_text font_hide">
+                {cityCode === "3301"
+                  ? "杭州"
+                  : cityCode === "4331"
+                  ? "湘西"
+                  : "全国"}
+                ·{categoryName}
+                {GetDistance(getLat(), getLnt(), lat, lnt)
+                  ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
+                  : ""}
+                {address}
+              </ScrollView>
+            )}
           </View>
         </View>
       </View>
@@ -376,7 +405,7 @@ export default (props) => {
     return (
       <View className="home_bottom">
         {children}
-        <View className="home_username font_hide">
+        <View className="home_username font_hide" onClick={() => routerInfo()}>
           <View className="font_hide"> @{ownerName} </View>
           {momentType === "platform" && (
             <View className="home_momentType public_center">广告</View>
@@ -396,20 +425,22 @@ export default (props) => {
             }
           >
             <View className="home_city_icon"></View>
-            <ScrollView scrollX className="home_desc_text font_hide">
-              {cityCode === "3301"
-                ? "杭州"
-                : cityCode === "4331"
-                ? "湘西"
-                : "全国"}
-              {categoryName && relateType !== "user" && relateType !== "brank"
-                ? `·${categoryName}`
-                : ""}
-              {GetDistance(getLat(), getLnt(), lat, lnt)
-                ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
-                : ""}
-              {address}
-            </ScrollView>
+            {relateType === "user" || relateType === "brank" ? (
+              <ScrollView className="home_desc_text font_hide"></ScrollView>
+            ) : (
+              <ScrollView scrollX className="home_desc_text font_hide">
+                {cityCode === "3301"
+                  ? "杭州"
+                  : cityCode === "4331"
+                  ? "湘西"
+                  : "全国"}
+                ·{categoryName}
+                {GetDistance(getLat(), getLnt(), lat, lnt)
+                  ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
+                  : ""}
+                {address}
+              </ScrollView>
+            )}
           </View>
         </View>
       </View>

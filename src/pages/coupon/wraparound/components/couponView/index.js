@@ -40,18 +40,7 @@ export default (props) => {
       return "wraparound_couponContent_iconStyle2";
     }
   };
-  const goMerchant = (val) => {
-    const { ownerType, merchantIdString, ownerIdString } = val;
-    if (ownerType !== "group") {
-      navigateTo(
-        `/pages/perimeter/merchantDetails/index?merchantId=${ownerIdString}`
-      );
-    } else {
-      navigateTo(
-        `/pages/perimeter/kaMerchantDetails/index?merchantGroupId=${ownerIdString}`
-      );
-    }
-  };
+  const goMerchant = (val) => {};
 
   const goCouponDetails = (couponType, userCouponIdString) => {
     if (couponType !== "reduceCoupon" && couponType !== "freeReduceCoupon") {

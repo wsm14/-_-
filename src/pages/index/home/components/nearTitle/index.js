@@ -100,17 +100,23 @@ export default (props) => {
             className="nearTitle_right_activeBox nearTitle_right_activeIcon1"
             onClick={() => {
               if (bannerList[0] && bannerList[0].jumpUrl) {
-                Router({
-                  routerName: "webView",
-                  args: {
-                    link: bannerList[0].jumpUrl.split("?")[0],
-                    url: bannerList[0].jumpUrl.split("?")[1] || "",
-                  },
-                });
+                const { jumpUrlNew, jumpUrlType, jumpUrl } = bannerList[0];
+                jumpUrlNew = (jumpUrlNew && JSON.parse(jumpUrlNew)) || {};
+                const { weChatUrl } = jumpUrlNew;
+                if (jumpUrlType === "native" && weChatUrl) {
+                  Router({
+                    routerName: weChatUrl,
+                  });
+                } else if (jumpUrlType === "h5" && jumpUrl) {
+                  Router({
+                    routerName: "webView",
+                    args: {
+                      link: jumpUrl.split("?")[0],
+                      url: jumpUrl.split("?")[1] || "",
+                    },
+                  });
+                } else return;
               }
-              Router({
-                routerName: "rankInfo",
-              });
             }}
           >
             <View className="nearTitle_right_rank">人气排行榜</View>
