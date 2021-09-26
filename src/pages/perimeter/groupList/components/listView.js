@@ -57,9 +57,9 @@ export const list = (item, index) => {
           <View className="list_shop_merchantName font_hide">
             {merchantName}
           </View>
-          <View className="list_shop_bussionTime">
+          <View className="list_shop_bussionTime font_hide">
             {businessTime && (
-              <View className="bussionTime_tag">
+              <View className="bussionTime_tag font_hide">
                 <Text className="font22 bold color9">营业时间</Text>
                 <Text className="bussionTime_liner bussionTime_margin"></Text>
                 <Text className="bussionTime_margin font22 bold  color9">

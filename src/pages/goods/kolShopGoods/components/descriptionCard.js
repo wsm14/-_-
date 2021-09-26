@@ -78,6 +78,7 @@ export default (props) => {
     relateId,
     relateType,
   } = orderResult;
+  console.log(orderResult);
   const goSpeGoods = () => {
     const {
       ownerIdString,
@@ -189,19 +190,19 @@ export default (props) => {
   };
   const linkInfo = () => {
     if (orderType === "rightGoods" || orderType === "rightCoupon") {
-      if (relateType === "group") {
-        Router({
-          routerName: "groupDetails",
-          args: {
-            merchantGroupId: relateId,
-          },
-        });
-        return;
-      }
+      // if (relateType === "group") {
+      //   Router({
+      //     routerName: "groupDetails",
+      //     args: {
+      //       merchantGroupId: relateId,
+      //     },
+      //   });
+      //   return;
+      // }
       Router({
         routerName: "merchantDetails",
         args: {
-          merchantId: relateId,
+          merchantId: merchantIdString,
         },
       });
     } else {
@@ -219,7 +220,7 @@ export default (props) => {
         routerName: "groupList",
         args: {
           ownerServiceId: activityIdString || ownerCouponIdString,
-          ownerId: relateId,
+          ownerId: ownerIdString,
         },
       });
     } else {

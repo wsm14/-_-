@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { Text, View, Image } from "@tarojs/components";
+import { Text, View, Image, RichText } from "@tarojs/components";
 import Coupon from "./components/couponTop";
 import { getOwnerCouponDetail } from "@/server/perimeter";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
@@ -344,6 +344,7 @@ class Index extends Component {
         paymentModeObject = {},
         couponName,
         rightFlag = "0",
+        richText,
       },
       visible,
       httpData,
@@ -495,6 +496,15 @@ class Index extends Component {
               </View>
             </View>
           )}
+          {richText && (
+            <View className="shopdetails_shop_details">
+              <View className="shopdetails_shop_merchantDetails">商品描述</View>
+              <RichText
+                nodes={richText}
+                className="temPlateComment_desc"
+              ></RichText>
+            </View>
+          )}
           {/*使用须知*/}
           {knowPay(couponDetail, "coupon")}
           {/*使用方法*/}
@@ -517,21 +527,44 @@ class Index extends Component {
             visible={beanLimitStatus === "1"}
             data={couponDetail}
           ></VideoBean>
+
           <View className="shopdetails_shop_btn">
-            <View className="shopdetails_shop_price">
-              <View className="shopdetails_shop_priceTop">
-                <Text className="font20">¥</Text>
-                {(buyPrice - (this.filterBeanPrice() / 100).toFixed(2)).toFixed(
-                  2
-                )}
+            {rightFlag === "1" ? (
+              <View className="shopdetails_shop_btn">
+                <View className="shopdetails_shop_price">
+                  <View className="shopdetails_shop_priceTop">
+                    <Text className="font20">¥</Text>
+                    {cash.toFixed(2)}
+                  </View>
+                  <View className="shopdetails_shop_real">
+                    <Text className="shopdetails_shop_realStatus2">
+                      已用{bean}卡豆抵扣
+                      {(bean / 100).toFixed(2)}元
+                    </Text>
+                  </View>
+                </View>
+                {payBtn()}
               </View>
-              <View className="shopdetails_shop_real">
-                <Text className="shopdetails_shop_realStatus2">
-                  已用{this.filterBeanPrice()}卡豆抵扣
-                  {(this.filterBeanPrice() / 100).toFixed(2)}元
-                </Text>
+            ) : (
+              <View className="shopdetails_shop_btn">
+                <View className="shopdetails_shop_price">
+                  <View className="shopdetails_shop_priceTop">
+                    <Text className="font20">¥</Text>
+                    {(
+                      buyPrice - (this.filterBeanPrice() / 100).toFixed(2)
+                    ).toFixed(2)}
+                  </View>
+                  <View className="shopdetails_shop_real">
+                    <Text className="shopdetails_shop_realStatus2">
+                      已用{this.filterBeanPrice()}卡豆抵扣
+                      {(this.filterBeanPrice() / 100).toFixed(2)}元
+                    </Text>
+                  </View>
+                </View>
+                {payBtn()}
               </View>
-            </View>
+            )}
+
             {payBtn()}
           </View>
           <Wares

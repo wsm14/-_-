@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { Image, ScrollView, Text, View } from "@tarojs/components";
+import { Image, ScrollView, Text, View, RichText } from "@tarojs/components";
 import Banner from "@/components/banner";
 import { perimeter } from "@/api/api";
 import { httpGet } from "@/api/newRequest";
@@ -377,6 +377,7 @@ class MerchantDetails extends Component {
         rightFlag = "0",
         paymentModeObject = {},
         goodsImg,
+        richText,
       },
       visible,
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
@@ -690,6 +691,17 @@ class MerchantDetails extends Component {
                       );
                     })}
                 </View>
+              </View>
+            )}
+            {richText && (
+              <View className="shopdetails_shop_details">
+                <View className="shopdetails_shop_merchantDetails">
+                  商品描述
+                </View>
+                <RichText
+                  nodes={richText}
+                  className="temPlateComment_desc"
+                ></RichText>
               </View>
             )}
             {/*使用须知*/}
