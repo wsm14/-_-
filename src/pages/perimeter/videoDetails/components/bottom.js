@@ -321,21 +321,21 @@ export default (props) => {
         ></TemplateCard>
         <View className="home_bottom">
           <View className="home_desc_coll public_auto">
-            <View
-              className="color6 home_desc_city"
-              onClick={() =>
-                mapGo({
-                  lat: lat,
-                  lnt: lnt,
-                  address: address,
-                  merchantName: ownerName,
-                })
-              }
-            >
-              <View className="home_city_icon"></View>
-              {relateType === "user" || relateType === "brank" ? (
-                <ScrollView className="home_desc_text font_hide"></ScrollView>
-              ) : (
+            {relateType === "user" || relateType === "brand" ? (
+              <View></View>
+            ) : (
+              <View
+                className="color6 home_desc_city"
+                onClick={() =>
+                  mapGo({
+                    lat: lat,
+                    lnt: lnt,
+                    address: address,
+                    merchantName: ownerName,
+                  })
+                }
+              >
+                <View className="home_city_icon"></View>
                 <ScrollView scrollX className="home_desc_text font_hide">
                   {cityCode === "3301"
                     ? "杭州"
@@ -348,8 +348,8 @@ export default (props) => {
                     : ""}
                   {address}
                 </ScrollView>
-              )}
-            </View>
+              </View>
+            )}
           </View>
         </View>
       </View>
@@ -369,21 +369,21 @@ export default (props) => {
         </View>
         {descView()}
         <View className="home_desc_coll public_auto">
-          <View
-            className="color6 home_desc_city"
-            onClick={() =>
-              mapGo({
-                lat: lat,
-                lnt: lnt,
-                address: address,
-                merchantName: ownerName,
-              })
-            }
-          >
-            <View className="home_city_icon"></View>
-            {relateType === "user" || relateType === "brank" ? (
-              <ScrollView className="home_desc_text font_hide"></ScrollView>
-            ) : (
+          {relateType === "user" || relateType === "brand" ? (
+            <View></View>
+          ) : (
+            <View
+              className="color6 home_desc_city"
+              onClick={() =>
+                mapGo({
+                  lat: lat,
+                  lnt: lnt,
+                  address: address,
+                  merchantName: ownerName,
+                })
+              }
+            >
+              <View className="home_city_icon"></View>
               <ScrollView scrollX className="home_desc_text font_hide">
                 {cityCode === "3301"
                   ? "杭州"
@@ -396,8 +396,8 @@ export default (props) => {
                   : ""}
                 {address}
               </ScrollView>
-            )}
-          </View>
+            </View>
+          )}
         </View>
       </View>
     );
@@ -413,21 +413,21 @@ export default (props) => {
         </View>
         {descView()}
         <View className="home_desc_coll public_auto">
-          <View
-            className="color6 home_desc_city"
-            onClick={() =>
-              mapGo({
-                lat: lat,
-                lnt: lnt,
-                address: address,
-                merchantName: ownerName,
-              })
-            }
-          >
-            <View className="home_city_icon"></View>
-            {relateType === "user" || relateType === "brank" ? (
-              <ScrollView className="home_desc_text font_hide"></ScrollView>
-            ) : (
+          {relateType === "user" || relateType === "brand" ? (
+            <View></View>
+          ) : (
+            <View
+              className="color6 home_desc_city"
+              onClick={() =>
+                mapGo({
+                  lat: lat,
+                  lnt: lnt,
+                  address: address,
+                  merchantName: ownerName,
+                })
+              }
+            >
+              <View className="home_city_icon"></View>
               <ScrollView scrollX className="home_desc_text font_hide">
                 {cityCode === "3301"
                   ? "杭州"
@@ -440,8 +440,8 @@ export default (props) => {
                   : ""}
                 {address}
               </ScrollView>
-            )}
-          </View>
+            </View>
+          )}
         </View>
       </View>
     );

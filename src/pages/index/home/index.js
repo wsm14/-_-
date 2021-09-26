@@ -21,6 +21,7 @@ import {
   checkPuzzleBeanLimitStatus,
   updateUserMomentParam,
   fetchUserShareCommission,
+  fakeNewUserVideo,
 } from "@/server/index";
 import {
   listParentCategory,
@@ -289,78 +290,132 @@ class Index extends React.PureComponent {
   } //设置定时器领取卡豆
   saveBean() {
     const {
-      userMomentsInfo: { momentId, guideMomentFlag, ownerId },
+      userMomentsInfo: { momentId, guideMomentFlag = "0", ownerId },
       userMomentsInfo,
     } = this.state;
     const { homeStore } = this.props.store;
     checkPuzzleBeanLimitStatus({}, (res) => {
       const { beanLimitStatus = "1" } = res;
       if (beanLimitStatus === "1") {
-        saveWatchBean(
-          {
-            momentId: momentId,
-            ownerId,
-          },
-          (res) => {
-            const {
-              specialGoodsList = [{}],
-              otherBeanAmount = "",
-              otherRealPrice = "",
-            } = res;
-            if (guideMomentFlag === "1") {
-              Taro.setStorageSync("newDeviceFlag", "0");
+        if (guideMomentFlag === "1") {
+          fakeNewUserVideo(
+            {
+              momentId: momentId,
+              ownerId,
+            },
+            (res) => {
+              const {
+                specialGoodsList = [{}],
+                otherBeanAmount = "",
+                otherRealPrice = "",
+              } = res;
+              if (guideMomentFlag === "1") {
+                Taro.setStorageSync("newDeviceFlag", "0");
+              }
+              this.setState(
+                {
+                  time: null,
+                  userMomentsInfo: {
+                    ...userMomentsInfo,
+                    watchStatus: "1",
+                    ...specialGoodsList[0],
+                    otherBeanAmount,
+                    otherRealPrice,
+                  },
+                  userMomentsList: this.state.userMomentsList.map((item) => {
+                    if (item.momentId === momentId) {
+                      return {
+                        ...item,
+                        watchStatus: "1",
+                        ...specialGoodsList[0],
+                        otherBeanAmount,
+                        otherRealPrice,
+                      };
+                    }
+                    return item;
+                  }),
+                },
+                (res) => {
+                  this.setState({
+                    beanflag: true,
+                    beanLimitStatus,
+                  });
+                }
+              );
             }
-            this.setState(
-              {
-                time: null,
+          ).catch((res) => {
+            const { resultCode } = res;
+            if (resultCode == "5231") {
+              this.setState({
                 userMomentsInfo: {
                   ...userMomentsInfo,
-                  watchStatus: "1",
-                  ...specialGoodsList[0],
-                  otherBeanAmount,
-                  otherRealPrice,
+                  beanFlag: 0,
                 },
                 userMomentsList: this.state.userMomentsList.map((item) => {
                   if (item.momentId === momentId) {
                     return {
                       ...item,
-                      watchStatus: "1",
-                      ...specialGoodsList[0],
-                      otherBeanAmount,
-                      otherRealPrice,
+                      beanFlag: 0,
                     };
                   }
                   return item;
                 }),
-              },
-              (res) => {
-                this.setState({
-                  beanflag: true,
-                  beanLimitStatus,
-                });
-              }
-            );
-          }
-        ).catch((res) => {
-          const { resultCode } = res;
-          if (resultCode == "5231") {
-            this.setState({
-              userMomentsInfo: {
-                ...userMomentsInfo,
-                beanFlag: 0,
-              },
-              userMomentsList: this.state.userMomentsList.map((item) => {
-                if (item.momentId === momentId) {
-                  return {
-                    ...item,
-                    beanFlag: 0,
-                  };
+              });
+            }
+          });
+        } else {
+          saveWatchBean(
+            {
+              momentId: momentId,
+              ownerId,
+            },
+            (res) => {
+              this.setState(
+                {
+                  time: null,
+                  userMomentsInfo: {
+                    ...userMomentsInfo,
+                    watchStatus: "1",
+                  },
+                  userMomentsList: this.state.userMomentsList.map((item) => {
+                    if (item.momentId === momentId) {
+                      return {
+                        ...item,
+                        watchStatus: "1",
+                      };
+                    }
+                    return item;
+                  }),
+                },
+                (res) => {
+                  this.setState({
+                    beanflag: true,
+                    beanLimitStatus,
+                  });
                 }
-                return item;
-              }),
-            });
-          }
-        });
+              );
+            }
+          ).catch((res) => {
+            const { resultCode } = res;
+            if (resultCode == "5231") {
+              this.setState({
+                userMomentsInfo: {
+                  ...userMomentsInfo,
+                  beanFlag: 0,
+                },
+                userMomentsList: this.state.userMomentsList.map((item) => {
+                  if (item.momentId === momentId) {
+                    return {
+                      ...item,
+                      beanFlag: 0,
+                    };
+                  }
+                  return item;
+                }),
+              });
+            }
+          });
+        }
       } else {
         homeStore.setBeanLimitStatus(beanLimitStatus);
       }
@@ -651,6 +706,7 @@ class Index extends React.PureComponent {
         momentType,
         addressContentObject: { address },
         ownerId,
+        guideMomentFlag,
       },
       userMomentsInfo,
       player,
@@ -659,7 +715,7 @@ class Index extends React.PureComponent {
       {
         shareType: "newVideo",
         shareId: momentId,
-        subType: momentType,
+        subType: guideMomentFlag === "1" ? "guide" : momentType,
         shardingKey: ownerId,
       },
       (res) => {

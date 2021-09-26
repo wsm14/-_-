@@ -279,3 +279,13 @@ export const fetchRightCoupon = (data = {}, fn) => {
   );
 };
 //权益券列表
+export const fakeNewUserVideo = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/moment/watch/newUserVideoMomentAcquire",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//新手视频领豆

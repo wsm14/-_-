@@ -473,6 +473,7 @@ class Index extends React.PureComponent {
         momentType,
         addressContentObject: { address },
         ownerId,
+        guideMomentFlag,
       },
       userMomentsInfo,
       player,
@@ -481,7 +482,7 @@ class Index extends React.PureComponent {
       {
         shareType: "newVideo",
         shareId: momentId,
-        subType: momentType,
+        subType: guideMomentFlag === "1" ? "guide" : momentType,
         shardingKey: ownerId,
       },
       (res) => {

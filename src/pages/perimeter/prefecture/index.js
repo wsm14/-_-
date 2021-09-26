@@ -70,7 +70,7 @@ class Index extends Component {
   }
   onReachBottom() {
     const { selectIndex, ownerHttp, selectHttp } = this.state;
-    if (selectIndex === "0") {
+    if (selectIndex === "1") {
       this.setState(
         { ownerHttp: { ...ownerHttp, page: ownerHttp.page + 1 } },
         (res) => {
@@ -197,7 +197,7 @@ class Index extends Component {
                 {GetDistance(getLat(), getLnt(), lat, lnt)}
               </View>
             </View>
-            <View className="prefecture_fure_tag prefecture_fure_margin2" ></View>
+            <View className="prefecture_fure_tag prefecture_fure_margin2"></View>
             <View className="prefecture_fure_bean">
               ¥{cash}+{bean}卡豆
             </View>
