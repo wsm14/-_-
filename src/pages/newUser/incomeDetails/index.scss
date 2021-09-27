@@ -3,11 +3,11 @@ page {
   height: 100%;
 }
 
-.rewardDetails_box{
+.rewardDetails_box {
   width: 100%;
   height: 100%;
   line-height: 1;
-  .rewardDetails_selectId{
+  .rewardDetails_selectId {
     padding: 40px 32px 32px;
     position: fixed;
     top: 88px;
@@ -15,80 +15,82 @@ page {
     right: 0;
     display: flex;
     z-index: 10;
-    background: #F5F5F5;
-    .rewardDetails_time{
+    background: #f5f5f5;
+    .rewardDetails_time {
       height: 24px;
       display: flex;
       align-items: center;
     }
-    .rewardDetails_icon{
+    .rewardDetails_icon {
       width: 24px;
       height: 24px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon332.png") no-repeat;
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon332.png")
+        no-repeat;
       background-size: 100% 100%;
       margin-left: 8px;
     }
-    .rewardDetails_cad{
+    .rewardDetails_cad {
       height: 24px;
       display: flex;
       align-items: center;
       margin-left: 40px;
     }
   }
-  .rewardDetails_layer{
+  .rewardDetails_layer {
     position: fixed;
     top: 104px;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index:10;
+    z-index: 10;
     background: rgba(0, 0, 0, 0.6);
-    .rewardDetails_layer_content{
-      background: #F5F5F5;
+    .rewardDetails_layer_content {
+      background: #f5f5f5;
       border-radius: 0px 0px 20px 20px;
-      .rewardDetails_layer_tab{
-        background: #FFFFFF;
+      .rewardDetails_layer_tab {
+        background: #ffffff;
         padding: 24px 32px;
         height: 24px;
         display: flex;
-        .rewardDetails_layer_tabs{
+        .rewardDetails_layer_tabs {
           height: 24px;
           display: flex;
         }
-        .rewardDetails_layer_tabBox{
+        .rewardDetails_layer_tabBox {
           height: 24px;
           display: flex;
           align-items: center;
           margin-right: 40px;
         }
-        .rewardDetails_layer_icon1{
+        .rewardDetails_layer_icon1 {
           width: 24px;
           height: 24px;
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon332.png") no-repeat;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon332.png")
+            no-repeat;
           background-size: 100% 100%;
           margin-left: 8px;
-
         }
-        .rewardDetails_layer_icon2{
+        .rewardDetails_layer_icon2 {
           width: 24px;
           height: 24px;
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon333.png") no-repeat;
+          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon333.png")
+            no-repeat;
           background-size: 100% 100%;
           margin-left: 8px;
         }
       }
-      .rewardDetails_layer_timeBox{
+      .rewardDetails_layer_timeBox {
         padding: 32px 32px 64px 32px;
-        background: #FFFFFF;
+        background: #ffffff;
       }
-      .rewardDetails_layer_tagsBox{
+      .rewardDetails_layer_tagsBox {
         padding: 32px;
         background-color: #ffffff;
         border-radius: 0px 0px 20px 20px;
         display: flex;
         flex-wrap: wrap;
       }
-      .rewardDetails_layer_tags{
+      .rewardDetails_layer_tags {
         width: 202px;
         height: 48px;
         border-radius: 4px;
@@ -99,66 +101,65 @@ page {
         box-sizing: border-box;
         margin-bottom: 32px;
       }
-      .marginRight{
-        margin-right: 40px
+      .marginRight {
+        margin-right: 40px;
       }
-      .rewardDetails_layer_tags_checked{
-        color: #07C0C2;
-        border: 1px solid #07C0C2;
+      .rewardDetails_layer_tags_checked {
+        color: #07c0c2;
+        border: 1px solid #07c0c2;
       }
-      .rewardDetails_layer_tags_noChecked{
+      .rewardDetails_layer_tags_noChecked {
         color: #999999;
         border: 1px solid #999999;
       }
-
     }
-    .rewardDetails_TimeBtn{
+    .rewardDetails_TimeBtn {
       width: 750px;
       height: 95px;
-      border-top:1px solid #E5E5E5;
+      border-top: 1px solid #e5e5e5;
       border-radius: 0px 0px 20px 20px;
-      background: #FFFFFF;
-      .rewardDetails_btnLeft{
+      background: #ffffff;
+      .rewardDetails_btnLeft {
         flex: 1;
-        border-right: 1px solid #E5E5E5;
+        border-right: 1px solid #e5e5e5;
         height: 95px;
       }
-      .rewardDetails_btnRight{
+      .rewardDetails_btnRight {
         flex: 1;
         height: 95px;
       }
     }
   }
-  .rewardDetails_bean_box{
-    background: #FFFFFF;
+  .rewardDetails_bean_box {
+    background: #ffffff;
     border-radius: 8px;
     margin: 0px 32px 32px;
     padding: 32px 32px 16px;
     position: relative;
     top: 184px;
   }
-  .rewardDetails_bean_title{
+  .rewardDetails_bean_title {
     height: 32px;
     line-height: 32px;
   }
-  .rewardDetails_bean_content{
+  .rewardDetails_bean_content {
     margin-top: 20px;
-    .rewardDetails_bean_tags{
+    .rewardDetails_bean_tags {
       min-height: 137px;
       position: relative;
-      border-bottom: 1px  solid  #E5E5E5;
-      .rewardDetails_bean_tagsPad{
+      border-bottom: 1px solid #e5e5e5;
+      .rewardDetails_bean_tagsPad {
         padding: 32px 0;
         display: flex;
-        .rewardDetails_bean_Img{
+        .rewardDetails_bean_Img {
           width: 74px;
           height: 74px;
           border-radius: 50%;
         }
-        .rewardDetails_bean_detailsBox{
+        .rewardDetails_bean_detailsBox {
           margin-left: 24px;
         }
-        .rewardDetails_bean_details{
+        .rewardDetails_bean_details {
           width: 395px;
           max-height: 84px;
           font-size: 28px;
@@ -166,7 +167,7 @@ page {
           color: #333333;
           line-height: 42px;
         }
-        .rewardDetails_bean_detailsTime{
+        .rewardDetails_bean_detailsTime {
           height: 24px;
           font-size: 24px;
           font-weight: 400;
@@ -174,25 +175,24 @@ page {
           line-height: 24px;
           margin-top: 4px;
         }
-        .rewardDetails_bean_num{
+        .rewardDetails_bean_num {
           position: absolute;
           right: 0;
           top: 37px;
         }
       }
     }
-    .rewardDetails_bean_tags:last-child{
+    .rewardDetails_bean_tags:last-child {
       border-bottom: 0px;
     }
   }
 }
-.rewardDetails_nullStatus{
+.rewardDetails_nullStatus {
   height: 778px;
   text-align: center;
-  .rewardDetails_nullImage{
+  .rewardDetails_nullImage {
     width: 300px;
     height: 300px;
     margin: 44px auto 32px;
-
   }
 }

@@ -6,7 +6,6 @@ import { authUpdateGeography } from "@/common/authority";
 import { getShareParamInfo, getDictionary } from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
-import { fetchActiveStatus } from "@/server/user";
 import evens from "@/common/evens";
 import "./assets/css/app.scss";
 import "./assets/css/color.scss";

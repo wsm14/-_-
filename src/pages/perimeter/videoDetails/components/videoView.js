@@ -18,6 +18,7 @@ export default ({
   shareInfo,
   beanLimitStatus,
   saveBean,
+  changeComment,
   play,
 }) => {
   const [scale, setScale] = useState(0);
@@ -69,6 +70,7 @@ export default ({
             beanLimitStatus={beanLimitStatus}
             id={`details1`}
             play={player}
+            changeComment={changeComment}
             time={time}
             show={true}
           ></InterVal>

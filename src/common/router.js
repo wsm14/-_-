@@ -65,12 +65,17 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     tipView: "/pages/perimeter/tipView/index",
     payCouponList: "/pages/perimeter/couponList/index", //有价券列表
     //周边
+
+    codeGoodDetails: "/pages/goods/getShopGoods/index", //扫码订单详情
     kolShopGoods: "/pages/goods/kolShopGoods/index", //支付订单详情
     codePay: "/pages/goods/codePay/index", //
     coupon: "/pages/goods/codeCoupon/index",
     couponOrder: "/pages/goods/couponOrder/index",
     favourableOrder: "/pages/goods/favourOrder/index",
     pay: "/pages/goods/payWeex/index", //支付页
+    rechargeOrder: "/pages/goods/rechargeOrder/index", //话费支付页
+    recharge: "/pages/perimeter/recharge/index", //话费充值
+    prefecture: "/pages/perimeter/prefecture/index", //卡豆专区
 
     //订单  goods
     legal: "/pages/kol/legal/index", //达人等级
@@ -86,6 +91,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
 
     makeError: "/pages/rules/makeError/index", //打卡失败
     interests: "/pages/rules/interests/index",
+    realName: "/pages/rules/realName/index", //实名认证
     hotActive: "/pages/share/hotActive/index", //88前活动
     shareActive: "/pages/share/invitation/index", //活动
     download: "/pages/share/download/index", //下载
@@ -94,7 +100,8 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     mainScene: "/pages/share/mainScene/index", //88活動主会场
     friendScene: "/pages/share/friendScene/index", //88活動邀请好友会场
     shopScene: "/pages/share/shopScene/index", //88活动带货会场
-    userNewArtist: "/pages/share/userNewArtist/index",
+    userNewArtist: "/pages/share/userNewArtist/index", //新人红包
+    Grab: "/pages/share/Grab/index", //领取他人红包
     //规则类
     relayHome: "/pages/relay/home/index", //社团首页
     communityGoods: "/pages/relay/community/goodInfo/index", //社团详情页

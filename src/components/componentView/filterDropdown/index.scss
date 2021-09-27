@@ -462,6 +462,66 @@
     }
   }
 }
+
+.sub-scorllView-left1 {
+  width: 176px;
+  height: 528px;
+  background: #f5f5f5;
+  .sub-scorll-btn {
+    width: 176px;
+    height: 108px;
+    align-items: center;
+    text-indent: 24px;
+    font-size: 28px;
+    display: flex;
+  }
+  .sub-scorll-btnSelect {
+    color: rgba(7, 192, 194, 1);
+    background: #ffffff;
+  }
+  .sub-scorll-btnSelectFlase {
+    background: #f5f5f5;
+    color: rgba(102, 102, 102, 1);
+  }
+}
+.sub-scorllView-right1 {
+  flex: 1;
+  height: 528px;
+  .sub-scorllView-rightbox {
+    padding: 32px 32px 0;
+    display: flex;
+    flex-wrap: wrap;
+    .sub-scorllView-tag {
+      width: 154px;
+      height: 80px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      font-size: 24px;
+    }
+    .sub-scorllView-init {
+      width: 120px;
+      text-align: center;
+    }
+    .sub-scorllView-tagSelect {
+      border: 1px solid #07c0c2;
+      color: #07c0c2;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
+    .sub-scorllView-tagSelectNo {
+      background: #f5f5f5;
+      color: rgba(102, 102, 102, 1);
+    }
+  }
+}
+.sub-scorllView-btnBox {
+  height: 112px;
+  background: #ffffff;
+  padding: 0 75px;
+}
 .sub-scorllView-own {
   width: 750px;
   height: 640px;
@@ -484,6 +544,26 @@
       color: #666666;
     }
   }
+}
+.sub-scorllView-btn {
+  width: 280px;
+  height: 70px;
+  box-sizing: border-box;
+}
+.sub-scorllView-btnStyle1 {
+  border-radius: 8px;
+  border: 2px solid #999999;
+  font-size: 32px;
+  font-weight: 400;
+  color: #999999;
+  line-height: 32px;
+}
+.sub-scorllView-btnStyle2 {
+  background: #07c0c2;
+  border-radius: 8px;
+  font-size: 32px;
+  font-weight: 600;
+  color: #ffffff;
 }
 /* 字体图标 */
 @font-face {

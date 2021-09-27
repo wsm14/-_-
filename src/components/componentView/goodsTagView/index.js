@@ -5,23 +5,27 @@ import classNames from "classnames";
 import { fetchGoodsTag } from "@/server/common";
 import "./index.scss";
 
-export default ({ confirm, onChange, val }) => {
+export default ({ confirm, defaultProps, onChange, val }) => {
   const [data, setData] = useState([]);
   const [list, setList] = useState([]);
 
+  // useEffect(() => {
+  //   if (defaultProps) {
+  //     const { goodsTags } = defaultProps;
+  //     if (goodsTags && typeof goodsTags === "string") {
+  //       setData([...goodsTags.split(",")]);
+  //     }
+  //   }
+  // }, [defaultProps]);
+
   useEffect(() => {
-    if (val) {
-      fetchGoodsTag({
-        categoryId: val,
-      }).then((res) => {
-        const { configGoodsTagList = [] } = res;
-        setList(configGoodsTagList);
-        setData([]);
-      });
-    } else {
-      setList([]);
-      setData([]);
-    }
+    setData([]);
+    fetchGoodsTag({
+      categoryId: val,
+    }).then((res) => {
+      const { configGoodsTagList = [] } = res;
+      setList(configGoodsTagList);
+    });
   }, [val]);
   const setChangeData = (id) => {
     if (data.includes(id)) {
@@ -39,11 +43,16 @@ export default ({ confirm, onChange, val }) => {
   if (list.length > 0) {
     return (
       <View className="tag_view_box">
-        <ScrollView scrollX className="tag_view_scroll">
-          {list.map((item) => {
+        <ScrollView
+          scrollIntoView={`tag_0`}
+          scrollX
+          className="tag_view_scroll"
+        >
+          {list.map((item, index) => {
             const { configGoodsTagId, tagName } = item;
             return (
               <View
+                id={`tag_${index}`}
                 onClick={() => {
                   onChange(setChangeData(configGoodsTagId).toString());
                 }}

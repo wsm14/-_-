@@ -28,7 +28,7 @@ export default (props) => {
     oriPrice = "",
     realPrice = "",
     discount = "",
-    beanAmount,
+    tippingBean,
     otherBeanAmount = "",
     merchantIdString,
     specialActivityIdString,
@@ -142,7 +142,7 @@ export default (props) => {
         <View className="kol_details_padding">
           <View className="color1 bold font32">恭喜您获得</View>
           <View className="font40 bold color3 bean_padding">
-            {data.beanAmount}卡豆
+            {data.tippingBean}卡豆
           </View>
           <ButtonView>
             <View
@@ -167,7 +167,7 @@ export default (props) => {
         <View className="specal_layer_getBean">
           <View className="specal_layer_bean"></View>
           <View className="specal_layer_X"></View>
-          <View className="specal_layer_count">{beanAmount}</View>
+          <View className="specal_layer_count">{tippingBean}</View>
         </View>
         <View className="specal_layer_title font24">
           <Text className="color6">再领{otherBeanAmount}卡豆</Text>

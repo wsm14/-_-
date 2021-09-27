@@ -32,27 +32,15 @@ export default (props) => {
   let nullCoupon =
     "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_big.png";
   const templateTag = () => {
-    if (couponType === "specialGoods") {
+    if (couponType === "specialGoods" || couponType === "rightGoods") {
       return "wraparound_couponContent_iconStyle3";
-    } else if (couponType === "reduceCoupon") {
+    } else if (couponType === "reduceCoupon" || couponType === "rightCoupon") {
       return "wraparound_couponContent_iconStyle1";
     } else {
       return "wraparound_couponContent_iconStyle2";
     }
   };
-  console.log(item);
-  const goMerchant = (val) => {
-    const { ownerType, merchantIdString, ownerIdString } = val;
-    if (ownerType !== "group") {
-      navigateTo(
-        `/pages/perimeter/merchantDetails/index?merchantId=${ownerIdString}`
-      );
-    } else {
-      navigateTo(
-        `/pages/perimeter/kaMerchantDetails/index?merchantGroupId=${ownerIdString}`
-      );
-    }
-  };
+  const goMerchant = (val) => {};
 
   const goCouponDetails = (couponType, userCouponIdString) => {
     if (couponType !== "reduceCoupon" && couponType !== "freeReduceCoupon") {

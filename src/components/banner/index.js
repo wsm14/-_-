@@ -56,6 +56,12 @@ export default (props) => {
           },
         });
       } else return;
+    } else {
+      if (item && typeof item === "string") {
+        Taro.previewImage({
+          urls: [item],
+        });
+      }
     }
   };
   if (list.length > 0) {

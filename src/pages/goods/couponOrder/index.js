@@ -67,8 +67,21 @@ class Index extends Component {
     const {
       httpData,
       httpData: { couponCount },
+      ownerCouponInfo,
     } = this.state;
     if (type === "add") {
+      const { maxBuyAmount, dayMaxBuyAmount, buyRule } = ownerCouponInfo;
+      if (buyRule !== "unlimited") {
+        if (buyRule === "personLimit") {
+          if (couponCount === maxBuyAmount) {
+            return toast("已超出限购限制");
+          }
+        } else if (buyRule === "dayLimit") {
+          if (couponCount === dayMaxBuyAmount) {
+            return toast("已超出限购限制");
+          }
+        }
+      }
       this.setState(
         {
           httpData: {
@@ -141,6 +154,7 @@ class Index extends Component {
       useBeanStatus,
       useBeanType,
       httpData: { couponCount },
+      ownerCouponInfo: { rightFlag },
     } = this.state;
     const { shareType } = this.props.store.authStore;
     const { shareUserId, shareUserType, sourceKey, sourceType } = shareType;
@@ -154,6 +168,7 @@ class Index extends Component {
         useBeanType,
         sourceKey,
         sourceType,
+        rightFlag,
       },
       (res) => {
         const { orderSn, status, orderType } = res;

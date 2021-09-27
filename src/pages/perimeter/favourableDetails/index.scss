@@ -15,7 +15,7 @@ page {
     text-align: center;
   }
   .shopdetails_beanTitleName {
-    max-height: 96px;
+    max-height: 192px;
     min-height: 48px;
     font-size: 32px;
     font-weight: 600;
@@ -23,7 +23,7 @@ page {
     margin-top: 24px;
   }
   .shopdetails_beanTitle_name {
-    max-height: 96px;
+    max-height: 192px;
     min-height: 48px;
     line-height: 48px;
     width: 606px;
@@ -328,5 +328,36 @@ page {
     background: #fdecf0;
     padding: 0 32px;
     font-size: 24px;
+  }
+  .favourInfo_box {
+    display: flex;
+    align-items: baseline;
+    .favourInfo_box_left {
+      font-size: 28px;
+      font-weight: 400;
+      color: #333333;
+    }
+    .favourInfo_box_right {
+      font-size: 48px;
+      font-weight: bold;
+      color: #ef476f;
+      display: flex;
+      align-items: center;
+    }
+    // .favourInfo_box_right::after {
+    //   width: 40px;
+    //   height: 40px;
+    //   background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon462.png)
+    //     no-repeat;
+    //   background-size: 100% 100%;
+    //   margin-left: 8px;
+    //   display: block;
+    //   content: "";
+    // }
+  }
+  .favourInfo_rel {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
   }
 }

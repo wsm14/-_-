@@ -264,7 +264,7 @@ export const getBusinessHub = (data = {}, fn) => {
 export const fetchGoodsTag = (data = {}, fn) => {
   return httpGet(
     {
-      url: "/common/config/goods/tag/listGoodsTagByCategoryId",
+      url: "/common/config/goods/tag/listGoodsTag",
       data: data,
     },
     (res) => fn && fn(res)
@@ -287,6 +287,16 @@ export const fetchConfigWindVaneBySizeNew = (data = {}, fn) => {
   return httpGet(
     {
       url: "/common/category/scenes/listConfigWindVaneBySizeNew",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//活动卡豆弹幕;
+export const fetchSpecialBarrage = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/listSpecialBarrage",
       data: data,
     },
     (res) => fn && fn(res)

@@ -19,7 +19,7 @@ export default (props) => {
   });
   const [show, setShow] = useState(false);
   const { payBeanCommission = "50", level = "0" } = configUserLevelInfo;
-  const { userIncomeBean = "", userBean = "" } = data;
+  const { userIncomeBean = "", userBean = "", rightFlag = "1" } = data;
   const { status, type } = selectType;
   const nowal = () => {
     const { status } = selectType;
@@ -83,15 +83,17 @@ export default (props) => {
                 style={{ border: "1px solid #ef476f" }}
                 className="order_payType_six"
               >
-                {payBeanCommission}%
+                {rightFlag === "1" ? `专区优惠` : `${payBeanCommission}%`}
               </View>
-              <View
-                className="order_payType_question"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShow(true);
-                }}
-              ></View>
+              {rightFlag !== "1" && (
+                <View
+                  className="order_payType_question"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShow(true);
+                  }}
+                ></View>
+              )}
             </View>
             <View className="order_pay_font">
               可用{parseInt(userBean)}卡豆抵扣卡豆{parseInt(userBean) / 100}元
@@ -138,17 +140,20 @@ export default (props) => {
                   className="order_payType_six"
                   style={{ border: "1px solid #ef476f" }}
                 >
-                  {payBeanCommission}%
+                  {rightFlag === "1" ? `专区优惠` : `${payBeanCommission}%`}
                 </View>
-                <View
-                  className="order_payType_question"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShow(true);
-                  }}
-                ></View>
+                {rightFlag !== "1" && (
+                  <View
+                    className="order_payType_question"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShow(true);
+                    }}
+                  ></View>
+                )}
               </View>
             </View>
+
             <View className="order_paybug_box">
               <View
                 className="order_select_top1 public_auto"

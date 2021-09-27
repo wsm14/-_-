@@ -305,7 +305,11 @@ export const GetDistance = function (lat1, lng1, lat2, lng2) {
   s = s * 6378.137; // EARTH_RADIUS;
   s = Math.round(s * 10000) / 10000; //输出为公里
   s = s.toFixed(2);
-  return filterLimit(s);
+  if (s && s !== "NaN") {
+    return filterLimit(s);
+  } else {
+    return null;
+  }
 };
 ////地理位置
 
@@ -565,8 +569,20 @@ export const getDom = (id, fn) => {
 export const filterGoods = (data) => {
   let { orderDesc = {}, orderType } = data;
   orderDesc = JSON.parse(orderDesc);
-  const { reduceCoupon = {}, specialGoods = {} } = orderDesc;
-  return { ...reduceCoupon, ...specialGoods, ...orderDesc, ...data };
+  const {
+    reduceCoupon = {},
+    specialGoods = {},
+    rightCoupon,
+    rightGoods,
+  } = orderDesc;
+  return {
+    ...reduceCoupon,
+    ...specialGoods,
+    ...rightGoods,
+    ...rightCoupon,
+    ...orderDesc,
+    ...data,
+  };
 };
 export const removeLogin = () =>
   Taro.removeStorage({
@@ -698,15 +714,18 @@ export const resiApiKey = "f390f1e2b0faa95710d00a0801384c41";
 //高德key
 
 export const filterIndex = (list = [], valKey) => {
-  // let a = {
-  //   val: {
-  //     categoryName: "全部",
-  //     childList: [],
-  //     fatherId: categoryIds,
-  //     selectName: categoryName,
-  //     type: "all",
-  //   },
-  // }
+  console.log(valKey);
+  const setMenu = (item = {}, data) => {
+    let flag = false;
+    if (data) {
+      data.split(",").forEach((value) => {
+        if (value === item.categoryIdString) {
+          flag = true;
+        }
+      });
+    }
+    return flag;
+  };
   let obj = {
     selectIndex: -1,
     val: {
@@ -720,22 +739,24 @@ export const filterIndex = (list = [], valKey) => {
         obj = {
           selectIndex: valIndex,
           val: {
-            categoryName: "全部",
+            categoryName: item["categoryName"],
             categoryDTOList: [],
             fatherId: valKey,
             selectName: categoryName,
-            type: "all",
+            categoryIdString: item.categoryIdString,
           },
         };
       } else {
         categoryDTOList.forEach((childVal) => {
-          if (childVal.categoryIdString === valKey) {
+          if (valKey && setMenu(childVal, valKey)) {
             obj = {
               selectIndex: valIndex,
               val: {
                 ...childVal,
-                selectName:
-                  item["categoryName"] + "/" + childVal["categoryName"],
+                categoryIdString: valKey,
+                categoryName: item["categoryName"],
+                selectName: item["categoryName"],
+                fatherId: item.categoryIdString,
               },
             };
           }
@@ -772,4 +793,19 @@ export const mapSelect = (fn) => {
       toast("获取微信位置失败");
     },
   });
+};
+export const plTimeFilter = (val) => {
+  if (val) {
+    let time =
+      parseInt(new Date().getTime() / 1000) -
+      parseInt(new Date(val.replace(/-/g, "/")).getTime() / 1000);
+    if (time < 3600) {
+      return parseInt(time / 60) + "分钟前";
+    } else if (time > 3600 && time < 86400) {
+      return parseInt(parseInt(time / 60) / 60) + "小时前";
+    } else if (time > 86400 && time < 31536000) {
+      const dateTime = val.split(" ")[0].split("-");
+      return dateTime[1] + "月" + dateTime[2] + "日";
+    } else return val.split(" ")[0];
+  } else return val;
 };

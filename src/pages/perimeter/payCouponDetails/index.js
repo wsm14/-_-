@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { Text, View, Image } from "@tarojs/components";
+import { Text, View, Image, RichText } from "@tarojs/components";
 import Coupon from "./components/couponTop";
 import { getOwnerCouponDetail } from "@/server/perimeter";
 import { getShareParamInfo, getShareInfo } from "@/server/common";
@@ -32,6 +32,8 @@ import Recommend from "@/components/couponActive";
 import NewToast from "@/components/noviceGuide";
 import Wares from "@/components/componentView/wares";
 import { filterStrList } from "@/common/utils";
+import Drawer from "@/components/Drawer";
+import RightFlag from "@/components/componentView/rightFlagView";
 import "./index.scss";
 @inject("store")
 @observer
@@ -51,6 +53,7 @@ class Index extends Component {
       },
       visible: false,
       mxVisible: false,
+      drawerVisible: false,
     };
   }
   componentWillMount() {
@@ -120,6 +123,8 @@ class Index extends Component {
         cityName,
         districtName,
         merchantLogo,
+        rightFlag = "0",
+        paymentModeObject = {},
       },
       couponDetail,
     } = this.state;
@@ -154,6 +159,8 @@ class Index extends Component {
               city: cityName + districtName + address,
               merchantLogo: image,
               saveMoney,
+              rightFlag,
+              paymentModeObject,
             }),
           },
           couponDetail: {
@@ -217,6 +224,9 @@ class Index extends Component {
         dayMaxBuyAmount,
         boughtCouponNum,
         buyRule,
+        rightFlag,
+        paymentModeObject = {},
+        userBean,
       },
     } = this.state;
     if (buyRule === "dayLimit" && dayMaxBuyAmount === boughtCouponNum) {
@@ -229,6 +239,14 @@ class Index extends Component {
         visible: true,
       });
       return;
+    } else if (rightFlag === "1") {
+      const { bean, cash } = paymentModeObject;
+      if (userBean < bean) {
+        this.setState({
+          drawerVisible: true,
+        });
+        return;
+      }
     }
     Router({
       routerName: "couponOrder",
@@ -323,16 +341,22 @@ class Index extends Component {
         ownerCouponIdString,
         userBean,
         couponDetailImg = "",
+        paymentModeObject = {},
+        couponName,
+        rightFlag = "0",
+        richText,
       },
       visible,
       httpData,
       mxVisible,
+      drawerVisible,
     } = this.state;
+    const { bean = "", cash = "" } = paymentModeObject;
     const { login } = this.props.store.authStore;
     const { beanLimitStatus } = this.props.store.homeStore;
     const { beanLimit } = this.props.store.commonStore;
     const shareInfoBtn = () => {
-      if (shareCommission > 0) {
+      if (shareCommission > 0 && rightFlag !== "1") {
         return (
           <ButtonView>
             <View
@@ -373,7 +397,7 @@ class Index extends Component {
             {shareInfoBtn()}
           </View>
         );
-      } else if (shareCommission) {
+      } else if (shareCommission && rightFlag !== "1") {
         return (
           <View className="shopdetails_shop_btnBox">
             <ButtonView>
@@ -460,6 +484,11 @@ class Index extends Component {
                       <Image
                         mode="widthFix"
                         src={item}
+                        onClick={() => {
+                          Taro.previewImage({
+                            urls: [item],
+                          });
+                        }}
                         style={{ width: "100%" }}
                       ></Image>
                     );
@@ -467,12 +496,25 @@ class Index extends Component {
               </View>
             </View>
           )}
+          {richText && (
+            <View className="shopdetails_shop_details">
+              <View className="shopdetails_shop_merchantDetails">商品描述</View>
+              <RichText
+                nodes={richText}
+                className="temPlateComment_desc"
+              ></RichText>
+            </View>
+          )}
           {/*使用须知*/}
           {knowPay(couponDetail, "coupon")}
           {/*使用方法*/}
           <Rule></Rule>
           {/*使用规则*/}
-          <Recommend current={true} userInfo={configUserLevelInfo}></Recommend>
+          <Recommend
+            defaultData={couponDetail}
+            current={true}
+            userInfo={configUserLevelInfo}
+          ></Recommend>
 
           <VideoBean
             price={(buyPrice * (payBeanCommission / 100))
@@ -485,21 +527,44 @@ class Index extends Component {
             visible={beanLimitStatus === "1"}
             data={couponDetail}
           ></VideoBean>
+
           <View className="shopdetails_shop_btn">
-            <View className="shopdetails_shop_price">
-              <View className="shopdetails_shop_priceTop">
-                <Text className="font20">¥</Text>
-                {(buyPrice - (this.filterBeanPrice() / 100).toFixed(2)).toFixed(
-                  2
-                )}
+            {rightFlag === "1" ? (
+              <View className="shopdetails_shop_btn">
+                <View className="shopdetails_shop_price">
+                  <View className="shopdetails_shop_priceTop">
+                    <Text className="font20">¥</Text>
+                    {cash.toFixed(2)}
+                  </View>
+                  <View className="shopdetails_shop_real">
+                    <Text className="shopdetails_shop_realStatus2">
+                      已用{bean}卡豆抵扣
+                      {(bean / 100).toFixed(2)}元
+                    </Text>
+                  </View>
+                </View>
+                {payBtn()}
               </View>
-              <View className="shopdetails_shop_real">
-                <Text className="shopdetails_shop_realStatus2">
-                  已用{this.filterBeanPrice()}卡豆抵扣
-                  {(this.filterBeanPrice() / 100).toFixed(2)}元
-                </Text>
+            ) : (
+              <View className="shopdetails_shop_btn">
+                <View className="shopdetails_shop_price">
+                  <View className="shopdetails_shop_priceTop">
+                    <Text className="font20">¥</Text>
+                    {(
+                      buyPrice - (this.filterBeanPrice() / 100).toFixed(2)
+                    ).toFixed(2)}
+                  </View>
+                  <View className="shopdetails_shop_real">
+                    <Text className="shopdetails_shop_realStatus2">
+                      已用{this.filterBeanPrice()}卡豆抵扣
+                      {(this.filterBeanPrice() / 100).toFixed(2)}元
+                    </Text>
+                  </View>
+                </View>
+                {payBtn()}
               </View>
-            </View>
+            )}
+
             {payBtn()}
           </View>
           <Wares
@@ -513,6 +578,30 @@ class Index extends Component {
             data={couponDetail}
             status={beanLimitStatus}
           ></Wares>
+          {drawerVisible && (
+            <Drawer
+              show={drawerVisible}
+              close={() => {
+                this.setState({
+                  drawerVisible: false,
+                });
+              }}
+            >
+              <RightFlag
+                data={{
+                  img: couponDetailImg,
+                  name: couponName,
+                  price: cash,
+                  bean: bean - userBean,
+                }}
+                close={(e) => {
+                  this.setState({ drawerVisible: false }, (res) => {
+                    e && e();
+                  });
+                }}
+              ></RightFlag>
+            </Drawer>
+          )}
           {visible && (
             <Toast
               title={"哒卡乐温馨提示"}

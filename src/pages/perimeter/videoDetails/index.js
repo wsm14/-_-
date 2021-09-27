@@ -13,8 +13,8 @@ import {
 } from "@/common/utils";
 import {
   saveWatchBean,
-  saveMerchantCollection,
-  closeMerchantCollection,
+  fakeInsertUserCollectionMoment,
+  fakeDeleteUserCollection,
   checkPuzzleBeanLimitStatus,
   updateUserMomentParam,
   fetchUserShareCommission,
@@ -28,6 +28,7 @@ import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import NewToast from "@/components/noviceGuide";
 import classNames from "classnames";
+import Comment from "@/components/componentView/comment";
 import "./index.scss";
 @inject("store")
 @observer
@@ -52,6 +53,7 @@ class Index extends React.PureComponent {
         data: null,
         start: false,
       },
+      commentShow: false,
     };
     this.interReload = null;
     this.interSwper = null;
@@ -86,12 +88,12 @@ class Index extends React.PureComponent {
   } //设置定时器领取卡豆
   saveBean() {
     const {
-      userMomentsInfo: { userMomentIdString },
+      userMomentsInfo: { momentId },
       userMomentsInfo,
     } = this.state;
     saveWatchBean(
       {
-        momentId: userMomentIdString,
+        momentId: momentId,
       },
       (res) => {
         this.setState({
@@ -131,22 +133,22 @@ class Index extends React.PureComponent {
     let that = this;
     const {
       userMomentsInfo,
-      userMomentsInfo: { merchantFollowStatus, userIdString },
+      userMomentsInfo: { followStatus, relateId, relateType },
     } = this.state;
-    if (merchantFollowStatus === "1") {
+    if (followStatus === "1") {
       return;
     } else {
       saveFollow(
         {
-          followType: "merchant",
-          followUserId: userIdString,
+          followType: relateType,
+          followUserId: relateId,
         },
         () =>
           that.setState(
             {
               userMomentsInfo: {
                 ...userMomentsInfo,
-                merchantFollowStatus: "1",
+                followStatus: "1",
               },
             },
             (res) => {
@@ -159,34 +161,40 @@ class Index extends React.PureComponent {
   collection() {
     let that = this;
     const {
-      userMomentsInfo: { userMomentIdString, merchantCollectionStatus },
+      userMomentsInfo: { momentId, collectionStatus, ownerId, ownerType },
       userMomentsInfo,
     } = this.state;
-    if (merchantCollectionStatus === "1") {
-      closeMerchantCollection(
+    if (collectionStatus === "1") {
+      fakeDeleteUserCollection(
         {
-          collectionId: userMomentIdString,
+          collectionType: "moment",
+          collectionId: momentId,
+          ownerId,
+          ownerType,
         },
         () => {
           that.setState({
             userMomentsInfo: {
               ...userMomentsInfo,
-              merchantCollectionStatus: "0",
+              collectionStatus: "0",
               collectionAmount: parseInt(userMomentsInfo.collectionAmount) - 1,
             },
           });
         }
       );
     } else {
-      saveMerchantCollection(
+      fakeInsertUserCollectionMoment(
         {
-          collectionId: userMomentIdString,
+          collectionType: "moment",
+          collectionId: momentId,
+          ownerId,
+          ownerType,
         },
         () => {
           that.setState({
             userMomentsInfo: {
               ...userMomentsInfo,
-              merchantCollectionStatus: "1",
+              collectionStatus: "1",
               collectionAmount: parseInt(userMomentsInfo.collectionAmount) + 1,
             },
           });
@@ -199,15 +207,15 @@ class Index extends React.PureComponent {
     this.fetchUserShareCommission();
   }
 
-  getUserMomentDetailById(momentId) {
+  getUserMomentDetailById() {
     getUserMomentDetailById(
       {
-        momentId,
+        ...this.state.httpData,
       },
       (res) => {
-        const { userMomentsInfo } = res;
+        const { moment = {} } = res;
         this.setState({
-          userMomentsInfo,
+          userMomentsInfo: moment,
         });
       }
     );
@@ -225,17 +233,21 @@ class Index extends React.PureComponent {
             param = JSON.parse(param);
             let { momentId } = param;
             if (momentId) {
-              this.getUserMomentDetailById(momentId);
-              this.setState({
-                httpData: {
-                  ...param,
+              this.setState(
+                {
+                  httpData: {
+                    ...param,
+                  },
                 },
-              });
+                (res) => {
+                  this.getUserMomentDetailById();
+                }
+              );
             }
           }
         });
       } else if (momentId) {
-        this.getUserMomentDetailById(momentId);
+        this.getUserMomentDetailById();
       } else {
         return;
       }
@@ -255,21 +267,24 @@ class Index extends React.PureComponent {
   shareImageInfo() {
     const {
       userMomentsInfo: {
-        userMomentIdString,
+        momentId,
         message,
-        username,
-        cityName,
-        districtName,
-        merchantAddress,
+        ownerName,
         frontImage,
+        momentType,
+        addressContentObject: { address },
+        ownerId,
+        guideMomentFlag,
       },
       userMomentsInfo,
       player,
     } = this.state;
     getShareInfo(
       {
-        shareType: "video",
-        shareId: userMomentIdString,
+        shareType: "newVideo",
+        shareId: momentId,
+        subType: guideMomentFlag === "1" ? "guide" : momentType,
+        shardingKey: ownerId,
       },
       (res) => {
         const {
@@ -295,9 +310,9 @@ class Index extends React.PureComponent {
               hasGoods,
               frontImage: frontImage,
               message,
-              merchantName: username,
-              cityName: cityName + districtName + merchantAddress,
-              address: merchantAddress,
+              merchantName: ownerName,
+              cityName: address,
+              address: address,
               username: userInfo.username,
               userProfile: userInfo.profile,
               wxCode: qcodeUrl,
@@ -324,15 +339,16 @@ class Index extends React.PureComponent {
       userMomentsInfo: {
         frontImage,
         title,
-        userMomentIdString,
+        momentId,
         weChatImg = "",
         weChatTitle = "",
+        ownerId,
       },
     } = this.state;
     updateUserMomentParam(
       {
         updateType: "share",
-        id: userMomentIdString,
+        id: momentId,
       },
       (res) => {}
     );
@@ -343,7 +359,7 @@ class Index extends React.PureComponent {
         return {
           title: weChatTitle || title,
           imageUrl: weChatImg || frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -353,7 +369,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?shareUserId=${userIdString}&shareUserType=user&momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -363,9 +379,9 @@ class Index extends React.PureComponent {
     } else {
       if (res.from === "button") {
         return {
-          title: weChatTitle || title,
-          imageUrl: weChatImg || frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
+          title: title,
+          imageUrl: frontImage,
+          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -375,7 +391,7 @@ class Index extends React.PureComponent {
         return {
           title: title,
           imageUrl: frontImage,
-          path: `/pages/perimeter/videoDetails/index?momentId=${userMomentIdString}`,
+          path: `/pages/perimeter/videoDetails/index?momentId=${momentId}&ownerId=${ownerId}`,
           complete: function () {
             // 转发结束之后的回调（转发成不成功都会执行）
             console.log("---转发完成---");
@@ -387,7 +403,7 @@ class Index extends React.PureComponent {
   render() {
     const {
       userMomentsInfo,
-      userMomentsInfo: { length = "", userIdString },
+      userMomentsInfo: { ownerId },
       time,
       configUserLevelInfo,
       beanflag,
@@ -396,6 +412,7 @@ class Index extends React.PureComponent {
       player,
       cavansObj,
       httpData,
+      commentShow,
     } = this.state;
     const { login } = this.props.store.authStore;
     return (
@@ -411,6 +428,7 @@ class Index extends React.PureComponent {
               shareInfo={this.shareImageInfo.bind(this)}
               beanLimitStatus={beanLimitStatus}
               saveBean={this.saveBean.bind(this)}
+              changeComment={() => this.setState({ commentShow: true })}
               play={player}
             ></VideoView>
           </>
@@ -461,9 +479,19 @@ class Index extends React.PureComponent {
                 });
               }}
               auth={login}
-              data={{ ...httpData, merchantId: userIdString }}
+              data={{ ...httpData, merchantId: ownerId }}
             ></NewToast>
           )}
+        <Comment
+          data={userMomentsInfo}
+          current={"0"}
+          close={() => {
+            this.setState({
+              commentShow: false,
+            });
+          }}
+          show={commentShow}
+        ></Comment>
       </View>
     );
   }

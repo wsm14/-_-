@@ -98,15 +98,28 @@
         border-radius: 8px;
       }
       .createdGood_details_title {
-        max-height: 84px;
+        padding-top: 8px;
         font-size: 28px;
-        font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
         color: #333333;
-        line-height: 42px;
         width: 280px;
       }
     }
+    .createdGood_details_color {
+      margin-top: 12px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #ef476f;
+      line-height: 24px;
+    }
+    .createdGood_details_time {
+      padding-top: 12px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      line-height: 24px;
+    }
+
     .createdGood_details_setting {
       margin-left: 24px;
     }
@@ -116,7 +129,7 @@
       font-weight: 400;
       color: #999999;
       line-height: 24px;
-      margin-top: 8px;
+      margin-top: 12px;
     }
     .createdGood_details_date {
       margin-top: 16px;
@@ -188,5 +201,10 @@
         border: 2px solid #999999;
       }
     }
+  }
+  .createdGood_details_order {
+    font-size: 24px;
+    font-weight: 400;
+    color: #ef476f;
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Canvas, Swiper, SwiperItem, View } from "@tarojs/components";
+import { Canvas, Swiper, SwiperItem, View, Button } from "@tarojs/components";
 import "./../../index.scss";
 import classNames from "classnames";
 import {
@@ -41,6 +41,25 @@ export default (props) => {
       });
     }, 100);
   }, [list]);
+  const goGoodDetails = () => {
+    Router({
+      routerName: "kolShopGoods",
+      args: {
+        orderSn: orderSn,
+      },
+    });
+  };
+  const goPayInfo = () => {
+    const { ownerCouponIdString, ownerIdString, merchantIdString } = data;
+    Router({
+      routerName: "payCouponDetails",
+      args: {
+        ownerCouponId: ownerCouponIdString,
+        ownerId: ownerIdString,
+        merchantId: merchantIdString,
+      },
+    });
+  };
   const setCode = () => {
     return (
       <View className="codeBox public_center">
@@ -220,7 +239,7 @@ export default (props) => {
             ></View>
           </>
         )}
-        <View className="couponDetails_merchantShop">
+        <View className="couponDetails_merchantShop" onClick={goPayInfo}>
           <View
             className="couponDetails_merchantLogo coupon_big_icon"
             style={
@@ -261,6 +280,37 @@ export default (props) => {
           >
             <View className="onReadly_icon onReadly_iconBox"></View>
             如果券码不显示，点这里刷新
+          </View>
+          <View className="kolgoods_go public_auto font24 color1">
+            <View className="kolgoods_go_left public_center">
+              <View
+                className="kolgoods_go_leftBox public_center"
+                onClick={() => goGoodDetails(orderResult.couponCode)}
+              >
+                <View className="kolgoods_goIcon_box  shop_goods_icon"></View>
+                订单详情
+              </View>
+            </View>
+            <View className="kolgoods_go_right public_center">
+              <Button
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: "100%",
+                  height: "100%",
+                  border: "none",
+                  background: "none",
+                }}
+                openType={"contact"}
+              ></Button>
+              <View className="kolgoods_go_rightBox public_center">
+                <View className="kolgoods_goIcon_box cannet_icon"></View>
+                联系客服
+              </View>
+            </View>
           </View>
         </>
       </View>

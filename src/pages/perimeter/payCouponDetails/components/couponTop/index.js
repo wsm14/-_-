@@ -33,8 +33,11 @@ export default ({
     personLimit,
     userCollectionStatus,
     buyUserImageList = [],
+    rightFlag = "0",
+    paymentModeObject = {},
   } = data;
   const { payBeanCommission = 50 } = configUserLevelInfo;
+  const { bean = 10, cash = 1 } = paymentModeObject;
   const templateSelect = () => {
     if (buyRule === "unlimited") {
       return `不限购`;
@@ -55,21 +58,42 @@ export default ({
         </View>
         <View className="coupon_top_name  font_noHide">{couponName}</View>
       </View>
-      <View className="coupon_price_people font_hide">
-        <Text className="font28 color1">优惠价: </Text>
-        <Text className="font48 color1 bold price_margin4">¥{buyPrice}</Text>
-        <Text className="coupon_price_style color2">原价:</Text>
-        <Text className="font36 font_hide price_margin8 color2 bold text_through">
-          ¥{couponPrice}
-        </Text>
-      </View>
-      <View onClick={() => onChange()} className="coupon_bean_showPay">
-        <View className="color3 font24">卡豆再省</View>
-        <View className="color3 font36 bold price_margin8">
-          ¥{computedPrice(buyPrice, payBeanCommission)}
+      {rightFlag === "1" ? (
+        <>
+          <View className="couponInfo_box">
+            <View className="couponInfo_box_left">卡豆价:</View>
+            <View className="couponInfo_box_right">
+              ¥{cash.toFixed(2)}+{bean}卡豆 
+            </View>
+          </View>
+          <View className="couponInfo_rel">
+            <Text className="color2 font28"> 原价:</Text>
+            <Text className="font36 font_hide price_margin4 color2 bold text_through">
+              ¥{couponPrice}
+            </Text>
+          </View>
+        </>
+      ) : (
+        <View>
+          <View className="coupon_price_people font_hide">
+            <Text className="font28 color1">优惠价: </Text>
+            <Text className="font48 color1 bold price_margin4">
+              ¥{buyPrice}
+            </Text>
+            <Text className="coupon_price_style color2">原价:</Text>
+            <Text className="font36 font_hide price_margin8 color2 bold text_through">
+              ¥{couponPrice}
+            </Text>
+          </View>
+          <View onClick={() => onChange()} className="coupon_bean_showPay">
+            <View className="color3 font24">卡豆再省</View>
+            <View className="color3 font36 bold price_margin8">
+              ¥{computedPrice(buyPrice, payBeanCommission)}
+            </View>
+            <View className="coupon_bean_mx">{"卡豆抵扣明细" + " >"}</View>
+          </View>
         </View>
-        <View className="coupon_bean_mx">{"卡豆抵扣明细" + " >"}</View>
-      </View>
+      )}
 
       <View className="coupon_top_price">
         <View className="coupon_top_right">

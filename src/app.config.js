@@ -120,6 +120,7 @@ export default {
         "mPay_wx_lite/index", //商家端支付页面
         "userNewArtist/index", //新人福利頁面
         "userNewGift/index", //新人红包頁面
+        "Grab/index", //领取他人发送红包页
       ],
     },
     {
@@ -157,6 +158,8 @@ export default {
         "groupMerchant/index", //集团核销列表
         "bubble/index", //品类风向标
         "nearPerimeter/index", //附近特惠
+        "prefecture/index", //卡豆专区
+        "recharge/index", //话费充值
       ],
     },
     {
@@ -172,6 +175,7 @@ export default {
         "code_wx_pay/index", //扫码订单支付页面
         "code_scanPay_Susccess/index", //扫码订单成功页面
         "codeCoupon/index", //设置优惠券
+        "rechargeOrder/index", //话费支付
       ],
     },
     {
@@ -187,6 +191,7 @@ export default {
       pages: [
         "interests/index", //券包
         "makeError/index", //打卡失败
+        "realName/index", //实名认证
       ],
     },
   ],

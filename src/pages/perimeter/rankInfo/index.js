@@ -52,7 +52,9 @@ class index extends PureComponent {
                 width: "100%",
                 height: "100%",
               }}
-              src={`https://web-new.dakale.net/public/image/rank/rank_icons${index + 1}.png`}
+              src={`https://web-new.dakale.net/public/image/rank/rank_icons${
+                index + 1
+              }.png`}
             ></Image>
           </View>
         );
@@ -96,7 +98,7 @@ class index extends PureComponent {
     };
     const templateShop = (item, index) => {
       const {
-        coverImg,
+        logoImg,
         merchantName,
         userMerchantIdString,
         address = "",
@@ -124,8 +126,8 @@ class index extends PureComponent {
           <View className="page_rank_shopBox">
             <View className="page_rank_ranking">{templateRankImg(index)}</View>
             <View
-              className="page_rank_image"
-              style={backgroundObj(coverImg)}
+              className="page_rank_image merchant_dakale_logo"
+              style={backgroundObj(logoImg)}
             ></View>
             <View className="page_rank_card">
               <View className="page_rank_name font_hide">{merchantName}</View>
@@ -195,7 +197,7 @@ class index extends PureComponent {
           })}
         </View>
 
-        <View className='page_rank_logo'></View>
+        <View className="page_rank_logo"></View>
       </View>
     );
   }

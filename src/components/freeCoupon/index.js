@@ -8,18 +8,20 @@ import { ScrollView, View, Text } from "@tarojs/components";
 import Taro, { useReachBottom } from "@tarojs/taro";
 import { toast, GetDistance, getLat, getLnt } from "@/common/utils";
 import classNames from "classnames";
-import { acquireCoupon, getAvailableCoupon } from "@/server/coupon";
+import { acquireCoupon, getNewAvailableCoupon } from "@/server/coupon";
 import "./index.scss";
 export default (props) => {
   const { data, visible, show = false, beanflag } = props;
+  const { freeCouponFlag } = data;
   const [list, setList] = useState([]);
   useEffect(() => {
-    const { userIdString, userMomentIdString, channel = "moment" } = data;
-    if (beanflag === true) {
-      if (userIdString && userMomentIdString) {
-        getAvailable({
-          merchantId: userIdString,
-          identifyId: userMomentIdString,
+    const { ownerId, momentId, channel = "moment" } = data;
+
+    if (beanflag && freeCouponFlag === "1") {
+      if (ownerId && momentId) {
+        getAvailableCoupon({
+          ownerId: ownerId,
+          identifyId: momentId,
           channel,
         });
       }
@@ -28,14 +30,15 @@ export default (props) => {
   const acquire = (obj) => {
     acquireCoupon(obj);
   };
-  const getAvailable = (obj) => {
-    getAvailableCoupon(obj, (res) => {
+  const getAvailableCoupon = (obj) => {
+    getNewAvailableCoupon(obj, (res) => {
+      console.log(obj);
       const { couponList = [] } = res;
       setList(couponList);
     });
   };
-  const { lat, lnt, username } = data;
-
+  const { addressContentObject = {} } = data;
+  const { lat, lnt, ownerName } = addressContentObject;
   if (list.length > 0) {
     const {
       couponName,
@@ -67,7 +70,7 @@ export default (props) => {
         class="atomicActivity_layer_box atomicActivity_layer_save"
       >
         <View class="atomicActivity_save_box">
-          <View class="atomicActivity_save_title font_hide">{username}</View>
+          <View class="atomicActivity_save_title font_hide">{ownerName}</View>
           <View class="atomicActivity_save_merchant font_hide">
             <Text className="atomicActivity_save_text font_hide">
               {address}

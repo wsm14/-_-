@@ -39,7 +39,7 @@ export const getSearchDataStatistic = (data, fn) => {
 export const getListUserMomentBySearch = (data, fn) => {
   httpGet(
     {
-      url: "/user/userMoment/listUserMomentBySearch",
+      url: "/user/moment/listMomentBySearch",
       data: data,
     },
     (res) => fn(res)
@@ -340,3 +340,37 @@ export const fetchServiceMerchants = (data = {}, fn) => {
 };
 //获取集团商品适用门店
 
+export const fetchMultiSearchData = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/multiSearchDataByKeyword",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取搜索数据统计
+/*
+ *params phoneMoney type of string
+ */
+export const fetchProductOrderPrice = (data, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/getPhoneBillVirtualProductOrderPrice",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取话费价格
+
+export const fakeVirtual = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/saveVirtualProductOrder",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//保存虚拟商品支付订单

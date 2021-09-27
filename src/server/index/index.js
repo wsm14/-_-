@@ -13,7 +13,7 @@ export const getMerchantLat = (data, fn) => {
 export const getUserMomentDetailById = (data, fn) => {
   return httpGet(
     {
-      url: "/user/userMoment/getUserMomentDetailById",
+      url: "/user/moment/ownerMomentDetail",
       data: data,
     },
     (res) => fn(res)
@@ -23,7 +23,7 @@ export const getUserMomentDetailById = (data, fn) => {
 export const saveWatchBean = (data, fn) => {
   return httpPost(
     {
-      url: "/user/beanDetail/saveWatchBeanDetailByUserId",
+      url: "/user/moment/watch/acquireMomentTipping",
       data: data,
     },
     (res) => fn(res)
@@ -52,6 +52,27 @@ export const closeMerchantCollection = (data, fn) => {
 };
 //取消收藏商家
 
+export const fakeInsertUserCollectionMoment = (data, fn) => {
+  httpPost(
+    {
+      url: "/user/userCollection/saveUserCollection",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//收藏视频
+export const fakeDeleteUserCollection = (data, fn) => {
+  httpPost(
+    {
+      url: "/user/userCollection/deleteUserCollection",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//取消收藏视频
+
 export const updateMomentsLikeAmount = (data, fn) => {
   httpPost(
     {
@@ -77,7 +98,7 @@ export const deleteMomentsLikeAmount = (data, fn) => {
 export const getUserMomentList = (data = {}, fn) => {
   return httpGet(
     {
-      url: "/user/userMoment/listMomentDetailByType",
+      url: "/user/moment/listMainMoment",
       data: data,
     },
     (res) => fn(res)
@@ -203,3 +224,68 @@ export const fetchRecommendMerchantList = (data = {}, fn) => {
   );
 };
 //获取风向标商家
+
+export const fetchMomentComment = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/momentComment/listMomentComment",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取视频评论
+
+export const fakeMomentComment = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/momentComment/saveMomentComment",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取视频评论
+
+export const fetchMomentRelate = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/moment/relate/listMomentRelate",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取视频关联数据
+
+export const fetchRightGoods = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/rightGoods/rightGoodsList",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//权益商品列表
+
+export const fetchRightCoupon = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/rightGoods/rightCouponList",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//权益券列表
+export const fakeNewUserVideo = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/moment/watch/newUserVideoMomentAcquire",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//新手视频领豆

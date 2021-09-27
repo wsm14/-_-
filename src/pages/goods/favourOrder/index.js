@@ -15,7 +15,6 @@ import {
   filterWeek,
 } from "@/common/utils";
 import PayBean from "@/components/stopBean";
-import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import ButtonView from "@/components/Button";
 import { fetchUserShareCommission } from "@/server/index";
@@ -72,8 +71,21 @@ class Index extends Component {
     const {
       httpData,
       httpData: { goodsCount },
+      specialGoodsInfo,
     } = this.state;
+    const { maxBuyAmount, dayMaxBuyAmount, buyRule } = specialGoodsInfo;
     if (type === "add") {
+      if (buyRule !== "unlimited") {
+        if (buyRule === "personLimit") {
+          if (goodsCount === maxBuyAmount) {
+            return toast("已超出限购限制");
+          }
+        } else if (buyRule === "dayLimit") {
+          if (goodsCount === dayMaxBuyAmount) {
+            return toast("已超出限购限制");
+          }
+        }
+      }
       this.setState(
         {
           httpData: {
@@ -150,7 +162,7 @@ class Index extends Component {
       useBeanStatus,
       useBeanType,
       momentId,
-      specialGoodsInfo: { ownerIdString },
+      specialGoodsInfo: { ownerIdString, rightFlag },
       httpData: { merchantId, specialActivityId, goodsCount },
     } = this.state;
     const { shareType } = this.props.store.authStore;
@@ -173,6 +185,7 @@ class Index extends Component {
           shareUserType,
           sourceKey,
           sourceType,
+          rightFlag,
         },
         url: saveSpecialGoods,
       },
@@ -262,12 +275,15 @@ class Index extends Component {
         activeDays,
         delayDays,
         userIncomeBean,
+        rightFlag = "0",
+        paymentModeObject = {},
       },
       httpData: { goodsCount },
       useBeanType,
       useBeanStatus,
       configUserLevelInfo,
     } = this.state;
+    const { bean = 0, cash = 0 } = paymentModeObject;
     const templateTime = () => {
       if (activeDays) {
         return `购买后${
@@ -310,15 +326,22 @@ class Index extends Component {
                   <View className="order_shopDetails_title font_hide">
                     {goodsName}
                   </View>
-                  <View className="order_price">
-                    <Text
-                      className="font20"
-                      style={{ color: "rgba(51, 51, 51, 1)" }}
-                    >
-                      ¥
-                    </Text>
-                    {" " + realPrice}
-                  </View>
+                  {rightFlag === "1" ? (
+                    <View className="order_price">
+                      ¥{cash.toFixed(2)} + {bean}卡豆
+                    </View>
+                  ) : (
+                    <View className="order_price">
+                      <Text
+                        className="font20"
+                        style={{ color: "rgba(51, 51, 51, 1)" }}
+                      >
+                        ¥
+                      </Text>
+                      {" " + realPrice}
+                    </View>
+                  )}
+
                   <View className="order_toast">购买数量</View>
                 </View>
                 <View className="order_shopDetails_price">

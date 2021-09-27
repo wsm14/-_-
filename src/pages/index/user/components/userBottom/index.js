@@ -37,6 +37,14 @@ export default ({ list = [] }) => {
           },
         }),
     },
+    {
+      style: "users_setting_icon4",
+      font: "实名认证",
+      fn: () =>
+        Router({
+          routerName: "realName",
+        }),
+    },
   ];
   return (
     <View className="user_bottom_box">

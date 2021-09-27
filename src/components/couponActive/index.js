@@ -6,21 +6,23 @@ import { couponTemplate } from "../specalTemplate";
 import { toast } from "@/common/utils";
 import "./index.scss";
 export default (props) => {
-  const { title, current = false, userInfo, page } = props;
+  const { title, current = false, userInfo, page, defaultData = null } = props;
   const [data, setData] = useState([]);
   const [httpData, setHttpData] = useState(null);
   const [count, countType] = useState(true);
   useEffect(() => {
-    if (current) {
-      setHttpData({
-        page: 1,
-        limit: 10,
-      });
-    } else {
-      setHttpData({
-        page: 1,
-        limit: 2,
-      });
+    if (!defaultData) {
+      if (current) {
+        setHttpData({
+          page: 1,
+          limit: 10,
+        });
+      } else {
+        setHttpData({
+          page: 1,
+          limit: 2,
+        });
+      }
     }
   }, []);
   useEffect(() => {
@@ -28,6 +30,17 @@ export default (props) => {
       getLovely();
     }
   }, [httpData]);
+  useEffect(() => {
+    if (defaultData) {
+      const { categoryId = "" } = defaultData;
+      setData([]);
+      setHttpData({
+        page: 1,
+        limit: 10,
+        categoryIds: categoryId,
+      });
+    }
+  }, [defaultData]);
   useReachBottom(() => {
     getDown();
   });

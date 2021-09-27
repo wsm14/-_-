@@ -66,7 +66,7 @@ class Index extends Component {
         }
       );
     } else {
-      return toast("暂无数据");
+      return 
     }
   } //上拉加载
   render() {

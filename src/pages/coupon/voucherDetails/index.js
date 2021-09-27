@@ -6,7 +6,8 @@ import { getUserCouponDetail } from "@/server/coupon";
 import Codes from "./components/code/index";
 import { goBack, toast, filterWeek } from "@/common/utils";
 import { knowPay } from "@/components/componentView/KnowPay";
-import CouponLovely from "@/components/couponLovely";
+import { fetchUserShareCommission } from "@/server/index";
+import RecommendCoupon from "@/components/couponActive";
 import "./index.scss";
 class Index extends PureComponent {
   constructor() {
@@ -14,6 +15,7 @@ class Index extends PureComponent {
     this.state = {
       id: getCurrentInstance().router.params.id,
       userCouponInfo: {},
+      configUserLevelInfo: {},
     };
   }
 
@@ -31,9 +33,17 @@ class Index extends PureComponent {
       }
     );
   }
-
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
+  }
   componentDidShow() {
     this.getUserCouponDetail();
+    this.fetchUserShareCommission();
   }
 
   componentWillMount() {
@@ -54,6 +64,7 @@ class Index extends PureComponent {
         thresholdPrice,
         couponDesc,
       },
+      configUserLevelInfo,
     } = this.state;
     if (couponDesc) {
       if (JSON.parse(couponDesc)) {
@@ -68,9 +79,10 @@ class Index extends PureComponent {
             data={userCouponInfo}
           ></Codes>
           {knowPay(userCouponInfo)}
-          <View className="voucherDetails_friend_box">
-            <CouponLovely title={"小伙伴们还喜欢"}></CouponLovely>
-          </View>
+          <RecommendCoupon
+            current={true}
+            userInfo={configUserLevelInfo}
+          ></RecommendCoupon>
         </View>
       );
     } else return null;

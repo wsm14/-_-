@@ -160,3 +160,14 @@ export const getListFreeCoupon = (data, fn) => {
   );
 };
 //下单成功三单福利
+
+export const fetchOrderTotalBean = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/order/getUserOrderTotalBean",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取我的订单总节省卡豆

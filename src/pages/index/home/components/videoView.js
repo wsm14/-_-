@@ -21,6 +21,7 @@ export default ({
   saveBean,
   dataInfo,
   initVideo,
+  changeComment,
 }) => {
   const [scale, setScale] = useState(0);
   const [time, setTime] = useState(0);
@@ -59,7 +60,6 @@ export default ({
                 watchStatus,
                 beanFlag,
               } = item;
-
               if (
                 index === current ||
                 index === current + 1 ||
@@ -90,6 +90,7 @@ export default ({
                         time={time}
                         show={index === current}
                         dataInfo={dataInfo}
+                        changeComment={changeComment}
                       ></InterVal>
                       <View
                         style={{

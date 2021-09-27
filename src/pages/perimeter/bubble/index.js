@@ -31,6 +31,7 @@ class Index extends React.Component {
         getCurrentInstance().router.params.bannerImage ||
         "https://wechat-config.dakale.net/miniprogram/image/icon714.png",
       categoryName: getCurrentInstance().router.params.categoryName,
+      name: getCurrentInstance().router.params.name,
       categoryIds: getCurrentInstance().router.params.categoryId,
       httpData: {
         categoryIds: getCurrentInstance().router.params.categoryId,
@@ -55,7 +56,7 @@ class Index extends React.Component {
     this.setState({
       height: computedSize(computedWinHeight()),
     });
-    setNavTitle(getCurrentInstance().router.params.categoryName);
+    setNavTitle(getCurrentInstance().router.params.name);
   }
   setNavTop() {
     this.setState({}, (res) => {
@@ -159,25 +160,7 @@ class Index extends React.Component {
                   categoryDTOList: [],
                   type: "father",
                 },
-                ...categoryList.map((item) => {
-                  const {
-                    categoryName,
-                    categoryIdString,
-                    categoryDTOList = [],
-                  } = item;
-                  return {
-                    ...item,
-                    categoryDTOList: [
-                      {
-                        categoryDTOList: [],
-                        fatherId: categoryIdString,
-                        categoryName: "全部",
-                        type: "all",
-                      },
-                      ...categoryDTOList,
-                    ],
-                  };
-                }),
+                ...categoryList,
               ],
             },
           ],
@@ -261,6 +244,7 @@ class Index extends React.Component {
       height,
       isFixedTop,
       httpData: { goodsTags },
+      name,
       size,
     } = this.state;
     return (
@@ -292,7 +276,7 @@ class Index extends React.Component {
         </View>
         {specialGoodsList.length > 0 && (
           <Goods
-            name={categoryName}
+            name={name}
             categoryIds={categoryIds}
             userInfo={configUserLevelInfo}
             list={specialGoodsList}
@@ -300,7 +284,7 @@ class Index extends React.Component {
         )}
         {couponList.length > 0 && (
           <Coupon
-            name={categoryName}
+            name={name}
             categoryIds={categoryIds}
             userInfo={configUserLevelInfo}
             list={couponList}

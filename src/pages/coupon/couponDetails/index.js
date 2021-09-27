@@ -1,15 +1,13 @@
 import React, { PureComponent } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import classNames from "classnames";
 import { Text, View } from "@tarojs/components";
 import { getUserCouponDetail } from "@/server/coupon";
 import { knowPay } from "@/components/componentView/KnowPay";
-import "./index.scss";
 import Codes from "./components/code/index";
 import { fetchUserShareCommission } from "@/server/index";
 import Recommend from "@/components/specalActive";
 import { goBack, toast, filterWeek } from "@/common/utils";
-
+import "./index.scss";
 class Index extends PureComponent {
   constructor() {
     super(...arguments);

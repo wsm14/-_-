@@ -3,7 +3,6 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
 import { goods } from "@/api/api";
 import { httpGet, httpPost } from "@/api/newRequest";
-import "./index.scss";
 import {
   toast,
   backgroundObj,
@@ -23,7 +22,10 @@ import Lovely from "@/components/lovely";
 import CouponLovely from "@/components/couponLovely";
 import { getOrderDetails, deleteOrder } from "@/server/goods";
 import { inject, observer } from "mobx-react";
-
+import { fetchUserShareCommission } from "@/server/index";
+import RecommendCoupon from "@/components/couponActive";
+import RecommendSpecal from "@/components/specalActive";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends Component {
@@ -38,6 +40,7 @@ class Index extends Component {
       draw: false,
       visible: false,
       closeVisible: false,
+      configUserLevelInfo: {},
     };
   }
 
@@ -191,8 +194,16 @@ class Index extends Component {
 
   componentDidShow() {
     this.getGoodsDetails();
+    this.fetchUserShareCommission();
   }
-
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
+  }
   componentWillUnmount() {
     let that = this;
     const { orderInfo } = this.state;
@@ -216,6 +227,7 @@ class Index extends Component {
       draw,
       visible,
       closeVisible,
+      configUserLevelInfo,
     } = this.state;
     if (orderInfo && status === "6") {
       return (
@@ -264,14 +276,10 @@ class Index extends Component {
               <View className="kolGoods_details_top font24 color2 public_auto kolGoods_details_height">
                 <View>卡豆抵扣</View>
                 <View className="color1">
-                  {"-" + Number(beanFee).toFixed(0) + "卡豆"} (¥{" "}
+                  {"-" + Number(beanFee).toFixed(0)} (¥{" "}
                   {(Number(beanFee) / 100).toFixed(2)})
                 </View>
               </View>
-              {/*<View className='kolGoods_details_top font24 color2 public_auto kolGoods_details_height'>*/}
-              {/*  <View>优惠券</View>*/}
-              {/*  <View className='color1'>- ¥ 4.00</View>*/}
-              {/*</View>*/}
               <View className="kolGoods_details_liner"></View>
               <View className="kolGoods_details_price public_auto bold">
                 <View className="font28 color1 ">实付金额 </View>
@@ -280,13 +288,17 @@ class Index extends Component {
             </View>
           </View>
           <ShopDetails data={orderInfo} />
-          <View style={{ marginTop: Taro.pxTransform(64) }}>
-            {orderType === "reduceCoupon" ? (
-              <CouponLovely title={"小伙伴们还喜欢"}></CouponLovely>
-            ) : (
-              <Lovely></Lovely>
-            )}
-          </View>
+          {orderType === "reduceCoupon" ? (
+            <RecommendCoupon
+              current={true}
+              userInfo={configUserLevelInfo}
+            ></RecommendCoupon>
+          ) : (
+            <RecommendSpecal
+              current={true}
+              userInfo={configUserLevelInfo}
+            ></RecommendSpecal>
+          )}
           <BtnLayer
             remove={() => this.setState({ visible: true })}
             data={orderInfo}
@@ -328,16 +340,13 @@ class Index extends Component {
                 <View className="color1">¥ {totalFee}</View>
               </View>
               <View className="kolGoods_details_top font24 color2 public_auto kolGoods_details_height">
-                <View>卡豆抵扣</View>
-                <View className="color1">
+                <View className="color3">卡豆帮省</View>
+                <View className="color3">
                   {"-" + Number(beanFee).toFixed(0) + "卡豆"} (¥{" "}
                   {(Number(beanFee) / 100).toFixed(2)})
                 </View>
               </View>
-              {/*<View className='kolGoods_details_top font24 color2 public_auto kolGoods_details_height'>*/}
-              {/*  <View>优惠券</View>*/}
-              {/*  <View className='color1'>- ¥ 4.00</View>*/}
-              {/*</View>*/}
+
               <View className="kolGoods_details_liner"></View>
               <View className="kolGoods_details_price public_auto bold">
                 <View className="font28 color1 ">
@@ -348,13 +357,17 @@ class Index extends Component {
             </View>
           </View>
           <ShopDetails data={orderInfo} />
-          <View style={{ marginTop: Taro.pxTransform(64) }}>
-            {orderType === "reduceCoupon" ? (
-              <CouponLovely title={"小伙伴们还喜欢"}></CouponLovely>
-            ) : (
-              <Lovely></Lovely>
-            )}
-          </View>
+          {orderType === "reduceCoupon" ? (
+            <RecommendCoupon
+              current={true}
+              userInfo={configUserLevelInfo}
+            ></RecommendCoupon>
+          ) : (
+            <RecommendSpecal
+              current={true}
+              userInfo={configUserLevelInfo}
+            ></RecommendSpecal>
+          )}
           {telephone && (
             <MakePhone
               data={filterStrList(merchantMobile)}

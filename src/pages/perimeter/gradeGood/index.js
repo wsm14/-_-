@@ -55,6 +55,7 @@ class Index extends Component {
       loading: false,
       topFlag: false,
       computedHight: computedWinHeight() - computedSize(44),
+      fatherId: "",
     };
   }
   fetchUserShare() {
@@ -156,25 +157,7 @@ class Index extends Component {
                 categoryDTOList: [],
                 type: "father",
               },
-              ...categoryList.map((item) => {
-                const {
-                  categoryName,
-                  categoryIdString,
-                  categoryDTOList = [],
-                } = item;
-                return {
-                  ...item,
-                  categoryDTOList: [
-                    {
-                      categoryDTOList: [],
-                      fatherId: categoryIdString,
-                      categoryName: "全部",
-                      type: "all",
-                    },
-                    ...categoryDTOList,
-                  ],
-                };
-              }),
+              ...categoryList,
             ],
           },
           {
@@ -277,6 +260,7 @@ class Index extends Component {
       loading,
       computedHight,
       topFlag,
+      fatherId,
     } = this.state;
     const bannerStyle = {
       width: "100%",
@@ -359,6 +343,9 @@ class Index extends Component {
             <FilterDropdown
               filterData={selectList}
               confirm={(e) => {
+                this.setState({
+                  fatherId: e.fatherIds,
+                });
                 this.changeSelect(e);
               }}
               top={size > top}
@@ -381,7 +368,7 @@ class Index extends Component {
                   this.changeSelect({ goodsTags: val });
                 }
               }}
-              val={categoryIds}
+              val={fatherId}
             ></Tags>
             <View className="scroll_margin"></View>
             <View

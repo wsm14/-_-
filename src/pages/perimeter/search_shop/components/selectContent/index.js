@@ -6,14 +6,13 @@ import KolView from "./watchVideo/index";
 import UserView from "./user/index";
 import ShopView from "./shop/index";
 export default ({
-  userList = [],
   setting,
   fn,
   keyword,
   configUserLevelInfo,
   store,
+  // childRef,
 }) => {
-  const [list, setList] = useState([]);
   const [keywords, setKeyword] = useState("");
   const [count, setCount] = useState(0);
   const tabStyle = {
@@ -26,13 +25,10 @@ export default ({
     position: "fixed",
     left: 0,
     right: 0,
-    zIndex: 100,
+    zIndex: 1050,
     top: Taro.pxTransform(88),
     borderBottom: "1px  solid #E5E5E5;",
   };
-  useEffect(() => {
-    setList(userList);
-  }, [userList]);
   useEffect(() => {
     setKeyword(keyword);
   }, [keyword]);
@@ -67,6 +63,7 @@ export default ({
           current={count}
           configUserLevelInfo={configUserLevelInfo}
           keyword={keywords}
+          // child={childRef}
         ></ShopView>
       }
       {<UserView current={count} keyword={keywords}></UserView>}

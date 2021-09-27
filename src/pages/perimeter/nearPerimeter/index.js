@@ -37,6 +37,7 @@ class Index extends Component {
       categoryIds: getCurrentInstance().router.params.categoryIds,
       type: getCurrentInstance().router.params.type,
       name: getCurrentInstance().router.params.name,
+      fatherId: "",
     };
   }
   fetchUserShare() {
@@ -99,25 +100,7 @@ class Index extends Component {
                 categoryDTOList: [],
                 type: "father",
               },
-              ...categoryList.map((item) => {
-                const {
-                  categoryName,
-                  categoryIdString,
-                  categoryDTOList = [],
-                } = item;
-                return {
-                  ...item,
-                  categoryDTOList: [
-                    {
-                      categoryDTOList: [],
-                      fatherId: categoryIdString,
-                      categoryName: "全部",
-                      type: "all",
-                    },
-                    ...categoryDTOList,
-                  ],
-                };
-              }),
+              ...categoryList,
             ],
           },
           {
@@ -228,6 +211,7 @@ class Index extends Component {
       httpData: { categoryIds },
       name,
       type,
+      fatherId,
     } = this.state;
 
     return (
@@ -241,6 +225,7 @@ class Index extends Component {
         <FilterDropdown
           filterData={selectList}
           confirm={(e) => {
+            this.setState({ fatherId: e.fatherIds });
             this.changeSelect(e);
           }}
           defaultData={this.state.categoryIds}
@@ -252,7 +237,7 @@ class Index extends Component {
             onChange={(val) => {
               this.changeSelect({ goodsTags: val });
             }}
-            val={categoryIds}
+            val={fatherId}
           ></Tags>
         ) : null}
         <View className="scroll_margin"></View>

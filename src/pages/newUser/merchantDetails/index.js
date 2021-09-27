@@ -167,7 +167,6 @@ class Index extends Component {
     const { userMomentsList } = this.state;
     const { store } = this.props;
     store.homeStore.setNavitory(userMomentsList, momentIndex);
-    console.log(userMomentsList)
     Router({ routerName: "merchantVideo", args: { userId: userIdString } });
   }
 

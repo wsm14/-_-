@@ -50,7 +50,7 @@ class Index extends Component {
     let code = res;
     let that = this;
     const { orderType } = this.state;
-    if (orderType === "scan") {
+    if (orderType === "scan" || orderType === "virtualProduct") {
       that.scanPay(res);
     } else {
       that.goodsPay(res);

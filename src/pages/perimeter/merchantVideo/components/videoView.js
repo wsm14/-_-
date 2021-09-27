@@ -18,7 +18,7 @@ export default ({
   userInfo,
   shareInfo,
   beanLimitStatus,
-  saveBean,
+  changeComment,
 }) => {
   const [scale, setScale] = useState(0);
   const [player, setPlayer] = useState(false);
@@ -81,6 +81,7 @@ export default ({
                         beanLimitStatus={beanLimitStatus}
                         index={index}
                         id={`video${index}`}
+                        changeComment={changeComment}
                         play={player}
                         show={index === current}
                       ></InterVal>
