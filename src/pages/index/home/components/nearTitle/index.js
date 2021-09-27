@@ -100,7 +100,7 @@ export default (props) => {
             className="nearTitle_right_activeBox nearTitle_right_activeIcon1"
             onClick={() => {
               if (bannerList[0] && bannerList[0].jumpUrl) {
-                let { jumpUrlNew, jumpUrlType, jumpUrl } = bannerList[0];
+                const { jumpUrlNew, jumpUrlType, jumpUrl } = bannerList[0];
                 jumpUrlNew = (jumpUrlNew && JSON.parse(jumpUrlNew)) || {};
                 const { weChatUrl } = jumpUrlNew;
                 if (jumpUrlType === "native" && weChatUrl) {

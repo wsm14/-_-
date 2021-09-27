@@ -317,12 +317,12 @@ export default class Index extends React.Component {
                   )}
                 </View>
                 <View className="fixed_merchant_text font_hide">
-                  <View className="font_hide">
+                  <Text className="font_hide">
                     {categoryName + " | " + address}
-                  </View>
-                  <View className="fixed_merchant_limit price_margin8">
+                  </Text>
+                  <Text className="fixed_merchant_limit price_margin8">
                     {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
-                  </View>
+                  </Text>
                 </View>
               </View>
             );
@@ -360,12 +360,12 @@ export default class Index extends React.Component {
                   ></RichText>
                 </View>
                 <View className="fixed_merchant_text font_hide">
-                  <View className="font_hide">
+                  <Text className="font_hide">
                     {categoryName + " | " + merchantAddress}
-                  </View>
-                  <View className="fixed_merchant_limit price_margin8">
+                  </Text>
+                  <Text className="fixed_merchant_limit price_margin8">
                     {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}
-                  </View>
+                  </Text>
                 </View>
               </View>
             );

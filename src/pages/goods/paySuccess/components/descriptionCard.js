@@ -29,16 +29,12 @@ export default (props) => {
     }
   }, [data]);
   const {
+    merchantImg,
     goodsName,
     specialGoods = {},
     reduceCoupon = {},
-    rightGoods = {},
-    rightCoupon = {},
     beanFee,
-    orderDesc = "",
   } = orderResult;
-  let objData = (orderDesc && JSON.parse(orderDesc)) || {};
-  const { merchantImg } = objData;
   useEffect(() => {
     setTimeout(() => {
       list.forEach((item, index) => {
@@ -120,11 +116,8 @@ export default (props) => {
         className="paySuccess_cover coupon_shop_icon"
         style={backgroundObj(merchantImg)}
       ></View>
-      <View className="paySuccess_goodName font_hide">
-        {specialGoods.goodsName ||
-          reduceCoupon.goodsName ||
-          rightGoods.goodsName ||
-          rightCoupon.goodsName}
+      <View className="paySuccess_goodName">
+        {specialGoods.goodsName || reduceCoupon.goodsName}
       </View>
       <View className="paySuccess_count">数量:{list.length}</View>
       {setCode()}

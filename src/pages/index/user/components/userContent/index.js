@@ -60,11 +60,7 @@ export default (props) => {
                       Router({
                         routerName: "webView",
                         args: {
-                          link: `https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/${
-                            process.env.NODE_ENV === "development"
-                              ? "dev"
-                              : "product"
-                          }/wechant/page/common/agreement.html`,
+                          link: "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dev/wechant/page/common/agreement.html",
                           title: "权益中心",
                         },
                       });

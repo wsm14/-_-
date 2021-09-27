@@ -32,7 +32,6 @@ export const nearList = (item = {}, list = [], store) => {
     freeCouponFlag,
     beanFlag,
     addressContentObject = {},
-    relateImg,
   } = item;
   const { lat, lnt } = addressContentObject;
   const linkTo = () => {
@@ -89,8 +88,8 @@ export const nearList = (item = {}, list = [], store) => {
 
       <View className="nearList_user_box">
         <View
-          style={backgroundObj(relateImg)}
-          className="nearList_user merchant_dakale_logo"
+          style={backgroundObj(ownerImg)}
+          className="nearList_user dakale_profile"
         ></View>
 
         <View className="nearList_merchantName font_hide">{ownerName}</View>
@@ -122,7 +121,6 @@ export const searchList = (item = {}, list = [], store) => {
     promotionNum,
     freeCouponFlag,
     keyword,
-    relateImg,
   } = item;
   const linkTo = () => {
     store.homeStore.setNavitory(list, momentIndex);
@@ -171,8 +169,8 @@ export const searchList = (item = {}, list = [], store) => {
       </View>
       <View className="nearList_user_box">
         <View
-          style={backgroundObj(relateImg)}
-          className="nearList_user merchant_dakale_logo"
+          style={backgroundObj(ownerImg)}
+          className="nearList_user dakale_profile"
         ></View>
 
         <View className="nearList_merchantName font_hide">
