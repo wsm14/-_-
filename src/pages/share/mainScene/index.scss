@@ -1,137 +1,38 @@
 .mainScene_box {
   width: 100%;
-  background: rgba(255, 230, 201, 1);
+  background: #1c3e6c;
   .mainScene_top {
     width: 100%;
-    min-height: 1948px;
-    background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_1.png)
-      no-repeat;
-    background-size: 100% 100%;
-    text-align: center;
-    .mainScene_box_location {
-      padding-top: 734px;
-      display: inline-block;
-      text-align: center;
-      .mainScene_box_scene {
-        padding: 11px 16px;
-        display: flex;
-        align-items: center;
-        line-height: normal;
-        background: #ffeba5;
-        border-radius: 24px;
-      }
-      .mainScene_box_sceneInfo {
-        padding: 3px 16px 6px;
-        display: flex;
-        align-items: center;
-        line-height: normal;
-        background: #ffeba5;
-        border-radius: 24px;
-      }
-      .mainScene_location_btn {
-        width: 60px;
-        height: 30px;
-        background: #ef476f;
-        border-radius: 15px;
-        font-size: 22px;
-        font-weight: 600;
-        color: #ffffff;
-        margin-left: 8px;
-      }
-    }
-    .mainScene_box_cardbg1 {
-      height: 956px;
-      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_2.png)
-        no-repeat;
-      background-size: 100% 100%;
-    }
-    .mainScene_box_cardbg2 {
-      height: 1120px;
-      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_40.png)
-        no-repeat;
-      background-size: 100% 100%;
-    }
-    .mainScene_box_card {
-      width: 710px;
-
-      margin: 91px auto 0;
-      position: relative;
-      z-index: 10;
-    }
-    .mainScene_card_linkH5 {
-      width: 590px;
-      height: 110px;
-      position: absolute;
-      bottom: 60px;
-      left: 60px;
-      right: 60px;
-    }
-    .mainScene_box_height {
-      height: 126px;
-    }
-    .mainScene_card_box {
-      width: 662px;
-      height: 242px;
+    .mainScene_bg_box {
+      width: 100%;
+      height: 785px;
       position: relative;
     }
-    .mainScene_card_style1 {
-      margin: 0px auto 0;
-      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_3.png)
-        no-repeat;
-      background-size: 100% 100%;
-    }
-    .mainScene_card_style2 {
-      margin: 24px auto 0;
-      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_4.png)
-        no-repeat;
-      background-size: 100% 100%;
-    }
-    .mainScene_card_style3 {
-      margin: 24px auto 0;
-      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_5.png)
-        no-repeat;
-      background-size: 100% 100%;
-    }
-    .mainScene_card_btn {
-      width: 150px;
-      height: 64px;
+    .mainScene_bg_rule {
+      width: 129px;
+      height: 56px;
+      background: #feec7f;
+      border-radius: 100px 0px 0px 100px;
+      border: 2px solid #000000;
       position: absolute;
-      top: 109px;
-      right: 32px;
-      bottom: 69px;
-    }
-    .mainScene_pp_box {
-      margin-top: 47px;
-    }
-    .mainScene_box_styleFontBold {
-      font-size: 42px;
-      font-weight: 600;
-      color: #f34b4b;
-    }
-    .mainScene_box_styleFont {
+      top: 228px;
       font-size: 24px;
       font-weight: 600;
-      color: #f34b4b;
+      color: #333333;
+      right: 0;
     }
-    .mainScene_card_btnStyle1 {
-      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_6.png)
-        no-repeat;
-      background-size: 100% 100%;
-    }
-    .mainScene_card_btnStyle2 {
-      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_7.png)
-        no-repeat;
-      background-size: 100% 100%;
-    }
-    .mainScene_card_btnStyle3 {
-      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_8.png)
-        no-repeat;
-      background-size: 100% 100%;
-    }
-    .mainScene_card_style4 {
-      background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_20.png)
-        no-repeat;
-      background-size: 100% 100%;
+    .mainScene_bg_share {
+      width: 129px;
+      height: 56px;
+      background: #feec7f;
+      border-radius: 100px 0px 0px 100px;
+      border: 2px solid #000000;
+      top: 316px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #333333;
+      right: 0;
+      position: absolute;
     }
   }
   .mainScene_logo_box {
@@ -145,5 +46,21 @@
     background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_21.png)
       no-repeat;
     background-size: 100% 100%;
+  }
+  .mainScene_image {
+    width: 100%;
+    height: 100%;
+  }
+  .mainScene_btn_box {
+    width: 100%;
+    height: 211px;
+    position: relative;
+  }
+  .mainScene_btn {
+    width: 88px;
+    height: 88px;
+    position: absolute;
+    right: 122px;
+    top: 52px;
   }
 }
