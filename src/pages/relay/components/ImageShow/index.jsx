@@ -39,6 +39,7 @@ export default ({
   // 点击查看图片
   const handleShowImg = (e, urlItem) => {
     e.stopPropagation();
+
     if (!urlArr.length || !look || urlItem.length < 10) return;
     Taro.previewImage({
       current: urlItem, // 当前显示图片的http链接

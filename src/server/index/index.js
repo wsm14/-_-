@@ -153,7 +153,7 @@ export const getListWatchMomentBeanDetail = (data = {}, fn) => {
 export const checkPuzzleBeanLimitStatus = (data = {}, fn) => {
   httpGet(
     {
-      url: "/user/userMoment/checkUserPuzzleBeanLimitStatus",
+      url: "/common/userActive/getPuzzleBeanLimitStatus",
       data: data,
     },
     (res) => fn(res)

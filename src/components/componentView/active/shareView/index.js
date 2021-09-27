@@ -21,7 +21,7 @@ export default ({ visible = false, close }) => {
     getShareInfo(
       {
         shareType: "activityImage",
-        subType: "midautumn",
+        subType: "88activity",
       },
       (res) => {
         const { shareInfo } = res;
@@ -35,18 +35,19 @@ export default ({ visible = false, close }) => {
           }),
         });
       }
-    ).catch((val) => {
-      close && close();
-    });
+    );
   };
   return (
-    <TaroShareDrawer
-      {...cavansObj}
-      onSave={() => console.log("点击保存")}
-      onClose={() => {
-        setCanvasObj({ cavansObj: { start: false, data: null } });
-        close && close();
-      }}
-    ></TaroShareDrawer>
+    <View className="shareView_box">
+      <View className="shareView_share" onClick={() => fetchShareInfo()}></View>
+      <TaroShareDrawer
+        {...cavansObj}
+        onSave={() => console.log("点击保存")}
+        onClose={() => {
+          setCanvasObj({ cavansObj: { start: false, data: null } });
+          close && close();
+        }}
+      ></TaroShareDrawer>
+    </View>
   );
 };

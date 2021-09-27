@@ -88,7 +88,7 @@ class Index extends Component {
                 mint={expiredTime}
                 times={createTime}
                 fn={() => {
-                  console.log(123)
+                  console.log(123);
                   goBack();
                 }}
               ></InterTime>

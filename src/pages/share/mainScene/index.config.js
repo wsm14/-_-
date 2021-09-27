@@ -1,5 +1,5 @@
 export default {
-  navigationBarTitleText: "中秋9.9元抢肯德基下午茶套餐",
+  navigationBarTitleText: "哒卡乐88线下消费节",
   navigationStyle: "default",
   enableShareAppMessage: true,
   enableShareTimeline: true,
