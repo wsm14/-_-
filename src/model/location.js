@@ -28,7 +28,7 @@ const locationStore = observable({
         if (info === "OK") {
           const { addressComponent = {} } = regeocode;
           const { adcode = "" } = addressComponent;
-          Taro.setStorageSync("district-code", adcode.slice(0, 4));
+          Taro.setStorageSync("district-code", adcode);
         } else {
           this.flag = false;
           toast(info);
@@ -37,7 +37,7 @@ const locationStore = observable({
     );
   },
   setCity(cityName, cityCode, type) {
-    this.cityName = cityName; 
+    this.cityName = cityName;
     this.cityCode = cityCode;
     Taro.setStorageSync("city", {
       cityCode: cityCode,

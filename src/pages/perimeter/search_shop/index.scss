@@ -479,6 +479,10 @@ page {
       .fixed_merchant_limit {
         flex: 1;
       }
+      text {
+        word-break: keep-all;
+        word-wrap: break-word;
+      }
     }
   }
 }

@@ -27,19 +27,17 @@ export default ({
           <View className="templateCard_btn_initbuy public_center">
             <View
               className="font_hide"
-              style={{ maxWidth: Taro.pxTransform(155) }}
+              style={{ maxWidth: Taro.pxTransform(135) }}
             >
-              {" "}
-              自购返 ¥{computedPrice(commission, shareCommission)}
+              自购返¥{computedPrice(commission, shareCommission)}
             </View>
           </View>
           <View className="templateCard_btn_initshare public_center">
             <View
               className="font_hide"
-              style={{ maxWidth: Taro.pxTransform(155) }}
+              style={{ maxWidth: Taro.pxTransform(135) }}
             >
-              {" "}
-              分享赚 ¥{computedPrice(commission, shareCommission)}
+              分享赚¥{computedPrice(commission, shareCommission)}
             </View>
           </View>
         </View>
