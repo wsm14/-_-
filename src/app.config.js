@@ -53,12 +53,9 @@ export default {
   },
   subPackages: [
     {
-      root: "pages/kol",
+      root: "pages/blind",
       pages: [
-        "legal/index", //达人等级
-        "report/index", //举报
-        "follow/index", //关注列表,
-        "fans/index", //粉丝列表,
+        "shareBlind/index", //盲盒助力
       ],
     },
     {
