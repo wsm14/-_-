@@ -1,0 +1,36 @@
+@import "@/assets/css/global.scss";
+
+page {
+  background: #ef476f;
+}
+
+.blind_home {
+  .blind_home_head {
+    position: relative;
+    width: 750px;
+    height: 500px;
+    background: url("https://wechat-config.dakale.net/miniprogram/blind/home/home_head.png")
+      no-repeat;
+    background-size: 100% 100%;
+    .blind_home_share {
+      position: absolute;
+      top: 162px;
+      right: 0;
+      width: 52px;
+      height: 110px;
+      background: url("https://wechat-config.dakale.net/miniprogram/blind/home/home_share.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .blind_home_rule {
+      position: absolute;
+      top: 288px;
+      right: 0;
+      width: 52px;
+      height: 110px;
+      background: url("https://wechat-config.dakale.net/miniprogram/blind/home/home_rule.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+}

@@ -55,6 +55,7 @@ export default {
     {
       root: "pages/blind",
       pages: [
+        "home/index", // 盲盒首页
         "shareBlind/index", //盲盒助力
       ],
     },

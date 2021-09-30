@@ -1,0 +1,15 @@
+@import "@/assets/css/global.scss";
+
+.blind_content {
+  position: relative;
+  width: 750px;
+  height: 906px;
+  background: url("https://wechat-config.dakale.net/miniprogram/blind/home/home_machine.png")
+    no-repeat;
+  background-size: 100% 100%;
+  .blindC_bean {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ef476f;
+  }
+}
