@@ -3,11 +3,12 @@ import { View } from "@tarojs/components";
 import PersonnelSwiper from "./components/PersonnelSwiper";
 import BlindContent from "./components/BlindContent";
 import BindGetNumber from "./components/BindGetNumber";
+import Footer from "./components/Footer";
 import "./index.scss";
 /**
  * 盲盒首页
  */
-const GroupCreate = () => {
+export default () => {
   useEffect(() => {}, []);
 
   return (
@@ -23,8 +24,8 @@ const GroupCreate = () => {
       <BlindContent></BlindContent>
       {/* 获取盲盒机会 */}
       <BindGetNumber></BindGetNumber>
+      {/* 底部logo */}
+      <Footer></Footer>
     </View>
   );
 };
-
-export default GroupCreate;
