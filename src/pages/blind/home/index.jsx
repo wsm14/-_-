@@ -3,6 +3,7 @@ import { View } from "@tarojs/components";
 import PersonnelSwiper from "./components/PersonnelSwiper";
 import BlindContent from "./components/BlindContent";
 import BindGetNumber from "./components/BindGetNumber";
+import GoodsContent from "./components/GoodsContent";
 import Footer from "./components/Footer";
 import "./index.scss";
 /**
@@ -24,6 +25,8 @@ export default () => {
       <BlindContent></BlindContent>
       {/* 获取盲盒机会 */}
       <BindGetNumber></BindGetNumber>
+      {/* 购物区域 */}
+      <GoodsContent></GoodsContent>
       {/* 底部logo */}
       <Footer></Footer>
     </View>

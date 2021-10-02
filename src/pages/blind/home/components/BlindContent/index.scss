@@ -71,10 +71,9 @@
     }
   }
   .blind_start {
+    @include whEqual(600px, 90px);
     @include flexCenter;
     margin: 68px auto 0;
-    width: 600px;
-    height: 90px;
     background: linear-gradient(360deg, #ff4545 0%, #ff4545 71%, #ff7a6b 100%);
     box-shadow: 0px 0px 10px 0px #ebad1c, 0px 0px 6px 2px #ff796b;
     border-radius: 45px;
