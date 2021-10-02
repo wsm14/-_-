@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { View } from "@tarojs/components";
 import PersonnelSwiper from "./components/PersonnelSwiper";
 import BlindContent from "./components/BlindContent";
+import BindGetNumber from "./components/BindGetNumber";
 import "./index.scss";
 /**
  * 盲盒首页
@@ -20,6 +21,8 @@ const GroupCreate = () => {
       <PersonnelSwiper></PersonnelSwiper>
       {/* 盲盒区域 */}
       <BlindContent></BlindContent>
+      {/* 获取盲盒机会 */}
+      <BindGetNumber></BindGetNumber>
     </View>
   );
 };

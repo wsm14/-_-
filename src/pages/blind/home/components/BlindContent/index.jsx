@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Image } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import "./index.scss";
 
 /**
