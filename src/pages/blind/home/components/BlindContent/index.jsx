@@ -37,8 +37,8 @@ export default () => {
       </View>
       {/* 開始按鈕 */}
       <View className="blind_start">50卡豆拆一次</View>
-      {/* 邀请好友获得免费机会 */}
-      <View className="blind_invint">邀请好友获得免费机会</View>
+      {/* 邀请好友获得免费机会/查看我的助力进度 */}
+      <View className="blind_invint">邀请好友获得免费机会 </View>
     </View>
   );
 };
