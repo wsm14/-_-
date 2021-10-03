@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View } from "@tarojs/components";
+import JackNow from "./JackNow";
 import "./index.scss";
 
 /**
@@ -7,6 +8,7 @@ import "./index.scss";
  */
 export default () => {
   const [tabKey, setTabKey] = useState("bean"); // tab key
+  const [showNow, setShowNow] = useState(false); // 本期奖池
 
   const bindTab = {
     bean: "卡豆专场",
@@ -14,31 +16,39 @@ export default () => {
   };
 
   return (
-    <View className="blind_content">
-      {/* 可用卡豆 */}
-      <View className="blindC_bean">100000</View>
-      {/* 切换区域 */}
-      <View className="blind_tab">
-        {Object.keys(bindTab).map((item) => (
+    <>
+      <View className="blind_content">
+        {/* 可用卡豆 */}
+        <View className="blindC_bean">100000</View>
+        {/* 切换区域 */}
+        <View className="blind_tab">
+          {Object.keys(bindTab).map((item) => (
+            <View
+              className={`blind_tab_cell ${tabKey === item ? "active" : ""}`}
+              onClick={() => setTabKey(item)}
+            >
+              {bindTab[item]}
+            </View>
+          ))}
+        </View>
+        {/* 抽奖区域 */}
+        <View className="blind_prize"></View>
+        {/* 记录按钮 */}
+        <View className="blind_jackpot">
+          {/* 本期奖池 */}
           <View
-            className={`blind_tab_cell ${tabKey === item ? "active" : ""}`}
-            onClick={() => setTabKey(item)}
-          >
-            {bindTab[item]}
-          </View>
-        ))}
+            className="blind_jacknow"
+            onClick={() => setShowNow(true)}
+          ></View>
+          {/* 我的奖品 */}
+          <View className="blind_jackown"></View>
+        </View>
+        {/* 開始按鈕 */}
+        <View className="blind_start">50卡豆拆一次</View>
+        {/* 邀请好友获得免费机会/查看我的助力进度 */}
+        <View className="blind_invint">邀请好友获得免费机会 </View>
       </View>
-      {/* 抽奖区域 */}
-      <View className="blind_prize"></View>
-      {/* 记录按钮 */}
-      <View className="blind_jackpot">
-        <View className="blind_jacknow"></View>
-        <View className="blind_jackown"></View>
-      </View>
-      {/* 開始按鈕 */}
-      <View className="blind_start">50卡豆拆一次</View>
-      {/* 邀请好友获得免费机会/查看我的助力进度 */}
-      <View className="blind_invint">邀请好友获得免费机会 </View>
-    </View>
+      <JackNow show={showNow} onClose={() => setShowNow(false)}></JackNow>
+    </>
   );
 };
