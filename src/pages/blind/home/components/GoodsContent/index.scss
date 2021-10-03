@@ -26,15 +26,30 @@
       42px
     );
   }
+  .special {
+    @include title(
+      "https://wechat-config.dakale.net/miniprogram/blind/home/bean_special.png",
+      470px,
+      42px
+    );
+  }
+  .coupon {
+    @include title(
+      "https://wechat-config.dakale.net/miniprogram/blind/home/bean_coupon.png",
+      470px,
+      42px
+    );
+  }
   .blind_Goods_group {
     padding: 24px 24px 32px;
     background: #ffffff;
     border-radius: 20px;
     .blind_Goods_cell {
-      display: flex;
+      @include flexCenterA;
       .blind_Goods_img {
         @include whEqual(224px);
         margin-right: 16px;
+        border-radius: 8px;
       }
       .blind_Goods_info {
         flex: 1;
@@ -43,6 +58,11 @@
           @include fontHideOnly;
           font-size: 28px;
           color: #333333;
+        }
+        .blind_Goods_coupon {
+          font-size: 24px;
+          color: #999999;
+          margin-top: 8px;
         }
         .blind_Goods_store {
           @include flexCenterA;
@@ -59,16 +79,7 @@
             margin-right: 8px;
           }
         }
-        .blind_Goods_priceContent {
-          font-size: 20px;
-          color: #999999;
-          margin-top: 34px;
-          .blind_Goods_price {
-            font-size: 24px;
-            font-weight: bold;
-            color: #999999;
-          }
-        }
+
         .blind_Goods_oriContent {
           margin-top: 6px;
           font-size: 20px;
@@ -77,6 +88,48 @@
             font-size: 28px;
             font-weight: bold;
             color: #333333;
+          }
+        }
+        .blind_Goods_ohterPriceTag {
+          width: 70px;
+          height: 30px;
+          border-radius: 8px;
+          border: 1px solid #ef476f;
+          font-size: 24px;
+          margin-top: 12px;
+        }
+        .blind_Goods_ohterPrice {
+          font-size: 28px;
+          font-weight: bold;
+          color: #ef476f;
+          margin-top: 4px;
+        }
+        .blind_Goods_footer {
+          margin-top: 34px;
+          .blind_Goods_tools {
+            display: flex;
+            align-items: flex-end;
+          }
+          .blind_Goods_priceContent {
+            font-size: 20px;
+            color: #999999;
+            .blind_Goods_price {
+              font-size: 24px;
+              font-weight: bold;
+              color: #999999;
+            }
+          }
+          .blind_Goods_left {
+            flex: 1;
+          }
+          .blind_Goods_right {
+            @include flexCenterA;
+            background: #ef476f;
+            height: 52px;
+            border-radius: 26px;
+            font-size: 28px;
+            color: #ffffff;
+            padding: 0 16px;
           }
         }
         .lookAround_new_bean {
@@ -102,6 +155,17 @@
           }
         }
       }
+    }
+    .blind_Goods_goAll {
+      @include flexCenter;
+      width: 520px;
+      height: 70px;
+      border-radius: 40px;
+      border: 2px solid #ef476f;
+      font-size: 28px;
+      font-weight: 400;
+      color: #ef476f;
+      margin: 40px auto 0;
     }
   }
 }
