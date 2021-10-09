@@ -1,0 +1,171 @@
+@import "@/assets/css/global.scss";
+
+@mixin title($url, $w, $h) {
+  &::before {
+    content: "";
+    display: block;
+    @include whEqual($w, $h);
+    background: url($url) no-repeat;
+    background-size: 100%;
+    margin: 0 auto 38px;
+  }
+}
+
+.blind_GoodsContent {
+  padding: 64px 32px 0;
+  background: #fdbf5d;
+  .blind_GoodsContent_Gorup {
+    & + .blind_GoodsContent_Gorup {
+      margin-top: 64px;
+    }
+  }
+  .bean {
+    @include title(
+      "https://wechat-config.dakale.net/miniprogram/blind/home/bean_prefecture.png",
+      391px,
+      42px
+    );
+  }
+  .special {
+    @include title(
+      "https://wechat-config.dakale.net/miniprogram/blind/home/bean_special.png",
+      470px,
+      42px
+    );
+  }
+  .coupon {
+    @include title(
+      "https://wechat-config.dakale.net/miniprogram/blind/home/bean_coupon.png",
+      470px,
+      42px
+    );
+  }
+  .blind_Goods_group {
+    padding: 24px 24px 32px;
+    background: #ffffff;
+    border-radius: 20px;
+    .blind_Goods_cell {
+      @include flexCenterA;
+      .blind_Goods_img {
+        @include whEqual(224px);
+        margin-right: 16px;
+        border-radius: 8px;
+      }
+      .blind_Goods_info {
+        flex: 1;
+        overflow: hidden;
+        .blind_Goods_name {
+          @include fontHideOnly;
+          font-size: 28px;
+          color: #333333;
+        }
+        .blind_Goods_coupon {
+          font-size: 24px;
+          color: #999999;
+          margin-top: 8px;
+        }
+        .blind_Goods_store {
+          @include flexCenterA;
+          margin-top: 16px;
+          font-size: 24px;
+          color: #999999;
+          .blind_Goods_storeName {
+            @include fontHideOnly;
+            max-width: 270px;
+          }
+          .blind_Goods_storeIcon {
+            @include whEqual(30px);
+            border-radius: 50%;
+            margin-right: 8px;
+          }
+        }
+
+        .blind_Goods_oriContent {
+          margin-top: 6px;
+          font-size: 20px;
+          color: #333333;
+          .blind_Goods_oriPrice {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333333;
+          }
+        }
+        .blind_Goods_ohterPriceTag {
+          width: 70px;
+          height: 30px;
+          border-radius: 8px;
+          border: 1px solid #ef476f;
+          font-size: 24px;
+          margin-top: 12px;
+        }
+        .blind_Goods_ohterPrice {
+          font-size: 28px;
+          font-weight: bold;
+          color: #ef476f;
+          margin-top: 4px;
+        }
+        .blind_Goods_footer {
+          margin-top: 34px;
+          .blind_Goods_tools {
+            display: flex;
+            align-items: flex-end;
+          }
+          .blind_Goods_priceContent {
+            font-size: 20px;
+            color: #999999;
+            .blind_Goods_price {
+              font-size: 24px;
+              font-weight: bold;
+              color: #999999;
+            }
+          }
+          .blind_Goods_left {
+            flex: 1;
+          }
+          .blind_Goods_right {
+            @include flexCenterA;
+            background: #ef476f;
+            height: 52px;
+            border-radius: 26px;
+            font-size: 28px;
+            color: #ffffff;
+            padding: 0 16px;
+          }
+        }
+        .lookAround_new_bean {
+          margin-top: 11px;
+          height: 32px;
+          background: #ffffff;
+          border-radius: 16px;
+          border: 1px solid #ef476f;
+          box-sizing: border-box;
+          display: inline-flex;
+          align-items: center;
+          .lookAround_new_img {
+            width: 100px;
+            height: 32px;
+          }
+          .lookAround_new_pay {
+            @include fontHideOnly;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ef476f;
+            max-width: 120px;
+            padding: 0 8px 0 4px;
+          }
+        }
+      }
+    }
+    .blind_Goods_goAll {
+      @include flexCenter;
+      width: 520px;
+      height: 70px;
+      border-radius: 40px;
+      border: 2px solid #ef476f;
+      font-size: 28px;
+      font-weight: 400;
+      color: #ef476f;
+      margin: 40px auto 0;
+    }
+  }
+}
