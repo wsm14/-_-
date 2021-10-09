@@ -56,7 +56,8 @@ export default {
       root: "pages/blindBox",
       pages: [
         "shareBox/index", //盲盒助力
-      ],
+        "home/index", // 盲盒首页
+      ]
     },
     {
       root: "pages/newUser",
