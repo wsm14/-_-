@@ -53,10 +53,9 @@ export default {
   },
   subPackages: [
     {
-      root: "pages/blind",
+      root: "pages/blindBox",
       pages: [
-        "home/index", // 盲盒首页
-        "shareBlind/index", //盲盒助力
+        "shareBox/index", //盲盒助力
       ],
     },
     {
