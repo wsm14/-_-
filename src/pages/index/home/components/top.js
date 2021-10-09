@@ -12,12 +12,12 @@ export default (props) => {
   }, [data]);
   const [select, setSelect] = useState([
     {
-      label: "推荐",
-      val: "commend",
-    },
-    {
       label: "捡豆",
       val: "pickUp",
+    },
+    {
+      label: "推荐",
+      val: "commend",
     },
     {
       label: "附近",
