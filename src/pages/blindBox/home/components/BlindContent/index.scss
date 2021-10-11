@@ -28,7 +28,7 @@
       font-weight: 600;
       color: #c88c00;
       flex: 1;
-      &.active {
+      &.invitation {
         @include whEqual(240px, 64px);
         background: linear-gradient(
           180deg,

@@ -8,7 +8,7 @@ import "./index.scss";
  * @param {*} onClose 关闭
  */
 export default (props) => {
-  const { onClose, show = false } = props;
+  const { onClose, show = false, list } = props;
 
   const [childDel, setChildDel] = useState(false); // 子组件销毁
 
@@ -36,15 +36,15 @@ export default (props) => {
         <View className="blind_layout_title"></View>
         {childDel && (
           <View className="blind_layout_group">
-            <View className="blind_goods_cell">
-              <Image
-                src="https://wechat-config.dakale.net/miniprogram/blind/home/bean_special.png"
-                className="blind_goods_img"
-              ></Image>
-              <View className="blind_goods_name">
-                MAC口红口红口红口红口红口红口红口红MAC口红口红口红口红口红口红口红口红
-              </View>
-            </View>
+            {list.map((item) => {
+              const { prizeImg, showName } = item;
+              return (
+                <View className="blind_goods_cell">
+                  <Image src={prizeImg} className="blind_goods_img"></Image>
+                  <View className="blind_goods_name">{showName}</View>
+                </View>
+              );
+            })}
           </View>
         )}
       </View>

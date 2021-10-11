@@ -130,6 +130,8 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     goodsManageImport: "/pages/relay/personal/GoodsManage/Import/index", // 商品库 导入
     relayVideo: "/pages/relay/nearVideo/index",
     //社团
+    blindIndex: "/pages/blindBox/home/index", //盲盒 首页
+    blindShare: "/pages/blindBox/shareBox/index", //盲盒邀请
   }[routerName];
   const types = type;
 

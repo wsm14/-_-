@@ -1,0 +1,36 @@
+.newsInfo_img {
+  width: 650px;
+  height: 608px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon777.png")
+    no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+  .newsInfo_height {
+    height: 132px;
+  }
+  .newsInfo_font_title {
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 28px;
+  }
+  .newsInfo_font_bold {
+    font-size: 40px;
+    font-weight: 600;
+    color: #ef476f;
+    line-height: 60px;
+  }
+  .newsInfo_font_content {
+    padding-top: 64px;
+  }
+  .newsInfo_btn {
+    width: 400px;
+    height: 70px;
+    background: #ef476f;
+    border-radius: 35px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 74px auto 0;
+  }
+}

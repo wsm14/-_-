@@ -129,6 +129,8 @@ page {
     }
     .shareBox_share_proStyle1 {
       border: 3px solid #ffffff;
+      box-sizing: border-box;
+      border-radius: 50%;
     }
     .shareBox_share_proStyle2 {
       background: url(https://wechat-config.dakale.net/miniprogram/blind/blind_3.png)
