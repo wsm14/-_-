@@ -102,8 +102,8 @@ export default ({
       )}
 
       {/* 评论区按钮 - start */}
-      <View onClick={changeComment} className="video_comment_box"></View>
-      <View className="video_comment_font">{commentAmount}</View>
+      {/* <View onClick={changeComment} className="video_comment_box"></View>
+      <View className="video_comment_font">{commentAmount}</View> */}
       {/* 评论区按钮 - end */}
       <View
         onClick={() => shareInfo()}

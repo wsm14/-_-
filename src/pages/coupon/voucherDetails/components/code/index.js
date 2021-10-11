@@ -61,14 +61,16 @@ export default (props) => {
   };
   const goPayInfo = () => {
     const { ownerCouponIdString, ownerIdString, merchantIdString } = data;
-    Router({
-      routerName: "payCouponDetails",
-      args: {
-        ownerCouponId: ownerCouponIdString,
-        ownerId: ownerIdString,
-        merchantId: merchantIdString,
-      },
-    });
+    if (couponType !== "freeReduceCoupon") {
+      Router({
+        routerName: "payCouponDetails",
+        args: {
+          ownerCouponId: ownerCouponIdString,
+          ownerId: ownerIdString,
+          merchantId: merchantIdString,
+        },
+      });
+    }
   };
   const setCode = () => {
     return (
