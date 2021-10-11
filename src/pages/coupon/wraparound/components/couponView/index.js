@@ -46,9 +46,6 @@ export default (props) => {
     if (couponType !== "reduceCoupon" && couponType !== "freeReduceCoupon") {
       navigateTo(`/pages/coupon/couponDetails/index?id=${userCouponIdString}`);
     } else {
-      if (couponType === "freeReduceCoupon") {
-        return;
-      }
       navigateTo(`/pages/coupon/voucherDetails/index?id=${userCouponIdString}`);
     }
   };
