@@ -267,6 +267,7 @@ class Index extends Component {
         routerName: weChatUrl,
         args: {
           ...param,
+          categoryId: param.categoryId || param.topCategoryId,
         },
       });
     } else if (jumpUrlType === "h5" && jumpUrl) {
