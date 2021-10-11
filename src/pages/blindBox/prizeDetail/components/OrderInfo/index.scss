@@ -1,5 +1,52 @@
 @import "@/assets/css/global.scss";
 
 .prize_OrderInfo {
-  
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 32px;
+  margin-top: 16px;
+  .prize_title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 32px;
+  }
+  .prize_order_group {
+    font-size: 28px;
+    color: #333333;
+    .prize_order_cell {
+      @include flexCenterA;
+      & + .prize_order_cell {
+        margin-top: 24px;
+      }
+      .prize_orderCell_name {
+        color: #999999;
+      }
+      .prize_orderCellData_box {
+        @include flexCenterA;
+        flex: 1;
+        text-align: right;
+        overflow: hidden;
+        .prize_orderCell_data {
+          flex: 1;
+          @include fontHideOnly;
+          padding-left: 50px;
+        }
+      }
+      .prize_orderCell_copy {
+        font-size: 28px;
+        font-weight: 400;
+        color: #07c0c2;
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 2px;
+          height: 20px;
+          background: #e5e5e5;
+          border-radius: 1px;
+          margin: 0 16px;
+        }
+      }
+    }
+  }
 }

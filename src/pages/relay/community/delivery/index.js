@@ -10,6 +10,7 @@ import {
   fakeRemoveAddress,
   fakeUpdateAddress,
 } from "@/server/relay";
+import { fetchBindAddress } from "@/server/share";
 import "./index.scss";
 import { goBack, toast } from "@/common/utils";
 import { navigatePostBack } from "@/relay/common/hooks";
@@ -24,6 +25,7 @@ class Index extends Component {
       defaultData: {},
       type: "edit",
       mode: getCurrentInstance().router.params.mode,
+      blindType: getCurrentInstance().router.params.blindType || 0, // 盲盒进入存在
     };
   }
   componentWillUnmount() {}
@@ -118,13 +120,33 @@ class Index extends Component {
   }
   //获取新增地址
   changeSelect(index) {
-    const { selectIndex, mode } = this.state;
+    const { selectIndex, mode, userAddressList } = this.state;
     if (selectIndex !== index) {
       this.setState(
         {
           selectIndex: index,
         },
         (res) => {
+          // 盲盒进入选择地址确认确认按钮
+          if (blindType) {
+            const { blindBoxRewardId } = getCurrentInstance().router.params;
+            const { userAddressId } = userAddressList[index];
+            Taro.showModal({
+              confirmText: "确定",
+              confirmColor: "#07c0c2",
+              content: `确认选择该地址？确认后无法修改`,
+              success: function (res) {
+                if (res.confirm) {
+                  fetchBindAddress({ blindBoxRewardId, userAddressId }).then(
+                    (res) => {
+                      goBack();
+                    }
+                  );
+                }
+              },
+            });
+            return;
+          }
           if (mode !== "list") {
             goBack();
           }
