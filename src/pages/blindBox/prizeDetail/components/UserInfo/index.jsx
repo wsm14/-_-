@@ -41,7 +41,8 @@ export default ({ data }) => {
         <View className="prize_goods_detail">
           <View className="prize_goods">
             <View className="prize_goods_name">iPhone13</View>
-            <View className="prize_order_status ">待完善收货信息</View>
+            {/* 灰色样式 end */}
+            <View className="prize_order_status end">待完善收货信息</View>
           </View>
           <View className="prize_goods_number">数量：1</View>
         </View>
