@@ -103,8 +103,6 @@ export const nearList = (item = {}, list = [], store) => {
 };
 export const searchList = (item = {}, list = [], store) => {
   const {
-    lat = "",
-    lnt = "",
     categoryName = "",
     watchStatus = "0",
     length,
@@ -123,7 +121,9 @@ export const searchList = (item = {}, list = [], store) => {
     freeCouponFlag,
     keyword,
     relateImg,
+    addressContentObject = {},
   } = item;
+  const { lat, lnt } = addressContentObject;
   const linkTo = () => {
     store.homeStore.setNavitory(list, momentIndex);
     Router({
@@ -178,9 +178,11 @@ export const searchList = (item = {}, list = [], store) => {
         <View className="nearList_merchantName font_hide">
           {ownerName + " "}
         </View>
-        <View className="nearList_limit font_hide">
-          {"| " + GetDistance(getLat(), getLnt(), lat, lnt)}
-        </View>
+        {lat && lnt && (
+          <View className="nearList_limit font_hide">
+            {"| " + GetDistance(getLat(), getLnt(), lat, lnt)}
+          </View>
+        )}
       </View>
     </View>
   );
