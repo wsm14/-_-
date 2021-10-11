@@ -91,4 +91,59 @@
     color: #ff426f;
     text-decoration: underline;
   }
+  .friend_box {
+    padding: 48px 27px;
+    background: #ffffff;
+    border-radius: 40px;
+    background: #ffffff;
+    text-align: center;
+    .friend_title {
+      font-size: 36px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .friend_wait {
+      font-size: 28px;
+      font-weight: 600;
+      color: #ef476f;
+      padding-top: 48px;
+    }
+    .friend_btn {
+      width: 400px;
+      height: 80px;
+      background: #ef476f;
+      border-radius: 59px;
+      border: 3px solid #ffd62e;
+      font-size: 32px;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 40px auto 0;
+    }
+    .friend_profileBox {
+      padding-top: 64px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .friend_share_profile {
+      margin-bottom: 16px;
+      width: 120px;
+      height: 120px;
+    }
+    .friend_share_proStyle1 {
+      border: 3px solid #ffffff;
+      box-sizing: border-box;
+      border-radius: 50%;
+    }
+    .friend_share_proStyle2 {
+      background: url(https://wechat-config.dakale.net/miniprogram/blind/blind_3.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .friend_share_desc {
+      padding-top: 40px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+    }
+  }
 }

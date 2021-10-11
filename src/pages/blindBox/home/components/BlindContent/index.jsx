@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 import { View, Image } from "@tarojs/components";
 import JackNow from "./JackNow";
-import { fetchBlindBoxReward } from "@/server/blindBox";
+import Taro from "@tarojs/taro";
+import { fetchBlindBoxReward, fetchBlindBoxHelp } from "@/server/blindBox";
 import Drawer from "@/components/Drawer";
+import { loginStatus } from "@/common/utils";
+import Router from "@/common/router";
 import "./index.scss";
-
+const filterList = (list) => {
+  let newList = [{}, {}, {}, {}];
+  if (list.length >= 4) {
+    return list;
+  }
+  list.forEach((item, index) => {
+    newList[index] = item;
+  });
+  return newList;
+};
 /**
  * 盲盒区域
  */
@@ -19,10 +31,43 @@ export default ({ data, updateInfo, list }) => {
   const [jpData, setJqData] = useState({});
   const [showNow, setShowNow] = useState(false); // 本期奖池
   const [visible, setVisible] = useState(false);
+  const [friendVisible, setFriendVisible] = useState(false);
+  const [shareData, setShareData] = useState({});
+
   const { winningImg } = jpData;
+  const { blindBoxHelpList = [], num, freeTime } = shareData;
   const bindTab = {
     bean: "卡豆专场",
     invitation: "邀请专场",
+  };
+  const getBlindHelp = () => {
+    let user = loginStatus();
+    if (!user) {
+      return Router({
+        routerName: "login",
+      });
+    } else {
+      const { userIdString } = user;
+      fetchBlindBoxHelp({
+        userId: userIdString,
+      }).then((val = {}) => {
+        const {
+          blindBoxHelpList = [],
+          freeTime,
+          blindBoxRuleObject = {},
+          userInfo,
+        } = val;
+        setFriendVisible(() => {
+          setShareData({
+            blindBoxHelpList: filterList(blindBoxHelpList),
+            freeTime,
+            blindBoxRuleObject,
+            userInfo,
+          });
+          return true;
+        });
+      });
+    }
   };
   const saveBlindBoxReward = () => {
     fetchBlindBoxReward({
@@ -123,7 +168,9 @@ export default ({ data, updateInfo, list }) => {
         {tabKey === "bean" ? (
           <View className="blind_invint">邀请好友获得免费机会 </View>
         ) : (
-          <View className="blind_invint">查看我的助力进度 </View>
+          <View className="blind_invint" onClick={() => getBlindHelp()}>
+            查看我的助力进度{" "}
+          </View>
         )}
       </View>
       <JackNow
@@ -165,6 +212,76 @@ export default ({ data, updateInfo, list }) => {
               >
                 多拆多送
               </View>
+            </View>
+          </View>
+        </Drawer>
+      )}
+
+      {friendVisible && (
+        <Drawer
+          show={friendVisible}
+          close={() => {
+            setFriendVisible(() => {
+              setShareData({});
+              return false;
+            });
+          }}
+        >
+          <View className="friend_box">
+            <View className="friend_title">我的邀请进度</View>
+            <View className="friend_wait">
+              {freeTime === 0
+                ? "等待好友助力"
+                : `已获得${freeTime}次免费拆盲盒机会`}
+            </View>
+            {freeTime === 0 ? (
+              <View className="friend_btn public_center">立即邀请好友助力</View>
+            ) : (
+              <View
+                className="friend_btn public_center"
+                onClick={() => {
+                  setFriendVisible(() => {
+                    setShareData({});
+                    return false;
+                  });
+                }}
+              >
+                助力成功 马上拆盲盒
+              </View>
+            )}
+            <View className="friend_profileBox">
+              {blindBoxHelpList.map((item, index) => {
+                const { profile = "" } = item;
+                if (!profile) {
+                  return (
+                    <View
+                      style={
+                        (index + 1) % 4 === 0
+                          ? {}
+                          : { marginRight: Taro.pxTransform(22) }
+                      }
+                      className="friend_share_profile friend_share_proStyle2"
+                    ></View>
+                  );
+                } else {
+                  return (
+                    <View
+                      style={
+                        (index + 1) % 4 === 0
+                          ? { ...backgroundObj(profile) }
+                          : {
+                              marginRight: Taro.pxTransform(22),
+                              ...backgroundObj(profile),
+                            }
+                      }
+                      className="friend_share_profile friend_share_proStyle1"
+                    ></View>
+                  );
+                }
+              })}
+            </View>
+            <View className="friend_share_desc">
+              2. 每{times}个人助力成功，即可获得{num}次机会
             </View>
           </View>
         </Drawer>
