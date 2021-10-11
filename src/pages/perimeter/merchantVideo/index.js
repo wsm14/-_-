@@ -293,13 +293,14 @@ class Index extends React.PureComponent {
         ownerName,
         frontImage,
         momentType,
-        addressContentObject: { address },
+        addressContentObject = {},
         ownerId,
         guideMomentFlag,
       },
       userMomentsInfo,
       player,
     } = this.state;
+    const { address = "" } = addressContentObject;
     getShareInfo(
       {
         shareType: "newVideo",

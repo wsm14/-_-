@@ -41,24 +41,36 @@ export default (props) => {
       });
     }, 100);
   }, [list]);
+  const {
+    ownerType,
+    thresholdPrice = "",
+    merchantCount,
+    ownerIdString,
+    ownerCouponIdString,
+    couponType,
+    merchantIdString,
+    couponCode,
+  } = orderResult;
   const goGoodDetails = () => {
     Router({
       routerName: "kolShopGoods",
       args: {
-        orderSn: orderSn,
+        orderSn: couponCode,
       },
     });
   };
   const goPayInfo = () => {
     const { ownerCouponIdString, ownerIdString, merchantIdString } = data;
-    Router({
-      routerName: "payCouponDetails",
-      args: {
-        ownerCouponId: ownerCouponIdString,
-        ownerId: ownerIdString,
-        merchantId: merchantIdString,
-      },
-    });
+    if (couponType !== "freeReduceCoupon") {
+      Router({
+        routerName: "payCouponDetails",
+        args: {
+          ownerCouponId: ownerCouponIdString,
+          ownerId: ownerIdString,
+          merchantId: merchantIdString,
+        },
+      });
+    }
   };
   const setCode = () => {
     return (
@@ -154,15 +166,7 @@ export default (props) => {
       </View>
     ),
   }[orderResult.couponStatus];
-  const {
-    ownerType,
-    thresholdPrice = "",
-    merchantCount,
-    ownerIdString,
-    ownerCouponIdString,
-    couponType,
-    merchantIdString,
-  } = orderResult;
+
   return (
     <View className="couponDetails_title" style={style ? style : {}}>
       <View className="couponDetails_box">
@@ -281,37 +285,39 @@ export default (props) => {
             <View className="onReadly_icon onReadly_iconBox"></View>
             如果券码不显示，点这里刷新
           </View>
-          <View className="kolgoods_go public_auto font24 color1">
-            <View className="kolgoods_go_left public_center">
-              <View
-                className="kolgoods_go_leftBox public_center"
-                onClick={() => goGoodDetails(orderResult.couponCode)}
-              >
-                <View className="kolgoods_goIcon_box  shop_goods_icon"></View>
-                订单详情
+          {couponType !== "freeReduceCoupon" && (
+            <View className="kolgoods_go public_auto font24 color1">
+              <View className="kolgoods_go_left public_center">
+                <View
+                  className="kolgoods_go_leftBox public_center"
+                  onClick={() => goGoodDetails(orderResult.couponCode)}
+                >
+                  <View className="kolgoods_goIcon_box  shop_goods_icon"></View>
+                  订单详情
+                </View>
+              </View>
+              <View className="kolgoods_go_right public_center">
+                <Button
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: "100%",
+                    height: "100%",
+                    border: "none",
+                    background: "none",
+                  }}
+                  openType={"contact"}
+                ></Button>
+                <View className="kolgoods_go_rightBox public_center">
+                  <View className="kolgoods_goIcon_box cannet_icon"></View>
+                  联系客服
+                </View>
               </View>
             </View>
-            <View className="kolgoods_go_right public_center">
-              <Button
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  width: "100%",
-                  height: "100%",
-                  border: "none",
-                  background: "none",
-                }}
-                openType={"contact"}
-              ></Button>
-              <View className="kolgoods_go_rightBox public_center">
-                <View className="kolgoods_goIcon_box cannet_icon"></View>
-                联系客服
-              </View>
-            </View>
-          </View>
+          )}
         </>
       </View>
     </View>
