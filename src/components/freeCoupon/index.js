@@ -66,6 +66,10 @@ export default (props) => {
     };
     return (
       <View
+        onClick={(e) => {
+          e.stopPropagation();
+          visible && visible();
+        }}
         style={!show ? { display: "none" } : { display: "flex" }}
         class="atomicActivity_layer_box atomicActivity_layer_save"
       >
