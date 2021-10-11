@@ -132,6 +132,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     //社团
     blindIndex: "/pages/blindBox/home/index", //盲盒 首页
     blindShare: "/pages/blindBox/shareBox/index", //盲盒邀请
+    blindPrize: "/pages/blindBox/prize/index", //我的奖品
   }[routerName];
   const types = type;
 

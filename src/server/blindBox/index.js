@@ -46,3 +46,11 @@ export const fetchBlindBoxRewardJackpot = (data = {}) => {
   });
 };
 //抽取盲盒
+
+export const fetchListBlindBoxReward = (data = {}) => {
+  return httpGet({
+    data: data,
+    url: "/user/activity/blindBox/reward/listBlindBoxReward",
+  });
+};
+//抽取盲盒
