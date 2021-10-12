@@ -51,6 +51,7 @@ export default (props) => {
       merchantIdString,
       ownerCouponIdString,
       address,
+      merchantName,
     } = list[0];
     const { couponPrice, thresholdPrice } = reduceObject;
     const templateTime = () => {
@@ -74,25 +75,22 @@ export default (props) => {
         class="atomicActivity_layer_box atomicActivity_layer_save"
       >
         <View class="atomicActivity_save_box">
-          <View class="atomicActivity_save_title font_hide">{ownerName}</View>
+          <View class="atomicActivity_save_title font_hide">
+            {merchantName}
+          </View>
           <View class="atomicActivity_save_merchant font_hide">
             <Text className="atomicActivity_save_text font_hide">
               {address}
             </Text>{" "}
             | {GetDistance(getLat(), getLnt(), lat, lnt)}
           </View>
-          <View class="atomicActivity_save_toast">送您到店消费优惠券</View>
           <View class="atomicActivity_save_goods">
-            <View className="positionSave">
-              <Text className="font24">￥</Text>
-              {couponPrice}
-            </View>
             <View class="atomicActivity_save_goodName  font_hide">
-              {" "}
               {couponName}
             </View>
             <View class="atomicActivity_save_city">
-              {thresholdPrice > 0 ? `满${thresholdPrice}元可用` : ""}
+              面值 {couponPrice}元
+              {thresholdPrice > 0 ? `| 满${thresholdPrice}元可用` : ""}
             </View>
             <View class="atomicActivity_save_time  font_hide">
               {templateTime()}
@@ -110,7 +108,7 @@ export default (props) => {
               visible && visible();
             }}
           >
-            开心收下
+            立即领取
           </View>
         </View>
       </View>
