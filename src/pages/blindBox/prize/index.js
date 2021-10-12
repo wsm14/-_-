@@ -19,7 +19,9 @@ class Index extends Component {
       },
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.getList();
+  }
   getList() {
     const { httpData } = this.state;
     fetchListBlindBoxReward(httpData).then((val) => {
@@ -58,7 +60,15 @@ class Index extends Component {
         2: "已发货",
       }[logisticsStatus];
       return (
-        <View className="prize_template">
+        <View
+          onClick={() => {
+            Router({
+              routerName: "blindPrizeDetail",
+              args: { blindBoxRewardId },
+            });
+          }}
+          className="prize_template"
+        >
           <View className="prize_template_img">
             <Image
               src={prizeImg}

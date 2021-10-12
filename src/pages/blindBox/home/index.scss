@@ -13,7 +13,7 @@ page {
       no-repeat;
     background-size: 100% 100%;
     .blind_home_share {
-      position: absolute;
+      position: fixed;
       top: 162px;
       right: 0;
       width: 52px;
@@ -21,9 +21,10 @@ page {
       background: url("https://wechat-config.dakale.net/miniprogram/blind/home/home_share.png")
         no-repeat;
       background-size: 100% 100%;
+      z-index: 101;
     }
     .blind_home_rule {
-      position: absolute;
+      position: fixed;
       top: 288px;
       right: 0;
       width: 52px;
@@ -31,6 +32,7 @@ page {
       background: url("https://wechat-config.dakale.net/miniprogram/blind/home/home_rule.png")
         no-repeat;
       background-size: 100% 100%;
+      z-index: 101;
     }
   }
   .blind_jp_box {
@@ -65,7 +67,7 @@ page {
     font-weight: 600;
     color: #ef476f;
   }
-  .blind_jp_btnBox  {
+  .blind_jp_btnBox {
     margin-top: 51px;
   }
 }

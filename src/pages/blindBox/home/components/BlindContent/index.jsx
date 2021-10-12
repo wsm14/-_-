@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Image } from "@tarojs/components";
+import { View, Image, Button } from "@tarojs/components";
 import JackNow from "./JackNow";
 import Taro from "@tarojs/taro";
 import { fetchBlindBoxReward, fetchBlindBoxHelp } from "@/server/blindBox";
@@ -33,7 +33,6 @@ export default ({ data, updateInfo, list }) => {
   const [visible, setVisible] = useState(false);
   const [friendVisible, setFriendVisible] = useState(false);
   const [shareData, setShareData] = useState({});
-
   const { winningImg } = jpData;
   const { blindBoxHelpList = [], num, freeTime } = shareData;
   const bindTab = {
@@ -95,7 +94,19 @@ export default ({ data, updateInfo, list }) => {
           </View>
         );
       } else {
-        return <View className="blind_start">卡豆不足 ?</View>;
+        return (
+          <View
+            className="blind_start"
+            onClick={() =>
+              Router({
+                routerName: "home",
+                type: "switchTab",
+              })
+            }
+          >
+            卡豆不足? 去捡卡豆
+          </View>
+        );
       }
     } else {
       if (times > 0) {
@@ -110,7 +121,32 @@ export default ({ data, updateInfo, list }) => {
           </View>
         );
       } else {
-        return <View className="blind_start">邀请好友助力 得机会</View>;
+        return (
+          <View
+            className="blind_start"
+            onClick={() => {
+              if (!loginStatus()) {
+                Router({
+                  routerName: "login",
+                });
+              }
+            }}
+          >
+            {loginStatus() && (
+              <Button
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  background: "none",
+                  position: "absolute",
+                }}
+                openType={"share"}
+                data-info="zl"
+              ></Button>
+            )}
+            邀请好友助力 得机会
+          </View>
+        );
       }
     }
   };
@@ -159,7 +195,14 @@ export default ({ data, updateInfo, list }) => {
             onClick={() => setShowNow(true)}
           ></View>
           {/* 我的奖品 */}
-          <View className="blind_jackown"></View>
+          <View
+            className="blind_jackown"
+            onClick={() => {
+              Router({
+                routerName: "blindPrize",
+              });
+            }}
+          ></View>
         </View>
         <Template></Template>
         {/* 開始按鈕 */}
@@ -200,7 +243,17 @@ export default ({ data, updateInfo, list }) => {
             </View>
 
             <View className="blind_jp_btnBox public_auto">
-              <View className="public_center blind_jp_btn">去看看</View>
+              <View
+                onClick={() => {
+                  setVisible(false);
+                  Router({
+                    routerName: "blindPrize",
+                  });
+                }}
+                className="public_center blind_jp_btn"
+              >
+                去看看
+              </View>
               <View
                 className="public_center blind_jp_btn"
                 onClick={() => {
@@ -235,7 +288,21 @@ export default ({ data, updateInfo, list }) => {
                 : `已获得${freeTime}次免费拆盲盒机会`}
             </View>
             {freeTime === 0 ? (
-              <View className="friend_btn public_center">立即邀请好友助力</View>
+              <View className="friend_btn public_center">
+                {loginStatus() && (
+                  <Button
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      background: "none",
+                      position: "absolute",
+                    }}
+                    openType={"share"}
+                    data-info="zl"
+                  ></Button>
+                )}
+                立即邀请好友助力
+              </View>
             ) : (
               <View
                 className="friend_btn public_center"

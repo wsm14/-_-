@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDidShow, useRouter } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { fetchGetPrizeDetail } from "@/server/share";
 import UserInfo from "./components/UserInfo";
 import OrderInfo from "./components/OrderInfo";
+import evens from "@/common/evens";
 import "./index.scss";
 
 /**
@@ -15,7 +16,7 @@ export default () => {
   const { blindBoxRewardId } = routeParams;
 
   const [detail, setDetail] = useState({}); // 商品详情
-
+  useEffect(() => {}, []);
   useDidShow(() => {
     getDetail();
   });

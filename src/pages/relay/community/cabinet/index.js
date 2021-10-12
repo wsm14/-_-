@@ -35,7 +35,6 @@ class Index extends Component {
   componentWillUnmount() {
     evens.$emit("setCabinetId", this.state.communityLiftingCabinetId);
   }
-  fetchLiftingCabinet;
   //获取地址列表
   render() {
     const { communityLiftingCabinetId, communityLiftingCabinetList } =

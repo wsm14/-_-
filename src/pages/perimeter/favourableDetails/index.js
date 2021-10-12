@@ -33,7 +33,6 @@ import Card from "@/components/shopView/represent";
 import Merchant from "@/components/shopView/merchant";
 import Rule from "@/components/shopView/rule";
 import Recommend from "@/components/specalActive";
-import NewToast from "@/components/noviceGuide";
 import Wares from "@/components/componentView/wares";
 import Drawer from "@/components/Drawer";
 import RightFlag from "@/components/componentView/rightFlagView";
@@ -809,30 +808,10 @@ class MerchantDetails extends Component {
                 ></RightFlag>
               </Drawer>
             )}
-
-            {filterPath(getCurrentInstance().router.params) &&
-              !Taro.getStorageSync("deviceFlag") && (
-                <NewToast
-                  type={"goods"}
-                  auth={login}
-                  data={httpData}
-                ></NewToast>
-              )}
           </View>
         );
       } else {
-        return (
-          <ActivityStatus userInfo={configUserLevelInfo}>
-            {filterPath(getCurrentInstance().router.params) &&
-              !Taro.getStorageSync("deviceFlag") && (
-                <NewToast
-                  type={"goods"}
-                  auth={login}
-                  data={httpData}
-                ></NewToast>
-              )}
-          </ActivityStatus>
-        );
+        return <ActivityStatus userInfo={configUserLevelInfo}></ActivityStatus>;
       }
     } else return null;
   }

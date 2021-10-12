@@ -28,7 +28,6 @@ class Index extends Component {
       blindType: getCurrentInstance().router.params.blindType || 0, // 盲盒进入存在
     };
   }
-  componentWillUnmount() {}
   componentDidMount() {}
   componentDidShow() {
     this.fetchAddress();

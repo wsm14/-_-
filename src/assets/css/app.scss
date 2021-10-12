@@ -3186,3 +3186,6 @@ image {
   margin-left: 8px;
   flex-shrink: 0;
 }
+button::after {
+  border: none;
+}

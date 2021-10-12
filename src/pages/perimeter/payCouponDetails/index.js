@@ -29,7 +29,6 @@ import Merchant from "@/components/shopView/merchant";
 import Rule from "@/components/shopView/rule";
 import VideoBean from "./components/getVideoBean";
 import Recommend from "@/components/couponActive";
-import NewToast from "@/components/noviceGuide";
 import Wares from "@/components/componentView/wares";
 import { filterStrList } from "@/common/utils";
 import Drawer from "@/components/Drawer";
@@ -621,21 +620,10 @@ class Index extends Component {
               </View>
             </Toast>
           )}
-          {filterPath(getCurrentInstance().router.params) &&
-            !Taro.getStorageSync("deviceFlag") && (
-              <NewToast type={"coupon"} auth={login} data={httpData}></NewToast>
-            )}
         </View>
       );
     } else {
-      return (
-        <NullStatus userInfo={configUserLevelInfo}>
-          {filterPath(getCurrentInstance().router.params) &&
-            !Taro.getStorageSync("deviceFlag") && (
-              <NewToast type={"coupon"} auth={login} data={httpData}></NewToast>
-            )}
-        </NullStatus>
-      );
+      return <NullStatus userInfo={configUserLevelInfo}></NullStatus>;
     }
   }
 }

@@ -245,7 +245,7 @@ export const getShareInfo = (data = {}, fn) => {
         sourceType,
       },
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
 //获取解密分享码

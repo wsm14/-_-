@@ -50,6 +50,7 @@
       }
       .bind_getNumber_btn {
         @include whEqual(132px, 56px);
+        position: relative;
         &.invite {
           background: url("https://wechat-config.dakale.net/miniprogram/blind/home/go_invite.png")
             no-repeat;

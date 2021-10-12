@@ -64,7 +64,6 @@ class Index extends Component {
           count: index,
         },
         (res) => {
-          console.log(this.state);
         }
       );
     }

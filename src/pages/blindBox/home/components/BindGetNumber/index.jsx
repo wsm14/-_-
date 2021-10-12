@@ -1,8 +1,9 @@
 import React from "react";
-import { View } from "@tarojs/components";
+import { View, Button } from "@tarojs/components";
 import Router from "@/common/router";
 import { observer } from "mobx-react";
 import "./index.scss";
+import { loginStatus } from "@/common/utils";
 
 /**
  * 获取盲盒机会
@@ -29,9 +30,11 @@ export default ({ data }) => {
       tip: `每天最高可获得${blindBoxInvitationTimes}次免费拆盲盒机会  `,
       btn: "invite",
       fn: () => {
-        Router({
-          routerName: "blindShare",
-        });
+        if (!loginStatus()) {
+          Router({
+            routerName: "login",
+          });
+        }
       },
     },
   ];
@@ -47,7 +50,20 @@ export default ({ data }) => {
               <View className="bind_getNumberInfo_title">{item.title}</View>
               <View className="bind_getNumber_tip">{item.tip}</View>
             </View>
-            <View className={`bind_getNumber_btn ${item.btn}`}></View>
+            <View className={`bind_getNumber_btn ${item.btn}`}>
+              {item.btn === "invite" && loginStatus() && (
+                <Button
+                  data-info="mh"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    background: "none",
+                    position: "absolute",
+                  }}
+                  openType={"share"}
+                ></Button>
+              )}
+            </View>
           </View>
         ))}
       </View>

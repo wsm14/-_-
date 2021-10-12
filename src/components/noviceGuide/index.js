@@ -7,7 +7,7 @@ import Router from "@/common/router";
 import "./index.scss";
 export default ({ data, auth, type, stopVideo, initVideo }) => {
   const [animate, setAnimated] = useState(null);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [beanInfo, setBeanInfo] = useState({
     newUserFlag: "0",
@@ -29,16 +29,19 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
         newDeviceFlag: Taro.getStorageSync("newDeviceFlag") || "1",
       }).then((val) => {
         const { newUserFlag = "1", newUserBean = "300" } = val;
-        setBeanInfo({
-          newUserFlag,
-          newUserBean,
+        setVisible(() => {
+          setBeanInfo({
+            newUserFlag,
+            newUserBean,
+          });
+          return true;
         });
       });
     }
   }, [auth]);
 
   useEffect(() => {
-    if (newUserFlag === "1" && visible) {
+    if (visible) {
       animated();
     }
   }, [beanInfo]);
@@ -78,7 +81,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
       stopVideo && stopVideo();
     }, 300);
   };
-  const login = () => {
+  const linkInfo = (routerName) => {
     let animateTem2 = Taro.createAnimation({
       duration: 300,
       timingFunction: "linear",
@@ -90,7 +93,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
     setTimeout(() => {
       setVisible(false);
       Router({
-        routerName: "userNewArtist",
+        routerName: routerName,
         args: {
           ...data,
           username,
@@ -100,7 +103,48 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
       initVideo && initVideo();
     }, 300);
   };
-
+  const templateBean = {
+    1: (
+      <View className="noviceGuide_Box">
+        <View className="noviceGuide_title">
+          <View className="noviceGuide_title_pad">你获得了拆盲盒机会</View>
+        </View>
+        <View className="noviceGuide_hf">拼手气玩大的·抽iPhone13</View>
+        <View className="noviceGuide_gif"></View>
+        <View
+          className="noviceGuide_btn public_center"
+          onClick={() => linkInfo("blindIndex")}
+        >
+          立即拆盲盒
+        </View>
+        <View
+          className="noviceGuide_Box_close"
+          onClick={() => onClose()}
+        ></View>
+      </View>
+    ),
+    0: (
+      <View className="noviceGuide_Box">
+        <View className="noviceGuide_title">
+          <View className="noviceGuide_title_pad">恭喜获得卡豆奖励</View>
+        </View>
+        <View className="noviceGuide_hf">卡豆玩盲盒 赢iPhone13</View>
+        <View className="noviceGuide_gifBean">
+          <View className="gifBean_btn public_center">{newUserBean}卡豆</View>
+        </View>
+        <View
+          className="noviceGuide_btn public_center"
+          onClick={() => linkInfo("userNewArtist")}
+        >
+          立即领取
+        </View>
+        <View
+          className="noviceGuide_Box_close"
+          onClick={() => onClose()}
+        ></View>
+      </View>
+    ),
+  }[newUserFlag];
   /* 显示隐藏动画  */
 
   const template = () => {
@@ -114,31 +158,11 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
           onClose();
         }}
       >
-        <View className="noviceGuide_Box">
-          <View className="noviceGuide_image" onClick={() => login()}>
-            <View className="noviceGuide_user font_hide">
-              {type !== "index" && `@${username + " "}送你`}
-            </View>
-            <View className="noviceGuide_font1"></View>
-            <View className="noviceGuide_font2 public_center">
-              <View className="noviceGuide_bean_icon"></View>
-              <View className="noviceGuide_num_icon"></View>
-              <View className="noviceGuide_num">{newUserBean}</View>
-            </View>
-            <View className="noviceGuide_font3">
-              成功领取 立减
-              <Text className="color14">{newUserBean / 100}元</Text>
-            </View>
-          </View>
-          <View
-            className="noviceGuide_Box_close"
-            onClick={() => onClose()}
-          ></View>
-        </View>
+        {templateBean}
       </View>
     );
   };
-  if (newUserFlag === "1" && visible) {
+  if (visible) {
     return template();
   } else {
     return null;

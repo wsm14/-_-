@@ -1,12 +1,12 @@
 import { httpGet, httpPost } from "@/api/newRequest";
 
 export const getGoodsByMerchantId = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/specialGoods/listMayLikeSpecialGoods",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
 //获取猜你喜欢数据
