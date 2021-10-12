@@ -23,9 +23,9 @@ export default (props) => {
     couponPrice,
     activeBeginDate,
     useWeek = "",
+    activeEndDate,
     useTime = "",
     verificationTime = "",
-    activeEndDate,
   } = item;
   let nullImage =
     "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/conpon_shop.png";
@@ -84,7 +84,7 @@ export default (props) => {
                 凭券到店扫码核销领取对应的商品
               </View>
               <View className="wraparound_coupon_bottomMargin">
-                限{activeBeginDate} 至 {activeBeginDate}使用
+                限{activeBeginDate} 至 {activeEndDate}使用
               </View>
               <View className="wraparound_coupon_bottomMargin">
                 限{filterWeek(useWeek) + " " + useTime}
@@ -107,7 +107,9 @@ export default (props) => {
                 : "wraparound_coupon_bottomIcon1"
             )}
           >
-            {couponChannel === "buy" ? "限到店核销使用" : "限到店扫码支付使用"}
+            {couponChannel === "buy"
+              ? "限到店核销使用"
+              : "限到店扫码支付、核销使用"}
           </View>
           {status && (
             <>
@@ -121,7 +123,7 @@ export default (props) => {
               )}
 
               <View className="wraparound_coupon_bottomMargin">
-                限{activeBeginDate} 至 {activeBeginDate}使用
+                限{activeBeginDate} 至 {activeEndDate}使用
               </View>
             </>
           )}
@@ -145,7 +147,9 @@ export default (props) => {
       return (
         <View className="wraparound_coupon_bottom  public_auto">
           <View className="wraparound_coupon_bottomIcon1">
-            {couponChannel === "buy" ? "限到店核销使用" : "限到店扫码支付使用"}
+            {couponChannel === "buy"
+              ? "限到店核销使用"
+              : "限到店扫码支付、核销使用"}
           </View>
           <View>
             {couponStatus === "2"
