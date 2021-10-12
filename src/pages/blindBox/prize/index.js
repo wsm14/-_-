@@ -49,7 +49,7 @@ class Index extends Component {
   render() {
     const { blindBoxRewardList } = this.state;
     const template = (item = {}) => {
-      const { contentParam } = item;
+      const { contentParam, blindBoxRewardId } = item;
       const data = JSON.parse(contentParam);
       const { showName, prize, deliveryTime, logisticsStatus, prizeImg } = data;
       const filterObj = {
@@ -61,7 +61,7 @@ class Index extends Component {
         <View className="prize_template">
           <View className="prize_template_img">
             <Image
-              src={prizeImg }
+              src={prizeImg}
               mode="aspectFill"
               className="prize_template_image"
             ></Image>
@@ -79,14 +79,24 @@ class Index extends Component {
           >
             {filterObj}
           </View>
-          <View className="prize_template_btn public_center">查看详情</View>
+          <View
+            className="prize_template_btn public_center"
+            onClick={() =>
+              Router({
+                routerName: "blindPrizeDetail",
+                args: { blindBoxRewardId },
+              })
+            }
+          >
+            查看详情
+          </View>
         </View>
       );
     };
     return (
       <View className="prize_box">
         {blindBoxRewardList.map((item) => {
-          return template();
+          return template(item);
         })}
       </View>
     );
