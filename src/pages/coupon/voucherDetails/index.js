@@ -78,7 +78,7 @@ class Index extends PureComponent {
             fn={() => this.getUserCouponDetail()}
             data={userCouponInfo}
           ></Codes>
-          {knowPay(userCouponInfo)}
+          {knowPay(userCouponInfo, "coupon")}
           <RecommendCoupon
             current={true}
             userInfo={configUserLevelInfo}
