@@ -21,7 +21,9 @@ class Index extends Component {
     this.state = {
       showAddress: false,
       userAddressList: [],
-      selectIndex: getCurrentInstance().router.params.selectIndex || 0,
+      selectIndex: getCurrentInstance().router.params.blindType
+        ? null
+        : getCurrentInstance().router.params.selectIndex || 0,
       defaultData: {},
       type: "edit",
       mode: getCurrentInstance().router.params.mode,
@@ -119,7 +121,7 @@ class Index extends Component {
   }
   //获取新增地址
   changeSelect(index) {
-    const { selectIndex, mode, userAddressList } = this.state;
+    const { selectIndex, mode, userAddressList, blindType } = this.state;
     if (selectIndex !== index) {
       this.setState(
         {
@@ -166,7 +168,7 @@ class Index extends Component {
   render() {
     const { showAddress, userAddressList, selectIndex, type, defaultData } =
       this.state;
-    console.log(selectIndex);
+
     return (
       <View className="delivery_box">
         <EditAddress

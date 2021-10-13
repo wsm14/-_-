@@ -162,7 +162,7 @@ export const fetchGetPrizeDetail = (data, fn) => {
 export const fetchBindAddress = (data, fn) => {
   return httpPost(
     {
-      url: "/user/activity/saveNewUserBean",
+      url: "/user/activity/blindBox/reward/blindBoxRewardAddAddress",
       data: data,
     },
     (res) => {
