@@ -23,7 +23,7 @@ export default ({ detail = {} }) => {
     },
     {
       name: "物流公司",
-      key: "ogisticsCompany",
+      key: "logisticsCompany",
     },
     {
       name: "物流单号",
