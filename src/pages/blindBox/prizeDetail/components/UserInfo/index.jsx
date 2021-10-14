@@ -75,7 +75,7 @@ export default ({ detail }) => {
         <View className="prize_goods_detail">
           <View className="prize_goods">
             {/* 商品名称 */}
-            <View className="prize_goods_name">{showName}</View>
+            <View className="prize_goods_name font_hide">{showName}</View>
             {/* 灰色样式 end */}
             <View
               className={`prize_order_status ${

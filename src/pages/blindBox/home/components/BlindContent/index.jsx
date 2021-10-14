@@ -4,7 +4,7 @@ import JackNow from "./JackNow";
 import Taro from "@tarojs/taro";
 import { fetchBlindBoxReward, fetchBlindBoxHelp } from "@/server/blindBox";
 import Drawer from "@/components/Drawer";
-import { loginStatus } from "@/common/utils";
+import { loginStatus, backgroundObj } from "@/common/utils";
 import Router from "@/common/router";
 import "./index.scss";
 const filterList = (list) => {
@@ -34,7 +34,12 @@ export default ({ data, updateInfo, list }) => {
   const [friendVisible, setFriendVisible] = useState(false);
   const [shareData, setShareData] = useState({});
   const { winningImg } = jpData;
-  const { blindBoxHelpList = [], num, freeTime } = shareData;
+  const {
+    blindBoxHelpList = [],
+    blindBoxRuleObject = {},
+    freeTime,
+  } = shareData;
+  const { num } = blindBoxRuleObject;
   const bindTab = {
     bean: "卡豆专场",
     invitation: "邀请专场",
@@ -58,7 +63,7 @@ export default ({ data, updateInfo, list }) => {
         } = val;
         setFriendVisible(() => {
           setShareData({
-            blindBoxHelpList: filterList(blindBoxHelpList),
+            blindBoxHelpList: filterList(blindBoxHelpList.slice(0, 3)),
             freeTime,
             blindBoxRuleObject,
             userInfo,
@@ -99,8 +104,10 @@ export default ({ data, updateInfo, list }) => {
             className="blind_start"
             onClick={() =>
               Router({
-                routerName: "home",
-                type: "switchTab",
+                routerName: "nearVideo",
+                args: {
+                  type: "goods",
+                },
               })
             }
           >
@@ -150,23 +157,6 @@ export default ({ data, updateInfo, list }) => {
       }
     }
   };
-  // const templateBtn = {
-  //   bean:
-  //     ruleTypeBeanStatus === "1" ? (
-  //       <View className="blind_start" onClick={saveBlindBoxReward}>
-  //         {blindBoxBeanNum}卡豆拆一次
-  //       </View>
-  //     ) : (
-  //       <View className="blind_start">卡豆不足 ?</View>
-  //     ),
-  //   invitation:
-  //     times > 0 ? (
-  //       <View className="blind_start">免费拆盲盒X{times}</View>
-  //     ) : (
-  //       <View className="blind_start">邀请好友助力 得机会</View>
-  //     ),
-  // }[tabKey];
-  // 这种写法click直接失效;
   return (
     <>
       <View className="blind_content">
@@ -209,7 +199,12 @@ export default ({ data, updateInfo, list }) => {
 
         {/* 邀请好友获得免费机会/查看我的助力进度 */}
         {tabKey === "bean" ? (
-          <View className="blind_invint">邀请好友获得免费机会 </View>
+          <View
+            className="blind_invint"
+            onClick={() => setTabKey("invitation")}
+          >
+            去邀请专场 免费抽{" "}
+          </View>
         ) : (
           <View className="blind_invint" onClick={() => getBlindHelp()}>
             查看我的助力进度{" "}
@@ -348,7 +343,7 @@ export default ({ data, updateInfo, list }) => {
               })}
             </View>
             <View className="friend_share_desc">
-              2. 每{times}个人助力成功，即可获得{num}次机会
+              每邀请{num}个人助力成功，即可获得{blindBoxRuleObject.times}次机会
             </View>
           </View>
         </Drawer>

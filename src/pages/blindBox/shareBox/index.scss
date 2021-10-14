@@ -74,6 +74,7 @@ page {
         text-align: center;
         font-weight: 400;
         color: #333333;
+        line-height: 40px;
       }
       .shareBox_fontMargin1 {
         margin: 64px auto 0;
@@ -107,6 +108,17 @@ page {
       padding: 40px 37px 0;
       .shareBox_btn {
         width: 274px;
+        height: 80px;
+        background: #ef476f;
+        border-radius: 59px;
+        border: 3px solid #ffd62e;
+        font-size: 32px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 32px;
+      }
+      .shareBox_btnInfo_btn {
+        width: 400px;
         height: 80px;
         background: #ef476f;
         border-radius: 59px;

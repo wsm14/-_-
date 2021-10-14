@@ -45,7 +45,7 @@ export default (props) => {
             })
           }
         >
-          玩盲盒赢千元大奖
+          用卡豆 拆盲盒 赢大奖
         </View>
       </View>
     );

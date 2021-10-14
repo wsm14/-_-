@@ -1,33 +1,38 @@
 import React from "react";
 import { View, Button } from "@tarojs/components";
 import Router from "@/common/router";
-import { observer } from "mobx-react";
+import { observer, MobXProviderContext } from "mobx-react";
 import "./index.scss";
 import { loginStatus } from "@/common/utils";
 
 /**
  * 获取盲盒机会
  */
-export default ({ data }) => {
-  const { blindBoxInvitationTimes } = data;
+export default observer(({ data }) => {
+  const { store } = React.useContext(MobXProviderContext);
+  const { commonStore } = store;
+  const { beanLimit } = commonStore;
+  const { blindBoxInvitationTimes, blindBoxInvitationNum } = data;
   console.log();
   const getNumberList = [
     {
       icon: "video",
       title: "看视频捡卡豆",
-      tip: "每天看视频最高可捡500卡豆",
+      tip: `每天看视频最高可捡${beanLimit}卡豆`,
       btn: "video",
       fn: () => {
         Router({
-          routerName: "home",
-          type: "switchTab",
+          routerName: "nearVideo",
+          args: {
+            type: "goods",
+          },
         });
       },
     },
     {
       icon: "invite",
       title: "邀请好友得免费机会",
-      tip: `每天最高可获得${blindBoxInvitationTimes}次免费拆盲盒机会  `,
+      tip: `每邀请${blindBoxInvitationNum}个好友助力即可获得${blindBoxInvitationTimes}次机会 `,
       btn: "invite",
       fn: () => {
         if (!loginStatus()) {
@@ -53,7 +58,7 @@ export default ({ data }) => {
             <View className={`bind_getNumber_btn ${item.btn}`}>
               {item.btn === "invite" && loginStatus() && (
                 <Button
-                  data-info="mh"
+                  data-info="zl"
                   style={{
                     width: "100%",
                     height: "100%",
@@ -81,4 +86,4 @@ export default ({ data }) => {
       </View>
     </View>
   );
-};
+});

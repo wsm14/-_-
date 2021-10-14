@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Image } from "@tarojs/components";
+import { View, Image, ScrollView } from "@tarojs/components";
 import "./index.scss";
 
 /**
@@ -23,29 +23,32 @@ export default (props) => {
   }, [show]);
 
   return (
-    <View className="blind_layout">
+    <View className="blind_layout" catchMove>
       <View
         catchMove
         className={"PopLayout_mask" + (show ? " pop_show" : "pop_hide")}
         onClick={onClose}
       ></View>
       <View
+        catchMove
         className={"PopLayout_content"}
         style={{ transform: `translateY(${!show ? "100%" : "0"})` }}
       >
         <View className="blind_layout_title"></View>
         {childDel && (
-          <View className="blind_layout_group">
-            {list.map((item) => {
-              const { prizeImg, showName } = item;
-              return (
-                <View className="blind_goods_cell">
-                  <Image src={prizeImg} className="blind_goods_img"></Image>
-                  <View className="blind_goods_name">{showName}</View>
-                </View>
-              );
-            })}
-          </View>
+          <ScrollView scrollY className="blind_layout_scroll">
+            <View className="blind_layout_group">
+              {list.map((item) => {
+                const { prizeImg, showName } = item;
+                return (
+                  <View className="blind_goods_cell">
+                    <Image src={prizeImg} className="blind_goods_img"></Image>
+                    <View className="blind_goods_name">{showName}</View>
+                  </View>
+                );
+              })}
+            </View>
+          </ScrollView>
         )}
       </View>
     </View>

@@ -134,6 +134,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     blindShare: "/pages/blindBox/shareBox/index", //盲盒邀请
     blindPrize: "/pages/blindBox/prize/index", //我的奖品
     blindPrizeDetail: "/pages/blindBox/prizeDetail/index", // 我的奖品详情
+    rewardDetails: "/pages/newUser/rewardDetails/index", //卡豆明细
   }[routerName];
   const types = type;
 

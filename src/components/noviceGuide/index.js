@@ -104,7 +104,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
     }, 300);
   };
   const templateBean = {
-    1: (
+    0: (
       <View className="noviceGuide_Box">
         <View className="noviceGuide_title">
           <View className="noviceGuide_title_pad">你获得了拆盲盒机会</View>
@@ -123,7 +123,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
         ></View>
       </View>
     ),
-    0: (
+    1: (
       <View className="noviceGuide_Box">
         <View className="noviceGuide_title">
           <View className="noviceGuide_title_pad">恭喜获得卡豆奖励</View>

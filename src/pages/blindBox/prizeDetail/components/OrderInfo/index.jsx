@@ -6,7 +6,7 @@ import "./index.scss";
 /**
  * 订单信息
  */
-export default ({ data = {} }) => {
+export default ({ detail = {} }) => {
   const dataArr = [
     {
       name: "中奖编号",
@@ -52,15 +52,17 @@ export default ({ data = {} }) => {
       <View className="prize_order_group">
         {dataArr.map(
           (item) =>
-            data[item.key] && (
+            detail[item.key] && (
               <View className="prize_order_cell">
                 <View className="prize_orderCell_name">{item.name}</View>
                 <View className="prize_orderCellData_box">
-                  <View className="prize_orderCell_data">{data[item.key]}</View>
+                  <View className="prize_orderCell_data">
+                    {detail[item.key]}
+                  </View>
                   {item.onCopy && (
                     <View
                       className="prize_orderCell_copy"
-                      onClick={() => handleCopyData(data[item.key])}
+                      onClick={() => handleCopyData(detail[item.key])}
                     >
                       复制
                     </View>

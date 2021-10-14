@@ -70,6 +70,7 @@
       background: #f8f2e9;
       border-radius: 4px;
       margin-right: 24px;
+      flex-shrink: 0;
     }
     .prize_goods_detail {
       flex: 1;
@@ -80,6 +81,7 @@
           font-size: 32px;
           font-weight: 600;
           color: #333333;
+          max-width: 315px;
         }
       }
 
@@ -92,8 +94,10 @@
     .prize_order_status {
       font-size: 24px;
       color: #ef476f;
+      margin-left: auto;
       &.end {
         color: #999999;
+        margin-left: auto;
       }
     }
   }

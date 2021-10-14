@@ -15,6 +15,7 @@ page {
     .prize_template_img {
       width: 152px;
       height: 152px;
+      flex-shrink: 0;
     }
     .prize_template_image {
       width: 100%;
@@ -29,6 +30,7 @@ page {
         color: #333333;
         line-height: 32px;
         padding-top: 8px;
+        max-width: 320px;
       }
       .prize_template_count {
         font-size: 24px;
@@ -59,9 +61,9 @@ page {
     .prize_template_right {
       font-size: 24px;
       font-weight: 400;
-      color: #ef476f;
       margin-left: auto;
       padding-top: 12px;
+      flex-shrink: 0;
     }
   }
 }

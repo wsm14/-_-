@@ -17,8 +17,6 @@ import "./index.scss";
 export default observer(() => {
   const { store } = React.useContext(MobXProviderContext);
   const { locationStore, authStore } = store;
-
-  const { login } = authStore;
   const [bindGoodList, setBindGoodList] = useState([
     {
       type: "bean", // 卡豆专区
@@ -80,17 +78,13 @@ export default observer(() => {
         },
       ]);
     });
-  });
-  useEffect(() => {
     fetchUserShareCommission({}, (res) => {
       const { configUserLevelInfo = {} } = res;
       const { payBeanCommission = 50, shareCommission = 0 } =
         configUserLevelInfo;
-      setConfigUserLevelInfo({
-        configUserLevelInfo: { payBeanCommission, shareCommission },
-      });
+      setConfigUserLevelInfo({ payBeanCommission, shareCommission });
     });
-  }, []);
+  });
 
   return (
     <View className="blind_GoodsContent">

@@ -13,6 +13,7 @@ import {
 } from "@/server/blindBox";
 import { getShareInfo } from "@/server/common";
 import { loginStatus } from "@/common/utils";
+import Router from "@/common/router";
 import "./index.scss";
 /**
  * 盲盒首页
@@ -107,7 +108,19 @@ export default () => {
             ></Button>
           )}
         </View>
-        <View className="blind_home_rule"></View>
+        <View
+          className="blind_home_rule"
+          onClick={() =>
+            Router({
+              routerName: "webView",
+              args: {
+                link: `https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/${
+                  process.env.NODE_ENV === "development" ? "dev" : "product"
+                }/wechant/page/common/blindBoxRule.html`,
+              },
+            })
+          }
+        ></View>
       </View>
       {/* 获奖信息滚动横幅 */}
       <PersonnelSwiper list={barrage}></PersonnelSwiper>

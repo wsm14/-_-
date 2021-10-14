@@ -13,6 +13,7 @@ import {
 import { fetchBindAddress } from "@/server/share";
 import "./index.scss";
 import { goBack, toast } from "@/common/utils";
+import Empty from "@/components/Empty";
 import { navigatePostBack } from "@/relay/common/hooks";
 
 class Index extends Component {
@@ -136,13 +137,17 @@ class Index extends Component {
               confirmText: "确定",
               confirmColor: "#07c0c2",
               content: `确认选择该地址？确认后无法修改`,
-              success: function (res) {
+              success: (res) => {
                 if (res.confirm) {
                   fetchBindAddress({ blindBoxRewardId, userAddressId }).then(
                     (res) => {
                       goBack();
                     }
                   );
+                } else {
+                  this.setState({
+                    selectIndex: -1,
+                  });
                 }
               },
             });
@@ -198,7 +203,11 @@ class Index extends Component {
             ></Template>
           );
         })}
-
+        <Empty
+          show={userAddressList.length === 0}
+          toast={"您还没有完善收货地址哦"}
+          type={"address"}
+        ></Empty>
         <Bottom onChange={this.onChangeSelect.bind(this)}></Bottom>
       </View>
     );

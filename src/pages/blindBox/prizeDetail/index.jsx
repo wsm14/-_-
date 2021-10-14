@@ -38,7 +38,14 @@ export default () => {
       {/* 兑奖须知 */}
       <View className="cash_deatil">
         <View className="cash_deatil_tile">兑奖须知</View>
-        <View className="cash_deatil_content"></View>
+        <View className="cash_deatil_content">
+          <View> 1.实物奖品将于5个工作日内寄出</View>
+          <View>2.您需填写详细地址，地址填写后确认发货将无法进行修改。</View>
+          <View>
+              3.若您确需修改可联系客服进行修改，但若商品已经寄出则无法修改。
+          </View>
+          <View> 4.商品为不可退换商品。</View>
+        </View>
       </View>
     </View>
   );

@@ -19,8 +19,7 @@ class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      userId:
-        getCurrentInstance().router.params.userId || "1434865185039794178",
+      userId: getCurrentInstance().router.params.userId,
       blindBoxRuleObject: {},
       blindBoxHelpList: [],
       userInfo: {},
@@ -28,6 +27,7 @@ class Index extends Component {
       visible: false,
       errorVisible: false,
       userBeanInfo: {},
+      userType: "other",
     };
   }
   fetchMomentcheckNew() {
@@ -57,13 +57,15 @@ class Index extends Component {
         freeTime,
         blindBoxRuleObject = {},
         userInfo,
+        userType,
       } = val;
 
       this.setState({
-        blindBoxHelpList,
+        blindBoxHelpList: blindBoxHelpList.slice(0, 3),
         freeTime,
         blindBoxRuleObject,
         userInfo,
+        userType,
       });
     });
   }
@@ -79,9 +81,12 @@ class Index extends Component {
         toast("邀请成功");
       })
       .catch((e) => {
-        this.setState({
-          errorVisible: true,
-        });
+        const { resultCode } = e;
+        if (resultCode == 5235) {
+          this.setState({
+            errorVisible: true,
+          });
+        }
       });
   }
   componentDidShow() {
@@ -155,37 +160,59 @@ class Index extends Component {
                 className="shareBox_profile"
               ></View>
               <View className="shareBox_fontInfo font_hide">
-                来自 {username} 的邀请函
+                来自 {username} 的礼盒
               </View>
               <View className="shareBox_fontMargin1 shareBox_font">
-                我正在哒卡乐抽盲盒，仅差1次机会
+                友友， 你的礼品等待领取
               </View>
-              <View className="shareBox_font">就可以最高抽中iPhone13啦，</View>
-              <View className="shareBox_font">
-                快来帮我助力，同时你也获得抽盲盒机会哦！
+              <View className="shareBox_font" style={{ visibility: "hidden" }}>
+                {" "}
+                友友， 你的礼品等待领取
+              </View>
+              <View className="shareBox_font" style={{ visibility: "hidden" }}>
+                {" "}
+                友友， 你的礼品等待领取
               </View>
               {template}
               <View className="shareBox_liner"></View>
-              <View className="shareBox_btn_box public_auto">
-                <Button>
-                  <View
-                    className="shareBox_btn public_center"
-                    onClick={this.saveBlindBoxHelp.bind(this)}
-                  >
-                    为TA助力
-                  </View>
-                </Button>
-                <Button>
-                  <View
-                    className="shareBox_btn public_center"
-                    onClick={() => {
-                      this.changeNewUser();
-                    }}
-                  >
-                    我也要拆盲盒
-                  </View>
-                </Button>
-              </View>
+              {userType === "other" ? (
+                <View className="shareBox_btn_box public_auto">
+                  <Button>
+                    <View
+                      className="shareBox_btn public_center"
+                      onClick={this.saveBlindBoxHelp.bind(this)}
+                    >
+                      为TA助力
+                    </View>
+                  </Button>
+                  <Button>
+                    <View
+                      className="shareBox_btn public_center"
+                      onClick={() => {
+                        this.changeNewUser();
+                      }}
+                    >
+                      我要领取
+                    </View>
+                  </Button>
+                </View>
+              ) : (
+                <View className="shareBox_btn_box public_center">
+                  <Button>
+                    <View
+                      className="shareBox_btnInfo_btn public_center"
+                      onClick={() =>
+                        Router({
+                          routerName: "blindIndex",
+                        })
+                      }
+                    >
+                      {freeTime > 0 ? "助力成功 马上拆盲盒" : "马上拆盲盒"}
+                    </View>
+                  </Button>
+                </View>
+              )}
+
               <View className="shareBox_share_profileBox">
                 {this.filterList(blindBoxHelpList).map((item, index) => {
                   const { profile = "" } = item;
@@ -225,7 +252,7 @@ class Index extends Component {
             1. 每个好友每天仅可助力1次哦
           </View>
           <View className="shareBox_toast_font">
-            2. 每{times}个人助力成功，好友即可获得{num}次免费盲盒机会
+            2. 每{num}个人助力成功，好友即可获得{times}次免费盲盒机会
           </View>
           <View className="shareBox_toast_font">3. 待补充</View>
         </View>
