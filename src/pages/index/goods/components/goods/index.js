@@ -267,7 +267,7 @@ export default (props) => {
     );
   };
   const createCodeGoods = (item) => {
-    let { payFee, orderDesc, orderSn, createTime, beanFee = "" } = item;
+    let { payFee, orderDesc, orderSn, createTime, beanFee = "", status } = item;
     orderDesc = JSON.parse(orderDesc) || {};
     const { merchantName, merchantImg, merchantId, merchantIdString } =
       orderDesc;
@@ -292,7 +292,10 @@ export default (props) => {
               {merchantName}
             </View>
             <View className="createGood_merchantgo"></View>
-            <View className="createGood_status status_color1">已完成</View>
+            <View className="createGood_status status_color1">
+              {" "}
+              {filterPayStatus(status)}
+            </View>
           </View>
         </View>
         <View
@@ -576,6 +579,7 @@ export default (props) => {
       createTime,
       beanFee = "",
       totalFee,
+      status,
     } = item;
     orderDesc = JSON.parse(orderDesc) || {};
     const {
@@ -592,7 +596,10 @@ export default (props) => {
               {virtualProductType === "phoneBill" ? "话费充值" : "会员充值"}
             </View>
 
-            <View className="createGood_status status_color1">已完成</View>
+            <View className="createGood_status status_color1">
+              {" "}
+              {filterPayStatus(status)}
+            </View>
           </View>
         </View>
         <View
