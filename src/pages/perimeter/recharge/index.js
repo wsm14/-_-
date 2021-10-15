@@ -21,22 +21,13 @@ class Index extends Component {
     this.state = {
       payList: [
         {
-          money: 5,
-        },
-        {
-          money: 10,
-        },
-        {
-          money: 20,
-        },
-        {
-          money: 30,
-        },
-        {
           money: 50,
         },
         {
           money: 100,
+        },
+        {
+          money: 200,
         },
       ],
       configUserLevelInfo: {},

@@ -107,7 +107,7 @@ export default (props) => {
                 : "wraparound_coupon_bottomIcon1"
             )}
           >
-            {couponChannel === "buy"
+            {couponType !== "freeReduceCoupon"
               ? "限到店核销使用"
               : "限到店扫码支付、核销使用"}
           </View>
@@ -147,7 +147,7 @@ export default (props) => {
       return (
         <View className="wraparound_coupon_bottom  public_auto">
           <View className="wraparound_coupon_bottomIcon1">
-            {couponChannel === "buy"
+            {couponType !== "freeReduceCoupon"
               ? "限到店核销使用"
               : "限到店扫码支付、核销使用"}
           </View>
