@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { ScrollView, Swiper, SwiperItem, Text, View } from "@tarojs/components";
-import "./index.scss";
+
 import {
   toast,
   backgroundObj,
@@ -10,8 +10,7 @@ import {
   GetDistance,
   navigateTo,
 } from "@/common/utils";
-import classNames from "classnames";
-import { checkLocation } from "@/server/common";
+import "./index.scss";
 const tabCity = (props) => {
   const { data, store, reload } = props;
   const [visible, setVisible] = useState(false);
@@ -30,76 +29,58 @@ const tabCity = (props) => {
     }
   }, [result]);
   const checkLocations = (obj) => {
-    checkLocation(obj, (res) => {
-      const { cityStatus, cityName } = res;
-      if (cityStatus === "1") {
-        let cityData = Taro.getStorageSync("city");
-        let relData = Taro.getStorageSync("relCity");
-        if (!cityData) {
-          store.locationStore.setCity(cityName, obj.cityCode, 1);
-          Taro.setStorageSync("relCity", {
-            cityCode: obj.cityCode,
-            cityName: cityName,
-          });
-          reload();
-        } else if (relData.cityCode !== obj.cityCode && relData) {
-          Taro.setStorageSync("relCity", {
-            cityCode: obj.cityCode,
-            cityName: cityName,
-          });
-          setCity({
-            cityCode: obj.cityCode,
-            cityName: cityName,
-            type: 1,
-          });
-          setVisible(true);
-        }
-      }
-    });
+    const { city } = obj;
+    let cityData = Taro.getStorageSync("city");
+    let relData = Taro.getStorageSync("relCity");
+    if (!cityData) {
+      store.locationStore.setCity(cityName, obj.cityCode, 1);
+      Taro.setStorageSync("relCity", {
+        cityCode: obj.cityCode,
+        cityName: city,
+      });
+      reload();
+    } else if (relData.cityCode !== obj.cityCode && relData) {
+      Taro.setStorageSync("relCity", {
+        cityCode: obj.cityCode,
+        cityName: city,
+      });
+      setCity({
+        cityCode: obj.cityCode,
+        cityName: city,
+        type: 1,
+      });
+      setVisible(true);
+    }
   };
   if (visible) {
     const { city } = result;
     return (
       <View catchMove className="tabCity_layer">
-        <View className="tabCity_box">
-          <View className="tabCity_box_content">
-            <View className="tabCity_box_font1 color1 font28">
-              您当前定位城市为
-            </View>
-            <View className="tabCity_box_font2 font32">{city}</View>
-            <View className="tabCity_box_font3 font28  color1">
-              是否确认切换？
-            </View>
-            <View className="tabCity_box_font4">
-              <View
-                className="tabCity_box_btn tabCity_box_btn1"
-                onClick={() => {
-                  Taro.setStorageSync("city", {
-                    ...Taro.getStorageSync("city"),
-                    type: "1",
-                  });
-                  setVisible(false);
-                }}
-              >
-                暂时不
-              </View>
-              <View
-                className="tabCity_box_btn tabCity_box_btn2"
-                onClick={() => {
-                  store.locationStore.setCity(
-                    citys.cityName,
-                    citys.cityCode,
-                    citys.type
-                  );
-                  setVisible(false);
-                  reload();
-                }}
-              >
-                确定
-              </View>
-            </View>
-          </View>
+        <View className="tabCity_layer_font">定位显示你在{city}</View>
+        <View
+          className="tabCity_layer_btn public_center"
+          onClick={() => {
+            store.locationStore.setCity(
+              citys.cityName,
+              citys.cityCode,
+              citys.type
+            );
+            setVisible(false);
+            reload();
+          }}
+        >
+          切换城市
         </View>
+        <View
+          className="tabCity_layer_close"
+          onClick={() => {
+            Taro.setStorageSync("city", {
+              ...Taro.getStorageSync("city"),
+              type: "1",
+            });
+            setVisible(false);
+          }}
+        ></View>
       </View>
     );
   } else return null;

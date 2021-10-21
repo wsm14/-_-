@@ -24,7 +24,6 @@ import { getConfigNewcomerOrders } from "@/server/goods";
 import { inject, observer } from "mobx-react";
 import Router from "@/common/router";
 import TabCity from "./components/tabCity";
-import ToastCity from "./components/toastCity";
 import Navition from "./components/navition";
 import Plate from "./components/plate";
 import SelectSpecal from "./components/selectSpecal";
@@ -623,7 +622,6 @@ class Index extends Component {
           store={this.props.store}
           data={result}
         ></TabCity>
-        <ToastCity store={this.props.store} data={result}></ToastCity>
       </View>
     );
   }
