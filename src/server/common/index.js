@@ -48,7 +48,18 @@ export const getRestapiAddress = (data, fn) => {
   );
 };
 //获取高德城市定位信息
-
+export const filterRestapiAddress = (data, fn) => {
+  httpOtherGet(
+    {
+      data: data,
+      url: "https://restapi.amap.com/v3/geocode/geo",
+    },
+    (res) => {
+      return fn(res);
+    }
+  );
+};
+//获取高德城市定位信息
 export const getCategory = (data, fn) => {
   return httpGet(
     {

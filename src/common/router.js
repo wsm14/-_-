@@ -20,6 +20,13 @@ const switchTab = (url) => {
   });
 };
 //跳转tab页面
+const reLaunch = (url) => {
+  Taro.reLaunch({
+    url: url,
+  });
+};
+//关闭所有页面打开这个页面
+
 export default ({ routerName, type = "navigateTo", args = {} }) => {
   const routerObj = {
     goods: "/pages/index/goods/index", //订单中心
@@ -147,5 +154,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
       return redirectTo(routerObj + (args ? `?${args}` : ""));
     case "switchTab":
       return switchTab(routerObj + (args ? `?${args}` : ""));
+    case "reLaunch":
+      return reLaunch(routerObj + (args ? `?${args}` : ""));
   }
 };
