@@ -26,9 +26,10 @@ import Router from "@/common/router";
 import TabCity from "./components/tabCity";
 import Navition from "./components/navition";
 import Plate from "./components/plate";
-import SelectSpecal from "./components/selectSpecal";
 import SpecalPlate from "./components/specalPlate";
 import ConfigWind from "./components/configWindVane";
+import CategoryGoods from "./components/categoryGoods";
+import HotOnly from "./components/hotOnly";
 import "./index.scss";
 @inject("store")
 @observer
@@ -49,7 +50,6 @@ class Index extends Component {
         limit: 3,
         specialFilterType: "today",
       },
-
       specialHttp: {
         page: 1,
         limit: 10,
@@ -63,6 +63,8 @@ class Index extends Component {
       categoryList: [],
       flagDom: false,
       result: {},
+      size: 0,
+      isFixedTop: 0,
       num: Taro.getStorageSync("toast") || 0,
       configNewcomerOrdersInfo: {},
     };
@@ -96,10 +98,11 @@ class Index extends Component {
         dateList: [],
         kolGoodsList: [],
         categoryList: [],
+        isFixedTop: 0,
         triggered: true,
-        flagDom: false,
       },
       (res) => {
+        Taro.stopPullDownRefresh();
         const { hotHttp, dateHttp } = this.state;
         this.topBanner();
         this.getConfigWindVaneBySize();
@@ -111,6 +114,9 @@ class Index extends Component {
         this.fetchgNewcomerOrders();
       }
     );
+  }
+  onPullDownRefresh() {
+    this.onReload();
   }
   componentDidMount() {
     const { hotHttp, dateHttp, num } = this.state;
@@ -279,9 +285,54 @@ class Index extends Component {
       });
     } else return toast("该风向标无跳转路径");
   }
-  getReachBottom() {
+  onPageScroll(e) {
+    const { flagDom } = this.state;
+    if (!flagDom) {
+      Taro.createSelectorQuery()
+        .select(".lookAround_categorys_box1")
+        .boundingClientRect((rect) => {
+          const { top } = rect;
+          console.log(top);
+          if (top >= 32) {
+            if (flagDom) {
+              this.setState({
+                flagDom: false,
+              });
+            }
+          } else {
+            if (!flagDom) {
+              this.setState({
+                flagDom: true,
+              });
+            }
+          }
+        })
+        .exec();
+    } else {
+      Taro.createSelectorQuery()
+        .select(".lookAround_category_fixed")
+        .boundingClientRect((rect) => {
+          const { top } = rect;
+          console.log(top);
+          if (top >= 32) {
+            if (flagDom) {
+              this.setState({
+                flagDom: false,
+              });
+            }
+          } else {
+            if (!flagDom) {
+              this.setState({
+                flagDom: true,
+              });
+            }
+          }
+        })
+        .exec();
+    }
+  }
+  onReachBottom() {
     const { countStatus, specialHttp } = this.state;
-
     this.setState(
       {
         specialHttp: {
@@ -294,7 +345,6 @@ class Index extends Component {
       }
     );
   } //上拉加载
-
   saveRouter(activityId, merchantId) {
     Router({
       routerName: "favourableDetails",
@@ -315,7 +365,6 @@ class Index extends Component {
       dateList = [],
       kolGoodsList = [],
       flagDom,
-      triggered,
       specialHttp: { categoryIds, specialFilterType },
       result = {},
       num,
@@ -326,7 +375,7 @@ class Index extends Component {
         subsidyBean,
       },
     } = this.state;
-    const { cityName, cityCode } = this.props.store.locationStore;
+    const { cityName } = this.props.store.locationStore;
 
     const templateSelect = () => {
       return (
@@ -439,184 +488,60 @@ class Index extends Component {
             “添加到我的小程序”，更多优惠抢不停
           </View>
         )}
-        <ScrollView
-          scrollY
-          onScrollToLower={this.getReachBottom.bind(this)}
-          refresherEnabled
-          onRefresherRefresh={this.onReload.bind(this)}
-          refresherTriggered={triggered}
-          className="lookAround_category_box"
-          onScroll={(e) => {
-            getDom(".lookAround_categorys_box", (res) => {
-              if (res[0]) {
-                const { top } = res[0];
-                if (top) {
-                  if (top < 40) {
-                    this.setState({
-                      flagDom: true,
-                    });
-                  } else {
-                    this.setState({
-                      flagDom: false,
-                    });
-                  }
-                }
-              }
-            });
-          }}
-        >
-          <View>
-            <Banner
-              imgName="coverImg"
-              data={[...specialHeadList]}
-              bottom={bottom}
-              boxStyle={bannerStyle}
-              showNear
-            ></Banner>
-          </View>
-          <ConfigWind
-            onChange={this.bubbleLink.bind(this)}
-            list={configWindVaneList}
-          ></ConfigWind>
-          {(taskStatus === "0" || taskStatus === "1") && (
-            <View
-              className="lookAround_goods_init"
-              onClick={() =>
-                Router({
-                  routerName: "download",
-                })
-              }
-            >
-              <View className="lookAround_goods_font">
-                新人{remainDay}天内成功核销{orderNum}单，赚
-                <Text className="color3">{subsidyBean}</Text>卡豆
-              </View>
-            </View>
-          )}
-          <SpecalPlate
-            data={hotList}
-            userInfo={configUserLevelInfo}
-            list={dateList}
-          ></SpecalPlate>
-          <Plate userInfo={configUserLevelInfo}></Plate>
-          <Banner
-            imgName="coverImg"
-            data={[...specialShopping]}
-            bottom={bottomContent}
-            boxStyle={bannerContentStyle}
-            showNear
-          ></Banner>
-          <View className="lookAround_linder_bottom"></View>
-          <View className="lookAround_category_linder"></View>
+        <View className="lookAround_goods_topHeight"></View>
+        <Banner
+          imgName="coverImg"
+          data={[...specialHeadList]}
+          bottom={bottom}
+          boxStyle={bannerStyle}
+          showNear
+        ></Banner>
+        <ConfigWind
+          onChange={this.bubbleLink.bind(this)}
+          list={configWindVaneList}
+        ></ConfigWind>
+        {(taskStatus === "0" || taskStatus === "1") && (
           <View
-            style={
-              flagDom
-                ? { visibility: "hidden", position: "relative", zIndex: "-1" }
-                : {}
+            className="lookAround_goods_init"
+            onClick={() =>
+              Router({
+                routerName: "download",
+              })
             }
-            className="lookAround_categorys_box lookAround_categorys_box1"
           >
-            <View
-              className="lookAround_categorys_orderBtn"
-              onClick={() =>
-                Router({
-                  routerName: "goodList",
-                })
-              }
-            ></View>
-            <ScrollView
-              scrollWithAnimation={true}
-              scrollX
-              className="lookAround_categorys_parent"
-            >
-              {templateSelect()}
-              {categoryList.map((item) => {
-                const { categoryName, subtitle, categoryIdString } = item;
-                return (
-                  <View
-                    onClick={this.tabGoods.bind(this, item)}
-                    className={classNames(
-                      "lookAround_categorys",
-                      categoryIds === categoryIdString
-                        ? "lookAround_categorys_true bold"
-                        : "lookAround_categorys_flag"
-                    )}
-                  >
-                    <View className="lookAround_topText">{categoryName}</View>
-                    <View
-                      className={classNames(
-                        "lookAround_categorys_iconText",
-                        categoryIds === categoryIdString
-                          ? "lookAround_iconText_color1"
-                          : "lookAround_iconText_color2"
-                      )}
-                    >
-                      {categoryIds === categoryIdString && (
-                        <View className="lookAround_categorys_icon"></View>
-                      )}
-                    </View>
-                  </View>
-                );
-              })}
-            </ScrollView>
+            <View className="lookAround_goods_font">
+              新人{remainDay}天内成功核销{orderNum}单，赚
+              <Text className="color3">{subsidyBean}</Text>卡豆
+            </View>
           </View>
-          <SelectSpecal
-            userInfo={configUserLevelInfo}
-            data={kolGoodsList}
-            linkTo={this.saveRouter.bind(this)}
-            type={specialFilterType}
-          ></SelectSpecal>
-        </ScrollView>
-        {
-          <View
-            style={!flagDom ? { display: "none" } : {}}
-            className="lookAround_categorys_box nav_flex"
-          >
-            <View
-              className="lookAround_categorys_orderBtn"
-              onClick={() =>
-                Router({
-                  routerName: "goodList",
-                })
-              }
-            ></View>
-            <ScrollView
-              scrollWithAnimation={true}
-              scrollX
-              className="lookAround_categorys_parent"
-            >
-              {templateSelect()}
-              {categoryList.map((item) => {
-                const { categoryName, subtitle, categoryIdString } = item;
-                return (
-                  <View
-                    onClick={this.tabGoods.bind(this, item)}
-                    className={classNames(
-                      "lookAround_categorys",
-                      categoryIds === categoryIdString
-                        ? "lookAround_categorys_true bold"
-                        : "lookAround_categorys_flag"
-                    )}
-                  >
-                    <View className="lookAround_topText">{categoryName}</View>
-                    <View
-                      className={classNames(
-                        "lookAround_categorys_iconText",
-                        categoryIds === categoryIdString
-                          ? "lookAround_iconText_color1"
-                          : "lookAround_iconText_color2"
-                      )}
-                    >
-                      {categoryIds === categoryIdString && (
-                        <View className="lookAround_categorys_icon"></View>
-                      )}
-                    </View>
-                  </View>
-                );
-              })}
-            </ScrollView>
-          </View>
-        }
+        )}
+        <SpecalPlate
+          data={hotList}
+          userInfo={configUserLevelInfo}
+          list={dateList}
+        ></SpecalPlate>
+        <HotOnly data={hotList} userInfo={configUserLevelInfo}></HotOnly>
+        <Plate userInfo={configUserLevelInfo}></Plate>
+        <Banner
+          imgName="coverImg"
+          data={[...specialShopping]}
+          bottom={bottomContent}
+          boxStyle={bannerContentStyle}
+          showNear
+        ></Banner>
+        <View className="lookAround_linder_bottom"></View>
+        <View className="lookAround_category_linder"></View>
+        <CategoryGoods
+          configUserLevelInfo={configUserLevelInfo}
+          flagDom={flagDom}
+          list={kolGoodsList}
+          saveRouter={this.saveRouter.bind(this)}
+          specialFilterType={specialFilterType}
+          categoryList={categoryList}
+          templateSelect={templateSelect}
+          categoryIds={categoryIds}
+          tabGoods={this.tabGoods.bind(this)}
+        ></CategoryGoods>
         <TabCity
           reload={this.onReload.bind(this)}
           store={this.props.store}

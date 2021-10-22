@@ -314,3 +314,14 @@ export const fetchSpecialBarrage = (data = {}, fn) => {
   );
 };
 //活动卡豆弹幕;
+
+export const fetchAroundModule = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/configModule/getWanderAroundModule",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//逛逛配置项;

@@ -5,12 +5,10 @@ import VideoView from "./components/videoView";
 import {
   computedClient,
   toast,
-  setIntive,
   saveFollow,
   goBack,
   loginStatus,
 } from "@/common/utils";
-import InterVal from "@/components/videoComponents";
 import {
   getUserMomentList,
   saveWatchBean,

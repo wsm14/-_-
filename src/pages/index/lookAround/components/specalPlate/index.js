@@ -1,12 +1,5 @@
 import React, { useMemo } from "react";
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  Swiper,
-  SwiperItem,
-} from "@tarojs/components";
+import { View, Swiper, SwiperItem } from "@tarojs/components";
 import Template from "./../hotTemplate";
 import classNames from "classnames";
 import Router from "@/common/router";
@@ -49,7 +42,7 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
               ? "lookAround_new_heightKol"
               : "lookAround_new_height"
           )}
-          style={{ border: "1px solid #e5e5e5;" }}
+          style={{ border: "2px solid #e5e5e5;" }}
           onClick={() =>
             Router({
               routerName: "speciaMaterial",
