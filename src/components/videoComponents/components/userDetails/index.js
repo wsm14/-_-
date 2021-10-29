@@ -2,8 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import Taro from "@tarojs/taro";
 import { Button, Text, View, Canvas } from "@tarojs/components";
 import classNames from "classnames";
-import { setPeople, navigateTo, backgroundObj } from "@/common/utils";
-
+import {
+  setPeople,
+  navigateTo,
+  backgroundObj,
+  fetchStorage,
+  fakeStorage,
+} from "@/common/utils";
 import Router from "@/common/router";
 import "./../../index.scss";
 export default ({
@@ -16,6 +21,8 @@ export default ({
   show,
   initBean,
   changeComment,
+  ugcBeanCount,
+  saveUgcBean,
 }) => {
   const {
     collectionStatus,
@@ -31,6 +38,7 @@ export default ({
     momentType,
     relateType,
     jumpUrl = "",
+    ugcRewardAmount = 0,
   } = data;
 
   const linkTo = () => {
@@ -62,6 +70,28 @@ export default ({
     } else {
       return;
     }
+  };
+
+  useEffect(() => {
+    let counts = fetchStorage("ugcBeanCount") || 0;
+    if (time >= 5 && ugcBeanCount == counts && momentType === "ugc") {
+      setShowFlag(true);
+      fakeStorage("ugcBeanCount", ugcBeanCount + 1);
+    }
+  }, [time]);
+  useEffect(() => {
+    if (showFlag) {
+      setTimeout(() => {
+        setShowFlag(false);
+      }, 6000);
+    }
+  }, [showFlag]);
+  const [showFlag, setShowFlag] = useState(false);
+  const fakeBean = () => {
+    setShowFlag(() => {
+      saveUgcBean();
+      return false;
+    });
   };
   return (
     <View className="video_stem_layer">
@@ -111,31 +141,47 @@ export default ({
       ></View>
       <View className="collected_font">{shareAmount}</View>
 
-      {initBean && (
-        <View
-          onClick={() => {
-            Router({
-              routerName: "beanReward",
-            });
-          }}
-          className={classNames(
-            "bean_animate",
-            watchStatus === "1" ? "bean_animate_bg2" : "bean_animate_bg1"
-          )}
-        >
+      {initBean &&
+        (momentType === "ugc" ? (
+          <React.Fragment>
+            <View className="ugc_template_view" onClick={() => fakeBean()}>
+              {showFlag && (
+                <View className="ugc_template_toast">
+                  <View className="ugc_template_font">
+                    可以给你喜欢的视频打赏哦～
+                  </View>
+                </View>
+              )}
+            </View>
+            <View className="ugc_template_count">{ugcRewardAmount}</View>
+          </React.Fragment>
+        ) : (
           <View
+            onClick={() => {
+              Router({
+                routerName: "beanReward",
+              });
+            }}
             className={classNames(
-              watchStatus === "1" ? "bean_animate_padding" : "bean_animate_time"
+              "bean_animate",
+              watchStatus === "1" ? "bean_animate_bg2" : "bean_animate_bg1"
             )}
           >
-            {watchStatus === "1"
-              ? "已领"
-              : show
-              ? parseInt(length) - time
-              : parseInt(length)}
+            <View
+              className={classNames(
+                watchStatus === "1"
+                  ? "bean_animate_padding"
+                  : "bean_animate_time"
+              )}
+            >
+              {watchStatus === "1"
+                ? "已领"
+                : show
+                ? parseInt(length) - time
+                : parseInt(length)}
+            </View>
           </View>
-        </View>
-      )}
+        ))}
     </View>
   );
 };

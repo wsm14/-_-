@@ -1,9 +1,11 @@
 page {
   width: 100%;
+  background: #ffffff;
 }
 .lookAround_box {
   width: 100%;
   background: white;
+  min-height: 100%;
   line-height: 1;
   position: relative;
   .wechant_init {
@@ -57,7 +59,11 @@ page {
     }
   }
   .lookAround_goods_topHeight {
-    height: 108px;
+    height: 64px;
+  }
+  .lookAround_content_margin {
+    padding-bottom: 32px;
+    background: #ffffff;
   }
   .lookAround_navition_box {
     height: 64px;
@@ -330,8 +336,10 @@ page {
     background-size: 100% 462px;
     min-height: 890px;
   }
-  .lookAround_linder_bottom {
-    height: 40px;
+  .lookAround_selectSpecal_Fliner {
+    height: 16px;
+    background: #f5f5f5;
+    margin-top: 40px;
   }
   .lookAround_category_linder {
     width: 100%;
@@ -347,6 +355,7 @@ page {
     background: #ffffff;
     padding: 38px 88px 24px 32px;
     position: relative;
+    margin-top: 16px;
     .lookAround_categorys_orderBtn {
       width: 40px;
       height: 40px;
@@ -455,32 +464,37 @@ page {
 
   .lookAround_template_specal1 {
     width: 218px;
-    .lookAround_template_img1 {
-      width: 218px;
-      height: 140px;
-      border-radius: 4px;
-      position: relative;
-      .lookAround_template_limit {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        border-radius: 14px;
-        background: rgba(0, 0, 0, 0.5);
-        font-size: 20px;
-        font-weight: 400;
-        color: #ffffff;
-        padding: 4px 6px;
-        line-height: 1;
-      }
-    }
-    .lookAround_template_name1 {
-      padding-top: 16px;
-      font-size: 22px;
+  }
+
+  .lookAround_template_specal2 {
+    width: 208px;
+    overflow: hidden;
+  }
+  .lookAround_template_img1 {
+    width: 218px;
+    height: 140px;
+    border-radius: 4px;
+    position: relative;
+    .lookAround_template_limit {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.5);
+      font-size: 20px;
       font-weight: 400;
-      color: #000000;
-      line-height: 22px;
-      max-width: 218px;
+      color: #ffffff;
+      padding: 4px 6px;
+      line-height: 1;
     }
+  }
+  .lookAround_template_name1 {
+    padding-top: 16px;
+    font-size: 22px;
+    font-weight: 400;
+    color: #000000;
+    line-height: 22px;
+    max-width: 218px;
   }
   .lookAround_template_specal:last-child {
     margin-right: 0px;
@@ -519,6 +533,11 @@ page {
       padding: 0 8px 0 4px;
     }
   }
+  .lookAround_specalPlate_hotOnly {
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon786.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
   .lookAround_bean_price {
     padding-top: 8px;
     font-size: 16px;
@@ -529,6 +548,12 @@ page {
   .lookAround_bean_show {
     padding-top: 8px;
     max-width: 180px;
+  }
+  .lookAround_specalPlate_liner {
+    background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+    border-radius: 8px;
+    border: 2px solid #e5e5e5;
+    box-sizing: border-box;
   }
   .lookAround_specalPlate_box {
     width: 688px;
@@ -547,15 +572,24 @@ page {
       background-size: 100% 100%;
       border-radius: 8px;
       box-sizing: border-box;
+      height: 374px;
     }
     .lookAround_specalPlate_hot {
       width: 250px;
-
       position: relative;
       background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
       border-radius: 8px;
       border: 1px solid #e5e5e5;
       box-sizing: border-box;
+      height: 374px;
+    }
+    .lookAround_specalPlate_date {
+      position: relative;
+      background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+      border-radius: 8px;
+      border: 1px solid #e5e5e5;
+      box-sizing: border-box;
+      height: 374px;
     }
     .lookAround_specalPlate_view {
       padding: 24px 16px 0;
@@ -563,6 +597,7 @@ page {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex: 1;
         .lookAround_specalPlate_title {
           width: 114px;
           height: 28px;
@@ -589,6 +624,13 @@ page {
         margin: 24px 0 0;
         width: 218px;
         height: 313px;
+        overflow: hidden;
+      }
+      .lookAround_specalPlate_swiper1 {
+        margin: 24px 0 0;
+        width: 208px;
+        height: 313px;
+        overflow: hidden;
       }
       .lookAround_absolute {
         position: absolute;
@@ -601,8 +643,12 @@ page {
     }
     .lookAround_specalPlate_content {
       display: flex;
-      padding: 24px 16px 0;
+      padding: 24px 16px 22px;
       justify-content: center;
+    }
+    .lookAround_only_content {
+      display: flex;
+      padding: 24px 16px 22px;
     }
   }
 }

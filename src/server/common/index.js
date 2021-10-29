@@ -10,7 +10,6 @@ import Taro from "@tarojs/taro";
  * 用户收益卡豆收入：root：userIncomeTrade，parent：earn
  * 现金 root：userCashTrade
  * */
-import { objStatus } from "@/common/utils";
 export const getRootAndParent = (data, fn) => {
   return httpGet(
     {
@@ -325,3 +324,25 @@ export const fetchAroundModule = (data = {}, fn) => {
   );
 };
 //逛逛配置项;
+
+export const fetchTabTag = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/indexTab/listIndexTabTag",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//视频配置项
+
+export const fetchUgcMomentRule = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/getUgcMomentRule",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//ugc配置项

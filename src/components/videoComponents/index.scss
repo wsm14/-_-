@@ -21,6 +21,40 @@
       text-align: center;
     }
   }
+  .ugc_template_view {
+    width: 72px;
+    height: 72px;
+    margin: 32px auto 0;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon789.png")
+      no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+  }
+  .ugc_template_toast {
+    position: absolute;
+    left: -369px;
+    top: 8px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon792.png")
+      no-repeat;
+    background-size: 100% 100%;
+    width: 361px;
+    height: 56px;
+    .ugc_template_font {
+      line-height: 56px;
+      padding-left: 20px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #ffffff;
+    }
+  }
+  .ugc_template_count {
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    padding-top: 8px;
+    text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
   .video_stem_layer {
     position: absolute;
     right: 24px;

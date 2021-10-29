@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
-import { city } from "./common/city";
+import { city } from "@/common/city";
 import classNames from "classnames";
 import {
   getDom,
@@ -10,10 +10,11 @@ import {
   resiApiKey,
   toast,
   fakeStorage,
+  fetchStorage,
   switchTab,
 } from "@/common/utils";
 import { getAuthStatus } from "@/common/authority";
-import { getRestapiAddress, filterRestapiAddress } from "@/server/common";
+import { getRestapiAddress, getDictionary } from "@/server/common";
 import evens from "@/common/evens";
 import Router from "@/common/router";
 import { inject, observer } from "mobx-react";
@@ -27,17 +28,8 @@ class Index extends Component {
       scrollTop: 0,
       initCity: {},
       initCityStatus: 0,
-      oldCity: [],
-      hot: [
-        { name: "上海" },
-        { name: "深圳" },
-        { name: "北京" },
-        { name: "广州" },
-        { name: "成都" },
-        { name: "南京" },
-        { name: "重庆" },
-        { name: "东莞" },
-      ],
+      oldCity: fetchStorage("oldCity") || [],
+      hot: [],
     };
   }
   filterAddress() {
@@ -52,6 +44,25 @@ class Index extends Component {
         });
       },
     });
+  }
+  fetchHotCity() {
+    getDictionary(
+      {
+        parent: "hotCityConfig",
+        child: "hotCityList",
+      },
+      (res) => {
+        const { keyValueInfo = {} } = res;
+        const { extraParam = "" } = keyValueInfo;
+        this.setState({
+          hot: extraParam
+            ? JSON.parse(extraParam).map((item) => {
+                return { name: item.cityName, cityCode: item.cityCode };
+              })
+            : [],
+        });
+      }
+    );
   }
   filterCity() {
     getAuthStatus({
@@ -75,11 +86,11 @@ class Index extends Component {
         if (info === "OK") {
           console.log(res, regeocode);
           const { addressComponent = {} } = regeocode;
-          const { citycode, city } = addressComponent;
+          const { adcode, city } = addressComponent;
           this.setState({
             initCity: {
-              cityCode: citycode,
-              cityName: city,
+              cityCode: adcode.slice(0, 4),
+              name: city,
             },
             initCityStatus: 1,
           });
@@ -93,11 +104,19 @@ class Index extends Component {
   }
   componentDidMount() {
     this.filterAddress();
+    this.fetchHotCity();
   }
   setIndex(item) {
-    fakeStorage("relCity", {
+    const { cityCode } = item;
+    const { oldCity } = this.state;
+    let newList = oldCity.filter((val) => {
+      return val.cityCode !== cityCode;
+    });
+    fakeStorage("oldCity", [{ ...item }, ...newList].slice(0, 3));
+    fakeStorage("city", {
       cityCode: item.cityCode,
       cityName: item.name,
+      type: 1,
     });
     this.props.store.locationStore.setCity(item.name, item.cityCode, "1");
     Router({
@@ -132,7 +151,7 @@ class Index extends Component {
     const tagStyle = {
       marginRight: "14px",
     };
-    const { hot, visible, initCityStatus, oldCity } = this.state;
+    const { hot, visible, initCityStatus, initCity, oldCity } = this.state;
     const marginTags = (list, num, style, components) => {
       return list.map((item, index) => {
         return (
@@ -147,7 +166,12 @@ class Index extends Component {
         <View className="city_title">当前定位/历史访问</View>
         <View className="city_tags">
           {initCityStatus === 1 && (
-            <View className="city_tags_box city_tags_init color1">杭州</View>
+            <View
+              className="city_tags_select city_tags_init color1"
+              onClick={() => this.setIndex(initCity)}
+            >
+              <View className="max_font_width font_hide"> {initCity.name}</View>
+            </View>
           )}
           {/* // 加载成功状态 */}
           {initCityStatus === 0 && (
@@ -166,8 +190,12 @@ class Index extends Component {
           )}
           {oldCity.map((item) => {
             return (
-              <View className="city_tags_box city_tags_error color1">
-                {item.cityName}
+              <View
+                style={{ marginLeft: Taro.pxTransform(12) }}
+                onClick={() => this.setIndex(item)}
+                className="city_tags_select color1"
+              >
+                <View className="max_font_width font_hide"> {item.name}</View>
               </View>
             );
           })}
@@ -177,10 +205,10 @@ class Index extends Component {
           {marginTags(hot, 3, tagStyle, (item, index) => {
             return (
               <View
-                onClick={() => this.setIndex(item.name)}
-                className={classNames("city_tags_box color1")}
+                onClick={() => this.setIndex(item)}
+                className={classNames("city_tags_select color1")}
               >
-                {item.name}
+                <View className="max_font_width font_hide"> {item.name}</View>
               </View>
             );
           })}

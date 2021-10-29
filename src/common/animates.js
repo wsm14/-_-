@@ -7,33 +7,24 @@
 // 'step-end'	动画一直保持开始状态，最后一帧跳到结束状态
 
 import Taro from "@tarojs/taro";
-const animates = (obj) => {
-  const {
-    duration = 300,
-    timingFunction = "linear",
-    delay = 0,
-    transformOrigin = "50% 50% 0",
-  } = obj;
-
-  const animate = Taro.createAnimation({
-    duration,
-    timingFunction,
-    delay,
-    transformOrigin,
-    ...obj,
-  });
-  return animate;
+const animates = (val = {}) => {
+  let obj = {
+    duration: 300,
+    timingFunction: "linear",
+    delay: 0,
+    transformOrigin: "50% 50% 0",
+    ...val,
+  };
+  return Taro.createAnimation(obj);
 };
 
-export const Animates1 = (obj) => {
-  return animates(obj).scale(1, 1).scale(2, 2).step().export();
+export const animateBean = (top) => {
+  let animate = animates({ transformOrigin: "-100% 50% 0", duration: 1000 });
+  animate.translateX(Taro.pxTransform(12)).step(0);
+  return animate.export();
 };
-export const Animates2 = (obj) => {
-  return animates(obj).scale(1, 1).scale(0, 0).step().export();
-};
-export const Animates3 = (obj) => {
-  let test1 = animates(obj);
-  test1.translateX(Taro.pxTransform(12)).step();
-  test1.translateX(0).step();
-  return test1;
+export const animateOrderBean = (top) => {
+  let animate = animates({ transformOrigin: "0 0 0", duration: 1000 });
+  animate.translateY(1000).opacity(0).step(0);
+  return animate.export();
 };

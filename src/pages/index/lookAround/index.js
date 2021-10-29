@@ -17,6 +17,7 @@ import {
   fetchConfigWindVaneBySizeNew,
   getSpecialGoodsCategory,
   getRestapiAddress,
+  fetchAroundModule,
 } from "@/server/common";
 import classNames from "classnames";
 import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
@@ -30,6 +31,10 @@ import SpecalPlate from "./components/specalPlate";
 import ConfigWind from "./components/configWindVane";
 import CategoryGoods from "./components/categoryGoods";
 import HotOnly from "./components/hotOnly";
+import DateOnly from "./components/DateOnly";
+import Empty from "@/components/Empty";
+import GameGoods from "./components/gameBuyMe";
+import Skeleton from "./components/SkeletonView";
 import "./index.scss";
 @inject("store")
 @observer
@@ -42,7 +47,7 @@ class Index extends Component {
       specialShopping: [], //中间轮播图
       hotHttp: {
         page: 1,
-        limit: 2,
+        limit: 3,
         specialFilterType: "hot",
       },
       dateHttp: {
@@ -63,55 +68,111 @@ class Index extends Component {
       categoryList: [],
       flagDom: false,
       result: {},
-      size: 0,
-      isFixedTop: 0,
-      num: Taro.getStorageSync("toast") || 0,
       configNewcomerOrdersInfo: {},
+      wanderAroundModule: [],
+      selfTourBanner: [],
+      requestStatus: true,
+      loading: false,
     };
+  }
+  topBanner() {
+    getBanner({ bannerType: "wanderAroundMainBanner" }, (res) => {
+      const { bannerList } = res;
+      this.setState({
+        specialHeadList: bannerList,
+      });
+    });
+  }
+  contentBanner() {
+    getBanner({ bannerType: "wanderAroundCapsule" }, (res) => {
+      const { bannerList = [] } = res;
+      this.setState({
+        specialShopping: bannerList,
+      });
+    });
+  }
+  selfTourBanner() {
+    getBanner({ bannerType: "wanderAroundRecharge" }, (res) => {
+      const { bannerList = [] } = res;
+      this.setState({
+        selfTourBanner: bannerList,
+      });
+    });
+  }
+  //轮播图配置项
+
+  filterRequest() {
+    const { hotHttp, dateHttp, wanderAroundModule } = this.state;
+    const requestObj = {
+      mainBanner: () => this.topBanner(),
+      capsulePosition: () => this.contentBanner(),
+      recharge: this.selfTourBanner(),
+      notify: () => this.fetchgNewcomerOrders(),
+      windVane: () => this.getConfigWindVaneBySize(),
+      specialRecommend: () => {
+        this.setState(
+          {
+            specialHttp: {
+              page: 1,
+              limit: 10,
+              specialFilterType: "aroundSpecial",
+              categoryIds: "",
+            },
+          },
+          (res) => {
+            this.getSpecialGoodsCategory();
+          }
+        );
+      },
+      limitedTimeAndExplosive: () => {
+        this.getshopList(hotHttp, "hotList");
+        this.getshopList(dateHttp, "dateList");
+      },
+      explosive: () => this.getshopList(dateHttp, "dateList"),
+      limitedTime: () => this.getshopList(hotHttp, "hotList"),
+      selfTour: () => {
+        this.setState(
+          {
+            specialHttp: {
+              page: 1,
+              limit: 10,
+              specialFilterType: "selfTour",
+              categoryIds: "",
+            },
+          },
+          (res) => {
+            this.getSpecialGoodsCategory();
+          }
+        );
+      },
+    };
+    wanderAroundModule.forEach((val) => {
+      requestObj[val] && requestObj[val]();
+    });
+    this.fetchUserShare();
   }
   //上拉刷新
   onReload() {
+    const { specialHttp } = this.state;
     this.setState(
       {
         specialHeadList: [], //头部轮播图
         configWindVaneList: [], //类目筛序
         specialShopping: [], //中间轮播图
-        hotHttp: {
-          page: 1,
-          limit: 2,
-          specialFilterType: "hot",
-        },
-        dateHttp: {
-          page: 1,
-          limit: 3,
-          specialFilterType: "today",
-        },
-
         specialHttp: {
+          ...specialHttp,
           page: 1,
-          limit: 10,
-          specialFilterType: "aroundSpecial",
-          categoryIds: "",
         },
         configUserLevelInfo: {},
         hotList: [],
         dateList: [],
         kolGoodsList: [],
         categoryList: [],
-        isFixedTop: 0,
         triggered: true,
       },
       (res) => {
         Taro.stopPullDownRefresh();
-        const { hotHttp, dateHttp } = this.state;
-        this.topBanner();
-        this.getConfigWindVaneBySize();
-        this.contentBanner();
-        this.getshopList(hotHttp, "hotList");
-        this.getshopList(dateHttp, "dateList");
-        this.getSpecialGoodsCategory();
-        this.fetchUserShare();
-        this.fetchgNewcomerOrders();
+        this.fetchModule();
       }
     );
   }
@@ -119,19 +180,40 @@ class Index extends Component {
     this.onReload();
   }
   componentDidMount() {
-    const { hotHttp, dateHttp, num } = this.state;
-    Taro.setStorageSync("toast", num + 1);
+    // Taro.setStorageSync("toast", num + 1);
     this.setMap();
-    this.topBanner();
-    this.getConfigWindVaneBySize();
-    this.contentBanner();
-    this.getshopList(hotHttp, "hotList");
-    this.getshopList(dateHttp, "dateList");
-    this.getSpecialGoodsCategory();
-    this.fetchgNewcomerOrders();
+    this.fetchModule();
   }
   componentDidShow() {
     this.fetchUserShare();
+  }
+  fetchModule() {
+    this.setState(
+      {
+        loading: true,
+      },
+      (res) => {
+        fetchAroundModule({}, (res) => {
+          const { wanderAroundModule = {} } = res;
+          const { wanderAroundModuleObjects = [] } = wanderAroundModule;
+          this.setState(
+            {
+              wanderAroundModule: wanderAroundModuleObjects.map(
+                (item) => item.moduleName
+              ),
+            },
+            (res) => {
+              this.filterRequest();
+            }
+          );
+        }).catch((e) => {
+          this.setState({
+            requestStatus: false,
+            loading: false,
+          });
+        });
+      }
+    );
   }
   fetchgNewcomerOrders() {
     getConfigNewcomerOrders({}, (res) => {
@@ -179,22 +261,7 @@ class Index extends Component {
       });
     });
   }
-  topBanner() {
-    getBanner({ bannerType: "wanderAroundMainBanner" }, (res) => {
-      const { bannerList } = res;
-      this.setState({
-        specialHeadList: bannerList,
-      });
-    });
-  }
-  contentBanner() {
-    getBanner({ bannerType: "wanderAroundCapsule" }, (res) => {
-      const { bannerList = [] } = res;
-      this.setState({
-        specialShopping: bannerList,
-      });
-    });
-  }
+
   getConfigWindVaneBySize() {
     fetchConfigWindVaneBySizeNew({}, (res) => {
       const { configWindVaneList } = res;
@@ -209,11 +276,11 @@ class Index extends Component {
       const { configUserLevelInfo = {} } = res;
       this.setState({
         configUserLevelInfo,
-        triggered: false,
+        loading: false,
       });
     }).catch((e) => {
       this.setState({
-        triggered: false,
+        loading: false,
       });
     });
   }
@@ -291,19 +358,21 @@ class Index extends Component {
       Taro.createSelectorQuery()
         .select(".lookAround_categorys_box1")
         .boundingClientRect((rect) => {
-          const { top } = rect;
-          console.log(top);
-          if (top >= 32) {
-            if (flagDom) {
-              this.setState({
-                flagDom: false,
-              });
-            }
-          } else {
-            if (!flagDom) {
-              this.setState({
-                flagDom: true,
-              });
+          if (rect) {
+            const { top } = rect;
+            console.log(top);
+            if (top >= 32) {
+              if (flagDom) {
+                this.setState({
+                  flagDom: false,
+                });
+              }
+            } else {
+              if (!flagDom) {
+                this.setState({
+                  flagDom: true,
+                });
+              }
             }
           }
         })
@@ -367,13 +436,16 @@ class Index extends Component {
       flagDom,
       specialHttp: { categoryIds, specialFilterType },
       result = {},
-      num,
+      loading,
+      selfTourBanner = [],
+      wanderAroundModule = [],
       configNewcomerOrdersInfo: {
         taskStatus = "2",
         remainDay,
         orderNum,
         subsidyBean,
       },
+      requestStatus,
     } = this.state;
     const { cityName } = this.props.store.locationStore;
 
@@ -463,7 +535,7 @@ class Index extends Component {
     const bannerStyle = {
       width: Taro.pxTransform(686),
       height: Taro.pxTransform(200),
-      margin: `${Taro.pxTransform(0)} auto  0`,
+      margin: `${Taro.pxTransform(32)} auto  0`,
       position: "relative",
     };
     const bottom = {
@@ -473,22 +545,21 @@ class Index extends Component {
     const bannerContentStyle = {
       width: Taro.pxTransform(686),
       height: Taro.pxTransform(160),
-      margin: `${Taro.pxTransform(30)} auto  0`,
+      margin: `${Taro.pxTransform(40)} auto  0`,
       position: "relative",
     };
     const bottomContent = {
       bottom: Taro.pxTransform(-12),
       justifyContent: "center",
     };
-    return (
-      <View className="lookAround_box">
-        <Navition city={cityName}></Navition>
-        {num === 0 && (
-          <View className="wechant_init color6 font28">
-            “添加到我的小程序”，更多优惠抢不停
-          </View>
-        )}
-        <View className="lookAround_goods_topHeight"></View>
+    const selfContentStyle = {
+      width: Taro.pxTransform(686),
+      height: Taro.pxTransform(380),
+      margin: `${Taro.pxTransform(40)} auto  0`,
+      position: "relative",
+    };
+    let templateObj = {
+      mainBanner: (
         <Banner
           imgName="coverImg"
           data={[...specialHeadList]}
@@ -496,32 +567,8 @@ class Index extends Component {
           boxStyle={bannerStyle}
           showNear
         ></Banner>
-        <ConfigWind
-          onChange={this.bubbleLink.bind(this)}
-          list={configWindVaneList}
-        ></ConfigWind>
-        {(taskStatus === "0" || taskStatus === "1") && (
-          <View
-            className="lookAround_goods_init"
-            onClick={() =>
-              Router({
-                routerName: "download",
-              })
-            }
-          >
-            <View className="lookAround_goods_font">
-              新人{remainDay}天内成功核销{orderNum}单，赚
-              <Text className="color3">{subsidyBean}</Text>卡豆
-            </View>
-          </View>
-        )}
-        <SpecalPlate
-          data={hotList}
-          userInfo={configUserLevelInfo}
-          list={dateList}
-        ></SpecalPlate>
-        <HotOnly data={hotList} userInfo={configUserLevelInfo}></HotOnly>
-        <Plate userInfo={configUserLevelInfo}></Plate>
+      ),
+      capsulePosition: (
         <Banner
           imgName="coverImg"
           data={[...specialShopping]}
@@ -529,8 +576,39 @@ class Index extends Component {
           boxStyle={bannerContentStyle}
           showNear
         ></Banner>
-        <View className="lookAround_linder_bottom"></View>
-        <View className="lookAround_category_linder"></View>
+      ),
+      recharge: (
+        <Banner
+          imgName="coverImg"
+          data={[...selfTourBanner]}
+          bottom={bottomContent}
+          boxStyle={selfContentStyle}
+          showNear
+        ></Banner>
+      ),
+      resource: <Plate userInfo={configUserLevelInfo}></Plate>,
+      notify: (taskStatus === "0" || taskStatus === "1") && (
+        <View
+          className="lookAround_goods_init"
+          onClick={() =>
+            Router({
+              routerName: "download",
+            })
+          }
+        >
+          <View className="lookAround_goods_font">
+            新人{remainDay}天内成功核销{orderNum}单，赚
+            <Text className="color3">{subsidyBean}</Text>卡豆
+          </View>
+        </View>
+      ),
+      windVane: (
+        <ConfigWind
+          onChange={this.bubbleLink.bind(this)}
+          list={configWindVaneList}
+        ></ConfigWind>
+      ),
+      specialRecommend: (
         <CategoryGoods
           configUserLevelInfo={configUserLevelInfo}
           flagDom={flagDom}
@@ -542,6 +620,61 @@ class Index extends Component {
           categoryIds={categoryIds}
           tabGoods={this.tabGoods.bind(this)}
         ></CategoryGoods>
+      ),
+      limitedTimeAndExplosive: (
+        <SpecalPlate
+          data={hotList}
+          userInfo={configUserLevelInfo}
+          list={dateList}
+        ></SpecalPlate>
+      ),
+      explosive: (
+        <HotOnly data={dateList} userInfo={configUserLevelInfo}></HotOnly>
+      ),
+      limitedTime: (
+        <DateOnly data={hotList} userInfo={configUserLevelInfo}></DateOnly>
+      ),
+      selfTour: (
+        <GameGoods
+          userInfo={configUserLevelInfo}
+          linkTo={this.saveRouter.bind(this)}
+          data={kolGoodsList}
+        ></GameGoods>
+      ),
+    };
+
+    return (
+      <View className="lookAround_box">
+        <Navition city={cityName}></Navition>
+        <Skeleton loading={loading}>
+          <View className="lookAround_no_style">
+            <View className="lookAround_goods_topHeight"></View>
+            {!requestStatus ? (
+              <Empty
+                fn={this.onReload.bind(this)}
+                show={!requestStatus}
+                type={"error"}
+                toast={"数据加载失败，请检查网络"}
+              ></Empty>
+            ) : (
+              <React.Fragment>
+                <View className="lookAround_content_margin">
+                  {wanderAroundModule.map((item) => {
+                    if (templateObj[item]) {
+                      return templateObj[item];
+                    }
+                    return null;
+                  })}
+                </View>
+              </React.Fragment>
+            )}
+          </View>
+        </Skeleton>
+        {/* {num === 0 && (
+          <View className="wechant_init color6 font28">
+            “添加到我的小程序”，更多优惠抢不停
+          </View>
+        )} */}
         <TabCity
           reload={this.onReload.bind(this)}
           store={this.props.store}

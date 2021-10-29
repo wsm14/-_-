@@ -19,6 +19,7 @@ export default ({
   const memo = useMemo(() => {
     return (
       <View>
+        <View className="lookAround_selectSpecal_Fliner"></View>
         <View
           style={!flagDom ? { display: "none" } : {}}
           className="lookAround_category_fixed"
@@ -26,7 +27,7 @@ export default ({
         <View
           style={
             flagDom
-              ? { position: "fixed", top: Taro.pxTransform(56 ), zIndex: 1000 }
+              ? { position: "fixed", top: Taro.pxTransform(48), zIndex: 1000 }
               : {}
           }
           className="lookAround_categorys_box lookAround_categorys_box1"

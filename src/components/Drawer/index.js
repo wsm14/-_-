@@ -5,7 +5,7 @@ import { getShareInfo } from "@/server/user";
 import { getUserMomentcheckNew } from "@/server/share";
 import Router from "@/common/router";
 import "./index.scss";
-export default ({ show, children, close }) => {
+export default ({ show, children, close, closeBtn = true }) => {
   const [animate, setAnimated] = useState(null);
   useEffect(() => {
     if (show) {
@@ -64,7 +64,9 @@ export default ({ show, children, close }) => {
         }}
       >
         {children}
-        <View className="Drawer_close_box" onClick={() => onClose()}></View>
+        {closeBtn && (
+          <View className="Drawer_close_box" onClick={() => onClose()}></View>
+        )}
       </View>
     </View>
   );

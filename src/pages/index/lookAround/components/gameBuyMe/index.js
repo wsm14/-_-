@@ -3,16 +3,19 @@ import { View } from "@tarojs/components";
 import NallStatus from "@/components/nullStatus";
 import Waterfall from "@/components/waterfall";
 import Taro from "@tarojs/taro";
-import { selectShop } from "@/components/componentView/selectShop";
-import "./../index.scss";
-export default ({ data = [], userInfo = {}, linkTo, type }) => {
+import { gameShop } from "@/components/componentView/selectShop";
+export default ({ data = [], userInfo = {}, linkTo }) => {
   const memo = useMemo(() => {
     const template = (item) => {
-      return selectShop(item, userInfo, linkTo);
+      return gameShop(item, userInfo, linkTo);
     };
     return (
-      <View>
-        <View className="lookAround_selectSpecal_box lookAround_selectSpecal_fPadding">
+      <React.Fragment>
+        <View className="lookAround_selectSpecal_Fliner"></View>
+        <View
+          style={{ paddingTop: Taro.pxTransform(40) }}
+          className="lookAround_selectSpecal_box"
+        >
           {data.length > 0 ? (
             <Waterfall
               list={data}
@@ -20,13 +23,10 @@ export default ({ data = [], userInfo = {}, linkTo, type }) => {
               style={{ width: Taro.pxTransform(335) }}
             ></Waterfall>
           ) : (
-            <NallStatus
-              type={0}
-              title={type === "follow" ? "还没有任何关注哦" : "暂无商品"}
-            ></NallStatus>
+            <NallStatus type={0} title={"暂无商品"}></NallStatus>
           )}
         </View>
-      </View>
+      </React.Fragment>
     );
   }, [data, userInfo]);
   return memo;

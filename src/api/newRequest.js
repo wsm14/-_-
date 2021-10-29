@@ -72,8 +72,8 @@ switch (env) {
     break;
   case "production":
     // baseUrl = "https://pregateway.dakale.net";
-    // baseUrl = "https://devgateway.dakale.net";
-    baseUrl = "https://gateway1.dakale.net";
+    baseUrl = "https://devgateway.dakale.net";
+    // baseUrl = "https://gateway1.dakale.net";
     break;
 }
 const httpCondition = {
@@ -91,6 +91,7 @@ const loadBeadRequest = [
   "/common/dictionary/listMomentBarrage",
   "/user/specialGoods/getPromotionInfo",
   "/user/userInfo/getUserShareCommission",
+  "/user/userMerchant/getOwnerExistPromotionStatus",
 ];
 export const httpGet = (obj, fn) => {
   const { header = {}, data = {} } = obj;
@@ -115,10 +116,10 @@ export const httpGet = (obj, fn) => {
       ...httpCondition,
       header: {
         ...httpCondition.header,
-        lnt: Taro.getStorageSync("lnt"),
-        lat: Taro.getStorageSync("lat"),
-        "district-code": Taro.getStorageSync("district-code") || null,
-        "city-code": Taro.getStorageSync("city").cityCode || "3301",
+        lnt: Taro.getStorageSync("lnt") || "",
+        lat: Taro.getStorageSync("lat") || "",
+        "district-code": Taro.getStorageSync("district-code") || "",
+        "city-code": Taro.getStorageSync("city").cityCode || "",
         ...header,
       },
       url: baseUrl + obj.url,
@@ -186,10 +187,10 @@ export const httpPost = (obj, fn) => {
         header: {
           ...httpCondition.header,
           "content-type": "application/json",
-          lnt: Taro.getStorageSync("lnt"),
-          lat: Taro.getStorageSync("lat"),
-          "city-code": Taro.getStorageSync("city").cityCode || "3301",
-          "district-code": Taro.getStorageSync("district-code") || null,
+          lnt: Taro.getStorageSync("lnt") || "",
+          lat: Taro.getStorageSync("lat") || "",
+          "city-code": Taro.getStorageSync("city").cityCode || "",
+          "district-code": Taro.getStorageSync("district-code") || "",
           ...header,
         },
         url: baseUrl + obj.url,
