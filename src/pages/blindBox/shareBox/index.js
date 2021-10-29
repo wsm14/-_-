@@ -33,20 +33,18 @@ class Index extends Component {
   fetchMomentcheckNew() {
     getUserMomentcheckNew({}).then((val) => {
       const { newUserFlag = "1", newUserBean = "300" } = val;
-      this.setState({
-        userBeanInfo: { newUserFlag, newUserBean },
-      });
+      if (newUserFlag === "1") {
+        Router({
+          routerName: "userNewArtist",
+        });
+      } else {
+        Router({
+          routerName: "blindIndex",
+        });
+      }
     });
   }
-  fakeNewUserBean() {
-    saveNewUserBean({}).then((val) => {
-      this.setState({
-        userBeanInfo: { ...this.state.userBeanInfo, newUserFlag: "0" },
-        visible: true,
-      });
-      fakeStorage("deviceFlag", "0");
-    });
-  }
+
   getBlindHelp() {
     const { userId } = this.state;
     fetchBlindBoxHelp({
@@ -148,7 +146,6 @@ class Index extends Component {
           auth={login}
           initFn={() => {
             this.getBlindHelp();
-            this.fetchMomentcheckNew();
           }}
         ></Init>
         <View className="shareBox_bg">
@@ -157,17 +154,17 @@ class Index extends Component {
               <View className="shareBox_bg_blind"></View>
               <View
                 style={backgroundObj(profile)}
-                className="shareBox_profile"
+                className="shareBox_profile merchant_dakale_logo"
               ></View>
               <View className="shareBox_fontInfo font_hide">
                 来自 {username} 的礼盒
               </View>
               <View className="shareBox_fontMargin1 shareBox_font">
-                友友， 你的礼品等待领取
+                友友，帮我助力
               </View>
-              <View className="shareBox_font" style={{ visibility: "hidden" }}>
+              <View className="shareBox_font">
                 {" "}
-                友友， 你的礼品等待领取
+                你也可以获得千元大奖的机会哦～
               </View>
               <View className="shareBox_font" style={{ visibility: "hidden" }}>
                 {" "}
@@ -176,23 +173,13 @@ class Index extends Component {
               {template}
               <View className="shareBox_liner"></View>
               {userType === "other" ? (
-                <View className="shareBox_btn_box public_auto">
+                <View className="shareBox_btn_box public_center">
                   <Button>
                     <View
-                      className="shareBox_btn public_center"
+                      className="shareBox_btnInfo_btn public_center"
                       onClick={this.saveBlindBoxHelp.bind(this)}
                     >
                       为TA助力
-                    </View>
-                  </Button>
-                  <Button>
-                    <View
-                      className="shareBox_btn public_center"
-                      onClick={() => {
-                        this.changeNewUser();
-                      }}
-                    >
-                      我要领取
                     </View>
                   </Button>
                 </View>
@@ -272,9 +259,7 @@ class Index extends Component {
                     visible: false,
                   },
                   () => {
-                    Router({
-                      routerName: "blindIndex",
-                    });
+                    this.fetchMomentcheckNew();
                   }
                 );
               }}

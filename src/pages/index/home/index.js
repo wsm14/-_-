@@ -885,14 +885,6 @@ class Index extends React.PureComponent {
           ></TopView>
         </View>
         <View
-          className="home_bean_info"
-          onClick={() => {
-            Router({
-              routerName: "prefecture",
-            });
-          }}
-        ></View>
-        <View
           className="home_blind_info"
           onClick={() => {
             Router({

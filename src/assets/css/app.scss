@@ -3270,3 +3270,6 @@ image {
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
+button::after {
+  border: none;
+}

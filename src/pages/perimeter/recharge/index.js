@@ -8,6 +8,9 @@ import { fetchUserShareCommission } from "@/server/index";
 import classNames from "classnames";
 import Barrage from "@/components/componentView/active/barrage";
 import Router from "@/common/router";
+import TaroShareDrawer from "./components/TaroShareDrawer";
+import { getShareInfo } from "@/server/common";
+import { rssConfigData } from "./components/data";
 const mobileNumber = "^[1][3-8][0-9]{9}$";
 const yd =
   "^1(3[4-9]|47|5[0-27-9]|65|78|8[2-478]|98)\\d{8}$|(^170[356]\\d{7}$)";
@@ -35,6 +38,11 @@ class Index extends Component {
       teleType: true,
       selectIndex: -1,
       telephone: null,
+      cavansObj: {
+        data: null,
+        start: false,
+      },
+      shareDeatils: {},
     };
   }
   componentDidShow() {
@@ -114,6 +122,56 @@ class Index extends Component {
       });
     });
   }
+  shareImageInfo() {
+    const { shareDeatils } = this.state;
+    const { frontImage, miniProgramUrl, qcodeUrl } = shareDeatils;
+    if (frontImage && miniProgramUrl && qcodeUrl) {
+      this.setState({
+        cavansObj: {
+          start: true,
+          data: rssConfigData({
+            wxCode: qcodeUrl,
+            frontImage: frontImage,
+          }),
+        },
+      });
+    } else {
+      getShareInfo(
+        {
+          shareType: "virtualProduct",
+          subType: "telephone",
+        },
+        (res) => {
+          this.setState({
+            cavansObj: {
+              start: true,
+              data: rssConfigData({
+                wxCode: res.qcodeUrl,
+                frontImage: res.frontImage,
+              }),
+            },
+            shareDeatils: res,
+          });
+        }
+      );
+    }
+  }
+  onShareAppMessage(res) {
+    const { shareDeatils } = this.state;
+    const { miniProgramUrl, frontImage, title } = shareDeatils;
+    if (res.from === "button") {
+      return {
+        title: title,
+        imageUrl: frontImage,
+        path: `/${miniProgramUrl}`,
+        complete: function () {
+          // 转发结束之后的回调（转发成不成功都会执行）
+          console.log("---转发完成---");
+        },
+      };
+    }
+    return {};
+  }
   render() {
     const {
       payList,
@@ -122,6 +180,7 @@ class Index extends Component {
       teleForm,
       teleType,
       telephone,
+      cavansObj,
     } = this.state;
     const { payBeanCommission = 50 } = configUserLevelInfo;
     return (
@@ -163,6 +222,7 @@ class Index extends Component {
             })}
           </View>
           <View className="recharge_select_toast">每人每月仅支持充值一次</View>
+          <View className="recharge_select_toast1">咨询客服 400-800-5881</View>
           <View
             className="recharge_video_box"
             onClick={() =>
@@ -178,6 +238,14 @@ class Index extends Component {
             <View className="videoBean_desc">使用卡豆抵扣更多</View>
             <View className="bold recharge_left">立即看视频捡豆{" >"}</View>
           </View>
+        </View>
+        <View className="recharge_bottom_layer public_auto">
+          <View
+            className="recharge_bottom_share"
+            onClick={() => this.shareImageInfo()}
+          >
+            分享
+          </View>
           <View
             onClick={() => this.fakeOrder()}
             className={classNames(
@@ -190,6 +258,13 @@ class Index extends Component {
             立即充值
           </View>
         </View>
+        <TaroShareDrawer
+          {...cavansObj}
+          onSave={() => console.log("点击保存")}
+          onClose={() =>
+            this.setState({ cavansObj: { start: false, data: null } })
+          }
+        ></TaroShareDrawer>
       </View>
     );
   }

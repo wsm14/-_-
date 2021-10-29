@@ -26,12 +26,14 @@ export default ({ data, updateInfo, list }) => {
     blindBoxBeanNum = "",
     times,
     ruleTypeBeanStatus,
+    surplusBoxBeanTimes,
   } = data;
   const [tabKey, setTabKey] = useState("bean"); // tab key
   const [jpData, setJqData] = useState({});
   const [showNow, setShowNow] = useState(false); // 本期奖池
   const [visible, setVisible] = useState(false);
   const [friendVisible, setFriendVisible] = useState(false);
+  const [noCountVisible, setCountVisible] = useState(false);
   const [shareData, setShareData] = useState({});
   const { winningImg } = jpData;
   const {
@@ -41,8 +43,8 @@ export default ({ data, updateInfo, list }) => {
   } = shareData;
   const { num } = blindBoxRuleObject;
   const bindTab = {
-    bean: "卡豆专场",
-    invitation: "邀请专场",
+    bean: "赚豆场",
+    invitation: "对象场",
   };
   const getBlindHelp = () => {
     let user = loginStatus();
@@ -76,26 +78,37 @@ export default ({ data, updateInfo, list }) => {
   const saveBlindBoxReward = () => {
     fetchBlindBoxReward({
       luckDrawType: tabKey,
-    }).then((val) => {
-      setVisible(() => {
-        setJqData(val);
-        return true;
+    })
+      .then((val) => {
+        setVisible(() => {
+          setJqData(val);
+          return true;
+        });
+        updateInfo && updateInfo({ ...data, ...val });
+      })
+      .catch((e) => {
+        const { resultCode } = e;
+        if (resultCode === "20260") {
+          setCountVisible(true);
+        }
       });
-
-      updateInfo && updateInfo({ ...data, ...val });
-    });
   };
   const Template = () => {
     if (tabKey === "bean") {
       if (ruleTypeBeanStatus === "1") {
         return (
           <View
-            className="blind_start"
+            className="blind_start_beanInfo"
             onClick={(e) => {
               saveBlindBoxReward();
             }}
           >
-            {blindBoxBeanNum}卡豆拆一次
+            <View className="blind_start_count">
+              {blindBoxBeanNum}卡豆拆一次
+            </View>
+            <View className="blind_start_our">
+              剩余抽奖次数{surplusBoxBeanTimes}
+            </View>
           </View>
         );
       } else {
@@ -203,7 +216,7 @@ export default ({ data, updateInfo, list }) => {
             className="blind_invint"
             onClick={() => setTabKey("invitation")}
           >
-            去邀请专场 免费抽{" "}
+            去对象专场 免费抽
           </View>
         ) : (
           <View className="blind_invint" onClick={() => getBlindHelp()}>
@@ -264,7 +277,6 @@ export default ({ data, updateInfo, list }) => {
           </View>
         </Drawer>
       )}
-
       {friendVisible && (
         <Drawer
           show={friendVisible}
@@ -344,6 +356,45 @@ export default ({ data, updateInfo, list }) => {
             </View>
             <View className="friend_share_desc">
               每邀请{num}个人助力成功，即可获得{blindBoxRuleObject.times}次机会
+            </View>
+          </View>
+        </Drawer>
+      )}
+      {noCountVisible && (
+        <Drawer
+          show={noCountVisible}
+          close={() => {
+            setCountVisible(false);
+          }}
+        >
+          <View className="countVisible_box">
+            <View className="countVisible_order_info">
+              <View className="countVisible_order_desc">
+                您今日在赚豆场抽奖次数
+              </View>
+              <View className="countVisible_order_desc">已达上限</View>
+              <View className="countVisible_order_desc">
+                可以去对象场继续玩哦～
+              </View>
+              <View className="countVisible_order_btn public_auto">
+                <View
+                  className="countVisible_order_btnBox countVisible_order_btnStyle1 public_center"
+                  onClick={() => setCountVisible(false)}
+                >
+                  好的 明日再来
+                </View>
+                <View
+                  className="countVisible_order_btnBox countVisible_order_btnStyle2 public_center"
+                  onClick={() => {
+                    setTabKey(() => {
+                      setCountVisible(false);
+                      return "invitation";
+                    });
+                  }}
+                >
+                  去对象场
+                </View>
+              </View>
             </View>
           </View>
         </Drawer>
