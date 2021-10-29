@@ -7,6 +7,7 @@ import ButtonView from "@/components/Button";
 import "./index.scss";
 export default (props) => {
   const { beanLimitStatus } = props;
+  
   const [animate, setAnimated] = useState(null);
   const [visible, setVisible] = useState(false);
   const [type, setType] = useState(null);

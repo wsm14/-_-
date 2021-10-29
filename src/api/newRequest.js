@@ -24,7 +24,10 @@ const resultOperate = {
     link: "/pages/auth/index",
     fn: () => {},
   },
-
+  5235: {
+    type: "不是助力新用户",
+    fn: () => {},
+  },
   4001: {
     type: "动态已下架",
     fn: () => {

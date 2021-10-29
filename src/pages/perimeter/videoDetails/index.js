@@ -26,7 +26,6 @@ import Coupon from "@/components/freeCoupon";
 import { getShareInfo, getShareParamInfo } from "@/server/common";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
-import NewToast from "@/components/noviceGuide";
 import classNames from "classnames";
 import Comment from "@/components/componentView/comment";
 import "./index.scss";
@@ -468,22 +467,6 @@ class Index extends React.PureComponent {
             this.setState({ cavansObj: { start: false, data: null } })
           }
         ></TaroShareDrawer>
-        {filterPath(getCurrentInstance().router.params) &&
-          !Taro.getStorageSync("deviceFlag") && (
-            <NewToast
-              type={"merchant"}
-              stopVideo={() => {
-                this.setState({ player: false });
-              }}
-              initVideo={() => {
-                this.setState({ player: true }, (res) => {
-                  Taro.createVideoContext(`details1`).play();
-                });
-              }}
-              auth={login}
-              data={{ ...httpData, merchantId: ownerId }}
-            ></NewToast>
-          )}
         <Comment
           data={userMomentsInfo}
           current={"0"}

@@ -342,3 +342,119 @@ export const couponTemplate = (item, configUserLevelInfo) => {
     </View>
   );
 };
+
+export const prefectrueGoodsTemplate = (item) => {
+  const {
+    goodsImg,
+    goodsName,
+    merchantName,
+    merchantLogo,
+    lat,
+    lnt,
+    oriPrice,
+    realPrice,
+    paymentModeObject: { bean, cash },
+    specialActivityIdString,
+    ownerId,
+  } = item;
+  return (
+    <View
+      className="prefecture_fure_box"
+      onClick={() => {
+        Router({
+          routerName: "favourableDetails",
+          args: {
+            specialActivityId: specialActivityIdString,
+            merchantId: ownerId,
+          },
+        });
+      }}
+    >
+      <View
+        className="prefecture_fure_img"
+        style={backgroundObj(goodsImg)}
+      ></View>
+      <View className="prefecture_fure_content">
+        <View className="prefecture_fure_title font_hide">{goodsName}</View>
+        <View className="prefecture_fure_user  font_hide">
+          <View
+            className="prefecture_fure_userProfile merchant_dakale_logo"
+            style={backgroundObj(merchantLogo)}
+          ></View>
+          <View className="prefecture_fure_userName font_hide">
+            {merchantName}
+          </View>
+          <View className="prefecture_fure_limit">
+            {"| "}
+            {GetDistance(getLat(), getLnt(), lat, lnt)}
+          </View>
+        </View>
+        <View className="prefecture_fure_price">
+          <Text className="font20">原价:</Text>
+          <Text className="font24 text_through">{oriPrice}</Text>
+        </View>
+        <View className="prefecture_fure_tag prefecture_fure_margin1"></View>
+        <View className="prefecture_fure_bean">
+          ¥{cash}+{bean}卡豆
+        </View>
+      </View>
+      <View className="prefecture_btn  public_center">立即抢购</View>
+    </View>
+  );
+};
+
+export const prefectrueCouponTemplate = (item) => {
+  const {
+    couponImg,
+    couponName,
+    lat,
+    lnt,
+    merchantLogo,
+    paymentModeObject: { bean, cash },
+    merchantName,
+    oriPrice,
+    realPrice,
+    ownerIdString,
+    ownerCouponIdString,
+  } = item;
+  return (
+    <View
+      className="prefecture_fure_box"
+      onClick={() =>
+        Router({
+          routerName: "payCouponDetails",
+          args: {
+            merchantId: ownerIdString,
+            ownerId: ownerIdString,
+            ownerCouponId: ownerCouponIdString,
+          },
+        })
+      }
+    >
+      <View
+        className="prefecture_fure_img coupon_big_icon"
+        style={backgroundObj(couponImg)}
+      ></View>
+      <View className="prefecture_fure_content">
+        <View className="prefecture_fure_title font_hide">{couponName}</View>
+        <View className="prefecture_fure_quan font_hide">{"无门槛"}</View>
+        <View className="prefecture_fure_user font_hide">
+          <View
+            className="prefecture_fure_userProfile merchant_dakale_logo"
+            style={backgroundObj(merchantLogo)}
+          ></View>
+          <View className="prefecture_fure_userName"> {merchantName}</View>
+          <View className="prefecture_fure_limit">
+            {"| "}
+            {GetDistance(getLat(), getLnt(), lat, lnt)}
+          </View>
+        </View>
+        <View className="prefecture_fure_tag prefecture_fure_margin2"></View>
+        <View className="prefecture_fure_bean">
+          ¥{cash}+{bean}卡豆
+        </View>
+      </View>
+      <View className="prefecture_btn  public_center">立即抢购</View>
+    </View>
+  );
+};

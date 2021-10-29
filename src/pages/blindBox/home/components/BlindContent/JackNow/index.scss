@@ -1,0 +1,92 @@
+@import "@/assets/css/global.scss";
+.blind_layout {
+  position: fixed !important;
+  z-index: 9998 !important;
+
+  .PopLayout_content {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    transform: translateY(100%);
+    width: 100%;
+    height: auto;
+    z-index: 9999;
+    overflow: hidden;
+    flex-direction: row;
+    transition: all 0.15s linear;
+    background: #fff8ed;
+    border-radius: 20px 20px 0px 0px;
+    &.pop_show {
+      transform: translateY(0);
+    }
+
+    &.pop_hide {
+      transform: translateY(100%);
+    }
+    .blind_layout_title {
+      &::before {
+        content: "";
+        display: block;
+        @include whEqual(391px, 40px);
+        background: url("https://wechat-config.dakale.net/miniprogram/blind/home/jack_now_title.png")
+          no-repeat;
+        background-size: 100%;
+        margin: 40px auto 48px;
+      }
+    }
+    .blind_layout_scroll {
+      max-height: 640px;
+    }
+    .blind_layout_group {
+      padding: 0 32px 16px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .blind_goods_cell {
+        @include flexCenterA;
+        @include whEqual(305px, 140px);
+        background: #ffffff;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        padding: 10px 20px 10px 10px;
+        .blind_goods_img {
+          @include whEqual(140px);
+        }
+        .blind_goods_name {
+          margin-left: 12px;
+          flex: 1;
+          text-align: justify;
+          font-size: 28px;
+          font-weight: 600;
+          color: #333333;
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: clip !important;
+          word-wrap: break-word;
+          white-space: normal !important;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+        }
+      }
+    }
+  }
+  .PopLayout_mask {
+    @include whEqual(100%);
+    z-index: 998;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.15s linear;
+    &.pop_show {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    &.pop_hide {
+      display: none;
+    }
+  }
+}

@@ -4,13 +4,9 @@ import { View, Text, Image } from "@tarojs/components";
 import classNames from "classnames";
 import { fetchRightGoods, fetchRightCoupon } from "@/server/index";
 import {
-  backgroundObj,
-  toast,
-  getLat,
-  getLnt,
-  GetDistance,
-} from "@/common/utils";
-import Router from "@/common/router";
+  prefectrueGoodsTemplate,
+  prefectrueCouponTemplate,
+} from "@/components/specalTemplate";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -89,123 +85,6 @@ class Index extends Component {
   render() {
     const { selectIndex, changeObj, ownerCouponList, specialGoodsList } =
       this.state;
-    const templateSpecail = (item) => {
-      const {
-        goodsImg,
-        goodsName,
-        merchantName,
-        merchantLogo,
-        lat,
-        lnt,
-        oriPrice,
-        realPrice,
-        paymentModeObject: { bean, cash },
-        specialActivityIdString,
-        ownerId,
-      } = item;
-      return (
-        <View
-          className="prefecture_fure_box"
-          onClick={() => {
-            Router({
-              routerName: "favourableDetails",
-              args: {
-                specialActivityId: specialActivityIdString,
-                merchantId: ownerId,
-              },
-            });
-          }}
-        >
-          <View
-            className="prefecture_fure_img"
-            style={backgroundObj(goodsImg)}
-          ></View>
-          <View className="prefecture_fure_content">
-            <View className="prefecture_fure_title font_hide">{goodsName}</View>
-            <View className="prefecture_fure_user  font_hide">
-              <View
-                className="prefecture_fure_userProfile merchant_dakale_logo"
-                style={backgroundObj(merchantLogo)}
-              ></View>
-              <View className="prefecture_fure_userName font_hide">
-                {merchantName}
-              </View>
-              <View className="prefecture_fure_limit">
-                {"| "}
-                {GetDistance(getLat(), getLnt(), lat, lnt)}
-              </View>
-            </View>
-            <View className="prefecture_fure_price">
-              <Text className="font20">原价:</Text>
-              <Text className="font24 text_through">{oriPrice}</Text>
-            </View>
-            <View className="prefecture_fure_tag prefecture_fure_margin1"></View>
-            <View className="prefecture_fure_bean">
-              ¥{cash}+{bean}卡豆
-            </View>
-          </View>
-          <View className="prefecture_btn  public_center">立即抢购</View>
-        </View>
-      );
-    };
-    const templateCoupon = (item) => {
-      console.log(item);
-      const {
-        couponImg,
-        couponName,
-        lat,
-        lnt,
-        merchantLogo,
-        paymentModeObject: { bean, cash },
-        merchantName,
-        oriPrice,
-        realPrice,
-        ownerIdString,
-        ownerCouponIdString,
-      } = item;
-      return (
-        <View
-          className="prefecture_fure_box"
-          onClick={() =>
-            Router({
-              routerName: "payCouponDetails",
-              args: {
-                merchantId: ownerIdString,
-                ownerId: ownerIdString,
-                ownerCouponId: ownerCouponIdString,
-              },
-            })
-          }
-        >
-          <View
-            className="prefecture_fure_img coupon_big_icon"
-            style={backgroundObj(couponImg)}
-          ></View>
-          <View className="prefecture_fure_content">
-            <View className="prefecture_fure_title font_hide">
-              {couponName}
-            </View>
-            <View className="prefecture_fure_quan font_hide">{"无门槛"}</View>
-            <View className="prefecture_fure_user font_hide">
-              <View
-                className="prefecture_fure_userProfile merchant_dakale_logo"
-                style={backgroundObj(merchantLogo)}
-              ></View>
-              <View className="prefecture_fure_userName"> {merchantName}</View>
-              <View className="prefecture_fure_limit">
-                {"| "}
-                {GetDistance(getLat(), getLnt(), lat, lnt)}
-              </View>
-            </View>
-            <View className="prefecture_fure_tag prefecture_fure_margin2"></View>
-            <View className="prefecture_fure_bean">
-              ¥{cash}+{bean}卡豆
-            </View>
-          </View>
-          <View className="prefecture_btn  public_center">立即抢购</View>
-        </View>
-      );
-    };
 
     return (
       <View className="prefecture_box">
@@ -246,7 +125,6 @@ class Index extends Component {
               onClick={() => this.selectChange("1")}
             ></View>
           </View>
-          {console.log(this.state[changeObj[selectIndex]])}
           {this.state[changeObj[selectIndex]].length === 0 && (
             <View className="prefecture_null_start">
               <View className="prefecture_null_image"></View>
@@ -262,7 +140,7 @@ class Index extends Component {
             }
           >
             {specialGoodsList.map((item) => {
-              return templateSpecail(item);
+              return prefectrueGoodsTemplate(item);
             })}
           </View>
           <View
@@ -272,7 +150,7 @@ class Index extends Component {
             }
           >
             {ownerCouponList.map((item) => {
-              return templateCoupon(item);
+              return prefectrueCouponTemplate(item);
             })}
           </View>
         </View>

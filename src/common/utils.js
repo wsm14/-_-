@@ -714,7 +714,6 @@ export const resiApiKey = "f390f1e2b0faa95710d00a0801384c41";
 //高德key
 
 export const filterIndex = (list = [], valKey) => {
-  console.log(valKey);
   const setMenu = (item = {}, data) => {
     let flag = false;
     if (data) {

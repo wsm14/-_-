@@ -892,6 +892,14 @@ class Index extends React.PureComponent {
             });
           }}
         ></View>
+        <View
+          className="home_blind_info"
+          onClick={() => {
+            Router({
+              routerName: "blindIndex",
+            });
+          }}
+        ></View>
         <View className="home_video_box">{templateView()}</View>
         <Toast
           data={userMomentsInfo}

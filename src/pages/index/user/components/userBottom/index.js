@@ -45,6 +45,17 @@ export default ({ list = [] }) => {
           routerName: "realName",
         }),
     },
+    {
+      style: "users_setting_icon5",
+      font: "我的地址",
+      fn: () =>
+        Router({
+          routerName: "delivery",
+          args: {
+            mode: "list",
+          },
+        }),
+    },
   ];
   return (
     <View className="user_bottom_box">
