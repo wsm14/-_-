@@ -1,0 +1,105 @@
+@import "@/assets/css/global.scss";
+.layer_Layout {
+  position: fixed !important;
+  z-index: 9998 !important;
+  .PopLayout_content {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    transform: translateY(100%);
+    width: 100%;
+    height: auto;
+    background: #ffffff;
+    border-radius: 20px 20px 0 0;
+    z-index: 9999;
+    overflow: hidden;
+    flex-direction: row;
+    transition: all 0.15s linear;
+    &.pop_show {
+      transform: translateY(0);
+    }
+
+    &.pop_hide {
+      transform: translateY(100%);
+    }
+    .layer_Layout_title {
+      height: 115px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 36px;
+      position: relative;
+      .layer_Layout_close {
+        position: absolute;
+        right: 32px;
+        top: 40px;
+        width: 36px;
+        height: 36px;
+        background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_22.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .larer_layout_liner {
+      width: 686px;
+      height: 1px;
+      border: 1px solid #e6e6e6;
+      margin: 0 auto;
+    }
+    .poplayout_top {
+      @include flexCenter;
+      height: 115px;
+      width: 100%;
+      border-bottom: 1px solid #e6e6e6;
+      .poplayout_left {
+        .poplayout_close {
+          font-size: 28px;
+          color: #999999;
+        }
+      }
+      .poplayout_title {
+        flex: 1;
+        text-align: center;
+        font-size: 36px;
+        font-weight: 600;
+        color: #333333;
+      }
+      .poplayout_right {
+        .poplayout_sure {
+          font-size: 28px;
+          color: #07c0c2;
+        }
+      }
+    }
+    .poplayout_children {
+      max-height: 600px;
+      &::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+        color: transparent;
+      }
+    }
+  }
+  .PopLayout_mask {
+    @include whEqual(100%);
+    z-index: 998;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.15s linear;
+    &.pop_show {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    &.pop_hide {
+      display: none;
+    }
+  }
+}

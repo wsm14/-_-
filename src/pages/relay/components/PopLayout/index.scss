@@ -1,0 +1,83 @@
+@import "@/assets/css/global.scss";
+.PopLayout {
+  position: fixed !important;
+  z-index: 9998 !important;
+  .PopLayout_content {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    transform: translateY(100%);
+    width: 100%;
+    height: auto;
+    background: #ffffff;
+    border-radius: 20px 20px 0 0;
+    z-index: 9999;
+    overflow: hidden;
+    flex-direction: row;
+    transition: all 0.15s linear;
+
+    .PopLayout_padding_info {
+      padding: 0 32px;
+    }
+    &.pop_show {
+      transform: translateY(0);
+    }
+
+    &.pop_hide {
+      transform: translateY(100%);
+    }
+    .poplayout_top {
+      @include flexCenter;
+      height: 115px;
+      width: 100%;
+      border-bottom: 1px solid #e6e6e6;
+      .poplayout_left {
+        .poplayout_close {
+          font-size: 28px;
+          color: #999999;
+        }
+      }
+      .poplayout_title {
+        flex: 1;
+        text-align: center;
+        font-size: 36px;
+        font-weight: 600;
+        color: #333333;
+      }
+      .poplayout_right {
+        .poplayout_sure {
+          font-size: 28px;
+          color: #07c0c2;
+        }
+      }
+    }
+    .poplayout_children {
+      overflow-y: auto;
+      max-height: 600px;
+      &::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+        color: transparent;
+      }
+    }
+  }
+  .PopLayout_mask {
+    @include whEqual(100%);
+    z-index: 998;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.15s linear;
+    &.pop_show {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    &.pop_hide {
+      display: none;
+    }
+  }
+}

@@ -65,7 +65,8 @@ const config = {
     "@/common": path.resolve(__dirname, "..", "src/common"),
     "@/layout": path.resolve(__dirname, "..", "src/layout"),
     "@/server": path.resolve(__dirname, "..", "src/server"),
-    "@/assets": path.resolve(__dirname, "..", "src/assets") 
+    "@/assets": path.resolve(__dirname, "..", "src/assets"),
+    "@/relay": path.resolve(__dirname, "..", "src/pages/relay"),
   },
   copy: {
     patterns: [

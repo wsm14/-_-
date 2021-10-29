@@ -1,0 +1,25 @@
+.SelectAddress_scroll {
+  height: 868px;
+  background: #ffffff;
+  .SelectAddress_scroll_padding {
+    padding: 40px 32px 0;
+    .SelectAddress_scroll_template {
+      margin-bottom: 56px;
+    }
+    .SelectAddress_scroll_name {
+      font-size: 28px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 28px;
+      max-width: 640px;
+    }
+    .SelectAddress_scroll_name1 {
+      padding-top: 20px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      line-height: 28px;
+      max-width: 640px;
+    }
+  }
+}

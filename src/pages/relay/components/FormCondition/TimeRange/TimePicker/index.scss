@@ -1,0 +1,45 @@
+@import "@/assets/css/global.scss";
+
+.PickerView_Block {
+  height: 516px;
+  padding-top: 58px;
+  .PickerView_tool {
+    width: 100%;
+    height: 400px;
+  }
+  .PickerView_indicator {
+    height: 95px;
+    line-height: 95px;
+  }
+  .PickerView_Item {
+    @include flexCenter;
+    height: 95px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    &.select {
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+    }
+  }
+  .picker_year,
+  .picker_day,
+  .picker_mon {
+    position: absolute;
+    z-index: 11;
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    bottom: 178px;
+  }
+  .picker_year {
+    left: 170px;
+  }
+  .picker_mon {
+    left: 170px + 205px;
+  }
+  .picker_day {
+    right: 55px;
+  }
+}
