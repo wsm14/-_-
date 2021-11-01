@@ -112,7 +112,7 @@ class Index extends Component {
     let newList = oldCity.filter((val) => {
       return val.cityCode !== cityCode;
     });
-    fakeStorage("oldCity", [{ ...item }, ...newList].slice(0, 3));
+    fakeStorage("oldCity", [{ ...item }, ...newList].slice(0, 2));
     fakeStorage("city", {
       cityCode: item.cityCode,
       cityName: item.name,
