@@ -12,7 +12,6 @@ const locationStore = observable({
   setLocation(latitude, longitude) {
     this.lat = latitude;
     this.lnt = longitude;
-
     if (!this.flag) {
       this.setDistrict(latitude, longitude);
     }

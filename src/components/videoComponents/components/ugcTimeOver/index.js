@@ -17,10 +17,11 @@ export default ({ data, time, current, platformRewardBeanRules }) => {
   const [requestTime, setRequestTime] = useState(0);
   const [request, setRequest] = useState(false);
   const [toast, setToast] = useState(false);
-  const [layer, setLayer] = useState(false);
+  const [layer, setLayer] = useState({ visible: false, count: 0 });
+  const [overStatus, setOverStatus] = useState(false);
   const { momentType, beanFlag } = data;
   useEffect(() => {
-    if (momentType === "ugc" && beanFlag === "0") {
+    if (momentType === "ugc" && beanFlag === "0" && !overStatus) {
       computedTimes(time);
     }
   }, [time]);
@@ -75,9 +76,14 @@ export default ({ data, time, current, platformRewardBeanRules }) => {
         });
       })
       .catch((val) => {
-        setRequest(() => {
-          return false;
-        });
+        const { resultCode } = val;
+        if (resultCode === "5038") {
+          setOverStatus(true);
+        } else {
+          setRequest(() => {
+            return false;
+          });
+        }
       });
   };
   const drawProgressbg = () => {
@@ -108,8 +114,12 @@ export default ({ data, time, current, platformRewardBeanRules }) => {
       } else {
         if (parseInt(currentTime) && !request) {
           if (currentTime >= watch && timeType) {
-            if (currentTime >= 3 && !layer) {
-              setLayer(true);
+            if (currentTime >= 3 && !layer.visible) {
+              setLayer({ visible: true, count: 0 });
+              let timeInfo = setTimeout(() => {
+                setLayer({ visible: true, count: 1 });
+                clearTimeout(timeInfo);
+              }, 2000);
             }
             setWatch(parseInt(currentTime));
           } else {
@@ -120,7 +130,7 @@ export default ({ data, time, current, platformRewardBeanRules }) => {
       }
     }
   };
-  if (momentType === "ugc" && beanFlag === "0") {
+  if (momentType === "ugc" && beanFlag === "0" && !overStatus) {
     return toast ? (
       <View className="ugcTimeOver_box ugcTimeOver_transtation">
         <View className="ugcTimeOver_toast_box public_center">
@@ -131,7 +141,7 @@ export default ({ data, time, current, platformRewardBeanRules }) => {
       </View>
     ) : (
       <View className="ugcTimeOver_box ugcTimeOver_boxBean">
-        {layer && (
+        {layer.visible && layer.count === 0 && (
           <View className="ugcTimeOver_tag_toast ugcTimeOver_tag_transtation">
             观看视频可以得卡豆奖励啦！
           </View>

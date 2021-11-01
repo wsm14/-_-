@@ -122,7 +122,6 @@ class Index extends Component {
       userBeanInfo,
       errorVisible,
     } = this.state;
-    const { num, times } = blindBoxRuleObject;
     const { profile = "", username } = userInfo;
     const template = {
       owner: (
@@ -233,15 +232,6 @@ class Index extends Component {
               </View>
             </View>
           </View>
-          <View className="shareBox_bg_left"></View>
-          <View className="shareBox_toast_title">温馨提示</View>
-          <View className="shareBox_toast_font">
-            1. 每个好友每天仅可助力1次哦
-          </View>
-          <View className="shareBox_toast_font">
-            2. 每{num}个人助力成功，好友即可获得{times}次免费盲盒机会
-          </View>
-          <View className="shareBox_toast_font">3. 待补充</View>
         </View>
         {visible && (
           <Drawer

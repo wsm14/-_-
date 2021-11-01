@@ -3,8 +3,8 @@ import Taro from "@tarojs/taro";
 import { View, Text, Image, Input } from "@tarojs/components";
 import "./index.scss";
 import { toast, computedBeanPrice } from "@/common/utils";
-import { fetchProductOrderPrice } from "@/server/perimeter";
 import { fetchUserShareCommission } from "@/server/index";
+import { fetchPhoneBill } from "@/server/common";
 import classNames from "classnames";
 import Barrage from "@/components/componentView/active/barrage";
 import Router from "@/common/router";
@@ -22,17 +22,7 @@ class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      payList: [
-        {
-          money: 50,
-        },
-        {
-          money: 100,
-        },
-        {
-          money: 200,
-        },
-      ],
+      phoneBillItemList: [],
       configUserLevelInfo: {},
       teleForm: "",
       teleType: true,
@@ -47,6 +37,10 @@ class Index extends Component {
   }
   componentDidShow() {
     this.fetchUserShareCommission();
+    fetchPhoneBill().then((val) => {
+      const { phoneBillItemList } = val;
+      this.setState({ phoneBillItemList });
+    });
   }
   regExpMobile(val) {
     console.log(new RegExp(mobileNumber).test(val), val, mobileNumber);
@@ -85,6 +79,7 @@ class Index extends Component {
       }
     }
   }
+
   //号码校验
   changeIndex(index) {
     const { selectIndex } = this.state;
@@ -124,14 +119,14 @@ class Index extends Component {
   }
   shareImageInfo() {
     const { shareDeatils } = this.state;
-    const { frontImage, miniProgramUrl, qcodeUrl } = shareDeatils;
-    if (frontImage && miniProgramUrl && qcodeUrl) {
+    const { backgroundImages, miniProgramUrl, qcodeUrl } = shareDeatils;
+    if (backgroundImages && miniProgramUrl && qcodeUrl) {
       this.setState({
         cavansObj: {
           start: true,
           data: rssConfigData({
             wxCode: qcodeUrl,
-            frontImage: frontImage,
+            frontImage: backgroundImages,
           }),
         },
       });
@@ -147,7 +142,7 @@ class Index extends Component {
               start: true,
               data: rssConfigData({
                 wxCode: res.qcodeUrl,
-                frontImage: res.frontImage,
+                frontImage: res.backgroundImages,
               }),
             },
             shareDeatils: res,
@@ -158,11 +153,11 @@ class Index extends Component {
   }
   onShareAppMessage(res) {
     const { shareDeatils } = this.state;
-    const { miniProgramUrl, frontImage, title } = shareDeatils;
+    const { miniProgramUrl, backgroundImages, title } = shareDeatils;
     if (res.from === "button") {
       return {
         title: title,
-        imageUrl: frontImage,
+        imageUrl: backgroundImages,
         path: `/${miniProgramUrl}`,
         complete: function () {
           // 转发结束之后的回调（转发成不成功都会执行）
@@ -174,7 +169,7 @@ class Index extends Component {
   }
   render() {
     const {
-      payList,
+      phoneBillItemList,
       selectIndex,
       configUserLevelInfo,
       teleForm,
@@ -200,7 +195,7 @@ class Index extends Component {
           <View className="recharge_title">充值金额</View>
           <Barrage></Barrage>
           <View className="recharge_select_info">
-            {payList.map((item, index) => {
+            {phoneBillItemList.map((item, index) => {
               return (
                 <View
                   onClick={() => this.changeIndex(index)}
@@ -212,10 +207,16 @@ class Index extends Component {
                     (index + 1) % 3 !== 0 ? "recharge_select_right" : ""
                   )}
                 >
-                  <View className="recharge_select_price">{item.money}</View>
+                  <View className="recharge_select_price">
+                    {item.totalFee}元
+                  </View>
+                  <View className="recharge_select_pay">
+                    售价:{item.discountFee}元
+                  </View>
                   <View className="recharge_select_title">卡豆最高可减</View>
                   <View className="recharge_select_font">
-                    {computedBeanPrice(item.money, 100 - payBeanCommission)}元
+                    {computedBeanPrice(item.totalFee, 100 - payBeanCommission)}
+                    元
                   </View>
                 </View>
               );

@@ -12,9 +12,6 @@ export default ({ change }) => {
       <View className="newsInfo_font_content newsInfo_font_bold">
         超多好礼尽在拆盲盒 去拆盲盒吧
       </View>
-      <View style={{ visibility: "hidden" }} className="newsInfo_font_bold">
-        动动手指
-      </View>
       <View style={{ visibility: "hidden" }} c className="newsInfo_font_bold">
         iPhone13到手
       </View>

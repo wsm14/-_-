@@ -12,8 +12,8 @@ export default ({}) => {
   }, []);
   const getBeanBarrage = () => {
     fetchSpecialBarrage({ size: 50 }, (res) => {
-      const { momentBarrageList = [] } = res;
-      setList(momentBarrageList);
+      const { phoneBillBarrageList = [] } = res;
+      setList(phoneBillBarrageList);
     });
   };
   return (
@@ -35,7 +35,7 @@ export default ({}) => {
                   style={backgroundObj(userProfile)}
                 ></View>
                 <View className="friendScene_barrage_font">
-                  {username + barrageTime + barrageDesc}
+                  {username + barrageDesc}
                 </View>
               </View>
             </SwiperItem>

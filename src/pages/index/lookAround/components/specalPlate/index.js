@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import Taro from "@tarojs/taro";
 import { View, Swiper, SwiperItem } from "@tarojs/components";
 import Template from "./../hotTemplate";
 import classNames from "classnames";
@@ -43,7 +44,7 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
                 ? "lookAround_new_heightKol"
                 : "lookAround_new_height"
             )}
-            style={{ border: "2px solid #e5e5e5;" }}
+            style={{ border: `${Taro.pxTransform(1)}px solid #e5e5e5` }}
             onClick={() =>
               Router({
                 routerName: "speciaMaterial",

@@ -614,6 +614,10 @@ class Index extends React.PureComponent {
           this.setState({
             ugcVisible1: true,
           });
+        } else if (resultCode === "5035") {
+          this.setState({
+            ugcVisible2: true,
+          });
         }
       });
   }
@@ -905,7 +909,6 @@ class Index extends React.PureComponent {
             });
           }}
         ></Toast>
-
         <Coupon
           data={userMomentsInfo}
           show={couponFlag}
@@ -980,7 +983,7 @@ class Index extends React.PureComponent {
                     style={backgroundObj(relateImg)}
                   ></View>
                   <View className="video_layer_title">
-                    谢谢你送的{rewardRules.times}卡豆
+                    谢谢你送的{rewardRules.times * rewardRules.bean}卡豆
                   </View>
                   <View className="video_layer_titleLiner">
                     我会继续努力加油出好作品

@@ -311,11 +311,8 @@ export default (props) => {
         <React.Fragment>
           {(activityGoodsList.length > 0 || ownerCouponList.length > 0) &&
             templateStated(couponInfo, linkTo)}
-          <View
-            className="video_username font_hide"
-            onClick={() => routerInfo()}
-          >
-            <View className="font_hide">@{ownerName} </View>
+          <View className="video_username font_hide">
+            <View className="font_hide">@{relateName} </View>
           </View>
           {/* 发布视频用户来源 */}
           {flagType && boolean ? (
@@ -361,12 +358,7 @@ export default (props) => {
               >
                 <View className="video_city_icon"></View>
                 <ScrollView scrollX className="video_desc_text font_hide">
-                  {cityCode === "3301"
-                    ? "杭州"
-                    : cityCode === "4331"
-                    ? "湘西"
-                    : "全国"}
-                  ·{categoryName}
+                  {cityObj[cityCode] || "全国"}·{categoryName}
                   {GetDistance(getLat(), getLnt(), lat, lnt)
                     ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
                     : ""}
@@ -426,26 +418,28 @@ export default (props) => {
           </View>
         </View>
       )}
-      {momentType !== "ugc" && promotionFlag === "0" && (
-        <View
-          className="video_shop_iconBox video_shop_icon1"
-          onClick={() =>
-            Router({
-              routerName: "merchantDetails",
-              args: {
-                merchantId: ownerId,
-              },
-            })
-          }
-        >
-          <View className="video_shop_font font_hide">
-            {cityObj[cityCode]} | {relateName}
+      {momentType !== "ugc" &&
+        momentType !== "platform" &&
+        promotionFlag === "0" && (
+          <View
+            className="video_shop_iconBox video_shop_icon1"
+            onClick={() =>
+              Router({
+                routerName: "merchantDetails",
+                args: {
+                  merchantId: ownerId,
+                },
+              })
+            }
+          >
+            <View className="video_shop_font font_hide">
+              {cityObj[cityCode]} | {ownerName}
+            </View>
+            {momentStatus === "1" && (
+              <View className="video_shop_label">优惠特卖</View>
+            )}
           </View>
-          {momentStatus === "1" && (
-            <View className="video_shop_label">优惠特卖</View>
-          )}
-        </View>
-      )}
+        )}
       {/* 发布视频类型 */}
       {FilterGoods()}
       {jumpUrl.length > 0 && (

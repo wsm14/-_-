@@ -553,7 +553,7 @@ class Index extends Component {
       justifyContent: "center",
     };
     const selfContentStyle = {
-      width: Taro.pxTransform(686),
+      width: Taro.pxTransform(702),
       height: Taro.pxTransform(380),
       margin: `${Taro.pxTransform(40)} auto  0`,
       position: "relative",

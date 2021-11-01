@@ -306,7 +306,7 @@ export const fetchConfigWindVaneBySizeNew = (data = {}, fn) => {
 export const fetchSpecialBarrage = (data = {}, fn) => {
   return httpGet(
     {
-      url: "/common/dictionary/listSpecialBarrage",
+      url: "/common/dictionary/getPhoneBillBarrage",
       data: data,
     },
     (res) => fn && fn(res)
@@ -346,3 +346,14 @@ export const fetchUgcMomentRule = (data = {}, fn) => {
   );
 };
 //ugc配置项
+
+export const fetchPhoneBill = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/listPhoneBill",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//话费配置项

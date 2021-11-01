@@ -13,7 +13,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
       <React.Fragment>
         <View className="lookAround_selectSpecal_Fliner"></View>
         <View
-          style={{ paddingTop: Taro.pxTransform(40) }}
+          style={{ paddingTop: Taro.pxTransform(24) }}
           className="lookAround_selectSpecal_box"
         >
           {data.length > 0 ? (
