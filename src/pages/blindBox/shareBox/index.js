@@ -76,8 +76,19 @@ class Index extends Component {
     })
       .then((val) => {
         this.getBlindHelp();
-        this.setState({ visible: true });
-        toast("邀请成功");
+        getUserMomentcheckNew({}).then((val) => {
+          const { newUserFlag = "1", newUserBean = "300" } = val;
+          if (newUserFlag === "1") {
+            this.setState(
+              {
+                userBeanInfo: { ...val },
+              },
+              (val) => {
+                this.setState({ visible: true });
+              }
+            );
+          }
+        });
       })
       .catch((e) => {
         const { resultCode } = e;
@@ -254,7 +265,7 @@ class Index extends Component {
                   }
                 );
               }}
-              data={{ ...userBeanInfo, ...userInfo }}
+              data={{ ...userInfo, ...userBeanInfo }}
             ></SaveBean>
           </Drawer>
         )}
