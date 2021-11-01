@@ -107,9 +107,9 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
     0: (
       <View className="noviceGuide_Box">
         <View className="noviceGuide_title">
-          <View className="noviceGuide_title_pad">你获得了拆盲盒机会</View>
+          <View className="noviceGuide_title_pad">双11·玩盲盒·送对象</View>
         </View>
-        <View className="noviceGuide_hf">拼手气玩大的·抽iPhone13</View>
+        <View className="noviceGuide_hf">你获得了拆盲盒机会</View>
         <View className="noviceGuide_gif"></View>
         <View
           className="noviceGuide_btn public_center"
