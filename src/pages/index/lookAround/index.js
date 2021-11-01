@@ -535,11 +535,11 @@ class Index extends Component {
     const bannerStyle = {
       width: Taro.pxTransform(686),
       height: Taro.pxTransform(200),
-      margin: `${Taro.pxTransform(32)} auto  0`,
+      margin: `${Taro.pxTransform(32)} auto  ${Taro.pxTransform(24)}`,
       position: "relative",
     };
     const bottom = {
-      bottom: Taro.pxTransform(-12),
+      bottom: Taro.pxTransform(-24),
       justifyContent: "flex-end",
     };
     const bannerContentStyle = {

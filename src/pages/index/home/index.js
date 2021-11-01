@@ -591,7 +591,7 @@ class Index extends React.PureComponent {
                 });
                 clearTimeout(this.animatedTime);
                 this.animatedTime = null;
-              }, 2000);
+              }, 3000);
             } else {
               this.setState({
                 animated: "video_beanIn",
@@ -602,7 +602,7 @@ class Index extends React.PureComponent {
                 });
                 clearTimeout(this.animatedTime);
                 this.animatedTime = null;
-              }, 2000);
+              }, 3000);
             }
           }
         );

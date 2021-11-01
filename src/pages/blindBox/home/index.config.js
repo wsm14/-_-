@@ -4,4 +4,5 @@ export default {
   navigationBarBackgroundColor: "#EF476F",
   navigationBarTextStyle: "white",
   enableShareAppMessage: true,
+  enablePullDownRefresh: true,
 };

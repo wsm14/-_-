@@ -3253,20 +3253,24 @@ image {
     transform: translateX(-400px);
     opacity: 0;
   }
-  50% {
+  25% {
     transform: translateX(16px);
     opacity: 1;
   }
-  to {
-    transform: translateY(1000px);
+  75% {
+    transform: translateX(16px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-400px);
     opacity: 0;
   }
 }
 
 .video_beanIn {
   animation-name: beanIn;
-  animation-duration: 2s;
-  animation-timing-function: ease-out;
+  animation-duration: 3s;
+  animation-timing-function: linear;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }

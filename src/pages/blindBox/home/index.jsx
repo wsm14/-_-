@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, Button } from "@tarojs/components";
-import { useDidShow, useShareAppMessage } from "@tarojs/taro";
+import Taro, {
+  useDidShow,
+  useShareAppMessage,
+  usePullDownRefresh,
+} from "@tarojs/taro";
 import PersonnelSwiper from "./components/PersonnelSwiper";
 import BlindContent from "./components/BlindContent";
 import BindGetNumber from "./components/BindGetNumber";
@@ -25,6 +29,16 @@ export default () => {
   const [shareZl, setShareZl] = useState(null);
   const [shareMh, setShareMh] = useState(null);
   useDidShow(() => {
+    dataInit();
+    getbarrage();
+    getRewardJackpot();
+    getShareData();
+  });
+  usePullDownRefresh(() => {
+    let time = setTimeout(() => {
+      clearTimeout(time);
+      Taro.stopPullDownRefresh();
+    }, 500);
     dataInit();
     getbarrage();
     getRewardJackpot();

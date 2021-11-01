@@ -107,14 +107,14 @@ export default ({ data, updateInfo, list }) => {
               {blindBoxBeanNum}卡豆拆一次
             </View>
             <View className="blind_start_our">
-              剩余抽奖次数{surplusBoxBeanTimes}
+              剩余抽奖次数: {surplusBoxBeanTimes}
             </View>
           </View>
         );
       } else {
         return (
           <View
-            className="blind_start"
+            className="blind_start_beanInfo"
             onClick={() =>
               Router({
                 routerName: "nearVideo",
@@ -124,7 +124,10 @@ export default ({ data, updateInfo, list }) => {
               })
             }
           >
-            卡豆不足? 去捡卡豆
+            <View className="blind_start_count">卡豆不足? 去捡卡豆</View>
+            <View className="blind_start_our">
+              剩余抽奖次数: {surplusBoxBeanTimes}
+            </View>
           </View>
         );
       }
