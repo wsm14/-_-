@@ -1,10 +1,10 @@
 page {
   width: 100%;
-  background: #f5f5f5;
+  background: #ffffff;
 }
 .lookAround_box {
   width: 100%;
-  background: white;
+  background: #ffffff;
   min-height: 100%;
   line-height: 1;
   position: relative;
@@ -574,17 +574,20 @@ page {
       position: relative;
       background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
       border-radius: 8px;
-      border: 1px solid #e5e5e5;
       box-sizing: border-box;
       height: 374px;
     }
     .lookAround_specalPlate_date {
       position: relative;
-      background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
       border-radius: 8px;
       border: 1px solid #e5e5e5;
       box-sizing: border-box;
       height: 374px;
+    }
+    .lookAround_tall_info {
+      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon795.png")
+        no-repeat;
+      background-size: 100% 100%;
     }
     .lookAround_specalPlate_view {
       padding: 24px 16px 0;
@@ -732,8 +735,7 @@ page {
   .configWindVane_text {
     padding-top: 12px;
     font-size: 24px;
-    font-weight: 600;
-    color: #333333;
+    color: #666666;
     line-height: 24px;
     text-align: center;
   }

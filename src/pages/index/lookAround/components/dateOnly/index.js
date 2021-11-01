@@ -32,7 +32,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
                   className="lookAround_specalPlate_swiper1 lookAround_template_specal2"
                 >
                   <Template
-                    title={"福利价:"}
+                    title={"秒杀价:"}
                     userInfo={userInfo}
                     data={item}
                   ></Template>

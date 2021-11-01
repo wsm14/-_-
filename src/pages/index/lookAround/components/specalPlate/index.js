@@ -39,12 +39,11 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
           </View>
           <View
             className={classNames(
-              "lookAround_specalPlate_hot",
+              "lookAround_specalPlate_hot lookAround_tall_info",
               shareCommission > 0
                 ? "lookAround_new_heightKol"
                 : "lookAround_new_height"
             )}
-            style={{ border: `${Taro.pxTransform(1)}px solid #e5e5e5` }}
             onClick={() =>
               Router({
                 routerName: "speciaMaterial",

@@ -43,7 +43,7 @@ export default ({ data = [], userInfo = {} }) => {
                       <Template
                         userInfo={userInfo}
                         data={item}
-                        type={"ms"}
+                        type={"fl"}
                       ></Template>
                     </View>
                   );

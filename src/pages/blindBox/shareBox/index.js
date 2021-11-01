@@ -76,6 +76,7 @@ class Index extends Component {
     })
       .then((val) => {
         this.getBlindHelp();
+        this.setState({ visible: true });
         toast("邀请成功");
       })
       .catch((e) => {
