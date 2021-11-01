@@ -13,8 +13,7 @@ import "./index.scss";
 import { getOrderPrepaymentResult, payOrder } from "@/server/goods";
 import { navigateTo, goBack, toast, redirectTo } from "@/common/utils";
 import PayGo from "@/components/pay_btn";
-import { authWxLogin } from "@/common/authority";
-const AdaPay = require("./../../payPrice/adaPay.js");
+import { handlePayWechat } from "@/server/user";
 
 class Index extends Component {
   constructor() {
@@ -54,28 +53,27 @@ class Index extends Component {
       httpData: { orderSn, payMonth },
       merchantId,
     } = this.state;
-    payOrder(
-      { orderSn: orderSn, payMonth, payType: "wx_lite", wechatCode: res },
-      (result) => {
-        const { status, error_msg } = result;
-        if (status === "succeeded") {
-          AdaPay.doPay(result, (payRes) => {
-            if (payRes.result_status == "succeeded") {
-              redirectTo(
-                `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}&merchantId=${merchantId}`
-              );
-            }
-          });
-        } else {
-          toast(error_msg || "支付失败");
-          goBack();
-        }
-      }
-    );
-  }
-
-  payScan() {
-    authWxLogin(this.payOrder.bind(this));
+    handlePayWechat({ orderSn }, (res) => {
+      console.log(res);
+    });
+    // payOrder(
+    //   { orderSn: orderSn, payMonth, payType: "wx_lite", wechatCode: res },
+    //   (result) => {
+    //     const { status, error_msg } = result;
+    //     if (status === "succeeded") {
+    //       AdaPay.doPay(result, (payRes) => {
+    //         if (payRes.result_status == "succeeded") {
+    //           redirectTo(
+    //             `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}&merchantId=${merchantId}`
+    //           );
+    //         }
+    //       });
+    //     } else {
+    //       toast(error_msg || "支付失败");
+    //       goBack();
+    //     }
+    //   }
+    // );
   }
 
   componentDidShow() {
@@ -120,7 +118,7 @@ class Index extends Component {
         </View>
         <PayGo
           content={`微信支付¥${payFee}`}
-          click={this.payScan.bind(this)}
+          click={this.payOrder.bind(this)}
         ></PayGo>
       </View>
     );
