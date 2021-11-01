@@ -32,7 +32,13 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
             <View className="lookAround_specalPlate_content">
               {data.map((item, index) => {
                 if (index < 2) {
-                  return <Template userInfo={userInfo} data={item}></Template>;
+                  return (
+                    <Template
+                      type={"ms"}
+                      userInfo={userInfo}
+                      data={item}
+                    ></Template>
+                  );
                 }
               })}
             </View>
