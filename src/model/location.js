@@ -2,6 +2,7 @@ import Taro from "@tarojs/taro";
 import { observable } from "mobx";
 import { getRestapiAddress } from "@/server/common";
 import { resiApiKey, toast } from "@/common/utils";
+import { fakeSubmitUserLocation } from "@/server/user";
 const locationStore = observable({
   lat: 30.229271,
   lnt: 120.255384,
@@ -18,6 +19,7 @@ const locationStore = observable({
   setDistrict(latitude, longitude) {
     this.flag = true;
     this.locationStatus = true;
+    fakeSubmitUserLocation();
     getRestapiAddress(
       {
         key: resiApiKey,

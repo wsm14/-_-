@@ -5,11 +5,15 @@ import classNames from "classnames";
 import { computedClient } from "@/common/utils";
 import User from "./components/userDetails";
 import "./index.scss";
-const scale = () => {
-  return Taro.getSystemInfoSync().windowWidth / 375;
-};
 export default (props) => {
-  const { data, current, beanLimitStatus, index, initBean = true } = props;
+  const {
+    data,
+    current,
+    beanLimitStatus,
+    index,
+    initBean = true,
+    ugcBeanCount,
+  } = props;
   const [toast, setToast] = useState(1);
   const [timeOut, setTimeOut] = useState(null);
   const {
@@ -36,7 +40,6 @@ export default (props) => {
       }
     }
   }, [current]);
-
   const renderToast = () => {
     let str = "";
     freeCouponFlag === "1" ? (str += "+免费券") : "";

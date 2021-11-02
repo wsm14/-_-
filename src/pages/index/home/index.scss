@@ -25,6 +25,17 @@ page {
     no-repeat;
   background-size: 100% 100%;
 }
+.home_blind_info {
+  width: 110px;
+  height: 98px;
+  position: fixed;
+  top: 200px;
+  left: 36px;
+  z-index: 105;
+  background: url("https://wechat-config.dakale.net/miniprogram/blind/blind_layer.png")
+    no-repeat;
+  background-size: 100% 100%;
+}
 .home_box {
   width: 100%;
   height: 100%;
@@ -97,10 +108,9 @@ page {
     left: 0;
     right: 0;
     height: 48px;
+    padding: 0 32px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 32px;
     .home_city {
       display: flex;
       align-items: center;
@@ -292,9 +302,11 @@ page {
       color: #07c0c2;
     }
   }
+  .home_Select_scroll {
+    max-width: 351px;
+    margin-left: 40px;
+  }
   .home_Select {
-    height: 48px;
-    line-height: 48px;
     font-size: 32px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.6);
@@ -303,19 +315,22 @@ page {
     display: flex;
     .home_select_right {
       margin-right: 40px;
+      padding-top: 8px;
+      position: relative;
     }
     .hode_select_line {
       width: 36px;
       height: 4px;
-      background: #ffffff;
       border-radius: 2px;
-      position: absolute;
-      bottom: -8px;
+      position: relative;
       left: 50%;
       margin-left: -18px;
+      background: #ffffff;
+      box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.4);
+      margin-top: 8px;
     }
     .home_select_checked {
-      font-size: 36px;
+      font-size: 32px;
       color: rgba(255, 255, 255, 1);
       font-weight: bold;
       position: relative;
@@ -548,163 +563,4 @@ page {
   background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon510.png")
     no-repeat;
   background-size: 100% 100%;
-}
-
-.templateStated_box {
-  width: 558px;
-  height: 76px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  .templateStated_img {
-    width: 60px;
-    height: 60px;
-    border-radius: 4px;
-    margin-left: 8px;
-  }
-  .templateStated_font {
-    margin-left: 12px;
-    height: 60px;
-    .templateStated_title {
-      max-width: 318px;
-      font-size: 24px;
-      font-weight: 600;
-      color: #ffffff;
-    }
-    .templateStated_price {
-      padding-top: 8px;
-      max-width: 318px;
-      color: rgba(255, 235, 165, 1);
-      line-height: 28px;
-    }
-  }
-  .templateStated_pay {
-    margin-left: 24px;
-    width: 88px;
-    height: 40px;
-    background: #ef476f;
-    border-radius: 22px;
-    font-size: 24px;
-    font-weight: 600;
-    color: #ffffff;
-    position: absolute;
-    right: 16px;
-    top: 18px;
-  }
-  .templateStated_margin {
-    margin-left: 4px;
-  }
-}
-.templateCard_box {
-  position: absolute;
-  bottom: 90px;
-  left: 32px;
-  right: 32px;
-  width: 520px;
-  height: 218px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
-  z-index: 10;
-  .templateCard_details_box {
-    padding: 16px 16px 0;
-    display: flex;
-    .templateCard_image {
-      width: 112px;
-      height: 112px;
-      border-radius: 8px;
-    }
-    .templateCard_goods_box {
-      margin-left: 12px;
-      height: 112px;
-      .templateCard_title {
-        width: 316px;
-        font-size: 28px;
-        font-weight: 400;
-        color: #ffffff;
-        line-height: 28px;
-        padding-top: 4px;
-      }
-      .templateCard_margin1 {
-        margin-left: 4px;
-      }
-      .templateCard_margin2 {
-        margin-left: 8px;
-      }
-      .templateCard_price {
-        padding-top: 12px;
-        width: 354px;
-        line-height: 28px;
-        color: #999999;
-      }
-      .templateCard_through {
-        text-decoration: line-through;
-      }
-      .templateCard_beanPrice {
-        padding-top: 8px;
-        width: 354px;
-        line-height: 28px;
-        display: flex;
-        align-items: baseline;
-        color: rgba(255, 235, 165, 1);
-      }
-      .templateCard_opcity {
-        color: rgba(255, 255, 255, 0.7);
-      }
-    }
-  }
-  .templateCard_btn_box {
-    margin: 16px 0 0 140px;
-    display: flex;
-    .templateCard_btn_buy {
-      width: 136px;
-      height: 40px;
-      background: #07c0c2;
-      border-radius: 22px;
-      font-size: 24px;
-      font-weight: 600;
-      color: #ffffff;
-    }
-    .templateCard_btn_share {
-      width: 160px;
-      height: 40px;
-      background: #ef476f;
-      border-radius: 22px;
-      font-size: 24px;
-      font-weight: 600;
-      color: #ffffff;
-      margin-left: 12px;
-    }
-    .templateCard_btn_initbuy {
-      padding: 0 20px;
-      height: 40px;
-      background: #07c0c2;
-      border-radius: 22px;
-      font-size: 24px;
-      font-weight: 600;
-      color: #ffffff;
-    }
-    .templateCard_btn_initshare {
-      padding: 0 20px;
-      height: 40px;
-      background: #ef476f;
-      border-radius: 22px;
-      font-size: 24px;
-      font-weight: 600;
-      color: #ffffff;
-      margin-left: 12px;
-    }
-  }
-}
-.templateCard_close {
-  width: 24px;
-  height: 24px;
-  right: 16px;
-  top: 16px;
-  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon611.png")
-    no-repeat;
-  background-size: 100% 100%;
-  position: absolute;
-  z-index: 100;
 }

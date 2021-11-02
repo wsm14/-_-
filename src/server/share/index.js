@@ -145,3 +145,29 @@ export const saveUserRedEnvelopes = (data, fn) => {
   );
 };
 //领取卡豆
+
+export const fetchGetPrizeDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/blindBox/reward/getBlindBoxReward",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+// 查询用户中奖单个奖励详情
+
+export const fetchBindAddress = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/activity/blindBox/reward/blindBoxRewardAddAddress",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+// 商品绑定地址

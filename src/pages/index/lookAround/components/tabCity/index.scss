@@ -1,53 +1,40 @@
 .tabCity_layer {
   position: fixed;
-  z-index: 1000000000;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  top: 72px;
+  left: 32px;
+  height: 66px;
+  min-width: 440px;
+  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon785.png")
+    no-repeat;
+  background-size: 100% 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  .tabCity_box {
-    width: 500px;
-    background: #ffffff;
+  .tabCity_layer_close {
+    width: 32px;
+    height: 32px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon784.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin: 12px 16px 0;
+    content: "";
+  }
+  .tabCity_layer_font {
+    font-size: 26px;
+    font-weight: 400;
+    color: #ffffff;
+    margin-top: 12px;
+    margin-left: 16px;
+  }
+  .tabCity_layer_btn {
+    width: 128px;
+    height: 40px;
+    background: #07c0c2;
     border-radius: 20px;
-    background: #ffffff;
-    .tabCity_box_content {
-      padding: 48px 40px 40px;
-      text-align: center;
-      .tabCity_box_font1 {
-      }
-      .tabCity_box_font2 {
-        margin-top: 16px;
-        color: rgba(7, 192, 194, 1);
-      }
-      .tabCity_box_font3 {
-        margin-top: 16px;
-      }
-      .tabCity_box_font4 {
-        margin-top: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .tabCity_box_btn {
-        width: 200px;
-        height: 70px;
-        font-size: 32px;
-        text-align: center;
-        line-height: 70px;
-        border-radius: 8px;
-      }
-      .tabCity_box_btn1 {
-        border: 2px solid #07c0c2;
-        color: #07c0c2;
-      }
-      .tabCity_box_btn2 {
-        background: #07c0c2;
-        color: #ffffff;
-      }
-    }
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 12px 0 0 24px;
   }
 }

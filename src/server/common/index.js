@@ -10,7 +10,6 @@ import Taro from "@tarojs/taro";
  * 用户收益卡豆收入：root：userIncomeTrade，parent：earn
  * 现金 root：userCashTrade
  * */
-import { objStatus } from "@/common/utils";
 export const getRootAndParent = (data, fn) => {
   return httpGet(
     {
@@ -48,7 +47,18 @@ export const getRestapiAddress = (data, fn) => {
   );
 };
 //获取高德城市定位信息
-
+export const filterRestapiAddress = (data, fn) => {
+  httpOtherGet(
+    {
+      data: data,
+      url: "https://restapi.amap.com/v3/geocode/geo",
+    },
+    (res) => {
+      return fn(res);
+    }
+  );
+};
+//获取高德城市定位信息
 export const getCategory = (data, fn) => {
   return httpGet(
     {
@@ -245,7 +255,7 @@ export const getShareInfo = (data = {}, fn) => {
         sourceType,
       },
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
 //获取解密分享码
@@ -296,10 +306,54 @@ export const fetchConfigWindVaneBySizeNew = (data = {}, fn) => {
 export const fetchSpecialBarrage = (data = {}, fn) => {
   return httpGet(
     {
-      url: "/common/dictionary/listSpecialBarrage",
+      url: "/common/dictionary/getPhoneBillBarrage",
       data: data,
     },
     (res) => fn && fn(res)
   );
 };
 //活动卡豆弹幕;
+
+export const fetchAroundModule = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/configModule/getWanderAroundModule",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//逛逛配置项;
+
+export const fetchTabTag = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/indexTab/listIndexTabTag",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//视频配置项
+
+export const fetchUgcMomentRule = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/getUgcMomentRule",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//ugc配置项
+
+export const fetchPhoneBill = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/listPhoneBill",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//话费配置项

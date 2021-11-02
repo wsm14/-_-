@@ -5,12 +5,10 @@ import VideoView from "./components/videoView";
 import {
   computedClient,
   toast,
-  setIntive,
   saveFollow,
   goBack,
   loginStatus,
 } from "@/common/utils";
-import InterVal from "@/components/videoComponents";
 import {
   getUserMomentList,
   saveWatchBean,
@@ -31,6 +29,7 @@ import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import Comment from "@/components/componentView/comment";
 import "./index.scss";
+import { httpPost } from "@/api/newRequest";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -43,7 +42,7 @@ class Index extends React.PureComponent {
       circular: false,
       userMomentsInfo: {},
       httpData: {
-        browseType: "pickUp",
+        browseType: "pickUpMerge",
         page: 1,
         limit: "10",
       },
@@ -77,12 +76,12 @@ class Index extends React.PureComponent {
       },
       (res) => {
         this.videoPlayerControl();
-        if (current >= this.state.userMomentsList.length - 3 && countStatus) {
+        if (current === this.state.userMomentsList.length - 3 && countStatus) {
           this.setState(
             {
               httpData: {
                 ...httpData,
-                page: Math.ceil(userMomentsList.length / 10) + 1,
+                page: httpData.page + 1,
               },
             },
             (res) => {
@@ -122,12 +121,10 @@ class Index extends React.PureComponent {
   onTransition(e) {
     const { dy } = e.detail;
     const { httpData, interval, current } = this.state;
-
     if (current === 0 && dy < -100) {
       if (interval) {
         this.stopInterval(interval);
       }
-
       if (this.interReload) {
         clearTimeout(this.interReload);
         return (this.interReload = setTimeout(
@@ -418,7 +415,7 @@ class Index extends React.PureComponent {
         this.setState(
           {
             httpData: {
-              browseType: "pickUp",
+              browseType: "pickUpMerge",
               page: 1,
               limit: "10",
             },
@@ -441,7 +438,8 @@ class Index extends React.PureComponent {
           userMomentsInfo: list[index],
           httpData: {
             ...this.state.httpData,
-            ...selectObj,
+            browseType: "sameCity",
+            page: Math.ceil(list.length / 10) + 1,
           },
         });
       }
@@ -452,7 +450,6 @@ class Index extends React.PureComponent {
     if (!getCurrentInstance().router.params.type) {
       homeStore.clearNavitor();
       evens.$emit("updateMomentsList", this.state.userMomentsList);
-      console.log(this.state.userMomentsList);
     }
   }
   fetchUserShareCommission() {

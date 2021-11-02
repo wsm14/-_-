@@ -253,3 +253,46 @@ export const fakeSubmitRealName = (data = {}, fn) => {
   );
 };
 //提交用户提名
+
+export const fakeSubmitUserLocation = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/userLocation/saveUserLocation",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户每次打开小程序获取定位后提交定位信息
+
+export const fetchPromotionStatus = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/getOwnerExistPromotionStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户每次打开小程序获取定位后提交定位信息
+
+export const fakRewarde = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/moment/watch/antiReward",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户每次打开小程序获取定位后提交定位信息
+export const fakeMomentReward = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/moment/watch/ugcWatchMomentReward",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户获取ugc卡豆

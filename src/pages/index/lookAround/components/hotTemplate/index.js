@@ -9,24 +9,22 @@ import {
   computedBeanPrice,
 } from "@/common/utils";
 import Router from "@/common/router";
-export default ({ data = {}, userInfo = {}, title = "秒杀价" }) => {
+export default ({
+  data = {},
+  userInfo = {},
+  show = true,
+  type = "fl",
+  title = "秒杀价",
+}) => {
   const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
   const template = () => {
     const {
-      goodsId,
       goodsName,
       goodsImg,
       oriPrice,
       realPrice,
       lnt,
       lat,
-      status,
-      goodsType,
-      merchantAddress,
-      merchantName,
-      merchantLogo,
-      merchantIdString,
-      specialActivityIdString,
       merchantPrice,
     } = data;
     return (
@@ -40,15 +38,17 @@ export default ({ data = {}, userInfo = {}, title = "秒杀价" }) => {
           </View>
         </View>
         <View className="lookAround_template_name font_hide">{goodsName}</View>
-        <View className="lookAround_template_oldPrice color2 font_hide">
-          <View className="font18">原价:</View>
-          <View className="lookAround_template_priceMax font_hide font20 price_margin4 bold text_through">
-            ¥{oriPrice}
+        {show && (
+          <View className="lookAround_template_oldPrice color2 font_hide">
+            <View className="font18">原价:</View>
+            <View className="lookAround_template_priceMax font_hide font20 price_margin4 bold text_through">
+              ¥{oriPrice}
+            </View>
           </View>
-        </View>
+        )}
 
         <View className="lookAround_template_price color1 font_hide">
-          <View className="font18">{title} </View>
+          <View className="font18">{type === "fl" ? "福利价:" : "秒杀价:"} </View>
           <View className="lookAround_template_priceMax font_hide font20 price_margin4 bold">
             ¥{realPrice}
           </View>
@@ -74,20 +74,12 @@ export default ({ data = {}, userInfo = {}, title = "秒杀价" }) => {
   };
   const template1 = () => {
     const {
-      goodsId,
       goodsName,
       goodsImg,
       oriPrice,
       realPrice,
       lnt,
       lat,
-      status,
-      goodsType,
-      merchantAddress,
-      merchantName,
-      merchantLogo,
-      merchantIdString,
-      specialActivityIdString,
       merchantPrice,
     } = data;
     return (
@@ -101,13 +93,14 @@ export default ({ data = {}, userInfo = {}, title = "秒杀价" }) => {
           </View>
         </View>
         <View className="lookAround_template_name1 font_hide">{goodsName}</View>
-        <View className="lookAround_template_oldPrice color2 font_hide">
-          <View className="font18">原价:</View>
-          <View className="lookAround_template_priceMax font_hide font20 price_margin4 bold text_through">
-            ¥{oriPrice}
+        {show && (
+          <View className="lookAround_template_oldPrice color2 font_hide">
+            <View className="font18">原价:</View>
+            <View className="lookAround_template_priceMax font_hide font20 price_margin4 bold text_through">
+              ¥{oriPrice}
+            </View>
           </View>
-        </View>
-
+        )}
         <View className="lookAround_template_price color1 font_hide">
           <View className="font18">{title} </View>
           <View className="lookAround_template_priceMax font_hide font20 price_margin4 bold">

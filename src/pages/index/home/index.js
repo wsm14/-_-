@@ -5,42 +5,40 @@ import VideoView from "./components/videoView";
 import {
   computedClient,
   toast,
-  setIntive,
   saveFollow,
   loginStatus,
-  filterPath,
+  backgroundObj,
 } from "@/common/utils";
-import { ScrollView, View, Image } from "@tarojs/components";
+import { ScrollView, View } from "@tarojs/components";
 import {
   getUserMomentList,
   saveWatchBean,
   fakeInsertUserCollectionMoment,
   fakeDeleteUserCollection,
   saveMomentType,
-  getUserMomentDetailById,
   checkPuzzleBeanLimitStatus,
   updateUserMomentParam,
   fetchUserShareCommission,
   fakeNewUserVideo,
 } from "@/server/index";
-import {
-  listParentCategory,
-  getShareParamInfo,
-  getShareInfo,
-} from "@/server/common";
+import { getShareInfo, fetchUgcMomentRule } from "@/server/common";
+import { fakRewarde } from "@/server/user";
 import { inject, observer } from "mobx-react";
-import { nearList } from "@/components/nearList";
 import Toast from "@/components/beanToast";
-import Waterfall from "@/components/waterfall";
 import Coupon from "@/components/freeCoupon";
 import Lead from "@/components/lead";
 import evens from "@/common/evens";
 import Comment from "@/components/componentView/comment";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
-import NearTitle from "./components/nearTitle";
 import NewToast from "@/components/noviceGuide";
 import Router from "@/common/router";
+import { fetchStorage } from "@/common/utils";
+import Drawer from "@/components/Drawer";
+import UgcCanvas from "@/components/videoComponents/components/ugcTimeOver";
+import Waterfall from "@/components/waterfall";
+import { nearList } from "@/components/nearList";
+import NearTitle from "./components/nearTitle";
 import "./index.scss";
 @inject("store")
 @observer
@@ -54,32 +52,17 @@ class Index extends React.PureComponent {
       circular: false,
       userMomentsInfo: {},
       httpData: {
-        browseType: "commend",
+        browseType: "pickUp",
         page: 1,
-        limit: "10",
+        limit: 10,
         newDeviceFlag: Taro.getStorageSync("newDeviceFlag") || "1",
       },
       shareInfoData: {},
       countStatus: true,
-      time: null,
+      time: {},
       interval: null,
       visible: false,
       paramsInfo: getCurrentInstance().router.params,
-      distanceList: [
-        { value: "", description: "全部" },
-        { value: "500", description: "500m" },
-        { value: "1000", description: "1km" },
-        { value: "2000", description: "2km" },
-        { value: "5000", description: "5km" },
-        { value: "10000", description: "10km" },
-        { value: "20000", description: "20km" },
-      ],
-      promotionTypeList: [
-        { value: "", description: "全部" },
-        { value: "special", description: "特价活动" },
-        { value: "reduce", description: "优惠券" },
-      ],
-      categoryList: [],
       beanflag: false,
       couponFlag: false,
       player: true,
@@ -88,12 +71,62 @@ class Index extends React.PureComponent {
         data: null,
         start: false,
       },
-      showTwoToast: false,
       triggered: false,
       commentShow: false,
+      ugcBeanCount: fetchStorage("ugcBeanCount") || 0,
+      ugcMomentRules: {},
+      ugcVisible1: false,
+      ugcVisible2: false,
+      animated: "",
     };
     this.interReload = null;
     this.interSwper = null;
+    this.animatedTime = null;
+  }
+  componentWillMount() {
+    this.getVideoList(() => {
+      const { userMomentsList } = this.state;
+      if (userMomentsList.length > 0) {
+        this.setState(
+          {
+            userMomentsInfo: this.state.userMomentsList[0],
+          },
+          (res) => {
+            this.setState({
+              interval: true,
+            });
+          }
+        );
+      }
+    });
+  }
+  componentDidShow() {
+    this.fetchUserShareCommission();
+    fetchUgcMomentRule().then((val) => {
+      const { platformRewardBeanRules, rewardRules } = val;
+      this.setState({
+        ugcMomentRules: {
+          rewardRules,
+          platformRewardBeanRules,
+        },
+      });
+    });
+    Taro.setTabBarStyle({
+      color: "#999999",
+      selectedColor: "#FFFFFF",
+      backgroundColor: "#000000",
+    });
+  }
+  componentDidHide() {
+    Taro.setTabBarStyle({
+      color: "#999999",
+      selectedColor: "#333333",
+      backgroundColor: "FFFFFF",
+    });
+  }
+  componentDidMount() {
+    evens.$on("updateMomentsList", this.updateList.bind(this));
+    evens.$on("reload", this.reload.bind(this));
   }
   saveMomentType() {
     const {
@@ -127,12 +160,12 @@ class Index extends React.PureComponent {
       },
       (res) => {
         this.videoPlayerControl();
-        if (current >= this.state.userMomentsList.length - 3 && countStatus) {
+        if (current === this.state.userMomentsList.length - 3 && countStatus) {
           this.setState(
             {
               httpData: {
                 ...httpData,
-                page: Math.ceil(userMomentsList.length / 10) + 1,
+                page: httpData.page + 1,
               },
             },
             (res) => {
@@ -154,7 +187,6 @@ class Index extends React.PureComponent {
       return (this.interReload = setTimeout(() => this.selectList(), 300));
     }
   }
-
   onReload() {
     const { httpData, interval } = this.state;
     this.setState(
@@ -166,7 +198,6 @@ class Index extends React.PureComponent {
         VideoList: [],
         circular: false,
         countStatus: true,
-        time: null,
         player: true,
       },
       (res) => {
@@ -178,13 +209,13 @@ class Index extends React.PureComponent {
       }
     );
   }
-
   selectList(data = {}) {
     const { httpData, interval } = this.state;
-    const { val } = data;
+    const { val, configMomentTagId } = data;
     const obj = {};
     if (val) {
       obj.browseType = val;
+      obj.momentTags = configMomentTagId;
     }
     this.setState(
       {
@@ -194,7 +225,7 @@ class Index extends React.PureComponent {
         VideoList: [],
         circular: false,
         countStatus: true,
-        time: null,
+
         player: true,
       },
       (res) => {
@@ -208,48 +239,6 @@ class Index extends React.PureComponent {
       }
     );
   }
-  screen(data = {}) {
-    const { httpData, interval } = this.state;
-    const {
-      loadDistance = "",
-      loadPromotionType = "",
-      loadCategoryIds = [],
-    } = data;
-
-    this.setState(
-      {
-        httpData: {
-          ...httpData,
-          page: 1,
-          ...{
-            distance: loadDistance,
-            categoryIds: loadCategoryIds.join(","),
-            promotionType: loadPromotionType,
-          },
-        },
-        current: 0,
-        userMomentsList: [],
-        VideoList: [],
-        circular: false,
-        countStatus: true,
-        time: null,
-      },
-      (res) => {
-        this.getVideoList(() => {
-          if (this.state.userMomentsList.length > 0) {
-            this.setState({
-              userMomentsInfo: this.state.userMomentsList[0],
-            });
-          }
-        });
-      }
-    );
-  }
-  // setScreen(data) {
-  //   const { homeStore } = this.props.store;
-  //   homeStore.setSelectObj(data);
-  //   this.screen(data);
-  // }
   getVideoList(fn) {
     const { httpData, current } = this.state;
     getUserMomentList(httpData, (res) => {
@@ -276,18 +265,7 @@ class Index extends React.PureComponent {
       });
     });
   }
-  getBean(time) {
-    this.setState(
-      {
-        time: time,
-      },
-      (res) => {
-        if (time == 0) {
-          this.saveBean();
-        }
-      }
-    );
-  } //设置定时器领取卡豆
+
   saveBean() {
     const {
       userMomentsInfo: { momentId, guideMomentFlag = "0", ownerId },
@@ -314,7 +292,6 @@ class Index extends React.PureComponent {
               }
               this.setState(
                 {
-                  time: null,
                   userMomentsInfo: {
                     ...userMomentsInfo,
                     watchStatus: "1",
@@ -372,7 +349,6 @@ class Index extends React.PureComponent {
             (res) => {
               this.setState(
                 {
-                  time: null,
                   userMomentsInfo: {
                     ...userMomentsInfo,
                     watchStatus: "1",
@@ -422,9 +398,6 @@ class Index extends React.PureComponent {
     });
   }
   //领取卡豆
-
-  //初始化详情数据
-
   videoPlayerControl() {
     const { current } = this.state;
     const list = [current - 1, current, current + 1];
@@ -566,36 +539,7 @@ class Index extends React.PureComponent {
       );
     }
   }
-  listParentCategory() {
-    const { categoryList } = this.state;
-    if (categoryList.length === 0) {
-      listParentCategory({}, (res) => {
-        const { categoryList = [] } = res;
-        this.setState({
-          categoryList: [...categoryList],
-        });
-      });
-    }
-  }
-  componentWillMount() {
-    this.getVideoList(() => {
-      const { userMomentsList } = this.state;
-      if (userMomentsList.length > 0) {
-        this.setState(
-          {
-            userMomentsInfo: this.state.userMomentsList[0],
-          },
-          (res) => {
-            this.setState({
-              interval: true,
-            });
-          }
-        );
-      }
-    });
-  }
   updateList(list = []) {
-    const { userMomentsList } = this.state;
     this.setState({
       userMomentsList: list,
     });
@@ -603,69 +547,6 @@ class Index extends React.PureComponent {
   reload() {
     let data = {};
     this.selectList(data);
-  }
-  componentDidShow() {
-    const { time, player } = this.state;
-    // this.listParentCategory();
-    this.fetchUserShareCommission();
-    Taro.setTabBarStyle({
-      color: "#999999",
-      selectedColor: "#FFFFFF",
-      backgroundColor: "#000000",
-    });
-  }
-  componentDidHide() {
-    Taro.setTabBarStyle({
-      color: "#999999",
-      selectedColor: "#333333",
-      backgroundColor: "FFFFFF",
-    });
-  }
-  componentDidMount() {
-    evens.$on("updateMomentsList", this.updateList.bind(this));
-    evens.$on("reload", this.reload.bind(this));
-  }
-  getUserMomentDetailById(momentId) {
-    getUserMomentDetailById(
-      {
-        momentId,
-      },
-      (res) => {
-        const { userMomentsInfo } = res;
-        this.setState(
-          {
-            userMomentsInfo,
-            userMomentsList: [userMomentsInfo],
-          },
-          (res) => {
-            this.getVideoList(() => {
-              const { userMomentsList } = this.state;
-              if (userMomentsList.length > 0) {
-                this.setState(
-                  {
-                    userMomentsInfo: this.state.userMomentsList[0],
-                  },
-                  (res) => {
-                    this.setState({
-                      interval: true,
-                    });
-                  }
-                );
-              }
-            });
-          }
-        );
-      }
-    ).catch((val) => {
-      this.getVideoList(() => {
-        const { userMomentsList } = this.state;
-        if (userMomentsList.length > 0) {
-          this.setState({
-            userMomentsInfo: this.state.userMomentsList[0],
-          });
-        }
-      });
-    });
   }
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
@@ -675,13 +556,80 @@ class Index extends React.PureComponent {
       });
     });
   }
+  fakeUgcBean() {
+    const { ugcMomentRules, userMomentsInfo } = this.state;
+    const { momentId, ownerId } = userMomentsInfo;
+    const { rewardRules = {} } = ugcMomentRules;
+    const { bean } = rewardRules;
+    fakRewarde({
+      rewardBean: bean,
+      momentId: momentId,
+      ownerId: ownerId,
+    })
+      .then((val) => {
+        const { successRewardBeans } = val;
+        this.setState(
+          {
+            userMomentsList: this.state.userMomentsList.map((item) => {
+              if (item.momentId === momentId) {
+                return {
+                  ...item,
+                  ugcRewardAmount: item.ugcRewardAmount + successRewardBeans,
+                };
+              }
+              return item;
+            }),
+            animated: "",
+          },
+          (res) => {
+            if (this.animatedTime) {
+              clearTimeout(this.animatedTime);
+              this.setState({
+                animated: "video_beanIn",
+              });
+              this.animatedTime = setTimeout(() => {
+                this.setState({
+                  animated: "",
+                });
+                clearTimeout(this.animatedTime);
+                this.animatedTime = null;
+              }, 3000);
+            } else {
+              this.setState({
+                animated: "video_beanIn",
+              });
+              this.animatedTime = setTimeout(() => {
+                this.setState({
+                  animated: "",
+                });
+                clearTimeout(this.animatedTime);
+                this.animatedTime = null;
+              }, 3000);
+            }
+          }
+        );
+      })
+      .catch((val) => {
+        const { resultCode } = val;
+        console.log(val);
+        if (resultCode === "5037") {
+          this.setState({
+            ugcVisible1: true,
+          });
+        } else if (resultCode === "5035") {
+          this.setState({
+            ugcVisible2: true,
+          });
+        }
+      });
+  }
   pageUpNear() {
     const {
       httpData,
       httpData: { browseType },
       countStatus,
     } = this.state;
-    if (countStatus && browseType === "near") {
+    if (countStatus && browseType === "sameCity") {
       this.setState(
         {
           httpData: {
@@ -839,29 +787,36 @@ class Index extends React.PureComponent {
       current,
       circular,
       userMomentsInfo = {},
-      userMomentsInfo: { ownerId },
-      httpData: { browseType },
+      userMomentsInfo: { ownerId, relateImg },
+      httpData: { browseType, momentTags },
       beanflag,
       couponFlag,
       configUserLevelInfo,
       player,
-      interval,
       cavansObj,
       triggered,
-      showTwoToast,
       paramsInfo,
       commentShow,
+      ugcBeanCount,
+      ugcMomentRules,
+      ugcVisible1,
+      ugcVisible2,
+      animated,
+      time,
     } = this.state;
     const {
       homeStore = {},
       authStore = {},
       activeInfoStore = {},
+      locationStore = {},
     } = this.props.store;
-    const { selectObj, beanLimitStatus } = homeStore;
+    const { locationStatus = false } = locationStore;
+    const { beanLimitStatus } = homeStore;
     const { login, shareType } = authStore;
-    const { setCount } = activeInfoStore;
+    const { platformRewardBeanRules = {}, rewardRules = {} } = ugcMomentRules;
+
     const templateView = () => {
-      if (browseType === "near") {
+      if (browseType === "sameCity") {
         if (userMomentsList.length > 0) {
           return (
             <ScrollView
@@ -881,6 +836,7 @@ class Index extends React.PureComponent {
               <NearTitle
                 configUserLevelInfo={configUserLevelInfo}
                 reload={triggered}
+                browseType={browseType}
               ></NearTitle>
               <Waterfall
                 list={userMomentsList}
@@ -922,6 +878,7 @@ class Index extends React.PureComponent {
                 data={userMomentsList}
                 dataInfo={userMomentsInfo}
                 current={current}
+                ugcBeanCount={ugcBeanCount}
                 onChange={this.onInterSwper.bind(this)}
                 onTransition={this.onTransition.bind(this)}
                 follow={this.followStatus.bind(this)}
@@ -932,33 +889,27 @@ class Index extends React.PureComponent {
                 beanLimitStatus={beanLimitStatus}
                 changeComment={() => this.setState({ commentShow: true })}
                 saveBean={this.saveBean.bind(this)}
+                saveUgcBean={this.fakeUgcBean.bind(this)}
+                onTimeUpdate={(e) => {
+                  const { currentTime, duration } = e.detail;
+                  this.setState({
+                    time: { currentTime, duration },
+                  });
+                }}
                 initVideo={() => {
                   if (!player && !this.interSwper) {
                     !this.state.player &&
                       Taro.createVideoContext(`video${current}`).pause();
                   }
                 }}
-              ></VideoView>
+              >
+                <View className={`video_tags_box public_center ${animated}`}>
+                  成功赠送{rewardRules.bean}卡豆
+                </View>
+              </VideoView>
             </>
           );
         } else {
-          // if (!loginStatus() && browseType === "follow") {
-          //   return (
-          //     <View className="home_order_box">
-          //       <View className="home_order_followImg home_new_login"></View>
-          //       <View className="home_order_font">您还未登录</View>
-          //       <View className="home_order_font1">
-          //         登录之后，可以查看您关注的精彩内容
-          //       </View>
-          //       <View
-          //         className="home_order_followBtn"
-          //         onClick={() => Router({ routerName: "login" })}
-          //       >
-          //         去登录
-          //       </View>
-          //     </View>
-          //   );
-          // }
           return (
             <ScrollView
               scrollY
@@ -979,7 +930,7 @@ class Index extends React.PureComponent {
                   <View className="home_order_font">
                     {browseType === "commend"
                       ? "我们正在努力探索更多城市，敬请期待"
-                      : "暂无捡豆视频"}
+                      : "暂无视频"}
                   </View>
                   <View className="home_order_font1">
                     若无数据请下拉刷新试试
@@ -991,23 +942,27 @@ class Index extends React.PureComponent {
         }
       }
     };
+
     return (
       <View className="home_box home_black">
         <View style={{ top: computedClient().top }} className="home_wait">
           <TopView
-            data={browseType}
+            data={momentTags}
             onChange={this.selectList.bind(this)}
+            store={locationStatus}
             session={() => this.setState({ visible: true })}
           ></TopView>
         </View>
-        <View
-          className="home_bean_info"
-          onClick={() => {
-            Router({
-              routerName: "prefecture",
-            });
-          }}
-        ></View>
+        {browseType !== "sameCity" && (
+          <View
+            className="home_blind_info"
+            onClick={() => {
+              Router({
+                routerName: "blindIndex",
+              });
+            }}
+          ></View>
+        )}
         <View className="home_video_box">{templateView()}</View>
         <Toast
           data={userMomentsInfo}
@@ -1031,12 +986,6 @@ class Index extends React.PureComponent {
             });
           }}
         ></Coupon>
-        {!player && (
-          <View
-            onClick={() => this.stopVideoPlayerControl()}
-            className="player_no"
-          ></View>
-        )}
         <Lead beanLimitStatus={beanLimitStatus}></Lead>
         {!Taro.getStorageSync("deviceFlag") && (
           <NewToast
@@ -1070,6 +1019,92 @@ class Index extends React.PureComponent {
           }}
           show={commentShow}
         ></Comment>
+        <View>
+          <UgcCanvas
+            current={current}
+            time={time}
+            data={momentTags}
+            platformRewardBeanRules={platformRewardBeanRules}
+            data={userMomentsInfo}
+          ></UgcCanvas>
+          {!player && (
+            <View
+              onClick={() => this.stopVideoPlayerControl()}
+              className="player_no"
+            ></View>
+          )}
+          {ugcVisible1 && (
+            <Drawer
+              show={ugcVisible1}
+              closeBtn={false}
+              close={() => {
+                this.setState({
+                  ugcVisible1: false,
+                });
+              }}
+            >
+              <View className="video_layer_ugc">
+                <View className="video_layer_content">
+                  <View
+                    className="video_layer_userProfile merchant_dakale_logo"
+                    style={backgroundObj(relateImg)}
+                  ></View>
+                  <View className="video_layer_title">
+                    谢谢你送的{rewardRules.times * rewardRules.bean}卡豆
+                  </View>
+                  <View className="video_layer_titleLiner">
+                    我会继续努力加油出好作品
+                  </View>
+                  <View className="video_layer_desc">
+                    你对作者的该视频打赏已达上限 作者收到的卡豆会产生金钱收益
+                  </View>
+                  <View
+                    className="video_layer_btn public_center"
+                    onClick={() => {
+                      this.setState({
+                        ugcVisible1: false,
+                      });
+                    }}
+                  >
+                    知道了
+                  </View>
+                </View>
+              </View>
+            </Drawer>
+          )}
+          {ugcVisible2 && (
+            <Drawer
+              show={ugcVisible2}
+              closeBtn={false}
+              close={() => {
+                this.setState({
+                  ugcVisible2: false,
+                });
+              }}
+            >
+              <View className="video_layer_ugc">
+                <View className="video_layer_content">
+                  <View className="video_layer_titleLiner">
+                    你剩余的卡豆数量不足 无法赠送
+                  </View>
+                  <View className="video_layer_desc">
+                    每天登陆哒卡乐看视频可以获得卡豆奖励，卡豆可以用来赠送、消费抵扣
+                  </View>
+                  <View
+                    className="video_layer_btn public_center"
+                    onClick={() => {
+                      this.setState({
+                        ugcVisible2: false,
+                      });
+                    }}
+                  >
+                    知道了
+                  </View>
+                </View>
+              </View>
+            </Drawer>
+          )}
+        </View>
       </View>
     );
   }

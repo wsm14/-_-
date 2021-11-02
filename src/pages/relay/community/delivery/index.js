@@ -10,8 +10,10 @@ import {
   fakeRemoveAddress,
   fakeUpdateAddress,
 } from "@/server/relay";
+import { fetchBindAddress } from "@/server/share";
 import "./index.scss";
 import { goBack, toast } from "@/common/utils";
+import Empty from "@/components/Empty";
 import { navigatePostBack } from "@/relay/common/hooks";
 
 class Index extends Component {
@@ -20,13 +22,15 @@ class Index extends Component {
     this.state = {
       showAddress: false,
       userAddressList: [],
-      selectIndex: getCurrentInstance().router.params.selectIndex || 0,
+      selectIndex: getCurrentInstance().router.params.blindType
+        ? null
+        : getCurrentInstance().router.params.selectIndex || 0,
       defaultData: {},
       type: "edit",
       mode: getCurrentInstance().router.params.mode,
+      blindType: getCurrentInstance().router.params.blindType || 0, // 盲盒进入存在
     };
   }
-  componentWillUnmount() {}
   componentDidMount() {}
   componentDidShow() {
     this.fetchAddress();
@@ -118,13 +122,37 @@ class Index extends Component {
   }
   //获取新增地址
   changeSelect(index) {
-    const { selectIndex, mode } = this.state;
+    const { selectIndex, mode, userAddressList, blindType } = this.state;
     if (selectIndex !== index) {
       this.setState(
         {
           selectIndex: index,
         },
         (res) => {
+          // 盲盒进入选择地址确认确认按钮
+          if (blindType) {
+            const { blindBoxRewardId } = getCurrentInstance().router.params;
+            const { userAddressId } = userAddressList[index];
+            Taro.showModal({
+              confirmText: "确定",
+              confirmColor: "#07c0c2",
+              content: `确认选择该地址？确认后无法修改`,
+              success: (res) => {
+                if (res.confirm) {
+                  fetchBindAddress({ blindBoxRewardId, userAddressId }).then(
+                    (res) => {
+                      goBack();
+                    }
+                  );
+                } else {
+                  this.setState({
+                    selectIndex: -1,
+                  });
+                }
+              },
+            });
+            return;
+          }
           if (mode !== "list") {
             goBack();
           }
@@ -145,7 +173,7 @@ class Index extends Component {
   render() {
     const { showAddress, userAddressList, selectIndex, type, defaultData } =
       this.state;
-    console.log(selectIndex);
+
     return (
       <View className="delivery_box">
         <EditAddress
@@ -175,7 +203,11 @@ class Index extends Component {
             ></Template>
           );
         })}
-
+        <Empty
+          show={userAddressList.length === 0}
+          toast={"您还没有完善收货地址哦"}
+          type={"address"}
+        ></Empty>
         <Bottom onChange={this.onChangeSelect.bind(this)}></Bottom>
       </View>
     );

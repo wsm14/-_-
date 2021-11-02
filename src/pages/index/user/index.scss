@@ -801,7 +801,7 @@ page {
   }
   .users_setting_bg {
     height: 104px;
-    width: 596px;
+    width: 696px;
     margin: 0 auto;
     .users_set_box {
       width: 96px;
@@ -836,6 +836,10 @@ page {
       }
       .users_setting_icon4 {
         background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon758.png");
+        background-size: 100% 100%;
+      }
+      .users_setting_icon5 {
+        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon_782.png");
         background-size: 100% 100%;
       }
     }

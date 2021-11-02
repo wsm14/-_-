@@ -30,7 +30,6 @@ const shareImg = ({ start = false, data = [], onClose, onSave }) => {
   // 绘制成功回调函数 （必须实现）=> 接收绘制结果、重置 TaroCanvasDrawer 状态
   const onCreateSuccess = (result) => {
     const { tempFilePath, errMsg } = result;
-    console.log(111);
     Taro.hideLoading();
     if (errMsg === "canvasToTempFilePath:ok") {
       setShareImage(tempFilePath);
@@ -38,7 +37,6 @@ const shareImg = ({ start = false, data = [], onClose, onSave }) => {
     } else {
       onCreateFail();
       Taro.showToast({ icon: "none", title: errMsg || "出现错误" });
-      console.log(errMsg);
     }
   };
 

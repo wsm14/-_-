@@ -1,11 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ScrollView, View } from "@tarojs/components";
 import Taro, { useReachBottom } from "@tarojs/taro";
-import { shopDetails } from "@/components/publicShopStyle";
 import { getGoodsByMerchantId } from "@/server/perimeter";
 import { template } from "./../specalTemplate";
-import { toast } from "@/common/utils";
-import classNames from "classnames";
 import "./index.scss";
 export default (props) => {
   const { title, current = false, userInfo, page, defaultData = null } = props;
