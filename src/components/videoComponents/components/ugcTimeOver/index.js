@@ -2,19 +2,20 @@ import React, { useEffect, useState, useRef } from "react";
 import Taro from "@tarojs/taro";
 import { Button, Text, View, Canvas } from "@tarojs/components";
 import classNames from "classnames";
-import {} from "@/common/utils";
+
 import { fakeMomentReward } from "@/server/user";
 import Router from "@/common/router";
 import "./index.scss";
 const scale = Taro.getSystemInfoSync().windowWidth / 375;
 
 export default ({ data, time, current, platformRewardBeanRules }) => {
-  const { second = 30, bean } = platformRewardBeanRules;
+  const { bean, second } = platformRewardBeanRules;
   const [watch, setWatch] = useState(0);
   //视频当前播放时长
-  const [timeType, setTimeType] = useState(true);
-  const [computedTime, setComputedTime] = useState(0);
-  const [requestTime, setRequestTime] = useState(0);
+  const [addWatch, setAddWatch] = useState(0);
+  //当前视频增加时长
+  const [requestStatus, setRequestStatus] = useState(true);
+  //当前视频增加时长状态
   const [request, setRequest] = useState(false);
   const [toast, setToast] = useState(false);
   const [layer, setLayer] = useState({ visible: false, count: 0 });
@@ -26,34 +27,14 @@ export default ({ data, time, current, platformRewardBeanRules }) => {
     }
   }, [time]);
   useEffect(() => {
-    if (!request) {
-      setWatch(() => {
-        setComputedTime(computedTime + watch);
-        setTimeType(true);
-        setRequestTime(0);
-        return 0;
-      });
-    } else {
-      setTimeType(true);
-    }
+    setWatch(0);
+    setRequestStatus(true);
   }, [current]);
-  useEffect(() => {
-    if (!request) {
-      setWatch(() => {
-        setComputedTime(computedTime + watch);
-        setTimeType(true);
-        setRequestTime(0);
-        return 0;
-      });
-    } else {
-      setTimeType(true);
-    }
-  }, [data]);
   useEffect(() => {
     if (momentType === "ugc" && beanFlag === "0") {
       drawProgressbg();
     }
-  }, [watch]);
+  }, [addWatch]);
   useEffect(() => {
     if (request) {
       fakeReward();
@@ -65,8 +46,7 @@ export default ({ data, time, current, platformRewardBeanRules }) => {
         setToast(() => {
           let timeOut = setTimeout(() => {
             setRequest(() => {
-              setRequestTime(requestTime + watch);
-              setComputedTime(0);
+              setAddWatch(0);
               setToast(false);
               return false;
             });
@@ -79,8 +59,14 @@ export default ({ data, time, current, platformRewardBeanRules }) => {
         const { resultCode } = val;
         if (resultCode === "5038") {
           setOverStatus(true);
+        } else if (resultCode === "5036") {
+          setRequest(() => {
+            setAddWatch(0);
+            return false;
+          });
         } else {
           setRequest(() => {
+            setAddWatch(0);
             return false;
           });
         }
@@ -97,8 +83,7 @@ export default ({ data, time, current, platformRewardBeanRules }) => {
       22 * scale,
       20 * scale,
       -Math.PI / 2,
-      ((watch - requestTime + computedTime) / second) * 2 * Math.PI -
-        Math.PI / 2,
+      (addWatch / second) * 2 * Math.PI - Math.PI / 2,
       false
     );
     ctx.stroke(); //对当前路径进行描边
@@ -107,25 +92,16 @@ export default ({ data, time, current, platformRewardBeanRules }) => {
   const computedTimes = (time) => {
     const { currentTime, duration } = time;
     if (momentType === "ugc" && beanFlag === "0") {
-      if (watch - requestTime + computedTime >= second && !request) {
+      if (addWatch >= second && !request) {
         setRequest(() => {
           return true;
         });
       } else {
-        if (parseInt(currentTime) && !request) {
-          if (currentTime >= watch && timeType) {
-            if (currentTime >= 3 && !layer.visible) {
-              setLayer({ visible: true, count: 0 });
-              let timeInfo = setTimeout(() => {
-                setLayer({ visible: true, count: 1 });
-                clearTimeout(timeInfo);
-              }, 2000);
-            }
-            setWatch(parseInt(currentTime));
-          } else {
-            setTimeType(false);
-            return;
-          }
+        if (requestStatus && parseInt(currentTime) > parseInt(watch)) {
+          setWatch(() => {
+            setAddWatch(addWatch + 1);
+            return parseInt(currentTime);
+          });
         }
       }
     }

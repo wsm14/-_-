@@ -64,26 +64,24 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
                 <View className="lookAround_specalPlate_title  lookAround_specalPlate_titleIcon2"></View>
                 <View className="lookAround_specalPlate_link"></View>
               </View>
-              <View style={{ position: "relative" }}>
-                <Swiper
-                  circular
-                  autoplay
-                  className="lookAround_specalPlate_swiper"
-                >
-                  {list.map((item) => {
-                    return (
-                      <SwiperItem>
-                        <Template
-                          userInfo={userInfo}
-                          data={item}
-                          title={"福利价:"}
-                        ></Template>
-                      </SwiperItem>
-                    );
-                  })}
-                </Swiper>
-                <View className="lookAround_absolute"></View>
-              </View>
+              <Swiper
+                circular
+                autoplay
+                className="lookAround_specalPlate_swiper"
+              >
+                {list.map((item) => {
+                  return (
+                    <SwiperItem>
+                      <Template
+                        userInfo={userInfo}
+                        data={item}
+                        title={"福利价:"}
+                      ></Template>
+                    </SwiperItem>
+                  );
+                })}
+              </Swiper>
+              <View className="lookAround_absolute"></View>
             </View>
           </View>
         </View>
