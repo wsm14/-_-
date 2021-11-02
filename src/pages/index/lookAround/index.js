@@ -186,6 +186,11 @@ class Index extends Component {
   }
   componentDidShow() {
     this.fetchUserShare();
+    Taro.setTabBarStyle({
+      color: "#999999",
+      selectedColor: "#333333",
+      backgroundColor: "FFFFFF",
+    });
   }
   fetchModule() {
     this.setState(
