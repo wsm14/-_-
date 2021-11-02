@@ -3,4 +3,5 @@ export default {
   navigationStyle: "default",
   enableShareAppMessage: true,
   backgroundColor: "#ffffff",
+  navigationBarBackgroundColor: "#FFFFFF",
 };

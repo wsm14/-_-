@@ -7,6 +7,7 @@ import Drawer from "@/components/Drawer";
 import { loginStatus, backgroundObj } from "@/common/utils";
 import Router from "@/common/router";
 import "./index.scss";
+import classNames from "_classnames@2.3.1@classnames";
 const filterList = (list) => {
   let newList = [{}, {}, {}, {}];
   if (list.length >= 4) {
@@ -43,8 +44,8 @@ export default ({ data, updateInfo, list }) => {
   } = shareData;
   const { num } = blindBoxRuleObject;
   const bindTab = {
-    bean: "赚豆场",
-    invitation: "对象场",
+    bean: "卡豆专场",
+    invitation: "邀请专场",
   };
   const getBlindHelp = () => {
     let user = loginStatus();
@@ -192,7 +193,11 @@ export default ({ data, updateInfo, list }) => {
           ))}
         </View>
         {/* 抽奖区域 */}
-        <View className="blind_prize"></View>
+        <View
+          className={classNames(
+            tabKey === "bean" ? "blind_bean" : "blind_friend"
+          )}
+        ></View>
         {/* 记录按钮 */}
         <View className="blind_jackpot">
           {/* 本期奖池 */}
@@ -219,7 +224,7 @@ export default ({ data, updateInfo, list }) => {
             className="blind_invint"
             onClick={() => setTabKey("invitation")}
           >
-            去对象专场 免费抽
+            去邀请专场 免费抽
           </View>
         ) : (
           <View className="blind_invint" onClick={() => getBlindHelp()}>
@@ -377,7 +382,7 @@ export default ({ data, updateInfo, list }) => {
               </View>
               <View className="countVisible_order_desc">已达上限</View>
               <View className="countVisible_order_desc">
-                可以去对象场继续玩哦～
+                可以去邀请场继续玩哦～
               </View>
               <View className="countVisible_order_btn public_auto">
                 <View
@@ -395,7 +400,7 @@ export default ({ data, updateInfo, list }) => {
                     });
                   }}
                 >
-                  去对象场
+                  去邀请场
                 </View>
               </View>
             </View>

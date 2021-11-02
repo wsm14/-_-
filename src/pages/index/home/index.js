@@ -36,6 +36,9 @@ import Router from "@/common/router";
 import { fetchStorage } from "@/common/utils";
 import Drawer from "@/components/Drawer";
 import UgcCanvas from "@/components/videoComponents/components/ugcTimeOver";
+import Waterfall from "@/components/waterfall";
+import { nearList } from "@/components/nearList";
+import NearTitle from "./components/nearTitle";
 import "./index.scss";
 @inject("store")
 @observer
@@ -195,7 +198,6 @@ class Index extends React.PureComponent {
         VideoList: [],
         circular: false,
         countStatus: true,
-
         player: true,
       },
       (res) => {
@@ -627,7 +629,7 @@ class Index extends React.PureComponent {
       httpData: { browseType },
       countStatus,
     } = this.state;
-    if (countStatus && browseType === "near") {
+    if (countStatus && browseType === "sameCity") {
       this.setState(
         {
           httpData: {
@@ -812,72 +814,135 @@ class Index extends React.PureComponent {
     const { beanLimitStatus } = homeStore;
     const { login, shareType } = authStore;
     const { platformRewardBeanRules = {}, rewardRules = {} } = ugcMomentRules;
+
     const templateView = () => {
-      if (userMomentsList.length > 0) {
-        return (
-          <>
-            <VideoView
-              circular={circular}
-              data={userMomentsList}
-              dataInfo={userMomentsInfo}
-              current={current}
-              ugcBeanCount={ugcBeanCount}
-              onChange={this.onInterSwper.bind(this)}
-              onTransition={this.onTransition.bind(this)}
-              follow={this.followStatus.bind(this)}
-              collection={this.collection.bind(this)}
-              stop={this.stopVideoPlayerControl.bind(this)}
-              userInfo={configUserLevelInfo}
-              shareInfo={this.shareImageInfo.bind(this)}
-              beanLimitStatus={beanLimitStatus}
-              changeComment={() => this.setState({ commentShow: true })}
-              saveBean={this.saveBean.bind(this)}
-              saveUgcBean={this.fakeUgcBean.bind(this)}
-              onTimeUpdate={(e) => {
-                const { currentTime, duration } = e.detail;
-                this.setState({
-                  time: { currentTime, duration },
-                });
+      if (browseType === "sameCity") {
+        if (userMomentsList.length > 0) {
+          return (
+            <ScrollView
+              scrollY
+              onScrollToLower={() => {
+                this.pageUpNear();
               }}
-              initVideo={() => {
-                if (!player && !this.interSwper) {
-                  !this.state.player &&
-                    Taro.createVideoContext(`video${current}`).pause();
-                }
+              refresherEnabled
+              onRefresherRefresh={this.onReload.bind(this)}
+              refresherTriggered={triggered}
+              refresherBackground={"#000000"}
+              className="home_Waterfall_box"
+              style={{
+                top: computedClient().top + computedClient().height + 20,
               }}
             >
-              <View className={`video_tags_box public_center ${animated}`}>
-                成功赠送{rewardRules.bean}卡豆
-              </View>
-            </VideoView>
-          </>
-        );
-      } else {
-        return (
-          <ScrollView
-            scrollY
-            onRefresherRefresh={this.onReload.bind(this)}
-            refresherEnabled
-            refresherTriggered={triggered}
-            refresherBackground={"#000000"}
-            className="debug_test"
-            style={{
-              width: "100%",
-              height: "100%",
-              zIndex: 100,
-            }}
-          >
-            <View className="home_order_box public_center">
+              <NearTitle
+                configUserLevelInfo={configUserLevelInfo}
+                reload={triggered}
+                browseType={browseType}
+              ></NearTitle>
+              <Waterfall
+                list={userMomentsList}
+                createDom={nearList}
+                imgHight={"frontImageHeight"}
+                imgWidth={"frontImageWidth"}
+                setWidth={372}
+                noMargin={{
+                  margin: "0",
+                }}
+                style={{ width: Taro.pxTransform(372) }}
+                store={this.props.store}
+              ></Waterfall>
+            </ScrollView>
+          );
+        } else {
+          return (
+            <View className="home_near_box">
+              <NearTitle
+                configUserLevelInfo={configUserLevelInfo}
+                reload={triggered}
+              ></NearTitle>
               <View>
-                <View className="home_order_image home_new_nullStatus"></View>
-                <View className="home_order_font">暂无捡豆视频</View>
-                <View className="home_order_font1">若无数据请下拉刷新试试</View>
+                <View className="home_near_image  home_new_nullStatus"></View>
+                <View className="home_near_font">您的附近没有内容</View>
+                <View className="home_near_font2">
+                  附近周边精彩内容还未发布
+                </View>
               </View>
             </View>
-          </ScrollView>
-        );
+          );
+        }
+      } else {
+        if (userMomentsList.length > 0) {
+          return (
+            <>
+              <VideoView
+                circular={circular}
+                data={userMomentsList}
+                dataInfo={userMomentsInfo}
+                current={current}
+                ugcBeanCount={ugcBeanCount}
+                onChange={this.onInterSwper.bind(this)}
+                onTransition={this.onTransition.bind(this)}
+                follow={this.followStatus.bind(this)}
+                collection={this.collection.bind(this)}
+                stop={this.stopVideoPlayerControl.bind(this)}
+                userInfo={configUserLevelInfo}
+                shareInfo={this.shareImageInfo.bind(this)}
+                beanLimitStatus={beanLimitStatus}
+                changeComment={() => this.setState({ commentShow: true })}
+                saveBean={this.saveBean.bind(this)}
+                saveUgcBean={this.fakeUgcBean.bind(this)}
+                onTimeUpdate={(e) => {
+                  const { currentTime, duration } = e.detail;
+                  this.setState({
+                    time: { currentTime, duration },
+                  });
+                }}
+                initVideo={() => {
+                  if (!player && !this.interSwper) {
+                    !this.state.player &&
+                      Taro.createVideoContext(`video${current}`).pause();
+                  }
+                }}
+              >
+                <View className={`video_tags_box public_center ${animated}`}>
+                  成功赠送{rewardRules.bean}卡豆
+                </View>
+              </VideoView>
+            </>
+          );
+        } else {
+          return (
+            <ScrollView
+              scrollY
+              onRefresherRefresh={this.onReload.bind(this)}
+              refresherEnabled
+              refresherTriggered={triggered}
+              refresherBackground={"#000000"}
+              className="debug_test"
+              style={{
+                width: "100%",
+                height: "100%",
+                zIndex: 100,
+              }}
+            >
+              <View className="home_order_box public_center">
+                <View>
+                  <View className="home_order_image home_new_nullStatus"></View>
+                  <View className="home_order_font">
+                    {browseType === "commend"
+                      ? "我们正在努力探索更多城市，敬请期待"
+                      : "暂无视频"}
+                  </View>
+                  <View className="home_order_font1">
+                    若无数据请下拉刷新试试
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
+          );
+        }
       }
     };
+
     return (
       <View className="home_box home_black">
         <View style={{ top: computedClient().top }} className="home_wait">
@@ -888,14 +953,16 @@ class Index extends React.PureComponent {
             session={() => this.setState({ visible: true })}
           ></TopView>
         </View>
-        <View
-          className="home_blind_info"
-          onClick={() => {
-            Router({
-              routerName: "blindIndex",
-            });
-          }}
-        ></View>
+        {browseType !== "sameCity" && (
+          <View
+            className="home_blind_info"
+            onClick={() => {
+              Router({
+                routerName: "blindIndex",
+              });
+            }}
+          ></View>
+        )}
         <View className="home_video_box">{templateView()}</View>
         <Toast
           data={userMomentsInfo}

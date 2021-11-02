@@ -11,7 +11,7 @@ import {
   computedBeanPrice,
 } from "@/common/utils";
 export default (props) => {
-  const { reload, configUserLevelInfo } = props;
+  const { reload, configUserLevelInfo, browseType } = props;
   const [list, setList] = useState([]);
   const [bannerList, setBannerList] = useState([]);
   const { payBeanCommission = 50 } = configUserLevelInfo;

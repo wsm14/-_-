@@ -42,10 +42,17 @@
       }
     }
   }
-  .blind_prize {
+  .blind_bean {
     @include whEqual(640px, 333px);
     margin: 16px auto 0;
-    background: url("https://wechat-config.dakale.net/miniprogram/blind/blind_16.gif")
+    background: url("https://wechat-config.dakale.net/miniprogram/blind/blind_bean.gif")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .blind_friend {
+    @include whEqual(640px, 333px);
+    margin: 16px auto 0;
+    background: url("https://wechat-config.dakale.net/miniprogram/blind/blind_friend.gif")
       no-repeat;
     background-size: 100% 100%;
   }

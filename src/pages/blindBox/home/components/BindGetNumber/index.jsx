@@ -72,7 +72,7 @@ export default observer(({ data }) => {
           </View>
         ))}
       </View>
-      <View
+      {/* <View
         className="bind_recharge"
         onClick={() => Router({ routerName: "recharge" })}
       >
@@ -83,7 +83,7 @@ export default observer(({ data }) => {
             <View className="bind_rechargeCell_tip">卡豆充话费 省钱又省力</View>
           </View>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 });

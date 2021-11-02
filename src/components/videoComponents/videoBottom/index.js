@@ -70,6 +70,7 @@ export default (props) => {
     relateName,
     promotionFlag,
     ugcAddressObject = {},
+    guideMomentFlag,
     ownerId,
   } = server;
   const { address, lat, lnt } = addressContentObject;
@@ -312,7 +313,14 @@ export default (props) => {
           {(activityGoodsList.length > 0 || ownerCouponList.length > 0) &&
             templateStated(couponInfo, linkTo)}
           <View className="video_username font_hide">
-            <View className="font_hide">@{relateName} </View>
+            <View className="font_hide">
+              @
+              {momentType === "merchant" ||
+              momentType === "ugc" ||
+              momentType === "platform"
+                ? relateName
+                : ownerName}
+            </View>
           </View>
           {/* 发布视频用户来源 */}
           {flagType && boolean ? (
@@ -420,17 +428,11 @@ export default (props) => {
       )}
       {momentType !== "ugc" &&
         momentType !== "platform" &&
+        guideMomentFlag !== "1" &&
         promotionFlag === "0" && (
           <View
             className="video_shop_iconBox video_shop_icon1"
-            onClick={() =>
-              Router({
-                routerName: "merchantDetails",
-                args: {
-                  merchantId: ownerId,
-                },
-              })
-            }
+            onClick={() => routerInfo()}
           >
             <View className="video_shop_font font_hide">
               {cityObj[cityCode]} | {ownerName}

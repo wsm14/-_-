@@ -10,7 +10,7 @@ export default (props) => {
   const [type, setType] = useState(null);
   const [select, setSelect] = useState([
     {
-      label: "捡豆",
+      label: "发现",
       val: "pickUp",
     },
   ]);
@@ -25,6 +25,13 @@ export default (props) => {
           setSelect(
             configMomentTagList.map((val) => {
               const { name, type, configMomentTagId } = val;
+              if (type === "pickUp") {
+                return {
+                  label: "发现",
+                  val: type,
+                  configMomentTagId,
+                };
+              }
               return {
                 label: name,
                 val: type,

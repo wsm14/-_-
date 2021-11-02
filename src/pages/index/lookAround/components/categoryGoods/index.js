@@ -18,7 +18,7 @@ export default ({
 }) => {
   const memo = useMemo(() => {
     return (
-      <View style={{ paddingTop: Taro.pxTransform(40) }}>
+      <View>
         <View className="lookAround_selectSpecal_Fliner"></View>
         <View
           style={!flagDom ? { display: "none" } : {}}
