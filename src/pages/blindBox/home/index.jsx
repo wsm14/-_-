@@ -31,7 +31,6 @@ export default () => {
   useDidShow(() => {
     dataInit();
     getbarrage();
-    getRewardJackpot();
     getShareData();
   });
   usePullDownRefresh(() => {
@@ -77,8 +76,8 @@ export default () => {
       });
     }
   };
-  const getRewardJackpot = () => {
-    fetchBlindBoxRewardJackpot().then((val) => {
+  const getRewardJackpot = (val) => {
+    fetchBlindBoxRewardJackpot({ luckDrawType: val }).then((val) => {
       const { blindBoxProductObjectList = [] } = val;
       setJpList(blindBoxProductObjectList);
     });
@@ -141,6 +140,9 @@ export default () => {
       {/* 盲盒区域 */}
       <BlindContent
         list={jpList}
+        updateList={(e) => {
+          getRewardJackpot(e);
+        }}
         data={data}
         updateInfo={setData}
       ></BlindContent>

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Image, Button } from "@tarojs/components";
 import JackNow from "./JackNow";
 import Taro from "@tarojs/taro";
 import { fetchBlindBoxReward, fetchBlindBoxHelp } from "@/server/blindBox";
+import { getUserMomentcheckNew } from "@/server/share";
 import Drawer from "@/components/Drawer";
 import { loginStatus, backgroundObj } from "@/common/utils";
 import Router from "@/common/router";
@@ -21,7 +22,7 @@ const filterList = (list) => {
 /**
  * 盲盒区域
  */
-export default ({ data, updateInfo, list }) => {
+export default ({ data, updateInfo, list, updateList }) => {
   const {
     beanNum = "--",
     blindBoxBeanNum = "",
@@ -47,6 +48,9 @@ export default ({ data, updateInfo, list }) => {
     bean: "卡豆专场",
     invitation: "邀请专场",
   };
+  useEffect(() => {
+    updateList(tabKey);
+  }, [tabKey]);
   const getBlindHelp = () => {
     let user = loginStatus();
     if (!user) {
@@ -116,14 +120,23 @@ export default ({ data, updateInfo, list }) => {
         return (
           <View
             className="blind_start_beanInfo"
-            onClick={() =>
-              Router({
-                routerName: "nearVideo",
-                args: {
-                  type: "goods",
-                },
-              })
-            }
+            onClick={() => {
+              getUserMomentcheckNew({}).then((val) => {
+                const { newUserFlag = "1", newUserBean = "300" } = val;
+                if (newUserFlag === "1") {
+                  Router({
+                    routerName: "userNewArtist",
+                  });
+                } else {
+                  Router({
+                    routerName: "nearVideo",
+                    args: {
+                      type: "goods",
+                    },
+                  });
+                }
+              });
+            }}
           >
             <View className="blind_start_count">卡豆不足? 去捡卡豆</View>
             <View className="blind_start_our">

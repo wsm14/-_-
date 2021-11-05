@@ -106,7 +106,9 @@ class Index extends Component {
           </View>
           <View className="prize_template_content">
             <View className="prize_template_name font_hide">{showName}</View>
-            <View className="prize_template_count">数量：{prize}</View>
+            <View className="prize_template_count">
+              数量：{awardType === "bean" ? 1 : prize}
+            </View>
             <View className="prize_template_time">{createTime}</View>
           </View>
           {console.log(logisticsStatus)}
