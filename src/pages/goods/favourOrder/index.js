@@ -124,20 +124,10 @@ class Index extends Component {
         url: getSpecialGoods,
       },
       (res) => {
-        const {
+        const { specialGoodsInfo } = res;
+        this.setState({
           specialGoodsInfo,
-          specialGoodsInfo: { userBean, userIncomeBean },
-        } = res;
-        if (!userBean && userIncomeBean) {
-          this.setState({
-            specialGoodsInfo,
-            useBeanType: "income",
-          });
-        } else {
-          this.setState({
-            specialGoodsInfo,
-          });
-        }
+        });
       }
     );
   }
@@ -150,11 +140,7 @@ class Index extends Component {
     if (useBeanStatus === "0") {
       return "0.00";
     } else {
-      if (useBeanType === "reward") {
-        return (userBean / 100).toFixed(2);
-      } else {
-        return (userIncomeBean / 100).toFixed(2);
-      }
+      return (userBean / 100).toFixed(2);
     }
   }
   saveKolGoodsOrder() {
@@ -240,13 +226,7 @@ class Index extends Component {
       useBeanStatus,
     } = this.state;
     if (useBeanStatus === "1") {
-      if (useBeanType === "reward") {
-        return (Number(realPrice) * goodsCount - userBean / 100).toFixed(2);
-      } else {
-        return (Number(realPrice) * goodsCount - userIncomeBean / 100).toFixed(
-          2
-        );
-      }
+      return (Number(realPrice) * goodsCount - userBean / 100).toFixed(2);
     } else {
       return (Number(realPrice) * goodsCount).toFixed(2);
     }
@@ -431,9 +411,7 @@ class Index extends Component {
               }
               visible={visible}
               canfirm={() => this.saveKolGoodsOrder()}
-              content={`是否确认使用${
-                useBeanType === "reward" ? userBean : userIncomeBean
-              }卡豆支付？`}
+              content={`是否确认使用${userBean}卡豆支付？`}
               canfirmText="再想想"
               cancelText="确定"
             ></PayBean>

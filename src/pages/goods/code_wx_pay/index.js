@@ -13,8 +13,7 @@ import "./index.scss";
 import { getOrderPrepaymentResult, payOrder } from "@/server/goods";
 import { navigateTo, goBack, toast, redirectTo } from "@/common/utils";
 import PayGo from "@/components/pay_btn";
-import { authWxLogin } from "@/common/authority";
-const AdaPay = require("./../../payPrice/adaPay.js");
+import { handlePayWechat } from "@/server/user";
 
 class Index extends Component {
   constructor() {
@@ -49,33 +48,18 @@ class Index extends Component {
     });
   }
 
-  payOrder(res) {
-    const {
-      httpData: { orderSn, payMonth },
-      merchantId,
-    } = this.state;
-    payOrder(
-      { orderSn: orderSn, payMonth, payType: "wx_lite", wechatCode: res },
-      (result) => {
-        const { status, error_msg } = result;
-        if (status === "succeeded") {
-          AdaPay.doPay(result, (payRes) => {
-            if (payRes.result_status == "succeeded") {
-              redirectTo(
-                `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}&merchantId=${merchantId}`
-              );
-            }
-          });
-        } else {
-          toast(error_msg || "支付失败");
-          goBack();
-        }
+  payOrder() {
+    const { httpData } = this.state;
+    handlePayWechat({ ...httpData }, (res) => {
+      const { result_status } = res;
+      if (result_status == "succeeded") {
+        redirectTo(
+          `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}&merchantId=${merchantId}`
+        );
+      } else {
+        toast("支付失败");
       }
-    );
-  }
-
-  payScan() {
-    authWxLogin(this.payOrder.bind(this));
+    });
   }
 
   componentDidShow() {
@@ -120,7 +104,7 @@ class Index extends Component {
         </View>
         <PayGo
           content={`微信支付¥${payFee}`}
-          click={this.payScan.bind(this)}
+          click={this.payOrder.bind(this)}
         ></PayGo>
       </View>
     );

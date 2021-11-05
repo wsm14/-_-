@@ -9,6 +9,7 @@ import "./index.scss";
 import InterTime from "@/components/InterTime";
 import ButtonView from "@/components/Button";
 import { toast, goBack, redirectTo } from "@/common/utils";
+import { handlePayWechat } from "@/server/user";
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -36,34 +37,19 @@ class Index extends Component {
       }
     );
   }
-  creatOrder(res) {
-    let code = res;
-    const { wechatPayDelayOrder } = wxapiPost;
-    const { orderSn } = this.state;
-    httpPost(
-      {
-        url: wechatPayDelayOrder,
-        data: { orderSn: orderSn, payType: "wx_lite", wechatCode: code },
-      },
-      (result, data) => {
-        const { success, resultDesc } = data;
-        if (success && data.content.status === "succeeded") {
-          let payment = data.content;
-          AdaPay.doPay(payment, (payRes) => {
-            if (payRes.result_status == "succeeded") {
-              redirectTo(`/pages/goods/paySuccess/index?orderSn=${orderSn}`);
-            }
-          });
-        } else {
-          toast(resultDesc || data.content.error_msg);
-          goBack();
-        }
+
+  creatOrder() {
+    const { orderSn, orderType } = this.state;
+    handlePayWechat({ orderSn, orderType }, (res) => {
+      const { result_status } = res;
+      if (result_status == "succeeded") {
+        redirectTo(`/pages/goods/paySuccess/index?orderSn=${orderSn}`);
+      } else {
+        toast("支付失败");
       }
-    );
+    });
   }
-  payByKol() {
-    authWxLogin(this.creatOrder.bind(this));
-  }
+
   componentDidShow() {
     this.getOrderResult();
   }
@@ -109,7 +95,7 @@ class Index extends Component {
         </View>
         <View
           className="pay_week_btn public_center"
-          onClick={() => this.payByKol()}
+          onClick={() => this.creatOrder()}
         >
           <ButtonView>
             {" "}
