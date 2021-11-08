@@ -3,7 +3,7 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Image, ScrollView, Text, View, RichText } from "@tarojs/components";
 import Banner from "@/components/banner";
 import { perimeter } from "@/api/api";
-import { httpGet } from "@/api/newRequest";
+import { httpGet, httpPost } from "@/api/newRequest";
 import {
   filterStrList,
   loginStatus,
@@ -40,6 +40,7 @@ import Recommend from "@/components/specalActive";
 import Wares from "@/components/componentView/wares";
 import Drawer from "@/components/Drawer";
 import RightFlag from "@/components/componentView/rightFlagView";
+import ShareView from "./components/shareCmt";
 import { inject, observer } from "mobx-react";
 import classNames from "classnames";
 import "./index.scss";
@@ -68,6 +69,7 @@ class MerchantDetails extends Component {
       mxVisible: false,
       drawerVisible: false,
       resultInfo: {},
+      urlLink: null,
     };
   }
   componentWillMount() {
@@ -87,6 +89,7 @@ class MerchantDetails extends Component {
             (res) => {
               this.getDetailsById();
               this.fetchConfig();
+              this.fetchUrlLink();
             }
           );
         }
@@ -94,6 +97,7 @@ class MerchantDetails extends Component {
     } else {
       this.getDetailsById();
       this.fetchConfig();
+      this.fetchUrlLink();
     }
   }
   componentDidShow() {
@@ -156,6 +160,38 @@ class MerchantDetails extends Component {
       });
     });
   }
+  fetchUrlLink() {
+    const { httpData } = this.state;
+    let str = "";
+    for (let item in httpData) {
+      if (httpData[item]) {
+        str = str + `${item}=${httpData[item]}&`;
+      }
+    }
+    str = str.slice(0, str.length - 1);
+    if (str) {
+      Taro.cloud
+        .callFunction({
+          name: "setUrl",
+          action: "setWxUrl",
+          data: {
+            path: "pages/perimeter/favourableDetails/index",
+            action: "setWxUrl",
+            query: str,
+          },
+        })
+        .then((val) => {
+          const { result = {} } = val;
+          const { urlLink, errMsg } = result;
+          if (errMsg === "openapi.urllink.generate:ok") {
+            this.setState({
+              urlLink: urlLink,
+            });
+          }
+        });
+    }
+  }
+
   getShareInfo() {
     const {
       specialGoodsInfo: {
@@ -406,6 +442,8 @@ class MerchantDetails extends Component {
       httpData,
       mxVisible,
       drawerVisible,
+      resultInfo,
+      urlLink,
     } = this.state;
     const { bean = "", cash = "" } = paymentModeObject;
     const { login } = this.props.store.authStore;
@@ -652,6 +690,7 @@ class MerchantDetails extends Component {
               data={specialGoodsInfo}
               ownerServiceId={specialActivityIdString}
             ></Merchant>
+            <ShareView urlLink={urlLink} data={resultInfo}></ShareView>
             {goodsType === "package" && (
               <View className="shopdetails_shop_packageGroup">
                 <View className="shopdetails_shop_groupTitle">套餐详情</View>

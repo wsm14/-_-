@@ -404,6 +404,7 @@ export const getSettingAuth = (obj) => {
   const { key, success, fail, title, content, cancel = "" } = obj;
   const getUserAuth = {
     location: "scope.userLocation",
+    photo: "scope.writePhotosAlbum",
   }[key];
   Taro.getSetting({
     success: (res) => {
@@ -451,6 +452,7 @@ export const getAuthStatus = (obj) => {
   const { key, success, fail } = obj;
   const getUserAuth = {
     location: "scope.userLocation",
+    photo: "scope.writePhotosAlbum",
   }[key];
   Taro.authorize({
     scope: getUserAuth,

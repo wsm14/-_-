@@ -177,6 +177,7 @@ page {
         padding: 24px 0px 0px;
         display: flex;
         align-items: flex-start;
+        position: relative;
         .Grab_people_profile {
           width: 80px;
           height: 80px;
@@ -229,6 +230,25 @@ page {
         margin: 64px auto 0;
       }
     }
+  }
+  .Grab_winning {
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffb103;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 24px;
+    top: 76px;
+  }
+  .Grab_winning::before {
+    display: block;
+    width: 32px;
+    height: 28px;
+    background-image: url(https://wechat-config.dakale.net/miniprogram/image/winningIcon.png);
+    background-size: 100% 100%;
+    content: "";
+    margin-right: 8px;
   }
   .Grab_showBean_gg {
     margin-top: 40px;

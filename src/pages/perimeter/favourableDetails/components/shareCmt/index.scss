@@ -1,0 +1,65 @@
+.shareCmt_box {
+  margin-top: 16px;
+  padding: 32px 0px;
+  background: #ffffff;
+  .shareCmt_margin_info {
+    margin-top: 40px;
+  }
+  .shareCmt_title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    padding: 0 32px;
+  }
+  .shareCmt_image {
+    margin: 40px 0 0 32px;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+    .shareCmt_image_view {
+      display: flex;
+      .shareCmt_image_content {
+        width: 200px;
+        height: 160px;
+        border-radius: 4px;
+        margin-right: 16px;
+      }
+      .shareCmt_image_info {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  .shareCmt_btn {
+    width: 360px;
+    height: 64px;
+    background: #07c0c2;
+    border-radius: 32px;
+    margin: 48px auto 0;
+    font-size: 28px;
+    color: #ffffff;
+  }
+  .shareCmt_text_info {
+  }
+  .shareCmt_liner_content {
+    margin: 32px 32px 0;
+    padding: 24px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 42px;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+    word-wrap: break-word;
+    position: relative;
+    white-space: pre-wrap;
+  }
+  .shareCmt_cobyLink {
+    margin-top: 16px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #148cff;
+    line-height: 28px;
+    text-decoration: underline;
+  }
+}
