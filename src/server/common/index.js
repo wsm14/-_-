@@ -357,3 +357,25 @@ export const fetchPhoneBill = (data = {}, fn) => {
   );
 };
 //话费配置项
+
+export const fetchGlobalConfig = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/configGlobalPopUp/getAllGlobalConfig",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//全局弹框配置项
+
+export const fetchShareConfig = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/share/getShareConfig",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取分享配置

@@ -3,7 +3,11 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import Store from "./model/index";
 import { Provider } from "mobx-react";
 import { authUpdateGeography } from "@/common/authority";
-import { getShareParamInfo, getDictionary } from "@/server/common";
+import {
+  getShareParamInfo,
+  getDictionary,
+  fetchGlobalConfig,
+} from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
 import evens from "@/common/evens";
@@ -25,6 +29,7 @@ class App extends Component {
     authWxLogin(this.fetchOpenId.bind(this));
     evens.$on("setLocation", this.fetchLocation.bind(this));
     this.fetchDictionary();
+    this.fetchGlobalConfig();
   }
 
   componentDidShow() {
@@ -61,6 +66,11 @@ class App extends Component {
     } else {
       return;
     }
+  }
+  fetchGlobalConfig() {
+    fetchGlobalConfig().then((val) => {
+      console.log(val);
+    });
   }
   fetchCheckUpdate() {
     // 判断目前微信版本是否支持自动更新

@@ -19,7 +19,11 @@ import {
 } from "@/common/utils";
 import { loginBtn } from "@/common/authority";
 import ActivityStatus from "./components/index";
-import { getShareParamInfo, getShareInfo } from "@/server/common";
+import {
+  getShareParamInfo,
+  getShareInfo,
+  fetchShareConfig,
+} from "@/server/common";
 import { fetchUserShareCommission } from "@/server/index";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
@@ -63,6 +67,7 @@ class MerchantDetails extends Component {
       },
       mxVisible: false,
       drawerVisible: false,
+      resultInfo: {},
     };
   }
   componentWillMount() {
@@ -81,12 +86,14 @@ class MerchantDetails extends Component {
             },
             (res) => {
               this.getDetailsById();
+              this.fetchConfig();
             }
           );
         }
       });
     } else {
       this.getDetailsById();
+      this.fetchConfig();
     }
   }
   componentDidShow() {
@@ -95,6 +102,19 @@ class MerchantDetails extends Component {
       this.getDetailsById();
     }
     this.fetchUserShareCommission();
+  }
+  fetchConfig() {
+    const { httpData } = this.state;
+    const { specialActivityId, merchantId } = httpData;
+    fetchShareConfig({
+      goodId: specialActivityId,
+      ownerId: merchantId,
+    }).then((val) => {
+      const { resultInfo } = val;
+      this.setState({
+        resultInfo,
+      });
+    });
   }
   getDetailsById() {
     const { getSpecialGoodsDetail } = perimeter;
