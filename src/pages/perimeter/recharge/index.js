@@ -95,13 +95,13 @@ class Index extends Component {
     }
   }
   fakeOrder() {
-    const { telephone, selectIndex, teleType, payList } = this.state;
+    const { telephone, selectIndex, teleType, phoneBillItemList } = this.state;
     if (telephone && selectIndex !== -1 && teleType) {
       Router({
         routerName: "rechargeOrder",
         args: {
           telephone,
-          phoneMoney: payList[selectIndex].money,
+          phoneMoney: phoneBillItemList[selectIndex].discountFee,
         },
       });
     } else {
