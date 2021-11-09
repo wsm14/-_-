@@ -1,4 +1,6 @@
 import { httpGet, httpPost } from "@/api/newRequest";
+import Taro from "@tarojs/taro";
+import { loginStatus } from "@/common/utils";
 /*
  * params token
  * */
@@ -296,3 +298,31 @@ export const fakeMomentReward = (data = {}, fn) => {
   );
 };
 //用户获取ugc卡豆
+export const fakeWechatPayInfo = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/pay/wechat/getWechatPayInfo",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取微信支付需要的参数接口
+//微信支付
+export const handlePayWechat = (data = {}, callback) => {
+  const { xcxOpenId } = loginStatus();
+  return fakeWechatPayInfo({ ...data, openId: xcxOpenId }).then((val) => {
+    const { payParams } = val;
+    Taro.requestPayment({
+      ...payParams,
+      success: (res) => {
+        callback && callback({ result_status: "succeeded" });
+      },
+      fail: () => {
+        callback && callback({ result_status: "fail" });
+      },
+    });
+  });
+};

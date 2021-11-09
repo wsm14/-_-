@@ -9,6 +9,7 @@ import SelectBean from "@/components/componentView/selectBean";
 import Evens from "@/common/evens";
 import Router from "@/common/router";
 import ShareView from "@/components/componentView/shareView";
+
 import { inject, observer } from "mobx-react";
 import "./index.scss";
 const computedScan = (value, couponPrice, scale, bean) => {
@@ -91,7 +92,7 @@ class Index extends Component {
       },
       (res) => {
         const {
-          reserveOrderResult: { userRewardBean, userIncomeBean },
+          reserveOrderResult: { userRewardBean },
           reserveOrderResult,
           configUserLevelInfo: { payBeanCommission },
           couponObj: { couponPrice = 0 },
@@ -108,12 +109,6 @@ class Index extends Component {
                 payBeanCommission / 100,
                 userRewardBean
               ),
-              userIncomeBean: computedScan(
-                totalFee,
-                couponPrice,
-                payBeanCommission / 100,
-                userIncomeBean
-              ),
             },
           });
         } else {
@@ -121,7 +116,6 @@ class Index extends Component {
             reserveOrderResult: {
               ...reserveOrderResult,
               userBean: userRewardBean,
-              userIncomeBean: userIncomeBean,
             },
           });
         }
@@ -165,7 +159,7 @@ class Index extends Component {
       httpData,
       httpData: { totalFee },
       couponObj: { userCouponIdString = "" },
-      useBeanType,
+
       useBeanStatus,
     } = this.state;
     const { shareType } = this.props.store.authStore;
@@ -175,7 +169,7 @@ class Index extends Component {
         {
           ...httpData,
           userCouponId: userCouponIdString,
-          useBeanType,
+
           useBeanStatus,
           sourceKey,
           sourceType,
@@ -209,14 +203,13 @@ class Index extends Component {
       configUserLevelInfo,
       configUserLevelInfo: { payBeanCommission = 50 },
       useBeanStatus,
-      useBeanType,
+
       reserveOrderResult: {
         merchantName,
         merchantImg,
         availableCouponCount,
         computedBean,
         computedIconBean,
-        userIncomeBean,
         userRewardBean,
       },
       httpData: { totalFee },
@@ -265,14 +258,12 @@ class Index extends Component {
                               computedBean: computedScan(
                                 value,
                                 couponPrice,
-                                payBeanCommission / 100,
-                                userRewardBean
+                                payBeanCommission / 100
                               ),
                               computedIconBean: computedScan(
                                 value,
                                 couponPrice,
-                                payBeanCommission / 100,
-                                userIncomeBean
+                                payBeanCommission / 100
                               ),
                             },
                           },
@@ -285,7 +276,6 @@ class Index extends Component {
                           reserveOrderResult: {
                             ...reserveOrderResult,
                             computedBean: userRewardBean,
-                            computedIconBean: userIncomeBean,
                           },
                         });
                       }
@@ -346,11 +336,9 @@ class Index extends Component {
 
             <SelectBean
               fn={this.useBean.bind(this)}
-              useBeanType={useBeanType}
               data={{
                 ...reserveOrderResult,
                 userBean: computedBean || userRewardBean,
-                userIncomeBean: computedIconBean || userIncomeBean,
               }}
               configUserLevelInfo={configUserLevelInfo}
               useBeanStatus={useBeanStatus}

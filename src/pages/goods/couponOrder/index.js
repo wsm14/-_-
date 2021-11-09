@@ -114,22 +114,13 @@ class Index extends Component {
     getOwnerCouponInfo(httpData).then((val) => {
       const { ownerCouponInfo = {} } = val;
       const { reduceObject = {}, userBean, userIncomeBean } = ownerCouponInfo;
-      if (!userBean && userIncomeBean) {
-        this.setState({
-          ownerCouponInfo: {
-            ...ownerCouponInfo,
-            ...reduceObject,
-          },
-          useBeanType: "income",
-        });
-      } else {
-        this.setState({
-          ownerCouponInfo: {
-            ...ownerCouponInfo,
-            ...reduceObject,
-          },
-        });
-      }
+
+      this.setState({
+        ownerCouponInfo: {
+          ...ownerCouponInfo,
+          ...reduceObject,
+        },
+      });
     });
   }
   showBean() {
@@ -141,11 +132,7 @@ class Index extends Component {
     if (useBeanStatus === "0") {
       return "0.00";
     } else {
-      if (useBeanType === "reward") {
-        return (userBean / 100).toFixed(2);
-      } else {
-        return (userIncomeBean / 100).toFixed(2);
-      }
+      return (userBean / 100).toFixed(2);
     }
   }
   saveKolGoodsOrder() {
@@ -220,13 +207,7 @@ class Index extends Component {
       useBeanStatus,
     } = this.state;
     if (useBeanStatus === "1") {
-      if (useBeanType === "reward") {
-        return (Number(buyPrice) * couponCount - userBean / 100).toFixed(2);
-      } else {
-        return (Number(buyPrice) * couponCount - userIncomeBean / 100).toFixed(
-          2
-        );
-      }
+      return (Number(buyPrice) * couponCount - userBean / 100).toFixed(2);
     } else {
       return (Number(buyPrice) * couponCount).toFixed(2);
     }
@@ -389,9 +370,7 @@ class Index extends Component {
               }
               visible={visible}
               canfirm={() => this.saveKolGoodsOrder()}
-              content={`是否确认使用${
-                useBeanType === "reward" ? userBean : userIncomeBean
-              }卡豆支付？`}
+              content={`是否确认使用${userBean}卡豆支付？`}
               canfirmText="再想想"
               cancelText="确定"
             ></PayBean>
