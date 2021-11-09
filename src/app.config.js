@@ -85,9 +85,6 @@ export default {
       root: "pages/share",
       pages: [
         "hotActive/index", //8.8前面活动
-        "mainScene/index", //8_8主会场
-        "shopScene/index", //8_8帶貨
-        "friendScene/index", //8_8邀请好友
         "invitation/index", //邀请函
         "download/index", //下载,
         "shareFriend/index", //分享好友,
