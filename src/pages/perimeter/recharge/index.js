@@ -101,7 +101,7 @@ class Index extends Component {
         routerName: "rechargeOrder",
         args: {
           telephone,
-          phoneMoney: phoneBillItemList[selectIndex].discountFee,
+          phoneMoney: phoneBillItemList[selectIndex].totalFee,
         },
       });
     } else {
