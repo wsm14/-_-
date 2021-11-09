@@ -13,7 +13,7 @@ import {
   format,
 } from "@/common/utils";
 import "./index.scss";
-export const goodsView = (item, userInfo, fn, type = "toast") => {
+export const goodsView = (item, userInfo, fn) => {
   const {
     merchantName,
     merchantLogo,
@@ -21,7 +21,6 @@ export const goodsView = (item, userInfo, fn, type = "toast") => {
     goodsName,
     lat,
     lnt,
-    ownerName,
     realPrice,
     oriPrice,
     activityStartTime,
@@ -46,30 +45,20 @@ export const goodsView = (item, userInfo, fn, type = "toast") => {
         <View className="activeView_btn_box activeView_btn_style1">已抢光</View>
       );
     } else {
-      if (type === "toast") {
-        return (
-          <View className="activeView_btn_box activeView_btn_style2">
-            {shareCommission > 0
-              ? `分享赚¥${computedPrice(commission, shareCommission)}`
-              : "立即抢购"}
-          </View>
-        );
-      } else {
-        return (
-          <View className="activeView_btn_box activeView_btn_style2">
-            {shareCommission > 0
-              ? `分享赚¥${computedPrice(commission, shareCommission)}`
-              : "分享"}
-          </View>
-        );
-      }
+      return (
+        <View className="activeView_btn_box activeView_btn_style2">
+          {shareCommission > 0
+            ? `分享赚¥${computedPrice(commission, shareCommission)}`
+            : "分享"}
+        </View>
+      );
     }
   };
   return (
     <View
       className="activeView_box"
       onClick={() => {
-        fn(item);
+        fn && fn(item);
       }}
     >
       <View className="activeView_image">
@@ -89,7 +78,7 @@ export const goodsView = (item, userInfo, fn, type = "toast") => {
           ></View>
           <View className="activeView_user_userHide font_hide">
             <View className="activeView_user_merchantName font_hide">
-              {ownerName}
+              {merchantName}
             </View>
             <View className="price_margin8">
               {" | " + GetDistance(getLat(), getLnt(), lat, lnt)}

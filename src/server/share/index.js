@@ -171,3 +171,16 @@ export const fetchBindAddress = (data, fn) => {
   );
 };
 // 商品绑定地址
+
+export const fetchFissionDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/fission/help/getFissionDetail",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+// 获取裂变活动详情

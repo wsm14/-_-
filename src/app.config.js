@@ -94,6 +94,7 @@ export default {
         "userNewArtist/index", //新人福利頁面
         "userNewGift/index", //新人红包頁面
         "Grab/index", //领取他人发送红包页
+        "shareActive/index", //活动页主会场
       ],
     },
     {

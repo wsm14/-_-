@@ -3,7 +3,7 @@
   position: relative;
   margin-bottom: 16px;
   background: #ffffff;
-  border-radius: 8px 8px 0 0;
+  border-radius: 8px;
   line-height: 1;
   .activeView_image {
     width: 335px;
@@ -98,7 +98,6 @@
     }
     .activeView_card_maxRight {
       max-width: 210px;
-      
     }
   }
   .activeView_btn_box {

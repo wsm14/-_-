@@ -81,36 +81,18 @@ export default (props) => {
         {recommendReason !== "" && (
           <View>
             <View className="shareCmt_title shareCmt_margin_info">
-              图片素材
+              分享文案
             </View>
             <View className="shareCmt_liner_content">
               {recommendReason}
-              {urlLink && (
-                <View
-                  className="shareCmt_cobyLink"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    Taro.setClipboardData({
-                      data: urlLink,
-                      success: function (res) {
-                        toast("复制成功");
-                      },
-                      fail: function (res) {
-                        toast("复制失败");
-                      },
-                    });
-                  }}
-                >
-                  商品链接
-                </View>
-              )}
+              {urlLink && <View className="shareCmt_cobyLink">商品链接</View>}
             </View>
             <View
               className="shareCmt_btn public_center "
               onClick={(e) => {
                 e.stopPropagation();
                 Taro.setClipboardData({
-                  data: recommendReason + "商品地址" + urlLink && urlLink,
+                  data: recommendReason + "商品地址" + urlLink,
                   success: function (res) {
                     toast("复制成功");
                   },
