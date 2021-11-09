@@ -146,7 +146,7 @@ class Index extends Component {
               ></Image>
             </View>
             {/*奖品图片*/}
-            <View className="shareActive_user">
+            <View className="shareActive_user font_hide">
               邀请新用户<Text className="font40 color3">{inviteNum}</Text>{" "}
               即可获得
               {name}
