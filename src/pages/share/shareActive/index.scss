@@ -153,4 +153,56 @@ page {
     background-size: 100% 100%;
     margin: 0 auto;
   }
+  .shareActive_fixed {
+    position: fixed;
+    right: 0;
+    top: 118px;
+    .shareActive_fixed_rule {
+      width: 50px;
+      height: 136px;
+      background: url(https://wechat-config.dakale.net/miniprogram/shareActive/icon6.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .shareActive_fixed_share {
+      width: 50px;
+      height: 96px;
+      background: url(https://wechat-config.dakale.net/miniprogram/shareActive/icon7.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .shareActive_layer_info {
+    width: 534px;
+    border-radius: 20px;
+    .shareActive_layer_content {
+      padding: 48px 32px;
+      background: #ffffff;
+      .shareActive_layer_title {
+        font-size: 36px;
+        font-weight: 600;
+        color: #333333;
+        text-align: center;
+      }
+      .shareActive_layer_body {
+        margin: 48px auto 0;
+        padding: 24px;
+        background: rgba(239, 71, 111, 0.1);
+        border-radius: 10px;
+        .shareActive_body_name {
+          max-height: 80px;
+          font-size: 32px;
+          font-weight: 500;
+          color: #333333;
+          line-height: 40px;
+        }
+        .shareActive_body_status {
+          margin-top: 16px;
+          font-size: 28px;
+          font-weight: 400;
+          color: #999999;
+        }
+      }
+    }
+  }
 }

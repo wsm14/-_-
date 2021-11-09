@@ -184,3 +184,28 @@ export const fetchFissionDetail = (data, fn) => {
   );
 };
 // 获取裂变活动详情
+
+export const fakeReceiveReward = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/activity/fission/reward/receiveReward",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//裂变领取奖励
+export const fetchFissionReward = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/activity/fission/reward/getFissionReward",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//裂变查看奖励

@@ -1,9 +1,5 @@
 export const rssConfigData = (data = {}) => {
-  let {
-    background = "https://resource-new.dakale.net/common/activity/88activityBackgroundIos.png",
-    qcodeUrl,
-    username = "",
-  } = data;
+  let { background = "", qcodeUrl, username = "" } = data;
   return {
     width: 750 * 2, // 画布宽度
     height: 1334 * 2, // 画布高度

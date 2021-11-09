@@ -1,11 +1,19 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
-import { fetchFissionDetail } from "@/server/share";
+import {
+  fetchFissionDetail,
+  fakeReceiveReward,
+  fetchFissionReward,
+} from "@/server/share";
 import { getShareParamInfo } from "@/server/common";
 import { fetchUserShareCommission } from "@/server/index";
-import { backgroundObj, toast } from "@/common/utils";
+import { backgroundObj, loginStatus, toast } from "@/common/utils";
+import { getShareInfo } from "@/server/common";
 import { goodsView } from "./components/shop";
+import { rssConfigData } from "./components/shareView/components/data";
+import ShareActive from "./components/shareView";
+import Drawer from "@/components/Drawer";
 import Router from "@/common/router";
 import "./index.scss";
 class Index extends Component {
@@ -20,6 +28,10 @@ class Index extends Component {
       userFissionHelps: [],
       configFissionTemplate: {},
       configUserLevelInfo: {},
+      cavansObj: { data: null, start: false },
+      fissionRewardInfo: {},
+      shareData: null,
+      visible: false,
     };
   }
   componentDidMount() {
@@ -49,14 +61,23 @@ class Index extends Component {
       const {
         specialGoods,
         rightGoods,
-        userFissionHelps,
+        userFissionHelps = [],
         configFissionTemplate,
       } = val;
+      const { inviteNum, hasReceived } = configFissionTemplate;
       this.setState({
         specialGoods,
         rightGoods,
         userFissionHelps,
-        configFissionTemplate,
+        configFissionTemplate: {
+          ...configFissionTemplate,
+          btnStatus:
+            hasReceived === "1"
+              ? "2"
+              : userFissionHelps.length >= inviteNum
+              ? "1"
+              : "0",
+        },
       });
     });
   }
@@ -86,6 +107,77 @@ class Index extends Component {
       this.fetchFissionDetail();
     }
   }
+  fetchShareInfo() {
+    const { shareData } = this.state;
+    if (shareData) {
+      const { backgroundImages, qcodeUrl } = shareData;
+      const { profile, username } = loginStatus() || {};
+      this.setState({
+        cavansObj: {
+          start: true,
+          data: rssConfigData({
+            background: backgroundImages,
+            qcodeUrl,
+            username,
+          }),
+        },
+      });
+    } else {
+      if (!loginStatus()) {
+        Router({
+          routerName: "login",
+        });
+      } else {
+        const { profile, username } = loginStatus() || {};
+        const { httpData } = this.state;
+        const { fissionId } = httpData;
+        getShareInfo(
+          {
+            shareType: "helpFission",
+            shareId: fissionId,
+          },
+          (res) => {
+            const { backgroundImages, qcodeUrl } = res;
+            this.setState({
+              shareData: { ...res },
+              cavansObj: {
+                start: true,
+                data: rssConfigData({
+                  background: backgroundImages,
+                  qcodeUrl,
+                  username,
+                }),
+              },
+            });
+          }
+        );
+      }
+    }
+  }
+  fakeGoods() {
+    const { httpData } = this.state;
+    const { fissionId } = httpData;
+    fakeReceiveReward({ fissionId }).then((val) => {
+      this.fetchFissionDetail();
+    });
+  }
+  fetchbest() {
+    const { httpData } = this.state;
+    const { fissionId } = httpData;
+    fetchFissionReward({ fissionId }).then((val) => {
+      const { fissionRewardInfo } = val;
+      this.setState(
+        {
+          fissionRewardInfo,
+        },
+        (res) => {
+          this.setState({
+            visible: true,
+          });
+        }
+      );
+    });
+  }
   filterList(num, list) {
     let newList = [];
     for (let i = 0; i < num; i++) {
@@ -97,6 +189,19 @@ class Index extends Component {
     }
     return newList;
   }
+  onShareAppMessage(res) {
+    const { shareData } = this.state;
+    if (res.from === "button") {
+      if (shareData) {
+        const { miniProgramUrl, title, frontImage } = shareData;
+        return {
+          title: title,
+          imageUrl: frontImage,
+          path: miniProgramUrl,
+        };
+      }
+    }
+  }
   render() {
     const {
       configFissionTemplate,
@@ -104,24 +209,67 @@ class Index extends Component {
       configUserLevelInfo,
       specialGoods,
       rightGoods,
+      cavansObj,
+      visible,
+      fissionRewardInfo,
     } = this.state;
     const {
       backgroundColor,
       mainImg,
       prizeImg,
       inviteNum,
-      name,
       introductionImg,
       specialGoodsTitleImg,
       rightGoodsTitleImg,
       activityBeginTime,
       activityEndTime,
+      btnStatus,
+      activityRuleUrl,
     } = configFissionTemplate;
+    const { prizeType, prizeReward, createTime } = fissionRewardInfo;
     const templateBtn = {
-      0: <View className="shareActive_btnInfo public_center">立即邀请</View>,
-    }[0];
+      0: (
+        <View
+          className="shareActive_btnInfo public_center"
+          onClick={() => this.fetchShareInfo()}
+        >
+          立即邀请
+        </View>
+      ),
+      1: (
+        <View
+          className="shareActive_btnInfo public_center"
+          onClick={() => this.fakeGoods()}
+        >
+          立即领取
+        </View>
+      ),
+      2: (
+        <View
+          className="shareActive_btnInfo public_center"
+          onClick={() => this.fetchbest()}
+        >
+          查看我的奖品
+        </View>
+      ),
+    }[btnStatus];
     return (
       <View style={{ background: backgroundColor }} className="shareActive_box">
+        <View className="shareActive_fixed">
+          <View
+            className="shareActive_fixed_rule"
+            onClick={() => {
+              Router({
+                routerName: "webView",
+                args: { link: activityRuleUrl },
+              });
+            }}
+          ></View>
+          <View
+            className="shareActive_fixed_share"
+            onClick={() => this.fetchbest()}
+          ></View>
+        </View>
         <View className="shareActive_Main">
           <Image
             className="share_img"
@@ -148,12 +296,11 @@ class Index extends Component {
             {/*奖品图片*/}
             <View className="shareActive_user font_hide">
               邀请新用户<Text className="font40 color3">{inviteNum}</Text>{" "}
-              即可获得
-              {name}
+              即可获得奖励
             </View>
             {/*拉新名额*/}
             <View className="shareActive_userProfile_box">
-              {this.filterList(7, userFissionHelps).map((item) => {
+              {this.filterList(inviteNum, userFissionHelps).map((item) => {
                 const { profile } = item;
                 return (
                   <View
@@ -194,6 +341,7 @@ class Index extends Component {
             src={rightGoodsTitleImg}
           ></Image>
         </View>
+        {/*权益商品标题*/}
         <View className="shareActive_shop_lineBox">
           {rightGoods.map((item) => {
             return goodsView(item, configUserLevelInfo, (e) => {
@@ -201,6 +349,7 @@ class Index extends Component {
             });
           })}
         </View>
+        {/*权益商品列表*/}
         <View className="shareActive_shopTitle">
           <Image
             className="share_img"
@@ -209,6 +358,7 @@ class Index extends Component {
             src={specialGoodsTitleImg}
           ></Image>
         </View>
+        {/*特惠商品标题*/}
         <View className="shareActive_shop_lineBox">
           {specialGoods.map((item) => {
             return goodsView(item, configUserLevelInfo, (e) => {
@@ -216,9 +366,44 @@ class Index extends Component {
             });
           })}
         </View>
+        {/*特惠商品列表*/}
         <View className="shareActive_logo_box">
           <View className="shareActive_logo"></View>
         </View>
+        {visible && (
+          <Drawer
+            show={visible}
+            close={() => {
+              this.setState({
+                visible: false,
+              });
+            }}
+          >
+            <View className="shareActive_layer_info">
+              <View className="shareActive_layer_content">
+                <View className="shareActive_layer_title">我的奖品</View>
+                <View className="shareActive_layer_body">
+                  <View className="shareActive_body_name font_noHide">
+                    {prizeReward}
+                  </View>
+                  <View className="shareActive_body_status public_auto">
+                    <View>已发放</View>
+                    <View>{createTime}</View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Drawer>
+        )}
+        {/*特惠商品浮层*/}
+        <ShareActive
+          cavansObj={cavansObj}
+          close={() =>
+            this.setState({
+              cavansObj: { data: null, start: false },
+            })
+          }
+        ></ShareActive>
       </View>
     );
   }
