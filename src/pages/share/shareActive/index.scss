@@ -157,6 +157,7 @@ page {
     position: fixed;
     right: 0;
     top: 118px;
+    z-index: 10;
     .shareActive_fixed_rule {
       width: 50px;
       height: 136px;
@@ -165,6 +166,7 @@ page {
       background-size: 100% 100%;
     }
     .shareActive_fixed_share {
+      margin-top: 16px;
       width: 50px;
       height: 96px;
       background: url(https://wechat-config.dakale.net/miniprogram/shareActive/icon7.png)

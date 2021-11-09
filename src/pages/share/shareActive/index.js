@@ -46,12 +46,12 @@ class Index extends Component {
     });
   }
   routerLink(item) {
-    const { ownerId, specialActivityIdString } = item;
+    const { ownerId, activityGoodsId } = item;
     Router({
       routerName: "favourableDetails",
       args: {
         merchantId: ownerId,
-        specialActivityId: specialActivityIdString,
+        specialActivityId: activityGoodsId,
       },
     });
   }
@@ -267,7 +267,7 @@ class Index extends Component {
           ></View>
           <View
             className="shareActive_fixed_share"
-            onClick={() => this.fetchbest()}
+            onClick={() => this.fetchShareInfo()}
           ></View>
         </View>
         <View className="shareActive_Main">

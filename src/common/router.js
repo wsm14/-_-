@@ -104,9 +104,8 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     download: "/pages/share/download/index", //下载
     login: "/pages/auth/index", //登录
     webView: "/pages/share/webView/index", //内嵌h5
-    mainScene: "/pages/share/mainScene/index", //88活動主会场
-    friendScene: "/pages/share/friendScene/index", //88活動邀请好友会场
-    shopScene: "/pages/share/shopScene/index", //88活动带货会场
+    shareActive: "/pages/share/shareActive/index", //活动页
+    shareUser: "/pages/share/shareUser/index", //活动助力页面
     userNewArtist: "/pages/share/userNewArtist/index", //新人红包
     Grab: "/pages/share/Grab/index", //领取他人红包
 

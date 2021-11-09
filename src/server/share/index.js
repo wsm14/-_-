@@ -209,3 +209,16 @@ export const fetchFissionReward = (data, fn) => {
   );
 };
 //裂变查看奖励
+
+export const fetchFissionHelps = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/fission/help/getFissionHelps",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//查看助力记录
