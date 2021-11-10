@@ -162,10 +162,16 @@ class MerchantDetails extends Component {
   }
   fetchUrlLink() {
     const { httpData } = this.state;
+    const { userIdString } = loginStatus() || {};
+    let obj = {
+      ...httpData,
+      shareUserId: userIdString,
+      shareUserType: userIdString ? "user" : undefined,
+    };
     let str = "";
-    for (let item in httpData) {
-      if (httpData[item]) {
-        str = str + `${item}=${httpData[item]}&`;
+    for (let item in obj) {
+      if (obj[item]) {
+        str = str + `${item}=${obj[item]}&`;
       }
     }
     str = str.slice(0, str.length - 1);
