@@ -222,3 +222,16 @@ export const fetchFissionHelps = (data, fn) => {
   );
 };
 //查看助力记录
+
+export const fetchInvitationUser = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/activity/fission/help/invitationUser",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//助力請求

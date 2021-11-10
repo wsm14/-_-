@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, WebView } from "@tarojs/components";
 import { toast, loginStatus, backgroundObj, fakeStorage } from "@/common/utils";
-import Init from "./componetns/init";
 import { inject, observer } from "mobx-react";
 import Button from "@/components/Button";
 import Drawer from "@/components/Drawer";
-import { fetchFissionHelps } from "@/server/share";
+import { fetchFissionHelps, fetchInvitationUser } from "@/server/share";
 import { getShareParamInfo } from "@/server/common";
 import SaveBean from "./componetns/saveBean";
 import NewsInfo from "./componetns/newsInfo";
@@ -21,6 +20,11 @@ class Index extends Component {
       httpData: {
         fissionId: getCurrentInstance().router.params.fissionId,
       },
+      fissionInfo: {},
+      userInfo: {},
+      helpUserListInfo: [],
+      // errorVisible: true,
+      // visible: true,
     };
   }
   fetchHelps() {
@@ -28,8 +32,24 @@ class Index extends Component {
     fetchFissionHelps({
       ...httpData,
     }).then((val) => {
-      console.log(val);
+      const { fissionInfo, userInfo, helpUserListInfo } = val;
+      this.setState({
+        fissionInfo,
+        userInfo,
+        helpUserListInfo,
+      });
     });
+  }
+  filterList(num, list) {
+    let newList = [];
+    for (let i = 0; i < num; i++) {
+      if (list[i]) {
+        newList.push(list[i]);
+      } else {
+        newList.push({});
+      }
+    }
+    return newList;
   }
   fetchShareType() {
     const { scene } = getCurrentInstance().router.params;
@@ -61,36 +81,14 @@ class Index extends Component {
     this.fetchHelps();
   }
   render() {
-    const {
-      visible,
-
-      errorVisible,
-    } = this.state;
-    // const { profile = "", username } = userInfo;
-    // const template = {
-    //   owner: (
-    //     <View className="shareUser_desc">
-    //       {" "}
-    //       {freeTime > 0
-    //         ? `恭喜获得${freeTime}次机会 加速赢iPhone13`
-    //         : "等待好友助力"}
-    //     </View>
-    //   ),
-    //   other: (
-    //     <View className="shareUser_desc">
-    //       {freeTime > 0 ? `TA已获得${freeTime}次免费拆盲盒机会` : ""}
-    //     </View>
-    //   ),
-    // }[userType];
-    const { login } = this.props.store.authStore;
+    const { visible, userInfo, errorVisible, helpUserListInfo, fissionInfo } =
+      this.state;
+    const { inviteNum, prizeBean, prizeName } = fissionInfo;
+    const { profile = "", username } = userInfo;
     return (
       <View className="shareUser_box">
-        {/* <Init
-          auth={login}
-          initFn={() => {
-            this.getBlindHelp();
-          }}
-        ></Init>
+        <View className="shareUser_left_layer"></View>
+        <View className="shareUser_bg_left"></View>
         <View className="shareUser_bg">
           <View className="shareUser_content">
             <View className="shareUser_content_box">
@@ -103,76 +101,61 @@ class Index extends Component {
                 来自 {username} 的礼盒
               </View>
               <View className="shareUser_fontMargin1 shareUser_font">
-                友友，帮我助力
+                我正在哒卡乐免费拿{prizeName}
+              </View>
+              <View className="shareUser_font">
+                {inviteNum - helpUserListInfo.length >= 0
+                  ? `该用户已完成助力任务`
+                  : `仅差${inviteNum - helpUserListInfo.length}次机会`}
               </View>
               <View className="shareUser_font">
                 {" "}
-                你也可以获得千元大奖的机会哦～
+                快来帮我助力就可以获得{prizeName}啦！
               </View>
-              <View className="shareUser_font" style={{ visibility: "hidden" }}>
-                {" "}
-                友友， 你的礼品等待领取
-              </View>
-              {template}
               <View className="shareUser_liner"></View>
-              {userType === "other" ? (
-                <View className="shareUser_btn_box public_center">
-                  <Button>
-                    <View
-                      className="shareUser_btnInfo_btn public_center"
-                      onClick={this.saveBlindBoxHelp.bind(this)}
-                    >
-                      为TA助力
-                    </View>
-                  </Button>
-                </View>
-              ) : (
-                <View className="shareUser_btn_box public_center">
-                  <Button>
-                    <View
-                      className="shareUser_btnInfo_btn public_center"
-                      onClick={() =>
-                        Router({
-                          routerName: "blindIndex",
-                        })
-                      }
-                    >
-                      {freeTime > 0 ? "助力成功 马上拆盲盒" : "马上拆盲盒"}
-                    </View>
-                  </Button>
-                </View>
-              )}
+              <View className="shareUser_btn_box public_center">
+                <Button>
+                  <View
+                    className="shareUser_btnInfo_btn public_center"
+                    // onClick={this.saveBlindBoxHelp.bind(this)}
+                  >
+                    帮TA助力
+                  </View>
+                </Button>
+              </View>
 
               <View className="shareUser_share_profileBox">
-                {this.filterList(blindBoxHelpList).map((item, index) => {
-                  const { profile = "" } = item;
-                  if (!profile) {
-                    return (
-                      <View
-                        style={
-                          (index + 1) % 4 === 0
-                            ? {}
-                            : { marginRight: Taro.pxTransform(22) }
-                        }
-                        className="shareUser_share_profile shareUser_share_proStyle2"
-                      ></View>
-                    );
-                  } else {
-                    return (
-                      <View
-                        style={
-                          (index + 1) % 4 === 0
-                            ? { ...backgroundObj(profile) }
-                            : {
-                                marginRight: Taro.pxTransform(22),
-                                ...backgroundObj(profile),
-                              }
-                        }
-                        className="shareUser_share_profile shareUser_share_proStyle1"
-                      ></View>
-                    );
+                {this.filterList(inviteNum, helpUserListInfo).map(
+                  (item, index) => {
+                    const { profile = "" } = item;
+                    if (!profile) {
+                      return (
+                        <View
+                          style={
+                            (index + 1) % 4 === 0
+                              ? {}
+                              : { marginRight: Taro.pxTransform(22) }
+                          }
+                          className="shareUser_share_profile shareUser_share_proStyle2"
+                        ></View>
+                      );
+                    } else {
+                      return (
+                        <View
+                          style={
+                            (index + 1) % 4 === 0
+                              ? { ...backgroundObj(profile) }
+                              : {
+                                  marginRight: Taro.pxTransform(22),
+                                  ...backgroundObj(profile),
+                                }
+                          }
+                          className="shareUser_share_profile shareUser_share_proStyle1"
+                        ></View>
+                      );
+                    }
                   }
-                })}
+                )}
               </View>
             </View>
           </View>
@@ -225,7 +208,7 @@ class Index extends Component {
               }}
             ></NewsInfo>
           </Drawer>
-        )} */}
+        )}
       </View>
     );
   }

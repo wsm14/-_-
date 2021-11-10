@@ -15,6 +15,8 @@ import { rssConfigData } from "./components/shareView/components/data";
 import ShareActive from "./components/shareView";
 import Drawer from "@/components/Drawer";
 import Router from "@/common/router";
+import BestView from "./components/sucessToast";
+import ErrorView from "./components/errorToast";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -32,6 +34,8 @@ class Index extends Component {
       fissionRewardInfo: {},
       shareData: null,
       visible: false,
+      bestVisible: false,
+      errorVisible: false,
     };
   }
   componentDidMount() {
@@ -157,9 +161,17 @@ class Index extends Component {
   fakeGoods() {
     const { httpData } = this.state;
     const { fissionId } = httpData;
-    fakeReceiveReward({ fissionId }).then((val) => {
-      this.fetchFissionDetail();
-    });
+    fakeReceiveReward({ fissionId })
+      .then((val) => {
+        this.setState({
+          bestVisible: true,
+        });
+        this.fetchFissionDetail();
+      })
+      .catch((e) => {
+        if (e === "5241") {
+        }
+      });
   }
   fetchbest() {
     const { httpData } = this.state;
@@ -212,6 +224,8 @@ class Index extends Component {
       cavansObj,
       visible,
       fissionRewardInfo,
+      bestVisible,
+      errorVisible,
     } = this.state;
     const {
       backgroundColor,
@@ -395,7 +409,57 @@ class Index extends Component {
             </View>
           </Drawer>
         )}
-        {/*特惠商品浮层*/}
+        {/*奖品浮层*/}
+        {bestVisible && (
+          <Drawer
+            show={bestVisible}
+            close={() => {
+              this.setState({
+                bestVisible: false,
+              });
+            }}
+          >
+            <BestView
+              data={configFissionTemplate}
+              close={(e) => {
+                this.setState(
+                  {
+                    bestVisible: false,
+                  },
+                  (res) => {
+                    e && e();
+                  }
+                );
+              }}
+            ></BestView>
+          </Drawer>
+        )}
+        {/*获奖浮层*/}
+        {errorVisible && (
+          <Drawer
+            show={errorVisible}
+            close={() => {
+              this.setState({
+                errorVisible: false,
+              });
+            }}
+          >
+            <ErrorView
+              data={configFissionTemplate}
+              close={(e) => {
+                this.setState(
+                  {
+                    errorVisible: false,
+                  },
+                  (res) => {
+                    e && e();
+                  }
+                );
+              }}
+            ></ErrorView>
+          </Drawer>
+        )}
+        {/*失败浮层*/}
         <ShareActive
           cavansObj={cavansObj}
           close={() =>
