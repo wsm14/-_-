@@ -62,25 +62,22 @@ class Index extends Component {
     } = this.state;
     return (
       <View className="page_wallet">
-        {(level === "0" || !level) && (
-          <View className="page_noUserLever">
-            <View className="page_userDetails">
-              <View className="page_userDetails_icon"></View>
-              <View className="page_userDetails_title font28 color1">
-                卡豆余额
-              </View>
-              <View className="page_userDetails_bean color1 bold">{bean}</View>
+        <View className="page_noUserLever">
+          <View className="page_userDetails">
+            <View className="page_userDetails_icon"></View>
+            <View className="page_userDetails_title font28 color1">
+              卡豆余额
             </View>
-            <View
-              className="page_link_go public_center"
-              onClick={() => navigateTo("/pages/newUser/rewardDetails/index")}
-            >
-              <View className="font24 color4"> 查看明细</View>
-              <View className="page_link_icon"></View>
-            </View>
+            <View className="page_userDetails_bean color1 bold">{bean}</View>
           </View>
-        )}
-
+          <View
+            className="page_link_go public_center"
+            onClick={() => navigateTo("/pages/newUser/rewardDetails/index")}
+          >
+            <View className="font24 color4"> 查看明细</View>
+            <View className="page_link_icon"></View>
+          </View>
+        </View>
         <View className="page_bottom_font color2 font24">
           哒卡乐支付安全保障中
         </View>

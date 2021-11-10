@@ -50,6 +50,7 @@ class Index extends Component {
 
   payOrder() {
     const { httpData } = this.state;
+    const { orderSn, merchantId } = httpData;
     handlePayWechat({ ...httpData }, (res) => {
       const { result_status } = res;
       if (result_status == "succeeded") {

@@ -17,7 +17,7 @@ export default (props) => {
   });
   const [show, setShow] = useState(false);
   const { payBeanCommission = "50", level = "0" } = configUserLevelInfo;
-  const { userIncomeBean = "", userBean = "", rightFlag = "1" } = data;
+  const { userIncomeBean = "", userBean = "", rightFlag = "0" } = data;
   const { status } = selectType;
   const nowal = () => {
     const { status } = selectType;
@@ -65,7 +65,7 @@ export default (props) => {
             )}
           </View>
           <View className="order_pay_font">
-            可用{parseInt(userBean)}卡豆抵扣卡豆{parseInt(userBean) / 100}元
+            可用{parseInt(userBean)}卡豆优惠抵扣{parseInt(userBean) / 100}元
           </View>
           <View
             className={classNames(

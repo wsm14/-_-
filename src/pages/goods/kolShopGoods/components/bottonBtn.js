@@ -111,14 +111,14 @@ export default (props) => {
           </View>
         );
         break;
-      case "6":
-        return (
-          <View className="kolGoods_bottom_btn">
-            <View className="kolGoods_submit color2" onClick={() => remove()}>
-              取消申请
-            </View>
-          </View>
-        );
+      // case "6":
+      //   return (
+      //     <View className="kolGoods_bottom_btn">
+      //       <View className="kolGoods_submit color2" onClick={() => remove()}>
+      //         取消申请
+      //       </View>
+      //     </View>
+      //   );
       default:
         return null;
     }
