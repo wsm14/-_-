@@ -8,7 +8,7 @@ import Drawer from "@/components/Drawer";
 import { loginStatus, backgroundObj } from "@/common/utils";
 import Router from "@/common/router";
 import "./index.scss";
-import classNames from "_classnames@2.3.1@classnames";
+import classNames from "classnames";
 const filterList = (list) => {
   let newList = [{}, {}, {}, {}];
   if (list.length >= 4) {

@@ -7,15 +7,15 @@ import { backgroundObj, fetchStorage } from "@/common/utils";
 export default ({ data, change }) => {
   const { profile, newUserBean } = data;
   return (
-    <View className="saveBean_img">
-      <View className="saveBean_height"></View>
-      <View className="saveBean_top"></View>
-      <View className="saveBean_profile" style={backgroundObj(profile)}></View>
-      <View className="saveBean_desc">“感谢您的支援”</View>
-      <View className="saveBean_getbean">恭喜你获得{newUserBean}卡豆</View>
-      <View className="saveBean_font"></View>
-      <View className="saveBean_btn public_center" onClick={() => change()}>
-        去领取
+    <View className="shareSaveBean_img">
+      <View className="shareSaveBean_height"></View>
+      <View className="shareSaveBean_top"></View>
+      <View className="shareSaveBean_profile" style={backgroundObj(profile)}></View>
+      <View className="shareSaveBean_desc">“谢谢你帮我～”</View>
+      <View className="shareSaveBean_getbean">送你免费获得霸王餐机会</View>
+      <View className="shareSaveBean_font">赶紧去拿吧</View>
+      <View className="shareSaveBean_btn public_center" onClick={() => change()}>
+        立即去拿
       </View>
     </View>
   );

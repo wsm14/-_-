@@ -1,14 +1,14 @@
-.saveBean_img {
+.shareSaveBean_img {
   width: 650px;
   height: 608px;
   background: url("https://wechat-config.dakale.net/miniprogram/image/icon777.png")
     no-repeat;
   background-size: 100% 100%;
   text-align: center;
-  .saveBean_height {
+  .shareSaveBean_height {
     height: 100px;
   }
-  .saveBean_top {
+  .shareSaveBean_top {
     width: 365px;
     height: 77px;
     background: url(https://wechat-config.dakale.net/miniprogram/blind/blind_zl.png)
@@ -16,31 +16,32 @@
     background-size: 100% 100%;
     margin: 0px auto 0;
   }
-  .saveBean_profile {
+  .shareSaveBean_profile {
     width: 72px;
     height: 72px;
     margin: 24px auto 0;
     border-radius: 50%;
   }
-  .saveBean_desc {
+  .shareSaveBean_desc {
     margin: 16px auto 0;
     font-size: 28px;
     font-weight: 400;
     color: #333333;
   }
-  .saveBean_getbean {
+  .shareSaveBean_getbean {
     font-size: 40px;
     font-weight: 600;
     color: #ef476f;
     margin: 32px auto 0;
   }
-  .saveBean_font {
+  .shareSaveBean_font {
     font-size: 28px;
     font-weight: 400;
     color: #333333;
     height: 28px;
+    margin-top: 16px;
   }
-  .saveBean_btn {
+  .shareSaveBean_btn {
     width: 400px;
     height: 70px;
     background: #ef476f;

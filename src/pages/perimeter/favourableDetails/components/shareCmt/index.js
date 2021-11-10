@@ -20,10 +20,14 @@ export default (props) => {
           Taro.saveImageToPhotosAlbum({
             filePath: sres.path,
             success: (fres) => {},
+            fail: () => {
+              toast(`图片${index + 1}保存失败`);
+            },
           });
         },
         complete: () => {
           if (index === filterImage.length - 1) {
+            toast("图片已保存到手机相册");
             Taro.hideLoading();
           }
         },
@@ -94,7 +98,7 @@ export default (props) => {
                 Taro.setClipboardData({
                   data: recommendReason + "商品地址" + urlLink,
                   success: function (res) {
-                    toast("复制成功");
+                    toast("文案已粘贴到剪贴板");
                   },
                   fail: function (res) {
                     toast("复制失败");

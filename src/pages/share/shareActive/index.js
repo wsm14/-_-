@@ -169,7 +169,11 @@ class Index extends Component {
         this.fetchFissionDetail();
       })
       .catch((e) => {
-        if (e === "5241") {
+        const { resultCode } = e;
+        if (resultCode === "5241") {
+          this.setState({
+            errorVisible: true,
+          });
         }
       });
   }
@@ -235,8 +239,8 @@ class Index extends Component {
       introductionImg,
       specialGoodsTitleImg,
       rightGoodsTitleImg,
-      activityBeginTime,
-      activityEndTime,
+      activityBeginTime = "",
+      activityEndTime = "",
       btnStatus,
       activityRuleUrl,
     } = configFissionTemplate;
@@ -296,7 +300,8 @@ class Index extends Component {
         <View className="shareActive_content">
           <View className="shareActive_body_box">
             <View className="shareActive_time">
-              活动时间:{activityBeginTime}-{activityEndTime}
+              活动时间:{activityBeginTime.split(" ")[0]}至
+              {activityEndTime.split(" ")[0]}
             </View>
             {/*活动时间*/}
             <View className="shareActive_shop_card">

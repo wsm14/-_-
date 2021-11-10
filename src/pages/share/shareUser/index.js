@@ -11,6 +11,7 @@ import SaveBean from "./componetns/saveBean";
 import NewsInfo from "./componetns/newsInfo";
 import Router from "@/common/router";
 import "./index.scss";
+import { httpPost } from "@/api/newRequest";
 @inject("store")
 @observer
 class Index extends Component {
@@ -23,8 +24,8 @@ class Index extends Component {
       fissionInfo: {},
       userInfo: {},
       helpUserListInfo: [],
-      // errorVisible: true,
-      // visible: true,
+      errorVisible: false,
+      visible: false,
     };
   }
   fetchHelps() {
@@ -77,12 +78,29 @@ class Index extends Component {
       this.fetchHelps();
     }
   }
+  fetchInvitation() {
+    const { httpData, userInfo } = this.state;
+    const { fissionId } = httpData;
+    const { fissionUserId } = userInfo;
+    fetchInvitationUser({ fissionId, userId: fissionUserId }).then((val) => {
+      this.setState({
+        visible: true,
+      });
+    });
+  }
   componentDidMount() {
-    this.fetchHelps();
+    this.fetchShareType();
   }
   render() {
-    const { visible, userInfo, errorVisible, helpUserListInfo, fissionInfo } =
-      this.state;
+    const {
+      visible,
+      userInfo,
+      errorVisible,
+      helpUserListInfo,
+      fissionInfo,
+      httpData,
+    } = this.state;
+    const { fissionId } = httpData;
     const { inviteNum, prizeBean, prizeName } = fissionInfo;
     const { profile = "", username } = userInfo;
     return (
@@ -104,7 +122,7 @@ class Index extends Component {
                 我正在哒卡乐免费拿{prizeName}
               </View>
               <View className="shareUser_font">
-                {inviteNum - helpUserListInfo.length >= 0
+                {helpUserListInfo.length - inviteNum >= 0
                   ? `该用户已完成助力任务`
                   : `仅差${inviteNum - helpUserListInfo.length}次机会`}
               </View>
@@ -117,7 +135,7 @@ class Index extends Component {
                 <Button>
                   <View
                     className="shareUser_btnInfo_btn public_center"
-                    // onClick={this.saveBlindBoxHelp.bind(this)}
+                    onClick={this.fetchInvitation.bind(this)}
                   >
                     帮TA助力
                   </View>
@@ -176,11 +194,16 @@ class Index extends Component {
                     visible: false,
                   },
                   () => {
-                    this.fetchMomentcheckNew();
+                    Router({
+                      routerName: "shareActive",
+                      args: {
+                        fissionId,
+                      },
+                    });
                   }
                 );
               }}
-              data={{ ...userInfo, ...userBeanInfo }}
+              data={{ ...userInfo }}
             ></SaveBean>
           </Drawer>
         )}
@@ -201,7 +224,10 @@ class Index extends Component {
                   },
                   () => {
                     Router({
-                      routerName: "blindIndex",
+                      routerName: "shareActive",
+                      args: {
+                        fissionId,
+                      },
                     });
                   }
                 );
