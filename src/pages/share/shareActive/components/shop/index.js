@@ -13,7 +13,7 @@ import {
   format,
 } from "@/common/utils";
 import "./index.scss";
-export const goodsView = (item, userInfo, fn) => {
+export const goodsView = (item, userInfo, fn, flag = true) => {
   const {
     merchantName,
     merchantLogo,
@@ -27,12 +27,14 @@ export const goodsView = (item, userInfo, fn) => {
     activityTimeRule,
     remain,
     commission,
+    paymentModeObject = {},
   } = item;
   const {
     payBeanCommission = 50,
     shareCommission = 0,
     teamCommission = 0,
   } = userInfo;
+  const { bean = "", cash = "" } = paymentModeObject;
   const templateBtn = () => {
     if (!format(activityStartTime) && activityTimeRule === "fixed") {
       return (
@@ -47,9 +49,9 @@ export const goodsView = (item, userInfo, fn) => {
     } else {
       return (
         <View className="activeView_btn_box activeView_btn_style2">
-          {shareCommission > 0
+          {shareCommission > 0 && flag
             ? `分享赚¥${computedPrice(commission, shareCommission)}`
-            : "分享"}
+            : "立即抢购"}
         </View>
       );
     }
@@ -89,20 +91,28 @@ export const goodsView = (item, userInfo, fn) => {
           <View className="font24">原价:</View>
           <View className="font28 text_through price_margin4">¥{oriPrice}</View>
         </View>
-        <View className="activeView_relPrice">
-          <View className="font24">优惠价:</View>
-          <View className="font28 price_margin4">¥{realPrice}</View>
-        </View>
+        {flag && (
+          <View className="activeView_relPrice">
+            <View className="font24">优惠价:</View>
+            <View className="font28 price_margin4">¥{realPrice}</View>
+          </View>
+        )}
         <View className="activeView_card">
           <View className="activeView_card_box">
             <View className="activeView_card_left">卡豆购</View>
             <View className="activeView_card_san"></View>
             <View className="activeView_card_right">
-              <Text className="activeView_card_maxRight font_hide">
-                ￥{computedBeanPrice(realPrice, payBeanCommission)}+
-                {parseInt(computedPrice(realPrice, payBeanCommission) * 100)}
-                卡豆
-              </Text>
+              {flag ? (
+                <Text className="activeView_card_maxRight font_hide">
+                  ￥{computedBeanPrice(realPrice, payBeanCommission)}+
+                  {parseInt(computedPrice(realPrice, payBeanCommission) * 100)}
+                  卡豆
+                </Text>
+              ) : (
+                <Text className="activeView_card_maxRight font_hide">
+                  ￥{cash}+{bean}卡豆
+                </Text>
+              )}
             </View>
           </View>
         </View>

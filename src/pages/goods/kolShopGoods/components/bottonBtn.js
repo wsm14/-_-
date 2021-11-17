@@ -11,7 +11,7 @@ export default (props) => {
   useEffect(() => {
     setOrderDetails(data);
   }, [data]);
-  console.log(order)
+  console.log(order);
   const getPay = () => {
     const { orderSn, orderType } = order;
     navigateTo(
@@ -30,7 +30,7 @@ export default (props) => {
       Router({
         routerName: "favourableDetails",
         args: {
-          merchantId: merchantIdString,
+          merchantId: ownerIdString,
           specialActivityId: activityIdString,
         },
       });

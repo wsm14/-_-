@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: "活动助力",
+  navigationBarTitleText: "吃喝玩乐购",
   navigationStyle: "default",
 };

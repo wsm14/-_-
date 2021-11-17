@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { View, Input } from "@tarojs/components";
 import "./index.scss";
 export default (props) => {
-  const { title, fn } = props;
+  const { title, fn, change, align = "center" } = props;
   const [handler, setHandler] = useState(0);
   const [keyword, setKeyword] = useState("");
   const [interval, setInterVal] = useState(null);
@@ -26,11 +26,13 @@ export default (props) => {
     const template = {
       0: (
         <View
-          className="searchView_noInput"
+          className={
+            align === "center" ? "searchView_noInput" : "searchView_left"
+          }
           onClick={(e) => {
-            e.stopPropagation()
-            setHandler(1);
-            console.log('1123123123')
+            e.stopPropagation();
+            change ? change() : setHandler(1);
+            console.log("1123123123");
           }}
         >
           <View className="searchView_icon"></View>
@@ -53,7 +55,7 @@ export default (props) => {
           <View
             className="searchView_close"
             onClick={(e) => {
-              e.stopPropagation()
+              e.stopPropagation();
               if (interval) {
                 clearTimeout(interval);
                 setInterVal(null);

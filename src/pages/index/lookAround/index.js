@@ -35,6 +35,7 @@ import DateOnly from "./components/DateOnly";
 import Empty from "@/components/Empty";
 import GameGoods from "./components/gameBuyMe";
 import Skeleton from "./components/SkeletonView";
+import SelfGoods from "./components/selfourOnly";
 import "./index.scss";
 @inject("store")
 @observer
@@ -73,6 +74,8 @@ class Index extends Component {
       selfTourBanner: [],
       requestStatus: true,
       loading: false,
+      selfTourResourceList: [],
+      newDateList: [],
     };
   }
   topBanner() {
@@ -142,6 +145,28 @@ class Index extends Component {
           },
           (res) => {
             this.getSpecialGoodsCategory();
+          }
+        );
+      },
+      selfTourResource: () => {
+        fetchSpecialGoods(
+          { page: 1, limit: 10, specialFilterType: "selfTour" },
+          (res) => {
+            const { specialGoodsList = [] } = res;
+            this.setState({
+              selfTourResourceList: specialGoodsList,
+            });
+          }
+        );
+      },
+      newProductRecommend: () => {
+        fetchSpecialGoods(
+          { page: 1, limit: 10, specialFilterType: "newProductRecommend" },
+          (res) => {
+            const { specialGoodsList = [] } = res;
+            this.setState({
+              newDateList: specialGoodsList,
+            });
           }
         );
       },
@@ -444,6 +469,8 @@ class Index extends Component {
       loading,
       selfTourBanner = [],
       wanderAroundModule = [],
+      selfTourResourceList = [],
+      newDateList = [],
       configNewcomerOrdersInfo: {
         taskStatus = "2",
         remainDay,
@@ -645,6 +672,21 @@ class Index extends Component {
           linkTo={this.saveRouter.bind(this)}
           data={kolGoodsList}
         ></GameGoods>
+      ),
+      selfTourResource: (
+        <SelfGoods
+          userInfo={configUserLevelInfo}
+          linkTo={this.saveRouter.bind(this)}
+          data={selfTourResourceList}
+        ></SelfGoods>
+      ),
+      newProductRecommend: (
+        <SelfGoods
+          userInfo={configUserLevelInfo}
+          linkTo={this.saveRouter.bind(this)}
+          data={newDateList}
+          type={"date"}
+        ></SelfGoods>
       ),
     };
 

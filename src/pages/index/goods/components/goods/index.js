@@ -434,7 +434,7 @@ export default (props) => {
                   Router({
                     routerName: "favourableDetails",
                     args: {
-                      merchantId: merchantIdString,
+                      merchantId: ownerIdString,
                       specialActivityId: activityIdString,
                     },
                   })
@@ -462,7 +462,7 @@ export default (props) => {
                   Router({
                     routerName: "favourableDetails",
                     args: {
-                      merchantId: merchantIdString,
+                      merchantId: ownerIdString,
                       specialActivityId: activityIdString,
                     },
                   })
@@ -910,6 +910,7 @@ export default (props) => {
       merchantIdString,
       relateId,
       relateType,
+      ownerIdString,
     } = orderDesc;
     const { goodsImg, goodsName, goodsCount, activityIdString, useEndTime } =
       rightGoods;
@@ -983,7 +984,7 @@ export default (props) => {
                   Router({
                     routerName: "favourableDetails",
                     args: {
-                      merchantId: merchantIdString,
+                      merchantId: ownerIdString,
                       specialActivityId: activityIdString,
                     },
                   })
@@ -1011,7 +1012,7 @@ export default (props) => {
                   Router({
                     routerName: "favourableDetails",
                     args: {
-                      merchantId: merchantIdString,
+                      merchantId: ownerIdString,
                       specialActivityId: activityIdString,
                     },
                   })

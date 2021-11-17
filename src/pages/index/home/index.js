@@ -726,13 +726,6 @@ class Index extends React.PureComponent {
         ownerId,
       },
     } = this.state;
-    updateUserMomentParam(
-      {
-        updateType: "share",
-        id: momentId,
-      },
-      (res) => {}
-    );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {
       const { userIdString } = userInfo;
@@ -953,16 +946,6 @@ class Index extends React.PureComponent {
             session={() => this.setState({ visible: true })}
           ></TopView>
         </View>
-        {browseType !== "sameCity" && (
-          <View
-            className="home_blind_info"
-            onClick={() => {
-              Router({
-                routerName: "blindIndex",
-              });
-            }}
-          ></View>
-        )}
         <View className="home_video_box">{templateView()}</View>
         <Toast
           data={userMomentsInfo}

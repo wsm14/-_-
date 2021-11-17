@@ -22,8 +22,6 @@
     padding: 0px 32px 34px;
   }
   .order_payType_top {
-    height: 36px;
-    line-height: 36px;
     padding-left: 44px;
     position: relative;
     font-size: 28px;
@@ -40,8 +38,10 @@
       font-weight: 600;
       color: #ef476f;
       box-sizing: border-box;
-      padding: 4px 8px;
+      padding: 0 8px;
       line-height: normal;
+      height: 30px;
+      line-height: 30px;
       box-sizing: border-box;
       flex-shrink: 0;
     }

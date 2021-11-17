@@ -135,6 +135,8 @@ export default {
         "nearPerimeter/index", //附近特惠
         "prefecture/index", //卡豆专区
         "recharge/index", //话费充值
+        "preChildTure/index", //吃喝玩乐购内页
+        "preSelfour/index", //自我游购内页
       ],
     },
     {

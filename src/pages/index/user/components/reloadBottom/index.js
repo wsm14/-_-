@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Taro, { useScope } from "@tarojs/taro";
 import { View, ScrollView } from "@tarojs/components";
-import ButtonView from "@/components/Button";
-import classNames from "classnames";
+
 export default (props) => {
   const { onChange } = props;
   const [visible, setVisible] = useState(true);

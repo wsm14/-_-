@@ -26,13 +26,16 @@ export default (props) => {
     activeEndDate,
     useTime = "",
     verificationTime = "",
+    verificationType,
   } = item;
   let nullImage =
     "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/conpon_shop.png";
   let nullCoupon =
     "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_big.png";
   const templateTag = () => {
-    if (couponType === "specialGoods" || couponType === "rightGoods") {
+    if (verificationType === "0" && couponType === "rightGoods") {
+      return "wraparound_couponContent_iconStyle4";
+    } else if (couponType === "specialGoods" || couponType === "rightGoods") {
       return "wraparound_couponContent_iconStyle3";
     } else if (couponType === "reduceCoupon" || couponType === "rightCoupon") {
       return "wraparound_couponContent_iconStyle1";
@@ -50,7 +53,10 @@ export default (props) => {
     }
   };
   const templateContent = () => {
-    if (couponType === "specialGoods") {
+    if (
+      couponType === "specialGoods" ||
+      (verificationType === "0" && couponType === "rightGoods")
+    ) {
       return `数量${verificationCodeAmount}`;
     } else {
       return `面值${couponPrice} ${
@@ -59,7 +65,10 @@ export default (props) => {
     }
   };
   const temPlateBottom = () => {
-    if (couponType === "goodsCoupon") {
+    if (
+      couponType === "goodsCoupon" ||
+      (couponType === "rightGoods" && verificationType === "0")
+    ) {
       return (
         <View className="wraparound_coupon_bottom">
           <View

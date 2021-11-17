@@ -2,11 +2,18 @@ import React, { Component } from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import classNames from "classnames";
-import { fetchRightGoods, fetchRightCoupon } from "@/server/index";
+import {
+  fetchRightGoods,
+  fetchRightCoupon,
+  fetchSpecialGoods,
+  fetchUserShareCommission,
+} from "@/server/index";
 import {
   prefectrueGoodsTemplate,
   prefectrueCouponTemplate,
+  template,
 } from "@/components/specalTemplate";
+import Router from "@/common/router";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -15,23 +22,27 @@ class Index extends Component {
       selectIndex: "0",
       ownerCouponList: [],
       specialGoodsList: [],
+      selfList: [],
       changeObj: {
         0: "specialGoodsList",
         1: "ownerCouponList",
       },
       ownerHttp: {
         page: 1,
-        limit: 10,
+        limit: 2,
       },
       selectHttp: {
         page: 1,
-        limit: 10,
+        limit: 2,
       },
+      configUserLevelInfo: {},
     };
   }
   componentDidMount() {
     this.changeList("owner");
     this.changeList("goods");
+    this.fetchSelfList();
+    this.fetchUserShare();
   }
   selectChange(e) {
     const { selectIndex } = this.state;
@@ -43,6 +54,15 @@ class Index extends Component {
       });
     }
   }
+  fetchUserShare() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
+    });
+  }
+
   changeList(t) {
     const { ownerHttp, selectHttp } = this.state;
     if (t !== "owner") {
@@ -64,26 +84,20 @@ class Index extends Component {
       });
     }
   }
-  onReachBottom() {
-    const { selectIndex, ownerHttp, selectHttp } = this.state;
-    if (selectIndex === "1") {
-      this.setState(
-        { ownerHttp: { ...ownerHttp, page: ownerHttp.page + 1 } },
-        (res) => {
-          this.changeList("owner");
-        }
-      );
-    } else {
-      this.setState(
-        { selectHttp: { ...selectHttp, page: selectHttp.page + 1 } },
-        (res) => {
-          this.changeList("goods");
-        }
-      );
-    }
+  fetchSelfList() {
+    fetchSpecialGoods({
+      page: 1,
+      limit: 2,
+      specialFilterType: "selfTour",
+    }).then((val) => {
+      const { specialGoodsList } = val;
+      this.setState({
+        selfList: specialGoodsList,
+      });
+    });
   }
   render() {
-    const { selectIndex, changeObj, ownerCouponList, specialGoodsList } =
+    const { ownerCouponList, specialGoodsList, selfList, configUserLevelInfo } =
       this.state;
 
     return (
@@ -108,59 +122,69 @@ class Index extends Component {
             }
           ></Image>
         </View>
-        <View className="prefecture_content">
-          <View
-            onClick={() => {}}
-            className={classNames(
-              "prefecture_select_box",
-              selectIndex === "0" ? "prefecture_tabbar1" : "prefecture_tabbar2"
-            )}
-          >
-            <View
-              className="prefecture_select_left"
-              onClick={() => this.selectChange("0")}
-            ></View>
-            <View
-              className="prefecture_select_right"
-              onClick={() => this.selectChange("1")}
-            ></View>
-          </View>
-          {this.state[changeObj[selectIndex]].length === 0 && (
-            <View className="prefecture_null_start">
-              <View className="prefecture_null_image"></View>
-              <View className="prefecture_null_desc">
-                东西都被抢完啦，小豆正在紧急备货中
+        {[...ownerCouponList, ...specialGoodsList].length > 0 && (
+          <View className="prefecture_content">
+            <View className="prefecture_init_title public_auto">
+              <View className="prefecture_title_info"></View>
+              <View
+                className="prefecture_title_right"
+                onClick={() =>
+                  Router({
+                    routerName: "preChildTure",
+                  })
+                }
+              >
+                查看更多
               </View>
             </View>
-          )}
-          <View
-            className="prefecture_content_top"
-            style={
-              selectIndex !== "0" ? { display: "none" } : { display: "block" }
-            }
-          >
-            {specialGoodsList.map((item) => {
-              return prefectrueGoodsTemplate(item);
-            })}
+            <View className="prefecture_content_top">
+              {[...specialGoodsList, ...ownerCouponList].map((item, index) => {
+                if (index < 2) {
+                  const { couponType } = item;
+                  if (couponType) {
+                    return prefectrueCouponTemplate(item);
+                  } else {
+                    return prefectrueGoodsTemplate(item);
+                  }
+                } else {
+                  return null;
+                }
+              })}
+            </View>
           </View>
-          <View
-            className="prefecture_content_top"
-            style={
-              selectIndex === "0" ? { display: "none" } : { display: "block" }
-            }
-          >
-            {ownerCouponList.map((item) => {
-              return prefectrueCouponTemplate(item);
-            })}
+        )}
+
+        {selfList.length > 0 && (
+          <View className="prefecture_content prefecture_margin">
+            <View className="prefecture_init_title public_auto">
+              <View className="prefecture_title_info2"></View>
+              <View
+                className="prefecture_title_right"
+                onClick={() => {
+                  Router({
+                    routerName: "preSelfour",
+                  });
+                }}
+              >
+                查看更多
+              </View>
+            </View>
+            <View className="prefecture_content_top">
+              {selfList.map((item, index) => {
+                if (index < 2) {
+                  return template(item, configUserLevelInfo, true, false);
+                }
+              })}
+            </View>
           </View>
-        </View>
+        )}
         <View className="prefecture_bg_logo">
           <Image
             className="prefecture_image"
             lazyLoad
             mode={"aspectFill"}
             src={
-              "https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_21.png"
+              "https://wechat-config.dakale.net/miniprogram/image/icon798.png"
             }
           ></Image>
         </View>

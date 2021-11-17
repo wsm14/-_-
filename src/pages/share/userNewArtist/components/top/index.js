@@ -41,11 +41,12 @@ export default (props) => {
           className="userNewArtist_bean_btnInfo  public_center"
           onClick={() =>
             Router({
-              routerName: "blindIndex",
+              routerName: "home",
+              type: "switchTab",
             })
           }
         >
-          用卡豆 拆盲盒 赢大奖
+          刷视频 捡卡豆 再领5元
         </View>
       </View>
     );

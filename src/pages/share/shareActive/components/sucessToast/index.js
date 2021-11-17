@@ -12,7 +12,7 @@ export default ({ data, close }) => {
       </View>
     ),
     KAGoods: "请到【我的】-【我的券包】查看",
-    rightGoods: "兑换券码已通过短信发送至该账号绑定手机号上",
+    rightGoods: "请到【我的】-【我的券包】查看",
   }[prizeType];
 
   const templateImg = {
@@ -20,7 +20,7 @@ export default ({ data, close }) => {
       <View className="sucessToast_goods_img sucessToast_goods_imgStyle2"></View>
     ),
     KAGoods: (
-      <View className="sucessToast_goods_img sucessToast_goods_imgStyle2"></View>
+      <View className="sucessToast_goods_img errorToast_goods_imgStyle2"></View>
     ),
     rightGoods: (
       <View className="sucessToast_goods_img sucessToast_goods_imgStyle1"></View>
@@ -69,7 +69,7 @@ export default ({ data, close }) => {
               });
           }}
         >
-          立即领取
+          抽盲盒
         </View>
       </View>
     ),
@@ -86,7 +86,7 @@ export default ({ data, close }) => {
               });
           }}
         >
-          查看券包
+          去查看
         </View>
         <View
           onClick={() => {
@@ -116,7 +116,7 @@ export default ({ data, close }) => {
           }}
           className="sucessToast_btn public_center"
         >
-          查看券包
+          去查看
         </View>
         <View
           onClick={() => {

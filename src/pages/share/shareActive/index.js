@@ -38,7 +38,8 @@ class Index extends Component {
       errorVisible: false,
     };
   }
-  componentDidMount() {
+  componentDidShow() {
+    this.fetchUserShareCommission();
     this.fetchShareType();
   }
   fetchUserShareCommission() {
@@ -50,11 +51,11 @@ class Index extends Component {
     });
   }
   routerLink(item) {
-    const { ownerId, activityGoodsId } = item;
+    const { ownerIdString, activityGoodsId } = item;
     Router({
       routerName: "favourableDetails",
       args: {
-        merchantId: ownerId,
+        merchantId: ownerIdString,
         specialActivityId: activityGoodsId,
       },
     });
@@ -68,7 +69,10 @@ class Index extends Component {
         userFissionHelps = [],
         configFissionTemplate,
       } = val;
-      const { inviteNum, hasReceived } = configFissionTemplate;
+      const { inviteNum, hasReceived, name } = configFissionTemplate;
+      Taro.setNavigationBarTitle({
+        title: name,
+      });
       this.setState({
         specialGoods,
         rightGoods,
@@ -87,7 +91,9 @@ class Index extends Component {
   }
   fetchShareType() {
     const { scene } = getCurrentInstance().router.params;
-    if (scene) {
+    const { httpData } = this.state;
+    const { fissionId } = httpData;
+    if (scene && !fissionId) {
       getShareParamInfo({ uniqueKey: scene }, (res) => {
         const {
           shareParamInfo: { param },
@@ -314,7 +320,7 @@ class Index extends Component {
             </View>
             {/*奖品图片*/}
             <View className="shareActive_user font_hide">
-              邀请新用户<Text className="font40 color3">{inviteNum}</Text>{" "}
+              邀请<Text className="font40 color3">{inviteNum}</Text> 位新用户
               即可获得奖励
             </View>
             {/*拉新名额*/}
@@ -343,14 +349,16 @@ class Index extends Component {
           </View>
           {/*活动内容*/}
         </View>
-        <View className="shareActive_introduction">
-          <Image
-            className="share_img"
-            lazyLoad
-            mode={"aspectFill"}
-            src={introductionImg}
-          ></Image>
-        </View>
+        {introductionImg && (
+          <View className="shareActive_introduction">
+            <Image
+              className="share_img"
+              lazyLoad
+              mode={"aspectFill"}
+              src={introductionImg}
+            ></Image>
+          </View>
+        )}
         {/*活动规则*/}
         <View className="shareActive_shopTitle">
           <Image
@@ -363,9 +371,14 @@ class Index extends Component {
         {/*权益商品标题*/}
         <View className="shareActive_shop_lineBox">
           {rightGoods.map((item) => {
-            return goodsView(item, configUserLevelInfo, (e) => {
-              this.routerLink(e);
-            });
+            return goodsView(
+              item,
+              configUserLevelInfo,
+              (e) => {
+                this.routerLink(e);
+              },
+              false
+            );
           })}
         </View>
         {/*权益商品列表*/}
@@ -403,12 +416,30 @@ class Index extends Component {
                 <View className="shareActive_layer_title">我的奖品</View>
                 <View className="shareActive_layer_body">
                   <View className="shareActive_body_name font_noHide">
-                    {prizeReward}
+                    {prizeType === "bean" ? prizeReward + "卡豆" : prizeReward}
                   </View>
                   <View className="shareActive_body_status public_auto">
-                    <View>已发放</View>
+                    <View>{prizeType === "bean" ? "已入账" : "已发放"}</View>
                     <View>{createTime}</View>
                   </View>
+                </View>
+                <View
+                  className="shareActive_success_btn public_center"
+                  onClick={() => {
+                    this.setState(
+                      {
+                        visible: false,
+                      },
+                      (res) => {
+                        prizeType === "bean" &&
+                          Router({
+                            routerName: "wallet",
+                          });
+                      }
+                    );
+                  }}
+                >
+                  {prizeType === "bean" ? "查看钱包" : "知道了"}
                 </View>
               </View>
             </View>

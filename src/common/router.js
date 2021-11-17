@@ -83,6 +83,8 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     rechargeOrder: "/pages/goods/rechargeOrder/index", //话费支付页
     recharge: "/pages/perimeter/recharge/index", //话费充值
     prefecture: "/pages/perimeter/prefecture/index", //卡豆专区
+    preChildTure: "/pages/perimeter/preChildTure/index", //吃喝玩乐购
+    preSelfour: "/pages/perimeter/preSelfour/index", //周边游路口
 
     //订单  goods
     legal: "/pages/kol/legal/index", //达人等级

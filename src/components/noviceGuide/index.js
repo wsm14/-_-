@@ -29,13 +29,15 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
         newDeviceFlag: Taro.getStorageSync("newDeviceFlag") || "1",
       }).then((val) => {
         const { newUserFlag = "1", newUserBean = "300" } = val;
-        setVisible(() => {
-          setBeanInfo({
-            newUserFlag,
-            newUserBean,
+        if (newUserFlag === "1") {
+          setVisible(() => {
+            setBeanInfo({
+              newUserFlag,
+              newUserBean,
+            });
+            return true;
           });
-          return true;
-        });
+        }
       });
     }
   }, [auth]);
@@ -103,48 +105,7 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
       initVideo && initVideo();
     }, 300);
   };
-  const templateBean = {
-    0: (
-      <View className="noviceGuide_Box">
-        <View className="noviceGuide_title">
-          <View className="noviceGuide_title_pad">双11·玩盲盒·送对象</View>
-        </View>
-        <View className="noviceGuide_hf">你获得了拆盲盒机会</View>
-        <View className="noviceGuide_gif"></View>
-        <View
-          className="noviceGuide_btn public_center"
-          onClick={() => linkInfo("blindIndex")}
-        >
-          立即拆盲盒
-        </View>
-        <View
-          className="noviceGuide_Box_close"
-          onClick={() => onClose()}
-        ></View>
-      </View>
-    ),
-    1: (
-      <View className="noviceGuide_Box">
-        <View className="noviceGuide_title">
-          <View className="noviceGuide_title_pad">恭喜获得卡豆奖励</View>
-        </View>
-        <View className="noviceGuide_hf">卡豆玩盲盒 赢iPhone13</View>
-        <View className="noviceGuide_gifBean">
-          <View className="gifBean_btn public_center">{newUserBean}卡豆</View>
-        </View>
-        <View
-          className="noviceGuide_btn public_center"
-          onClick={() => linkInfo("userNewArtist")}
-        >
-          立即领取
-        </View>
-        <View
-          className="noviceGuide_Box_close"
-          onClick={() => onClose()}
-        ></View>
-      </View>
-    ),
-  }[newUserFlag];
+
   /* 显示隐藏动画  */
 
   const template = () => {
@@ -158,7 +119,27 @@ export default ({ data, auth, type, stopVideo, initVideo }) => {
           onClose();
         }}
       >
-        {templateBean}
+        <View className="noviceGuide_Box">
+          <View className="noviceGuide_title">
+            <View className="noviceGuide_title_pad">恭喜获得新人奖励</View>
+          </View>
+          <View className="noviceGuide_hf">
+            卡豆抵扣消费立减{(newUserBean / 100).toFixed(2)}元
+          </View>
+          <View className="noviceGuide_gifBean">
+            <View className="gifBean_btn public_center">{newUserBean}卡豆</View>
+          </View>
+          <View
+            className="noviceGuide_btn public_center"
+            onClick={() => linkInfo("userNewArtist")}
+          >
+            立即领取
+          </View>
+          <View
+            className="noviceGuide_Box_close"
+            onClick={() => onClose()}
+          ></View>
+        </View>
       </View>
     );
   };

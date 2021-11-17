@@ -29,7 +29,7 @@ class App extends Component {
     authWxLogin(this.fetchOpenId.bind(this));
     evens.$on("setLocation", this.fetchLocation.bind(this));
     this.fetchDictionary();
-    this.fetchGlobalConfig();
+    // this.fetchGlobalConfig();
   }
 
   componentDidShow() {

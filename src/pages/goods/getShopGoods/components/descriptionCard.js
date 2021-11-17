@@ -13,6 +13,7 @@ export default (props) => {
     orderType,
   } = data;
   orderDesc = JSON.parse(orderDesc);
+  console.log(orderDesc);
   const { merchantImg, merchantName, merchantIdString, merchantId } = orderDesc;
   const goMerchant = (merchantId) => {
     navigateTo(
@@ -28,7 +29,7 @@ export default (props) => {
             onClick={() => goMerchant(merchantIdString || merchantId)}
           >
             <View
-              className="descriptionCard_profile dakale_nullImage"
+              className="descriptionCard_profile merchant_dakale_logo"
               style={merchantImg ? backgroundObj(merchantImg) : {}}
             ></View>
             <View className="descriptionCard_merchantTitle font_hide">

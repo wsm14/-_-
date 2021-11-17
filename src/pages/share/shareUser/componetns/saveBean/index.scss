@@ -1,7 +1,7 @@
 .shareSaveBean_img {
   width: 650px;
-  height: 608px;
-  background: url("https://wechat-config.dakale.net/miniprogram/image/icon777.png")
+  height: 647px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon802.png")
     no-repeat;
   background-size: 100% 100%;
   text-align: center;
@@ -28,11 +28,18 @@
     font-weight: 400;
     color: #333333;
   }
+  .shre_margin1 {
+    margin-top: 24px;
+  }
+
   .shareSaveBean_getbean {
     font-size: 40px;
     font-weight: 600;
     color: #ef476f;
-    margin: 32px auto 0;
+    text-align: center;
+    padding: 0 80px;
+    text-align: center;
+    line-height: 50px;
   }
   .shareSaveBean_font {
     font-size: 28px;

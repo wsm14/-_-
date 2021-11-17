@@ -89,14 +89,20 @@ export default (props) => {
             </View>
             <View className="shareCmt_liner_content">
               {recommendReason}
-              {urlLink && <View className="shareCmt_cobyLink">商品链接</View>}
+
+              {urlLink && (
+                <View className="shareCmt_cobyLink_title">
+                  【商品链接】{" "}
+                  <View className="shareCmt_cobyLink">商品链接</View>
+                </View>
+              )}
             </View>
             <View
               className="shareCmt_btn public_center "
               onClick={(e) => {
                 e.stopPropagation();
                 Taro.setClipboardData({
-                  data: recommendReason + "商品地址" + urlLink,
+                  data: recommendReason + "\r\n【商品链接】" + urlLink,
                   success: function (res) {
                     toast("文案已粘贴到剪贴板");
                   },

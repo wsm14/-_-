@@ -111,7 +111,8 @@ page {
     }
     .shopdetails_price_people {
       display: flex;
-      align-items: baseline;
+      align-items: center;
+      line-height: normal;
       .shopdetails_price_style {
         margin-left: 16px;
       }

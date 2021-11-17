@@ -19,7 +19,7 @@ export default ({ data, show, list, close }) => {
         routerName: "favourableDetails",
         args: {
           specialActivityId: specialActivityIdString,
-          merchantId: merchantIdString,
+          merchantId: ownerIdString,
         },
       });
     } else {

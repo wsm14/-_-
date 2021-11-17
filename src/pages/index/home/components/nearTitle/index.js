@@ -53,6 +53,7 @@ export default (props) => {
       realPrice,
       specialActivityIdString,
       merchantIdString,
+      ownerIdString,
     } = item;
     return (
       <View
@@ -62,7 +63,7 @@ export default (props) => {
             routerName: "favourableDetails",
             args: {
               specialActivityId: specialActivityIdString,
-              merchantId: merchantIdString,
+              merchantId: ownerIdString,
             },
           })
         }

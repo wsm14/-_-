@@ -198,7 +198,7 @@ export const fakeReceiveReward = (data, fn) => {
 };
 //裂变领取奖励
 export const fetchFissionReward = (data, fn) => {
-  return httpPost(
+  return httpGet(
     {
       url: "/user/activity/fission/reward/getFissionReward",
       data: data,

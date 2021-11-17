@@ -7,7 +7,7 @@ export default ({ close }) => {
   return (
     <View className="errorToast_img">
       <View className="errorToast_urlLink">今日奖品已领完 明日再来</View>
-      <View className="errorToast_goods_img errorToast_goods_imgStyle2"></View>
+      <View className="errorToast_goods_img errorToast_goods_imgStyle1"></View>
       <View className="errorToast_liner_font1">另有惊喜福利 享首单立减</View>
       <View className="errorToast_liner_btnBox public_auto">
         <View
@@ -29,7 +29,7 @@ export default ({ close }) => {
           }}
           className="errorToast_btn public_center"
         >
-          立即领取
+          抽盲盒
         </View>
       </View>
     </View>

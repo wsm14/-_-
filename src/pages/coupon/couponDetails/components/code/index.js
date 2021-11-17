@@ -284,7 +284,7 @@ export default (props) => {
             如果券码不显示，点这里刷新
           </View>
           <View className="kolgoods_go public_auto font24 color1">
-            <View className="kolgoods_go_left public_center">
+            {/* <View className="kolgoods_go_left public_center">
               <View
                 className="kolgoods_go_leftBox public_center"
                 onClick={() => goGoodDetails(orderResult.couponCode)}
@@ -292,7 +292,7 @@ export default (props) => {
                 <View className="kolgoods_goIcon_box  shop_goods_icon"></View>
                 订单详情
               </View>
-            </View>
+            </View> */}
             <View className="kolgoods_go_right public_center">
               <Button
                 style={{

@@ -29,13 +29,12 @@ export const selectShop = (item, userInfo, linkTo) => {
     merchantId,
     specialActivityIdString,
     merchantPrice,
-    discount,
-    merchantIdString,
+    ownerIdString,
   } = item;
   return (
     <View
       className="lookAround_selectSpecal animated  fadeIn"
-      onClick={() => linkTo(specialActivityIdString, merchantIdString)}
+      onClick={() => linkTo(specialActivityIdString, ownerIdString)}
     >
       <View
         style={backgroundObj(goodsImg)}
@@ -107,11 +106,12 @@ export const gameShop = (item, userInfo, linkTo) => {
     merchantPrice,
     discount,
     merchantIdString,
+    ownerIdString,
   } = item;
   return (
     <View
       className="lookAround_selectSpecal animated  fadeIn"
-      onClick={() => linkTo(specialActivityIdString, merchantIdString)}
+      onClick={() => linkTo(specialActivityIdString, ownerIdString)}
     >
       <View
         style={backgroundObj(goodsImg)}

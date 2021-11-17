@@ -20,6 +20,7 @@ class Index extends Component {
     this.state = {
       httpData: {
         fissionId: getCurrentInstance().router.params.fissionId,
+        shareUserId: getCurrentInstance().router.params.shareUserId,
       },
       fissionInfo: {},
       userInfo: {},
@@ -82,13 +83,27 @@ class Index extends Component {
     const { httpData, userInfo } = this.state;
     const { fissionId } = httpData;
     const { fissionUserId } = userInfo;
-    fetchInvitationUser({ fissionId, userId: fissionUserId }).then((val) => {
-      this.setState({
-        visible: true,
+    fetchInvitationUser({ fissionId, userId: fissionUserId })
+      .then((val) => {
+        this.setState(
+          {
+            visible: true,
+          },
+          (res) => {
+            this.fetchHelps();
+          }
+        );
+      })
+      .catch((e) => {
+        const { resultCode } = e;
+        if (resultCode === "5238" || resultCode === "5239") {
+          this.setState({
+            errorVisible: true,
+          });
+        }
       });
-    });
   }
-  componentDidMount() {
+  componentDidShow() {
     this.fetchShareType();
   }
   render() {
@@ -101,7 +116,7 @@ class Index extends Component {
       httpData,
     } = this.state;
     const { fissionId } = httpData;
-    const { inviteNum, prizeBean, prizeName } = fissionInfo;
+    const { inviteNum, prizeBean, prizeName, prizeType } = fissionInfo;
     const { profile = "", username } = userInfo;
     return (
       <View className="shareUser_box">
@@ -119,7 +134,7 @@ class Index extends Component {
                 来自 {username} 的礼盒
               </View>
               <View className="shareUser_fontMargin1 shareUser_font">
-                我正在哒卡乐免费拿{prizeName}
+                我正在哒卡乐免费拿{prizeName || prizeBean + "卡豆"}
               </View>
               <View className="shareUser_font">
                 {helpUserListInfo.length - inviteNum >= 0
@@ -127,8 +142,7 @@ class Index extends Component {
                   : `仅差${inviteNum - helpUserListInfo.length}次机会`}
               </View>
               <View className="shareUser_font">
-                {" "}
-                快来帮我助力就可以获得{prizeName}啦！
+                快来帮我助力就可以获得{prizeName || prizeBean + "卡豆"}啦！
               </View>
               <View className="shareUser_liner"></View>
               <View className="shareUser_btn_box public_center">
@@ -203,7 +217,7 @@ class Index extends Component {
                   }
                 );
               }}
-              data={{ ...userInfo }}
+              data={{ ...userInfo, ...fissionInfo }}
             ></SaveBean>
           </Drawer>
         )}
@@ -232,6 +246,7 @@ class Index extends Component {
                   }
                 );
               }}
+              data={{ ...userInfo, ...fissionInfo }}
             ></NewsInfo>
           </Drawer>
         )}

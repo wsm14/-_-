@@ -26,17 +26,21 @@ class Index extends Component {
         <View className="download_content_Image">
           <View className="download_content_height"></View>
           <View
-            className="download_content_imageUrl"
+            className="download_content_imageUrl public_center"
             onClick={() => this.setClipboard("哒卡乐")}
-          ></View>
+          >
+            复制搜索文案
+          </View>
           <View
-            className="download_content_imageCopy"
+            className="download_content_imageCopy public_center"
             onClick={() =>
               this.setClipboard(
                 "https://web-new.dakale.net/product/page/registerDownload/registration.html"
               )
             }
-          ></View>
+          >
+            复制下载链接
+          </View>
         </View>
       </View>
     );

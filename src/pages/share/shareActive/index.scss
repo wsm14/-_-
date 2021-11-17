@@ -96,6 +96,7 @@ page {
     .shareActive_userProfile_liner {
       border: 3px solid #ffffff;
       box-sizing: border-box;
+      border-radius: 50%;
     }
     .shareActive_btnInfo {
       width: 480px;
@@ -180,6 +181,7 @@ page {
     .shareActive_layer_content {
       padding: 48px 32px;
       background: #ffffff;
+      border-radius: 8px;
       .shareActive_layer_title {
         font-size: 36px;
         font-weight: 600;
@@ -206,5 +208,15 @@ page {
         }
       }
     }
+  }
+  .shareActive_success_btn {
+    width: 400px;
+    height: 70px;
+    background: #ef476f;
+    border-radius: 35px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 58px auto 0;
   }
 }
