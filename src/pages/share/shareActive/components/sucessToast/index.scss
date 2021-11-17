@@ -1,0 +1,63 @@
+.sucessToast_img {
+  width: 650px;
+  height: 731px;
+  background: url("https://wechat-config.dakale.net/miniprogram/shareActive/icon10.png")
+    no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+  .sucessToast_urlLink {
+    width: 351px;
+    margin: 0 auto;
+    padding-top: 201px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 34px;
+    height: 68px;
+  }
+  .sucessToast_goods_img {
+    width: 320px;
+    height: 200px;
+    margin: 12px auto 0;
+  }
+  .sucessToast_goods_imgStyle1 {
+    background: url("https://wechat-config.dakale.net/miniprogram/shareActive/icon11.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .sucessToast_goods_imgStyle2 {
+    background: url("https://wechat-config.dakale.net/miniprogram/shareActive/icon12.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .sucessToast_liner_font {
+    margin: 8px auto 0;
+    width: 329px;
+    height: 80px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ef476f;
+  }
+  .sucessToast_liner_font1 {
+    margin: 8px auto 0;
+    width: 168px;
+    height: 80px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ef476f;
+  }
+  .sucessToast_liner_btnBox {
+    margin: 32px 115px 0;
+    .sucessToast_btn {
+      width: 200px;
+      height: 70px;
+      background: #ef476f;
+      border-radius: 35px;
+      font-size: 28px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 28px;
+    }
+  }
+}

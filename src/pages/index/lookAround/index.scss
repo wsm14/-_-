@@ -465,6 +465,20 @@ page {
     width: 208px;
     overflow: hidden;
   }
+  .lookAround_template_name2 {
+    padding-top: 16px;
+    font-size: 22px;
+    font-weight: 400;
+    color: #000000;
+    line-height: 22px;
+    max-width: 208px;
+  }
+  .lookAround_template_img2 {
+    width: 208px;
+    height: 154px;
+    background: #d8d8d8;
+    border-radius: 8px;
+  }
   .lookAround_template_img1 {
     width: 218px;
     height: 140px;
@@ -503,6 +517,11 @@ page {
     display: flex;
     align-items: center;
     padding-top: 6px;
+  }
+  .lookAround_template_price1 {
+    display: flex;
+    align-items: center;
+    padding-top: 16px;
   }
   .lookAround_template_priceMax {
     max-width: 140px;

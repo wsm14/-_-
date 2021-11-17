@@ -3,7 +3,11 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import Store from "./model/index";
 import { Provider } from "mobx-react";
 import { authUpdateGeography } from "@/common/authority";
-import { getShareParamInfo, getDictionary } from "@/server/common";
+import {
+  getShareParamInfo,
+  getDictionary,
+  fetchGlobalConfig,
+} from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
 import evens from "@/common/evens";
@@ -25,9 +29,22 @@ class App extends Component {
     authWxLogin(this.fetchOpenId.bind(this));
     evens.$on("setLocation", this.fetchLocation.bind(this));
     this.fetchDictionary();
+    // this.fetchGlobalConfig();
   }
 
   componentDidShow() {
+    if (!Taro.cloud) {
+      console.error("请使用 2.2.3 或以上的基础库以使用云能力");
+    } else {
+      Taro.cloud.init({
+        // env 参数说明：
+        //   env 参数决定接下来小程序发起的云开发调用（wx.cloud.xxx）会默认请求到哪个云环境的资源
+        //   此处请填入环境 ID, 环境 ID 可打开云控制台查看
+        //   如不填则使用默认环境（第一个创建的环境）
+        env: "dakale-wx-hutxs",
+        traceUser: true,
+      });
+    }
     this.fetchCheckUpdate();
     this.getShareType();
   }
@@ -61,6 +78,11 @@ class App extends Component {
     } else {
       return;
     }
+  }
+  fetchGlobalConfig() {
+    fetchGlobalConfig().then((val) => {
+      console.log(val);
+    });
   }
   fetchCheckUpdate() {
     // 判断目前微信版本是否支持自动更新

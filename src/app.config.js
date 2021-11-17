@@ -85,9 +85,6 @@ export default {
       root: "pages/share",
       pages: [
         "hotActive/index", //8.8前面活动
-        "mainScene/index", //8_8主会场
-        "shopScene/index", //8_8帶貨
-        "friendScene/index", //8_8邀请好友
         "invitation/index", //邀请函
         "download/index", //下载,
         "shareFriend/index", //分享好友,
@@ -97,6 +94,8 @@ export default {
         "userNewArtist/index", //新人福利頁面
         "userNewGift/index", //新人红包頁面
         "Grab/index", //领取他人发送红包页
+        "shareActive/index", //活动主会场
+        "shareUser/index", //活动页助力
       ],
     },
     {
@@ -136,6 +135,8 @@ export default {
         "nearPerimeter/index", //附近特惠
         "prefecture/index", //卡豆专区
         "recharge/index", //话费充值
+        "preChildTure/index", //吃喝玩乐购内页
+        "preSelfour/index", //自我游购内页
       ],
     },
     {

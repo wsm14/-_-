@@ -15,7 +15,12 @@ import ButtonView from "@/components/Button";
 import Date from "@/components/dateTime";
 import classNames from "classnames";
 import "./index.scss";
-export const template = (item, configUserLevelInfo, animate = true) => {
+export const template = (
+  item,
+  configUserLevelInfo,
+  animate = true,
+  flag = true
+) => {
   const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
   const {
     goodsId,
@@ -33,16 +38,17 @@ export const template = (item, configUserLevelInfo, animate = true) => {
     merchantIdString,
     specialActivityIdString,
     merchantPrice = 0,
+    ownerIdString,
   } = item;
   return (
     <View
-      className={classNames("specialOffer_shop", animate && "animated fadeIn")}
+      className={classNames("specialOffer_shop", "animated fadeIn")}
       onClick={() =>
         Router({
           routerName: "favourableDetails",
           args: {
             specialActivityId: specialActivityIdString,
-            merchantId: merchantIdString,
+            merchantId: ownerIdString,
           },
         })
       }
@@ -54,20 +60,22 @@ export const template = (item, configUserLevelInfo, animate = true) => {
       <View className="specialOffer_desc">
         <View className="specialOffer_title  font_hide">{goodsName}</View>
         <View className="specialOffer_userDetails font_hide">
-          <View
-            className="specialOffer_userprofile merchant_dakale_logo"
-            style={backgroundObj(merchantLogo)}
-          ></View>
-          <View className="specialOffer_userHide">
-            <View className="specialOffer_username font_hide">
-              {" "}
-              {merchantName}
-            </View>
-            <View className="specialOffer_limit">
-              {" "}
-              ｜{GetDistance(getLat(), getLnt(), lat, lnt)}
-            </View>
-          </View>
+          {flag && (
+            <React.Fragment>
+              <View
+                className="specialOffer_userprofile merchant_dakale_logo"
+                style={backgroundObj(merchantLogo)}
+              ></View>
+              <View className="specialOffer_userHide">
+                <View className="specialOffer_username font_hide">
+                  {merchantName}
+                </View>
+                <View className="specialOffer_limit">
+                  ｜{GetDistance(getLat(), getLnt(), lat, lnt)}
+                </View>
+              </View>
+            </React.Fragment>
+          )}
         </View>
         <View className="specialOffer_hotOld_price color1 font_hide">
           <View className="font20">原价:</View>
@@ -131,6 +139,7 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
     activityEndTime,
     activityTimeRule = "infinite",
     buyUserImageList = [],
+    ownerIdString,
   } = item;
   const leftTemplate = {
     hot:
@@ -172,7 +181,7 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
           routerName: "favourableDetails",
           args: {
             specialActivityId: specialActivityIdString,
-            merchantId: merchantIdString,
+            merchantId: ownerIdString,
           },
         })
       }

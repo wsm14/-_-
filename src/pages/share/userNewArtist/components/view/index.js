@@ -26,7 +26,7 @@ const linkTo = (item) => {
       routerName: "favourableDetails",
       args: {
         specialActivityId: specialActivityIdString,
-        merchantId: merchantIdString,
+        merchantId: ownerIdString,
       },
     });
   } else {

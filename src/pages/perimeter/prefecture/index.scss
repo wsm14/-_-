@@ -29,10 +29,42 @@ page {
     }
   }
   .prefecture_content {
-    margin: 10px 22px 0;
-    padding: 40px 24px 48px;
+    margin: 16px 22px 0;
+    padding: 40px 24px 32px;
     background: #ffffff;
     border-radius: 20px;
+    .prefecture_init_title {
+      .prefecture_title_info {
+        width: 173px;
+        height: 32px;
+        background: url(https://wechat-config.dakale.net/miniprogram/image/icon796.png)
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .prefecture_title_info2 {
+        width: 138px;
+        height: 32px;
+        background: url(https://wechat-config.dakale.net/miniprogram/image/icon797.png)
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .prefecture_title_right {
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+        display: flex;
+        align-items: center;
+      }
+      .prefecture_title_right::after {
+        width: 24px;
+        height: 24px;
+        margin-left: 4px;
+        content: "";
+        background: url(https://wechat-config.dakale.net/miniprogram/image/icon253.png)
+          no-repeat;
+        background-size: 100% 100%;
+      }
+    }
     .prefecture_select_box {
       width: 540px;
       height: 80px;

@@ -83,6 +83,8 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     rechargeOrder: "/pages/goods/rechargeOrder/index", //话费支付页
     recharge: "/pages/perimeter/recharge/index", //话费充值
     prefecture: "/pages/perimeter/prefecture/index", //卡豆专区
+    preChildTure: "/pages/perimeter/preChildTure/index", //吃喝玩乐购
+    preSelfour: "/pages/perimeter/preSelfour/index", //周边游路口
 
     //订单  goods
     legal: "/pages/kol/legal/index", //达人等级
@@ -104,9 +106,8 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     download: "/pages/share/download/index", //下载
     login: "/pages/auth/index", //登录
     webView: "/pages/share/webView/index", //内嵌h5
-    mainScene: "/pages/share/mainScene/index", //88活動主会场
-    friendScene: "/pages/share/friendScene/index", //88活動邀请好友会场
-    shopScene: "/pages/share/shopScene/index", //88活动带货会场
+    shareActive: "/pages/share/shareActive/index", //活动页
+    shareUser: "/pages/share/shareUser/index", //活动助力页面
     userNewArtist: "/pages/share/userNewArtist/index", //新人红包
     Grab: "/pages/share/Grab/index", //领取他人红包
 

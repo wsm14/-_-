@@ -28,6 +28,7 @@ export const specailGoods = (item, val = {}) => {
     specialActivityIdString,
     goodsName,
     merchantPrice,
+    ownerIdString,
   } = item;
   const { payBeanCommission = 50, shareCommission = 0 } = val;
   return (
@@ -40,7 +41,7 @@ export const specailGoods = (item, val = {}) => {
             routerName: "favourableDetails",
             args: {
               specialActivityId: specialActivityIdString,
-              merchantId: merchantIdString,
+              merchantId: ownerIdString,
             },
           })
         }

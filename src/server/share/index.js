@@ -171,3 +171,67 @@ export const fetchBindAddress = (data, fn) => {
   );
 };
 // 商品绑定地址
+
+export const fetchFissionDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/fission/help/getFissionDetail",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+// 获取裂变活动详情
+
+export const fakeReceiveReward = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/activity/fission/reward/receiveReward",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//裂变领取奖励
+export const fetchFissionReward = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/fission/reward/getFissionReward",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//裂变查看奖励
+
+export const fetchFissionHelps = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/fission/help/getFissionHelps",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//查看助力记录
+
+export const fetchInvitationUser = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/activity/fission/help/invitationUser",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//助力請求

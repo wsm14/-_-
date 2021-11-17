@@ -112,7 +112,7 @@ export default ({ data = {}, list = [], configUserLevelInfo }) => {
         </View>
         <ScrollView scrollY className="Grab_showBean_handerPeo">
           {list.map((item = {}, index) => {
-            const { receiveUser = {}, createTime, bean } = item;
+            const { receiveUser = {}, createTime, bean, isBestLuck } = item;
             const { profile, username } = receiveUser;
             return (
               <View className="Grab_people_list">
@@ -130,6 +130,9 @@ export default ({ data = {}, list = [], configUserLevelInfo }) => {
                     </View>
                   </View>
                   <View className="Grab_people_contentTime">{createTime}</View>
+                  {isBestLuck === 1 && (
+                    <View className="Grab_winning">手气最佳</View>
+                  )}
                   {index !== list.length - 1 && (
                     <View className="Grab_people_contentliner"></View>
                   )}

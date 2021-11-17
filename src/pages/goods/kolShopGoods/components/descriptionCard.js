@@ -91,7 +91,7 @@ export default (props) => {
       Router({
         routerName: "favourableDetails",
         args: {
-          merchantId: merchantIdString,
+          merchantId: ownerIdString,
           specialActivityId: activityIdString,
         },
       });
@@ -238,7 +238,7 @@ export default (props) => {
       return (
         <View onClick={() => linkInfo()} className="descriptionCard_merchant">
           <View
-            className="descriptionCard_profile dakale_nullImage"
+            className="descriptionCard_profile merchant_dakale_logo"
             style={backgroundObj(merchantLogoImg)}
           ></View>
           <View className="descriptionCard_merchantTitle font_hide">
@@ -251,7 +251,7 @@ export default (props) => {
       return (
         <View onClick={() => linkInfo()} className="descriptionCard_merchant">
           <View
-            className="descriptionCard_profile dakale_nullImage"
+            className="descriptionCard_profile merchant_dakale_logo"
             style={backgroundObj(merchantLogoImg)}
           ></View>
           <View className="descriptionCard_merchantTitle font_hide">
