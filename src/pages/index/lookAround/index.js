@@ -75,6 +75,7 @@ class Index extends Component {
       requestStatus: true,
       loading: false,
       selfTourResourceList: [],
+      beanCodeList: [],
       newDateList: [],
     };
   }
@@ -99,6 +100,14 @@ class Index extends Component {
       const { bannerList = [] } = res;
       this.setState({
         selfTourBanner: bannerList,
+      });
+    });
+  }
+  beanCodeBanner() {
+    getBanner({ bannerType: "wanderAroundBean" }, (res) => {
+      const { bannerList = [] } = res;
+      this.setState({
+        beanCodeList: bannerList,
       });
     });
   }
@@ -170,6 +179,7 @@ class Index extends Component {
           }
         );
       },
+      wanderAroundBean: () => this.beanCodeBanner(),
     };
     wanderAroundModule.forEach((val) => {
       requestObj[val] && requestObj[val]();
@@ -471,6 +481,7 @@ class Index extends Component {
       wanderAroundModule = [],
       selfTourResourceList = [],
       newDateList = [],
+      beanCodeList = [],
       configNewcomerOrdersInfo: {
         taskStatus = "2",
         remainDay,
@@ -590,7 +601,22 @@ class Index extends Component {
       margin: `${Taro.pxTransform(40)} auto  0`,
       position: "relative",
     };
+    const beanCodeStyle = {
+      width: Taro.pxTransform(688),
+      height: Taro.pxTransform(240),
+      margin: `${Taro.pxTransform(24)} auto  0`,
+      position: "relative",
+    };
     let templateObj = {
+      wanderAroundBean: (
+        <Banner
+          imgName="coverImg"
+          data={[...beanCodeList]}
+          bottom={bottomContent}
+          boxStyle={beanCodeStyle}
+          showNear
+        ></Banner>
+      ),
       mainBanner: (
         <Banner
           imgName="coverImg"

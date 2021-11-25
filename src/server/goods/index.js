@@ -82,7 +82,7 @@ export const getOrderDetails = (data, fn) => {
 };
 //获取订单详情
 export const deleteOrder = (data, fn) => {
-  httpPost(
+  return httpPost(
     {
       url: "/user/order/deleteOrder",
       data: data,
@@ -171,3 +171,25 @@ export const fetchOrderTotalBean = (data, fn) => {
   );
 };
 //获取我的订单总节省卡豆
+
+export const fakeCommerceGoods = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/saveCommerceGoodsOrder",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//提交电商订单
+
+export const fakeUpdateOrder = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/updateOrderStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//修改订单 状态

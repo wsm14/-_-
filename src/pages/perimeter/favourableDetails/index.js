@@ -366,11 +366,12 @@ class MerchantDetails extends Component {
         boughtActivityGoodsNum,
         buyRule,
         specialActivityIdString,
-        rightFlag,
         paymentModeObject,
         userBean,
+        activityType,
       },
     } = this.state;
+    const { bean, type } = paymentModeObject;
     if (buyRule === "dayLimit" && dayMaxBuyAmount === boughtActivityGoodsNum) {
       this.setState({
         visible: true,
@@ -384,8 +385,7 @@ class MerchantDetails extends Component {
         visible: true,
       });
       return;
-    } else if (rightFlag === "1") {
-      const { bean, cash } = paymentModeObject;
+    } else if (type !== "defaultMode") {
       if (userBean < bean) {
         this.setState({
           drawerVisible: true,
@@ -393,13 +393,23 @@ class MerchantDetails extends Component {
         return;
       }
     }
-    Router({
-      routerName: "favourableOrder",
-      args: {
-        merchantId: merchantIdString,
-        specialActivityId: specialActivityIdString,
-      },
-    });
+    if (activityType === "commerceGoods") {
+      Router({
+        routerName: "commerOrder",
+        args: {
+          merchantId: merchantIdString,
+          specialActivityId: specialActivityIdString,
+        },
+      });
+    } else {
+      Router({
+        routerName: "favourableOrder",
+        args: {
+          merchantId: merchantIdString,
+          specialActivityId: specialActivityIdString,
+        },
+      });
+    }
   }
   onPullDownRefresh() {
     Taro.stopPullDownRefresh();
@@ -444,6 +454,7 @@ class MerchantDetails extends Component {
         paymentModeObject = {},
         goodsImg,
         richText,
+        activityType,
       },
       visible,
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
@@ -461,7 +472,7 @@ class MerchantDetails extends Component {
     const { beanLimitStatus } = this.props.store.homeStore;
     const { beanLimit } = this.props.store.commonStore;
     const shareInfoBtn = () => {
-      if (shareCommission > 0 && rightFlag !== "1") {
+      if (shareCommission > 0 && type === "defaultMode") {
         return (
           <ButtonView
             data={{
@@ -615,7 +626,7 @@ class MerchantDetails extends Component {
             </View>
           </View>
         );
-      } else if (rightFlag === "1" && type !== "defaultMode") {
+      } else if (type !== "defaultMode") {
         return (
           <View className="shopdetails_getShop">
             <View className="favourInfo_box">
@@ -725,7 +736,10 @@ class MerchantDetails extends Component {
                 boxStyle={{ width: "100%", height: "100%" }}
               ></Banner>
             </View>
-            {!(rightFlag === "1" && type === "defaultMode") && (
+            {!(
+              (rightFlag === "1" && type === "defaultMode") ||
+              activityType === "commerceGoods"
+            ) && (
               <View className="shopDetails_activeStatus">
                 <View className="shopDetails_avtiveLogo"></View>
                 <View className="shopDetails_avtiveTime">{template()}</View>
@@ -739,15 +753,17 @@ class MerchantDetails extends Component {
               data={specialGoodsInfo}
             ></Card>
             {/*保障*/}
-            <Merchant
-              serviceType={"specialGoods"}
-              data={specialGoodsInfo}
-              ownerServiceId={specialActivityIdString}
-            ></Merchant>
-
-            {!(rightFlag === "1" && type === "defaultMode") && (
-              <ShareView urlLink={urlLink} data={resultInfo}></ShareView>
+            {activityType !== "commerceGoods" && (
+              <Merchant
+                serviceType={"specialGoods"}
+                data={specialGoodsInfo}
+                ownerServiceId={specialActivityIdString}
+              ></Merchant>
             )}
+            {!(
+              (rightFlag === "1" && type === "defaultMode") ||
+              activityType === "commerceGoods"
+            ) && <ShareView urlLink={urlLink} data={resultInfo}></ShareView>}
             {goodsType === "package" && (
               <View className="shopdetails_shop_packageGroup">
                 <View className="shopdetails_shop_groupTitle">套餐详情</View>
@@ -820,9 +836,9 @@ class MerchantDetails extends Component {
               </View>
             )}
             {/*使用须知*/}
-            {knowPay(specialGoodsInfo)}
+            {activityType !== "commerceGoods" && knowPay(specialGoodsInfo)}
             {/*使用方法*/}
-            <Rule></Rule>
+            {activityType !== "commerceGoods" && <Rule></Rule>}
             <Recommend
               current={true}
               defaultData={specialGoodsInfo}
@@ -841,7 +857,7 @@ class MerchantDetails extends Component {
             ></VideoBean>
             {!(rightFlag === "1" && type === "defaultMode") && (
               <View className="shopdetails_shop_btn">
-                {rightFlag === "1" ? (
+                {type !== "defaultMode" ? (
                   <View className="shopdetails_shop_price">
                     <View className="shopdetails_shop_priceTop bold">
                       <Text className="font20">¥</Text>

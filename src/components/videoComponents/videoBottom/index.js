@@ -100,24 +100,118 @@ export default (props) => {
       });
     }
   };
-  const templateStated = (val = {}, callback) => {
-    const { activityGoodsList = [], ownerCouponList = [] } = val;
-    if (activityGoodsList.length > 0) {
-      return activityGoodsList.map((item, index) => {
-        const {
-          activityGoodsId,
-          goodsImg,
-          goodsName,
-          realPrice,
-          commission,
-          oriPrice,
-        } = item;
-        if (index === 0) {
+  const templateCommerce = (val) => {
+    const {
+      activityType = "specialGoods",
+      paymentModeObject = {},
+      activityGoodsId,
+      goodsImg,
+      goodsName,
+      realPrice,
+      commission,
+      oriPrice,
+    } = val;
+    const { type = "default", bean = "", cash = "" } = paymentModeObject;
+
+    if (type === "default" || activityType === "specialGoods") {
+      return (
+        <View className="test_debug">
+          <View className="templateStated_box" onClick={() => callback(val)}>
+            <View
+              className="templateStated_img coupon_shop_icon"
+              style={backgroundObj(goodsImg)}
+            ></View>
+            <View className="templateStated_font">
+              <View
+                style={
+                  shareCommission > 0 ? { maxWidth: Taro.pxTransform(336) } : {}
+                }
+                className="templateStated_title font_hide"
+              >
+                {goodsName}
+              </View>
+              <View className="templateStated_price font_hide">
+                <Text className="font18">卡豆再省:</Text>
+                <Text className="font20 bold templateStated_margin">¥</Text>
+                <Text className="font28 bold templateStated_margin">
+                  {computedBeanPrice(realPrice, 100 - payBeanCommission)}
+                </Text>
+                {shareCommission > 0 && commission && (
+                  <Text className="font22 templateStated_margin">
+                    /赚¥
+                    {computedPrice(commission, shareCommission)}
+                  </Text>
+                )}
+              </View>
+            </View>
+            <View
+              style={
+                shareCommission === 0 ? {} : { width: Taro.pxTransform(112) }
+              }
+              className="templateStated_pay public_center"
+            >
+              {shareCommission === 0 ? "抢购" : "分享赚"}
+            </View>
+          </View>
+        </View>
+      );
+    } else {
+      if (activityType === "commerceGoods" && (cash || bean)) {
+        if (!bean) {
           return (
             <View className="test_debug">
               <View
                 className="templateStated_box"
-                onClick={() => callback(item)}
+                onClick={() => callback(val)}
+              >
+                <View
+                  className="templateStated_img coupon_shop_icon"
+                  style={backgroundObj(goodsImg)}
+                ></View>
+                <View className="templateStated_font">
+                  <View
+                    style={
+                      shareCommission > 0 && commission
+                        ? { maxWidth: Taro.pxTransform(336) }
+                        : {}
+                    }
+                    className="templateStated_title font_hide"
+                  >
+                    {goodsName}
+                  </View>
+                  <View className="templateStated_price font_hide">
+                    <Text className="font18">卡豆再省:</Text>
+                    <Text className="font20 bold templateStated_margin">¥</Text>
+                    <Text className="font28 bold templateStated_margin">
+                      {computedBeanPrice(cash, 100 - payBeanCommission)}
+                      {shareCommission > 0 && commission && (
+                        <Text className="font22 templateStated_margin">
+                          /赚¥
+                          {computedPrice(commission, shareCommission)}
+                        </Text>
+                      )}
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={
+                    shareCommission > 0 && commission
+                      ? {}
+                      : { width: Taro.pxTransform(112) }
+                  }
+                  className="templateStated_pay public_center"
+                >
+                  {shareCommission === 0 ? "抢购" : "分享赚"}
+                </View>
+              </View>
+            </View>
+          );
+        } else {
+          return (
+            <View className="test_debug">
+              <View
+                className="templateStated_box"
+                onClick={() => callback(val)}
               >
                 <View
                   className="templateStated_img coupon_shop_icon"
@@ -135,22 +229,22 @@ export default (props) => {
                     {goodsName}
                   </View>
                   <View className="templateStated_price font_hide">
-                    <Text className="font18">卡豆再省:</Text>
+                    <Text className="font18">卡豆价:</Text>
                     <Text className="font20 bold templateStated_margin">¥</Text>
                     <Text className="font28 bold templateStated_margin">
-                      {computedBeanPrice(realPrice, 100 - payBeanCommission)}
+                      {cash}+{bean}卡豆
+                      {shareCommission > 0 && commission && (
+                        <Text className="font22 templateStated_margin">
+                          /赚¥
+                          {computedPrice(commission, shareCommission)}
+                        </Text>
+                      )}
                     </Text>
-                    {shareCommission > 0 && (
-                      <Text className="font22 templateStated_margin">
-                        /赚¥
-                        {computedPrice(commission, shareCommission)}
-                      </Text>
-                    )}
                   </View>
                 </View>
                 <View
                   style={
-                    shareCommission === 0
+                    shareCommission > 0 && commission
                       ? {}
                       : { width: Taro.pxTransform(112) }
                   }
@@ -161,6 +255,16 @@ export default (props) => {
               </View>
             </View>
           );
+        }
+      }
+    }
+  };
+  const templateStated = (val = {}, callback) => {
+    const { activityGoodsList = [], ownerCouponList = [] } = val;
+    if (activityGoodsList.length > 0) {
+      return activityGoodsList.map((item, index) => {
+        if (index === 0) {
+          return templateCommerce(item);
         }
         return null;
       });

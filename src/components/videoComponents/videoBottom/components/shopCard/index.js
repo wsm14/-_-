@@ -19,8 +19,13 @@ export default ({
   const { activityGoodsList = [], ownerCouponList = [] } = val;
   const [current, setCurrent] = useState(0);
   const templateBtn = (val) => {
-    const { commission } = val;
-    if (shareCommission > 0) {
+    const {
+      commission,
+      activityType = "specialGoods",
+      paymentModeObject = {},
+    } = val;
+    const { type = "default", bean = "", cash = "" } = paymentModeObject;
+    if (shareCommission > 0 && commission > 0) {
       return (
         <View className="templateCard_btn_box">
           <View className="templateCard_btn_initbuy public_center">
@@ -50,6 +55,49 @@ export default ({
           </View>
         </View>
       );
+    }
+  };
+  const templateCommerce = (val) => {
+    const {
+      activityType = "specialGoods",
+      paymentModeObject = {},
+      realPrice,
+    } = val;
+    const { type = "default", bean = "", cash = "" } = paymentModeObject;
+    if (type === "default" || activityType === "specialGoods") {
+      return (
+        <View className="templateCard_beanPrice font_hide">
+          <Text className="font20">卡豆再省:</Text>
+          <Text className="font20 bold templateCard_margin1">¥ </Text>
+          <Text className="font28 bold templateCard_margin1">
+            {computedBeanPrice(realPrice, 100 - payBeanCommission)}
+          </Text>
+        </View>
+      );
+    } else {
+      if (activityType === "commerceGoods" && (cash || bean)) {
+        if (!bean) {
+          return (
+            <View className="templateCard_beanPrice font_hide">
+              <Text className="font20">卡豆再省:</Text>
+              <Text className="font20 bold templateCard_margin1">¥ </Text>
+              <Text className="font28 bold templateCard_margin1">
+                {computedBeanPrice(cash, 100 - payBeanCommission)}
+              </Text>
+            </View>
+          );
+        } else {
+          return (
+            <View className="templateCard_beanPrice font_hide">
+              <Text className="font20">卡豆价:</Text>
+              <Text className="font20 bold templateCard_margin1">¥ </Text>
+              <Text className="font28 bold templateCard_margin1">
+                {cash}+{bean}卡豆
+              </Text>
+            </View>
+          );
+        }
+      }
     }
   };
   const memo = useMemo(() => {
@@ -104,18 +152,7 @@ export default ({
                             ¥{oriPrice}
                           </Text>
                         </View>
-                        <View className="templateCard_beanPrice font_hide">
-                          <Text className="font20">卡豆再省:</Text>
-                          <Text className="font20 bold templateCard_margin1">
-                            ¥{" "}
-                          </Text>
-                          <Text className="font28 bold templateCard_margin1">
-                            {computedBeanPrice(
-                              realPrice,
-                              100 - payBeanCommission
-                            )}
-                          </Text>
-                        </View>
+                        {templateCommerce(item)}
                       </View>
                     </View>
                     {templateBtn(item)}

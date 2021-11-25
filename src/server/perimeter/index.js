@@ -374,3 +374,14 @@ export const fakeVirtual = (data, fn) => {
   );
 };
 //保存虚拟商品支付订单
+
+export const fetchCommerceGoods = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/commerceGoods/commerceGoodsList",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取电商列表

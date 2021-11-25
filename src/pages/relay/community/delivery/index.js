@@ -122,43 +122,41 @@ class Index extends Component {
   }
   //获取新增地址
   changeSelect(index) {
-    const { selectIndex, mode, userAddressList, blindType } = this.state;
-    if (selectIndex !== index) {
-      this.setState(
-        {
-          selectIndex: index,
-        },
-        (res) => {
-          // 盲盒进入选择地址确认确认按钮
-          if (blindType) {
-            const { blindBoxRewardId } = getCurrentInstance().router.params;
-            const { userAddressId } = userAddressList[index];
-            Taro.showModal({
-              confirmText: "确定",
-              confirmColor: "#07c0c2",
-              content: `确认选择该地址？确认后无法修改`,
-              success: (res) => {
-                if (res.confirm) {
-                  fetchBindAddress({ blindBoxRewardId, userAddressId }).then(
-                    (res) => {
-                      goBack();
-                    }
-                  );
-                } else {
-                  this.setState({
-                    selectIndex: -1,
-                  });
-                }
-              },
-            });
-            return;
-          }
-          if (mode !== "list") {
-            goBack();
-          }
+    const { mode, userAddressList, blindType } = this.state;
+    this.setState(
+      {
+        selectIndex: index,
+      },
+      (res) => {
+        // 盲盒进入选择地址确认确认按钮
+        if (blindType) {
+          const { blindBoxRewardId } = getCurrentInstance().router.params;
+          const { userAddressId } = userAddressList[index];
+          Taro.showModal({
+            confirmText: "确定",
+            confirmColor: "#07c0c2",
+            content: `确认选择该地址？确认后无法修改`,
+            success: (res) => {
+              if (res.confirm) {
+                fetchBindAddress({ blindBoxRewardId, userAddressId }).then(
+                  (res) => {
+                    goBack();
+                  }
+                );
+              } else {
+                this.setState({
+                  selectIndex: -1,
+                });
+              }
+            },
+          });
+          return;
         }
-      );
-    }
+        if (mode !== "list") {
+          goBack();
+        }
+      }
+    );
   }
   //选择地址
   fetchAddress() {

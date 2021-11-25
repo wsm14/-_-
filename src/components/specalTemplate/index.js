@@ -23,22 +23,17 @@ export const template = (
 ) => {
   const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
   const {
-    goodsId,
     goodsName,
     goodsImg,
     oriPrice,
     realPrice,
     lnt,
     lat,
-    status,
-    goodsType,
-    merchantAddress,
     merchantName,
     merchantLogo,
-    merchantIdString,
     specialActivityIdString,
-    merchantPrice = 0,
     ownerIdString,
+    commission,
   } = item;
   return (
     <View
@@ -102,11 +97,11 @@ export const template = (
 
       <ButtonView>
         <View className="specialOffer_new_btn">
-          {shareCommission > 0 ? (
+          {shareCommission > 0 && commission > 0 ? (
             <View>
               分享赚
               <Text className="bold">
-                ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
+                ¥{computedPrice(commission, shareCommission)}
               </Text>
             </View>
           ) : (
@@ -459,6 +454,53 @@ export const prefectrueCouponTemplate = (item) => {
           </View>
         </View>
         <View className="prefecture_fure_tag prefecture_fure_margin2"></View>
+        <View className="prefecture_fure_bean">
+          ¥{cash}+{bean}卡豆
+        </View>
+      </View>
+      <View className="prefecture_btn  public_center">立即抢购</View>
+    </View>
+  );
+};
+export const commerGoodsTemplate = (item) => {
+  const {
+    goodsImg,
+    goodsName,
+    oriPrice,
+    realPrice,
+    paymentModeObject: { bean, cash },
+    specialActivityIdString,
+    ownerId,
+    commission,
+  } = item;
+
+  return (
+    <View
+      className="prefecture_fure_box"
+      onClick={() => {
+        Router({
+          routerName: "favourableDetails",
+          args: {
+            specialActivityId: specialActivityIdString,
+            merchantId: ownerId,
+          },
+        });
+      }}
+    >
+      <View
+        className="prefecture_fure_img"
+        style={backgroundObj(goodsImg)}
+      ></View>
+      <View className="prefecture_fure_content">
+        <View className="prefecture_fure_twoTitle font_noHide">
+          {goodsName}
+        </View>
+
+        <View className="prefecture_fure_price">
+          <Text className="font20">原价:</Text>
+          <Text className="font24 text_through">{oriPrice}</Text>
+        </View>
+        <View className="prefecture_fure_tag prefecture_fure_margin1"></View>
         <View className="prefecture_fure_bean">
           ¥{cash}+{bean}卡豆
         </View>

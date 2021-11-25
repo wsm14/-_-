@@ -33,6 +33,7 @@ export const nearList = (item = {}, list = [], store) => {
     beanFlag,
     addressContentObject = {},
     relateImg,
+    message,
   } = item;
   const { lat, lnt } = addressContentObject;
   const linkTo = () => {
@@ -82,7 +83,7 @@ export const nearList = (item = {}, list = [], store) => {
         <View className="nearList_time">{filterTime(length)}</View>
       </View>
       <View className="nearList_new_content font_hide">
-        <View className="nearList_new_title font_hide"> {title}</View>
+        <View className="nearList_new_title font_noHide"> {message}</View>
 
         {activeTemplate()}
       </View>
@@ -122,6 +123,7 @@ export const searchList = (item = {}, list = [], store) => {
     keyword,
     relateImg,
     addressContentObject = {},
+    message,
   } = item;
   const { lat, lnt } = addressContentObject;
   const linkTo = () => {
@@ -165,7 +167,7 @@ export const searchList = (item = {}, list = [], store) => {
       >
         <View className="nearList_time">{filterTime(length)}</View>
         <View className="nearList_bottom">
-          <View className="nearList_bottom_title font_noHide">{title}</View>
+          <View className="nearList_bottom_title font_noHide">{message}</View>
           {activeTemplate()}
         </View>
       </View>

@@ -137,6 +137,7 @@ export default {
         "recharge/index", //话费充值
         "preChildTure/index", //吃喝玩乐购内页
         "preSelfour/index", //自我游购内页
+        "commer/index", //电商商品内页
       ],
     },
     {
@@ -147,12 +148,14 @@ export default {
         "couponOrder/index", //有价券下单
         "kolShopGoods/index", //普通商品详情
         "getShopGoods/index", //扫码订单详情
+        "commerceShopGoods/index", //电商商品订单详情
         "paySuccess/index", //kol支付成功
         "codePay/index", //扫码订单生成订单页
         "code_wx_pay/index", //扫码订单支付页面
         "code_scanPay_Susccess/index", //扫码订单成功页面
         "codeCoupon/index", //设置优惠券
         "rechargeOrder/index", //话费支付
+        "commerOrder/index", //电商商品下单
       ],
     },
     {
