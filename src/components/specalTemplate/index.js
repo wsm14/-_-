@@ -505,7 +505,7 @@ export const commerGoodsTemplate = (item) => {
           ¥{cash}+{bean}卡豆
         </View>
       </View>
-      <View className="prefecture_btn  public_center">立即抢购</View>
+      <View className="prefecture_btn  public_center">抢购</View>
     </View>
   );
 };

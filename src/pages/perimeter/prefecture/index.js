@@ -8,8 +8,7 @@ import {
   fetchSpecialGoods,
   fetchUserShareCommission,
 } from "@/server/index";
-import { fetchCommerceGoods } from "@/server/perimeter";
-
+import { fetchCommerceGoods, fetchSelfTourGoods } from "@/server/perimeter";
 import {
   prefectrueGoodsTemplate,
   prefectrueCouponTemplate,
@@ -98,14 +97,10 @@ class Index extends Component {
     }
   }
   fetchSelfList() {
-    fetchSpecialGoods({
-      page: 1,
-      limit: 2,
-      specialFilterType: "selfTour",
-    }).then((val) => {
-      const { specialGoodsList } = val;
+    fetchSelfTourGoods({}).then((val) => {
+      const { selfTourGoodList = [] } = val;
       this.setState({
-        selfList: specialGoodsList,
+        selfList: selfTourGoodList,
       });
     });
   }

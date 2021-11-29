@@ -24,7 +24,7 @@ export default ({
       activityType = "specialGoods",
       paymentModeObject = {},
     } = val;
-    const { type = "default", bean = "", cash = "" } = paymentModeObject;
+    const { type = "defaultMode", bean = "", cash = "" } = paymentModeObject;
     if (shareCommission > 0 && commission > 0) {
       return (
         <View className="templateCard_btn_box">
@@ -63,8 +63,8 @@ export default ({
       paymentModeObject = {},
       realPrice,
     } = val;
-    const { type = "default", bean = "", cash = "" } = paymentModeObject;
-    if (type === "default" || activityType === "specialGoods") {
+    const { type = "defaultMode", bean = "", cash = "" } = paymentModeObject;
+    if (type === "defaultMode" || activityType === "specialGoods") {
       return (
         <View className="templateCard_beanPrice font_hide">
           <Text className="font20">卡豆再省:</Text>
@@ -75,28 +75,16 @@ export default ({
         </View>
       );
     } else {
-      if (activityType === "commerceGoods" && (cash || bean)) {
-        if (!bean) {
-          return (
-            <View className="templateCard_beanPrice font_hide">
-              <Text className="font20">卡豆再省:</Text>
-              <Text className="font20 bold templateCard_margin1">¥ </Text>
-              <Text className="font28 bold templateCard_margin1">
-                {computedBeanPrice(cash, 100 - payBeanCommission)}
-              </Text>
-            </View>
-          );
-        } else {
-          return (
-            <View className="templateCard_beanPrice font_hide">
-              <Text className="font20">卡豆价:</Text>
-              <Text className="font20 bold templateCard_margin1">¥ </Text>
-              <Text className="font28 bold templateCard_margin1">
-                {cash}+{bean}卡豆
-              </Text>
-            </View>
-          );
-        }
+      if (activityType === "commerceGoods" && type !== "defaultMode") {
+        return (
+          <View className="templateCard_beanPrice font_hide">
+            <Text className="font20">卡豆价:</Text>
+            <Text className="font20 bold templateCard_margin1">¥ </Text>
+            <Text className="font28 bold templateCard_margin1">
+              {cash}+{bean}卡豆
+            </Text>
+          </View>
+        );
       }
     }
   };

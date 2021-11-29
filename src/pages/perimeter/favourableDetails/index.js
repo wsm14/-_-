@@ -455,6 +455,7 @@ class MerchantDetails extends Component {
         goodsImg,
         richText,
         activityType,
+        commission,
       },
       visible,
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
@@ -472,7 +473,7 @@ class MerchantDetails extends Component {
     const { beanLimitStatus } = this.props.store.homeStore;
     const { beanLimit } = this.props.store.commonStore;
     const shareInfoBtn = () => {
-      if (shareCommission > 0 && type === "defaultMode") {
+      if (shareCommission > 0 && commission > 0) {
         return (
           <ButtonView
             data={{
@@ -487,9 +488,7 @@ class MerchantDetails extends Component {
             >
               <View className="shop_price_font">
                 <View>分享赚</View>
-                <View>
-                  ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
-                </View>
+                <View>¥{computedPrice(commission, shareCommission)}</View>
               </View>
             </View>
           </ButtonView>
@@ -641,18 +640,21 @@ class MerchantDetails extends Component {
                 ¥{oriPrice}
               </Text>
             </View>
+
             <View className="shopdetails_beanTitleName public_auto">
               <View className="shopdetails_beanTitle_name font_fourHide">
                 {goodsName}
               </View>
-              <View
-                onClick={() => this.setCollection()}
-                className={classNames(
-                  userCollectionStatus === "1"
-                    ? "shopdetails_isCollect"
-                    : "shopdetails_collect"
-                )}
-              ></View>
+              {activityType !== "commerceGoods" && (
+                <View
+                  onClick={() => this.setCollection()}
+                  className={classNames(
+                    userCollectionStatus === "1"
+                      ? "shopdetails_isCollect"
+                      : "shopdetails_collect"
+                  )}
+                ></View>
+              )}
             </View>
             <View className="shopdetails_bean_handerRight">
               {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
@@ -693,14 +695,16 @@ class MerchantDetails extends Component {
                 {" "}
                 {goodsName}
               </View>
-              <View
-                onClick={() => this.setCollection()}
-                className={classNames(
-                  userCollectionStatus === "1"
-                    ? "shopdetails_isCollect"
-                    : "shopdetails_collect"
-                )}
-              ></View>
+              {activityType !== "commerceGoods" && (
+                <View
+                  onClick={() => this.setCollection()}
+                  className={classNames(
+                    userCollectionStatus === "1"
+                      ? "shopdetails_isCollect"
+                      : "shopdetails_collect"
+                  )}
+                ></View>
+              )}
             </View>
             <View className="shopdetails_bean_handerRight">
               {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
@@ -839,11 +843,13 @@ class MerchantDetails extends Component {
             {activityType !== "commerceGoods" && knowPay(specialGoodsInfo)}
             {/*使用方法*/}
             {activityType !== "commerceGoods" && <Rule></Rule>}
-            <Recommend
-              current={true}
-              defaultData={specialGoodsInfo}
-              userInfo={configUserLevelInfo}
-            ></Recommend>
+            {activityType !== "commerceGoods" && (
+              <Recommend
+                current={true}
+                defaultData={specialGoodsInfo}
+                userInfo={configUserLevelInfo}
+              ></Recommend>
+            )}
             <VideoBean
               visible={beanLimitStatus === "1"}
               beanLimit={beanLimit}

@@ -100,7 +100,7 @@ export default (props) => {
       });
     }
   };
-  const templateCommerce = (val) => {
+  const templateCommerce = (val, callback) => {
     const {
       activityType = "specialGoods",
       paymentModeObject = {},
@@ -111,9 +111,9 @@ export default (props) => {
       commission,
       oriPrice,
     } = val;
-    const { type = "default", bean = "", cash = "" } = paymentModeObject;
+    const { type = "defaultMode", bean = "", cash = "" } = paymentModeObject;
 
-    if (type === "default" || activityType === "specialGoods") {
+    if (type === "defaultMode" || activityType === "specialGoods") {
       return (
         <View className="test_debug">
           <View className="templateStated_box" onClick={() => callback(val)}>
@@ -156,7 +156,7 @@ export default (props) => {
         </View>
       );
     } else {
-      if (activityType === "commerceGoods" && (cash || bean)) {
+      if (activityType === "commerceGoods") {
         if (!bean) {
           return (
             <View className="test_debug">
@@ -183,7 +183,7 @@ export default (props) => {
                     <Text className="font18">卡豆再省:</Text>
                     <Text className="font20 bold templateStated_margin">¥</Text>
                     <Text className="font28 bold templateStated_margin">
-                      {computedBeanPrice(cash, 100 - payBeanCommission)}
+                      {computedBeanPrice(realPrice, 100 - payBeanCommission)}
                       {shareCommission > 0 && commission && (
                         <Text className="font22 templateStated_margin">
                           /赚¥
@@ -264,7 +264,7 @@ export default (props) => {
     if (activityGoodsList.length > 0) {
       return activityGoodsList.map((item, index) => {
         if (index === 0) {
-          return templateCommerce(item);
+          return templateCommerce(item, callback);
         }
         return null;
       });

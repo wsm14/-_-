@@ -147,7 +147,7 @@ class Index extends Component {
             {orderType === "commerceGoods" && typeof orderDesc === "string" && (
               <View className="code_scanPay_decBox  code_scanPay_decMargin public_auto font24">
                 <View className="color2">商品</View>
-                <View className="color1">
+                <View className="color1 font_hide code_scanPay_Max">
                   {JSON.parse(orderDesc).commerceGoods.goodsName}
                 </View>
               </View>

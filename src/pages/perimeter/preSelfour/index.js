@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import classNames from "classnames";
 import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
-import {
-  prefectrueGoodsTemplate,
-  prefectrueCouponTemplate,
-  template,
-} from "@/components/specalTemplate";
+import { fetchSelfTourGoods } from "@/server/perimeter";
 import SelectView from "@/components/searchView";
 import {
   computedPrice,
@@ -61,31 +56,44 @@ class Index extends Component {
   }
   onReachBottom() {
     const { selectHttp } = this.state;
-    this.setState(
-      {
-        selectHttp: {
-          ...selectHttp,
-          page: selectHttp.page + 1,
+    const { specialFilterType } = selectHttp;
+    if (specialFilterType !== "selfTour") {
+      this.setState(
+        {
+          selectHttp: {
+            ...selectHttp,
+            page: selectHttp.page + 1,
+          },
         },
-      },
-      (res) => {
-        this.fetchSelfList();
-      }
-    );
+        (res) => {
+          this.fetchSelfList();
+        }
+      );
+    }
   } //上拉加载
   fetchSelfList() {
     const { selectHttp } = this.state;
-    fetchSpecialGoods(selectHttp)
-      .then((val) => {
-        Taro.stopPullDownRefresh();
-        const { specialGoodsList } = val;
+    const { specialFilterType } = selectHttp;
+    if (specialFilterType === "selfTour") {
+      fetchSelfTourGoods({}).then((val) => {
+        const { selfTourGoodList = [] } = val;
         this.setState({
-          selfList: [...this.state.selfList, ...specialGoodsList],
+          selfList: selfTourGoodList,
         });
-      })
-      .catch((e) => {
-        Taro.stopPullDownRefresh();
       });
+    } else {
+      fetchSpecialGoods(selectHttp)
+        .then((val) => {
+          Taro.stopPullDownRefresh();
+          const { specialGoodsList } = val;
+          this.setState({
+            selfList: [...this.state.selfList, ...specialGoodsList],
+          });
+        })
+        .catch((e) => {
+          Taro.stopPullDownRefresh();
+        });
+    }
   }
   render() {
     const { selfList, configUserLevelInfo, selectHttp } = this.state;

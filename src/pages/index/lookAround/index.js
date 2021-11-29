@@ -19,6 +19,7 @@ import {
   getRestapiAddress,
   fetchAroundModule,
 } from "@/server/common";
+import { fetchSelfTourGoods } from "@/server/perimeter";
 import classNames from "classnames";
 import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
 import { getConfigNewcomerOrders } from "@/server/goods";
@@ -87,6 +88,14 @@ class Index extends Component {
       });
     });
   }
+  fetchSelfTour() {
+    fetchSelfTourGoods({}).then((val) => {
+      const { selfTourGoodList = [] } = val;
+      this.setState({
+        selfTourResourceList: selfTourGoodList,
+      });
+    });
+  }
   contentBanner() {
     getBanner({ bannerType: "wanderAroundCapsule" }, (res) => {
       const { bannerList = [] } = res;
@@ -143,30 +152,10 @@ class Index extends Component {
       explosive: () => this.getshopList(dateHttp, "dateList"),
       limitedTime: () => this.getshopList(hotHttp, "hotList"),
       selfTour: () => {
-        this.setState(
-          {
-            specialHttp: {
-              page: 1,
-              limit: 10,
-              specialFilterType: "selfTour",
-              categoryIds: "",
-            },
-          },
-          (res) => {
-            this.getSpecialGoodsCategory();
-          }
-        );
+        this.fetchSelfTour();
       },
       selfTourResource: () => {
-        fetchSpecialGoods(
-          { page: 1, limit: 10, specialFilterType: "selfTour" },
-          (res) => {
-            const { specialGoodsList = [] } = res;
-            this.setState({
-              selfTourResourceList: specialGoodsList,
-            });
-          }
-        );
+        this.fetchSelfTour();
       },
       newProductRecommend: () => {
         fetchSpecialGoods(
@@ -179,7 +168,7 @@ class Index extends Component {
           }
         );
       },
-      wanderAroundBean: () => this.beanCodeBanner(),
+      beanSpecialArea: () => this.beanCodeBanner(),
     };
     wanderAroundModule.forEach((val) => {
       requestObj[val] && requestObj[val]();
@@ -608,7 +597,7 @@ class Index extends Component {
       position: "relative",
     };
     let templateObj = {
-      wanderAroundBean: (
+      beanSpecialArea: (
         <Banner
           imgName="coverImg"
           data={[...beanCodeList]}
@@ -696,7 +685,7 @@ class Index extends Component {
         <GameGoods
           userInfo={configUserLevelInfo}
           linkTo={this.saveRouter.bind(this)}
-          data={kolGoodsList}
+          data={selfTourResourceList}
         ></GameGoods>
       ),
       selfTourResource: (

@@ -50,40 +50,53 @@ class Index extends Component {
   componentDidShow() {
     this.getKolGoodsOrder();
     this.fetchUserShareCommission();
-
-    const { userAddressIndex, userAddressList } = this.state;
-    const pages = Taro.getCurrentPages(); // 获取页面堆栈
-    const currPage = pages[pages.length - 1]; // 获取上一页栈
-    const { data } = currPage.data; // 获取上一页回传数据
-    if (data && data != userAddressIndex && userAddressList.length > 0) {
-      this.setState({
-        userAddress: { ...data },
-        userAddressIndex: userAddressList
-          .map((val, index) => {
-            return { userAddressId: val.userAddressId, index };
-          })
-          .filter((item) => {
-            return item.userAddressId === data.userAddressId;
-          })[0].index,
-      });
-    }
-  }
-  componentDidMount() {
     this.fetchAddress();
   }
   fetchAddress() {
+    const { userAddressIndex, userAddress } = this.state;
+    const { userAddressId } = userAddress;
     fetchAddressList({}).then((val) => {
       const { userAddressList = [] } = val;
-      this.setState({
-        userAddressList,
-        userAddressIndex: userAddressList.length > 0 ? 0 : -1,
-        userAddress:
-          userAddressList.length > 0
-            ? {
-                ...userAddressList[0],
-              }
-            : { userAddressId: "" },
-      });
+      this.setState(
+        {
+          userAddressList,
+        },
+        (res) => {
+          if (userAddressList.length > 0) {
+            if (userAddressIndex === -1) {
+              this.setState({
+                userAddressIndex: userAddressList.length > 0 ? 0 : -1,
+                userAddress:
+                  userAddressList.length > 0
+                    ? {
+                        ...userAddressList[0],
+                      }
+                    : { userAddressId: "" },
+              });
+            }
+            const pages = Taro.getCurrentPages(); // 获取页面堆栈
+            const currPage = pages[pages.length - 1]; // 获取上一页栈
+            const { data } = currPage.data; // 获取上一页回传数据
+            if (data) {
+              this.setState({
+                userAddress: { ...data },
+                userAddressIndex: userAddressList
+                  .map((val, index) => {
+                    return { userAddressId: val.userAddressId, index };
+                  })
+                  .filter((item) => {
+                    return item.userAddressId === data.userAddressId;
+                  })[0].index,
+              });
+            }
+          } else {
+            this.setState({
+              userAddressIndex: -1,
+              userAddress: { userAddressId: "" },
+            });
+          }
+        }
+      );
     });
   }
   fetchUserShareCommission() {

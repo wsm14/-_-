@@ -87,7 +87,7 @@ class Index extends React.PureComponent {
   } //设置定时器领取卡豆
   saveBean() {
     const {
-      userMomentsInfo: { momentId },
+      userMomentsInfo: {   },
       userMomentsInfo,
     } = this.state;
     saveWatchBean(

@@ -1132,6 +1132,7 @@ export default (props) => {
       closeType,
       createTime,
       beanFee,
+      payTime,
     } = item;
     orderDesc = orderDesc && JSON.parse(orderDesc);
     const {
@@ -1301,9 +1302,9 @@ export default (props) => {
                 {goodsName}
               </View>
               <View className="createdGood_details_time">
-                支付时间：{createTime}
+                {payTime ? `支付时间：${payTime}` : `创建时间：${createTime}`}
               </View>
-              {beanFee > 0 && (
+              {beanFee > 0 && status === "3" && (
                 <View className="createdGood_details_color">
                   卡豆帮省{" "}
                   <Text className="bold">¥{(beanFee / 100).toFixed(2)}</Text>

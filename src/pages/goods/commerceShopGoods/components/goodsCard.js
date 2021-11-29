@@ -58,7 +58,7 @@ export default (props) => {
       { label: "创建时间", value: createTime },
       { label: "支付时间", value: payTime },
       { label: "关闭时间", value: closeTime },
-      { label: "关闭原因", closeReason },
+      { label: "关闭原因", value: closeReason },
     ],
 
     3: [
@@ -73,6 +73,18 @@ export default (props) => {
       { label: "创建时间", value: createTime },
       { label: "支付时间", value: payTime },
       { label: "完成时间", value: deliveryTime },
+    ],
+    6: [
+      { label: "商品", value: goodsName },
+      {
+        label: "订单号码",
+        value: orderSn,
+        fn: () => {
+          setClipboard(orderSn);
+        },
+      },
+      { label: "创建时间", value: createTime },
+      { label: "支付时间", value: payTime },
     ],
   }[status];
   const setClipboard = (str) => {
@@ -114,7 +126,7 @@ export default (props) => {
                 return (
                   <View className="font24 public_auto goods_cardHeight">
                     <View className="color2">{label}</View>
-                    <View className="color1"> {value}</View>
+                    <View className="color1 font_hide goods_max"> {value}</View>
                   </View>
                 );
               }

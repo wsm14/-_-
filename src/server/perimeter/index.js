@@ -385,3 +385,14 @@ export const fetchCommerceGoods = (data, fn) => {
   );
 };
 //获取电商列表
+
+export const fetchSelfTourGoods = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/specialGoods/getSelfTourGoods",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取电商列表
