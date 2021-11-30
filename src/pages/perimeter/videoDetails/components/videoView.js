@@ -20,6 +20,7 @@ export default ({
   saveBean,
   changeComment,
   play,
+  current,
 }) => {
   const [scale, setScale] = useState(0);
   const [player, setPlayer] = useState(false);
@@ -149,12 +150,19 @@ export default ({
               ></View>
             </View>
           </View>
-          <BottomView userInfo={userInfo} index={0} server={data} current={0}>
+          <BottomView
+            userInfo={userInfo}
+            index={current}
+            server={data}
+            current={current}
+          >
             {children}
           </BottomView>
         </View>
       </View>
     );
   }, [Object.keys(data).length, scale, player, time, walk]);
-  return expensive;
+  if (Object.keys(data).length > 0) {
+    return expensive;
+  } else return null;
 };
