@@ -402,7 +402,7 @@ export const prefectrueGoodsTemplate = (item) => {
           ¥{cash}+{bean}卡豆
         </View>
       </View>
-      <View className="prefecture_btn  public_center">立即抢购</View>
+      <View className="prefecture_btn  public_center">抢购</View>
     </View>
   );
 };
@@ -458,11 +458,11 @@ export const prefectrueCouponTemplate = (item) => {
           ¥{cash}+{bean}卡豆
         </View>
       </View>
-      <View className="prefecture_btn  public_center">立即抢购</View>
+      <View className="prefecture_btn  public_center">抢购</View>
     </View>
   );
 };
-export const commerGoodsTemplate = (item) => {
+export const commerGoodsTemplate = (item, configUserLevelInfo) => {
   const {
     goodsImg,
     goodsName,
@@ -473,7 +473,7 @@ export const commerGoodsTemplate = (item) => {
     ownerId,
     commission,
   } = item;
-
+  const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
   return (
     <View
       className="prefecture_fure_box"
@@ -505,7 +505,18 @@ export const commerGoodsTemplate = (item) => {
           ¥{cash}+{bean}卡豆
         </View>
       </View>
-      <View className="prefecture_btn  public_center">抢购</View>
+      <View className="prefecture_btn  public_center">
+        {shareCommission > 0 && commission > 0 ? (
+          <View>
+            分享赚
+            <Text className="bold">
+              ¥{computedPrice(commission, shareCommission)}
+            </Text>
+          </View>
+        ) : (
+          "抢购"
+        )}
+      </View>
     </View>
   );
 };

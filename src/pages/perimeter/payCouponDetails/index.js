@@ -166,6 +166,7 @@ class Index extends Component {
             ...couponDetail,
             weChatImg: res.frontImage,
             weChatTitle: res.title,
+            weChatUrl: res.miniProgramUrl,
           },
         });
       }
@@ -188,6 +189,7 @@ class Index extends Component {
         merchantLogo,
         weChatImg = "",
         weChatTitle = "",
+        weChatUrl = "",
       },
       httpData: { merchantId, ownerId, ownerCouponId },
     } = this.state;
@@ -197,14 +199,18 @@ class Index extends Component {
       return {
         title: weChatTitle || couponName,
         imageUrl: weChatImg || merchantLogo,
-        path: `/pages/perimeter/payCouponDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&ownerId=${ownerId}&ownerCouponId=${ownerCouponId}`,
+        path:
+          weChatUrl ||
+          `/pages/perimeter/payCouponDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&ownerId=${ownerId}&ownerCouponId=${ownerCouponId}`,
       };
     }
     if (loginStatus()) {
       return {
         title: couponName,
         imageUrl: merchantLogo,
-        path: `/pages/perimeter/payCouponDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&ownerId=${ownerId}&ownerCouponId=${ownerCouponId}`,
+        path:
+          weChatUrl ||
+          `/pages/perimeter/payCouponDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&ownerId=${ownerId}&ownerCouponId=${ownerCouponId}`,
       };
     } else {
       return {

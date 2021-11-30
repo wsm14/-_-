@@ -27,6 +27,7 @@ export default ({
       lnt,
       lat,
       merchantPrice,
+      commission,
     } = data;
     return (
       <View className="lookAround_template_specal animated  fadeIn">
@@ -68,7 +69,7 @@ export default ({
           <View className="lookAround_bean_show font_hide  font18 color3">
             赚
             <Text className="bold">
-              ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
+              ¥{computedPrice(commission, shareCommission)}
             </Text>
           </View>
         )}
@@ -84,6 +85,7 @@ export default ({
       lnt,
       lat,
       merchantPrice,
+      commission,
     } = data;
     return (
       <View className="lookAround_template_specal1 animated  fadeIn">
@@ -121,7 +123,7 @@ export default ({
           <View className="lookAround_bean_show font_hide  font18 color3">
             赚
             <Text className="bold">
-              ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
+              ¥{computedPrice(commission, shareCommission)}
             </Text>
           </View>
         )}
@@ -129,7 +131,14 @@ export default ({
     );
   };
   const template2 = () => {
-    const { goodsName, goodsImg, oriPrice, realPrice, merchantPrice } = data;
+    const {
+      goodsName,
+      goodsImg,
+      oriPrice,
+      realPrice,
+      merchantPrice,
+      commission,
+    } = data;
     return (
       <View className="lookAround_template_specal2 animated  fadeIn">
         <View
@@ -162,7 +171,7 @@ export default ({
           <View className="lookAround_bean_show font_hide  font18 color3">
             赚
             <Text className="bold">
-              ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
+              ¥{computedPrice(commission, shareCommission)}
             </Text>
           </View>
         )}

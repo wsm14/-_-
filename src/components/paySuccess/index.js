@@ -18,8 +18,6 @@ export default (props) => {
   const { taskStatus } = data;
   if (taskStatus === "0" || taskStatus === "1") {
     return <ThreeGoods {...props}></ThreeGoods>;
-  } else if (beanLimitStatus === "1") {
-    return <VideoGoods {...props}></VideoGoods>;
   } else {
     return null;
   }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Video, Swiper, SwiperItem, View } from "@tarojs/components";
 import Taro, { pxTransform, useReady } from "@tarojs/taro";
-import BottomView from "./bottom";
+import BottomView from "@/components/videoComponents/videoBottom";
 import { computedVideoSize } from "@/common/utils";
 import InterVal from "@/components/videoComponents";
 import "./../index.scss";

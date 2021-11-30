@@ -305,7 +305,7 @@ class Index extends Component {
         return (
           <View className="commerOrder_address">
             <View className="commerOrder_address_icon"></View>
-            <View className="commerOrder_address_content font_hide">
+            <View className="commerOrder_address_content ">
               <View className="commerOrder_address_sh">
                 完善收货信息才可以发货哦{" "}
               </View>
@@ -336,7 +336,9 @@ class Index extends Component {
                   {mobile}
                 </Text>
               </View>
-              <View className="commerOrder_address_details">{address}</View>
+              <View className="commerOrder_address_details liner_info">
+                {address}
+              </View>
             </View>
             <View
               className="commerOrder_address_link"

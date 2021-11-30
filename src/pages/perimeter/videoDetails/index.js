@@ -20,6 +20,7 @@ import {
   fetchUserShareCommission,
   getUserMomentDetailById,
 } from "@/server/index";
+import { fetchFormMomentDetail } from "@/server/share";
 import { inject, observer } from "mobx-react";
 import Toast from "@/components/beanToast";
 import Coupon from "@/components/freeCoupon";
@@ -87,7 +88,7 @@ class Index extends React.PureComponent {
   } //设置定时器领取卡豆
   saveBean() {
     const {
-      userMomentsInfo: {   },
+      userMomentsInfo: {},
       userMomentsInfo,
     } = this.state;
     saveWatchBean(
@@ -207,17 +208,30 @@ class Index extends React.PureComponent {
   }
 
   getUserMomentDetailById() {
-    getUserMomentDetailById(
-      {
+    const { httpData } = this.state;
+    const { momentType } = httpData;
+    if (momentType === "platform") {
+      fetchFormMomentDetail({
         ...this.state.httpData,
-      },
-      (res) => {
+      }).then((res) => {
         const { moment = {} } = res;
         this.setState({
           userMomentsInfo: moment,
         });
-      }
-    );
+      });
+    } else {
+      getUserMomentDetailById(
+        {
+          ...this.state.httpData,
+        },
+        (res) => {
+          const { moment = {} } = res;
+          this.setState({
+            userMomentsInfo: moment,
+          });
+        }
+      );
+    }
   }
 
   componentWillMount() {

@@ -266,6 +266,7 @@ class MerchantDetails extends Component {
             ...specialGoodsInfo,
             weChatImg: res.frontImage,
             weChatTitle: res.title,
+            weChatUrl: res.miniProgramUrl,
           },
         });
       }
@@ -273,7 +274,7 @@ class MerchantDetails extends Component {
   }
   onShareAppMessage(res) {
     const {
-      specialGoodsInfo: { goodsName, weChatImg, weChatTitle },
+      specialGoodsInfo: { goodsName, weChatImg, weChatTitle, weChatUrl },
       specialGoodsInfo,
       httpData: { merchantId, specialActivityId },
     } = this.state;
@@ -284,14 +285,18 @@ class MerchantDetails extends Component {
       return {
         title: weChatTitle || goodsName,
         imageUrl: weChatImg || img,
-        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+        path:
+          weChatUrl ||
+          `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     }
     if (loginStatus()) {
       return {
         title: goodsName,
         imageUrl: img,
-        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+        path:
+          weChatUrl ||
+          `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     } else {
       return {
@@ -473,7 +478,7 @@ class MerchantDetails extends Component {
     const { beanLimitStatus } = this.props.store.homeStore;
     const { beanLimit } = this.props.store.commonStore;
     const shareInfoBtn = () => {
-      if (shareCommission > 0 && commission > 0) {
+      if (shareCommission > 0 && commission > 0 && rightFlag !== "1") {
         return (
           <ButtonView
             data={{
@@ -535,7 +540,7 @@ class MerchantDetails extends Component {
             {shareInfoBtn()}
           </View>
         );
-      } else if (shareCommission !== 0 && rightFlag !== "1") {
+      } else if (shareCommission !== 0 && rightFlag !== "1" && commission > 0) {
         return (
           <View className="shopdetails_shop_btnBox">
             <ButtonView
@@ -551,9 +556,7 @@ class MerchantDetails extends Component {
               >
                 <View className="shop_price_font">
                   <View>自购返</View>
-                  <View>
-                    ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
-                  </View>
+                  <View>¥{computedPrice(commission, shareCommission)}</View>
                 </View>
               </View>
             </ButtonView>
@@ -570,7 +573,6 @@ class MerchantDetails extends Component {
                 name: "商品详情购买",
               }}
             >
-              {" "}
               <View
                 className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"
                 onClick={() => loginBtn(() => this.saveGoodsOrder())}
@@ -619,7 +621,6 @@ class MerchantDetails extends Component {
             </View>
             <View className="shopdetails_beanTitleName public_auto">
               <View className="shopdetails_beanTitle_name font_fourHide">
-                {" "}
                 {goodsName}
               </View>
             </View>

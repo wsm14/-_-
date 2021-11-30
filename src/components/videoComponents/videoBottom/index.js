@@ -27,7 +27,7 @@ city.forEach((item) => {
 });
 export default (props) => {
   const { server = {}, children, index, userInfo, current } = props;
-  const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
+  const { payBeanCommission = 50, shareCommission } = userInfo;
   const [flag, setFlag] = useState({
     flagType: false,
     boolean: false,
@@ -66,7 +66,7 @@ export default (props) => {
     cityCode,
     relateType,
     relateId,
-    jumpUrl,
+    jumpUrl = "",
     relateName,
     promotionFlag,
     ugcAddressObject = {},
@@ -112,7 +112,6 @@ export default (props) => {
       oriPrice,
     } = val;
     const { type = "defaultMode", bean = "", cash = "" } = paymentModeObject;
-
     if (type === "defaultMode" || activityType === "specialGoods") {
       return (
         <View className="test_debug">
@@ -136,7 +135,7 @@ export default (props) => {
                 <Text className="font28 bold templateStated_margin">
                   {computedBeanPrice(realPrice, 100 - payBeanCommission)}
                 </Text>
-                {shareCommission > 0 && commission && (
+                {shareCommission > 0 && commission > 0 && (
                   <Text className="font22 templateStated_margin">
                     /赚¥
                     {computedPrice(commission, shareCommission)}
@@ -146,11 +145,13 @@ export default (props) => {
             </View>
             <View
               style={
-                shareCommission === 0 ? {} : { width: Taro.pxTransform(112) }
+                shareCommission === 0 && commission > 0
+                  ? {}
+                  : { width: Taro.pxTransform(112) }
               }
               className="templateStated_pay public_center"
             >
-              {shareCommission === 0 ? "抢购" : "分享赚"}
+              {shareCommission > 0 && commission > 0 ? "分享赚" : "抢购"}
             </View>
           </View>
         </View>
@@ -171,7 +172,7 @@ export default (props) => {
                 <View className="templateStated_font">
                   <View
                     style={
-                      shareCommission > 0 && commission
+                      shareCommission > 0 && commission > 0
                         ? { maxWidth: Taro.pxTransform(336) }
                         : {}
                     }
@@ -184,7 +185,7 @@ export default (props) => {
                     <Text className="font20 bold templateStated_margin">¥</Text>
                     <Text className="font28 bold templateStated_margin">
                       {computedBeanPrice(realPrice, 100 - payBeanCommission)}
-                      {shareCommission > 0 && commission && (
+                      {shareCommission > 0 && commission > 0 && (
                         <Text className="font22 templateStated_margin">
                           /赚¥
                           {computedPrice(commission, shareCommission)}
@@ -195,13 +196,13 @@ export default (props) => {
                 </View>
                 <View
                   style={
-                    shareCommission > 0 && commission
+                    shareCommission > 0 && commission > 0
                       ? {}
                       : { width: Taro.pxTransform(112) }
                   }
                   className="templateStated_pay public_center"
                 >
-                  {shareCommission === 0 ? "抢购" : "分享赚"}
+                  {shareCommission > 0 && commission > 0 ? "分享赚" : "抢购"}
                 </View>
               </View>
             </View>
@@ -220,7 +221,7 @@ export default (props) => {
                 <View className="templateStated_font">
                   <View
                     style={
-                      shareCommission > 0
+                      shareCommission > 0 && commission > 0
                         ? { maxWidth: Taro.pxTransform(336) }
                         : {}
                     }
@@ -233,7 +234,7 @@ export default (props) => {
                     <Text className="font20 bold templateStated_margin">¥</Text>
                     <Text className="font28 bold templateStated_margin">
                       {cash}+{bean}卡豆
-                      {shareCommission > 0 && commission && (
+                      {shareCommission > 0 && commission > 0 && (
                         <Text className="font22 templateStated_margin">
                           /赚¥
                           {computedPrice(commission, shareCommission)}
@@ -244,13 +245,15 @@ export default (props) => {
                 </View>
                 <View
                   style={
-                    shareCommission > 0 && commission
+                    shareCommission > 0 && commission > 0
                       ? {}
                       : { width: Taro.pxTransform(112) }
                   }
                   className="templateStated_pay public_center"
                 >
-                  {shareCommission === 0 ? "抢购" : "分享赚"}
+                  {shareCommission > 0 && commission > 0 > 0
+                    ? "分享赚"
+                    : "抢购"}
                 </View>
               </View>
             </View>
@@ -330,7 +333,6 @@ export default (props) => {
     }
   };
   const routerInfo = () => {
-    console.log(relateType);
     if (relateType === "user") {
       Router({
         routerName: "download",
