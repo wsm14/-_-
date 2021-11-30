@@ -92,6 +92,7 @@ class Index extends React.PureComponent {
       userMomentsInfo: {},
       userMomentsInfo,
     } = this.state;
+    const { momentId } = userMomentsInfo;
     saveWatchBean(
       {
         momentId: momentId,
