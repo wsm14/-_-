@@ -12,13 +12,13 @@ import {
   filterPath,
 } from "@/common/utils";
 import {
-  saveWatchBean,
   fakeInsertUserCollectionMoment,
   fakeDeleteUserCollection,
   checkPuzzleBeanLimitStatus,
   updateUserMomentParam,
   fetchUserShareCommission,
   getUserMomentDetailById,
+  saveWatchBean,
 } from "@/server/index";
 import { fetchFormMomentDetail } from "@/server/share";
 import { inject, observer } from "mobx-react";
@@ -92,10 +92,11 @@ class Index extends React.PureComponent {
       userMomentsInfo: {},
       userMomentsInfo,
     } = this.state;
-    const { momentId } = userMomentsInfo;
+    const { momentId, ownerId } = userMomentsInfo;
     saveWatchBean(
       {
         momentId: momentId,
+        ownerId,
       },
       (res) => {
         this.setState({
