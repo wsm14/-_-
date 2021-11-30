@@ -139,9 +139,9 @@ class MerchantDetails extends Component {
               index: index + 1,
             },
             (res) => {
-              const { rightFlag, paymentModeObject } = specialGoodsInfo;
-              const { type } = paymentModeObject;
-              if (!(rightFlag === "1" && type === "defaultMode")) {
+              const { rightFlag, paymentModeObject, activityType } =
+                specialGoodsInfo;
+              if (!(rightFlag === "1" || activityType === "commerceGoods")) {
                 this.fetchConfig();
               }
             }
