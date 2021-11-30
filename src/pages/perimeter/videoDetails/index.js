@@ -12,13 +12,13 @@ import {
   filterPath,
 } from "@/common/utils";
 import {
-  saveWatchBean,
   fakeInsertUserCollectionMoment,
   fakeDeleteUserCollection,
   checkPuzzleBeanLimitStatus,
   updateUserMomentParam,
   fetchUserShareCommission,
   getUserMomentDetailById,
+  saveWatchBean,
 } from "@/server/index";
 import { fetchFormMomentDetail } from "@/server/share";
 import { inject, observer } from "mobx-react";
@@ -53,6 +53,7 @@ class Index extends React.PureComponent {
         data: null,
         start: false,
       },
+      current: 0,
       commentShow: false,
     };
     this.interReload = null;
@@ -91,9 +92,11 @@ class Index extends React.PureComponent {
       userMomentsInfo: {},
       userMomentsInfo,
     } = this.state;
+    const { momentId, ownerId } = userMomentsInfo;
     saveWatchBean(
       {
         momentId: momentId,
+        ownerId,
       },
       (res) => {
         this.setState({
@@ -217,6 +220,7 @@ class Index extends React.PureComponent {
         const { moment = {} } = res;
         this.setState({
           userMomentsInfo: moment,
+          current: 1,
         });
       });
     } else {
@@ -228,6 +232,7 @@ class Index extends React.PureComponent {
           const { moment = {} } = res;
           this.setState({
             userMomentsInfo: moment,
+            current: 1,
           });
         }
       );
@@ -428,6 +433,7 @@ class Index extends React.PureComponent {
       cavansObj,
       httpData,
       commentShow,
+      current,
     } = this.state;
     const { login } = this.props.store.authStore;
     return (
@@ -445,6 +451,7 @@ class Index extends React.PureComponent {
               saveBean={this.saveBean.bind(this)}
               changeComment={() => this.setState({ commentShow: true })}
               play={player}
+              current={current}
             ></VideoView>
           </>
         </View>
