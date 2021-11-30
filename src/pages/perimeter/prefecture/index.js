@@ -8,9 +8,11 @@ import {
   fetchSpecialGoods,
   fetchUserShareCommission,
 } from "@/server/index";
+import { fetchCommerceGoods, fetchSelfTourGoods } from "@/server/perimeter";
 import {
   prefectrueGoodsTemplate,
   prefectrueCouponTemplate,
+  commerGoodsTemplate,
   template,
 } from "@/components/specalTemplate";
 import Router from "@/common/router";
@@ -35,12 +37,15 @@ class Index extends Component {
         page: 1,
         limit: 2,
       },
+      commerList: [],
+      commerHttp: { page: 1, limit: 2 },
       configUserLevelInfo: {},
     };
   }
   componentDidMount() {
     this.changeList("owner");
     this.changeList("goods");
+    this.fetchCommerceList();
     this.fetchSelfList();
     this.fetchUserShare();
   }
@@ -62,7 +67,14 @@ class Index extends Component {
       });
     });
   }
-
+  fetchCommerceList() {
+    fetchCommerceGoods(this.state.commerHttp).then((val) => {
+      const { specialGoodsList } = val;
+      this.setState({
+        commerList: specialGoodsList,
+      });
+    });
+  }
   changeList(t) {
     const { ownerHttp, selectHttp } = this.state;
     if (t !== "owner") {
@@ -85,20 +97,21 @@ class Index extends Component {
     }
   }
   fetchSelfList() {
-    fetchSpecialGoods({
-      page: 1,
-      limit: 2,
-      specialFilterType: "selfTour",
-    }).then((val) => {
-      const { specialGoodsList } = val;
+    fetchSelfTourGoods({}).then((val) => {
+      const { selfTourGoodList = [] } = val;
       this.setState({
-        selfList: specialGoodsList,
+        selfList: selfTourGoodList,
       });
     });
   }
   render() {
-    const { ownerCouponList, specialGoodsList, selfList, configUserLevelInfo } =
-      this.state;
+    const {
+      ownerCouponList,
+      specialGoodsList,
+      selfList,
+      configUserLevelInfo,
+      commerList,
+    } = this.state;
 
     return (
       <View className="prefecture_box">
@@ -173,6 +186,37 @@ class Index extends Component {
               {selfList.map((item, index) => {
                 if (index < 2) {
                   return template(item, configUserLevelInfo, true, false);
+                }
+              })}
+            </View>
+          </View>
+        )}
+
+        {commerList.length > 0 && (
+          <View className="prefecture_content prefecture_margin">
+            <View className="prefecture_init_title public_auto">
+              <View className="prefecture_title_info3"></View>
+              <View
+                className="prefecture_title_right"
+                onClick={() => {
+                  Router({
+                    routerName: "commer",
+                  });
+                }}
+              >
+                查看更多
+              </View>
+            </View>
+            <View className="prefecture_content_top">
+              {commerList.map((item, index) => {
+                const { paymentModeObject = {} } = item;
+                const { type = "defaultMode" } = paymentModeObject;
+                if (index < 2) {
+                  if (type === "defaultMode") {
+                    return template(item, configUserLevelInfo, true, false);
+                  } else {
+                    return commerGoodsTemplate(item, configUserLevelInfo);
+                  }
                 }
               })}
             </View>

@@ -19,6 +19,7 @@ import {
   getRestapiAddress,
   fetchAroundModule,
 } from "@/server/common";
+import { fetchSelfTourGoods } from "@/server/perimeter";
 import classNames from "classnames";
 import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
 import { getConfigNewcomerOrders } from "@/server/goods";
@@ -75,6 +76,7 @@ class Index extends Component {
       requestStatus: true,
       loading: false,
       selfTourResourceList: [],
+      beanCodeList: [],
       newDateList: [],
     };
   }
@@ -83,6 +85,14 @@ class Index extends Component {
       const { bannerList } = res;
       this.setState({
         specialHeadList: bannerList,
+      });
+    });
+  }
+  fetchSelfTour() {
+    fetchSelfTourGoods({}).then((val) => {
+      const { selfTourGoodList = [] } = val;
+      this.setState({
+        selfTourResourceList: selfTourGoodList,
       });
     });
   }
@@ -99,6 +109,14 @@ class Index extends Component {
       const { bannerList = [] } = res;
       this.setState({
         selfTourBanner: bannerList,
+      });
+    });
+  }
+  beanCodeBanner() {
+    getBanner({ bannerType: "wanderAroundBean" }, (res) => {
+      const { bannerList = [] } = res;
+      this.setState({
+        beanCodeList: bannerList,
       });
     });
   }
@@ -134,30 +152,10 @@ class Index extends Component {
       explosive: () => this.getshopList(dateHttp, "dateList"),
       limitedTime: () => this.getshopList(hotHttp, "hotList"),
       selfTour: () => {
-        this.setState(
-          {
-            specialHttp: {
-              page: 1,
-              limit: 10,
-              specialFilterType: "selfTour",
-              categoryIds: "",
-            },
-          },
-          (res) => {
-            this.getSpecialGoodsCategory();
-          }
-        );
+        this.fetchSelfTour();
       },
       selfTourResource: () => {
-        fetchSpecialGoods(
-          { page: 1, limit: 10, specialFilterType: "selfTour" },
-          (res) => {
-            const { specialGoodsList = [] } = res;
-            this.setState({
-              selfTourResourceList: specialGoodsList,
-            });
-          }
-        );
+        this.fetchSelfTour();
       },
       newProductRecommend: () => {
         fetchSpecialGoods(
@@ -170,6 +168,7 @@ class Index extends Component {
           }
         );
       },
+      beanSpecialArea: () => this.beanCodeBanner(),
     };
     wanderAroundModule.forEach((val) => {
       requestObj[val] && requestObj[val]();
@@ -471,6 +470,7 @@ class Index extends Component {
       wanderAroundModule = [],
       selfTourResourceList = [],
       newDateList = [],
+      beanCodeList = [],
       configNewcomerOrdersInfo: {
         taskStatus = "2",
         remainDay,
@@ -590,7 +590,22 @@ class Index extends Component {
       margin: `${Taro.pxTransform(40)} auto  0`,
       position: "relative",
     };
+    const beanCodeStyle = {
+      width: Taro.pxTransform(688),
+      height: Taro.pxTransform(240),
+      margin: `${Taro.pxTransform(24)} auto  0`,
+      position: "relative",
+    };
     let templateObj = {
+      beanSpecialArea: (
+        <Banner
+          imgName="coverImg"
+          data={[...beanCodeList]}
+          bottom={bottomContent}
+          boxStyle={beanCodeStyle}
+          showNear
+        ></Banner>
+      ),
       mainBanner: (
         <Banner
           imgName="coverImg"
@@ -670,7 +685,7 @@ class Index extends Component {
         <GameGoods
           userInfo={configUserLevelInfo}
           linkTo={this.saveRouter.bind(this)}
-          data={kolGoodsList}
+          data={selfTourResourceList}
         ></GameGoods>
       ),
       selfTourResource: (

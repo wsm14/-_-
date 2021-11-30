@@ -139,9 +139,9 @@ class MerchantDetails extends Component {
               index: index + 1,
             },
             (res) => {
-              const { rightFlag, paymentModeObject } = specialGoodsInfo;
-              const { type } = paymentModeObject;
-              if (!(rightFlag === "1" && type === "defaultMode")) {
+              const { rightFlag, paymentModeObject, activityType } =
+                specialGoodsInfo;
+              if (!(rightFlag === "1" || activityType === "commerceGoods")) {
                 this.fetchConfig();
               }
             }
@@ -266,6 +266,7 @@ class MerchantDetails extends Component {
             ...specialGoodsInfo,
             weChatImg: res.frontImage,
             weChatTitle: res.title,
+            weChatUrl: res.miniProgramUrl,
           },
         });
       }
@@ -273,7 +274,7 @@ class MerchantDetails extends Component {
   }
   onShareAppMessage(res) {
     const {
-      specialGoodsInfo: { goodsName, weChatImg, weChatTitle },
+      specialGoodsInfo: { goodsName, weChatImg, weChatTitle, weChatUrl },
       specialGoodsInfo,
       httpData: { merchantId, specialActivityId },
     } = this.state;
@@ -284,14 +285,18 @@ class MerchantDetails extends Component {
       return {
         title: weChatTitle || goodsName,
         imageUrl: weChatImg || img,
-        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+        path:
+          weChatUrl ||
+          `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     }
     if (loginStatus()) {
       return {
         title: goodsName,
         imageUrl: img,
-        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+        path:
+          weChatUrl ||
+          `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     } else {
       return {
@@ -366,11 +371,12 @@ class MerchantDetails extends Component {
         boughtActivityGoodsNum,
         buyRule,
         specialActivityIdString,
-        rightFlag,
         paymentModeObject,
         userBean,
+        activityType,
       },
     } = this.state;
+    const { bean, type } = paymentModeObject;
     if (buyRule === "dayLimit" && dayMaxBuyAmount === boughtActivityGoodsNum) {
       this.setState({
         visible: true,
@@ -384,8 +390,7 @@ class MerchantDetails extends Component {
         visible: true,
       });
       return;
-    } else if (rightFlag === "1") {
-      const { bean, cash } = paymentModeObject;
+    } else if (type !== "defaultMode") {
       if (userBean < bean) {
         this.setState({
           drawerVisible: true,
@@ -393,13 +398,23 @@ class MerchantDetails extends Component {
         return;
       }
     }
-    Router({
-      routerName: "favourableOrder",
-      args: {
-        merchantId: merchantIdString,
-        specialActivityId: specialActivityIdString,
-      },
-    });
+    if (activityType === "commerceGoods") {
+      Router({
+        routerName: "commerOrder",
+        args: {
+          merchantId: merchantIdString,
+          specialActivityId: specialActivityIdString,
+        },
+      });
+    } else {
+      Router({
+        routerName: "favourableOrder",
+        args: {
+          merchantId: merchantIdString,
+          specialActivityId: specialActivityIdString,
+        },
+      });
+    }
   }
   onPullDownRefresh() {
     Taro.stopPullDownRefresh();
@@ -444,6 +459,8 @@ class MerchantDetails extends Component {
         paymentModeObject = {},
         goodsImg,
         richText,
+        activityType,
+        commission,
       },
       visible,
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
@@ -461,7 +478,7 @@ class MerchantDetails extends Component {
     const { beanLimitStatus } = this.props.store.homeStore;
     const { beanLimit } = this.props.store.commonStore;
     const shareInfoBtn = () => {
-      if (shareCommission > 0 && rightFlag !== "1") {
+      if (shareCommission > 0 && commission > 0 && rightFlag !== "1") {
         return (
           <ButtonView
             data={{
@@ -476,9 +493,7 @@ class MerchantDetails extends Component {
             >
               <View className="shop_price_font">
                 <View>分享赚</View>
-                <View>
-                  ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
-                </View>
+                <View>¥{computedPrice(commission, shareCommission)}</View>
               </View>
             </View>
           </ButtonView>
@@ -525,7 +540,7 @@ class MerchantDetails extends Component {
             {shareInfoBtn()}
           </View>
         );
-      } else if (shareCommission !== 0 && rightFlag !== "1") {
+      } else if (shareCommission !== 0 && rightFlag !== "1" && commission > 0) {
         return (
           <View className="shopdetails_shop_btnBox">
             <ButtonView
@@ -541,9 +556,7 @@ class MerchantDetails extends Component {
               >
                 <View className="shop_price_font">
                   <View>自购返</View>
-                  <View>
-                    ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
-                  </View>
+                  <View>¥{computedPrice(commission, shareCommission)}</View>
                 </View>
               </View>
             </ButtonView>
@@ -560,7 +573,6 @@ class MerchantDetails extends Component {
                 name: "商品详情购买",
               }}
             >
-              {" "}
               <View
                 className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"
                 onClick={() => loginBtn(() => this.saveGoodsOrder())}
@@ -609,13 +621,12 @@ class MerchantDetails extends Component {
             </View>
             <View className="shopdetails_beanTitleName public_auto">
               <View className="shopdetails_beanTitle_name font_fourHide">
-                {" "}
                 {goodsName}
               </View>
             </View>
           </View>
         );
-      } else if (rightFlag === "1" && type !== "defaultMode") {
+      } else if (type !== "defaultMode") {
         return (
           <View className="shopdetails_getShop">
             <View className="favourInfo_box">
@@ -630,18 +641,21 @@ class MerchantDetails extends Component {
                 ¥{oriPrice}
               </Text>
             </View>
+
             <View className="shopdetails_beanTitleName public_auto">
               <View className="shopdetails_beanTitle_name font_fourHide">
                 {goodsName}
               </View>
-              <View
-                onClick={() => this.setCollection()}
-                className={classNames(
-                  userCollectionStatus === "1"
-                    ? "shopdetails_isCollect"
-                    : "shopdetails_collect"
-                )}
-              ></View>
+              {activityType !== "commerceGoods" && (
+                <View
+                  onClick={() => this.setCollection()}
+                  className={classNames(
+                    userCollectionStatus === "1"
+                      ? "shopdetails_isCollect"
+                      : "shopdetails_collect"
+                  )}
+                ></View>
+              )}
             </View>
             <View className="shopdetails_bean_handerRight">
               {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
@@ -682,14 +696,16 @@ class MerchantDetails extends Component {
                 {" "}
                 {goodsName}
               </View>
-              <View
-                onClick={() => this.setCollection()}
-                className={classNames(
-                  userCollectionStatus === "1"
-                    ? "shopdetails_isCollect"
-                    : "shopdetails_collect"
-                )}
-              ></View>
+              {activityType !== "commerceGoods" && (
+                <View
+                  onClick={() => this.setCollection()}
+                  className={classNames(
+                    userCollectionStatus === "1"
+                      ? "shopdetails_isCollect"
+                      : "shopdetails_collect"
+                  )}
+                ></View>
+              )}
             </View>
             <View className="shopdetails_bean_handerRight">
               {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
@@ -725,7 +741,10 @@ class MerchantDetails extends Component {
                 boxStyle={{ width: "100%", height: "100%" }}
               ></Banner>
             </View>
-            {!(rightFlag === "1" && type === "defaultMode") && (
+            {!(
+              (rightFlag === "1" && type === "defaultMode") ||
+              activityType === "commerceGoods"
+            ) && (
               <View className="shopDetails_activeStatus">
                 <View className="shopDetails_avtiveLogo"></View>
                 <View className="shopDetails_avtiveTime">{template()}</View>
@@ -739,15 +758,17 @@ class MerchantDetails extends Component {
               data={specialGoodsInfo}
             ></Card>
             {/*保障*/}
-            <Merchant
-              serviceType={"specialGoods"}
-              data={specialGoodsInfo}
-              ownerServiceId={specialActivityIdString}
-            ></Merchant>
-
-            {!(rightFlag === "1" && type === "defaultMode") && (
-              <ShareView urlLink={urlLink} data={resultInfo}></ShareView>
+            {activityType !== "commerceGoods" && (
+              <Merchant
+                serviceType={"specialGoods"}
+                data={specialGoodsInfo}
+                ownerServiceId={specialActivityIdString}
+              ></Merchant>
             )}
+            {!(
+              (rightFlag === "1" && type === "defaultMode") ||
+              activityType === "commerceGoods"
+            ) && <ShareView urlLink={urlLink} data={resultInfo}></ShareView>}
             {goodsType === "package" && (
               <View className="shopdetails_shop_packageGroup">
                 <View className="shopdetails_shop_groupTitle">套餐详情</View>
@@ -820,14 +841,16 @@ class MerchantDetails extends Component {
               </View>
             )}
             {/*使用须知*/}
-            {knowPay(specialGoodsInfo)}
+            {activityType !== "commerceGoods" && knowPay(specialGoodsInfo)}
             {/*使用方法*/}
-            <Rule></Rule>
-            <Recommend
-              current={true}
-              defaultData={specialGoodsInfo}
-              userInfo={configUserLevelInfo}
-            ></Recommend>
+            {activityType !== "commerceGoods" && <Rule></Rule>}
+            {activityType !== "commerceGoods" && (
+              <Recommend
+                current={true}
+                defaultData={specialGoodsInfo}
+                userInfo={configUserLevelInfo}
+              ></Recommend>
+            )}
             <VideoBean
               visible={beanLimitStatus === "1"}
               beanLimit={beanLimit}
@@ -841,7 +864,7 @@ class MerchantDetails extends Component {
             ></VideoBean>
             {!(rightFlag === "1" && type === "defaultMode") && (
               <View className="shopdetails_shop_btn">
-                {rightFlag === "1" ? (
+                {type !== "defaultMode" ? (
                   <View className="shopdetails_shop_price">
                     <View className="shopdetails_shop_priceTop bold">
                       <Text className="font20">¥</Text>

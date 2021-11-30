@@ -209,9 +209,6 @@ class Index extends Component {
     const { orderInfo } = this.state;
     that.props.store.goodsStore.updateList(orderInfo, "orderSn");
   }
-
-  onError(msg) {}
-
   render() {
     const {
       orderInfo,

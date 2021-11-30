@@ -379,3 +379,26 @@ export const fetchShareConfig = (data = {}, fn) => {
   );
 };
 //获取分享配置
+
+export const fetchGetAdderssInfo = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/aliyun/address/getAliyunAddressInfo",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 粘贴获取地址识别接口;
+export const getRestapiCode = (data, fn) => {
+  httpOtherGet(
+    {
+      data: data,
+      url: "https://restapi.amap.com/v3/geocode/geo",
+    },
+    (res) => {
+      return fn(res);
+    }
+  );
+};
+//获取高德城市定位信息

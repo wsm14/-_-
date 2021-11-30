@@ -6,16 +6,31 @@ import {
   Text as TextBlock,
   Textarea,
 } from "@/relay/components/FormCondition";
+import Taro from "@tarojs/taro";
 import { checkCityName } from "@/relay/common/utils";
 import Drawer from "@/relay/components/layerlayout";
 import CitySelect from "@/relay/components/FormCondition/MreCity/CitySelect";
-import { computedSize, getLat, getLnt, toast, mapSelect } from "@/common/utils";
+import {
+  computedSize,
+  getLat,
+  getLnt,
+  toast,
+  mapSelect,
+  resiApiKey,
+} from "@/common/utils";
 import FooterFixed from "@/relay/components/FooterFixed";
 import { getAuthStatus } from "@/common/authority";
+import {
+  getRestapiCode,
+  getRestapiAddress,
+  fetchGetAdderssInfo,
+} from "@/server/common";
 import evens from "@/common/evens";
 import { useEffect } from "react";
-const FormItem = Form.Item;
+import up from "./up.png";
+import down from "./down.png";
 
+const FormItem = Form.Item;
 export default (props) => {
   const {
     show = false,
@@ -28,6 +43,9 @@ export default (props) => {
   } = props;
   const [cityVisible, setCityVisible] = useState(false);
   const [data, setData] = useState({});
+  const [hiddenAddress, setHiddenAddress] = useState(false);
+  const [cobyAddress, setCobyAddress] = useState("");
+
   useEffect(() => {
     setData({ ...defaultData });
   }, [defaultData]);
@@ -43,29 +61,94 @@ export default (props) => {
     districtName,
     provinceName,
   } = data;
+
   const setAddress = (e) => {
-    const { addressName = "", mobile = "", address = "" } = e.detail.value;
+    const { cobyAddress, ...ohter } = e.detail.value;
+    const { addressName = "", mobile = "", address = "" } = ohter;
     if (
-      addressName.length === 0 ||
-      mobile.length === 0 ||
-      address.length === 0 ||
-      !cityCode
+      (addressName.length === 0 &&
+        mobile.length === 0 &&
+        (address.length === 0 || !cityCode)) ||
+      !checkCityName(districtCode).length
     ) {
       return toast("请把信息填写完整后提交");
     } else {
       if (type === "edit") {
-        onSubmit({ lat: getLat(), lnt: getLnt(), ...data, ...e.detail.value });
-      } else {
-        console.log(type);
-        fakeUpDate({
-          lat: getLat(),
-          lnt: getLnt(),
+        onSubmit({
           ...data,
-          ...e.detail.value,
+          ...ohter,
+        });
+      } else {
+        fakeUpDate({
+          ...data,
+          ...ohter,
         });
       }
     }
   };
+
+  // 智能识别地址信息
+  const fetchGetAddress = (cobyAddress) => {
+    if (cobyAddress)
+      fetchGetAdderssInfo({ address: cobyAddress }, (res = {}) => {
+        const { addressInfo = {} } = res;
+        const {
+          username: addressName,
+          phone: mobile,
+          districtName,
+          provinceName,
+          cityName,
+          address,
+          ...ohter
+        } = addressInfo;
+        setData({ ...ohter, mobile, addressName });
+        // 根据地址获取经纬度
+        getRestapiCode(
+          {
+            address: provinceName + cityName + districtName + address,
+            key: resiApiKey,
+          },
+          (val) => {
+            const { geocodes = [] } = val;
+            if (geocodes.length > 0) {
+              const { location = "" } = geocodes[0];
+              setData((old) => ({
+                ...old,
+                address,
+                lat: location.split(",")[1] || getLat(),
+                lnt: location.split(",")[0] || getLnt(),
+              }));
+            } else {
+              toast("区县码无法获取，请手动填写信息");
+            }
+          }
+        );
+      });
+  };
+
+  const checkLntLat = (value) => {
+    const { lnt, lat } = value;
+    // 逆地理位置解析 获取用户当前所在地省市区
+    getRestapiAddress(
+      {
+        location: `${lnt},${lat}`,
+        key: resiApiKey,
+      },
+      (val) => {
+        console.log(val, val.infocode, val.regeocode);
+        const { addressComponent } = val.regeocode;
+        const { adcode } = addressComponent;
+        setData({
+          ...data,
+          ...value,
+          districtCode: adcode,
+          provinceCode: adcode.slice(0, 2),
+          cityCode: adcode.slice(0, 4),
+        });
+      }
+    );
+  };
+
   const extra = () => {
     return (
       <View
@@ -76,7 +159,7 @@ export default (props) => {
             key: "location",
             success: (res) => {
               mapSelect((val) => {
-                setData({ ...data, ...val });
+                checkLntLat(val);
               });
             },
             fail: (res) => {
@@ -90,6 +173,7 @@ export default (props) => {
       </View>
     );
   };
+
   const bottomBtn = {
     edit: (
       <FooterFixed>
@@ -117,14 +201,29 @@ export default (props) => {
       </FooterFixed>
     ),
   }[type];
+
+  const hiddenAiAddress = () => (
+    <View className="hiddenAiAddress_box">
+      <Image
+        src={hiddenAddress ? down : up}
+        className="hiddenAiAddress_icon"
+        onClick={() => setHiddenAddress(!hiddenAddress)}
+      ></Image>
+    </View>
+  );
+
   return (
     <>
       <Drawer
         title={type === "edit" ? "添加收货地址" : "编辑地址"}
         show={show}
         height={586}
-        overflow={true}
-        onClose={() => onClose()}
+        overflow={false}
+        onClose={() => {
+          setHiddenAddress(false);
+          setCobyAddress("");
+          onClose();
+        }}
       >
         <Form onSubmit={(e) => setAddress(e)} footer={false}>
           <FormItem linerFlag={false} label={"收货人"}>
@@ -134,13 +233,69 @@ export default (props) => {
               style={{ textAlign: "left" }}
               maxLength={20}
               value={addressName}
+              suffix={
+                <Button
+                  className="link_wx public_center"
+                  onClick={() =>
+                    Taro.chooseAddress({
+                      success(res) {
+                        const {
+                          cityName,
+                          countyName,
+                          detailInfo,
+                          provinceName,
+                          telNumber,
+                          userName,
+                        } = res;
+                        console.log(res);
+                        getRestapiCode(
+                          {
+                            address:
+                              provinceName + cityName + countyName + detailInfo,
+                            key: resiApiKey,
+                          },
+                          (val) => {
+                            const { geocodes = [] } = val;
+                            if (geocodes.length > 0) {
+                              console.log(geocodes);
+                              const {
+                                adcode = "",
+                                district,
+                                location = "",
+                              } = geocodes[0];
+                              // 钱塘区强行转换编码为正确位置
+                              const districtCode =
+                                district === "钱塘区" ? "330114" : adcode;
+                              setData({
+                                ...data,
+                                mobile: telNumber,
+                                address: detailInfo,
+                                districtCode: districtCode,
+                                provinceCode: districtCode.slice(0, 2),
+                                cityCode: districtCode.slice(0, 4),
+                                addressName: userName,
+                                lat: location.split(",")[1] || getLat(),
+                                lnt: location.split(",")[0] || getLnt(),
+                              });
+                            } else {
+                              toast("区县码无法获取，请手动填写信息");
+                            }
+                          }
+                        );
+                      },
+                    })
+                  }
+                >
+                  从微信读取
+                </Button>
+              }
             ></Input>
           </FormItem>
           <FormItem linerFlag={false} label={"联系电话"}>
             <Input
               name={"mobile"}
               placeholder={"请输入联系电话"}
-              maxLength={11}
+              maxLength={19}
               style={{ textAlign: "left" }}
               type={"number"}
               value={mobile}
@@ -169,6 +324,38 @@ export default (props) => {
               style={{ textAlign: "left", maxWidth: 227 }}
               value={address}
             ></Input>
+          </FormItem>
+          <FormItem
+            label={"智能填写"}
+            linerFlag={false}
+            after={hiddenAiAddress}
+            vertical
+          >
+            {hiddenAddress ? null : (
+              <Textarea
+                name={"cobyAddress"}
+                value={cobyAddress}
+                className="hiddenAiAddress_Textarea"
+                onBlur={fetchGetAddress}
+                onConfirm={fetchGetAddress}
+                TextExirt={() => (
+                  <View
+                    className="hiddenAiAddress_coby"
+                    onClick={() => {
+                      Taro.getClipboardData({
+                        success: function (res) {
+                          setCobyAddress(res?.data || "");
+                          fetchGetAddress(res?.data || "");
+                        },
+                      });
+                    }}
+                  >
+                    粘贴
+                  </View>
+                )}
+                placeholder="请粘贴收货信息，如“张三 18888888888 广东省广州市天河区西西大街123号”，将自动为您拆分"
+              ></Textarea>
+            )}
           </FormItem>
           <View className="extra_liners"></View>
           {bottomBtn}

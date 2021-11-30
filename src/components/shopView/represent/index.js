@@ -7,7 +7,7 @@ import "./index.scss";
 
 export default (props) => {
   const { data, configUserLevelInfo } = props;
-  const { allowExpireRefund, allowRefund, needOrder } = data;
+  const { allowExpireRefund, allowRefund, needOrder, activityType } = data;
   const {
     payBeanCommission = 50,
     shareCommission = 0,
@@ -25,40 +25,43 @@ export default (props) => {
   };
   return (
     <View className="represent_box">
-      <View className="represent_buy_rules">
-        <View className="represent_buy_rulesName">保障</View>
+      {activityType !== "commerceGoods" && (
+        <View className="represent_buy_rules">
+          <View className="represent_buy_rulesName">保障</View>
 
-        {needOrder === "0" && (
-          <>
-            <View className="shopDetails_tab_icon"></View>
-            <View className="shopDetails_tab_font">免预约</View>
-          </>
-        )}
+          {needOrder === "0" && (
+            <>
+              <View className="shopDetails_tab_icon"></View>
+              <View className="shopDetails_tab_font">免预约</View>
+            </>
+          )}
 
-        {allowRefund === "1" && (
+          {allowRefund === "1" && (
+            <>
+              <View className="shopDetails_tab_icon"></View>
+              <View className="shopDetails_tab_font">随时退</View>
+            </>
+          )}
+          {allowExpireRefund === "1" && (
+            <>
+              <View className="shopDetails_tab_icon"></View>
+              <View className="shopDetails_tab_font">过期退</View>
+            </>
+          )}
           <>
             <View className="shopDetails_tab_icon"></View>
-            <View className="shopDetails_tab_font">随时退</View>
+            <View className="shopDetails_tab_questionRight color2 font24">
+              卡豆抵扣
+              <Text className="color11 font24">{payBeanCommission + "%"}</Text>
+            </View>
           </>
-        )}
-        {allowExpireRefund === "1" && (
-          <>
-            <View className="shopDetails_tab_icon"></View>
-            <View className="shopDetails_tab_font">过期退</View>
-          </>
-        )}
-        <>
-          <View className="shopDetails_tab_icon"></View>
-          <View className="shopDetails_tab_questionRight color2 font24">
-            卡豆抵扣
-            <Text className="color11 font24">{payBeanCommission + "%"}</Text>
-          </View>
-        </>
-        <View
-          onClick={() => Router({ routerName: "interests" })}
-          className="shop_question question_icon"
-        ></View>
-      </View>
+          <View
+            onClick={() => Router({ routerName: "interests" })}
+            className="shop_question question_icon"
+          ></View>
+        </View>
+      )}
+
       {level === "2.4" ? null : (
         <View
           className="represent_buy_lever public_auto"

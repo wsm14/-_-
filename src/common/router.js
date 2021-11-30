@@ -71,15 +71,18 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     abnormalStatus: "/pages/perimeter/abnormalStatus/index", //打卡状态： 超过距离
     tipView: "/pages/perimeter/tipView/index",
     payCouponList: "/pages/perimeter/couponList/index", //有价券列表
-    //周边
+    commer: "/pages/perimeter/commer/index", //电商商品
 
+    commerceShopGoods: "/pages/goods/commerceShopGoods/index", //电商商品订单详情
     codeGoodDetails: "/pages/goods/getShopGoods/index", //扫码订单详情
     kolShopGoods: "/pages/goods/kolShopGoods/index", //支付订单详情
     codePay: "/pages/goods/codePay/index", //
     coupon: "/pages/goods/codeCoupon/index",
     couponOrder: "/pages/goods/couponOrder/index",
-    favourableOrder: "/pages/goods/favourOrder/index",
+    favourableOrder: "/pages/goods/favourOrder/index", //商品下单
+    commerOrder: "/pages/goods/commerOrder/index", //特惠商品下单
     pay: "/pages/goods/payWeex/index", //支付页
+    xnPay: "/pages/goods/code_wx_pay/index",
     rechargeOrder: "/pages/goods/rechargeOrder/index", //话费支付页
     recharge: "/pages/perimeter/recharge/index", //话费充值
     prefecture: "/pages/perimeter/prefecture/index", //卡豆专区

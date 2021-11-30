@@ -457,6 +457,8 @@ export const filterPayStatus = (string, type = "") => {
     return "订单已过期";
   } else if (type === "manualRefund" && string === "6") {
     return "申请退款中";
+  } else if (type === "manualRefund") {
+    return "退款已完成";
   } else {
     switch (string) {
       case "0":

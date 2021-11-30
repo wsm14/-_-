@@ -8,6 +8,8 @@ export default ({
   maxLength,
   disabled,
   onInput,
+  onBlur,
+  onConfirm,
   placeholder,
   TextareaClassName,
   TextExirt,
@@ -50,6 +52,12 @@ export default ({
             setData(e.detail.value);
             setTotalNum(e.detail.value.length);
             onInput && onInput(e.detail.value);
+          }}
+          onBlur={(e) => {
+            onBlur && onBlur(e.detail.value);
+          }}
+          onConfirm={(e) => {
+            onConfirm && onConfirm(e.detail.value);
           }}
         ></Textarea>
         {TextExirt && TextExirt()}

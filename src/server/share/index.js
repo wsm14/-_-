@@ -235,3 +235,11 @@ export const fetchInvitationUser = (data, fn) => {
   );
 };
 //助力請求
+
+export const fetchFormMomentDetail = (data = {}, fn) => {
+  return httpGet({
+    url: "/user/moment/platformMoment/getPlatformMomentDetail",
+    data: data,
+  });
+};
+//平台广告视频详情

@@ -58,7 +58,6 @@ class Index extends Component {
       },
       (res) => {
         const { orderResult } = res;
-        console.log(filterGoods(orderResult));
         this.setState({
           orderResult: filterGoods(orderResult),
         });
@@ -94,11 +93,7 @@ class Index extends Component {
         },
         (res) => {
           const { beanLimitStatus } = this.props.store.homeStore;
-          if (
-            taskStatus === "0" ||
-            taskStatus === "1" ||
-            beanLimitStatus === "1"
-          ) {
+          if (taskStatus === "0" || taskStatus === "1") {
             this.setState({ visible: true });
           }
         }

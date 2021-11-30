@@ -54,11 +54,7 @@ class Index extends Component {
         },
         (res) => {
           const { beanLimitStatus } = this.props.store.homeStore;
-          if (
-            taskStatus === "0" ||
-            taskStatus === "1" ||
-            beanLimitStatus === "1"
-          ) {
+          if (taskStatus === "0" || taskStatus === "1") {
             this.setState({ visible: true });
           }
         }
@@ -144,6 +140,14 @@ class Index extends Component {
                 {" " + totalFee}
               </Text>
             </View>
+            {orderType === "commerceGoods" && typeof orderDesc === "string" && (
+              <View className="code_scanPay_decBox  code_scanPay_decMargin public_auto font24">
+                <View className="color2">商品</View>
+                <View className="color1 font_hide code_scanPay_Max">
+                  {JSON.parse(orderDesc).commerceGoods.goodsName}
+                </View>
+              </View>
+            )}
             {orderType === "virtualProduct" && typeof orderDesc === "string" && (
               <View className="code_scanPay_decBox  code_scanPay_decMargin public_auto font24">
                 <View className="color2">商品</View>
@@ -177,11 +181,17 @@ class Index extends Component {
             <View className="code_scanPay_btnBox">
               <View
                 className="code_scanPay_btn btn_style1"
-                onClick={() =>
-                  redirectTo(
-                    `/pages/goods/getShopGoods/index?orderSn=${orderSn}`
-                  )
-                }
+                onClick={() => {
+                  if (orderType === "commerceGoods") {
+                    redirectTo(
+                      `/pages/goods/commerceShopGoods/index?orderSn=${orderSn}`
+                    );
+                  } else {
+                    redirectTo(
+                      `/pages/goods/getShopGoods/index?orderSn=${orderSn}`
+                    );
+                  }
+                }}
               >
                 {" "}
                 查看订单

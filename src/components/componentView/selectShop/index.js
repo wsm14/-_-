@@ -107,6 +107,7 @@ export const gameShop = (item, userInfo, linkTo) => {
     discount,
     merchantIdString,
     ownerIdString,
+    commission,
   } = item;
   return (
     <View
@@ -134,7 +135,7 @@ export const gameShop = (item, userInfo, linkTo) => {
             <View className="font22 color3 price_margin4">
               /赚
               <Text className="bold">
-                ¥{computedPrice(realPrice - merchantPrice, shareCommission)}
+                ¥{computedPrice(commission, shareCommission)}
               </Text>
             </View>
           )}

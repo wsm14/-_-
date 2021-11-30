@@ -1121,6 +1121,211 @@ export default (props) => {
       </View>
     );
   };
+
+  const createCommerceGoods = (item) => {
+    let {
+      payFee,
+      orderDesc = "",
+      orderSn,
+      orderType,
+      status,
+      closeType,
+      createTime,
+      beanFee,
+      payTime,
+    } = item;
+    orderDesc = orderDesc && JSON.parse(orderDesc);
+    const {
+      commerceGoods = {},
+      merchantName,
+      merchantIdString,
+      relateId,
+      relateType,
+      ownerIdString,
+    } = orderDesc;
+    const { goodsImg, goodsName, goodsCount, activityIdString, useEndTime } =
+      commerceGoods;
+    const createBottom = () => {
+      return {
+        0: (
+          <View className="createGood_bottom">
+            <View className="createGood_btn_style">
+              <View className="createGood_btn_left">
+                待付款：
+                <Text style={{ color: "rgba(51, 51, 51, 1)" }}>
+                  {
+                    <InterTime
+                      fn={() => updateStatus(item)}
+                      times={createTime}
+                    ></InterTime>
+                  }
+                </Text>
+              </View>
+              <View
+                className="createGood_btn_right createGood_btn_color1"
+                onClick={() =>
+                  Router({
+                    routerName: "xnPay",
+                    args: {
+                      orderSn: orderSn,
+                      orderType: orderType,
+                    },
+                  })
+                }
+              >
+                去付款
+              </View>
+            </View>
+          </View>
+        ),
+        1: (
+          <View className="createGood_bottom">
+            <View className="createGood_btn_style">
+              <View className="createGood_btn_left"></View>
+              <View
+                className="createGood_btn_right createGood_btn_color1"
+                onClick={() =>
+                  Router({
+                    routerName: "favourableDetails",
+                    args: {
+                      merchantId: ownerIdString,
+                      specialActivityId: activityIdString,
+                    },
+                  })
+                }
+              >
+                再次购买
+              </View>
+            </View>
+          </View>
+        ),
+        2: (
+          <View className="createGood_bottom">
+            <View className="createGood_btn_style">
+              <View className="createGood_btn_left"></View>
+              <View
+                className="createGood_btn_right createGood_btn_color1"
+                onClick={() =>
+                  Router({
+                    routerName: "favourableDetails",
+                    args: {
+                      merchantId: ownerIdString,
+                      specialActivityId: activityIdString,
+                    },
+                  })
+                }
+              >
+                重新购买
+              </View>
+            </View>
+          </View>
+        ),
+        3: (
+          <View className="createGood_bottom">
+            <View className="createGood_btn_style">
+              <View className="createGood_btn_left"></View>
+              <View
+                className="createGood_btn_right createGood_btn_color1"
+                onClick={() =>
+                  Router({
+                    routerName: "favourableDetails",
+                    args: {
+                      merchantId: ownerIdString,
+                      specialActivityId: activityIdString,
+                    },
+                  })
+                }
+              >
+                再次购买
+              </View>
+            </View>
+          </View>
+        ),
+        6: (
+          <View className="createGood_bottom">
+            <View className="createGood_btn_style">
+              <View className="createGood_btn_left"></View>
+              <View
+                className="createGood_btn_right createGood_btn_color2"
+                onClick={() =>
+                  Router({
+                    routerName: "commerceShopGoods",
+                    args: {
+                      orderSn: orderSn,
+                    },
+                  })
+                }
+              >
+                查看
+              </View>
+            </View>
+          </View>
+        ),
+      }[status];
+    };
+    //按钮
+    return (
+      <View className="createGood_box">
+        <View className="createGood_title">
+          <View className="createGood_title_box">
+            <View className="createGood_iconBox createGood_bg2">精选好物</View>
+            <View
+              className={classNames(
+                "createGood_status",
+                filterPayColor(status)
+              )}
+            >
+              {filterPayStatus(status, closeType) === "待核销"
+                ? "待发货"
+                : filterPayStatus(status, closeType)}
+            </View>
+          </View>
+        </View>
+        <View
+          className="createGood_content"
+          onClick={() =>
+            Router({
+              routerName: "commerceShopGoods",
+              args: {
+                orderSn: orderSn,
+              },
+            })
+          }
+        >
+          <View className="createdGood_details_box">
+            <View
+              className="createdGood_details_image merchant_dakale_logo"
+              style={goodsImg ? backgroundObj(goodsImg) : {}}
+            ></View>
+            <View className="createdGood_details_setting">
+              <View className="createdGood_details_title bold font_hide">
+                {goodsName}
+              </View>
+              <View className="createdGood_details_time">
+                {payTime ? `支付时间：${payTime}` : `创建时间：${createTime}`}
+              </View>
+              {beanFee > 0 && (status === "1" || status === "3") && (
+                <View className="createdGood_details_color">
+                  卡豆帮省{" "}
+                  <Text className="bold">¥{(beanFee / 100).toFixed(2)}</Text>
+                </View>
+              )}
+            </View>
+            <View className="createdGood_details_price">
+              <Text className="createdGood_details_priceFont1">¥</Text>
+              <Text className="createdGood_details_priceFont2">
+                {" " + payFee.split(".")[0]}
+              </Text>
+              <Text className="createdGood_details_priceFont3">
+                {payFee.split(".")[1] && `.${payFee.split(".")[1]}`}
+              </Text>
+            </View>
+          </View>
+        </View>
+        {createBottom()}
+      </View>
+    );
+  };
   const templateObj = {
     scan: createCodeGoods,
     specialGoods: createShopGoods,
@@ -1128,6 +1333,7 @@ export default (props) => {
     virtualProduct: createVirtualProduct,
     rightCoupon: createRightCoupon,
     rightGoods: createRightGoods,
+    commerceGoods: createCommerceGoods,
   };
   //订单支付渲染模板
   return (
