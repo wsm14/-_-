@@ -244,7 +244,7 @@ export default (props) => {
                     })}
                   </View>
                   <View
-                    className="dakale_gift_btn public_center"
+                    className="dakale_close_btn public_center"
                     onClick={(e) => {
                       e.stopPropagation();
                       visible();

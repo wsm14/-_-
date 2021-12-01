@@ -678,7 +678,7 @@ class MerchantDetails extends Component {
           {getBeanStatus && (
             <Toast
               data={{
-                beanAmount:
+                tippingBean:
                   getCurrentInstance().router.params.beanAmount || "0",
               }}
               show={getBeanStatus}
