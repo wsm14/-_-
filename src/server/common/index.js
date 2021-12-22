@@ -402,3 +402,15 @@ export const getRestapiCode = (data, fn) => {
   );
 };
 //获取高德城市定位信息
+export const fetchNewShareInfo = (data, fn) => {
+  return httpGet(
+    {
+      data: data,
+      url: "/common/share/getNewShareInfo",
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取新分享配置

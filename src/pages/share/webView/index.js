@@ -44,6 +44,7 @@ class Index extends Component {
   }
   render() {
     const { link } = this.state;
+    console.log(link);
     return (
       <View className="record_box">
         <WebView src={`${link}?${this.filterUrl()}`} />

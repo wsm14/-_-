@@ -15,6 +15,7 @@ export default (props) => {
   const template = {
     home: <View className="empty_img_home  empty_img_box"></View>,
     error: <View className="empty_img_error  empty_img_box"></View>,
+    shop: <View className="empty_img_nullShop  empty_img_box"></View>,
   }[type];
   if (show) {
     return (

@@ -54,3 +54,24 @@ export const fetchListBlindBoxReward = (data = {}) => {
   });
 };
 //抽取盲盒
+export function fetchGetMyPrizeRecord(data) {
+  return httpGet({
+    data: data,
+    url: "/user/package/listUserPackage",
+  });
+}
+// _post 领取实物商品
+export function fetchGetPackagePrize(data) {
+  return httpPost({
+    data: data,
+    url: "/user/package/finishUserPackage",
+  });
+}
+
+// _post 领取电商品
+export function fetchGetOnlinePackagePrize(data) {
+  return httpPost({
+    data: data,
+    url: "/user/package/onlineGoodsAddress",
+  });
+}

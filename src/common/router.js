@@ -34,6 +34,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     home: "/pages/index/home/index", //首页
     takeCard: "/pages/index/takeCard/index", //打卡地图
     user: "/pages/index/user/index", //首页个人
+    sign: "/pages/index/sign/index", //首页
 
     //tab页面和分享
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
@@ -111,6 +112,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     webView: "/pages/share/webView/index", //内嵌h5
     shareActive: "/pages/share/shareActive/index", //活动页
     shareUser: "/pages/share/shareUser/index", //活动助力页面
+    shareFriend: "/pages/share/shareFriend/index", //分享赚豆
     userNewArtist: "/pages/share/userNewArtist/index", //新人红包
     Grab: "/pages/share/Grab/index", //领取他人红包
 

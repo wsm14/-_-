@@ -1,0 +1,95 @@
+.myPrize_cell {
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 8px;
+  & + .myPrize_cell {
+    margin-top: 16px;
+  }
+  .myPrize_detail {
+    display: flex;
+    align-items: center;
+    .myPrize_img {
+      position: relative;
+      width: 152px;
+      height: 152px;
+      background: #f8f2e9;
+      background-size: cover;
+      background-position: center;
+      border-radius: 4px;
+      margin-right: 24px;
+      &.beanAd::before,
+      &.beanCheck::before {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        text-align: center;
+        font-size: 24px;
+        color: #ffffff;
+        height: 30px;
+        border-radius: 0px 0px 4px 4px;
+      }
+      &.beanAd::before {
+        content: "广告奖励";
+        background: #ef476f;
+      }
+      &.beanCheck::before {
+        content: "打卡奖励";
+        background: #07c0c2;
+      }
+    }
+    .myPrize_info {
+      flex: 1;
+      overflow: hidden;
+      height: 136px;
+      .myPrize_name {
+        line-height: 1;
+        font-size: 32px;
+        font-weight: 600;
+        color: #333333;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .myPrize_num {
+        line-height: 1;
+        margin-top: 16px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+      }
+      .myPrize_tip {
+        line-height: 1;
+        margin-top: 40px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+      }
+    }
+  }
+  .myPrize_footer {
+    display: flex;
+    .myPrize_footer_time {
+      margin-top: 24px;
+      flex: 1;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+    }
+    .myPrize_footer_btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 176px;
+      height: 52px;
+      border-radius: 26px;
+      border: 1px solid #ef476f;
+      font-size: 28px;
+      color: #ef476f;
+      &.none {
+        border: 1px solid #999999;
+        color: #999999;
+      }
+    }
+  }
+}
