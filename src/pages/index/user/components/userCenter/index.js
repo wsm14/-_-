@@ -107,16 +107,9 @@ export default ({ bannerList }) => {
           }),
       },
       {
-        style: "users_setting_icon4",
-        font: "实名认证",
-        fn: () =>
-          Router({
-            routerName: "realName",
-          }),
-      },
-      {
         style: "users_setting_icon1",
         font: "微信客服",
+        type: "connet",
       },
       {
         style: "users_setting_icon3",
@@ -149,7 +142,7 @@ export default ({ bannerList }) => {
       <View className="users_ourSetting_bg">
         <View className="users_setting_bg public_auto">
           {listTem.map((item, index) => {
-            if (index === 0) {
+            if (item.type) {
               return (
                 <View
                   className="users_set_box"
@@ -190,11 +183,35 @@ export default ({ bannerList }) => {
   };
   return (
     <View className="user_centerBar_box">
-      <BeanBar></BeanBar>
+      {/* <BeanBar></BeanBar> */}
+      <View className="user_bottom_share public_auto">
+        <View
+          className="user_share_image user_share_img1"
+          onClick={() => navigateTo("/pages/share/shareFriend/index")}
+        >
+          <View className="share_name">分享赚豆</View>
+          <View className="share_title">好友注册 你领卡豆</View>
+          <View className="share_link public_center">去邀请</View>
+        </View>
+        <View
+          className="user_share_image user_share_img2"
+          onClick={() =>
+            navigateTo(
+              `/pages/share/webView/index?link=${"https://web-new.dakale.net/product/page/bannerShare/merchantPlaybill.html"}&title=我要推店`
+            )
+          }
+        >
+          <View className="share_name">推店赚豆</View>
+          <View className="share_title">推店成家主 赚豆</View>
+          <View className="share_link public_center">去推店</View>
+        </View>
+      </View>
       <View className="user_centerBar_banner">
         <Banner
           boxStyle={{ width: "100%", height: "100%", position: "relative" }}
           imgName="coverImg"
+          linerSuccessColor={"rgba(255, 255, 255, 1)"}
+          linerFallColor={`rgba(255, 255, 255, 0.5)`}
           data={[...bannerList]}
           showNear
         ></Banner>

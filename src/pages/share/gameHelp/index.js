@@ -67,7 +67,7 @@ class Index extends Component {
     });
   }
   fakeTogether() {
-    const { shareId } = this.state;
+    const { shareId, subType } = this.state;
     fetchNewShareInfo({
       subType: subType,
       shareId: shareId,

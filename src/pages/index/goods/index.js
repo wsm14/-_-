@@ -68,16 +68,14 @@ class Index extends Component {
     });
   }
 
-  componentDidShow() {
+  componentDidMount() {
     const { defaultRouter } = getCurrentInstance().router.params;
     const {
       store: {
         goodsStore: { orderList },
       },
     } = this.props;
-    if (orderList.length === 0 && loginStatus()) {
-      this.setIndex(parseInt(defaultRouter));
-    }
+    this.setIndex(parseInt(defaultRouter));
     if (loginStatus()) {
       this.getOrderTotalBean();
     }

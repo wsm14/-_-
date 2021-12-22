@@ -211,7 +211,7 @@ page {
   }
   .user_top_newBox {
     background: white;
-    padding: 32px;
+    padding: 32px 32px 0;
     position: relative;
     line-height: 1;
   }
@@ -397,6 +397,11 @@ page {
   }
   .user_topGoods {
     margin: 40px auto 0;
+    padding: 32px 40px;
+
+    background: #ffffff;
+    box-shadow: 0px 0px 10px 0px rgba(20, 144, 148, 0.1);
+    border-radius: 8px;
   }
   .user_top_title {
     font-size: 36px;
@@ -407,14 +412,14 @@ page {
     display: block;
     content: "";
     position: absolute;
-    right: 194px;
+    right: 164px;
     width: 2px;
     height: 79px;
     background: #cccccc;
     top: 48px;
   }
   .user_top_goods {
-    padding: 39px 40px 0;
+    padding: 32px 28px 0;
     display: flex;
     align-items: flex-start;
     position: relative;
@@ -424,7 +429,7 @@ page {
       font-size: 24px;
       font-weight: 400;
       color: #333333;
-      margin-right: 67px;
+      margin-right: 56px;
     }
     .user_goods_one::before {
       width: 72px;
@@ -442,7 +447,7 @@ page {
       font-size: 24px;
       font-weight: 400;
       color: #333333;
-      margin-right: 67px;
+      margin-right: 56px;
     }
     .user_goods_two::before {
       width: 72px;

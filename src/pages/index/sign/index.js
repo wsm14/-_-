@@ -11,7 +11,7 @@ import {
 import { getMainPage } from "@/server/user";
 import Router from "@/common/router";
 import Drawer from "@/components/Drawer";
-let env = process.env.NODE_ENV === "development" ? "dev" : "dev";
+let env = process.env.NODE_ENV === "development" ? "dev" : "product";
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -21,8 +21,7 @@ class Index extends Component {
       link: `https://web-new.dakale.net/${env}/game/sign/index.html#/register?${this.filterUrl()}`,
       token: fetchStorage("userInfo").token,
     };
-  }
-
+  } 
   filterUrl() {
     const { token = "" } = Taro.getStorageSync("userInfo") || {};
     const { cityCode = 3301 } = fetchStorage("city") || {};

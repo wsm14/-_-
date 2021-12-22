@@ -181,17 +181,7 @@ class Index extends Component {
         }
       );
     } else {
-      this.setState(
-        {
-          httpData4: {
-            ...httpData4,
-            page: httpData4.page + 1,
-          },
-        },
-        (res) => {
-          this.fetchSelfTourGoods();
-        }
-      );
+      return;
     }
   }
   render() {

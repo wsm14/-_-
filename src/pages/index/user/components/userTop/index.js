@@ -125,7 +125,7 @@ export default (props) => {
         fn: () => {
           if (loginStatus()) {
             Router({
-              routerName: "wallet",
+              routerName: "rewardDetails",
             });
           } else {
             Router({

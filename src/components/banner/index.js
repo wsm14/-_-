@@ -28,6 +28,8 @@ export default (props) => {
     showNear,
     borderRadius,
     bottom = {},
+    linerSuccessColor = "#108588",
+    linerFallColor = "#e5e5e5",
   } = props;
   const [list, setList] = useState([]);
   const [current, setCurrent] = useState("1");
@@ -137,6 +139,10 @@ export default (props) => {
               return (
                 <View
                   key={index}
+                  style={{
+                    background:
+                      index == current - 1 ? linerSuccessColor : linerFallColor,
+                  }}
                   className={classNames(
                     index == current - 1
                       ? "show_near_linerTrue"

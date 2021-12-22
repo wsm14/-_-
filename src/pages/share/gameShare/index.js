@@ -121,8 +121,8 @@ class Index extends Component {
       fillSign: "帮助TA",
       blindBoxHelp: "我要拿好礼",
       signTaskHelp: "帮助TA",
-      gameTogether: "立即合力",
-      freeTaskHelp: "我要拿好礼",
+      gameTogether: "我要拿好礼",
+      freeTaskHelp: "立即合力",
     }[subType];
     return (
       <View className="game_box_info">
