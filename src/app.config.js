@@ -5,6 +5,7 @@ export default {
     "pages/index/lookAround/index", //逛逛
     "pages/index/goods/index",
     "pages/index/user/index", //首页个人
+    "pages/index/sign/index", //签到游戏
     "pages/auth/index", //登录
   ],
   window: {
@@ -33,10 +34,10 @@ export default {
         text: "逛逛",
       },
       {
-        pagePath: "pages/index/goods/index",
-        iconPath: "./assets/image/tab-bar/goods_1.png",
-        selectedIconPath: "./assets/image/tab-bar/goods.png",
-        text: "订单",
+        pagePath: "pages/index/sign/index",
+        iconPath: "./assets/image/tab-bar/sign_icon1.png",
+        selectedIconPath: "./assets/image/tab-bar/sign_icon.png",
+        text: "签到",
       },
       {
         pagePath: "pages/index/user/index",
@@ -59,6 +60,7 @@ export default {
         "home/index", // 盲盒首页
         "prizeDetail/index", // 奖品详情
         "prize/index", // 盲盒奖品
+        "gamePrize/index",
       ],
     },
     {
@@ -96,6 +98,8 @@ export default {
         "Grab/index", //领取他人发送红包页
         "shareActive/index", //活动主会场
         "shareUser/index", //活动页助力
+        "gameShare/index", //游戏助力页面
+        "gameHelp/index", //游戏邀请页面
       ],
     },
     {
@@ -138,6 +142,7 @@ export default {
         "preChildTure/index", //吃喝玩乐购内页
         "preSelfour/index", //自我游购内页
         "commer/index", //电商商品内页
+        "goodThings/index", //精选商品
       ],
     },
     {

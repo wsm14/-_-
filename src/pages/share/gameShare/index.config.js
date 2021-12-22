@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: "我的地址",
+  navigationBarTitleText: "邀请好友",
   navigationStyle: "default",
 };

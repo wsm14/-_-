@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { Video, Swiper, SwiperItem, View } from "@tarojs/components";
 import Taro, { pxTransform, useReady } from "@tarojs/taro";
 import BottomView from "@/components/videoComponents/videoBottom";
 import { computedVideoSize } from "@/common/utils";
+import Task from "@/components/task";
 import InterVal from "@/components/videoComponents";
 import "./../index.scss";
 export default ({
@@ -26,6 +27,7 @@ export default ({
   const [player, setPlayer] = useState(false);
   const [time, setTime] = useState(0);
   const [walk, setWalk] = useState(false);
+  const cRef = useRef();
   useEffect(() => {
     setScale(0);
     setPlayer(false);
@@ -159,6 +161,7 @@ export default ({
                             ) {
                               saveBean();
                             }
+                            cRef.current.updateTask();
                           }}
                           id={`nearVideo${index}`}
                           muted={false}
@@ -191,6 +194,7 @@ export default ({
               }
             })}
           </Swiper>
+          <Task useRef={cRef}></Task>
         </View>
       );
     } else {

@@ -2,8 +2,6 @@ import React from "react";
 import Taro, { getCurrentPages } from "@tarojs/taro";
 import { Button, Image, View } from "@tarojs/components";
 import UserTitle from "./components/userTop";
-import UserContent from "./components/userContent";
-import UserBottom from "./components/userBottom";
 import {
   getMainPage,
   getUserSub,
@@ -11,19 +9,9 @@ import {
   saveLevelTarget,
 } from "@/server/user";
 import { getBanner } from "@/server/common";
-import {
-  backgroundObj,
-  removeLogin,
-  navigateTo,
-  filterStrList,
-  toast,
-} from "@/common/utils";
+import { removeLogin } from "@/common/utils";
 import Router from "@/common/router";
-import Toast from "@/components/stopBean";
-import Rules from "./components/retailRules";
-import Success from "./components/successLevel";
-import ReloadBottom from "./components/reloadBottom";
-import LeverToast from "./components/userLevelToast";
+import UserContent from "./components/userCenter";
 import Skeleton from "./components/SkeletonView";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
@@ -213,11 +201,7 @@ class Index extends React.Component {
       levelToast,
       loading,
     } = this.state;
-    const {
-      homeStore = {},
-      authStore = {},
-      activeInfoStore = {},
-    } = this.props.store;
+    const {} = this.props.store;
     return (
       <Skeleton loading={loading}>
         <View className="page_userBox">
@@ -232,150 +216,10 @@ class Index extends React.Component {
             data={userInfo}
           ></UserTitle>
           <View className="page_user_liner"></View>
-          <UserContent
-            bannerList={bannerList}
-            levelDetails={levelDetails}
-            nextLevel={nextLevel}
-            status={loginStatus}
-            data={userInfo}
-            fetchLoad={this.fetchLoad.bind(this)}
-            infoCollect={this.fetchCollect.bind(this)}
-            fetchLever={this.fetchLever.bind(this)}
-            fetchUserLeverToast={this.fetchUserLeverToast.bind(this)}
-          ></UserContent>
-          <View className="page_user_liner"></View>
-          <UserBottom></UserBottom>
-          {visible && (
-            <Toast
-              cancel={() =>
-                this.setState({
-                  visible: false,
-                })
-              }
-              visible={visible}
-              title={"账号已授权成功"}
-              canfirm={() => {
-                this.setState(
-                  {
-                    visible: false,
-                  },
-                  (res) => {
-                    this.fetchCollect();
-                  }
-                );
-              }}
-              content={`更多福利通知建议关注「哒卡乐DAKALE」公众号`}
-              canfirmText="取消"
-              cancelText="去关注"
-            ></Toast>
-          )}
-          {toastVisible && (
-            <Toast
-              cancel={() =>
-                this.setState({
-                  collectStatus: {
-                    ...collectStatus,
-                    toastVisible: false,
-                  },
-                })
-              }
-              visible={toastVisible}
-              title={"恭喜您达到哒人的解锁条件"}
-              canfirm={() => {
-                this.setState(
-                  {
-                    collectStatus: {
-                      ...collectStatus,
-                      toastVisible: false,
-                      toastClick: true,
-                    },
-                  },
-                  (res) => {
-                    this.fetchCollect();
-                  }
-                );
-              }}
-              content={`请先关注「哒卡乐DAKALE」公众号，收益到账立即知道`}
-              canfirmText="取消"
-              cancelText="去关注"
-            ></Toast>
-          )}
-          {ruleVisible && (
-            <Rules
-              onClose={() =>
-                this.setState({
-                  collectStatus: {
-                    ...collectStatus,
-                    ruleVisible: false,
-                  },
-                })
-              }
-              canfirm={() =>
-                this.setState(
-                  {
-                    collectStatus: {
-                      ...collectStatus,
-                      ruleVisible: false,
-                      ruleStatus: true,
-                    },
-                  },
-                  (res) => {
-                    this.fetchLever();
-                  }
-                )
-              }
-              visible={ruleVisible}
-            ></Rules>
-          )}
-          <Success
-            onClose={() =>
-              this.setState({
-                collectStatus: {
-                  ...collectStatus,
-                  successToast: false,
-                },
-              })
-            }
-            canfirm={() =>
-              this.setState(
-                {
-                  collectStatus: {
-                    ...collectStatus,
-                    successToast: false,
-                  },
-                },
-                (res) => {
-                  Router({
-                    routerName: "download",
-                  });
-                }
-              )
-            }
-            visible={successToast}
-          ></Success>
-          <ReloadBottom onChange={this.fetchCollect.bind(this)}></ReloadBottom>
-          <LeverToast
-            data={userInfo}
-            onClose={() =>
-              this.setState({
-                levelToast: false,
-              })
-            }
-            canfirm={() =>
-              this.setState(
-                {
-                  levelToast: false,
-                },
-                (res) => {
-                  Router({
-                    routerName: "download",
-                  });
-                }
-              )
-            }
-            visible={levelToast}
-          ></LeverToast>
-          <View className="users_ourcard"></View>
+          <UserContent bannerList={bannerList}></UserContent>
+        </View>
+        <View className="page_user_logo public_center">
+          <View className="page_user_dakalelogo"></View>
         </View>
       </Skeleton>
     );

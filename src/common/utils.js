@@ -506,6 +506,7 @@ export const filterPayColor = (string) => {
 //订单列表颜色配置
 
 export const filterGoodsStatus = (status) => {
+  console.log(status);
   switch (status) {
     case 0:
       return "";

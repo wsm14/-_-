@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Taro from "@tarojs/taro";
+import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { index } from "@/api/api";
 import { httpGet } from "@/api/newRequest";
@@ -67,14 +67,16 @@ class Index extends Component {
       });
     });
   }
+
   componentDidShow() {
+    const { defaultRouter } = getCurrentInstance().router.params;
     const {
       store: {
         goodsStore: { orderList },
       },
     } = this.props;
     if (orderList.length === 0 && loginStatus()) {
-      this.getOrder();
+      this.setIndex(parseInt(defaultRouter));
     }
     if (loginStatus()) {
       this.getOrderTotalBean();
@@ -101,8 +103,7 @@ class Index extends Component {
             {
               countStatus: false,
             },
-            (res) => {
-            }
+            (res) => {}
           );
         }
       }

@@ -243,3 +243,67 @@ export const fetchFormMomentDetail = (data = {}, fn) => {
   });
 };
 //平台广告视频详情
+
+export const fakefillSign = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/game/sign/fillSign",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//签到补签
+export const fakeBoxPrize = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/sign/game/receiveBoxPrize",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//领取盲盒
+
+export const fetchTaskDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/game/task/getTaskDetail",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取任务详情
+
+export const fetchDoneTask = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/game/task/doneTask",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取任务详情
+
+export const fakeTogether = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/game/freeGood/gameTogether",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//完成合力任务
