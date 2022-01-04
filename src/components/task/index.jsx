@@ -2,7 +2,7 @@ import React, { useState, useEffect, useImperativeHandle } from "react";
 import { useRouter } from "@tarojs/taro";
 import { Video, View } from "@tarojs/components";
 import { fetchTaskDetail, fetchDoneTask, fakeBoxPrize } from "@/server/share";
-import { goBack, toast } from "@/common/utils";
+import { goBack, toast } from "@/utils/utils";
 import "./index.scss";
 let intervalTime = null;
 export default (props) => {
@@ -50,6 +50,9 @@ export default (props) => {
     if (strapId) {
       fetchTask();
     }
+    return () => {
+      clearInterval(intervalTime);
+    };
   }, []);
   const templateFont = () => {
     const { type } = task;

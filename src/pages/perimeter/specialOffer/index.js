@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
-import {
-  toast,
-  GetDistance,
-  getLnt,
-  getLat,
-  backgroundObj,
-} from "@/common/utils";
-import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
+import { fetchSpecialGoods } from "@/server/index";
+import { fetchUserShareCommission } from "@/server/common";
 import { getListSpecialByPeriod } from "@/server/perimeter";
-import { childTemplate } from "@/components/specalTemplate";
-import { specailGoods } from "@/components/componentView/specail";
+import { childTemplate } from "@/components/public_ui/specalTemplate";
+import { specailGoods } from "@/components/public_ui/specail";
 import "./index.scss";
 import classNames from "classnames";
 class Index extends Component {

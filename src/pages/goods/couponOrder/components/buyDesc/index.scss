@@ -1,0 +1,25 @@
+
+.order_shop_desc {
+  margin: 24px 32px 0;
+  border-radius: 8px;
+  background: #ffffff;
+  .order_shop_descBox {
+    padding: 32px;
+    .order_shop_descTitle {
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 32px;
+    }
+    .order_shop_getTime {
+      margin-top: 24px;
+    }
+    .order_shop_timeDesc {
+      margin-top: 16px;
+      color: rgba(7, 192, 194, 1);
+    }
+    .order_shop_week {
+      margin-top: 16px;
+    }
+  }
+}

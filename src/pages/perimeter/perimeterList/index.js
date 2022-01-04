@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View, ScrollView } from "@tarojs/components";
-import FilterDropdown from "@/components/componentView/filterDropdown";
-import Search from "@/components/componentView/SearchView";
+import FilterDropdown from "@/components/public_ui/filterDropdown";
+import Search from "@/components/public_ui/SearchView";
 import {
-  getCategory,
-  getConfigWindVaneBySize,
-  getBusinessHub,
+  fetchCategory,
+  fetchBusinessHub,
+  fetchUserShareCommission,
 } from "@/server/common";
-import { fetchUserShareCommission, fetchSpecialGoods } from "@/server/index";
-import Tags from "@/components/componentView/goodsTagView";
-import { template } from "@/components/specalTemplate";
-import { toast, computedViewHeight } from "@/common/utils";
+import { fetchSpecialGoods } from "@/server/index";
+import Tags from "@/components/public_ui/goodsTagView";
+import { template } from "@/components/public_ui/specalTemplate";
+import { computedViewHeight } from "@/utils/utils";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -43,8 +43,8 @@ class Index extends Component {
   }
   initSelect() {
     Promise.all([
-      getCategory({ parentId: "0" }, () => {}),
-      getBusinessHub({}),
+      fetchCategory({ parentId: "0" }, () => {}),
+      fetchBusinessHub({}),
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
       const { categoryList } = val[0];
@@ -197,30 +197,32 @@ class Index extends Component {
           val={fatherId}
         ></Tags>
         <View className="scroll_margin"></View>
-        <ScrollView
-          scrollY
-          onScrollToLower={(e) => {
-            this.onPageUp();
-          }}
-          style={{
-            height: height
-              ? height
-              : computedViewHeight(".perimeterList_scroll", (e) => {
-                  this.setState({ height: e });
-                }),
-          }}
-          className="perimeterList_scroll"
-        >
-          {specialGoodsList.length === 0 && (
-            <>
-              <View className="perimeterList_nullStatus"></View>
-              <View className="perimeterList_text">暂无商品</View>
-            </>
-          )}
-          {specialGoodsList.map((item) => {
-            return template(item, configUserLevelInfo);
-          })}
-        </ScrollView>
+        <View className="scroll_padding_info">
+          <ScrollView
+            scrollY
+            onScrollToLower={(e) => {
+              this.onPageUp();
+            }}
+            style={{
+              height: height
+                ? height
+                : computedViewHeight(".perimeterList_scroll", (e) => {
+                    this.setState({ height: e });
+                  }),
+            }}
+            className="perimeterList_scroll"
+          >
+            {specialGoodsList.length === 0 && (
+              <>
+                <View className="perimeterList_nullStatus"></View>
+                <View className="perimeterList_text">暂无商品</View>
+              </>
+            )}
+            {specialGoodsList.map((item) => {
+              return template(item, configUserLevelInfo);
+            })}
+          </ScrollView>
+        </View>
       </View>
     );
   }

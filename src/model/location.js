@@ -1,8 +1,9 @@
 import Taro from "@tarojs/taro";
 import { observable } from "mobx";
-import { getRestapiAddress } from "@/server/common";
-import { resiApiKey, toast } from "@/common/utils";
-import { fakeSubmitUserLocation } from "@/server/user";
+import { getRestapiAddress } from "@/server/other";
+import { resiApiKey } from "@/common/constant";
+import { toast } from "@/utils/utils";
+import { fakeSubmitUserLocation } from "@/server/index";
 const locationStore = observable({
   lat: 30.229271,
   lnt: 120.255384,

@@ -1,8 +1,8 @@
 import React from "react";
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { coupon } from "@/components/componentView/CouponView";
-import Router from "@/common/router";
+import { coupon } from "@/components/public_ui/CouponView";
+import Router from "@/utils/router";
 export default ({ list, merchantGroupId }) => {
   if (list.length === 0) {
     return null;

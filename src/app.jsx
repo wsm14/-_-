@@ -3,11 +3,7 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import Store from "./model/index";
 import { Provider } from "mobx-react";
 import { authUpdateGeography } from "@/common/authority";
-import {
-  getShareParamInfo,
-  getDictionary,
-  fetchGlobalConfig,
-} from "@/server/common";
+import { fetchShareParamInfo, fetchDictionary } from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
 import evens from "@/common/evens";
@@ -24,11 +20,13 @@ class App extends Component {
     super(...arguments);
   }
   componentDidMount() {
+    this.getShareType();
     this.fetchLocation();
     this.fetchNetwork();
     authWxLogin(this.fetchOpenId.bind(this));
     evens.$on("setLocation", this.fetchLocation.bind(this));
     this.fetchDictionary();
+
     // this.fetchGlobalConfig();
   }
 
@@ -46,7 +44,6 @@ class App extends Component {
       });
     }
     this.fetchCheckUpdate();
-    this.getShareType();
   }
   getShareType() {
     const {
@@ -57,7 +54,7 @@ class App extends Component {
       sourceType = "",
     } = getCurrentInstance().router.params;
     if (scene) {
-      getShareParamInfo({ uniqueKey: scene }, (res) => {
+      fetchShareParamInfo({ uniqueKey: scene }, (res) => {
         const {
           shareParamInfo: { param },
         } = res;
@@ -141,7 +138,7 @@ class App extends Component {
     Store.locationStore.setLocation(latitude, longitude);
   }
   fetchDictionary() {
-    getDictionary({
+    fetchDictionary({
       parent: "moments",
       child: "preventSizeBeanNum",
     }).then((val) => {

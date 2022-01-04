@@ -1,14 +1,9 @@
 import React from "react";
-import Taro from "@tarojs/taro";
-import Banner from "@/components/banner";
 import { View } from "@tarojs/components";
-import { backgroundObj, loginStatus, navigateTo, toast } from "@/common/utils";
-import { scanCode } from "@/common/authority";
-import Router from "@/common/router";
-import classnames from "classnames";
-import { bindTelephone } from "@/server/auth";
-import { saveUpdateLoginUserInfo } from "@/server/user";
-import "./../../index.scss";
+import { backgroundObj, loginStatus, toast } from "@/utils/utils";
+import Router from "@/utils/router";
+import { fakeUpdateLoginUserInfo } from "@/server/index";
+import "./index.scss";
 
 export default (props) => {
   const { data, status, reload } = props;
@@ -40,7 +35,7 @@ export default (props) => {
           const { errMsg, userInfo } = res;
           if (errMsg === "getUserProfile:ok") {
             const { nickName, avatarUrl } = userInfo;
-            saveUpdateLoginUserInfo(
+            fakeUpdateLoginUserInfo(
               {
                 username: nickName,
                 profile: avatarUrl,
@@ -142,7 +137,7 @@ export default (props) => {
             Router({
               routerName: "webView",
               args: {
-                link: "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dakale-web-page/wechant/page/interface.html",
+                link: "https://mp.weixin.qq.com/s/cigoCWs94L4wT_T40fSOkw",
                 title: "关注公众号",
               },
             });
@@ -160,10 +155,6 @@ export default (props) => {
           if (loginStatus()) {
             Router({
               routerName: "download",
-              args: {
-                link: "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dakale-web-page/wechant/page/interface.html",
-                title: "关注公众号",
-              },
             });
           } else {
             Router({

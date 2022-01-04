@@ -1,0 +1,92 @@
+.fixedBtn_box {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  .fixedBtn_button {
+    padding: 14px 32px 14px 65px;
+    background: #ffffff;
+    display: flex;
+    align-items: flex-start;
+  }
+  .fixedBtn_getBean {
+    padding-top: 2px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+    text-align: center;
+    position: relative;
+  }
+  .fixedBtn_bean {
+    padding: 0 8px;
+    height: 32px;
+    background: #07c0c2;
+    border-radius: 20px;
+    position: absolute;
+    top: -6px;
+    left: 40px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+    min-width: 92px;
+  }
+  .fixedBtn_getBean::before {
+    display: block;
+    content: "";
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon807.png)
+      no-repeat;
+    background-size: 100% 100%;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto;
+    margin-bottom: 4px;
+  }
+  .fixedBtn_getShare {
+    padding-top: 2px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+    text-align: center;
+    position: relative;
+    margin-left: 54px;
+  }
+  .fixedBtn_getShare::before {
+    display: block;
+    content: "";
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon808.png)
+      no-repeat;
+    background-size: 100% 100%;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto;
+    margin-bottom: 4px;
+  }
+  .fixedBtn_payBtn {
+    width: 370px;
+    height: 88px;
+    border-radius: 44px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-left: auto;
+  }
+  .fixedBtn_payStyle1 {
+    background: #ef476f;
+  }
+  .fixedBtn_payStyle2 {
+    background: #cccccc;
+    opacity: 0.8;
+  }
+  .fixedBtn_payStyle3 {
+    background: rgba(246, 145, 169, 1);
+    opacity: 0.8;
+  }
+  .fixedBtn_computedBean {
+    height: 72px;
+    background: #fef4f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

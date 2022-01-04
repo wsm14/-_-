@@ -1,0 +1,26 @@
+.order_details_btn {
+  position: fixed;
+  height: 128px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 100;
+  .order_details_payLabel {
+    display: flex;
+    align-items: baseline;
+  }
+  .order_details_button {
+    width: 380px;
+    height: 80px;
+    background: #07c0c2;
+    border-radius: 40px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+}

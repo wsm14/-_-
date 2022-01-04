@@ -1,0 +1,172 @@
+.user_topGoods {
+  margin: 40px auto 0;
+}
+.user_top_title {
+  font-size: 36px;
+  font-weight: 600;
+  color: #333333;
+}
+.user_tabbarBox {
+  margin: 64px 32px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .user_tabbar_one {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+  }
+  .user_tabbar_one::before {
+    width: 72px;
+    height: 72px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/new_user3.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    margin: 0 auto;
+    content: "";
+    margin-bottom: 8px;
+  }
+  .user_tabbar_two {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+  }
+  .user_tabbar_two::before {
+    width: 72px;
+    height: 72px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/new_user2.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    margin: 0 auto;
+    content: "";
+    margin-bottom: 8px;
+  }
+  .user_tabbar_three {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+  }
+  .user_tabbar_three::before {
+    width: 72px;
+    height: 72px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/new_user1.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    margin: 0 auto;
+    content: "";
+    margin-bottom: 8px;
+  }
+  .user_tabbar_four {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+  }
+  .user_tabbar_four::before {
+    width: 72px;
+    height: 72px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/new_user4.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    margin: 0 auto;
+    content: "";
+    margin-bottom: 8px;
+  }
+}
+.user_top_goods::before {
+  display: block;
+  content: "";
+  position: absolute;
+  right: 194px;
+  width: 2px;
+  height: 79px;
+  background: #cccccc;
+  top: 48px;
+}
+.user_top_goods {
+  padding: 32px 28px 0;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+
+  .user_goods_one {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+    margin-right: 67px;
+  }
+  .user_goods_one::before {
+    width: 72px;
+    height: 72px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/new_user5.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    margin: 0 auto;
+    content: "";
+    margin-bottom: 8px;
+  }
+  .user_goods_two {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+    margin-right: 67px;
+  }
+  .user_goods_two::before {
+    width: 72px;
+    height: 72px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/new_user6.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    margin: 0 auto;
+    content: "";
+    margin-bottom: 8px;
+  }
+  .user_goods_three {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+    margin-right: 67px;
+  }
+  .user_goods_three::before {
+    width: 72px;
+    height: 72px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/new_user7.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    margin: 0 auto;
+    content: "";
+    margin-bottom: 8px;
+  }
+  .user_goods_four {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+    margin-left: auto;
+  }
+  .user_goods_four::before {
+    width: 72px;
+    height: 72px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/new_user5.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    margin: 0 auto;
+    content: "";
+    margin-bottom: 8px;
+  }
+}

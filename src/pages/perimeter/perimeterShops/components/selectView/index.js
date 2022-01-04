@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { View, Image, Text, ScrollView } from "@tarojs/components";
-import { useReady } from "@tarojs/taro";
 import classNames from "classnames";
 import Taro from "@tarojs/taro";
 import "./index.scss";
-import { getDom } from "@/common/utils";
-import { Children } from "react";
 const marginTags = (list, num, style, components) => {
   return list.map((item, index) => {
     return (

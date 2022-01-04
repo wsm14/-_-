@@ -7,8 +7,8 @@ import {
   backgroundObj,
   loginStatus,
   mapGo,
-} from "@/common/utils";
-import Router from "@/common/router";
+} from "@/utils/utils";
+import Router from "@/utils/router";
 export const list = (item, index) => {
   const {
     businessStatus,

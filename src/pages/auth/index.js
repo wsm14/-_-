@@ -2,13 +2,12 @@ import Taro, { getCurrentPages } from "@tarojs/taro";
 import React, { Component } from "react";
 import { View, Text, Button } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
-import { navigateTo, removeLogin } from "@/common/utils";
 import { authWxLogin } from "@/common/authority";
-import { getOpenId, getUserInfo, bindTelephone } from "@/server/auth";
-import "./index.scss";
-import { goBack, toast } from "../../common/utils";
+import { getOpenId, bindTelephone } from "@/server/auth";
+import { goBack, toast, removeLogin } from "@/utils/utils";
 import evens from "@/common/evens";
-import Router from "@/common/router";
+import Router from "@/utils/router";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends Component {
@@ -37,13 +36,23 @@ class Index extends Component {
 
   goConceal() {
     const link = "https://web-new.dakale.net/product/page/policy/conceal.html";
-    navigateTo(`/pages/share/webView/index?link=${link}&title=隐私协议`);
+    Router({
+      rouerName: "webView",
+      args: {
+        link,
+      },
+    });
   }
 
   goUserConceal() {
     const link =
       "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dakale-web-page/wechant/page/policy/userConceal.html";
-    navigateTo(`/pages/share/webView/index?link=${link}&title=用户协议`);
+    Router({
+      rouerName: "webView",
+      args: {
+        link,
+      },
+    });
   }
 
   getOpenId(code) {
@@ -68,104 +77,7 @@ class Index extends Component {
       }
     );
   }
-
-  // bindUser() {
-  //   const { btnStatus, openId, unionId } = this.state;
-  //   if (openId && unionId) {
-  //     if (btnStatus === 0 && wx.getUserProfile) {
-  //       wx.getUserProfile({
-  //         desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-  //         success: (res) => {
-  //           const { errMsg, userInfo } = res;
-  //           if (errMsg === "getUserProfile:ok") {
-  //             getUserInfo(
-  //               {
-  //                 openId,
-  //                 unionId,
-  //                 ...userInfo,
-  //               },
-  //               (res) => {
-  //                 const { mobile } = res.userInfo;
-  //                 const { userInfo = {} } = res;
-  //                 if (mobile && mobile.length === 11) {
-  //                   Taro.setStorageSync("userInfo", res.userInfo);
-  //                   return goBack(() => toast("登录成功"));
-  //                 } else {
-  //                   let oldObj = Taro.getStorageSync("userInfo") || {};
-  //                   Object.keys(userInfo).forEach((item) => {
-  //                     if (!userInfo[item] || userInfo[item] === "") {
-  //                       delete userInfo[item];
-  //                     }
-  //                   });
-  //                   let obj = { ...oldObj, ...userInfo };
-  //                   Taro.setStorageSync("userInfo", obj);
-  //                   this.setState({
-  //                     btnStatus: 1,
-  //                     visible: true,
-  //                   });
-  //                 }
-  //               }
-  //             );
-  //           } else {
-  //             console.log(errMsg);
-  //             toast("获取失败");
-  //           }
-  //         },
-  //       });
-  //     }
-  //   } else {
-  //     authWxLogin(this.getOpenId.bind(this));
-  //     toast("获取OpenId失败，请重试");
-  //   }
-  // }
-
-  // async getUserInfo(e) {
-  //   const { openId, unionId } = this.state;
-  //   console.log(e);
-  //   if (openId) {
-  //     const {
-  //       detail: { errMsg },
-  //     } = e;
-  //     const {
-  //       encryptedData,
-  //       iv,
-  //       rawData,
-  //       userInfo: { nickName, gender, avatarUrl },
-  //     } = e.detail;
-  //     if (errMsg === "getUserInfo:ok") {
-  //       getUserInfo(
-  //         { avatarUrl, gender, nickName, encryptedData, iv, openId, unionId },
-  //         (res) => {
-  //           const { mobile } = res.userInfo;
-  //           const { userInfo = {} } = res;
-  //           if (mobile && mobile.length === 11) {
-  //             Taro.setStorageSync("userInfo", res.userInfo);
-  //             return goBack(() => toast("登录成功"));
-  //           } else {
-  //             let oldObj = Taro.getStorageSync("userInfo") || {};
-  //             Object.keys(userInfo).forEach((item) => {
-  //               if (!userInfo[item] || userInfo[item] === "") {
-  //                 delete userInfo[item];
-  //               }
-  //             });
-  //             let obj = { ...oldObj, ...userInfo };
-  //             Taro.setStorageSync("userInfo", obj);
-  //             this.setState({
-  //               btnStatus: 1,
-  //               visible: true,
-  //             });
-  //           }
-  //         }
-  //       );
-  //     } else {
-  //       toast("授权用户信息失败");
-  //     }
-  //   } else {
-  //     await authWxLogin(this.getOpenId.bind(this));
-  //     toast("获取OpenId失败，请重试");
-  //   }
-  // }
-
+  //获取用户openId unionId
   async getTelephone(e) {
     let that = this;
     const {
@@ -173,6 +85,7 @@ class Index extends Component {
     } = e;
     const { openId, unionId } = this.state;
     const { shareType } = this.props.store.authStore;
+    //拿取全局绑定关系
     if (errMsg === "getPhoneNumber:ok") {
       //如果用户点击同意授权
       if (openId) {
@@ -204,8 +117,9 @@ class Index extends Component {
       toast("授权手机号码失败");
     }
   }
+  //用户注册手机号
   render() {
-    const { btnStatus, visible } = this.state;
+    const { visible } = this.state;
     return (
       <View className="auth_box">
         <View className="auth_login"></View>

@@ -1,27 +1,22 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import {
-  toast,
-  backgroundObj,
-  getLat,
-  getLnt,
-  GetDistance,
-  navigateTo,
-} from "@/common/utils";
 import "./index.scss";
+//逛逛 定位陌生城市自动切换
 const tabCity = (props) => {
   const { data, store, reload } = props;
   const [visible, setVisible] = useState(false);
+  //是否显示提示框
   const [result, setResult] = useState({});
+  //请求的高德数据
   const [citys, setCity] = useState({});
+  //设置城市
   useEffect(() => {
     if (Object.keys(data).length > 0) {
       setResult(data);
     }
   }, [data]);
   useEffect(() => {
-    console.log(result);
     if (Object.keys(result).length > 3) {
       const { city, adcode } = result;
       const city_code = adcode.slice(0, 4);

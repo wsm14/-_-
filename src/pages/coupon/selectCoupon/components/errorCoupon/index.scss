@@ -1,0 +1,110 @@
+.couponTemplate_error_box {
+  margin: 0 0px 24px;
+  height: 240px;
+  background: rgba(255, 255, 255, 1);
+  opacity: 0.8;
+  border-radius: 20px;
+  position: relative;
+  .couponTemplate_error_top {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    line-height: 1;
+  }
+  .couponTemplate_left {
+    width: 184px;
+    text-align: center;
+    .couponTemplate_price {
+      display: flex;
+      align-items: baseline;
+      font-size: 48px;
+      font-weight: 600;
+      color: #ef476f;
+      padding-top: 48px;
+      text-align: center;
+      justify-content: center;
+    }
+    .couponTemplate_price::before {
+      font-size: 24px;
+      content: "¥";
+      font-weight: 600;
+      color: #ef476f;
+      display: block;
+    }
+    .couponTemplate_main {
+      padding-top: 16px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+    }
+  }
+  .couponTemplate_content {
+    width: 411px;
+    .couponTemplate_name {
+      padding-top: 56px;
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .couponTemplate_date {
+      padding-top: 16px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+    }
+  }
+  .couponTemplate_right {
+    position: absolute;
+    right: 24px;
+    top: 58px;
+    width: 48px;
+    height: 48px;
+  }
+  .couponTemplate_select_icon1 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon256.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .couponTemplate_select_icon2 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon257.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .couponTemplate_error_question {
+    width: 702px;
+    height: 56px;
+    background: #fef4f7;
+    display: flex;
+    align-items: center;
+    text-indent: 32px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ef476f;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+.couponTemplate_error_select {
+  width: 702px;
+  height: 80px;
+  background: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 400;
+  color: #999999;
+}
+.couponTemplate_error_select::after {
+  width: 24px;
+  height: 24px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon332.png")
+    no-repeat;
+  background-size: 100% 100%;
+  margin-left: 8px;
+  content: "";
+  display: block;
+}

@@ -2,11 +2,12 @@ import React from "react";
 import Taro from "@tarojs/taro";
 import Banner from "@/components/banner";
 import { View, Button } from "@tarojs/components";
-import Router from "@/common/router";
-import classnames from "classnames";
-import { backgroundObj, loginStatus, navigateTo, toast } from "@/common/utils";
+import Router from "@/utils/router";
+import { loginStatus } from "@/utils/utils";
 import "./index.scss";
 export default ({ bannerList }) => {
+  console.log(bannerList);
+
   const BeanBar = () => {
     const list = [
       {
@@ -183,39 +184,20 @@ export default ({ bannerList }) => {
   };
   return (
     <View className="user_centerBar_box">
-      {/* <BeanBar></BeanBar> */}
-      <View className="user_bottom_share public_auto">
-        <View
-          className="user_share_image user_share_img1"
-          onClick={() => navigateTo("/pages/share/shareFriend/index")}
-        >
-          <View className="share_name">分享赚豆</View>
-          <View className="share_title">好友注册 你领卡豆</View>
-          <View className="share_link public_center">去邀请</View>
+      <BeanBar></BeanBar>
+      {bannerList.length > 0 && (
+        <View className="user_centerBar_banner">
+          <Banner
+            boxStyle={{ width: "100%", height: "100%", position: "relative" }}
+            imgName="coverImg"
+            linerSuccessColor={"rgba(255, 255, 255, 1)"}
+            linerFallColor={`rgba(255, 255, 255, 0.5)`}
+            data={[...bannerList]}
+            showNear
+          ></Banner>
         </View>
-        <View
-          className="user_share_image user_share_img2"
-          onClick={() =>
-            navigateTo(
-              `/pages/share/webView/index?link=${"https://web-new.dakale.net/product/page/bannerShare/merchantPlaybill.html"}&title=我要推店`
-            )
-          }
-        >
-          <View className="share_name">推店赚豆</View>
-          <View className="share_title">推店成家主 赚豆</View>
-          <View className="share_link public_center">去推店</View>
-        </View>
-      </View>
-      <View className="user_centerBar_banner">
-        <Banner
-          boxStyle={{ width: "100%", height: "100%", position: "relative" }}
-          imgName="coverImg"
-          linerSuccessColor={"rgba(255, 255, 255, 1)"}
-          linerFallColor={`rgba(255, 255, 255, 0.5)`}
-          data={[...bannerList]}
-          showNear
-        ></Banner>
-      </View>
+      )}
+
       <BottomShare></BottomShare>
     </View>
   );

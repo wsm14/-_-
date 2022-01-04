@@ -1,30 +1,34 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
+import { fetchSpecialGoods } from "@/server/index";
+import { fetchUserShareCommission } from "@/server/common";
 import { fetchSelfTourGoods } from "@/server/perimeter";
-import SelectView from "@/components/searchView";
+
 import {
   computedPrice,
   getLat,
   getLnt,
   GetDistance,
   backgroundObj,
-} from "@/common/utils";
+} from "@/utils/utils";
 import Empty from "@/components/Empty";
-import Router from "@/common/router";
+import Router from "@/utils/router";
+import SelectView from "@/components/public_ui/searchView";
 import "./index.scss";
 class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
       selfList: [],
+      //数据列表
       selectHttp: {
         page: 1,
         limit: 10,
         specialFilterType:
           getCurrentInstance().router.params.specialFilterType || "selfTour",
       },
+      //请求参数
       configUserLevelInfo: {},
     };
   }
@@ -40,6 +44,7 @@ class Index extends Component {
         title: "新品推荐",
       });
     }
+    //根据 上个页面 携带参数
     this.fetchSelfList();
     this.fetchUserShare();
   }
@@ -169,11 +174,7 @@ class Index extends Component {
                 ¥{computedPrice(realPrice, payBeanCommission)}
               </View>
             </View>
-            <View className="preSelfour_btn public_center">
-              {shareCommission > 0
-                ? `分享赚¥${computedPrice(commission, shareCommission)}`
-                : "立即抢购"}
-            </View>
+            <View className="preSelfour_btn public_center">立即抢购</View>
           </View>
         </View>
       );

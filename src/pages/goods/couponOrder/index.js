@@ -2,21 +2,17 @@ import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
 import "./index.scss";
-import {
-  toast,
-  backgroundObj,
-  goBack,
-  navigateTo,
-  redirectTo,
-  filterWeek,
-} from "@/common/utils";
-import PayBean from "@/components/stopBean";
-import SelectBean from "@/components/componentView/selectBean";
+import { toast, goBack } from "@/utils/utils";
+import Collection from "./components/collection";
+import PayBean from "@/components/public_ui/selectToast";
+import SelectBean from "@/components/public_ui/selectKol";
+import BuyDesc from "./components/buyDesc";
+import Submit from "./components/submit";
+import { fetchOwnerCouponInfo, fakeCouponOrder } from "@/server/goods";
+import { fetchUserShareCommission } from "@/server/common";
 import { inject, observer } from "mobx-react";
-import { getOwnerCouponInfo, saveCouponOrder } from "@/server/goods";
-import { fetchUserShareCommission } from "@/server/index";
-import ButtonView from "@/components/Button";
-import ShareView from "@/components/componentView/shareView";
+import Router from "@/utils/router";
+import evens from "@/common/evens";
 @inject("store")
 @observer
 class Index extends Component {
@@ -30,10 +26,10 @@ class Index extends Component {
         ownerCouponId: getCurrentInstance().router.params.ownerCouponId,
       },
       useBeanStatus: "1",
-      useBeanType: "reward",
       ownerCouponInfo: {},
       visible: false,
       configUserLevelInfo: {},
+      couponObj: {},
     };
   }
   componentWillUnmount() {
@@ -111,7 +107,7 @@ class Index extends Component {
   }
   getOwnerCouponInfo() {
     const { httpData } = this.state;
-    getOwnerCouponInfo(httpData).then((val) => {
+    fetchOwnerCouponInfo(httpData).then((val) => {
       const { ownerCouponInfo = {} } = val;
       const { reduceObject = {}, userBean, userIncomeBean } = ownerCouponInfo;
 
@@ -125,7 +121,6 @@ class Index extends Component {
   }
   showBean() {
     const {
-      useBeanType,
       useBeanStatus,
       ownerCouponInfo: { userIncomeBean = 0, userBean = 0 },
     } = this.state;
@@ -139,23 +134,29 @@ class Index extends Component {
     const {
       httpData,
       useBeanStatus,
-      useBeanType,
+      couponObj,
       httpData: { couponCount },
       ownerCouponInfo: { rightFlag },
     } = this.state;
     const { shareType } = this.props.store.authStore;
     const { shareUserId, shareUserType, sourceKey, sourceType } = shareType;
-    saveCouponOrder(
+    const { userCouponId, couponType } = couponObj;
+    fakeCouponOrder(
       {
         ...httpData,
         goodsCount: couponCount,
         useBeanStatus,
         shareUserType,
         shareUserId,
-        useBeanType,
         sourceKey,
         sourceType,
         rightFlag,
+        userCouponObjects: [
+          {
+            userCouponId,
+            couponType,
+          },
+        ],
       },
       (res) => {
         const { orderSn, status, orderType } = res;
@@ -163,13 +164,21 @@ class Index extends Component {
           visible: false,
         });
         if (status === "1") {
-          return redirectTo(
-            `/pages/goods/paySuccess/index?orderSn=${orderSn}&orderType=${orderType}`
-          );
+          Router({
+            routerName: "paySuccess",
+            args: {
+              orderSn,
+              orderType,
+            },
+          });
         } else {
-          return redirectTo(
-            `/pages/goods/payWeex/index?orderSn=${orderSn}&orderType=${orderType}`
-          );
+          Router({
+            routerName: "pay",
+            args: {
+              orderSn,
+              orderType,
+            },
+          });
         }
       }
     );
@@ -189,178 +198,90 @@ class Index extends Component {
     }
   }
 
-  useBean(val) {
+  changeBean() {
+    const { useBeanStatus } = this.state;
+    if (useBeanStatus === "1") {
+      this.setState({
+        useBeanStatus: "0",
+      });
+    } else {
+      this.setState({
+        useBeanStatus: "1",
+      });
+    }
+  }
+  //选择是否使用卡豆
+  setCoupon(item) {
     this.setState({
-      ...val,
+      couponObj: item,
     });
   }
-  computedPrice(price, bean) {
-    if (Number(bean) > price * 100) {
-      return price.toFixed(2);
-    } else return (Number(bean) / 100).toFixed(2);
+  //设置优惠券
+  componentDidMount() {
+    evens.$on("payCoupon", this.setCoupon.bind(this));
+  }
+  componentWillUnmount() {
+    evens.$off("payCoupon");
   }
   computedPayPrice() {
     const {
-      useBeanType,
-      ownerCouponInfo: { userIncomeBean, userBean, buyPrice },
+      couponObj: { couponValue = 0 },
+      ownerCouponInfo: { userBean, buyPrice },
       httpData: { couponCount },
       useBeanStatus,
     } = this.state;
     if (useBeanStatus === "1") {
-      return (Number(buyPrice) * couponCount - userBean / 100).toFixed(2);
+      return (
+        Number(buyPrice) * couponCount -
+        userBean / 100 -
+        couponValue
+      ).toFixed(2);
     } else {
-      return (Number(buyPrice) * couponCount).toFixed(2);
+      return (Number(buyPrice) * couponCount - couponValue).toFixed(2);
     }
   }
+  //底部支付价格
 
   render() {
     const {
       ownerCouponInfo,
       visible,
+      couponObj,
       ownerCouponInfo: {
-        merchantLogo,
-        merchantName,
-        buyPrice,
         activeDays,
         delayDays,
         userBean,
-        merchantIdString,
         activeDate,
         endDate,
         useStartTime,
         useEndTime,
-        anytimeRefund,
-        expireRefund,
-        couponName,
-        couponImg,
-        thresholdPrice = "0",
-        couponPrice,
-        userIncomeBean,
       },
-      httpData: { couponCount },
       useBeanStatus,
       useBeanType,
       configUserLevelInfo = {},
     } = this.state;
-    const templateTime = () => {
-      if (activeDays) {
-        return `购买后${
-          delayDays === 0 ? "立刻" : delayDays + "天"
-        }生效，有效期${activeDays}天`;
-      } else if (activeDate) {
-        return `${activeDate}至${endDate}`;
-      } else {
-        return `${useStartTime}至${useEndTime}`;
-      }
-    };
 
     if (Object.keys(ownerCouponInfo).length > 0) {
       return (
         <View className="couponOrder_box">
-          <View className="order_details_box">
-            <View className="order_details_merchant">
-              <View
-                className="order_merchant_details"
-                onClick={() =>
-                  navigateTo(
-                    `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
-                  )
-                }
-              >
-                <View
-                  className="order_merchant_userProfile merchant_dakale_logo"
-                  style={{ ...backgroundObj(merchantLogo) }}
-                ></View>
-                <View className="order_name font_hide">
-                  {merchantName || ""}
-                </View>
-                <View className="order_merchant_go"></View>
-              </View>
-            </View>
-            <View className="order_shopDetails">
-              <View className="order_shopDetails_box">
-                <View
-                  className="order_shopDetails_Img coupon_big_icon"
-                  style={{ ...backgroundObj(couponImg) }}
-                ></View>
-                <View className="order_shopDetails_dec">
-                  <View className="order_shopDetails_title font_hide">
-                    {couponName}
-                  </View>
-                  <View className="order_price">
-                    面值{couponPrice}元{" "}
-                    {thresholdPrice ? `｜满${thresholdPrice}元可用` : ""}
-                  </View>
-                  <View className="order_toast">购买数量</View>
-                </View>
-                <View className="order_shopDetails_price">
-                  <View
-                    className="order_shop_btnBox order_shop_btn1"
-                    onClick={() => this.computedCount()}
-                  ></View>
-                  <View className="order_shop_num">{couponCount}</View>
-                  <View
-                    className="order_shop_btnBox order_shop_btn2"
-                    onClick={() => this.computedCount("add")}
-                  ></View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <SelectBean
-            fn={this.useBean.bind(this)}
-            useBeanType={useBeanType}
+          <Collection
+            computedCount={this.computedCount.bind(this)}
             data={ownerCouponInfo}
+          ></Collection>
+          {/*商品数量操作组件 */}
+          <SelectBean
             configUserLevelInfo={configUserLevelInfo}
-            useBeanStatus={useBeanStatus}
+            data={ownerCouponInfo}
+            useScenesType={"goodsBuy"}
+            status={useBeanStatus}
+            couponObj={couponObj}
+            changeBean={this.changeBean.bind(this)}
           ></SelectBean>
-          <View className="order_shop_desc">
-            <View className="order_shop_descBox">
-              <View className="order_shop_descTitle">购买须知</View>
-              <View className="order_shop_getTime font28 color2">
-                使用有效期：
-              </View>
-              <View className="order_shop_timeDesc font28">
-                <Text>{templateTime()}</Text>
-              </View>
-              <View className="order_shop_getTime font28 color2">使用门槛</View>
-              <View className="order_shop_week color1 font28">
-                {thresholdPrice !== "0" && thresholdPrice !== ""
-                  ? `满${thresholdPrice}元可用`
-                  : "无门槛"}
-              </View>
-              <View className="order_shop_getTime font28 color2">
-                退款原则：
-              </View>
-              <View className="order_shop_week color1 font28">
-                {anytimeRefund === "1" ? "支持" : "不支持"}
-                随时退、{expireRefund === "1" ? "支持" : "不支持"}过期自动退
-              </View>
-            </View>
-          </View>
-          <View className="order_details_sumbit">
-            <View className="order_rmb">
-              实付：
-              <Text style={{ fontSize: Taro.pxTransform(20) }}>
-                ¥
-                <Text
-                  style={{ fontSize: Taro.pxTransform(32), fontWeight: "bold" }}
-                >
-                  {this.computedPayPrice()}
-                </Text>
-              </Text>
-            </View>
-            <View className="order_beanRmb">
-              抵扣：¥
-              {this.showBean()}
-            </View>
-            <ButtonView>
-              <View className="payBtn" onClick={() => this.saveCancel()}>
-                立即支付
-              </View>
-            </ButtonView>
-          </View>
-          <ShareView></ShareView>
+          <BuyDesc data={ownerCouponInfo}></BuyDesc>
+          <Submit
+            computedPrice={this.computedPayPrice.bind(this)}
+            submit={this.saveCancel.bind(this)}
+          ></Submit>
           {visible && (
             <PayBean
               cancel={() =>

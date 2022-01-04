@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, PickerView, WebView } from "@tarojs/components";
-import { getLat, getLnt } from "@/common/utils";
+import { getLat, getLnt } from "@/utils/utils";
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -11,14 +11,7 @@ class Index extends Component {
       title: getCurrentInstance().router.params.title,
     };
   }
-  setTitle() {
-    const { title } = this.state;
-    if (title) {
-      Taro.setNavigationBarTitle({
-        title: this.state.title,
-      });
-    }
-  }
+
   filterUrl() {
     const { url = "" } = this.state;
     const { token = "" } = Taro.getStorageSync("userInfo") || {};
@@ -39,9 +32,7 @@ class Index extends Component {
     return str;
   }
 
-  componentDidMount() {
-    this.setTitle();
-  }
+  componentDidMount() {}
   render() {
     const { link } = this.state;
     console.log(link);

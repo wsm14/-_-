@@ -1,10 +1,9 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Taro from "@tarojs/taro";
-import { View, ScrollView, Image } from "@tarojs/components";
+import { View, ScrollView } from "@tarojs/components";
 import SelectSpecal from "./../selectSpecal";
 import classNames from "classnames";
-import Router from "@/common/router";
-import { backgroundObj } from "@/common/utils";
+import Router from "@/utils/router";
 export default ({
   list = [],
   flagDom,

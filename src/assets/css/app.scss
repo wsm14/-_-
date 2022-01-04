@@ -6,7 +6,9 @@
 .cleanfix {
   display: flex;
 }
-
+.scroll_padding_info {
+  padding: 0 32px;
+}
 page {
   background: #f2f2f2;
   width: 100%;
@@ -3039,7 +3041,7 @@ image {
   -webkit-box-orient: vertical;
 }
 .dakale_nullImage {
-  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/morenLogo.png")
+  background: url("https://wechat-config.dakale.net/miniprogram/image/morenLogo.png")
     no-repeat;
   background-size: 100% 100%;
 }
@@ -3048,7 +3050,7 @@ image {
   border: 1px solid #ffffff;
   box-sizing: border-box;
   border-radius: 50%;
-  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/useProfile.png")
+  background: url("https://wechat-config.dakale.net/miniprogram/image/useProfile.png")
     no-repeat center/cover;
 }
 .public_fixed {

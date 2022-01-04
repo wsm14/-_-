@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
-import TaroCanvasDrawer from "./../taro-plugin-canvas";
-import { View, Button, Image } from "@tarojs/components";
-import { toast, loginStatus } from "@/common/utils";
+import TaroCanvasDrawer from "@/components/taro-plugin-canvas";
+import { toast } from "@/utils/utils";
 import "./index.scss";
 
 /**
@@ -33,12 +32,9 @@ const shareImg = ({ start = false, data = [], type, onClose, onSave }) => {
     if (errMsg === "canvasToTempFilePath:ok") {
       if (type && type === "friend") {
         previewImage(tempFilePath);
-      
       } else if (type && type === "image") {
         saveToAlbum(tempFilePath);
-      
       } else {
-      
       }
     } else {
       onCreateFail();
@@ -48,7 +44,6 @@ const shareImg = ({ start = false, data = [], type, onClose, onSave }) => {
 
   // 绘制失败回调函数 （必须实现）=> 接收绘制错误信息、重置 TaroCanvasDrawer 状态
   const onCreateFail = () => {
- 
     Taro.hideLoading();
     // 重置 TaroCanvasDrawer 状态，方便下一次调用
     onClose && onClose(); //重置 TaroCanvasDrawer 状态，方便下一次调用

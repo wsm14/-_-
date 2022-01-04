@@ -1,166 +1,42 @@
-import { httpGet, httpPost } from "@/api/newRequest";
-export const getMerchantLat = (data, fn) => {
-  httpGet(
-    {
-      url: "/user/userMerchant/listMapSearchMerchantByLatAndLnt",
-      data: data,
-    },
-    (res) => fn(res)
-  );
+import { httpGet, httpPost } from "@/utils/request";
+export const fetchMainPage = (data = {}) => {
+  return httpGet({
+    url: "/user/userInfo/mainPage",
+    data: data,
+  });
 };
-//通过地图搜索附近商家
-
-export const getUserMomentDetailById = (data, fn) => {
-  return httpGet(
-    {
-      url: "/user/moment/ownerMomentDetail",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//获取动态详情
-export const saveWatchBean = (data, fn) => {
+//获取用户详情
+export const fakeSubmitUserLocation = (data = {}, fn) => {
   return httpPost(
     {
-      url: "/user/moment/watch/acquireMomentTipping",
+      url: "/user/userLocation/saveUserLocation",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户每次打开小程序获取定位后提交定位信息
+export const fakeUpdateLoginUserInfo = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/userInfo/updateLoginUserInfo",
       data: data,
     },
     (res) => fn(res)
   );
 };
-//看动态领取卡豆
+//修改用户信息
 
-export const saveMerchantCollection = (data, fn) => {
-  httpPost(
-    {
-      url: "/user/merchantCollection/saveMerchantCollection",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//收藏商家
-export const closeMerchantCollection = (data, fn) => {
-  httpPost(
-    {
-      url: "/user/merchantCollection/deleteMerchantCollection",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//取消收藏商家
-
-export const fakeInsertUserCollectionMoment = (data, fn) => {
-  httpPost(
-    {
-      url: "/user/userCollection/saveUserCollection",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//收藏视频
-export const fakeDeleteUserCollection = (data, fn) => {
-  httpPost(
-    {
-      url: "/user/userCollection/deleteUserCollection",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//取消收藏视频
-
-export const updateMomentsLikeAmount = (data, fn) => {
-  httpPost(
-    {
-      url: "/user/merchantLike/updateMomentsLikeAmount",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//点赞商家
-
-export const deleteMomentsLikeAmount = (data, fn) => {
-  httpPost(
-    {
-      url: "/user/merchantLike/deleteMomentsLikeAmount",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//点赞商家
-
-export const getUserMomentList = (data = {}, fn) => {
+export const fetchSelfTourGoods = (data, fn) => {
   return httpGet(
     {
-      url: "/user/moment/listMainMoment",
+      url: "/user/specialGoods/getSelfTourGoods",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
-//获取连刷视频动态
-
-export const saveMomentType = (data = {}, fn) => {
-  httpPost(
-    {
-      url: "/user/userMoment/listMomentDetailByType",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//设置分享数量
-
-export const getPromotionInfo = (data = {}, fn) => {
-  httpGet(
-    {
-      url: "/user/specialGoods/getPromotionInfo",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//设置分享数量
-
-export const getUserWatchMomentEarn = (data = {}, fn) => {
-  httpGet(
-    {
-      url: "/user/userWatchMoment/getUserWatchMomentEarn",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//获取卡豆信息
-
-export const getListWatchMomentBeanDetail = (data = {}, fn) => {
-  httpGet(
-    {
-      url: "/user/beanDetail/listWatchMomentBeanDetail",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//获取卡豆信息
-
-export const checkPuzzleBeanLimitStatus = (data = {}, fn) => {
-  httpGet(
-    {
-      url: "/common/userActive/getPuzzleBeanLimitStatus",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//获取卡豆状态
-
+//获取电商列表
 export const fetchSpecialGoods = (data = {}, fn) => {
   return httpGet(
     {
@@ -172,92 +48,26 @@ export const fetchSpecialGoods = (data = {}, fn) => {
 };
 //获取特惠列表
 
-export const fetchUserShareCommission = (data = {}, fn) => {
+export const getConfigNewcomerOrders = (data, fn) => {
   return httpGet(
     {
-      url: "/user/userInfo/getUserShareCommission",
+      url: "/user/config/newcomer/order/getConfigNewcomerOrders",
       data: data,
     },
     (res) => fn(res)
   );
 };
-//获取卡豆分层信息
-
-export const updateUserMomentParam = (data = {}, fn) => {
-  httpPost(
+//下单成功三单福利
+export const getMerchantLat = (data, fn) => {
+  httpGet(
     {
-      url: "/user/userMoment/updateUserMomentParam",
+      url: "/user/userMerchant/listMapSearchMerchantByLatAndLnt",
       data: data,
     },
     (res) => fn(res)
   );
 };
-//添加分享数量
-export const fetchSpecialForRecommend = (data = {}, fn) => {
-  return httpGet(
-    {
-      url: "/user/specialGoods/listSpecialForRecommend",
-      data: data,
-    },
-    (res) => fn && fn(res)
-  );
-};
-//获取附近热销特惠
-export const fetchListCouponByFilterType = (data = {}, fn) => {
-  return httpGet(
-    {
-      url: "/user/merchantMainCoupon/listCouponByFilterType",
-      data: data,
-    },
-    (res) => fn && fn(res)
-  );
-};
-//获取风向标券列表
-
-export const fetchRecommendMerchantList = (data = {}, fn) => {
-  return httpGet(
-    {
-      url: "/user/userMerchant/mainRecommendMerchantList",
-      data: data,
-    },
-    (res) => fn && fn(res)
-  );
-};
-//获取风向标商家
-
-export const fetchMomentComment = (data = {}, fn) => {
-  return httpGet(
-    {
-      url: "/user/momentComment/listMomentComment",
-      data: data,
-    },
-    (res) => fn && fn(res)
-  );
-};
-//获取视频评论
-
-export const fakeMomentComment = (data = {}, fn) => {
-  return httpPost(
-    {
-      url: "/user/momentComment/saveMomentComment",
-      data: data,
-    },
-    (res) => fn && fn(res)
-  );
-};
-//获取视频评论
-
-export const fetchMomentRelate = (data = {}, fn) => {
-  return httpGet(
-    {
-      url: "/user/moment/relate/listMomentRelate",
-      data: data,
-    },
-    (res) => fn && fn(res)
-  );
-};
-//获取视频关联数据
-
+//通过地图搜索附近商家
 export const fetchRightGoods = (data = {}, fn) => {
   return httpGet(
     {
@@ -279,13 +89,34 @@ export const fetchRightCoupon = (data = {}, fn) => {
   );
 };
 //权益券列表
-export const fakeNewUserVideo = (data = {}, fn) => {
-  return httpPost(
+export const getUserWatchMomentEarn = (data = {}, fn) => {
+  httpGet(
     {
-      url: "/user/moment/watch/newUserVideoMomentAcquire",
+      url: "/user/userWatchMoment/getUserWatchMomentEarn",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取卡豆信息
+
+export const getListWatchMomentBeanDetail = (data = {}, fn) => {
+  httpGet(
+    {
+      url: "/user/beanDetail/listWatchMomentBeanDetail",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取卡豆信息
+export const fetchListCouponByFilterType = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/merchantMainCoupon/listCouponByFilterType",
       data: data,
     },
     (res) => fn && fn(res)
   );
 };
-//新手视频领豆
+//获取风向标券列表

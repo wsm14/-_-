@@ -1,9 +1,9 @@
 import React from "react";
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { goodsCard, shopDetails } from "@/components/publicShopStyle";
-import { navigateTo } from "@/common/utils";
+import { goodsCard, shopDetails } from "@/components/public_ui/shopInfo";
 import Waterfall from "@/components/waterfall";
+import Router from "@/utils/router";
 export default ({ list, merchantGroupId }) => {
   if (list.length === 0) {
     return null;
@@ -22,9 +22,12 @@ export default ({ list, merchantGroupId }) => {
             <View
               className="active_go"
               onClick={() =>
-                navigateTo(
-                  `/pages/perimeter/special/index?merchantGroupId=${merchantGroupId}`
-                )
+                Router({
+                  routerName: "special",
+                  args: {
+                    merchantGroupId,
+                  },
+                })
               }
             ></View>
           )}

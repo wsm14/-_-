@@ -7,16 +7,16 @@ import {
   getDom,
   getLat,
   getLnt,
-  resiApiKey,
   toast,
   fakeStorage,
   fetchStorage,
-  switchTab,
-} from "@/common/utils";
+} from "@/utils/utils";
+import { resiApiKey } from "@/common/constant";
 import { getAuthStatus } from "@/common/authority";
-import { getRestapiAddress, getDictionary } from "@/server/common";
+import { fetchDictionary } from "@/server/common";
+import { getRestapiAddress } from "@/server/other";
 import evens from "@/common/evens";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
 @inject("store")
@@ -46,7 +46,7 @@ class Index extends Component {
     });
   }
   fetchHotCity() {
-    getDictionary(
+    fetchDictionary(
       {
         parent: "hotCityConfig",
         child: "hotCityList",

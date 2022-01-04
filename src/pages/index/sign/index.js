@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, PickerView, WebView } from "@tarojs/components";
-import {
-  getLat,
-  getLnt,
-  fetchStorage,
-  loginStatus,
-  backgroundObj,
-} from "@/common/utils";
-import { getMainPage } from "@/server/user";
-import Router from "@/common/router";
+import { getLat, getLnt, fetchStorage, backgroundObj } from "@/utils/utils";
+import { fetchMainPage } from "@/server/index";
+import Router from "@/utils/router";
 import Drawer from "@/components/Drawer";
 let env = process.env.NODE_ENV === "development" ? "dev" : "product";
 class Index extends Component {
@@ -21,7 +15,7 @@ class Index extends Component {
       link: `https://web-new.dakale.net/${env}/game/sign/index.html#/register?${this.filterUrl()}`,
       token: fetchStorage("userInfo").token,
     };
-  } 
+  }
   filterUrl() {
     const { token = "" } = Taro.getStorageSync("userInfo") || {};
     const { cityCode = 3301 } = fetchStorage("city") || {};
@@ -43,7 +37,7 @@ class Index extends Component {
     return str;
   }
   getMainPage() {
-    getMainPage({}, (res) => {
+    fetchMainPage({}).then((res) => {
       const { userInfo } = res;
       if (!userInfo) {
         this.setState(

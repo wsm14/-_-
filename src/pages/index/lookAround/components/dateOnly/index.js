@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { View, Swiper, SwiperItem } from "@tarojs/components";
 import Template from "./../hotTemplate";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import Taro from "@tarojs/taro";
 export default ({ data = [], userInfo = {}, linkTo }) => {
   const { shareCommission = 0 } = userInfo;

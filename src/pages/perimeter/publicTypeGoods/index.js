@@ -1,23 +1,18 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View, ScrollView } from "@tarojs/components";
-import FilterDropdown from "@/components/componentView/filterDropdown";
+import FilterDropdown from "@/components/public_ui/filterDropdown";
 import Banner from "@/components/banner";
 import {
-  getCategory,
-  getConfigWindVaneBySize,
-  getBusinessHub,
-  getBanner,
+  fetchCategory,
+  fetchBusinessHub,
+  fetchBanner,
+  fetchUserShareCommission,
 } from "@/server/common";
-import { fetchUserShareCommission, fetchSpecialGoods } from "@/server/index";
-import Tags from "@/components/componentView/goodsTagView";
-import { template } from "@/components/specalTemplate";
-import {
-  toast,
-  computedWinHeight,
-  setNavTitle,
-  computedSize,
-} from "@/common/utils";
+import { fetchSpecialGoods } from "@/server/index";
+import Tags from "@/components/public_ui/goodsTagView";
+import { template } from "@/components/public_ui/specalTemplate";
+import { computedWinHeight, setNavTitle, computedSize } from "@/utils/utils";
 import Skeleton from "./components/SkeletonView";
 import "./index.scss";
 class Index extends Component {
@@ -65,24 +60,26 @@ class Index extends Component {
         loading: true,
       },
       (res) => {
-        getBanner(bannerType, (res) => {
-          const { bannerList } = res;
-          this.setState({
-            bannerList,
-            loading: false,
+        fetchBanner(bannerType)
+          .then((res) => {
+            const { bannerList } = res;
+            this.setState({
+              bannerList,
+              loading: false,
+            });
+          })
+          .catch((e) => {
+            this.setState({
+              loading: false,
+            });
           });
-        }).catch((e) => {
-          this.setState({
-            loading: false,
-          });
-        });
       }
     );
   }
   initSelect() {
     Promise.all([
-      getCategory({ parentId: "0" }, () => {}),
-      getBusinessHub({}),
+      fetchCategory({ parentId: "0" }, () => {}),
+      fetchBusinessHub({}),
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
       const { categoryList } = val[0];

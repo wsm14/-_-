@@ -1,15 +1,13 @@
 import React, { Component, useEffect } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
-import { filterStrList } from "@/common/utils";
 import { getSettingAuth } from "@/common/authority";
-import { toast } from "@/common/utils";
-import Router from "@/common/router";
+import { toast, filterStrList } from "@/utils/utils";
+import Router from "@/utils/router";
 import "./index.scss";
 
 export default (props) => {
   const { data, urlLink } = props;
-
   const { activityGoodsImg, recommendReason } = data;
   const savePhoto = (filterImage) => {
     Taro.showLoading({ mask: true, title: "照片保存中..." });

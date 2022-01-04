@@ -2,15 +2,9 @@ import React from "react";
 import Taro, { getCurrentPages } from "@tarojs/taro";
 import { Button, Image, View } from "@tarojs/components";
 import UserTitle from "./components/userTop";
-import {
-  getMainPage,
-  getUserSub,
-  getLevel,
-  saveLevelTarget,
-} from "@/server/user";
-import { getBanner } from "@/server/common";
-import { removeLogin } from "@/common/utils";
-import Router from "@/common/router";
+import { fetchMainPage } from "@/server/index";
+import { fetchBanner } from "@/server/common";
+import { objStatus } from "@/utils/utils";
 import UserContent from "./components/userCenter";
 import Skeleton from "./components/SkeletonView";
 import { inject, observer } from "mobx-react";
@@ -22,24 +16,19 @@ class Index extends React.Component {
     super(...arguments);
     this.state = {
       bannerList: [],
+      //轮播图数组
       bannerHttp: {
         bannerType: "person",
       },
+      //轮播图参数
       loginStatus: 0,
+      //登录状态
       userInfo: {},
-      nextLevel: {},
-      levelDetails: {},
-      visible: false,
-      collectStatus: {
-        toastVisible: false,
-        toastClick: false,
-        ruleVisible: false,
-        ruleStatus: false,
-        successToast: false,
-      },
-      levelToast: false,
+      //用户信息
       loading: false,
+      //骨架屏是否展示
       size: 0,
+      //与骨架屏关联
     };
   }
   onPullDownRefresh() {
@@ -48,37 +37,28 @@ class Index extends React.Component {
         bannerList: [],
         loginStatus: 0,
         userInfo: {},
-        nextLevel: {},
-        levelDetails: {},
       },
       (res) => {
         let time = setTimeout(() => {
           Taro.stopPullDownRefresh();
           clearTimeout(time);
         }, 500);
-        this.getBannerList();
-        this.getUserDetails();
+        this.fetchBannerList();
+        this.fetchUser();
       }
     );
   }
-  getBannerList() {
+  fetchBannerList() {
     const { bannerHttp } = this.state;
-    getBanner(bannerHttp, (res) => {
+    fetchBanner(bannerHttp).then((res) => {
       const { bannerList } = res;
       this.setState({
         bannerList,
       });
     });
   }
-  getLevel() {
-    getLevel({}, (res) => {
-      const { nextLevel } = res;
-      this.setState({
-        nextLevel,
-      });
-    });
-  }
-  getUserDetails() {
+
+  fetchUser() {
     const { size } = this.state;
     if (size === 0) {
       this.setState({
@@ -86,128 +66,33 @@ class Index extends React.Component {
         loading: true,
       });
     }
-    getMainPage({}, (res) => {
-      const { userInfo } = res;
-      if (!userInfo) {
-        removeLogin();
-        this.setState({
-          userInfo: {},
-          loginStatus: 0,
-          loading: false,
-        });
-        return;
-      } else {
-        this.setState(
-          {
-            loginStatus: 1,
-            userInfo: { ...userInfo },
-            loading: false,
-          },
-          (res) => {
-            this.getLevel();
-            this.getUserSub();
-          }
-        );
-      }
-    }).catch((e) => {
+    fetchMainPage().then((val) => {
+      const { userInfo = {} } = val;
       this.setState({
+        userInfo: userInfo,
+        loginStatus: objStatus(userInfo) ? 1 : 0,
         loading: false,
       });
     });
   }
-  fetchCollect() {
-    Router({
-      routerName: "webView",
-      args: {
-        link: "https://mp.weixin.qq.com/s/cigoCWs94L4wT_T40fSOkw",
-        title: "关注公众号",
-      },
-    });
-  }
-  fetchLoad() {
-    Router({
-      routerName: "webView",
-      args: {
-        link: "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dakale-web-page/wechant/page/interface.html",
-        title: "关注公众号",
-      },
-    });
-  }
-  fetchLever() {
-    const {
-      collectStatus,
-      collectStatus: { toastClick, ruleStatus },
-    } = this.state;
-    if (!ruleStatus) {
-      this.setState({
-        collectStatus: {
-          ...collectStatus,
-          ruleVisible: true,
-        },
-      });
-    } else {
-      saveLevelTarget({}).then((val) => {
-        this.setState(
-          {
-            collectStatus: {
-              ...collectStatus,
-              successToast: true,
-            },
-          },
-          (res) => {
-            this.getUserDetails();
-          }
-        );
-      });
-    }
-  }
-  getUserSub() {
-    getUserSub({}, (res) => {
-      this.setState({
-        levelDetails: { ...res },
-      });
-    });
-  }
-
-  fetchUserLeverToast() {
-    const { level = "0" } = this.state.userInfo;
-    if (level === "0") {
-      this.fetchLoad();
-    } else {
-      this.setState({
-        levelToast: true,
-      });
-    }
-  }
+  //获取用户信息
   componentDidMount() {
-    this.getBannerList();
+    this.fetchBannerList();
   }
 
   componentDidShow() {
-    this.getUserDetails();
+    this.fetchUser();
   }
 
   render() {
-    const {
-      bannerList = [],
-      list,
-      loginStatus,
-      userInfo,
-      nextLevel,
-      levelDetails,
-      visible,
-      collectStatus,
-      collectStatus: { toastVisible, ruleVisible, successToast },
-      levelToast,
-      loading,
-    } = this.state;
-    const {} = this.props.store;
+    const { bannerList = [], loginStatus, userInfo, loading } = this.state;
+
     return (
       <Skeleton loading={loading}>
         <View className="page_userBox">
           <UserTitle
             reload={() => {
-              this.getUserDetails();
+              this.fetchUser();
               this.setState({
                 visible: true,
               });

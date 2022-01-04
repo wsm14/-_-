@@ -1,7 +1,7 @@
 /*
  * data, 轮播图数据
  * showToast 是否显示当前张数,
- * imgName 图片参数名称
+ * imgName 图片参数名称，当传进来的是对象时候填写
  * list 图片数组
  * current 图片当前张数
  * boxStyle 轮播图外边框样式
@@ -12,7 +12,7 @@ import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { Swiper, SwiperItem, View, Image } from "@tarojs/components";
 import classNames from "classnames";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import "./index.scss";
 export default (props) => {
   const {
@@ -66,6 +66,7 @@ export default (props) => {
       }
     }
   };
+  //轮播图点击跳转逻辑
   if (list.length > 0) {
     return (
       <View style={!boxStyle ? { position: "relative" } : { ...boxStyle }}>

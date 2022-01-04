@@ -1,8 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Taro from "@tarojs/taro";
-import { View, ScrollView, Image } from "@tarojs/components";
-import { backgroundObj } from "@/common/utils";
-import {} from "react";
+import { View, ScrollView } from "@tarojs/components";
+import { backgroundObj } from "@/utils/utils";
 export default ({ list = [], onChange }) => {
   const width = Taro.getSystemInfoSync().windowWidth / 5;
   const windowWidth = Taro.getSystemInfoSync().windowWidth;

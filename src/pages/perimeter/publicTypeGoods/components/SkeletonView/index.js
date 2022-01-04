@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { CoverView, View } from "@tarojs/components";
+import React from "react";
+import { View } from "@tarojs/components";
 import Skeleton from "@/components/Skeleton";
-import classNames from "classnames";
-import { computedClient, goBack } from "@/common/utils";
 export default (props) => {
   const { loading, children } = props;
   if (loading) {

@@ -1,14 +1,12 @@
-import React, { useMemo } from "react";
-import { View, Text, Image, ScrollView } from "@tarojs/components";
+import React from "react";
+import { View, Text } from "@tarojs/components";
 import {
   GetDistance,
   getLnt,
   getLat,
   backgroundObj,
   computedPrice,
-  computedBeanPrice,
-} from "@/common/utils";
-import Router from "@/common/router";
+} from "@/utils/utils";
 export default ({
   data = {},
   userInfo = {},
@@ -64,15 +62,6 @@ export default ({
             ¥{computedPrice(realPrice, payBeanCommission)}
           </View>
         </View>
-
-        {shareCommission > 0 && (
-          <View className="lookAround_bean_show font_hide  font18 color3">
-            赚
-            <Text className="bold">
-              ¥{computedPrice(commission, shareCommission)}
-            </Text>
-          </View>
-        )}
       </View>
     );
   };
@@ -167,14 +156,6 @@ export default ({
             ¥{computedPrice(realPrice, payBeanCommission)}
           </View>
         </View>
-        {shareCommission > 0 && (
-          <View className="lookAround_bean_show font_hide  font18 color3">
-            赚
-            <Text className="bold">
-              ¥{computedPrice(commission, shareCommission)}
-            </Text>
-          </View>
-        )}
       </View>
     );
   };

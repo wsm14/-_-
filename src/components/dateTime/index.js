@@ -5,7 +5,7 @@
  */
 import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
-import { toast } from "../../common/utils";
+import { toast } from "@/utils/utils";
 import classNames from "classnames";
 import "./index.scss";
 function getSeconds(s, val = false) {

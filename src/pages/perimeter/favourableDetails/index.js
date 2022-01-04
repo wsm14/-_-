@@ -1,52 +1,46 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Image, ScrollView, Text, View, RichText } from "@tarojs/components";
-import Banner from "@/components/banner";
-import { perimeter } from "@/api/api";
-import { httpGet, httpPost } from "@/api/newRequest";
 import {
-  filterStrList,
   loginStatus,
-  format,
-  setBuyRule,
   computedPrice,
-  backgroundObj,
-  saveCollection,
-  deleteCollection,
   toast,
-  computedBeanPrice,
-  filterPath,
-} from "@/common/utils";
-import { loginBtn } from "@/common/authority";
-import ActivityStatus from "./components/index";
+  objStatus,
+  fakeStorage,
+} from "@/utils/utils";
 import {
-  getShareParamInfo,
-  getShareInfo,
+  fetchShareParamInfo,
+  fetchShareInfo,
   fetchShareConfig,
+  fetchUserShareCommission,
 } from "@/server/common";
-import { fetchUserShareCommission } from "@/server/index";
+import {
+  fetchSpecialGoods,
+  fakeSaveCollection,
+  fakeDeleteCollection,
+} from "@/server/perimeter";
+import BannerTop from "./components/bannerTop";
+import GoodTemplate from "./components/goodTemplate";
+import Card from "@/components/public_ui/represent";
+import Merchant from "@/components/public_ui/merchant";
+import KnowPay from "@/components/public_ui/KnowPay";
+import ShareView from "./components/shareCmt";
+import Rule from "@/components/public_ui/rule";
+import Recommend from "@/components/public_ui/specalActive";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
-import ButtonView from "@/components/Button";
-import { knowPay } from "@/components/componentView/KnowPay";
-import VideoBean from "./components/getVideoBean";
-import Router from "@/common/router";
-import Date from "@/components/dateTime";
-import Toast from "@/components/dakale_toast";
-import Card from "@/components/shopView/represent";
-import Merchant from "@/components/shopView/merchant";
-import Rule from "@/components/shopView/rule";
-import Recommend from "@/components/specalActive";
-import Wares from "@/components/componentView/wares";
-import Drawer from "@/components/Drawer";
-import RightFlag from "@/components/componentView/rightFlagView";
-import ShareView from "./components/shareCmt";
+import Toast from "@/components/toast";
+import Wares from "@/components/public_ui/wares";
+import RightDrawer from "./components/RightDrawer";
+import ActivityStatus from "./components/errorStatus";
+import Router from "@/utils/router";
 import { inject, observer } from "mobx-react";
-import classNames from "classnames";
+import FixedBtn from "./components/fixedBtn";
+import { fetchStorage } from "@/utils/utils";
 import "./index.scss";
 @inject("store")
 @observer
-class MerchantDetails extends Component {
+class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -56,8 +50,6 @@ class MerchantDetails extends Component {
         merchantId: getCurrentInstance().router.params.merchantId || "",
         shareUserId: getCurrentInstance().router.params.shareUserId || "",
       },
-      lnt: Taro.getStorageSync("lnt"),
-      lat: Taro.getStorageSync("lat"),
       specialGoodsInfo: {}, //商品详情
       index: 0,
       visible: false,
@@ -70,13 +62,15 @@ class MerchantDetails extends Component {
       drawerVisible: false,
       resultInfo: {},
       urlLink: null,
+      showDownload: false,
+      toastVisible: fetchStorage("toast_dakale") === 1 ? false : true,
     };
   }
   componentWillMount() {
     let { scene } = getCurrentInstance().router.params;
     let { httpData } = this.state;
     if (scene) {
-      getShareParamInfo({ uniqueKey: scene }, (res) => {
+      fetchShareParamInfo({ uniqueKey: scene }, (res) => {
         let {
           shareParamInfo: { param },
         } = res;
@@ -119,14 +113,9 @@ class MerchantDetails extends Component {
     });
   }
   getDetailsById() {
-    const { getSpecialGoodsDetail } = perimeter;
     const { httpData, index } = this.state;
-    httpGet(
-      {
-        url: getSpecialGoodsDetail,
-        data: httpData,
-      },
-      (res) => {
+    fetchSpecialGoods(httpData)
+      .then((res) => {
         const {
           specialGoodsInfo,
           specialGoodsInfo: { status },
@@ -154,10 +143,10 @@ class MerchantDetails extends Component {
             index: index + 1,
           });
         }
-      }
-    ).catch((e) => {
-      Taro.stopPullDownRefresh();
-    });
+      })
+      .catch((e) => {
+        Taro.stopPullDownRefresh();
+      });
   }
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
@@ -222,7 +211,7 @@ class MerchantDetails extends Component {
       specialGoodsInfo,
     } = this.state;
     const { profile, username } = Taro.getStorageSync("userInfo");
-    getShareInfo(
+    fetchShareInfo(
       {
         shareType: "specialActivity",
         shareId: specialActivityIdString,
@@ -305,63 +294,45 @@ class MerchantDetails extends Component {
       };
     }
   }
-  filterBeanPrice() {
-    const { configUserLevelInfo, specialGoodsInfo } = this.state;
-    const { payBeanCommission = 50 } = configUserLevelInfo;
-    const { userBean, realPrice } = specialGoodsInfo;
-    if (userBean >= computedPrice(realPrice, payBeanCommission) * 100) {
-      return parseInt(computedPrice(realPrice, payBeanCommission) * 100);
-    } else {
-      return userBean;
-    }
-  }
   setCollection() {
     const {
       specialGoodsInfo: { userCollectionStatus = "0", specialActivityIdString },
       specialGoodsInfo,
     } = this.state;
     if (userCollectionStatus === "0") {
-      saveCollection(
-        {
-          collectionType: "special",
-          collectionId: specialActivityIdString,
-        },
-        (res) => {
-          this.setState(
-            {
-              specialGoodsInfo: {
-                ...specialGoodsInfo,
-                userCollectionStatus: "1",
-              },
-            },
-            (res) => {
-              toast("收藏成功,请打开「哒卡乐APP」查看收藏详情");
-            }
-          );
-        }
-      );
+      fakeSaveCollection({
+        collectionType: "special",
+        collectionId: specialActivityIdString,
+      }).then((res) => {
+        this.setState({
+          specialGoodsInfo: {
+            ...specialGoodsInfo,
+            userCollectionStatus: "1",
+          },
+          showDownload: true,
+        });
+      });
     } else {
-      deleteCollection(
-        {
-          collectionType: "special",
-          collectionId: specialActivityIdString,
-        },
-        (res) => {
-          this.setState(
-            {
-              specialGoodsInfo: {
-                ...specialGoodsInfo,
-                userCollectionStatus: "0",
-              },
+      fakeDeleteCollection({
+        collectionType: "special",
+        collectionId: specialActivityIdString,
+      }).then((res) => {
+        this.setState(
+          {
+            specialGoodsInfo: {
+              ...specialGoodsInfo,
+              userCollectionStatus: "0",
             },
-            (res) => {
-              toast("取消成功");
-            }
-          );
-        }
-      );
+            showDownload: false,
+          },
+          (res) => {
+            toast("取消成功");
+          }
+        );
+      });
     }
   }
+  //收藏
   saveGoodsOrder() {
     const {
       specialGoodsInfo: {
@@ -398,24 +369,15 @@ class MerchantDetails extends Component {
         return;
       }
     }
-    if (activityType === "commerceGoods") {
-      Router({
-        routerName: "commerOrder",
-        args: {
-          merchantId: merchantIdString,
-          specialActivityId: specialActivityIdString,
-        },
-      });
-    } else {
-      Router({
-        routerName: "favourableOrder",
-        args: {
-          merchantId: merchantIdString,
-          specialActivityId: specialActivityIdString,
-        },
-      });
-    }
+    Router({
+      routerName: "favourableOrder",
+      args: {
+        merchantId: merchantIdString,
+        specialActivityId: specialActivityIdString,
+      },
+    });
   }
+  //跳到确认订单页面
   onPullDownRefresh() {
     Taro.stopPullDownRefresh();
     this.getDetailsById();
@@ -427,301 +389,48 @@ class MerchantDetails extends Component {
   render() {
     const {
       specialGoodsInfo: {
-        oriPrice,
-        realPrice,
-        activityEndTime,
-        goodsName,
-        allowExpireRefund,
-        allowRefund,
-        needOrder,
-        goodsDesc,
         specialActivityIdString,
-        merchantIdString,
-        goodsDescImg,
         status,
-        ownerType = "merchant",
-        activityStartTime,
         buyRule = "unlimited",
         dayMaxBuyAmount = 0,
-        maxBuyAmount = 0,
-        goodsType = "single",
-        activityTimeRule,
-        activityGoodsImg,
-        packageGroupObjects = [],
-        merchantCount,
-        merchantPrice,
-        remain,
-        userCollectionStatus,
         personLimit,
-        buyUserImageList,
-        userBean = 0,
         rightFlag = "0",
         paymentModeObject = {},
-        goodsImg,
-        richText,
         activityType,
-        commission,
       },
       visible,
       configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
       configUserLevelInfo,
       specialGoodsInfo,
       cavansObj,
-      httpData,
       mxVisible,
       drawerVisible,
       resultInfo,
       urlLink,
+      showDownload,
+      toastVisible,
     } = this.state;
-    const { bean = 0, cash = 0, type = "defaultMode" } = paymentModeObject;
-    const { login } = this.props.store.authStore;
+    const { type = "defaultMode" } = paymentModeObject;
     const { beanLimitStatus } = this.props.store.homeStore;
     const { beanLimit } = this.props.store.commonStore;
-    const shareInfoBtn = () => {
-      if (shareCommission > 0 && commission > 0 && rightFlag !== "1") {
-        return (
-          <ButtonView
-            data={{
-              path: "pages/perimeter/favourableDetails/index",
-              type: "favourableDetails_share",
-              name: "商品详情分享",
-            }}
-          >
-            <View
-              onClick={() => loginBtn(() => this.getShareInfo())}
-              className="shopdetails_shop_btnBox2 shopdetails_shop_btnColor2"
-            >
-              <View className="shop_price_font">
-                <View>分享赚</View>
-                <View>¥{computedPrice(commission, shareCommission)}</View>
-              </View>
-            </View>
-          </ButtonView>
-        );
-      } else {
-        return (
-          <ButtonView
-            data={{
-              path: "pages/perimeter/favourableDetails/index",
-              type: "favourableDetails_share",
-              name: "商品详情分享",
-            }}
-          >
-            <View
-              onClick={() => loginBtn(() => this.getShareInfo())}
-              className="shopdetails_shop_btnBox2 shopdetails_shop_btnColor2"
-            >
-              分享给好友
-            </View>
-          </ButtonView>
-        );
-      }
-    };
-    const payBtn = () => {
-      if (!format(activityStartTime) && activityTimeRule === "fixed") {
-        return (
-          <View className="shopdetails_shop_btnBox">
-            <ButtonView>
-              <View className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1 shopdetails_shop_option">
-                即将开始
-              </View>
-            </ButtonView>
-            {shareInfoBtn()}
-          </View>
-        );
-      } else if (remain === 0) {
-        return (
-          <View className="shopdetails_shop_btnBox">
-            <ButtonView>
-              <View className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1 shopdetails_shop_option">
-                已售罄
-              </View>
-            </ButtonView>
-            {shareInfoBtn()}
-          </View>
-        );
-      } else if (shareCommission !== 0 && rightFlag !== "1" && commission > 0) {
-        return (
-          <View className="shopdetails_shop_btnBox">
-            <ButtonView
-              data={{
-                path: "pages/perimeter/favourableDetails/index",
-                type: "favourableDetails_share",
-                name: "商品详情购买",
-              }}
-            >
-              <View
-                className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"
-                onClick={() => loginBtn(() => this.saveGoodsOrder())}
-              >
-                <View className="shop_price_font">
-                  <View>自购返</View>
-                  <View>¥{computedPrice(commission, shareCommission)}</View>
-                </View>
-              </View>
-            </ButtonView>
-            {shareInfoBtn()}
-          </View>
-        );
-      } else {
-        return (
-          <View className="shopdetails_shop_btnBox">
-            <ButtonView
-              data={{
-                path: "pages/perimeter/favourableDetails/index",
-                type: "favourableDetails_share",
-                name: "商品详情购买",
-              }}
-            >
-              <View
-                className="shopdetails_shop_btnBox1 shopdetails_shop_btnColor1"
-                onClick={() => loginBtn(() => this.saveGoodsOrder())}
-              >
-                立即抢购
-              </View>
-            </ButtonView>
-            {shareInfoBtn()}
-          </View>
-        );
-      }
-    };
-    const template = () => {
-      if (!format(activityStartTime) && activityTimeRule === "fixed") {
-        return <View className="shopDetails_avtiveTime_tag">即将开始</View>;
-      } else {
-        return (
-          <View className="shopdetails_pay_status">
-            {activityTimeRule !== "infinite" ? (
-              <Date
-                onlyTime
-                type={true}
-                times={activityEndTime}
-                fn={() => {}}
-              ></Date>
-            ) : (
-              <View className="shopDetails_avtiveTime_tag">长期有效</View>
-            )}
-          </View>
-        );
-      }
-    };
-    const templatePrice = () => {
-      if (rightFlag === "1" && type === "defaultMode") {
-        return (
-          <View className="shopdetails_getShop">
-            <View className="shopdetails_price_people">
-              <Text className="font28 color1">优惠价: </Text>
-              <Text className="font48 color1 font_hide bold price_margin4  shopdetails_price_info">
-                ¥{cash}
-              </Text>
-              <Text className="shopdetails_price_style color2">原价:</Text>
-              <Text className="font36 shopdetails_price_style1 font_hide price_margin4 color2 bold text_through">
-                ¥{oriPrice}
-              </Text>
-            </View>
-            <View className="shopdetails_beanTitleName public_auto">
-              <View className="shopdetails_beanTitle_name font_fourHide">
-                {goodsName}
-              </View>
-            </View>
-          </View>
-        );
-      } else if (type !== "defaultMode") {
-        return (
-          <View className="shopdetails_getShop">
-            <View className="favourInfo_box">
-              <View className="favourInfo_box_left">卡豆价:</View>
-              <View className="favourInfo_box_right">
-                ¥{cash.toFixed(2)}+{bean}卡豆
-              </View>
-            </View>
-            <View className="favourInfo_rel">
-              <Text className="color2 font28"> 原价:</Text>
-              <Text className="font36 font_hide price_margin4 color2 bold text_through">
-                ¥{oriPrice}
-              </Text>
-            </View>
-
-            <View className="shopdetails_beanTitleName public_auto">
-              <View className="shopdetails_beanTitle_name font_fourHide">
-                {goodsName}
-              </View>
-              {activityType !== "commerceGoods" && (
-                <View
-                  onClick={() => this.setCollection()}
-                  className={classNames(
-                    userCollectionStatus === "1"
-                      ? "shopdetails_isCollect"
-                      : "shopdetails_collect"
-                  )}
-                ></View>
-              )}
-            </View>
-            <View className="shopdetails_bean_handerRight">
-              {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
-                <View className="shopdetails_getPrice_tag">
-                  {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount)}
-                </View>
-              )}
-            </View>
-          </View>
-        );
-      } else {
-        return (
-          <View className="shopdetails_getShop">
-            <View className="shopdetails_price_people">
-              <Text className="font28 color1">优惠价: </Text>
-              <Text className="font48 color1 font_hide bold price_margin4  shopdetails_price_info">
-                ¥{realPrice}
-              </Text>
-              <Text className="shopdetails_price_style color2">原价:</Text>
-              <Text className="font36 shopdetails_price_style1 font_hide price_margin4 color2 bold text_through">
-                ¥{oriPrice}
-              </Text>
-            </View>
-            <View
-              onClick={() => this.setState({ mxVisible: true })}
-              className="shopdetails_bean_showPay"
-            >
-              <View className="color3 font24">卡豆再省</View>
-              <View className="color3 font36 bold price_margin8">
-                ¥{computedPrice(realPrice, payBeanCommission)}
-              </View>
-              <View className="shopdetails_bean_mx">
-                {"卡豆抵扣明细" + " >"}
-              </View>
-            </View>
-            <View className="shopdetails_beanTitleName public_auto">
-              <View className="shopdetails_beanTitle_name font_fourHide">
-                {" "}
-                {goodsName}
-              </View>
-              {activityType !== "commerceGoods" && (
-                <View
-                  onClick={() => this.setCollection()}
-                  className={classNames(
-                    userCollectionStatus === "1"
-                      ? "shopdetails_isCollect"
-                      : "shopdetails_collect"
-                  )}
-                ></View>
-              )}
-            </View>
-            <View className="shopdetails_bean_handerRight">
-              {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
-                <View className="shopdetails_getPrice_tag">
-                  {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount)}
-                </View>
-              )}
-            </View>
-          </View>
-        );
-      }
-    };
-    if (Object.keys(specialGoodsInfo).length > 0) {
+    if (objStatus(specialGoodsInfo)) {
       if (status !== "0") {
         return (
           <View className="favourable_Details">
+            {toastVisible && (
+              <View className="favourable_toastInfo">
+                <View
+                  className="favourable_toastClose"
+                  onClick={() => {
+                    fakeStorage("toast_dakale", 1);
+                    this.setState({
+                      toastVisible: false,
+                    });
+                  }}
+                ></View>
+              </View>
+            )}
+            {/*分享卡片*/}
             <TaroShareDrawer
               {...cavansObj}
               onSave={() => console.log("点击保存")}
@@ -729,35 +438,25 @@ class MerchantDetails extends Component {
                 this.setState({ cavansObj: { start: false, data: null } })
               }
             ></TaroShareDrawer>
-            <View className="shopDetails_banner dakale_nullImage">
-              <Banner
-                autoplay={
-                  filterStrList(activityGoodsImg).length > 1 ? true : false
-                }
-                imgStyle
-                showNear
-                data={filterStrList(activityGoodsImg) || []}
-                style={{ width: "100%", height: "100%" }}
-                boxStyle={{ width: "100%", height: "100%" }}
-              ></Banner>
-            </View>
-            {!(
-              (rightFlag === "1" && type === "defaultMode") ||
-              activityType === "commerceGoods"
-            ) && (
-              <View className="shopDetails_activeStatus">
-                <View className="shopDetails_avtiveLogo"></View>
-                <View className="shopDetails_avtiveTime">{template()}</View>
-              </View>
-            )}
-            {/*使用商家*/}
-            {templatePrice()}
-            {/*抵扣价格 和状态*/}
-            <Card
-              configUserLevelInfo={configUserLevelInfo}
+            <BannerTop data={specialGoodsInfo}></BannerTop>
+            <GoodTemplate
+              show={showDownload}
+              close={() =>
+                this.setState({
+                  showDownload: false,
+                })
+              }
+              collect={this.setCollection.bind(this)}
+              showToast={() => this.setState({ mxVisible: true })}
+              userInfo={configUserLevelInfo}
               data={specialGoodsInfo}
-            ></Card>
+            ></GoodTemplate>
             {/*保障*/}
+            <Card
+              data={specialGoodsInfo}
+              configUserLevelInfo={configUserLevelInfo}
+            ></Card>
+            {/*适用门店*/}
             {activityType !== "commerceGoods" && (
               <Merchant
                 serviceType={"specialGoods"}
@@ -765,85 +464,18 @@ class MerchantDetails extends Component {
                 ownerServiceId={specialActivityIdString}
               ></Merchant>
             )}
+            {/*分享*/}
             {!(
               (rightFlag === "1" && type === "defaultMode") ||
               activityType === "commerceGoods"
             ) && <ShareView urlLink={urlLink} data={resultInfo}></ShareView>}
-            {goodsType === "package" && (
-              <View className="shopdetails_shop_packageGroup">
-                <View className="shopdetails_shop_groupTitle">套餐详情</View>
-                {packageGroupObjects.map((item) => {
-                  const { packageGoodsObjects = [], groupName } = item;
-                  return (
-                    <View className="shopdetails_shop_package">
-                      <View className="shopdetails_package_title font_hide">
-                        ·{groupName}（{packageGoodsObjects.length}）
-                      </View>
-                      {packageGoodsObjects.map((val) => {
-                        const { goodsName, goodsNum, goodsPrice } = val;
-                        return (
-                          <View className="shopdetails_package_goods public_auto">
-                            <View>
-                              <Text className="shopdetails_package_width font_hide">
-                                {goodsName}
-                              </Text>
-                              <Text>（{goodsNum}份）</Text>
-                            </View>
-                            <View>¥{goodsPrice}</View>
-                          </View>
-                        );
-                      })}
-                    </View>
-                  );
-                })}
-              </View>
-            )}
-            {/* 套餐 */}
-            {/* 商品详情 */}
-            {(goodsDesc || goodsDescImg) && (
-              <View className="shopdetails_shop_details">
-                <View className="shopdetails_shop_merchantDetails">
-                  商品描述
-                </View>
-                {goodsDesc && (
-                  <View className="shopdetails_dec">
-                    <Text>{goodsDesc.replace(/\\n/g, "\n")}</Text>
-                  </View>
-                )}
-                <View className="shopdetails_Image">
-                  {goodsDescImg &&
-                    filterStrList(goodsDescImg).map((item) => {
-                      return (
-                        <Image
-                          mode="widthFix"
-                          src={item}
-                          onClick={() => {
-                            Taro.previewImage({
-                              urls: [item],
-                            });
-                          }}
-                          style={{ width: "100%" }}
-                        ></Image>
-                      );
-                    })}
-                </View>
-              </View>
-            )}
-            {richText && (
-              <View className="shopdetails_shop_details">
-                <View className="shopdetails_shop_merchantDetails">
-                  商品描述
-                </View>
-                <RichText
-                  nodes={richText}
-                  className="temPlateComment_desc"
-                ></RichText>
-              </View>
-            )}
             {/*使用须知*/}
-            {activityType !== "commerceGoods" && knowPay(specialGoodsInfo)}
+            {activityType !== "commerceGoods" && (
+              <KnowPay data={specialGoodsInfo}></KnowPay>
+            )}
             {/*使用方法*/}
             {activityType !== "commerceGoods" && <Rule></Rule>}
+            {/*为你推荐*/}
             {activityType !== "commerceGoods" && (
               <Recommend
                 current={true}
@@ -851,50 +483,34 @@ class MerchantDetails extends Component {
                 userInfo={configUserLevelInfo}
               ></Recommend>
             )}
-            <VideoBean
-              visible={beanLimitStatus === "1"}
-              beanLimit={beanLimit}
-              price={(realPrice * (payBeanCommission / 100))
-                .toFixed(3)
-                .substring(
-                  0,
-                  (realPrice * (payBeanCommission / 100)).toFixed(3).length - 1
-                )}
+            {/*卡豆可省弹层 */}
+            <Wares
+              close={(fn) =>
+                this.setState({ mxVisible: false }, (res) => {
+                  fn && fn();
+                })
+              }
+              visible={mxVisible}
+              configUserLevelInfo={configUserLevelInfo}
               data={specialGoodsInfo}
-            ></VideoBean>
-            {!(rightFlag === "1" && type === "defaultMode") && (
-              <View className="shopdetails_shop_btn">
-                {type !== "defaultMode" ? (
-                  <View className="shopdetails_shop_price">
-                    <View className="shopdetails_shop_priceTop bold">
-                      <Text className="font20">¥</Text>
-                      <Text className="price_margin8">{cash.toFixed(2)}</Text>
-                    </View>
-                    <View className="shopdetails_shop_real">
-                      已用{bean}卡豆抵扣
-                      {(bean / 100).toFixed(2)}元
-                    </View>
-                  </View>
-                ) : (
-                  <View className="shopdetails_shop_price">
-                    <View className="shopdetails_shop_priceTop bold">
-                      <Text className="font20">¥</Text>
-                      <Text className="price_margin8">
-                        {(
-                          realPrice - (this.filterBeanPrice() / 100).toFixed(2)
-                        ).toFixed(2)}
-                      </Text>
-                    </View>
-                    <View className="shopdetails_shop_real">
-                      已用{this.filterBeanPrice()}卡豆抵扣
-                      {(this.filterBeanPrice() / 100).toFixed(2)}元
-                    </View>
-                  </View>
-                )}
-                {payBtn()}
-              </View>
-            )}
-
+              status={beanLimitStatus}
+            ></Wares>
+            {/*权益商品卡豆不足时弹层 */}
+            <RightDrawer
+              close={(fn) => {
+                this.setState(
+                  {
+                    drawerVisible: false,
+                  },
+                  (res) => {
+                    fn && fn();
+                  }
+                );
+              }}
+              data={specialGoodsInfo}
+              show={drawerVisible}
+            ></RightDrawer>
+            {/*限购或者购买达到最大数量的时候的提示  */}
             {visible && (
               <Toast
                 title={"哒卡乐温馨提示"}
@@ -914,41 +530,14 @@ class MerchantDetails extends Component {
                 </View>
               </Toast>
             )}
-            <Wares
-              close={(fn) =>
-                this.setState({ mxVisible: false }, (res) => {
-                  fn && fn();
-                })
-              }
-              visible={mxVisible}
+            {/*商品底部 按钮以及优惠提示栏*/}
+            <FixedBtn
               configUserLevelInfo={configUserLevelInfo}
+              shareInfo={this.getShareInfo.bind(this)}
+              saveInfo={this.saveGoodsOrder.bind(this)}
+              beanLimit={beanLimit}
               data={specialGoodsInfo}
-              status={beanLimitStatus}
-            ></Wares>
-            {drawerVisible && (
-              <Drawer
-                show={drawerVisible}
-                close={() => {
-                  this.setState({
-                    drawerVisible: false,
-                  });
-                }}
-              >
-                <RightFlag
-                  data={{
-                    img: goodsImg,
-                    name: goodsName,
-                    price: cash,
-                    bean: bean - userBean,
-                  }}
-                  close={(e) => {
-                    this.setState({ drawerVisible: false }, (res) => {
-                      e && e();
-                    });
-                  }}
-                ></RightFlag>
-              </Drawer>
-            )}
+            ></FixedBtn>
           </View>
         );
       } else {
@@ -957,4 +546,4 @@ class MerchantDetails extends Component {
     } else return null;
   }
 }
-export default MerchantDetails;
+export default Index;

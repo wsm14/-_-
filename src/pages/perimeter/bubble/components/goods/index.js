@@ -1,35 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text, ScrollView } from "@tarojs/components";
 import {
-  toast,
   backgroundObj,
   GetDistance,
   getLat,
   getLnt,
   computedPrice,
-} from "@/common/utils";
-import classNames from "classnames";
-import Router from "@/common/router";
+} from "@/utils/utils";
+import Router from "@/utils/router";
 export default ({ list, userInfo, name, categoryIds }) => {
   const template = (item, userInfo, linkTo) => {
     const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
     const {
-      goodsId,
       goodsName,
       goodsImg,
       oriPrice,
       realPrice,
       lnt,
       lat,
-      status,
-      goodsType,
-      merchantAddress,
       merchantName,
       merchantLogo,
-      merchantId,
       specialActivityIdString,
       merchantPrice,
-      discount,
       merchantIdString,
     } = item;
     return (

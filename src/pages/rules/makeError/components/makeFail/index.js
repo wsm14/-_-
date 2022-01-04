@@ -4,7 +4,7 @@
 import React from "react";
 import { View } from "@tarojs/components";
 import { scanCard } from "@/common/authority";
-import { goBack } from "@/common/utils";
+import { goBack } from "@/utils/utils";
 
 export default (props) => {
   return (

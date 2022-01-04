@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { Text, View, ScrollView } from "@tarojs/components";
-import FilterDropdown from "@/components/componentView/filterDropdown";
-import Search from "@/components/componentView/SearchView";
+import { View, ScrollView } from "@tarojs/components";
+import FilterDropdown from "@/components/public_ui/filterDropdown";
+import Search from "@/components/public_ui/searchView";
 import {
-  getCategory,
-  getConfigWindVaneBySize,
-  getBusinessHub,
-} from "@/server/common";
-import {
+  fetchCategory,
+  fetchBusinessHub,
   fetchUserShareCommission,
-  fetchSpecialGoods,
-  fetchListCouponByFilterType,
-} from "@/server/index";
-import Tags from "@/components/componentView/goodsTagView";
-import { template, couponTemplate } from "@/components/specalTemplate";
-import { toast, computedViewHeight, setNavTitle } from "@/common/utils";
+} from "@/server/common";
+import { fetchSpecialGoods, fetchListCouponByFilterType } from "@/server/index";
+import Tags from "@/components/public_ui/goodsTagView";
+import {
+  template,
+  couponTemplate,
+} from "@/components/public_ui/specalTemplate";
+import { computedViewHeight, setNavTitle } from "@/utils/utils";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -25,14 +24,23 @@ class Index extends Component {
         page: 1,
         limit: 10,
         distance: "",
+        //距离筛选
         businessHubId: "",
+        //商圈筛选
         categoryIds: "",
+        //品类筛选
         keyword: "",
+        //关键字筛选
         goodsTags: "",
+        //商品标签筛选
       },
+      //获取风向标内层品类页面列表
       selectList: [],
+      //筛选条件
       configUserLevelInfo: {},
+      //哒人身份
       list: [],
+      //数据列表
       height: 0,
       categoryIds: getCurrentInstance().router.params.categoryIds,
       type: getCurrentInstance().router.params.type,
@@ -48,10 +56,11 @@ class Index extends Component {
       });
     });
   }
+  //哒人身份
   initSelect() {
     Promise.all([
-      getCategory({ parentId: "0" }, () => {}),
-      getBusinessHub({}),
+      fetchCategory({ parentId: "0" }, () => {}),
+      fetchBusinessHub({}),
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
       const { categoryList } = val[0];
@@ -124,6 +133,7 @@ class Index extends Component {
       });
     });
   }
+  //获取筛选接口
   getshopList() {
     fetchSpecialGoods(this.state.httpData, (res) => {
       const { specialGoodsList = [] } = res;
@@ -132,6 +142,7 @@ class Index extends Component {
       });
     });
   }
+  //请求商品列表数据
   fetchCoupons() {
     const { httpData } = this.state;
     fetchListCouponByFilterType(httpData, (res) => {
@@ -141,6 +152,7 @@ class Index extends Component {
       });
     });
   }
+  //请求券列表数据
   fecthRequest() {
     const { type } = this.state;
     if (type === "good") {
@@ -149,7 +161,7 @@ class Index extends Component {
       this.fetchCoupons();
     }
   }
-
+  //判断外层传递参数查询商品详情还是券详情
   changeSelect(val) {
     const { httpData } = this.state;
     this.setState(
@@ -166,10 +178,12 @@ class Index extends Component {
       }
     );
   }
+  //筛选
   componentWillMount() {
     const { name, type } = this.state;
     setNavTitle(name + (type === "good" ? "·附近特惠" : "·附近优惠券"));
   }
+  //判断外层标题
   componentDidMount() {
     const { categoryIds, httpData } = this.state;
     this.initSelect();
@@ -241,37 +255,39 @@ class Index extends Component {
           ></Tags>
         ) : null}
         <View className="scroll_margin"></View>
-        <ScrollView
-          scrollY
-          onScrollToLower={(e) => {
-            this.onPageUp();
-          }}
-          style={{
-            height: height
-              ? height
-              : computedViewHeight(".perimeterList_scroll", (e) => {
-                  this.setState({ height: e });
-                }),
-          }}
-          className="perimeterList_scroll"
-        >
-          {list.length === 0 && (
-            <>
-              <View className="perimeterList_nullStatus"></View>
-              <View className="perimeterList_text">
-                暂无{type === "good" ? "商品" : "优惠券"}
-              </View>
-            </>
-          )}
-          {list.map((item) => {
-            const { type } = this.state;
-            if (type === "good") {
-              return template(item, configUserLevelInfo);
-            } else {
-              return couponTemplate(item, configUserLevelInfo);
-            }
-          })}
-        </ScrollView>
+        <View className="scroll_padding_info">
+          <ScrollView
+            scrollY
+            onScrollToLower={(e) => {
+              this.onPageUp();
+            }}
+            style={{
+              height: height
+                ? height
+                : computedViewHeight(".perimeterList_scroll", (e) => {
+                    this.setState({ height: e });
+                  }),
+            }}
+            className="perimeterList_scroll"
+          >
+            {list.length === 0 && (
+              <>
+                <View className="perimeterList_nullStatus"></View>
+                <View className="perimeterList_text">
+                  暂无{type === "good" ? "商品" : "优惠券"}
+                </View>
+              </>
+            )}
+            {list.map((item) => {
+              const { type } = this.state;
+              if (type === "good") {
+                return template(item, configUserLevelInfo);
+              } else {
+                return couponTemplate(item, configUserLevelInfo);
+              }
+            })}
+          </ScrollView>
+        </View>
       </View>
     );
   }

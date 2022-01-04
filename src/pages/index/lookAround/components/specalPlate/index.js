@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import { View, Swiper, SwiperItem } from "@tarojs/components";
 import Template from "./../hotTemplate";
 import classNames from "classnames";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
   const { shareCommission = 0 } = userInfo;
   const memo = useMemo(() => {

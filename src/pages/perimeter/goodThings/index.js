@@ -2,22 +2,19 @@ import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View, Swiper, ScrollView, SwiperItem } from "@tarojs/components";
 import Waterfall from "@/components/waterfall";
-import {
-  fetchUserShareCommission,
-  fetchRightGoods,
-  fetchSpecialGoods,
-} from "@/server/index";
+import { fetchRightGoods, fetchSpecialGoods } from "@/server/index";
 import { fetchCommerceGoods, fetchSelfTourGoods } from "@/server/perimeter";
+import { fetchUserShareCommission } from "@/server/common";
 import {
   backgroundObj,
   computedPrice,
   getLnt,
   getLat,
   GetDistance,
-} from "@/common/utils";
+} from "@/utils/utils";
 import Empty from "@/components/Empty";
 import classNames from "classnames";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import Task from "@/components/task";
 import "./index.scss";
 class Index extends Component {
@@ -351,7 +348,7 @@ class Index extends Component {
     };
     const templateRight = (item) => {
       const {
-        commission,
+     
         goodsImg,
         ownerIdString,
         goodsName,
@@ -360,8 +357,7 @@ class Index extends Component {
         lnt,
         merchantLogo,
         oriPrice,
-        realPrice,
-        merchantIdString,
+      
         specialActivityIdString,
         paymentModeObject = {},
       } = item;
@@ -413,20 +409,16 @@ class Index extends Component {
         </View>
       );
     };
-
     const templateGame = (item) => {
       const {
         commission,
         goodsImg,
         ownerIdString,
         goodsName,
-        merchantName,
-        lat,
-        lnt,
-        merchantLogo,
+      
         oriPrice,
         realPrice,
-        merchantIdString,
+       
         specialActivityIdString,
       } = item;
       return (

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import "./index.scss";
 
 export default (props) => {

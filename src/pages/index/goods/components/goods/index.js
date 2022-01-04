@@ -3,14 +3,31 @@ import Taro from "@tarojs/taro";
 import classNames from "classnames";
 import { ScrollView, Text, View } from "@tarojs/components";
 import InterTime from "@/components/InterTime";
-import { filterPayStatus, backgroundObj, filterPayColor } from "@/common/utils";
+import { filterPayStatus, backgroundObj } from "@/utils/utils";
+import Router from "@/utils/router";
 import "./index.scss";
-import { navigateTo } from "@/common/utils";
-import Router from "@/common/router";
-
 export default (props) => {
   const { list, pageDown } = props;
   const [data, setData] = useState([]);
+  const filterPayColor = (string) => {
+    switch (string) {
+      case "0":
+        return "status_color2";
+      case "1":
+        return "status_color2";
+      case "2":
+        return "status_color1";
+      case "3":
+        return "status_color1";
+      case "4":
+        return "status_color2";
+      case "5":
+        return "status_color2";
+      case "6":
+        return "status_color2";
+    }
+  };
+  //订单列表颜色配置
   useEffect(() => {
     setData(list);
   }, [list]);
@@ -266,6 +283,7 @@ export default (props) => {
       </View>
     );
   };
+  //券渲染模板
   const createCodeGoods = (item) => {
     let { payFee, orderDesc, orderSn, createTime, beanFee = "", status } = item;
     orderDesc = JSON.parse(orderDesc) || {};
@@ -571,6 +589,7 @@ export default (props) => {
       </View>
     );
   };
+  //特惠商品渲模板
   const createVirtualProduct = (item) => {
     let {
       payFee,
@@ -646,6 +665,7 @@ export default (props) => {
       </View>
     );
   };
+  //虚拟商品模板
   const createRightCoupon = (item) => {
     let {
       payFee,
@@ -891,7 +911,7 @@ export default (props) => {
       </View>
     );
   };
-
+  //卡豆商品券模板
   const createRightGoods = (item) => {
     let {
       payFee,
@@ -1121,7 +1141,7 @@ export default (props) => {
       </View>
     );
   };
-
+  //卡豆商品模板
   const createCommerceGoods = (item) => {
     let {
       payFee,
@@ -1326,6 +1346,7 @@ export default (props) => {
       </View>
     );
   };
+  //电商商品模板
   const templateObj = {
     scan: createCodeGoods,
     specialGoods: createShopGoods,

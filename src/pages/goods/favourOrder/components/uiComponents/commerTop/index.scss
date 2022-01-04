@@ -1,0 +1,40 @@
+.commerOrder_address {
+  margin: 24px 32px 0;
+  padding: 26px 32px;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  .commerOrder_address_content {
+    width: 466px;
+    margin-left: 24px;
+  }
+  .commerOrder_address_icon {
+    width: 40px;
+    height: 48px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/commer_address.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .commerOrder_address_link {
+    margin-left: auto;
+    font-size: 24px;
+    font-weight: 400;
+    color: #07c0c2;
+    display: flex;
+    align-items: center;
+  }
+  .commerOrder_address_link::after {
+    content: "";
+    width: 12px;
+    height: 24px;
+    margin-left: 8px;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/commer_link.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .commerOrder_address_sh {
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+  }
+}

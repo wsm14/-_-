@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import Template from "./components/realTemplate";
-import { fetchRealNameInfo } from "@/server/user";
+import { fetchRealNameInfo } from "@/server/perimeter";
 import "./index.scss";
 class Index extends Component {
   constructor() {

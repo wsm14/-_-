@@ -1,7 +1,7 @@
 import Taro, { getCurrentInstance, getCurrentPages } from "@tarojs/taro";
-import { toast, addPhotosAlbum, navigateTo } from "@/common/utils";
-import { saveMarkBean } from "@/server/perimeter";
-import router from "./router";
+import { toast, addPhotosAlbum } from "@/utils/utils";
+import { fakeMarkBean } from "@/server/perimeter";
+import router from "@/utils/router";
 import qs from "qs";
 
 export const setLocation = (fn) => {
@@ -245,7 +245,7 @@ export const scanCode = (data) => {
             getAuthStatus({
               key: "location",
               success: () => {
-                saveMarkBean({ merchantId: data.merchantId }, (res) => {
+                fakeMarkBean({ merchantId: data.merchantId }, (res) => {
                   const {
                     resultCode,
                     merchantLnt,
@@ -326,7 +326,7 @@ export const scanCard = () => {
             getAuthStatus({
               key: "location",
               success: () => {
-                saveMarkBean({ merchantId: data.merchantId }, (res) => {
+                fakeMarkBean({ merchantId: data.merchantId }, (res) => {
                   const {
                     resultCode,
                     merchantLnt,
@@ -466,3 +466,4 @@ export const getAuthStatus = (obj) => {
 };
 
 export const mapTx = "V44BZ-PNPR4-Z6PUO-X2YUZ-5GAVO-MRBYQ";
+  
