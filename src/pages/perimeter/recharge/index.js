@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
+import router from "@/utils/router";
 import { useDidShow, useShareAppMessage } from "@tarojs/taro";
 import { View, Input, Button } from "@tarojs/components";
+import { fetchPhoneBill, fetchShareInfo } from "@/server/common";
 // import Barrage from "@/components/componentView/active/barrage";
 import FooterFixed from "@/components/FooterFixed";
-import Router from "@/utils/router";
-import TaroShareDrawer from "./components/TaroShareDrawer";
-import { fetchPhoneBill, fetchShareInfo } from "@/server/common";
 import { rssConfigData } from "./components/data";
+import TaroShareDrawer from "./components/TaroShareDrawer";
 import "./index.scss";
 
 const mobileNumber = "^[1][3-8][0-9]{9}$"; // 手机号
@@ -93,7 +93,7 @@ const rechargePage = () => {
   // 立即充值
   const handleGoRecharge = () => {
     if (teleForm && phoneMoney && !teleMsg) {
-      Router({
+      router({
         routerName: "rechargeOrder",
         args: {
           telephone,

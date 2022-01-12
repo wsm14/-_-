@@ -194,3 +194,14 @@ export const fetchPhoneBill = (data = {}, fn) => {
   );
 };
 // 话费充值列表
+
+export const fetchRechargeMemberList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/listNewAllLsxdProduct",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 会员充值列表
