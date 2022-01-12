@@ -307,3 +307,14 @@ export const fakeTogether = (data, fn) => {
   );
 };
 //完成合力任务
+export const fetchUserInfo = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/userInfo/getShareUserInfo",
+      data: data,
+    },
+    (res) => {
+      return fn(res);
+    }
+  );
+}; //获取他人动态

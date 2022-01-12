@@ -495,7 +495,7 @@ class index extends PureComponent {
               className="template_shop_img"
               style={backgroundObj(
                 logoImg ||
-                  "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_dakale.png"
+                  "https://wechat-config.dakale.net/miniprogram/image/merchant_dakale.png"
               )}
             ></View>
             <View className="template_shop_font">

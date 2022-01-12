@@ -19,3 +19,38 @@ export const fetchOwnerCouponDetail = (data = {}, fn) => {
   );
 };
 //获取商家有价券详情
+export const acquireCoupon = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/userCoupon/acquireCoupon",
+      data: data,
+    },
+    (res) => {
+      fn && fn(res);
+    }
+  );
+};
+//扫码支付领券
+
+export const fetchOrderLinkCoupon = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/link/coupon/getOrderLinkCoupon",
+      data: data,
+    },
+    (res) => {
+      fn && fn(res);
+    }
+  );
+};
+//查询订单链路券
+export const getNewAvailableCoupon = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/userCoupon/listNewAvailableCouponByChannel",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//查看多渠道可用券列表(打卡/消费/看视频)

@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro";
 import { Button, Text, View } from "@tarojs/components";
 import Router from "@/utils/router";
 import classNames from "classnames";
-import { objStatus } from "@/utils/utils";
+import { objStatus, toast } from "@/utils/utils";
 import "./index.scss";
 
 export default (props) => {
@@ -27,16 +27,22 @@ export default (props) => {
     tags = "",
     totalFee = "",
     ownerCouponIdString,
+    availableCouponCount,
+    merchantIdString,
   } = data;
+  console.log(data);
   const { payBeanCommission = 50 } = configUserLevelInfo;
   const linkCoupon = () => {
+    if (!totalFee) {
+      return toast("输入价格有误,请在输入价格后选择优惠券");
+    }
     Router({
       routerName: "selectCoupon",
       args: {
         useScenesType,
         cityCode,
         categoryNode: categoryIds,
-        ownerId: ownerIdString,
+        ownerId: ownerIdString || merchantIdString,
         goodsId: specialActivityIdString || ownerCouponIdString,
         tags,
         buyPrice: totalFee,
@@ -70,6 +76,36 @@ export default (props) => {
                 onClick={linkCoupon}
               >
                 未选优惠券，最高{userCouponObjects[0].couponValue}元可用
+              </View>
+            </View>
+          );
+        }
+      }
+    } else {
+      if (availableCouponCount === 0) {
+        return (
+          <View className="selectKol_coupon_coupons color2">
+            暂无优惠券可用
+          </View>
+        );
+      } else {
+        if (objStatus(couponObj)) {
+          const { couponPrice } = couponObj;
+          return (
+            <View className="selectKol_coupon_coupons">
+              <View onClick={linkCoupon} className="font28 color3 bold">
+                -{couponPrice}
+              </View>
+            </View>
+          );
+        } else {
+          return (
+            <View className="selectKol_coupon_coupons">
+              <View
+                className="selectKol_coupon_toast public_center"
+                onClick={linkCoupon}
+              >
+                请选择
               </View>
             </View>
           );

@@ -2,7 +2,383 @@ page {
   width: 100%;
   height: 100%;
 }
-.payWeex_box {
+.paySuccess_box {
   width: 100%;
-  height: 100%;
+  padding: 32px 0;
+  background: #ffffff;
+  margin: 24px auto 0;
+  line-height: 1;
+  .paySuccess_download {
+    margin: 32px 32px 0;
+    padding: 24px 32px;
+    height: 28px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+    background: #fef4f7;
+    border-radius: 20px;
+    .paySuccess_download_btn {
+      width: 136px;
+      height: 50px;
+      background: #ef476f;
+      border-radius: 25px;
+      border: 1px solid;
+      border-image: linear-gradient(
+          158deg,
+          rgba(255, 255, 255, 0.86),
+          rgba(255, 255, 255, 0.63),
+          rgba(255, 255, 255, 0.86)
+        )
+        1 1;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+  }
+  .paySuccess_yd_game {
+    margin: 40px 60px 0;
+    .paySuccess_game_one {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #666666;
+    }
+    .paySuccess_game_one::before {
+      display: block;
+      content: "";
+      width: 80px;
+      height: 80px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon813.png)
+        no-repeat;
+      background-size: 100% 100%;
+
+      margin: 0 auto 12px;
+    }
+    .paySuccess_game_two {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #666666;
+    }
+    .paySuccess_game_two::before {
+      display: block;
+      content: "";
+      width: 80px;
+      height: 80px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon814.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 0 auto 12px;
+    }
+    .paySuccess_game_three {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #666666;
+    }
+    .paySuccess_game_three::before {
+      display: block;
+      content: "";
+      width: 80px;
+      height: 80px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon815.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 0 auto 12px;
+    }
+  }
+  .paySuccess_top_info {
+    padding: 0 32px;
+    display: flex;
+    align-items: flex-start;
+    .paySuccess_content {
+      margin-left: 24px;
+      padding-top: 12px;
+    }
+  }
+  .paySuccess_yd {
+    margin: 28px;
+    display: flex;
+    justify-content: flex-end;
+    .paySuccess_yd_icon {
+      width: 24px;
+      height: 24px;
+      background: rgba(254, 244, 247, 1);
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      margin-left: -12px;
+      transform: rotateZ(45deg);
+      border-radius: 4px;
+    }
+    .paySuccess_yd_box {
+      display: inline-flex;
+      align-items: center;
+      background: #fef4f7;
+      height: 70px;
+      padding: 0 24px 0 12px;
+      border-radius: 8px;
+      position: relative;
+      .paySuccess_yd_logo {
+        width: 54px;
+        height: 54px;
+        background: url(https://wechat-config.dakale.net/miniprogram/image/icon727.png);
+        background-size: 100% 100%;
+      }
+      .paySuccess_yd_bean {
+        font-size: 26px;
+        font-weight: 400;
+        color: #333333;
+        margin-left: 16px;
+      }
+    }
+  }
+  .paySuccess_collect {
+    margin: 48px auto 0;
+    display: flex;
+    align-items: center;
+    width: 520px;
+    .paySuccess_collect_btnBox {
+      width: 240px;
+      height: 60px;
+      border-radius: 30px;
+      font-size: 28px;
+    }
+    .paySuccess_style1 {
+      border: 2px solid #07c0c2;
+      color: #07c0c2;
+      margin-right: 40px;
+    }
+    .paySuccess_style2 {
+      border: 2px solid #ef476f;
+      color: #ef476f;
+    }
+  }
+  .paySuccess_cover {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .paySuccess_goodName {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    max-width: 428px;
+  }
+  .paySuccess_count {
+    max-width: 428px;
+    margin: 16px auto 0;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+  }
+  .codeBox {
+    position: relative;
+    height: 360px;
+    margin: 48px 80px 0;
+    .code_swiper {
+      width: 360px;
+      height: 360px;
+      position: relative;
+    }
+    .code_left {
+      position: absolute;
+      top: 137px;
+      left: 0;
+    }
+    .code_right {
+      position: absolute;
+    }
+    .codePosition {
+      width: 36px;
+      height: 36px;
+      top: 156px;
+      right: 0;
+    }
+  }
+}
+.pay_details_payDetails {
+  width: 100%;
+  color: #f5f5f5;
+  .payTitle_top {
+    height: 168px;
+    background: #ffffff;
+    .payTitle_status {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 52px 32px 0;
+      .payTitle_iconBox {
+        width: 60px;
+        height: 60px;
+      }
+      .payTitle_icon1 {
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon539.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .payTitle_font {
+        height: 60px;
+        line-height: 60px;
+        font-size: 48px;
+        margin-left: 16px;
+        font-weight: 600;
+        color: #333333;
+      }
+    }
+    .payTitle_dec {
+      margin-top: 16px;
+      height: 24px;
+      font-size: 24px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      line-height: 24px;
+      margin-left: 76px;
+    }
+  }
+  .descriptionCard_title {
+    width: 686px;
+    margin: 24px auto 0;
+    background: #ffffff;
+    border-radius: 12px;
+    .descriptionCard_box {
+      padding: 24px 32px 8px;
+      font-size: 24px;
+      .descriptionCard_merchant {
+        height: 64px;
+        display: flex;
+        align-items: center;
+        .descriptionCard_profile {
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+        }
+        .descriptionCard_merchantTitle {
+          height: 42px;
+          font-size: 28px;
+          font-weight: 600;
+          color: #333333;
+          line-height: 42px;
+          margin-left: 29px;
+        }
+        .descriptionCard_goIcon {
+          width: 36px;
+          height: 36px;
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon260.png")
+            no-repeat;
+          background-size: 100% 100%;
+          margin-left: 16px;
+        }
+      }
+      .descriptionCard_merchantShop {
+        height: 120px;
+        margin-top: 32px;
+        display: flex;
+        .descriptionCard_merchantLogo {
+          width: 120px;
+          height: 120px;
+          border-radius: 8px;
+        }
+        .descriptionCard_shop_details {
+          margin-left: 24px;
+          .descriptionCard_goods_name {
+            width: 280px;
+            max-height: 84px;
+            line-height: 42px;
+          }
+          .descriptionCard_goods_num {
+            height: 24px;
+            padding-top: 8px;
+          }
+        }
+      }
+      .descriptionCard_shop_price {
+        height: 32px;
+        margin-top: 5px;
+        margin-left: auto;
+      }
+      .descriptionCard_goods_liner {
+        width: 622px;
+        height: 1px;
+        background: #e5e5e5;
+        margin: 31px auto 0;
+      }
+      .descriptionCard_goods_tags {
+        height: 84px;
+        .kolTagBox {
+          height: 36px;
+          .kolTagIcons {
+            width: 36px;
+            height: 36px;
+          }
+          .kolTag_font {
+            height: 36px;
+            line-height: 36px;
+            margin-left: 4px;
+            margin-right: 16px;
+          }
+        }
+      }
+    }
+  }
+  .pay_goLiner {
+    margin-top: 39px;
+    width: 100%;
+    height: 2px;
+    background: #e5e5e5;
+    border-radius: 1px;
+  }
+  .pay_goGoods {
+    padding: 0 32px;
+    height: 140px;
+    background: #ffffff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .pay_goGoods_box {
+      height: 60px;
+    }
+    .pay_goods_btn {
+      width: 160px;
+      height: 60px;
+      border-radius: 8px;
+      border: 2px solid #07c0c2;
+    }
+  }
+  .maybe_love {
+    margin-top: 64px;
+  }
+}
+.tests {
+  width: 304px;
+  height: 304px;
+}
+.code_count {
+  margin-top: 16px;
+  height: 24px;
+  text-align: center;
+}
+.code_num {
+  position: relative;
+  text-align: center;
+  margin-top: 24px;
+}
+.code_onRead {
+  height: 36px;
+  margin-top: 32px;
+
+  .onReadly_iconBox {
+    width: 36px;
+    height: 36px;
+    margin-right: 8px;
+  }
+}
+.pay_dec {
+  margin-top: 80px;
+  padding-bottom: 32px;
+}
+.pay_dec_margin {
+  margin-top: 20px;
 }

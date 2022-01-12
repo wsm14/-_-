@@ -66,7 +66,9 @@ export default ({ data, computedCount }) => {
       </View>
       <View className="order_shop_price">
         <View className="order_shop_label">商品总额</View>
-        <View className="order_shop_count"></View>
+        <View className="order_shop_count">
+          ¥{(cash * goodsCount).toFixed(2)} + {parseInt(bean * goodsCount)}卡豆
+        </View>
       </View>
     </View>
   );

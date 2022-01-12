@@ -115,3 +115,75 @@ export const fakeCouponOrder = (data, fn) => {
   );
 };
 //购买有价券订单
+
+export const getListFreeCoupon = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/merchantMainCoupon/listFreeCoupon",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//下单成功三单福利
+
+export const fetchOrderResult = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/order/getOrderResult",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//下单成功三单福利
+export const getReserveOrder = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/order/getReserveOrderByMerchantId",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//扫商家二维码获取支付信息
+
+export const saveScanCodeOrder = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/saveScanCodeOrder",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//创建扫码订单
+
+export const fakeUpdateOrder = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/updateOrderStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//修改订单状态
+export const fakeRemoveOrder = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/deleteOrder",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//删除订单状态
+
+export const fetchOrderDetails = (data) => {
+  return httpGet({
+    url: "/user/order/getOrderDetail",
+    data: data,
+  });
+};
+//获取订单详情

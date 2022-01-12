@@ -277,3 +277,13 @@ export const getListMayLikeCoupon = (data = {}, fn) => {
   );
 };
 //猜你喜欢有价券
+export const getListUserMomentBySearch = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/moment/listMomentBySearch",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取搜索动态

@@ -31,7 +31,7 @@ export default (props) => {
           <View className="payWeex_scanContent_tags font_hide">
             <View className="payWeex_label">卡豆优惠抵扣</View>
             <View className="payWeex_value font">
-              -{beanFee}({beanFee.toFixed(2)})
+              -{beanFee}(¥{(beanFee / 100).toFixed(2)})
             </View>
           </View>
         )}

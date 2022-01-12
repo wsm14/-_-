@@ -13,8 +13,10 @@ import { fetchAddressList } from "@/server/perimeter";
 import Specal from "./components/template/favGoods";
 import Commer from "./components/template/commerGoods";
 import PayBean from "@/components/public_ui/selectToast";
+import RightGoods from "./components/template/rightGoods";
 import evens from "@/common/evens";
 import Router from "@/utils/router";
+
 import "./index.scss";
 @inject("store")
 @observer
@@ -79,6 +81,7 @@ class Index extends Component {
             orderSn,
             orderType,
           },
+          type: "redirectTo",
         });
       } else {
         Router({
@@ -87,6 +90,7 @@ class Index extends Component {
             orderSn,
             orderType,
           },
+          type: "redirectTo",
         });
       }
     });
@@ -310,10 +314,14 @@ class Index extends Component {
       sourceKey,
       sourceType,
       rightFlag,
-      userCouponObjects: [{
-        userCouponId,
-        couponType,
-      }],
+      userCouponObjects: userCouponId
+        ? [
+            {
+              userCouponId,
+              couponType,
+            },
+          ]
+        : [],
     }).then((res) => {
       const { orderSn, status, orderType } = res;
       this.setState({
@@ -326,6 +334,7 @@ class Index extends Component {
             orderSn,
             orderType,
           },
+          type: "redirectTo",
         });
       } else {
         Router({
@@ -334,6 +343,7 @@ class Index extends Component {
             orderSn,
             orderType,
           },
+          type: "redirectTo",
         });
       }
     });
@@ -358,7 +368,11 @@ class Index extends Component {
       userAddressIndex,
       userAddress,
     } = this.state;
-    const { activityType, userBean } = specialGoodsInfo;
+    let { activityType, userBean, paymentModeObject = {} } = specialGoodsInfo;
+    const { type } = paymentModeObject;
+    if (type === "self") {
+      activityType = "rightGoods";
+    }
     const template = {
       specialGoods: (
         <Specal
@@ -402,6 +416,21 @@ class Index extends Component {
             this.saveCancel();
           }}
         ></Commer>
+      ),
+      rightGoods: (
+        <RightGoods
+          configUserLevelInfo={configUserLevelInfo}
+          data={specialGoodsInfo}
+          useScenesType={"goodsBuy"}
+          status={useBeanStatus}
+          couponObj={couponObj}
+          changeBean={this.changeBean.bind(this)}
+          computedCount={this.computedCount.bind(this)}
+          computedPrice={this.computedPayPrice.bind(this)}
+          submit={() => {
+            this.saveGoodsOrder();
+          }}
+        ></RightGoods>
       ),
     }[activityType];
     return (

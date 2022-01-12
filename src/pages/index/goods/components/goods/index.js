@@ -118,7 +118,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color1"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -189,7 +189,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color2"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -247,7 +247,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "kolShopGoods",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -320,7 +320,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "codeGoodDetails",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -430,7 +430,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color1"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -499,7 +499,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color2"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -558,7 +558,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "kolShopGoods",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -625,7 +625,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "codeGoodDetails",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -746,7 +746,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color1"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -817,7 +817,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color2"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -875,7 +875,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "kolShopGoods",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -982,7 +982,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color1"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -1051,7 +1051,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color2"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -1110,7 +1110,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "kolShopGoods",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -1269,7 +1269,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color2"
                 onClick={() =>
                   Router({
-                    routerName: "commerceShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -1305,7 +1305,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "commerceShopGoods",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -1347,6 +1347,111 @@ export default (props) => {
     );
   };
   //电商商品模板
+  const createCommunity = (item) => {
+    let {
+      payFee,
+      organizationGoodsOrderDescObject = {},
+      orderSn,
+      orderType,
+      status,
+      closeType,
+      createTime,
+      beanFee,
+      payTime,
+      closeTime,
+      deliveryTime,
+    } = item;
+    const {
+      communityGoodsList = [],
+      title,
+      merchantImg = "",
+      logisticsType,
+      liftingAddress,
+    } = organizationGoodsOrderDescObject;
+    const templateTime = {
+      0: `创建时间：${createTime}`,
+      1: `支付时间：${payTime}`,
+      2: `关闭时间${closeTime}`,
+      3: `完成时间${deliveryTime}`,
+    }[status];
+    return (
+      <View
+        onClick={() =>
+          Router({
+            routerName: "orderDetails",
+            args: {
+              orderSn: orderSn,
+            },
+          })
+        }
+        className="createGood_box"
+      >
+        <View className="createGood_title">
+          <View className="createGood_title_box">
+            <View className="createGood_iconBox createGood_bg2">团购订单</View>
+
+            <View className="createGood_merchantName font_hide">
+              共{communityGoodsList.length}商品
+            </View>
+            <View
+              className={classNames(
+                "createGood_status",
+                filterPayColor(status)
+              )}
+            >
+              {filterPayStatus(status, closeType)}
+            </View>
+          </View>
+        </View>
+        <View className="createGood_content">
+          <View className="createdGood_details_box">
+            <View
+              className="createdGood_details_image merchant_dakale_logo"
+              style={merchantImg ? backgroundObj(merchantImg) : {}}
+            ></View>
+            <View className="createdGood_details_setting">
+              <View className="createdGood_details_title bold font_hide">
+                {title}
+              </View>
+              <View className="createdGood_details_time">{templateTime}</View>
+              {beanFee > 0 && (
+                <View className="createdGood_details_color">
+                  卡豆帮省{" "}
+                  <Text className="bold">¥{(beanFee / 100).toFixed(2)}</Text>
+                </View>
+              )}
+            </View>
+            <View className="createdGood_details_price">
+              <Text className="createdGood_details_priceFont1">¥</Text>
+              <Text className="createdGood_details_priceFont2">
+                {" " + payFee.split(".")[0]}
+              </Text>
+              <Text className="createdGood_details_priceFont3">
+                {payFee.split(".")[1] && `.${payFee.split(".")[1]}`}
+              </Text>
+            </View>
+          </View>
+          {((logisticsType === "self" && status !== "2") || status === "0") && (
+            <View className="createGood_self font_hide font24 color2">
+              {status === "0" ? (
+                <>
+                  <View className="font28 color2">待付款：</View>
+                  <View className="color1 font28 bold">
+                    <InterTime
+                      fn={() => updateStatus(item)}
+                      times={createTime}
+                    ></InterTime>
+                  </View>
+                </>
+              ) : (
+                <View className="font_hide">{`自提地点：${liftingAddress}`}</View>
+              )}
+            </View>
+          )}
+        </View>
+      </View>
+    );
+  };
   const templateObj = {
     scan: createCodeGoods,
     specialGoods: createShopGoods,
@@ -1355,6 +1460,7 @@ export default (props) => {
     rightCoupon: createRightCoupon,
     rightGoods: createRightGoods,
     commerceGoods: createCommerceGoods,
+    communityGoods: createCommunity,
   };
   //订单支付渲染模板
   return (

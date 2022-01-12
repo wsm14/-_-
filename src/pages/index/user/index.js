@@ -8,6 +8,7 @@ import { objStatus } from "@/utils/utils";
 import UserContent from "./components/userCenter";
 import Skeleton from "./components/SkeletonView";
 import { inject, observer } from "mobx-react";
+import NewUser from "@/components/public_ui/newUserToast";
 import "./index.scss";
 @inject("store")
 @observer
@@ -90,6 +91,7 @@ class Index extends React.Component {
     return (
       <Skeleton loading={loading}>
         <View className="page_userBox">
+          <NewUser></NewUser>
           <UserTitle
             reload={() => {
               this.fetchUser();

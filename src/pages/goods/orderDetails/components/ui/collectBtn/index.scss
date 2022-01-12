@@ -1,0 +1,59 @@
+.kolGoods_bottom_btnBox {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 128px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 123;
+  .kolGoods_bottom_btn {
+    padding: 0 32px;
+    height: 80px;
+    display: flex;
+  }
+  .kolGoods_submit1 {
+    width: 220px;
+    height: 80px;
+    border-radius: 8px;
+    border: 2px solid #07c0c2;
+    text-align: center;
+    line-height: 80px;
+  }
+
+  .kolGoods_submit {
+    width: 220px;
+    height: 80px;
+    border-radius: 8px;
+    border: 2px solid #999999;
+    text-align: center;
+    line-height: 80px;
+  }
+}
+.goods_bottom_btnBox {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 128px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .goods_bottom_btn {
+    padding: 0 32px;
+    height: 80px;
+  }
+
+  .goods_submit {
+    width: 220px;
+    height: 80px;
+    border-radius: 8px;
+    border: 2px solid #999999;
+    text-align: center;
+    line-height: 80px;
+  }
+}

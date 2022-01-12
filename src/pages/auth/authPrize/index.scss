@@ -1,0 +1,99 @@
+page {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+.clearfix {
+  display: flex;
+}
+.authPrize_box {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: rgba(255, 121, 71, 1);
+  line-height: 1;
+  .authPrize_login {
+    width: 100%;
+    height: 1496px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon820.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin: 0 auto;
+    text-align: center;
+    color: #333333;
+    .authPrize_title1 {
+      padding-top: 512px;
+      font-size: 28px;
+      font-weight: 600;
+      color: #ef3636;
+      line-height: 43px;
+    }
+    .authPrize_title2 {
+      padding-top: 8px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      .authPrize_title2_font1 {
+        padding-top: 18px;
+        font-size: 55px;
+        color: #ef3636;
+      }
+      .authPrize_title2_font2 {
+        font-size: 78px;
+        color: #ef3636;
+      }
+    }
+    .authPrize_title3 {
+      padding-top: 40px;
+      font-size: 36px;
+      font-weight: 600;
+      color: #ef3636;
+    }
+    .authPrize_title4 {
+      padding-top: 26px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+    }
+    .authPrize_title5 {
+      padding-top: 149px;
+      font-size: 32px;
+      color: #ffffff;
+    }
+    .authPrize_title6 {
+      padding-top: 26px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #ffffff;
+    }
+    .authPrize_btn {
+      width: 430px;
+      height: 87px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon823.png")
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 60px auto 0;
+      position: relative;
+      .clearBtn {
+        background: none;
+        border: none;
+        width: 100%;
+        height: 100%;
+      }
+      .clearBtn::after {
+        border: none;
+      }
+    }
+    .authPrize_bottom {
+      margin: 239px auto 100px;
+      text-align: center;
+      color: #ffffff;
+      font-size: 24px;
+    }
+  }
+
+  .textThould {
+    text-decoration: underline;
+  }
+}

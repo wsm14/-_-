@@ -32,6 +32,7 @@ import Empty from "@/components/Empty";
 import GameGoods from "./components/gameBuyMe";
 import Skeleton from "./components/SkeletonView";
 import SelfGoods from "./components/selfourOnly";
+import NewUser from "@/components/public_ui/newUserToast";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
 @inject("store")
@@ -716,6 +717,7 @@ class Index extends Component {
     return (
       <View className="lookAround_box">
         <Navition city={cityName}></Navition>
+        <NewUser></NewUser>
         <Skeleton loading={loading}>
           <View className="lookAround_no_style">
             <View className="lookAround_goods_topHeight"></View>

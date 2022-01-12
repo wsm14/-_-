@@ -58,7 +58,7 @@ class Index extends Component {
           data={orderResult}
         ></GoodsPay>
       ),
-      scanPay : (
+      scanPay: (
         <ScanPay
           onChange={this.fakePayInfo.bind(this)}
           data={orderResult}

@@ -1,0 +1,72 @@
+.descriptionCard_title {
+  width: 686px;
+  margin: -74px auto 0;
+  background: #ffffff;
+  border-radius: 12px;
+  position: relative;
+  z-index: 10;
+}
+
+.descriptionCard_box {
+  padding: 24px 32px 0;
+  font-size: 24px;
+  .descriptionCard_payPrice {
+    height: 104px;
+    line-height: 104px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+  .discount_top {
+    margin-top: 24px;
+  }
+
+  .descriptionCard_liner {
+    width: 622px;
+    height: 1px;
+    background: #e5e5e5;
+    margin: 31px auto 0;
+  }
+
+  .descriptionCard_merchant {
+    height: 64px;
+    display: flex;
+    align-items: center;
+
+    .descriptionCard_profile {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+
+    .descriptionCard_merchantTitle {
+      width: 498px;
+      height: 42px;
+      font-size: 28px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 42px;
+      margin-left: 29px;
+    }
+
+    .descriptionCard_goIcon {
+      width: 36px;
+      height: 36px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon260.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+
+  .descriptionCard_dec {
+    padding-top: 32px;
+
+    .descriptionCard_discount {
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #999999;
+    }
+  }
+}

@@ -32,7 +32,6 @@ export default (props) => {
           onClick={(e) => {
             e.stopPropagation();
             change ? change() : setHandler(1);
-            console.log("1123123123");
           }}
         >
           <View className="searchView_icon"></View>

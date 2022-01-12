@@ -10,6 +10,7 @@ export default ({ data, checkedObj = {}, index, change }) => {
     couponValue,
     thresholdPrice = "",
     userCouponId,
+    couponPrice,
   } = data;
   return (
     <View
@@ -19,7 +20,9 @@ export default ({ data, checkedObj = {}, index, change }) => {
       }}
     >
       <View className="couponTemplate_left">
-        <View className="couponTemplate_price">{couponValue}</View>
+        <View className="couponTemplate_price">
+          {couponValue || couponPrice}
+        </View>
         <View className="couponTemplate_main">
           {thresholdPrice.length > 0 ? `满${thresholdPrice}可用` : "无门槛"}
         </View>

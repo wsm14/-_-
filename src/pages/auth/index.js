@@ -16,7 +16,6 @@ class Index extends Component {
     this.state = {
       openId: "",
       unionId: "",
-      visible: false,
     };
   }
   componentWillUnmount() {
@@ -43,7 +42,7 @@ class Index extends Component {
       },
     });
   }
-
+  //跳转隐私协议
   goUserConceal() {
     const link =
       "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dakale-web-page/wechant/page/policy/userConceal.html";
@@ -54,7 +53,7 @@ class Index extends Component {
       },
     });
   }
-
+  //跳转用户协议
   getOpenId(code) {
     const that = this;
     getOpenId(
@@ -64,6 +63,7 @@ class Index extends Component {
       (res) => {
         const { openId, unionId, userInfo } = res;
         if (userInfo && userInfo.mobile.length >= 11) {
+          //用户存在手机号的情况视为已登录 返回上一页
           Taro.setStorageSync("userInfo", userInfo);
           that.props.store.authStore.setUserInfoStore(userInfo);
           return goBack(() => toast("登录成功"));
@@ -71,8 +71,8 @@ class Index extends Component {
           this.setState({
             openId: openId,
             unionId: unionId,
-            visible: true,
           });
+          //保存检验字段用户获取 手机号码
         }
       }
     );
@@ -119,36 +119,31 @@ class Index extends Component {
   }
   //用户注册手机号
   render() {
-    const { visible } = this.state;
     return (
       <View className="auth_box">
-        <View className="auth_login"></View>
-        <View className="auth_btn">
-          {visible ? (
-            <View className="auth_animate_toast">
-              <Button
-                openType={"getPhoneNumber"}
-                onGetPhoneNumber={(e) => this.getTelephone(e)}
-                className="clearBtn"
-              ></Button>
-            </View>
-          ) : null}
-          <Button
-            openType={"getPhoneNumber"}
-            onGetPhoneNumber={(e) => this.getTelephone(e)}
-            className="clearBtn"
-          ></Button>
-        </View>
-
-        <View className="auth_bottom color2 font24">
-          登录表示您已阅读并同意{" "}
-          <Text className="textThould" onClick={() => this.goUserConceal()}>
-            用户协议
-          </Text>{" "}
-          和{" "}
-          <Text className="textThould" onClick={() => this.goConceal()}>
-            隐私政策
-          </Text>
+        <View className="auth_login">
+          <View className="auth_btnTitle1">哒卡乐小程序</View>
+          <View className="auth_btnTitle2">
+            <Text className="bold">哒卡乐小程序</Text>获得以下授权
+          </View>
+          <View className="auth_btnTitle3">获取您的手机号，以享受更多优惠</View>
+          <View className="auth_btn">
+            <Button
+              openType={"getPhoneNumber"}
+              onGetPhoneNumber={(e) => this.getTelephone(e)}
+              className="clearBtn"
+            ></Button>
+          </View>
+          <View className="auth_bottom color2 font24">
+            登录表示您已阅读并同意{" "}
+            <Text className="textThould" onClick={() => this.goUserConceal()}>
+              用户协议
+            </Text>{" "}
+            和{" "}
+            <Text className="textThould" onClick={() => this.goConceal()}>
+              隐私政策
+            </Text>
+          </View>
         </View>
       </View>
     );

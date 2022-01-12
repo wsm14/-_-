@@ -151,3 +151,35 @@ export const fetchGetAdderssInfo = (data = {}, fn) => {
   );
 };
 // 粘贴获取地址识别接口;
+export const fetchNewShareInfo = (data, fn) => {
+  return httpGet(
+    {
+      data: data,
+      url: "/common/share/getNewShareInfo",
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取新分享配置
+export const fetchTabTag = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/indexTab/listIndexTabTag",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//视频配置项
+export const fetchUgcMomentRule = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/getUgcMomentRule",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//ugc配置项

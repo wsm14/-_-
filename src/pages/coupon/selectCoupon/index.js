@@ -103,7 +103,14 @@ class Index extends Component {
               return item.availableFlag === "1";
             })
             .map((item, index) => {
-              return <Template data={item} index={index}></Template>;
+              return (
+                <Template
+                  change={this.onChange.bind(this)}
+                  checkedObj={selectObj}
+                  data={item}
+                  index={index}
+                ></Template>
+              );
             })}
           <ErrorTemplate
             list={userCouponList.filter((item) => {

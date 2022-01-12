@@ -47,7 +47,7 @@ export default ({ list, userInfo, name, categoryIds }) => {
                   mode={"aspectFill"}
                   src={
                     merchantLogo ||
-                    "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_dakale.png"
+                    "https://wechat-config.dakale.net/miniprogram/image/merchant_dakale.png"
                   }
                   lazyLoad
                   className="bubble_conpon_image"

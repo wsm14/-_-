@@ -1,4 +1,5 @@
 import Taro from "@tarojs/taro";
+import days from "dayjs";
 export const goBack = function (fn) {
   Taro.navigateBack({
     delta: 1, // 返回上一级页面
@@ -89,7 +90,7 @@ export const filterPayStatus = (string, type = "") => {
     return "订单已过期";
   } else if (type === "manualRefund" && string === "6") {
     return "申请退款中";
-  } else if (type === "manualRefund") {
+  } else if (type === "manualRefund" && string !== "1") {
     return "退款已完成";
   } else {
     switch (string) {
@@ -362,3 +363,103 @@ export const removeLogin = () =>
     },
   });
 //删除用户信息
+export const filterGoods = (data) => {
+  let { orderDesc = {}, orderType } = data;
+  orderDesc = JSON.parse(orderDesc);
+  const {
+    reduceCoupon = {},
+    specialGoods = {},
+    rightCoupon,
+    rightGoods,
+  } = orderDesc;
+  return {
+    ...reduceCoupon,
+    ...specialGoods,
+    ...rightGoods,
+    ...rightCoupon,
+    ...orderDesc,
+    ...data,
+  };
+};
+export const filterPayfont = (string) => {
+  if (string == "0" || string == "2" || string == "5") {
+    return "待付";
+  }
+  return "实付";
+};
+//订单所显示文字
+export const plTimeFilter = (val) => {
+  if (val) {
+    let time =
+      parseInt(new Date().getTime() / 1000) -
+      parseInt(new Date(val.replace(/-/g, "/")).getTime() / 1000);
+    if (time < 3600) {
+      return parseInt(time / 60) + "分钟前";
+    } else if (time > 3600 && time < 86400) {
+      return parseInt(parseInt(time / 60) / 60) + "小时前";
+    } else if (time > 86400 && time < 31536000) {
+      const dateTime = val.split(" ")[0].split("-");
+      return dateTime[1] + "月" + dateTime[2] + "日";
+    } else return val.split(" ")[0];
+  } else return val;
+};
+export const computedVideoSize = (width = 0, height = 0) => {
+  let widthScale = (width * 16) / 9;
+  if (widthScale === height || widthScale <= (height * 9) / 16) {
+    return true;
+  } else {
+    return false;
+  }
+};
+export const filterTime = function (time) {
+  time = parseInt(time);
+  if (time == 0) {
+    return "00:00";
+  }
+  if (time < 10) {
+    return `00:0${time}`;
+  } else if (time >= 10 && time / 60 < 1) {
+    return `00:${time}`;
+  } else {
+    let remainder = time % 60;
+    let numeral = parseInt(time / 60);
+    if (numeral < 10) {
+      if (remainder < 10) {
+        return `0${numeral}:0${remainder}`;
+      } else {
+        return `0${numeral}:${remainder}`;
+      }
+    } else {
+      if (remainder < 10) {
+        return `${numeral}:0${remainder}`;
+      } else {
+        return `${numeral}:${remainder}`;
+      }
+    }
+  }
+};
+//过率时间
+export const setPeople = function (num) {
+  if (typeof num == "string") {
+    if (num.length > 4) {
+      let str = (parseInt(num) / 10000).toFixed(1) + "万";
+      return str;
+    }
+    return num;
+  } else {
+    if (num >= 10000) {
+      let str = (num / 10000).toString().split(".");
+      if (str.length > 1) {
+        return str[0] + "." + str[1][0] + "万";
+      } else {
+        return str[0] + "万";
+      }
+    }
+    return num;
+  }
+};
+//设置人数
+export const computedTime = (time, scale = 86400000) => {
+  return parseInt((days(new Date()).valueOf() - days(time).valueOf()) / scale);
+};
+//返回天数

@@ -12,55 +12,56 @@ page {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  background: #108588;
+  background: rgba(255, 121, 71, 1);
   line-height: 1;
-  .auth_margin {
-    margin: 41px auto 0;
-  }
   .auth_login {
     width: 100%;
-    height: 1000px;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon592.png")
+    height: 1496px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon821.png")
       no-repeat;
     background-size: 100% 100%;
     margin: 0 auto;
-  }
-  .auth_btn {
-    width: 520px;
-    height: 88px;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon601.png")
-      no-repeat;
-    background-size: 100% 100%;
-    margin: 32px auto 0;
-    position: relative;
-    .auth_animate_toast {
-      position: absolute;
-      top: -66px;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
-      width: 378px;
-      height: 80px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon721.png")
+    text-align: center;
+    color: #333333;
+    .auth_btnTitle1 {
+      padding-top: 755px;
+      font-size: 36px;
+      font-weight: 600;
+    }
+    .auth_btnTitle2 {
+      padding-top: 97px;
+      font-size: 32px;
+    }
+    .auth_btnTitle3 {
+      padding-top: 26px;
+      font-size: 28px;
+    }
+    .auth_btn {
+      width: 430px;
+      height: 87px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon822.png")
         no-repeat;
       background-size: 100% 100%;
+      margin: 76px auto 0;
+      position: relative;
+      .clearBtn {
+        background: none;
+        border: none;
+        width: 100%;
+        height: 100%;
+      }
+      .clearBtn::after {
+        border: none;
+      }
     }
-    .clearBtn {
-      background: none;
-      border: none;
-      width: 100%;
-      height: 100%;
-    }
-    .clearBtn::after {
-      border: none;
+    .auth_bottom {
+      margin: 239px auto 100px;
+      text-align: center;
+      color: #ffffff;
+      font-size: 24px;
     }
   }
-  .auth_bottom {
-    margin: 20px auto 158px;
-    text-align: center;
-    color: #ffffff;
-    font-size: 24px;
-  }
+
   .textThould {
     text-decoration: underline;
   }

@@ -6,6 +6,7 @@ import Tabs from "@/components/tabs";
 import Goods from "./components/goods";
 import { inject, observer } from "mobx-react";
 import { fetchOrderTotalBean, fetchOrderList } from "@/server/goods";
+import NewUser from "@/components/public_ui/newUserToast";
 import Router from "@/utils/router";
 import "./index.scss";
 @inject("store")
@@ -108,12 +109,9 @@ class Index extends Component {
         if (orderList && orderList.length > 0) {
           that.props.store.goodsStore.setOrderList(orderList);
         } else {
-          this.setState(
-            {
-              countStatus: false,
-            },
-            (res) => {}
-          );
+          this.setState({
+            countStatus: false,
+          });
         }
       })
       .catch((e) => {
@@ -183,6 +181,7 @@ class Index extends Component {
     };
     return (
       <View className="goods_tabbar_box">
+        <NewUser></NewUser>
         <Tabs
           fn={this.setIndex.bind(this)}
           lineStyle={{

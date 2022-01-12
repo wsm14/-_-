@@ -74,10 +74,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     tipView: "/pages/perimeter/tipView/index",
     payCouponList: "/pages/perimeter/couponList/index", //有价券列表
     commer: "/pages/perimeter/commer/index", //电商商品
-
-    commerceShopGoods: "/pages/goods/commerceShopGoods/index", //电商商品订单详情
-    codeGoodDetails: "/pages/goods/getShopGoods/index", //扫码订单详情
-    kolShopGoods: "/pages/goods/kolShopGoods/index", //支付订单详情
+    orderDetails: "/pages/goods/orderDetails/index", //订单详情
     codePay: "/pages/goods/codePay/index", //
     coupon: "/pages/goods/codeCoupon/index",
     couponOrder: "/pages/goods/couponOrder/index",

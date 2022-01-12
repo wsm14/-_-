@@ -1,12 +1,12 @@
 export default {
   pages: [
+    "pages/index/home/index", //视频连刷
     "pages/index/lookAround/index", //逛逛
     "pages/index/user/index", //首页个人
-    // "pages/index/home/index", //周边打卡
-
     "pages/index/goods/index",
     "pages/index/sign/index", //签到游戏
     "pages/auth/index", //登录
+    "pages/auth/authPrize/index", //券礼包加登录
   ],
   window: {
     backgroundTextStyle: "dark",
@@ -21,12 +21,12 @@ export default {
     backgroundColor: "#fafafa",
     borderStyle: "black",
     list: [
-      // {
-      //   pagePath: "pages/index/home/index",
-      //   iconPath: "./assets/image/tab-bar/home_1.png",
-      //   selectedIconPath: "./assets/image/tab-bar/home.png",
-      //   text: "捡豆",
-      // },
+      {
+        pagePath: "pages/index/home/index",
+        iconPath: "./assets/image/tab-bar/home_1.png",
+        selectedIconPath: "./assets/image/tab-bar/home.png",
+        text: "捡豆",
+      },
       {
         pagePath: "pages/index/lookAround/index",
         iconPath: "./assets/image/tab-bar/look_1.png",
@@ -60,7 +60,7 @@ export default {
     //       "home/index", // 盲盒首页
     //       "prizeDetail/index", // 奖品详情
     //       "prize/index", // 盲盒奖品
-    //       "gamePrize/index",
+    //       "gamePrize/index", //游戏奖品
     //     ],
     //   },
     //   {
@@ -80,20 +80,17 @@ export default {
     {
       root: "pages/share",
       pages: [
-        // "hotActive/index", //8.8前面活动
-        // "invitation/index", //邀请函
-        // "download/index", //下载,
+        "download/index", //下载,
         "shareFriend/index", //分享好友,
-        // "pay_wx_lite/index", //微信支付
         "webView/index", //webView页面
-        // "mPay_wx_lite/index", //商家端支付页面
+        "gameShare/index", //游戏助力页面
+        "gameHelp/index", //游戏邀请页面
+        "Grab/index", //领取他人发送红包页
         // "userNewArtist/index", //新人福利頁面
         // "userNewGift/index", //新人红包頁面
-        // "Grab/index", //领取他人发送红包页
+
         // "shareActive/index", //活动主会场
         // "shareUser/index", //活动页助力
-        // "gameShare/index", //游戏助力页面
-        // "gameHelp/index", //游戏邀请页面
       ],
     },
     {
@@ -125,12 +122,12 @@ export default {
         "bubble/index", //品类风向标
         "nearPerimeter/index", //附近特惠
         "payCouponDetails/index", //有价券详情
+        "nearVideo/index", //附近主页视频
+        "merchantVideo/index", //商家主页视频
+        "videoDetails/index", //视频详情
         // "recharge/index", //话费充值
         // "search_shop/index", //商家搜索
         // "merchantDetails/index", //商家详情
-        // "merchantVideo/index", //商家主页视频
-        // "videoDetails/index", //视频详情
-        // "nearVideo/index", //附近主页视频
       ],
     },
     {
@@ -139,16 +136,10 @@ export default {
         "payWeex/index", //支付
         "favourOrder/index", //商品下单页面
         "couponOrder/index", //有价券下单
-        // "kolShopGoods/index", //普通商品详情
-        // "getShopGoods/index", //扫码订单详情
-        // "commerceShopGoods/index", //电商商品订单详情
-        // "paySuccess/index", //kol支付成功
-        // "codePay/index", //扫码订单生成订单页
-        // "code_wx_pay/index", //扫码订单支付页面
-        // "code_scanPay_Susccess/index", //扫码订单成功页面
-        // "codeCoupon/index", //设置优惠券
+        "paySuccess/index", //支付成功页面
+        "codePay/index", //扫码订单生成订单页
+        "orderDetails/index", //订单详情
         // "rechargeOrder/index", //话费支付
-        // "commerOrder/index", //电商商品下单
       ],
     },
     {

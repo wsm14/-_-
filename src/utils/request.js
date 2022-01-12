@@ -9,8 +9,8 @@
  */
 import Taro from "@tarojs/taro";
 import encrypt from "./keys";
-import Router from "@/utils/router";
 import { toast } from "@/utils/utils";
+import Router from "@/utils/router";
 const filterHttpStatus = (value) => {
   if (value.includes("timeout")) {
     return "响应超时";
@@ -22,11 +22,21 @@ const filterHttpStatus = (value) => {
 };
 //http错误信息
 const resultOperate = {
-  2001: { type: "用户身份不存在", link: "/pages/auth/index" },
+  2001: {
+    type: "用户身份不存在",
+    fn: () => {
+      Router({
+        routerName: "login",
+      });
+    },
+  },
   5005: {
     type: "用户身份不存在",
-    link: "/pages/auth/index",
-    fn: () => {},
+    fn: () => {
+      Router({
+        routerName: "login",
+      });
+    },
   },
   5235: {
     type: "不是助力新用户",
@@ -81,8 +91,8 @@ switch (env) {
     break;
   case "production":
     // baseUrl = "https://pregateway.dakale.net";
-    // baseUrl = "https://devgateway.dakale.net";
-    baseUrl = "https://gateway1.dakale.net";
+    baseUrl = "https://devgateway.dakale.net";
+    // baseUrl = "https://gateway1.dakale.net";
     break;
 }
 const httpCondition = {
@@ -151,7 +161,7 @@ export const httpGet = (obj, fn) => {
             if (resultOperate[resultCode]) {
               toast(resultDesc);
               resultOperate[resultCode].fn();
-              return navigateTo(resultOperate[resultCode].link);
+              return;
             }
             reject(res.data.content);
             return toast(resultDesc);
@@ -221,8 +231,6 @@ export const httpPost = (obj, fn) => {
               if (resultOperate[resultCode]) {
                 toast(resultDesc);
                 resultOperate[resultCode].fn();
-                resultOperate[resultCode].link &&
-                  navigateTo(resultOperate[resultCode].link);
                 return;
               }
               return toast(resultDesc);

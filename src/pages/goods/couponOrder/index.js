@@ -151,12 +151,14 @@ class Index extends Component {
         sourceKey,
         sourceType,
         rightFlag,
-        userCouponObjects: [
-          {
-            userCouponId,
-            couponType,
-          },
-        ],
+        userCouponObjects: userCouponId
+          ? [
+              {
+                userCouponId,
+                couponType,
+              },
+            ]
+          : [],
       },
       (res) => {
         const { orderSn, status, orderType } = res;
@@ -170,6 +172,7 @@ class Index extends Component {
               orderSn,
               orderType,
             },
+            type: "redirectTo",
           });
         } else {
           Router({
@@ -178,6 +181,7 @@ class Index extends Component {
               orderSn,
               orderType,
             },
+            type: "redirectTo",
           });
         }
       }

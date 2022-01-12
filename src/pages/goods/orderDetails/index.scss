@@ -1,0 +1,115 @@
+.orderDetails_box {
+  width: 100%;
+  background: #f5f5f5;
+  padding-bottom: 188px;
+  color: #ffffff;
+  line-height: 1;
+  .code_num {
+    position: relative;
+    text-align: center;
+    margin-top: 24px;
+  }
+  .code_onRead {
+    height: 36px;
+    margin-top: 32px;
+
+    .onReadly_iconBox {
+      width: 36px;
+      height: 36px;
+      margin-right: 8px;
+    }
+  }
+
+  .pay_dec {
+    margin-top: 80px;
+    padding-bottom: 32px;
+  }
+
+  .pay_dec_margin {
+    margin-top: 20px;
+  }
+
+  .kolgoods_go {
+    margin-top: 47px;
+    height: 100px;
+    border-top: 1px solid #e5e5e5;
+
+    .kolgoods_goIcon_box {
+      width: 36px;
+      height: 36px;
+      margin-right: 16px;
+    }
+  }
+  .kolgoods_go_center {
+    position: relative;
+    flex: 1;
+    .kolgoods_go_leftBox {
+      width: 100%;
+      height: 36px;
+      border-right: 1px solid rgba(229, 229, 229, 1);
+    }
+  }
+  button::after {
+    border: none;
+  }
+  .kolgoods_go_left {
+    flex: 1;
+
+    .kolgoods_go_leftBox {
+      width: 100%;
+      height: 36px;
+      border-right: 1px solid rgba(229, 229, 229, 1);
+    }
+  }
+
+  .kolgoods_go_right {
+    flex: 1;
+
+    .kolgoods_go_rightBox {
+      width: 100%;
+      height: 36px;
+    }
+  }
+
+  .goods_card {
+    width: 702px;
+    background: #ffffff;
+    border-radius: 12px;
+    margin: 24px auto;
+    .goods_remark {
+      margin-top: 32px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #333333;
+      line-height: 28px;
+    }
+    .goods_cardBox {
+      padding: 32px 32px 40px;
+
+      .goods_cardHeight {
+        height: 24px;
+        margin-top: 24px;
+
+        .goods_cardliner {
+          width: 2px;
+          height: 20px;
+          background: #e5e5e5;
+          border-radius: 1px;
+          margin: 0 16px;
+        }
+      }
+
+      .goods_payHeight {
+        height: 30px;
+        line-height: 30px;
+        margin-top: 24px;
+
+        .pay_icon_box {
+          width: 30px;
+          height: 30px;
+          margin-right: 11px;
+        }
+      }
+    }
+  }
+}

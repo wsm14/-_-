@@ -68,11 +68,17 @@
       .createGood_bg2 {
         background: #ef476f;
       }
-      
     }
+  }
+  .createGood_self {
+    padding-top: 32px;
+    max-width: 638px;
+    display: flex;
+    align-items: center;
   }
   .createGood_content {
     padding: 24px 32px 24px;
+
     .createdGood_details_box {
       height: 120px;
       display: flex;
@@ -203,6 +209,7 @@
       }
     }
   }
+
   .createdGood_details_order {
     font-size: 24px;
     font-weight: 400;

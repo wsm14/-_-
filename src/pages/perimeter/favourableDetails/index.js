@@ -37,6 +37,7 @@ import Router from "@/utils/router";
 import { inject, observer } from "mobx-react";
 import FixedBtn from "./components/fixedBtn";
 import { fetchStorage } from "@/utils/utils";
+import NewUser from "@/components/public_ui/newUserToast";
 import "./index.scss";
 @inject("store")
 @observer
@@ -417,6 +418,7 @@ class Index extends Component {
       if (status !== "0") {
         return (
           <View className="favourable_Details">
+            <NewUser></NewUser>
             {toastVisible && (
               <View className="favourable_toastInfo">
                 <View

@@ -1,3 +1,9 @@
+import React from "react";
+import { View, Text } from "@tarojs/components";
+import Taro from "@tarojs/taro";
+import Router from "@/utils/router";
+import { format, backgroundObj } from "@/utils/utils";
+import "./index.scss";
 export const goodsCard = (item) => {
   const {
     goodsName,
@@ -43,9 +49,13 @@ export const goodsCard = (item) => {
         if (status === "0" || (status === "1" && remain === "0")) {
           return;
         }
-        return navigateTo(
-          `/pages/perimeter/favourableDetails/index?merchantId=${merchantIdString}&specialActivityId=${specialActivityIdString}`
-        );
+        return Router({
+          routerName: "favourableDetails",
+          args: {
+            merchantId: merchantIdString,
+            specialActivityId: specialActivityIdString,
+          },
+        });
       }}
     >
       <View className="goodsCard_desc_box">
@@ -123,9 +133,13 @@ export const shopDetails = (data, obj) => {
           if (status === "0" || (status === "1" && remain === 0)) {
             return;
           }
-          return navigateTo(
-            `/pages/perimeter/favourableDetails/index?merchantId=${merchantIdString}&specialActivityId=${specialActivityIdString}`
-          );
+          return Router({
+            routerName: "favourableDetails",
+            args: {
+              merchantId: merchantIdString,
+              specialActivityId: specialActivityIdString,
+            },
+          });
         }}
       >
         <View

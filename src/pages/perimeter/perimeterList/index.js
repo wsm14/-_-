@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View, ScrollView } from "@tarojs/components";
 import FilterDropdown from "@/components/public_ui/filterDropdown";
-import Search from "@/components/public_ui/SearchView";
+import Search from "@/components/public_ui/searchView";
 import {
   fetchCategory,
   fetchBusinessHub,
