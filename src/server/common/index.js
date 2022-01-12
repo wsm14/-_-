@@ -183,3 +183,14 @@ export const fetchUgcMomentRule = (data = {}, fn) => {
   );
 };
 //ugc配置项
+
+export const fetchPhoneBill = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/listPhoneBill",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 话费充值列表
