@@ -316,4 +316,20 @@ export const fetchUserAcquiredPlatformGift = (data, fn) => {
     (res) => fn && fn(res)
   );
 };
-//获取动态详情
+//获取平台券
+
+export const fakeAcquireMoment = (data) => {
+  return httpPost({
+    url: "/user/moment/watch/acquireMomentTippingAndCoupon",
+    data: data,
+  });
+};
+//领取卡豆并获取推广券
+
+export const fakeLinkCoupon = (data) => {
+  return httpPost({
+    url: "/user/link/coupon/exchangeMomentLinkCoupon",
+    data: data,
+  });
+};
+//视频链路券兑换

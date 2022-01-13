@@ -30,7 +30,6 @@ export default (props) => {
     availableCouponCount,
     merchantIdString,
   } = data;
-  console.log(data);
   const { payBeanCommission = 50 } = configUserLevelInfo;
   const linkCoupon = () => {
     if (!totalFee) {

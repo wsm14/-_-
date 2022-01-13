@@ -92,6 +92,7 @@ export default (props) => {
   };
   const getPromotionStatus = (server) => {
     const { promotionFlag, ownerId, momentType } = server;
+    console.log(server);
     if (promotionFlag === "0" && momentType !== "ugc") {
       fetchPromotionStatus({ ownerId }).then((val) => {
         const { merchantPromotionStatus } = val;

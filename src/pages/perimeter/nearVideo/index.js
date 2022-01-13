@@ -597,7 +597,9 @@ class Index extends React.PureComponent {
       cavansObj,
       commentShow,
     } = this.state;
-    const { beanLimitStatus } = this.props.store.homeStore;
+    const { homeStore = {}, commonStore = {} } = this.props.store;
+    const { beanLimitStatus } = homeStore;
+    const { balance } = commonStore;
     const templateView = () => {
       if (userMomentsList.length > 0) {
         return (
@@ -665,7 +667,7 @@ class Index extends React.PureComponent {
             });
           }}
         ></Coupon>
-        <Lead beanLimitStatus={beanLimitStatus}></Lead>
+        <Lead balance={balance} beanLimitStatus={beanLimitStatus}></Lead>
         {!player && (
           <View
             onClick={() => this.stopVideoPlayerControl()}

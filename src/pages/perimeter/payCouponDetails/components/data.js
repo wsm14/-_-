@@ -121,7 +121,7 @@ export const rssConfigData = (data = {}) => {
           zIndex: 999,
           addonAfter: {
             type: "text",
-            text: `¥${cash.toFixed(2)}+${bean} 卡豆`, //原价格
+            text: `¥${cash}+${bean} 卡豆`, //原价格
             fontSize: 36,
             color: "#EF486F",
             marginLeft: 5,

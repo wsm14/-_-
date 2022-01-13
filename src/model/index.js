@@ -1,5 +1,4 @@
 import authStore from "./auth";
-
 import commonStore from "./common";
 import goodsStore from "./goods";
 import locationStore from "./location";

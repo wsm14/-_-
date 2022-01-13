@@ -20,7 +20,7 @@ export default (props) => {
     rightFlag = "0",
     activityType,
   } = data;
-  const { bean = 0, cash = 0, type = "defaultMode" } = paymentModeObject;
+  const { bean = 0, cash = "0", type = "defaultMode" } = paymentModeObject;
   const { payBeanCommission = 50 } = userInfo;
   if (rightFlag === "1" && type === "defaultMode") {
     //权益商品样式展示
@@ -50,7 +50,7 @@ export default (props) => {
         <View className="favourInfo_box">
           <View className="favourInfo_box_left">卡豆价:</View>
           <View className="favourInfo_box_right">
-            ¥{cash.toFixed(2)}+{bean}卡豆
+            ¥{cash}+{bean}卡豆
           </View>
         </View>
         <View className="favourInfo_rel">

@@ -4,11 +4,13 @@ import Drawer from "@/components/Drawer";
 import Router from "@/utils/router";
 import "./index.scss";
 export default (props) => {
-  const { beanLimitStatus } = props;
-
+  const { beanLimitStatus, balance } = props;
+  const [bean, setBean] = useState(0);
   const [visible, setVisible] = useState(false);
   const [type, setType] = useState(null);
-
+  useEffect(() => {
+    setBean(balance);
+  }, [balance]);
   useEffect(() => {
     if (type === "1" && beanLimitStatus === "0") {
       setVisible(true);
@@ -34,7 +36,7 @@ export default (props) => {
           <View className="lead_bean_content public_center">
             <View className="lead_bean_hook"></View>
             <View className="lead_bean_x"></View>
-            <View className="lead_bean_bean">300</View>
+            <View className="lead_bean_bean">{bean}</View>
           </View>
           <View
             className="lead_bean_btn public_center"

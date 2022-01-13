@@ -28,6 +28,7 @@ import ShareView from "./components/shareCmt";
 import Rule from "@/components/public_ui/rule";
 import Recommend from "@/components/public_ui/specalActive";
 import TaroShareDrawer from "./components/TaroShareDrawer";
+import GoodsOther from "./components/goodOther";
 import { rssConfigData } from "./components/data";
 import Toast from "@/components/toast";
 import Wares from "@/components/public_ui/wares";
@@ -459,6 +460,9 @@ class Index extends Component {
               configUserLevelInfo={configUserLevelInfo}
             ></Card>
             {/*适用门店*/}
+
+            <GoodsOther data={specialGoodsInfo}></GoodsOther>
+            {/*商品详情*/}
             {activityType !== "commerceGoods" && (
               <Merchant
                 serviceType={"specialGoods"}

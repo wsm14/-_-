@@ -53,6 +53,7 @@ class Index extends Component {
     const { shareType } = this.props.store.authStore;
     const { shareUserId, shareUserType, sourceKey, sourceType } = shareType;
     const { userAddressId = "" } = userAddress;
+    const { userCouponId, couponType } = couponObj;
     if (!userAddressId) {
       return toast("请完善收货地址");
     }
@@ -69,6 +70,14 @@ class Index extends Component {
       sourceType,
       remark,
       userAddressId,
+      userCouponObjects: userCouponId
+        ? [
+            {
+              userCouponId,
+              couponType,
+            },
+          ]
+        : [],
     }).then((val) => {
       const { orderSn, status, orderType } = val;
       this.setState({
@@ -266,9 +275,14 @@ class Index extends Component {
             const pages = Taro.getCurrentPages(); // 获取页面堆栈
             const currPage = pages[pages.length - 1]; // 获取上一页栈
             const { data } = currPage.data; // 获取上一页回传数据
+            console.log(data);
             if (data) {
               this.setState({
-                userAddress: { ...data },
+                userAddress: {
+                  ...userAddressList.filter((item) => {
+                    return item.userAddressId === data.userAddressId;
+                  })[0],
+                },
                 userAddressIndex: userAddressList
                   .map((val, index) => {
                     return { userAddressId: val.userAddressId, index };
@@ -370,7 +384,7 @@ class Index extends Component {
     } = this.state;
     let { activityType, userBean, paymentModeObject = {} } = specialGoodsInfo;
     const { type } = paymentModeObject;
-    if (type === "self") {
+    if (type === "self" && activityType !== "commerceGoods") {
       activityType = "rightGoods";
     }
     const template = {

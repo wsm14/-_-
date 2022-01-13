@@ -8,6 +8,8 @@ import {
   loginStatus,
   backgroundObj,
   fetchStorage,
+  computedTime,
+  fakeStorage,
 } from "@/utils/utils";
 import { ScrollView, View } from "@tarojs/components";
 import {
@@ -41,6 +43,8 @@ import Waterfall from "@/components/waterfall";
 import { nearList } from "@/components/public_ui/nearList";
 import NearTitle from "./components/nearTitle";
 import NewUser from "@/components/public_ui/newUserToast";
+import NewsPilot from "./components/newsPilot";
+import CouponBean from "@/components/public_ui/couponBean";
 import "./index.scss";
 @inject("store")
 @observer
@@ -80,6 +84,7 @@ class Index extends React.PureComponent {
       ugcVisible1: false,
       ugcVisible2: false,
       animated: "",
+      showFlag: false,
     };
     this.interReload = null;
     this.interSwper = null;
@@ -100,6 +105,32 @@ class Index extends React.PureComponent {
           }
         );
       }
+    });
+  }
+  filterNewsFlag() {
+    const { createTime } = loginStatus() || {};
+    if (computedTime(createTime) < 3 && loginStatus()) {
+      const count = computedTime(createTime);
+      let countObj = fetchStorage(`day${count}`);
+      const { num, current } = countObj;
+      if ((num >= 40 && !current) || (num >= 140 && current === 1)) {
+        this.setState({
+          showFlag: true,
+        });
+        return true;
+      }
+      return false;
+    }
+    return false;
+  }
+  addStorage(bean) {
+    const { createTime } = loginStatus() || {};
+    const count = computedTime(createTime);
+    let countObj = fetchStorage(`day${count}`);
+    const { current = 0, num = 0 } = countObj;
+    fakeStorage(`day${count}`, {
+      num: num + bean,
+      current,
     });
   }
   componentDidShow() {
@@ -343,12 +374,17 @@ class Index extends React.PureComponent {
             }
           });
         } else {
+          if (this.filterNewsFlag()) {
+            return;
+          }
           saveWatchBean(
             {
               momentId: momentId,
               ownerId,
             },
             (res) => {
+              const { tippingBean } = userMomentsInfo;
+              this.addStorage(tippingBean);
               this.setState(
                 {
                   userMomentsInfo: {
@@ -797,6 +833,7 @@ class Index extends React.PureComponent {
       ugcVisible1,
       ugcVisible2,
       animated,
+      showFlag,
       time,
     } = this.state;
     const {
@@ -804,10 +841,12 @@ class Index extends React.PureComponent {
       authStore = {},
       activeInfoStore = {},
       locationStore = {},
+      commonStore = {},
     } = this.props.store;
     const { locationStatus = false } = locationStore;
     const { beanLimitStatus } = homeStore;
     const { login } = authStore;
+    const { balance } = commonStore;
     const { platformRewardBeanRules = {}, rewardRules = {} } = ugcMomentRules;
 
     const templateView = () => {
@@ -972,7 +1011,7 @@ class Index extends React.PureComponent {
             });
           }}
         ></Coupon>
-        <Lead beanLimitStatus={beanLimitStatus}></Lead>
+        <Lead balance={balance} beanLimitStatus={beanLimitStatus}></Lead>
         {!Taro.getStorageSync("deviceFlag") && (
           <NewToast
             type={"index"}
@@ -1089,6 +1128,13 @@ class Index extends React.PureComponent {
               </View>
             </Drawer>
           )}
+          <NewsPilot></NewsPilot>
+          <CouponBean
+            userMomentsList={userMomentsList}
+            data={userMomentsInfo}
+            onChange={this.setState.bind(this)}
+            visible={showFlag}
+          ></CouponBean>
         </View>
       </View>
     );

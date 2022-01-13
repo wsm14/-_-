@@ -47,7 +47,7 @@ export default ({ data, computedCount }) => {
               {goodsName}
             </View>
             <View className="order_price">
-              ¥{cash.toFixed(2)} + {bean}卡豆
+              ¥{cash} + {bean}卡豆
             </View>
             <View className="order_toast">购买数量</View>
           </View>
