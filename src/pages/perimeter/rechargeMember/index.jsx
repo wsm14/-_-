@@ -81,7 +81,6 @@ const rechargeMember = () => {
       key: "video",
     },
     {
-      title: "",
       rule: "",
       key: "music",
     },
