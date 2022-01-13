@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDidShow, useShareAppMessage } from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 // import Barrage from "@/components/componentView/active/barrage";
 import Router from "@/utils/router";
 import TaroShareDrawer from "./components/TaroShareDrawer";
@@ -22,9 +22,9 @@ const rechargeMember = () => {
     fetchGetShareData(); // 获取分享图数据
   }, []);
 
-  useDidShow(() => {
-    fetchGetList();
-  });
+  // useDidShow(() => {
+  //   fetchGetList();
+  // });
 
   useShareAppMessage((res) => {
     const { miniProgramUrl, backgroundImages, title } = shareData;
@@ -77,7 +77,6 @@ const rechargeMember = () => {
   // 列表渲染
   const listArr = [
     {
-      title: "",
       rule: "",
       key: "video",
     },
@@ -87,7 +86,6 @@ const rechargeMember = () => {
       key: "music",
     },
     {
-      title: "",
       rule: "",
       key: "choice",
     },
@@ -100,11 +98,11 @@ const rechargeMember = () => {
       </View>
       <View className="rechargeMember_group">
         {listArr.map((item) => {
-          const { key, title } = item;
+          const { key } = item;
           return (
             data[key] && (
               <View className="rechargeMember_cell" key={key}>
-                <View className={`rechargeMember_cell_head ${title}`}>
+                <View className={`rechargeMember_cell_head ${key}`}>
                   <View className="rechargeMember_cell_rule">充值规则</View>
                 </View>
                 <View className="rechargeMember_cell_list">
@@ -130,6 +128,14 @@ const rechargeMember = () => {
             )
           );
         })}
+      </View>
+      <View className="rechargeMember_footer">
+        <Image
+          src={
+            "https://wechat-config.dakale.net/miniprogram/image/dkl_slogan.png"
+          }
+          className="rechargeMember_dkl_slogan"
+        ></Image>
       </View>
       <TaroShareDrawer
         {...cavansObj}

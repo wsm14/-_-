@@ -1,6 +1,18 @@
 page {
   background-color: #333333;
 }
+
+@mixin head_titile($url) {
+  &::before {
+    content: "";
+    display: block;
+    width: 392px;
+    height: 74px;
+    background: url($url);
+    background-size: 100% 100%;
+  }
+}
+
 .rechargeMember_box {
   View {
     box-sizing: border-box;
@@ -22,9 +34,15 @@ page {
   }
   .rechargeMember_group {
     .rechargeMember_cell {
+      & + .rechargeMember_cell {
+        margin-top: 10px;
+      }
       .rechargeMember_cell_head {
         position: relative;
         height: 168px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         .rechargeMember_cell_rule {
           position: absolute;
           padding: 5px 10px;
@@ -34,6 +52,21 @@ page {
           color: #8c8c8c;
           top: 54px;
           right: 24px;
+        }
+        &.video {
+          @include head_titile(
+            "https://wechat-config.dakale.net/miniprogram/image/rechargeMember_video.png"
+          );
+        }
+        &.music {
+          @include head_titile(
+            "https://wechat-config.dakale.net/miniprogram/image/rechargeMember_music.png"
+          );
+        }
+        &.choice {
+          @include head_titile(
+            "https://wechat-config.dakale.net/miniprogram/image/rechargeMember_exquisite.png"
+          );
         }
       }
       .rechargeMember_cell_list {
@@ -64,6 +97,16 @@ page {
           }
         }
       }
+    }
+  }
+  .rechargeMember_footer {
+    height: 155px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .rechargeMember_dkl_slogan {
+      width: 409px;
+      height: 57px;
     }
   }
 }
