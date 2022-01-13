@@ -92,15 +92,13 @@ const rechargePage = () => {
 
   // 立即充值
   const handleGoRecharge = () => {
-    if (teleForm && phoneMoney && !teleMsg) {
-      router({
-        routerName: "rechargeOrder",
-        args: {
-          telephone,
-          phoneMoney,
-        },
-      });
-    }
+    router({
+      routerName: "rechargeOrder",
+      args: {
+        telephone,
+        phoneMoney,
+      },
+    });
   };
 
   // 获取分享参数
@@ -151,6 +149,7 @@ const rechargePage = () => {
           {selectList.map((item) => {
             return (
               <View
+                key={item.totalFee}
                 onClick={() => handlePhoneMoney(item.totalFee)}
                 className={`recharge_select_cell ${
                   phoneMoney === item.totalFee && "select"
@@ -177,10 +176,9 @@ const rechargePage = () => {
             分享
           </View>
           <Button
+            disabled={!phoneMoney || teleMsg || !telephone}
             onClick={handleGoRecharge}
-            className={`recharge_select_btn ${
-              phoneMoney && teleMsg && telephone ? "" : "disabled"
-            }`}
+            className={"recharge_select_btn"}
           >
             立即充值
           </Button>

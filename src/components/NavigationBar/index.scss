@@ -1,0 +1,41 @@
+.navBar_block {
+  position: relative;
+  background: #ffffff;
+  .nav-bar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    color: #fff;
+    z-index: 1000;
+    height: 88px;
+  }
+  .nav_title {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 33px;
+    font-weight: 600;
+    color: #333333;
+  }
+  .naviton_title_backStyle {
+    width: 48px;
+    height: 48px;
+    z-index: 1006;
+    margin-left: 24px;
+    position: absolute;
+    left: 0;
+  }
+  .go_back_iconWhite {
+    background: url("https://wechat-config.dakale.net/miniprogram/mark/backWhite.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .go_back_iconBlack {
+    background: url("https://wechat-config.dakale.net/miniprogram/mark/backBlack.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+}

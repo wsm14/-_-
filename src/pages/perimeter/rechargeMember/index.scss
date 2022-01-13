@@ -6,4 +6,154 @@ page {
   View {
     box-sizing: border-box;
   }
+  padding: 37px 32px 64px;
+  .rechargeMember_head {
+    display: flex;
+    margin-bottom: 48px;
+    .rechargeMember_logo {
+      width: 200px;
+      height: 200px;
+      border-radius: 8px;
+      background-color: #e5e5e5;
+    }
+    .rechargeMember_info {
+      flex: 1;
+      margin-left: 24px;
+      padding: 8px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .rechargeMember_info_name {
+        font-size: 32px;
+        font-weight: 600;
+        color: #333333;
+        line-height: 32px;
+      }
+      .rechargeMember_info_price {
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+        line-height: 24px;
+        margin-bottom: 16px;
+        Text {
+          font-size: 28px;
+          font-weight: bold;
+          color: #999999;
+          line-height: 28px;
+          text-decoration: line-through;
+        }
+      }
+      .rechargeMember_info_bean {
+        font-size: 28px;
+        font-weight: bold;
+        color: #ef476f;
+        line-height: 28px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        &::before {
+          content: "";
+          display: block;
+          width: 70px;
+          height: 28px;
+          background: url(https://wechat-config.dakale.net/miniprogram/image/icon776.png);
+          background-size: 100% 100%;
+          margin-right: 8px;
+        }
+        .bean {
+          font-size: 24px;
+          font-weight: 500;
+          color: #ef476f;
+          line-height: 24px;
+          margin-left: 4px;
+        }
+      }
+      .rechargeMember_info_beanTip {
+        font-size: 24px;
+        color: #ef476f;
+        line-height: 24px;
+      }
+    }
+  }
+
+  .rechargeMember_title {
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 28px;
+  }
+
+  .rechargeMember_cell {
+    & + .rechargeMember_cell {
+      margin-top: 32px;
+    }
+    .rechargeMember_sku_group {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      .sku_cell {
+        width: 331px;
+        padding: 18px 0;
+        box-sizing: border-box;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        background: #ffffff;
+        border: 1px solid #e5e5e5;
+        position: relative;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 400;
+        color: #333333;
+        line-height: 24px;
+        & + .sku_cell {
+          margin-left: 24px;
+        }
+        &:nth-child(2n + 1) {
+          margin-left: 0;
+        }
+        &.select {
+          background: #e3c763;
+          border: none;
+          color: #ffffff;
+          font-weight: 600;
+        }
+      }
+    }
+    .recharge_content_input {
+      margin-top: 48px;
+      display: block;
+      font-size: 48px;
+      font-weight: 400;
+      color: #333333;
+      height: 60px;
+      line-height: 60px;
+    }
+    .recharge_content_liner {
+      height: 1px;
+      background: #e5e5e5;
+      border-radius: 1px;
+      margin-top: 15px;
+    }
+  }
+
+  .recharge_footer {
+    position: fixed;
+    bottom: 64px;
+    left: 55px;
+    right: 55px;
+    .recharge_button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 80px;
+      background: #ef476f;
+      border-radius: 40px;
+      font-size: 36px;
+      font-weight: 600;
+      color: #ffffff;
+      &[disabled] {
+        opacity: 0.4;
+      }
+    }
+  }
 }

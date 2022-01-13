@@ -129,8 +129,8 @@ page {
       margin-left: 32px;
       background-color: #ef476f;
       color: #ffffff;
-      &.disabled {
-        opacity: 0.1;
+      &[disabled] {
+        opacity: 0.4;
       }
     }
     .recharge_bottom_share {
