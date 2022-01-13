@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, RichText, Text, Image } from "@tarojs/components";
 import { filterStrList } from "@/utils/utils";
 import Router from "@/utils/router";
 import "./index.scss";

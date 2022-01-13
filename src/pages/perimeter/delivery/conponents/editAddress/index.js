@@ -16,6 +16,7 @@ import { getAuthStatus } from "@/common/authority";
 import { fetchGetAdderssInfo } from "@/server/common";
 import { getRestapiCode, getRestapiAddress } from "@/server/other";
 import evens from "@/common/evens";
+import cityJson from "@/common/cityJson";
 import { useEffect } from "react";
 import up from "./up.png";
 import down from "./down.png";

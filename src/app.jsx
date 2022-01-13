@@ -144,8 +144,9 @@ class App extends Component {
     }).then((val) => {
       const { keyValueInfo = {} } = val;
       const { extraParam = "{}" } = keyValueInfo;
-      const { beanLimit } = JSON.parse(extraParam) || {};
-      Store.commonStore.setBean(beanLimit);
+      const { beanLimit, weChatBeanLimit } = JSON.parse(extraParam) || {};
+      Store.commonStore.setBean(weChatBeanLimit);
+      Store.commonStore.setBalancen(beanLimit - weChatBeanLimit);
     });
   }
   fetchNetwork() {

@@ -2,6 +2,7 @@ import { observable } from "mobx";
 import Taro from "@tarojs/taro";
 const commonStore = observable({
   beanLimit: "500",
+  balance: "0",
   data: {},
   overallBanner: [],
   floatList: [],
@@ -13,6 +14,9 @@ const commonStore = observable({
   },
   setBean(e) {
     this.beanLimit = e;
+  },
+  setBalancen(e) {
+    this.balance = e;
   },
   setShareData(obj) {
     this.data = obj;

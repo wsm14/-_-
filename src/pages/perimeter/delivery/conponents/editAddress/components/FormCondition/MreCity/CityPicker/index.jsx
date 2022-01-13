@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { View, PickerView, PickerViewColumn } from "@tarojs/components";
-import cityJson from "./../../../cityJson";
+import cityJson from "@/common/cityJson";
 import "./index.scss";
 
 const nowValue = {
