@@ -1,8 +1,7 @@
 import React from "react";
-import { View, Text, Input } from "@tarojs/components";
-import { filterWeek } from "@/utils/utils";
-import Router from "@/utils/router";
+import { View, Input } from "@tarojs/components";
 import "./index.scss";
+
 export default ({ changeLabel }) => {
   return (
     <>

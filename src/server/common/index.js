@@ -205,3 +205,49 @@ export const fetchRechargeMemberList = (data = {}, fn) => {
   );
 };
 // 会员充值列表
+
+export const fetchRechargeMemberLsxdList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/listLsxdProduct",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 会员充值项目列表
+
+export const fetchRechargeMemberLsxdDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/getLsxdVirtualProductOrderPrice",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 会员充值项目详情
+
+export const fetchMemberOrderSumbit = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/saveVirtualProductOrder",
+      data: data,
+    },
+    (res) => {
+      fn && fn(res);
+    }
+  );
+};
+// 会员充值确认下单
+
+export const fetchSpecialBarrage = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/getPhoneBillBarrage",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 活动卡豆弹幕;

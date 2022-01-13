@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { Text, View } from "@tarojs/components";
-import { toast, goBack } from "@/utils/utils";
+import { View } from "@tarojs/components";
+import { toast } from "@/utils/utils";
 import { inject, observer } from "mobx-react";
-import { fetchUserShareCommission } from "@/server/common";
+import {
+  fetchMemberOrderSumbit,
+  fetchUserShareCommission,
+  fetchRechargeMemberLsxdDetail,
+} from "@/server/common";
 import {
   fetchKolGoodsOrder,
   fakeGoodsOrder,
@@ -12,6 +16,7 @@ import {
 import { fetchAddressList } from "@/server/perimeter";
 import Specal from "./components/template/favGoods";
 import Commer from "./components/template/commerGoods";
+import Recharge from "./components/template/recharge";
 import PayBean from "@/components/public_ui/selectToast";
 import RightGoods from "./components/template/rightGoods";
 import evens from "@/common/evens";
@@ -42,6 +47,26 @@ class Index extends Component {
       visible: false,
     };
   }
+
+  //商品支付
+  componentDidMount() {
+    evens.$on("payCoupon", this.setCoupon.bind(this));
+  }
+  componentDidShow() {
+    const { mode } = getCurrentInstance().router.params;
+    // 充值会员获取详情接口 防止和其他杂糅
+    if (mode === "member") {
+      this.fetchRechargeMemberLsxdDetail();
+      return;
+    }
+    this.fetchUserShareCommission();
+    this.fetchKolGoodsOrder();
+  }
+  //获取订单详情
+  componentWillUnmount() {
+    evens.$off("payCoupon");
+  }
+
   saveCommerceGoods() {
     const {
       useBeanStatus,
@@ -49,6 +74,7 @@ class Index extends Component {
       httpData: { merchantId, specialActivityId, goodsCount },
       remark,
       userAddress,
+      couponObj,
     } = this.state;
     const { shareType } = this.props.store.authStore;
     const { shareUserId, shareUserType, sourceKey, sourceType } = shareType;
@@ -141,10 +167,7 @@ class Index extends Component {
       );
     });
   }
-  //获取订单详情
-  componentWillUnmount() {
-    evens.$off("payCoupon");
-  }
+
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
       const {
@@ -362,13 +385,58 @@ class Index extends Component {
       }
     });
   }
-  //商品支付
-  componentDidMount() {
-    evens.$on("payCoupon", this.setCoupon.bind(this));
+
+  // 获取会员充值详情
+  fetchRechargeMemberLsxdDetail() {
+    const { productNo, virtualProductAccount } =
+      getCurrentInstance().router.params;
+    fetchRechargeMemberLsxdDetail({
+      productNo,
+      goodsCount: 1,
+      virtualProductAccount,
+    }).then((res) => {
+      this.setState({
+        specialGoodsInfo: {
+          rightFlag: "1", // 为了显示 专区优惠 标识
+          activityType: "rechargeMember", // 为了显示模块
+          ...(res.lsxdSubMemberInfo || {}),
+          realPrice: res.lsxdSubMemberInfo.price,
+        },
+      });
+    });
   }
-  componentDidShow() {
-    this.fetchUserShareCommission();
-    this.fetchKolGoodsOrder();
+
+  // 会员确认充值
+  fetchMemberOrderSumbit() {
+    const { mode, productNo, virtualProductAccount, virtualProductSubType } =
+      getCurrentInstance().router.params;
+    const { useBeanStatus, useBeanType, couponObj } = this.state;
+    const { userCouponId, couponType } = couponObj;
+    fetchMemberOrderSumbit({
+      useBeanStatus,
+      useBeanType,
+      virtualProductType: mode,
+      virtualProductId: productNo,
+      virtualProductAccount,
+      virtualProductSubType,
+      userCouponObjects: userCouponId
+        ? [
+            {
+              userCouponId,
+              couponType,
+            },
+          ]
+        : [],
+    }).then(({ orderSn, orderType }) => {
+      Router({
+        routerName: "paySuccess",
+        args: {
+          orderSn,
+          orderType,
+        },
+        type: "redirectTo",
+      });
+    });
   }
 
   render() {
@@ -412,8 +480,8 @@ class Index extends Component {
       commerceGoods: (
         <Commer
           userAddress={userAddress}
-          configUserLevelInfo={configUserLevelInfo}
           userAddressIndex={userAddressIndex}
+          configUserLevelInfo={configUserLevelInfo}
           data={specialGoodsInfo}
           useScenesType={"commerce"}
           status={useBeanStatus}
@@ -446,6 +514,19 @@ class Index extends Component {
           }}
         ></RightGoods>
       ),
+      rechargeMember: (
+        <Recharge
+          data={specialGoodsInfo}
+          useScenesType={"rechargeMember"}
+          status={useBeanStatus}
+          couponObj={couponObj}
+          changeBean={this.changeBean.bind(this)}
+          computedPrice={this.computedPayPrice.bind(this)}
+          submit={() => {
+            this.fetchMemberOrderSumbit();
+          }}
+        ></Recharge>
+      ), // 充值
     }[activityType];
     return (
       <View className="favOrder_box">

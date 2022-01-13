@@ -3,7 +3,7 @@ import router from "@/utils/router";
 import { useDidShow, useShareAppMessage } from "@tarojs/taro";
 import { View, Input, Button } from "@tarojs/components";
 import { fetchPhoneBill, fetchShareInfo } from "@/server/common";
-// import Barrage from "@/components/componentView/active/barrage";
+import Barrage from "./components/Barrage";
 import FooterFixed from "@/components/FooterFixed";
 import { rssConfigData } from "./components/data";
 import TaroShareDrawer from "./components/TaroShareDrawer";
@@ -144,7 +144,7 @@ const rechargePage = () => {
         <View className="recharge_content_liner"></View>
         {teleMsg && <View className="recharge_wrong">{teleMsg}</View>}
         <View className="recharge_title">充值金额</View>
-        {/* <Barrage></Barrage> */}
+        <Barrage></Barrage>
         <View className="recharge_select_info">
           {selectList.map((item) => {
             return (
