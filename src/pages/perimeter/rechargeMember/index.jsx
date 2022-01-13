@@ -36,12 +36,12 @@ const rechargeMember = () => {
   // 提交充值
   const handleUpRecharge = (val) => {
     // 还没有看视频 前往看广告
-    // if (!videoEnd) {
-    //   router({
-    //     routerName: "advertisingVideo",
-    //   });
-    //   return;
-    // }
+    if (!videoEnd) {
+      router({
+        routerName: "advertisingVideo",
+      });
+      return;
+    }
     // 跳转下单页面
     router({
       routerName: "favourableOrder",

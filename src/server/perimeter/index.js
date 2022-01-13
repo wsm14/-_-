@@ -287,3 +287,11 @@ export const getListUserMomentBySearch = (data, fn) => {
   );
 };
 //获取搜索动态
+
+export const fetchGetRandomPlatformMoment = (data) => {
+  return httpGet({
+    url: "/user/moment/platformMoment/getRandomPlatformMoment",
+    data: data,
+  });
+};
+// 随机获取一个广告视频

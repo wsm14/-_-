@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import Taro, { useRouter, useDidShow, useDidHide } from "@tarojs/taro";
+import Taro, { useDidShow, useDidHide } from "@tarojs/taro";
 import { View, Video, Text, Image } from "@tarojs/components";
 import { navigatePostBack } from "@/utils/utils";
-import AdverConfirm from "./components/AdverConfirm";
+import { fetchGetRandomPlatformMoment } from "@/server/perimeter";
 import NavigationBar from "@/components/NavigationBar";
+import AdverConfirm from "./components/AdverConfirm";
 
 import "./index.scss";
 
@@ -23,8 +24,7 @@ const AdvertisingVideo = () => {
   /**
    * 路由内进入存在参数
    */
-  const routeParams = useRouter().params;
-  const { hittingId, url, title, height = 0 } = videoData;
+  const { url, title, height = 0 } = videoData;
 
   useDidShow(() => {
     setPlay(true);
@@ -35,8 +35,7 @@ const AdvertisingVideo = () => {
   });
 
   useEffect(() => {
-    setStep(routeParams.showlength || 15);
-    setPlay(true);
+    fetchGetVideoDetail();
   }, []);
 
   useEffect(() => {
@@ -62,6 +61,21 @@ const AdvertisingVideo = () => {
     }
     return () => clearTimeout(refTimer.current);
   }, [step, play]);
+
+  // 获取视频广告信息
+  const fetchGetVideoDetail = () => {
+    fetchGetRandomPlatformMoment().then((res) => {
+      const { platformMomentInfo } = res;
+      const { videoContent = "{}", title } = platformMomentInfo;
+      const videoData = JSON.parse(videoContent || "{}");
+      setVideoData({
+        title,
+        ...videoData,
+      });
+      setStep(platformMomentInfo["length"] || 15);
+      setPlay(true);
+    });
+  };
 
   // 控制视频播放停止
   const handleVideoPausePlay = (type) => {
