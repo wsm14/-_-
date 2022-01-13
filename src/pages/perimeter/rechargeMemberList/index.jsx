@@ -8,7 +8,7 @@ import { fetchShareInfo, fetchRechargeMemberList } from "@/server/common";
 import { rssConfigData } from "./components/data";
 import "./index.scss";
 
-const rechargeMember = () => {
+const rechargeMemberList = () => {
   const [shareDeatils, setShareDeatils] = useState({
     cavansObj: {},
     shareData: {},
@@ -91,32 +91,32 @@ const rechargeMember = () => {
   ];
 
   return (
-    <View className="rechargeMember_box">
-      <View className="rechargeMember_head">
-        <View className="rechargeMember_i_share"></View>
+    <View className="rechargeMemberList_box">
+      <View className="rechargeMemberList_head">
+        <View className="rechargeMemberList_i_share"></View>
       </View>
-      <View className="rechargeMember_group">
+      <View className="rechargeMemberList_group">
         {listArr.map((item) => {
           const { key } = item;
           return (
             data[key] && (
-              <View className="rechargeMember_cell" key={key}>
-                <View className={`rechargeMember_cell_head ${key}`}>
-                  <View className="rechargeMember_cell_rule">充值规则</View>
+              <View className="rechargeMemberList_cell" key={key}>
+                <View className={`rechargeMemberList_cell_head ${key}`}>
+                  <View className="rechargeMemberList_cell_rule">充值规则</View>
                 </View>
-                <View className="rechargeMember_cell_list">
+                <View className="rechargeMemberList_cell_list">
                   {/* 会员列表 */}
                   {data[key]?.lsxdSubMemberItemList?.map((cell) => {
                     return (
                       <View
-                        className="rechargeMember_list_cell"
+                        className="rechargeMemberList_list_cell"
                         key={cell.productNo}
                       >
                         <View
-                          className="rechargeMember_cell_img"
+                          className="rechargeMemberList_cell_img"
                           style={{ backgroundImage: cell.image }}
                         ></View>
-                        <View className="rechargeMember_cell_name">
+                        <View className="rechargeMemberList_cell_name">
                           {item.name}
                         </View>
                       </View>
@@ -128,12 +128,12 @@ const rechargeMember = () => {
           );
         })}
       </View>
-      <View className="rechargeMember_footer">
+      <View className="rechargeMemberList_footer">
         <Image
           src={
             "https://wechat-config.dakale.net/miniprogram/image/dkl_slogan.png"
           }
-          className="rechargeMember_dkl_slogan"
+          className="rechargeMemberList_dkl_slogan"
         ></Image>
       </View>
       <TaroShareDrawer
@@ -146,4 +146,4 @@ const rechargeMember = () => {
   );
 };
 
-export default rechargeMember;
+export default rechargeMemberList;

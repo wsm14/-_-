@@ -13,37 +13,37 @@ page {
   }
 }
 
-.rechargeMember_box {
+.rechargeMemberList_box {
   View {
     box-sizing: border-box;
   }
-  .rechargeMember_head {
+  .rechargeMemberList_head {
     position: relative;
     height: 210px;
-    background-image: url(https://wechat-config.dakale.net/miniprogram/image/rechargeMember_head.png);
+    background-image: url(https://wechat-config.dakale.net/miniprogram/image/rechargeMemberList_head.png);
     background-size: 100% 100%;
-    .rechargeMember_i_share {
+    .rechargeMemberList_i_share {
       position: absolute;
       width: 48px;
       height: 48px;
       top: 76px;
       right: 24px;
-      background-image: url(https://wechat-config.dakale.net/miniprogram/image/rechargeMember_share.png);
+      background-image: url(https://wechat-config.dakale.net/miniprogram/image/rechargeMemberList_share.png);
       background-size: 100% 100%;
     }
   }
-  .rechargeMember_group {
-    .rechargeMember_cell {
-      & + .rechargeMember_cell {
+  .rechargeMemberList_group {
+    .rechargeMemberList_cell {
+      & + .rechargeMemberList_cell {
         margin-top: 10px;
       }
-      .rechargeMember_cell_head {
+      .rechargeMemberList_cell_head {
         position: relative;
         height: 168px;
         display: flex;
         align-items: center;
         justify-content: center;
-        .rechargeMember_cell_rule {
+        .rechargeMemberList_cell_rule {
           position: absolute;
           padding: 5px 10px;
           border-radius: 20px;
@@ -55,26 +55,26 @@ page {
         }
         &.video {
           @include head_titile(
-            "https://wechat-config.dakale.net/miniprogram/image/rechargeMember_video.png"
+            "https://wechat-config.dakale.net/miniprogram/image/rechargeMemberList_video.png"
           );
         }
         &.music {
           @include head_titile(
-            "https://wechat-config.dakale.net/miniprogram/image/rechargeMember_music.png"
+            "https://wechat-config.dakale.net/miniprogram/image/rechargeMemberList_music.png"
           );
         }
         &.choice {
           @include head_titile(
-            "https://wechat-config.dakale.net/miniprogram/image/rechargeMember_exquisite.png"
+            "https://wechat-config.dakale.net/miniprogram/image/rechargeMemberList_exquisite.png"
           );
         }
       }
-      .rechargeMember_cell_list {
+      .rechargeMemberList_cell_list {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         padding: 0 40px;
-        .rechargeMember_list_cell {
+        .rechargeMemberList_list_cell {
           width: 325px;
           height: 140px;
           background: #ffffff;
@@ -83,12 +83,12 @@ page {
           padding: 0 32px;
           display: flex;
           align-items: center;
-          .rechargeMember_cell_img {
+          .rechargeMemberList_cell_img {
             width: 100px;
             height: 100px;
             background-size: 100% 100%;
           }
-          .rechargeMember_cell_name {
+          .rechargeMemberList_cell_name {
             font-size: 28px;
             font-weight: 600;
             color: #333333;
@@ -99,12 +99,12 @@ page {
       }
     }
   }
-  .rechargeMember_footer {
+  .rechargeMemberList_footer {
     height: 155px;
     display: flex;
     align-items: center;
     justify-content: center;
-    .rechargeMember_dkl_slogan {
+    .rechargeMemberList_dkl_slogan {
       width: 409px;
       height: 57px;
     }
