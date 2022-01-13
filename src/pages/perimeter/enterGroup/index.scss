@@ -1,0 +1,27 @@
+page {
+  .enterGroup_box {
+    position: relative;
+    .enterGroup_bag {
+      width: 100%;
+      height: 1769px;
+      &.invite {
+        height: 1496px;
+      }
+    }
+    .enterGroup_btn {
+      position: absolute;
+      bottom: 355px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      width: 500px;
+      height: 96px;
+      &.getBean,
+      &.goUse,
+      &.getGroup {
+        bottom: 196px;
+        width: 490px;
+        height: 95px;
+      }
+    }
+  }
+}
