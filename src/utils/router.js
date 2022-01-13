@@ -87,7 +87,6 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     pay: "/pages/goods/payWeex/index", //支付页
     paySuccess: "/pages/goods/paySuccess/index", //支付成功页
     xnPay: "/pages/goods/code_wx_pay/index",
-    rechargeOrder: "/pages/goods/rechargeOrder/index", //话费支付页
     recharge: "/pages/perimeter/recharge/index", //话费充值
     prefecture: "/pages/perimeter/prefecture/index", //卡豆专区
     preChildTure: "/pages/perimeter/preChildTure/index", //吃喝玩乐购

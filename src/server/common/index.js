@@ -241,6 +241,17 @@ export const fetchMemberOrderSumbit = (data, fn) => {
 };
 // 会员充值确认下单
 
+export const fetchPhoneBillDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/getPhoneBillVirtualProductOrderPrice",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 话费充值项目详情;
+
 export const fetchSpecialBarrage = (data = {}, fn) => {
   return httpGet(
     {

@@ -4,6 +4,7 @@ import { View } from "@tarojs/components";
 import { toast } from "@/utils/utils";
 import { inject, observer } from "mobx-react";
 import {
+  fetchPhoneBillDetail,
   fetchMemberOrderSumbit,
   fetchUserShareCommission,
   fetchRechargeMemberLsxdDetail,
@@ -57,6 +58,11 @@ class Index extends Component {
     // 充值会员获取详情接口 防止和其他杂糅
     if (mode === "member") {
       this.fetchRechargeMemberLsxdDetail();
+      return;
+    }
+    // 话费充值详情获取
+    if (mode === "phoneBill") {
+      this.fetchPhoneBillDetail();
       return;
     }
     this.fetchUserShareCommission();
@@ -406,20 +412,44 @@ class Index extends Component {
     });
   }
 
-  // 会员确认充值
+  // 获取话费充值详情
+  fetchPhoneBillDetail() {
+    const { totalFee } = getCurrentInstance().router.params;
+    fetchPhoneBillDetail({ phoneMoney: totalFee }).then((res) => {
+      const { phoneBillInfo = {} } = res;
+      this.setState({
+        specialGoodsInfo: {
+          rightFlag: "1", // 为了显示 专区优惠 标识
+          activityType: "rechargeMember", // 为了显示模块
+          ...(phoneBillInfo || {}),
+          image:
+            "https://wechat-config.dakale.net/miniprogram/image/rechargePhone.png",
+          oriPrice: phoneBillInfo.totalFee,
+          realPrice: phoneBillInfo.totalFee,
+        },
+      });
+    });
+  }
+
+  // 会员确认充值 提交订单
   fetchMemberOrderSumbit() {
-    const { mode, productNo, virtualProductAccount, virtualProductSubType } =
-      getCurrentInstance().router.params;
+    const {
+      mode,
+      productNo,
+      virtualProductAccount,
+      virtualProductSubType,
+      totalFee,
+    } = getCurrentInstance().router.params;
     const { useBeanStatus, useBeanType, couponObj } = this.state;
     const { userCouponId, couponType } = couponObj;
     fetchMemberOrderSumbit({
-      useBeanStatus,
-      useBeanType,
-      virtualProductType: mode,
-      virtualProductId: productNo,
-      virtualProductAccount,
-      virtualProductSubType,
-      userCouponObjects: userCouponId
+      useBeanType, // 使用卡豆类型
+      useBeanStatus, // 是否使用卡豆
+      virtualProductType: mode, // 虚拟商品类型 member-会员 phoneBill-话费
+      virtualProductId: productNo, // 虚拟商品id mode === member
+      virtualProductAccount, // 充值账号
+      virtualProductSubType, // 虚拟商品子类型 mode === member
+      userCouponObjects: userCouponId // 是否使用优惠券
         ? [
             {
               userCouponId,
@@ -427,6 +457,7 @@ class Index extends Component {
             },
           ]
         : [],
+      totalFee, // mode === phoneBill 存在
     }).then(({ orderSn, orderType }) => {
       Router({
         routerName: "paySuccess",

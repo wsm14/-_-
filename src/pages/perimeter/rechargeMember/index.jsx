@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDidShow, useRouter } from "@tarojs/taro";
-import { View, Form, Input, Text, Image, Button } from "@tarojs/components";
 import router from "@/utils/router";
+import { useRouter } from "@tarojs/taro";
+import { View, Form, Input, Text, Image, Button } from "@tarojs/components";
 import { usePostBackData } from "@/utils/utils";
 import { fetchRechargeMemberLsxdList } from "@/server/common";
 import "./index.scss";

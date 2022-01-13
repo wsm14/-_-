@@ -142,7 +142,6 @@ export default {
         "paySuccess/index", //支付成功页面
         "codePay/index", //扫码订单生成订单页
         "orderDetails/index", //订单详情
-        // "rechargeOrder/index", //话费支付
       ],
     },
     {
