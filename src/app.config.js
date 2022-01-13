@@ -126,7 +126,8 @@ export default {
         "merchantVideo/index", //商家主页视频
         "videoDetails/index", //视频详情
         "recharge/index", // 话费充值
-        "rechargeMember/index", // 会员充值
+        "rechargeMember/index", // 会员充值列表
+        "rechargeMemberList/index", // 会员充值列表
         // "search_shop/index", //商家搜索
         // "merchantDetails/index", //商家详情
       ],
