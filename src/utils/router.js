@@ -77,6 +77,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     rechargeMember: "/pages/perimeter/rechargeMember/index", // 会员充值
     enterGroup: "/pages/perimeter/enterGroup/index", // 加入社群
     advertisingVideo: "/pages/perimeter/AdvertisingVideo/index", // 视频广告
+    beanWelfareZone: "/pages/perimeter/beanWelfareZone/index", // 卡豆福利专区
     payCouponList: "/pages/perimeter/couponList/index", //有价券列表
     commer: "/pages/perimeter/commer/index", //电商商品
     orderDetails: "/pages/goods/orderDetails/index", //订单详情

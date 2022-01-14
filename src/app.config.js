@@ -130,6 +130,7 @@ export default {
         "rechargeMemberList/index", // 会员充值列表
         "AdvertisingVideo/index", // 视频广告
         "enterGroup/index", // 加入社群
+        "beanWelfareZone/index", // 卡豆福利专区
         // "search_shop/index", //商家搜索
         // "merchantDetails/index", //商家详情
       ],
