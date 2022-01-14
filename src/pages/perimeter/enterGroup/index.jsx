@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import router from "@/utils/router";
-import Taro, { useRouter } from "@tarojs/taro";
+import { useRouter } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
+import Toast from "@/components/toast";
 import "./index.scss";
 
 export default () => {
@@ -10,6 +11,7 @@ export default () => {
   const { mode = "userCenter" } = routeParams;
 
   const [showType, setShowType] = useState("userCenter");
+  const [toastShow, setToastShow] = useState(false);
 
   useEffect(() => {
     setShowType(mode);
@@ -19,8 +21,9 @@ export default () => {
   const handleBtnClick = () => {
     if (showType === "userCenter") {
     } else if (showType === "getBean") {
+      setToastShow(true);
     } else if (showType === "getGroup") {
-      setShowType('userCenter');
+      setShowType("userCenter");
     } else if (showType === "goUse") {
       router({
         type: "switchTab",
@@ -68,6 +71,15 @@ export default () => {
         className={`enterGroup_btn ${showType}`}
         onClick={handleBtnClick}
       ></Image>
+      {toastShow && (
+        <Toast
+          btn="立即去加群"
+          close={() => setToastShow(false)}
+          onSubmit={() => setShowType("userCenter")}
+        >
+          <View className="total_content">请先加入福利群</View>
+        </Toast>
+      )}
     </View>
   );
 };
