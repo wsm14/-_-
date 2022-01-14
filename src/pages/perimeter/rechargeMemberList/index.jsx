@@ -147,14 +147,7 @@ const rechargeMemberList = () => {
           );
         })}
       </View>
-      <View className="rechargeMemberList_footer">
-        <Image
-          src={
-            "https://wechat-config.dakale.net/miniprogram/image/dkl_slogan.png"
-          }
-          className="rechargeMemberList_dkl_slogan"
-        ></Image>
-      </View>
+      <View className="rechargeMemberList_footer dkl_slogan"></View>
       <TaroShareDrawer
         {...cavansObj}
         start={cavansShow}
