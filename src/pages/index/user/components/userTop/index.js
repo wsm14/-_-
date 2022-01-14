@@ -218,10 +218,26 @@ export default (props) => {
     );
   };
   //顶部用户权益功能组件
+
+  // 加入社群模块
+  const EnterGroup = () => {
+    return (
+      <View
+        className="user_top_enterGroup"
+        onClick={() => {
+          Router({
+            routerName: "enterGroup",
+          });
+        }}
+      ></View>
+    );
+  };
+
   return (
     <View className="user_top_newBox">
       <User></User>
       <TopTabbar></TopTabbar>
+      <EnterGroup></EnterGroup>
       <TopGoods></TopGoods>
     </View>
   );
