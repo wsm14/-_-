@@ -1,5 +1,6 @@
-import Taro from "@tarojs/taro";
+import Taro, { useDidShow } from "@tarojs/taro";
 import days from "dayjs";
+
 export const goBack = function (fn) {
   Taro.navigateBack({
     delta: 1, // 返回上一级页面
@@ -313,7 +314,11 @@ export const setNavTitle = (title) => {
     },
   });
 };
-//设置页面名称
+
+/**
+ * 数据回传监听
+ * @param onEvnetChange 事件回调
+ */
 export function usePostBackData(onEvnetChange) {
   useDidShow(() => {
     const pages = Taro.getCurrentPages(); // 获取页面堆栈
@@ -321,10 +326,13 @@ export function usePostBackData(onEvnetChange) {
     const { data } = currPage.data; // 获取上一页回传数据
     if (data) {
       onEvnetChange(data);
+      const closeData = setTimeout(() => {
+        currPage.setData({ data: {} }); // 返回参数
+        clearTimeout(closeData);
+      }, 1000);
     }
   });
 }
-
 /**
  * 数据回传
  */
@@ -336,6 +344,7 @@ export function navigatePostBack(data, back = true) {
   }
   back && Taro.navigateBack({ delta: 1 }); //返回上一个页面
 }
+
 export const mapSelect = (fn) => {
   wx.chooseLocation({
     success: (val) => {

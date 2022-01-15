@@ -183,3 +183,25 @@ export const fetchUgcMomentRule = (data = {}, fn) => {
   );
 };
 //ugc配置项
+
+export const fetchPhoneBill = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/listPhoneBill",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 话费充值列表
+
+export const fetchRechargeMemberList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/listNewAllLsxdProduct",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 会员充值列表
