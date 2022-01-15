@@ -11,7 +11,7 @@ import {
 import { fakeAcquireMoment, fakeLinkCoupon } from "@/server/index";
 import "./index.scss";
 export default ({ visible, data, onChange, userMomentsList }) => {
-  const { momentId, tippingBean } = data;
+  const { momentId, tippingBean, ownerId } = data;
   const [visibleFlag, setvisibleFlag] = useState(false);
   const [couponVisible, setVisible] = useState(false);
   const [couponInfo, setCouponInfo] = useState([]);
@@ -28,11 +28,12 @@ export default ({ visible, data, onChange, userMomentsList }) => {
       const { num, current = 0 } = fetchStorage(`day${count}`);
       fakeAcquireMoment({
         momentId,
-        beanStage: num + tippingBean,
+        beanStage: current === 0 ? 50 : 150,
         newUserFlag: createTime < 3 ? 0 : 1,
+        ownerId,
       })
         .then((val) => {
-          const { momentLinkCouponList } = val;
+          const { momentLinkCouponList = [] } = val;
           onChange({
             userMomentsInfo: {
               ...data,
@@ -110,14 +111,17 @@ export default ({ visible, data, onChange, userMomentsList }) => {
     );
   };
   const saveCoupon = (platformCouponId) => {
+    const { createTime } = loginStatus();
+    let count = computedTime(createTime);
     const { num, current = 0 } = fetchStorage(`day${count}`);
     fakeLinkCoupon({
       platformCouponId,
-      beanStage: num,
+      beanStage: current == 1 ? "50" : "150",
     })
       .then((val) => {
         const { userPlatformCouponInfo } = val;
         setVisible(() => {
+          setvisibleFlag(false);
           setUserPlatformCouponInfo(userPlatformCouponInfo);
           return true;
         });
@@ -125,6 +129,7 @@ export default ({ visible, data, onChange, userMomentsList }) => {
       .catch((e) => {
         onChange({
           showFlag: false,
+          couponFlag: true,
         });
       });
   };
@@ -136,6 +141,7 @@ export default ({ visible, data, onChange, userMomentsList }) => {
           close={() => {
             onChange({
               showFlag: false,
+              couponFlag: true,
             });
           }}
         >
@@ -147,6 +153,9 @@ export default ({ visible, data, onChange, userMomentsList }) => {
             </View>
             <View className="couponBean_let public_auto">
               {couponInfo.map((item, index) => {
+                const { createTime } = loginStatus();
+                let count = computedTime(createTime);
+                const { num, current = 0 } = fetchStorage(`day${count}`);
                 const {
                   exchangeBeanNum,
                   useScenesType,
@@ -164,7 +173,7 @@ export default ({ visible, data, onChange, userMomentsList }) => {
                 return (
                   <View className="couponBean_coupon_details">
                     <View className="couponBean_coupon_absolute">
-                      {index > 0 && (
+                      {num < exchangeBeanNum && (
                         <View className="couponBean_coupon_toast">
                           {exchangeBeanNum}卡豆可兑
                         </View>
@@ -180,7 +189,7 @@ export default ({ visible, data, onChange, userMomentsList }) => {
                     <View className="couponBean_coupon_xz">
                       满{thresholdPrice}可用
                     </View>
-                    {index > 0 ? (
+                    {exchangeBeanNum > num ? (
                       <View
                         className="couponBean_coupon_btn public_center"
                         onClick={() =>
@@ -193,7 +202,7 @@ export default ({ visible, data, onChange, userMomentsList }) => {
                       </View>
                     ) : (
                       <View
-                        className="couponBean_coupon_toast"
+                        className="couponBean_coupon_btn public_center"
                         onClick={() => saveCoupon(platformCouponId)}
                       >
                         {exchangeBeanNum}卡豆可兑
@@ -212,6 +221,7 @@ export default ({ visible, data, onChange, userMomentsList }) => {
           close={() => {
             onChange({
               showFlag: false,
+              couponFlag: true,
             });
           }}
         >
@@ -228,6 +238,7 @@ export default ({ visible, data, onChange, userMomentsList }) => {
               onClick={() => {
                 onChange({
                   showFlag: false,
+                  couponFlag: true,
                 });
               }}
             >

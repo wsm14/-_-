@@ -9,13 +9,13 @@ import { toast, GetDistance, getLat, getLnt } from "@/utils/utils";
 import { acquireCoupon, getNewAvailableCoupon } from "@/server/coupon";
 import "./index.scss";
 export default (props) => {
-  const { data, visible, show = false, beanflag } = props;
+  const { data, visible, show = false, beanflag, showFlag } = props;
   const { freeCouponFlag } = data;
   const [list, setList] = useState([]);
   useEffect(() => {
     const { ownerId, momentId, channel = "moment" } = data;
-
-    if (beanflag && freeCouponFlag === "1") {
+    console.log(showFlag);
+    if ((beanflag || showFlag) && freeCouponFlag === "1") {
       if (ownerId && momentId) {
         getAvailableCoupon({
           ownerId: ownerId,
@@ -24,7 +24,7 @@ export default (props) => {
         });
       }
     }
-  }, [beanflag]);
+  }, [beanflag, showFlag]);
   const acquire = (obj) => {
     acquireCoupon(obj);
   };

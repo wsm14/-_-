@@ -145,9 +145,8 @@ export default {
     {
       root: "pages/coupon",
       pages: [
-        // "wraparound/index", //券包
-        // "couponDetails/index", //券包详情
-        // "voucherDetails/index", //抵扣券详情
+        "wraparound/index", //券包
+        "couponDetails/index", //券包详情
         "selectCoupon/index", //选择支付券
       ],
     },

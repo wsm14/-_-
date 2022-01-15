@@ -42,7 +42,7 @@ import UgcCanvas from "@/components/videoComponents/components/ugcTimeOver";
 import Waterfall from "@/components/waterfall";
 import { nearList } from "@/components/public_ui/nearList";
 import NearTitle from "./components/nearTitle";
-import NewUser from "@/components/public_ui/newUserToast";
+
 import NewsPilot from "./components/newsPilot";
 import CouponBean from "@/components/public_ui/couponBean";
 import "./index.scss";
@@ -109,11 +109,16 @@ class Index extends React.PureComponent {
   }
   filterNewsFlag() {
     const { createTime } = loginStatus() || {};
+    const { userMomentsInfo } = this.state;
+    const { tippingBean } = userMomentsInfo;
     if (computedTime(createTime) < 3 && loginStatus()) {
       const count = computedTime(createTime);
       let countObj = fetchStorage(`day${count}`);
       const { num, current } = countObj;
-      if ((num >= 40 && !current) || (num >= 140 && current === 1)) {
+      if (
+        (num + tippingBean >= 50 && !current) ||
+        (num + tippingBean >= 150 && current === 1)
+      ) {
         this.setState({
           showFlag: true,
         });
@@ -979,7 +984,6 @@ class Index extends React.PureComponent {
 
     return (
       <View className="home_box home_black">
-        <NewUser></NewUser>
         <View style={{ top: computedClient().top }} className="home_wait">
           <TopView
             data={momentTags}
@@ -1004,6 +1008,7 @@ class Index extends React.PureComponent {
         <Coupon
           data={userMomentsInfo}
           show={couponFlag}
+          showFlag={showFlag}
           beanflag={beanflag}
           visible={() => {
             this.setState({

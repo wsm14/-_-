@@ -2,7 +2,15 @@ import React from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Button, Image, ScrollView, View } from "@tarojs/components";
 import VideoView from "./components/videoView";
-import { computedClient, toast, goBack, loginStatus } from "@/utils/utils";
+import {
+  computedClient,
+  toast,
+  goBack,
+  loginStatus,
+  fetchStorage,
+  computedTime,
+  fakeStorage,
+} from "@/utils/utils";
 import {
   getUserMomentList,
   saveWatchBean,
@@ -21,6 +29,7 @@ import { fetchShareInfo, fetchUserShareCommission } from "@/server/common";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import Comment from "@/components/public_ui/comment";
+import CouponBean from "@/components/public_ui/couponBean";
 import "./index.scss";
 @inject("store")
 @observer
@@ -51,11 +60,32 @@ class Index extends React.PureComponent {
         start: false,
       },
       commentShow: false,
+      showFlag: false,
     };
     this.interReload = null;
     this.interSwper = null;
   }
-
+  filterNewsFlag() {
+    const { createTime } = loginStatus() || {};
+    const { userMomentsInfo } = this.state;
+    const { tippingBean } = userMomentsInfo;
+    if (computedTime(createTime) < 3 && loginStatus()) {
+      const count = computedTime(createTime);
+      let countObj = fetchStorage(`day${count}`);
+      const { num, current } = countObj;
+      if (
+        (num + tippingBean >= 50 && !current) ||
+        (num + tippingBean >= 150 && current === 1)
+      ) {
+        this.setState({
+          showFlag: true,
+        });
+        return true;
+      }
+      return false;
+    }
+    return false;
+  }
   onChange(e) {
     const { countStatus, httpData, userMomentsList } = this.state;
     let { current } = e.detail;
@@ -201,6 +231,9 @@ class Index extends React.PureComponent {
     checkPuzzleBeanLimitStatus({}, (res) => {
       const { beanLimitStatus = "1" } = res;
       if (beanLimitStatus === "1") {
+        if (this.filterNewsFlag()) {
+          return;
+        }
         saveWatchBean(
           {
             momentId: momentId,
@@ -596,6 +629,7 @@ class Index extends React.PureComponent {
       player,
       cavansObj,
       commentShow,
+      showFlag,
     } = this.state;
     const { homeStore = {}, commonStore = {} } = this.props.store;
     const { beanLimitStatus } = homeStore;
@@ -661,6 +695,7 @@ class Index extends React.PureComponent {
           data={userMomentsInfo}
           show={couponFlag}
           beanflag={beanflag}
+          showFlag={showFlag}
           visible={() => {
             this.setState({
               couponFlag: false,
@@ -691,6 +726,12 @@ class Index extends React.PureComponent {
             this.setState({ cavansObj: { start: false, data: null } })
           }
         ></TaroShareDrawer>
+        <CouponBean
+          userMomentsList={userMomentsList}
+          data={userMomentsInfo}
+          onChange={this.setState.bind(this)}
+          visible={showFlag}
+        ></CouponBean>
       </View>
     );
   }

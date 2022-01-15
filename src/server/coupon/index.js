@@ -54,3 +54,44 @@ export const getNewAvailableCoupon = (data, fn) => {
   );
 };
 //查看多渠道可用券列表(打卡/消费/看视频)
+
+export const getCouponList = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/userCoupon/listUserCouponByUserId",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+/*
+ * 用户我的卡券列表
+ * couponStatus  0-未使用 1-已过期 2-已核销 3-即将过期
+ * page
+ * size
+ * */
+
+export const fetchListUserPlatformCoupon = (data, fn) => {
+  return httpGet({
+    url: "/user/platform/coupon/listUserPlatformCoupon",
+    data: data,
+  });
+};
+/*
+ * 获取平台券列表
+ * couponStatus  0-未使用 1-已过期 2-已核销 3-即将过期
+ * page
+ * size
+ * */
+export const getUserCouponDetail = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/userCoupon/getUserCouponDetail",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+/*
+ * 用户券详情
+ * */

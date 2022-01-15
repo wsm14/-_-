@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Image, View } from "@tarojs/components";
-import { navigateTo, filterWeek } from "@/common/utils";
+import { filterWeek } from "@/utils/utils";
 import classNames from "classnames";
 import "./../../index.scss";
+import Router from "@/utils/router";
 export default (props) => {
   const { item } = props;
   const [status, setStatus] = useState(false);
@@ -43,14 +44,14 @@ export default (props) => {
       return "wraparound_couponContent_iconStyle2";
     }
   };
-  const goMerchant = (val) => {};
 
   const goCouponDetails = (couponType, userCouponIdString) => {
-    if (couponType !== "reduceCoupon" && couponType !== "freeReduceCoupon") {
-      navigateTo(`/pages/coupon/couponDetails/index?id=${userCouponIdString}`);
-    } else {
-      navigateTo(`/pages/coupon/voucherDetails/index?id=${userCouponIdString}`);
-    }
+    Router({
+      routerName: "couponDetails",
+      args: {
+        id: userCouponIdString,
+      },
+    });
   };
   const templateContent = () => {
     if (

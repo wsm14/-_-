@@ -1,0 +1,143 @@
+.couponFree_box {
+  width: 702px;
+  height: 274px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon835.png");
+  background-size: 100% 100%;
+  position: relative;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+.couponFree_gq {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 140px;
+  height: 140px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon837.png");
+  background-size: 100% 100%;
+}
+.couponFree_sy {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 140px;
+  height: 140px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon836.png");
+  background-size: 100% 100%;
+}
+.couponFree_box_open {
+  width: 702px;
+  height: 340px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon838.png");
+  background-size: 100% 100%;
+  position: relative;
+}
+.couponFree_title {
+  display: flex;
+  align-items: flex-start;
+  .couponFree_title_left {
+    width: 494px;
+    .couponFree_title_leftInfo {
+      display: flex;
+      align-items: center;
+      padding: 40px 0 0 32px;
+    }
+    .couponFree_title_font {
+      max-width: 350px;
+      height: 32px;
+      font-size: 32px;
+      color: #333333;
+      font-weight: 600;
+    }
+    .couponFree_title_icon {
+      height: 28px;
+      background: #ef476f;
+      border-radius: 4px;
+      padding: 0 4px;
+      font-size: 20px;
+      font-weight: normal;
+      color: #ffffff;
+      flex-shrink: 0;
+      margin-left: 8px;
+      display: flex;
+      align-items: center;
+    }
+    .couponFree_title_time {
+      margin-top: 24px;
+      font-size: 28px;
+      font-weight: 400;
+      padding-left: 32px;
+    }
+  }
+}
+.couponFree_title_right {
+  position: absolute;
+  top: 38px;
+  right: 24px;
+  width: 180px;
+
+  .couponFree_title_priceInfo {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+
+    .couponFree_title_count {
+      font-size: 48px;
+      font-weight: 600;
+      color: #ef476f;
+    }
+  }
+  .couponFree_title_mk {
+    padding-top: 20px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+    text-align: center;
+  }
+  .couponFree_title_priceInfo::before {
+    display: block;
+    content: "¥";
+    font-size: 24px;
+    color: rgba(239, 71, 111, 1);
+    margin-right: 4px;
+  }
+}
+.couponFree_content {
+  margin: 80px 32px 0;
+  font-size: 24px;
+  color: #999999;
+  .couponFree_coupon_bottomIcon {
+    display: flex;
+    align-items: center;
+  }
+  .couponFree_coupon_bottomIcon1 {
+    display: flex;
+    align-items: center;
+  }
+  .couponFree_coupon_bottomIcon::after {
+    width: 24px;
+    height: 24px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon596.png")
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+    margin-left: 8px;
+  }
+  .couponFree_coupon_bottomIcon1::after {
+    width: 24px;
+    height: 24px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon595.png")
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+    margin-left: 8px;
+  }
+  .couponFree_coupon_marginTop {
+    margin-top: 16px;
+  }
+}
+.couponFree_opcity {
+  opacity: 0.4;
+}
