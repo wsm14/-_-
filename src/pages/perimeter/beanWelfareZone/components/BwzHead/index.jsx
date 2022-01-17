@@ -4,6 +4,7 @@ import { View } from "@tarojs/components";
 import "./index.scss";
 
 /**
+ * 头部显示背景和文案区域
  * mode
  * telephoneCharges-话费福利券包
  * commerceGoods-电商品
@@ -42,9 +43,7 @@ export default ({ data = {} }) => {
   }[mode];
 
   const textTip =
-    type === "self"
-      ? `使用${bean}卡豆抵扣仅需${cash}元`
-      : `仅需${buyPrice}元`;
+    type === "self" ? `使用${bean}卡豆抵扣仅需${cash}元` : `仅需${buyPrice}元`;
 
   return (
     <View

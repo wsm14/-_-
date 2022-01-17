@@ -1,0 +1,59 @@
+.beanLackModal_content {
+  width: 650px;
+  height: 608px;
+  background-image: url("https://wechat-config.dakale.net/miniprogram/image/icon777.png");
+  background-size: 100% 100%;
+  padding: 100px 100px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  .beanLackModal_showImg {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-image: url("https://wechat-config.dakale.net/miniprogram/image/coupon_big.png");
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 40px;
+  }
+
+  .beanLackModal_showTip {
+    font-size: 28px;
+    color: #333333;
+    line-height: 28px;
+    & + .beanLackModal_showTip {
+      margin-top: 24px;
+    }
+  }
+  .beanLackModal_showPrice {
+    font-size: 36px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 600;
+    color: #ef476f;
+    line-height: 36px;
+    margin-top: 32px;
+  }
+  .red {
+    color: #ef476f;
+  }
+  .beanLackModal_footer {
+    display: flex;
+    width: 100%;
+    margin-top: 50px;
+    .beanLackModal_btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 70px;
+      background: #ef476f;
+      border-radius: 35px;
+      font-size: 28px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 28px;
+    }
+  }
+}

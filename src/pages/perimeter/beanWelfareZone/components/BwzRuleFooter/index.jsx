@@ -4,6 +4,7 @@ import { View, Button } from "@tarojs/components";
 import "./index.scss";
 
 /**
+ * 底部显示说明和提示，logo
  * mode
  * telephoneCharges-话费福利券包
  * commerceGoods-电商品
