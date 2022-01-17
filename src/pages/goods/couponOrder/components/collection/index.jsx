@@ -13,8 +13,11 @@ export default ({ data, computedCount }) => {
     thresholdPrice = "0",
     couponPrice,
     couponCount,
+    paymentModeObject,
+    rightFlag,
+    buyPrice,
   } = data;
-
+  const { cash, bean } = paymentModeObject;
   return (
     <View className="order_details_box">
       <View className="order_details_merchant">
@@ -62,6 +65,14 @@ export default ({ data, computedCount }) => {
               onClick={() => computedCount("add")}
             ></View>
           </View>
+        </View>
+      </View>
+      <View className="order_shop_price">
+        <View className="order_shop_label">商品总额</View>
+        <View className="order_shop_count">
+          {rightFlag === "1"
+            ? `¥${cash * couponCount}元+${bean * couponCount}卡豆`
+            : `¥${(buyPrice * couponCount).toFixed(2)}`}
         </View>
       </View>
     </View>

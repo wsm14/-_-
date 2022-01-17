@@ -59,12 +59,17 @@
     //  border-bottom: rgba(229, 229, 229, 1) 1px solid;
     //}
   }
+  .order_payType_showPrice {
+    position: absolute;
+    right: 66px;
+    bottom: 54px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ef476f;
+    line-height: 1;
+  }
   .order_payTypeBug_box {
     padding: 34px 32px 0px;
-
-    //.order_pay_line{
-    //  border-bottom: rgba(229, 229, 229, 1) 1px solid;
-    //}
   }
   .order_paybug_box {
     padding: 0px 32px 34px;
@@ -118,7 +123,7 @@
   .order_pay_font {
     font-size: 24px;
     font-weight: 400;
-    color: rgba(239, 71, 111, 1);
+    color: #999999;
     padding: 16px 44px 0;
   }
   .order_pay_iconBox {

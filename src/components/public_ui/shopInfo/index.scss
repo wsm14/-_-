@@ -202,3 +202,28 @@
     }
   }
 }
+.billboard_box {
+  width: 335px;
+  display: inline-block;
+  margin-right: 16px;
+
+  .billboard_img {
+    width: 335px;
+    height: 248px;
+    border-radius: 4px;
+  }
+
+  .billboard_title {
+    height: 28px;
+    font-size: 28px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #666666;
+    line-height: 28px;
+    margin-top: 24px;
+  }
+}
+
+.billboard_box:last-child {
+  margin-right: 0;
+}

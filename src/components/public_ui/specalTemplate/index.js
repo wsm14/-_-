@@ -17,7 +17,7 @@ export const template = (
   animate = true,
   flag = true
 ) => {
-  const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
+  const { payBeanCommission = 50 } = configUserLevelInfo;
   const {
     goodsName,
     goodsImg,
@@ -96,7 +96,7 @@ export const template = (
 };
 //特惠
 export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
-  const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
+  const { payBeanCommission = 50 } = configUserLevelInfo;
   const {
     goodsId,
     goodsName,
@@ -218,7 +218,7 @@ export const childTemplate = (item, configUserLevelInfo, type = "hot") => {
 };
 //带头像或者时间的特殊特惠样式
 export const couponTemplate = (item, configUserLevelInfo) => {
-  const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
+  const { payBeanCommission = 50 } = configUserLevelInfo;
   let nullCoupon =
     "https://wechat-config.dakale.net/miniprogram/image/coupon_big.png";
   let nullImage =
@@ -442,7 +442,7 @@ export const commerGoodsTemplate = (item, configUserLevelInfo) => {
     ownerId,
     commission,
   } = item;
-  const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
+
   return (
     <View
       className="prefecture_fure_box"

@@ -243,7 +243,7 @@ export const mapGo = (item) => {
 export const filterWeek = (str) => {
   let string = [];
   if (str && str.includes("1,2,3,4,5,6,7")) {
-    return `每周${["一", "二", "三", "四", "五", "六", "日"].join("、")}`;
+    return `每天`;
   } else if (str) {
     string = str.split(",");
     string = string.map((item) => {
@@ -472,3 +472,21 @@ export const computedTime = (time, scale = 86400000) => {
   return parseInt((days(new Date()).valueOf() - days(time).valueOf()) / scale);
 };
 //返回天数
+export const removeStorage = (key) =>
+  Taro.removeStorage({
+    key: key,
+    success: (res) => {},
+    fail: (res) => {
+      toast("缓存清理错误");
+    },
+  });
+//清理缓存
+export const filterSetting = (str) => {
+  if (str.includes("km") && parseInt(str) > 5) {
+    return `驾车约${parseInt(parseInt(str) * 2)}分钟`;
+  } else if (str.includes("km") && parseInt(str) >= 1 && parseInt(str) <= 5) {
+    return `骑车约${parseInt(str) * 8}分钟`;
+  } else {
+    return `骑车约${parseInt(str) / 100}分钟`;
+  }
+};

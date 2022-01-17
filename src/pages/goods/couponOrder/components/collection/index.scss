@@ -63,7 +63,7 @@
           color: #333333;
         }
         .order_toast {
-          padding-top: 40px;
+          padding-top: 12px;
           font-size: 24px;
           font-weight: 400;
           color: #999999;
@@ -113,6 +113,22 @@
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: #999999;
+    }
+  }
+  .order_shop_price {
+    padding: 0px 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .order_shop_label {
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+    }
+    .order_shop_count {
+      font-size: 28px;
+      font-weight: 600;
+      color: #333333;
     }
   }
 }

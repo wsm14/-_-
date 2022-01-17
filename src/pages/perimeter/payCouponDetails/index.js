@@ -359,6 +359,7 @@ class Index extends Component {
       mxVisible,
       drawerVisible,
       showDownload,
+      httpData,
     } = this.state;
     const { bean = "", cash = "" } = paymentModeObject;
     const { beanLimitStatus } = this.props.store.homeStore;
@@ -457,6 +458,7 @@ class Index extends Component {
             saveInfo={this.saveCouponOrder.bind(this)}
             beanLimit={beanLimit}
             data={couponDetail}
+            httpData={httpData}
           ></FixedBtn>
           <Wares
             close={(fn) =>

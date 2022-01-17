@@ -172,3 +172,29 @@ export const shopDetails = (data, obj) => {
   } else return null;
 };
 //商品标签
+export const billboard = (data, userIdString) => {
+  if (data) {
+    const { goodsImg, goodsName, goodsIdString } = data;
+    return (
+      <View
+        className="billboard_box"
+        onClick={() =>
+          Router({
+            routerName: "merchantCommodity",
+            args: {
+              merchantId: userIdString,
+              goodsId: goodsIdString,
+            },
+          })
+        }
+      >
+        <View
+          className="billboard_img dakale_nullImage"
+          style={goodsImg ? backgroundObj(goodsImg) : {}}
+        ></View>
+        <View className="billboard_title font_hide">{goodsName}</View>
+      </View>
+    );
+  }
+  return null;
+};

@@ -208,11 +208,39 @@ export default (props) => {
           },
           {
             label: "免费领商品",
-            icon: "paySuccess_game_two",
+            icon: "paySuccess_game_three",
+            fn: () => {
+              const env =
+                process.env.NODE_ENV === "development"
+                  ? "development"
+                  : "production";
+              Router({
+                routerName: "webView",
+                args: {
+                  link: `https://web-new.dakale.net/${
+                    env === "development" ? "dev" : "product"
+                  }/game/receiveGame/index.html#/index`,
+                },
+              });
+            },
           },
           {
             label: "碎片大转盘",
-            icon: "paySuccess_game_three",
+            icon: "paySuccess_game_four",
+            fn: () => {
+              const env =
+                process.env.NODE_ENV === "development"
+                  ? "development"
+                  : "production";
+              Router({
+                routerName: "webView",
+                args: {
+                  link: `https://web-new.dakale.net/${
+                    env === "development" ? "dev" : "product"
+                  }/game/collectGame/index.html#/collect`,
+                },
+              });
+            },
           },
         ]}
       ></Tag>

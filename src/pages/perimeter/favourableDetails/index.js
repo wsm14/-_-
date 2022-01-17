@@ -65,8 +65,29 @@ class Index extends Component {
       resultInfo: {},
       urlLink: null,
       showDownload: false,
-      toastVisible: fetchStorage("toast_dakale") === 1 ? false : true,
+      toastVisible: false,
     };
+  }
+  componentDidMount() {
+    if (
+      fetchStorage("toast_dakale") !== 1 &&
+      (getCurrentInstance().router.params.shareUserId ||
+        getCurrentInstance().router.params.scene)
+    ) {
+      this.setState(
+        {
+          toastVisible: true,
+        },
+        (res) => {
+          setTimeout(() => {
+            fakeStorage("toast_dakale", 1);
+            this.setState({
+              toastVisible: false,
+            });
+          }, 10000);
+        }
+      );
+    }
   }
   componentWillMount() {
     let { scene } = getCurrentInstance().router.params;
@@ -306,13 +327,22 @@ class Index extends Component {
         collectionType: "special",
         collectionId: specialActivityIdString,
       }).then((res) => {
-        this.setState({
-          specialGoodsInfo: {
-            ...specialGoodsInfo,
-            userCollectionStatus: "1",
+        this.setState(
+          {
+            specialGoodsInfo: {
+              ...specialGoodsInfo,
+              userCollectionStatus: "1",
+            },
+            showDownload: true,
           },
-          showDownload: true,
-        });
+          (res) => {
+            setTimeout(() => {
+              this.setState({
+                showDownload: false,
+              });
+            }, 5000);
+          }
+        );
       });
     } else {
       fakeDeleteCollection({
@@ -411,6 +441,7 @@ class Index extends Component {
       urlLink,
       showDownload,
       toastVisible,
+      httpData,
     } = this.state;
     const { type = "defaultMode" } = paymentModeObject;
     const { beanLimitStatus } = this.props.store.homeStore;
@@ -471,10 +502,9 @@ class Index extends Component {
               ></Merchant>
             )}
             {/*分享*/}
-            {!(
-              (rightFlag === "1" && type === "defaultMode") ||
-              activityType === "commerceGoods"
-            ) && <ShareView urlLink={urlLink} data={resultInfo}></ShareView>}
+            {!(rightFlag === "1" || activityType === "commerceGoods") && (
+              <ShareView urlLink={urlLink} data={resultInfo}></ShareView>
+            )}
             {/*使用须知*/}
             {activityType !== "commerceGoods" && (
               <KnowPay data={specialGoodsInfo}></KnowPay>
@@ -538,6 +568,7 @@ class Index extends Component {
             )}
             {/*商品底部 按钮以及优惠提示栏*/}
             <FixedBtn
+              httpData={httpData}
               configUserLevelInfo={configUserLevelInfo}
               shareInfo={this.getShareInfo.bind(this)}
               saveInfo={this.saveGoodsOrder.bind(this)}

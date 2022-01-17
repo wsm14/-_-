@@ -152,17 +152,17 @@ export const fakeUpdateAddress = (data, fn) => {
 };
 //修改地址
 export const getUserCoupon = (data = {}, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/merchantMainCoupon/listMerchantMainCoupon",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
 //获取商家有价券列表
 export const getSearchConditions = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/userMerchant/listAllBySearchConditions",
       data: data,
@@ -287,3 +287,74 @@ export const getListUserMomentBySearch = (data, fn) => {
   );
 };
 //获取搜索动态
+export const getSearchRecommend = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/userMerchant/listMerchantSearchRecommend",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//商家热门搜索和话题对应的话题数
+
+/*
+ * page 页数
+ * limit 数量
+ * smartSiftType  couponTitles-有优惠，markFlag-到店打卡， merchantShare-商家分享
+ * */
+export const fetchMultiSearchData = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/multiSearchDataByKeyword",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取搜索数据统计
+/*
+ *params phoneMoney type of string
+ */
+export const fetchSearchGoods = (data = {}, fn) => {
+  httpGet(
+    {
+      url: "/user/specialGoods/listSpecialGoods",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//根据条件查找商品
+
+export const fetchMerchantListByKeyword = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/searchMerchantListByKeyword",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//新版商家名搜索商家列表（只用来搜索，包含KA）
+
+export const fetchAllPutShelfGoods = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/goods/listAllPutShelfGoodsByMerchantId",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取商家商品橱窗
+export const fetchMerchantDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/getMerchantDetail",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取商家详情

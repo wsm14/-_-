@@ -17,10 +17,7 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
               })
             }
             className={classNames(
-              "lookAround_specalPlate_time",
-              shareCommission > 0
-                ? "lookAround_new_heightKol"
-                : "lookAround_new_height"
+              "lookAround_specalPlate_time lookAround_new_height"
             )}
           >
             <View className="lookAround_specalPlate_view">
@@ -45,10 +42,7 @@ export default ({ data = [], list = [], userInfo = {}, linkTo }) => {
           </View>
           <View
             className={classNames(
-              "lookAround_specalPlate_hot lookAround_tall_info",
-              shareCommission > 0
-                ? "lookAround_new_heightKol"
-                : "lookAround_new_height"
+              "lookAround_specalPlate_hot lookAround_tall_info lookAround_new_height"
             )}
             onClick={() =>
               Router({

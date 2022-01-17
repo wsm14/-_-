@@ -237,8 +237,8 @@ class Index extends Component {
     if (useBeanStatus === "1") {
       return (
         Number(buyPrice) * couponCount -
-        userBean / 100 -
-        couponValue
+        couponValue -
+        userBean / 100
       ).toFixed(2);
     } else {
       return (Number(buyPrice) * couponCount - couponValue).toFixed(2);

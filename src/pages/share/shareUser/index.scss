@@ -1,0 +1,174 @@
+page {
+  width: 100%;
+  height: 100%;
+  .shareUser_box {
+    background: linear-gradient(180deg, #ff952a 0%, #ffaf3a 66%, #ffcd7f 100%);
+    box-sizing: border-box;
+    .shareUser_bg {
+      width: 100%;
+      height: 1495px;
+      position: relative;
+
+      .shareUser_bg_top {
+        width: 100%;
+        height: 568px;
+      }
+      .shareUser_content {
+        padding-top: 132px;
+        position: relative;
+      }
+      .shareUser_content_box {
+        width: 640px;
+        min-height: 821px;
+        background: #ffffff;
+        border-radius: 60px;
+        margin: 0 auto;
+        position: relative;
+      }
+      .shareUser_profile {
+        width: 200px;
+        height: 200px;
+        border: 5px solid #ffffff;
+        border-radius: 50%;
+        z-index: 101;
+        position: absolute;
+        top: -100px;
+        left: 220px;
+      }
+      .shareUser_bg_blind {
+        width: 436px;
+        height: 458px;
+        position: absolute;
+        left: 101px;
+        top: 12px;
+        z-index: 1;
+      }
+      .shareUser_fontInfo {
+        font-size: 32px;
+        font-weight: 600;
+        color: #333333;
+        line-height: 32px;
+        margin: 24px auto 0;
+        text-align: center;
+        max-width: 480px;
+        padding-top: 124px;
+      }
+      .shareUser_font {
+        font-size: 28px;
+        text-align: center;
+        font-weight: 400;
+        color: #333333;
+        line-height: 40px;
+      }
+      .shareUser_fontMargin1 {
+        margin: 64px auto 0;
+      }
+      .shareUser_bg_bottom {
+        width: 640px;
+        min-height: 384px;
+        background-size: 100% 100%;
+        margin: 0 auto;
+        background: url(https://wechat-config.dakale.net/miniprogram/blind/blind_5.png)
+          no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .shareUser_desc {
+      font-size: 28px;
+      font-weight: 600;
+      color: #ef476f;
+      margin: 36px auto 0;
+      text-align: center;
+      min-height: 28px;
+    }
+    .shareUser_liner {
+      width: 576px;
+      height: 2px;
+      background: #ef476f;
+      opacity: 0.16;
+      margin: 80px auto 0;
+    }
+    .shareUser_btn_box {
+      padding: 40px 37px 0;
+      .shareUser_btn {
+        width: 274px;
+        height: 80px;
+        background: #ef476f;
+        border-radius: 59px;
+        border: 3px solid #ffd62e;
+        font-size: 32px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 32px;
+      }
+      .shareUser_btnInfo_btn {
+        width: 400px;
+        height: 80px;
+        background: #ef476f;
+        border-radius: 59px;
+        border: 3px solid #ffd62e;
+        font-size: 32px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 32px;
+      }
+    }
+    .shareUser_share_profileBox {
+      padding: 64px 47px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .shareUser_share_profile {
+      margin-bottom: 16px;
+      width: 120px;
+      height: 120px;
+    }
+    .shareUser_share_proStyle1 {
+      border: 3px solid #ffffff;
+      box-sizing: border-box;
+      border-radius: 50%;
+    }
+    .shareUser_share_proStyle2 {
+      background: url(https://wechat-config.dakale.net/miniprogram/blind/blind_3.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .shareUser_left_layer {
+    width: 104px;
+    height: 183px;
+    position: absolute;
+    right: 0;
+    top: 9px;
+    background: url(https://wechat-config.dakale.net/miniprogram/shareActive/icon9.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .shareUser_bg_left {
+    width: 100px;
+    height: 164px;
+    background: url(https://wechat-config.dakale.net/miniprogram/shareActive/icon8.png)
+      no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    left: 0;
+    top: 168px;
+    z-index: 20;
+  }
+  .shareUser_toast_title {
+    height: 32px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 32px;
+    text-align: center;
+    padding: 40px 0 24px;
+  }
+  .shareUser_toast_font {
+    padding: 0 55px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 36px;
+  }
+}

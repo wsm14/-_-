@@ -5,7 +5,7 @@ import "./index.scss";
 
 export default (props) => {
   const { data, show, close } = props;
-  const { paymentModeObject = {}, goodsImg, goodsName } = data;
+  const { paymentModeObject = {}, goodsImg, goodsName, userBean } = data;
   const { bean = 0, cash = 0, type = "defaultMode" } = paymentModeObject;
   if (show) {
     return (

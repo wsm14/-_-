@@ -34,7 +34,7 @@ export default ({
   const { bean = 10, cash = 1 } = paymentModeObject;
   const templateSelect = () => {
     if (buyRule === "unlimited") {
-      return `不限购`;
+      return `每人不限购买数量`;
     } else {
       if (buyRule === "personLimit") {
         return `每人限购${personLimit}份`;
@@ -43,7 +43,6 @@ export default ({
       }
     }
   };
-  console.log(show);
   return (
     <View className="coupon_bg">
       <View className="coupon_top_bg">
@@ -66,14 +65,16 @@ export default ({
               <Text className="font36 font_hide price_margin4 color2 bold text_through">
                 ¥{couponPrice}
               </Text>
-              <View
-                onClick={() => collect()}
-                className={classNames(
-                  userCollectionStatus === "1"
-                    ? "shopdetails_isCollect"
-                    : "shopdetails_collect"
-                )}
-              ></View>
+              {rightFlag !== "1" && (
+                <View
+                  onClick={() => collect()}
+                  className={classNames(
+                    userCollectionStatus === "1"
+                      ? "shopdetails_isCollect"
+                      : "shopdetails_collect"
+                  )}
+                ></View>
+              )}
             </View>
           </>
         ) : (

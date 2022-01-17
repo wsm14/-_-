@@ -99,14 +99,7 @@ export default (props) => {
                   style={backgroundObj(goodsImg)}
                 ></View>
                 <View className="templateStated_font">
-                  <View
-                    style={
-                      shareCommission > 0
-                        ? { maxWidth: Taro.pxTransform(336) }
-                        : {}
-                    }
-                    className="templateStated_title font_hide"
-                  >
+                  <View className="templateStated_title font_hide">
                     {goodsName}
                   </View>
                   <View className="templateStated_price font_hide">
@@ -115,24 +108,9 @@ export default (props) => {
                     <Text className="font28 bold templateStated_margin">
                       {computedBeanPrice(realPrice, 100 - payBeanCommission)}
                     </Text>
-                    {shareCommission > 0 && (
-                      <Text className="font22 templateStated_margin">
-                        /赚¥
-                        {computedPrice(commission, shareCommission)}
-                      </Text>
-                    )}
                   </View>
                 </View>
-                <View
-                  style={
-                    shareCommission === 0
-                      ? {}
-                      : { width: Taro.pxTransform(112) }
-                  }
-                  className="templateStated_pay public_center"
-                >
-                  {shareCommission === 0 ? "抢购" : "分享赚"}
-                </View>
+                <View className="templateStated_pay public_center">抢购</View>
               </View>
             </View>
           );
@@ -159,14 +137,7 @@ export default (props) => {
                   style={backgroundObj(ownerImg)}
                 ></View>
                 <View className="templateStated_font">
-                  <View
-                    style={
-                      shareCommission > 0
-                        ? { maxWidth: Taro.pxTransform(336) }
-                        : {}
-                    }
-                    className="templateStated_title font_hide"
-                  >
+                  <View className="templateStated_title font_hide">
                     {couponName}
                   </View>
                   <View className="templateStated_price font_hide">
@@ -175,24 +146,9 @@ export default (props) => {
                     <Text className="font28 bold templateStated_margin">
                       {computedBeanPrice(buyPrice, 100 - payBeanCommission)}
                     </Text>
-                    {shareCommission > 0 && (
-                      <Text className="font22 templateStated_margin">
-                        /赚¥
-                        {computedPrice(commission, shareCommission)}
-                      </Text>
-                    )}
                   </View>
                 </View>
-                <View
-                  style={
-                    shareCommission === 0
-                      ? {}
-                      : { width: Taro.pxTransform(112) }
-                  }
-                  className="templateStated_pay public_center"
-                >
-                  {shareCommission === 0 ? "抢购" : "分享赚"}
-                </View>
+                <View className="templateStated_pay public_center">抢购</View>
               </View>
             </View>
           );

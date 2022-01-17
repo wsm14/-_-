@@ -11,7 +11,7 @@ import {
 import "./index.scss";
 //逛逛普通 商品瀑布流
 export const selectShop = (item, userInfo, linkTo) => {
-  const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
+  const { payBeanCommission = 50 } = userInfo;
   const {
     goodsId,
     goodsName,
@@ -80,7 +80,7 @@ export const selectShop = (item, userInfo, linkTo) => {
 
 //逛逛自我游商品瀑布流
 export const gameShop = (item, userInfo, linkTo) => {
-  const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
+  const { payBeanCommission = 50 } = userInfo;
   const {
     goodsId,
     goodsName,

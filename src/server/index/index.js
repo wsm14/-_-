@@ -151,7 +151,18 @@ export const fakeUserFollow = (data = {}, fn) => {
     (res) => fn && fn(res)
   );
 };
-//获取视频关注
+//获取关注
+export const fakeRemoveFollow = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/userFollow/deleteUserFollow",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//取消关注
+
 export const getUserMomentList = (data = {}, fn) => {
   return httpGet(
     {

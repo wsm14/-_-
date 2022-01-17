@@ -24,7 +24,7 @@ export const specailGoods = (item, val = {}) => {
     merchantPrice,
     ownerIdString,
   } = item;
-  const { payBeanCommission = 50, shareCommission = 0 } = val;
+  const { payBeanCommission = 50 } = val;
   return (
     <View className="specail_hot_box">
       <View

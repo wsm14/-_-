@@ -260,13 +260,6 @@ class Index extends Component {
                       ¥{computedPrice(realPrice, payBeanCommission)}
                     </View>
                   </View>
-                  {shareCommission > 0 && commission > 0 && (
-                    <View className="bottom_kol_z font_hide">
-                      <View className="bottom_kol_money font_hide">
-                        ¥{computedPrice(commission, shareCommission)}
-                      </View>
-                    </View>
-                  )}
                 </View>
               </>
             )}
@@ -334,13 +327,6 @@ class Index extends Component {
                   ¥{computedPrice(realPrice, payBeanCommission)}
                 </View>
               </View>
-              {shareCommission > 0 && commission > 0 && (
-                <View className="bottom_kol_z font_hide">
-                  <View className="bottom_kol_money font_hide">
-                    ¥{computedPrice(commission, shareCommission)}
-                  </View>
-                </View>
-              )}
             </View>
           </View>
         </View>
@@ -348,7 +334,6 @@ class Index extends Component {
     };
     const templateRight = (item) => {
       const {
-     
         goodsImg,
         ownerIdString,
         goodsName,
@@ -357,7 +342,7 @@ class Index extends Component {
         lnt,
         merchantLogo,
         oriPrice,
-      
+
         specialActivityIdString,
         paymentModeObject = {},
       } = item;
@@ -415,10 +400,10 @@ class Index extends Component {
         goodsImg,
         ownerIdString,
         goodsName,
-      
+
         oriPrice,
         realPrice,
-       
+
         specialActivityIdString,
       } = item;
       return (
@@ -457,13 +442,6 @@ class Index extends Component {
                   ¥{computedPrice(realPrice, payBeanCommission)}
                 </View>
               </View>
-              {shareCommission > 0 && commission > 0 && (
-                <View className="bottom_kol_z font_hide">
-                  <View className="bottom_kol_money font_hide">
-                    ¥{computedPrice(commission, shareCommission)}
-                  </View>
-                </View>
-              )}
             </View>
           </View>
         </View>

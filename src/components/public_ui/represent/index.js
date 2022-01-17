@@ -10,7 +10,7 @@ export default (props) => {
   const { allowExpireRefund, allowRefund, needOrder, activityType } = data;
   const {
     payBeanCommission = 50,
-    shareCommission = 0,
+
     levelKey = "normal",
     level = 0,
   } = configUserLevelInfo;

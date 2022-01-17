@@ -15,38 +15,12 @@ export default ({
   const { activityGoodsList = [], ownerCouponList = [] } = val;
   const [current, setCurrent] = useState(0);
   const templateBtn = (val) => {
-    const { commission } = val;
-    if (shareCommission > 0) {
-      return (
-        <View className="templateCard_btn_box">
-          <View className="templateCard_btn_initbuy public_center">
-            <View
-              className="font_hide"
-              style={{ maxWidth: Taro.pxTransform(135) }}
-            >
-              自购返¥{computedPrice(commission, shareCommission)}
-            </View>
-          </View>
-          <View className="templateCard_btn_initshare public_center">
-            <View
-              className="font_hide"
-              style={{ maxWidth: Taro.pxTransform(135) }}
-            >
-              分享赚¥{computedPrice(commission, shareCommission)}
-            </View>
-          </View>
-        </View>
-      );
-    } else {
-      return (
-        <View className="templateCard_btn_box">
-          <View className="templateCard_btn_buy public_center">立即抢购</View>
-          <View className="templateCard_btn_share public_center">
-            分享给好友
-          </View>
-        </View>
-      );
-    }
+    return (
+      <View className="templateCard_btn_box">
+        <View className="templateCard_btn_buy public_center">立即抢购</View>
+        <View className="templateCard_btn_share public_center">分享给好友</View>
+      </View>
+    );
   };
   const memo = useMemo(() => {
     return (

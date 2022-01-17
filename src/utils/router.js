@@ -66,6 +66,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     favourableDetails: "/pages/perimeter/favourableDetails/index", //砍价详情
     shopDetails: "/pages/perimeter/shopDetails/index", //商品详情
     merchantDetails: "/pages/perimeter/merchantDetails/index", //周边详情
+    merchantCommodity:'/pages/perimeter/commodity/index',
     special: "/pages/perimeter/special/index", //特价商品
     perimeteRoducts: "/pages/perimeter/perimeteRoducts/index", //特价商品选择项
     perimeterIndex: "/pages/perimeter/index", //打卡一条街

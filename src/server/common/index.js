@@ -205,3 +205,15 @@ export const fetchRechargeMemberList = (data = {}, fn) => {
   );
 };
 // 会员充值列表
+export const getRootAndParent = (data, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/listDictionaryByRootAndParent",
+      data: data,
+    },
+    (res) => {
+      return fn(res);
+    }
+  );
+};
+//用户奖励

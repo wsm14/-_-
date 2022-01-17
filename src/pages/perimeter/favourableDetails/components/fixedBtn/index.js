@@ -12,6 +12,7 @@ export default (props) => {
     shareInfo,
     configUserLevelInfo,
     saveInfo,
+    httpData,
   } = props;
   const {
     paymentModeObject = {},
@@ -23,7 +24,7 @@ export default (props) => {
     realPrice,
     userCouponObjects = [],
   } = data;
-  console.log(userCouponObjects);
+  const { shareUserId } = httpData;
   const { bean = 0, cash = 0, type = "defaultMode" } = paymentModeObject;
   const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
   const computedBeanInfo = (price) => {
@@ -58,7 +59,7 @@ export default (props) => {
         );
       } else if (remain === 0) {
         return (
-          <View className="fixedBtn_payBtn public_center fixedBtn_payStyle3">
+          <View className="fixedBtn_payBtn public_center fixedBtn_payStyle2">
             已售罄
           </View>
         );
@@ -113,8 +114,9 @@ export default (props) => {
           )
         ) : (
           <View className="fixedBtn_computedBean  font24">
-            平台权益 <View className="color3">¥{cash}</View> 元加{" "}
-            <View className="color3"> {bean}</View>卡豆可购买
+            平台权益 <View className="color3">¥{cash}元</View> 需用
+            <View className="color3">{bean}</View>卡豆抵扣
+            {(bean / 10).toFixed(2)}元
           </View>
         )}
 
@@ -123,9 +125,9 @@ export default (props) => {
             className="fixedBtn_getBean"
             onClick={() =>
               Router({
-                routerName: "nearVideo",
+                routerName: "home",
                 args: {
-                  type: "goods",
+                  type: "switchTab",
                 },
               })
             }
@@ -133,7 +135,7 @@ export default (props) => {
             <View className="fixedBtn_bean public_center">
               天天领{(beanLimit / 100).toFixed(0)}元
             </View>
-            去捡豆
+            {shareUserId ? "首页捡豆" : "去捡豆"}
           </View>
           <View className="fixedBtn_getShare" onClick={shareInfo}>
             推荐给好友

@@ -19,6 +19,7 @@ export default (props) => {
     paymentModeObject = {},
     rightFlag = "0",
     activityType,
+    rightGoods,
   } = data;
   const { bean = 0, cash = "0", type = "defaultMode" } = paymentModeObject;
   const { payBeanCommission = 50 } = userInfo;
@@ -110,7 +111,7 @@ export default (props) => {
             {" "}
             {goodsName}
           </View>
-          {activityType !== "commerceGoods" && (
+          {!(activityType === "commerceGoods" || rightGoods === "1") && (
             <View
               onClick={() => collect()}
               className={classNames(

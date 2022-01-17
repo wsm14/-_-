@@ -1,0 +1,104 @@
+@import "@/assets/css/global.scss";
+
+.prize_UserInfo {
+  .prize_location {
+    &.center {
+      align-items: center;
+    }
+    &.info {
+      padding: 32px;
+    }
+    display: flex;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 24px 24px 24px 32px;
+    margin-bottom: 16px;
+    .prize_location_icon {
+      @include whEqual(40px, 48px);
+      background: url("https://wechat-config.dakale.net/miniprogram/blind/prize/location.png");
+      background-size: 100%;
+      margin-right: 24px;
+      &.info {
+        margin-top: 17px;
+      }
+    }
+    .prize_info {
+      flex: 1;
+      font-size: 28px;
+      color: #333333;
+      .prize_user {
+        .prize_user_name {
+          font-size: 32px;
+          font-weight: 600;
+          color: #333333;
+        }
+        .prize_user_phone {
+          font-size: 24px;
+          color: #999999;
+          margin-left: 16px;
+        }
+      }
+      .prize_user_address {
+        margin-top: 19px;
+        font-size: 26px;
+        font-weight: 400;
+        color: #333333;
+        line-height: 36px;
+      }
+    }
+    .prize_goSet {
+      @include flexCenterA;
+      font-size: 24px;
+      color: #07c0c2;
+      &::after {
+        content: "";
+        display: inline-block;
+        @include whEqual(12px, 24px);
+        background: url("https://wechat-config.dakale.net/miniprogram/blind/prize/right.png");
+        background-size: 100%;
+        margin-left: 8px;
+      }
+    }
+  }
+  .prize_goodsInfo {
+    display: flex;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 24px;
+    .prize_goods_img {
+      @include whEqual(152px);
+      background: #f8f2e9;
+      border-radius: 4px;
+      margin-right: 24px;
+      flex-shrink: 0;
+    }
+    .prize_goods_detail {
+      flex: 1;
+      .prize_goods {
+        @include flexCenterA;
+        .prize_goods_name {
+          flex: 1;
+          font-size: 32px;
+          font-weight: 600;
+          color: #333333;
+          max-width: 315px;
+        }
+      }
+
+      .prize_goods_number {
+        font-size: 24px;
+        color: #999999;
+        margin-top: 16px;
+      }
+    }
+    .prize_order_status {
+      font-size: 24px;
+      color: #ef476f;
+      margin-left: auto;
+      &.end {
+        color: #999999;
+        margin-left: auto;
+      }
+    }
+  }
+}

@@ -40,19 +40,6 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
         });
       },
     },
-    {
-      coverImg:
-        "https://wechat-config.dakale.net/miniprogram/image/icon710.png",
-      fn: () => {
-        Router({
-          routerName: "download",
-          args: {
-            type: "todayNew",
-            title: "升级达人",
-          },
-        });
-      },
-    },
   ];
 
   const memo = useMemo(() => {

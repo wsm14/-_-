@@ -53,30 +53,25 @@ export default {
     },
   },
   subPackages: [
-    //   {
-    //     root: "pages/blindBox",
-    //     pages: [
-    //       "shareBox/index", //盲盒助力
-    //       "home/index", // 盲盒首页
-    //       "prizeDetail/index", // 奖品详情
-    //       "prize/index", // 盲盒奖品
-    //       "gamePrize/index", //游戏奖品
-    //     ],
-    //   },
-    //   {
-    //     root: "pages/newUser",
-    //     pages: [
-    //       "circle/index", //协议规则
-    //       "incomeDetails/index", //收益明细
-    //       "rewardDetails/index", //奖励 明细
-    //       "wallet/index", //钱包
-    //       "merchantDetails/index", ///商家主页,
-    //       "userDetails/index", //个人主页,
-    //       "record/index", //打卡记录
-    //       "beanRule/index", //卡豆权益
-    //       "userConceal/index", //协议规则
-    //     ],
-    //   },
+    {
+      root: "pages/blindBox",
+      pages: [
+        "shareBox/index", //盲盒助力
+        "home/index", // 盲盒首页
+        "prizeDetail/index", // 奖品详情
+        "prize/index", // 盲盒奖品
+        "gamePrize/index", //游戏奖品
+      ],
+    },
+    {
+      root: "pages/newUser",
+      pages: [
+        "rewardDetails/index", //奖励 明细
+        "wallet/index", //钱包
+        "beanRule/index", //卡豆权益
+        "userConceal/index", //协议规则
+      ],
+    },
     {
       root: "pages/share",
       pages: [
@@ -86,11 +81,9 @@ export default {
         "gameShare/index", //游戏助力页面
         "gameHelp/index", //游戏邀请页面
         "Grab/index", //领取他人发送红包页
-        // "userNewArtist/index", //新人福利頁面
-        // "userNewGift/index", //新人红包頁面
-
-        // "shareActive/index", //活动主会场
-        // "shareUser/index", //活动页助力
+        "shareActive/index", //活动主会场
+        "shareUser/index", //活动页助力
+        "shareSign/index", //集碎片助力
       ],
     },
     {
@@ -129,8 +122,8 @@ export default {
         "rechargeMember/index", // 会员充值列表
         "rechargeMemberList/index", // 会员充值列表
         "AdvertisingVideo/index", // 视频广告
-        // "search_shop/index", //商家搜索
-        // "merchantDetails/index", //商家详情
+        "search_shop/index", //商家搜索
+        "merchantDetails/index", //商家详情
       ],
     },
     {
@@ -142,7 +135,6 @@ export default {
         "paySuccess/index", //支付成功页面
         "codePay/index", //扫码订单生成订单页
         "orderDetails/index", //订单详情
-        // "rechargeOrder/index", //话费支付
       ],
     },
     {

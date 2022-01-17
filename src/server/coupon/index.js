@@ -95,3 +95,13 @@ export const getUserCouponDetail = (data, fn) => {
 /*
  * 用户券详情
  * */
+export const getAvailableCoupon = (data, fn) => {
+  httpGet(
+    {
+      url: "/user/userCoupon/listAvailableCouponByChannel",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//多渠道可用券列表(打卡/消费/看视频)

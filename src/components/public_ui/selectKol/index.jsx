@@ -147,6 +147,9 @@ export default (props) => {
               status === "1" ? "order_pay_icon2" : "order_pay_icon1"
             )}
           ></View>
+          {totalFee && (
+            <View className="order_payType_showPrice">- {totalFee}</View>
+          )}
         </View>
       </View>
     </View>

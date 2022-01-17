@@ -108,14 +108,6 @@ export default ({
             ¥{computedPrice(realPrice, payBeanCommission)}
           </View>
         </View>
-        {shareCommission > 0 && (
-          <View className="lookAround_bean_show font_hide  font18 color3">
-            赚
-            <Text className="bold">
-              ¥{computedPrice(commission, shareCommission)}
-            </Text>
-          </View>
-        )}
       </View>
     );
   };
