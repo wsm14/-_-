@@ -124,6 +124,8 @@ export default {
         "AdvertisingVideo/index", // 视频广告
         "search_shop/index", //商家搜索
         "merchantDetails/index", //商家详情
+        "enterGroup/index", // 加入社群
+        "beanWelfareZone/index", // 卡豆福利专区
       ],
     },
     {

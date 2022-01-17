@@ -1,6 +1,4 @@
 import React from "react";
-import { View, Text } from "@tarojs/components";
-import { backgroundObj } from "@/utils/utils";
 import CommerTop from "./../../uiComponents/commerTop";
 import CommerCard from "./../../uiComponents/commerContent";
 import Desc from "./../../uiComponents/commerDesc";

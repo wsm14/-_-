@@ -358,3 +358,43 @@ export const fetchMerchantDetail = (data = {}, fn) => {
   );
 };
 //获取商家详情
+
+export const fetchGetRandomPlatformMoment = (data) => {
+  return httpGet({
+    url: "/user/moment/platformMoment/getRandomPlatformMoment",
+    data: data,
+  });
+};
+// 随机获取一个广告视频
+
+export const fetchGetBeanGiftPackDetail = (data) => {
+  return httpGet({
+    url: "/user/platform/gift/getPlatformGiftPackByType",
+    data: data,
+  });
+};
+// 卡豆福利专区 - 礼包获取
+
+export const fetchGetBeanCommerceGoodsDetail = (data) => {
+  return httpGet({
+    url: "/user/commerceGoods/getCommerceGoodsConfigList",
+    data: data,
+  });
+};
+// 卡豆福利专区 - 电商品数据
+
+export const fetchGetGiftPackPriceDetail = (data) => {
+  return httpGet({
+    url: "/user/platform/gift/getPlatformGiftPackPrice",
+    data: data,
+  });
+};
+// 卡豆福利专区 - 礼包购买详情查询
+
+export const fetchGiftPackPricePay = (data) => {
+  return httpGet({
+    url: "/user/order/savePlatformGiftOrder",
+    data: data,
+  });
+};
+// 卡豆福利专区 - 平台礼包支付订单

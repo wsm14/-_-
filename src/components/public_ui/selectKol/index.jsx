@@ -10,7 +10,7 @@ export default (props) => {
   const {
     data,
     type = "goods",
-    configUserLevelInfo,
+    configUserLevelInfo = {},
     useScenesType,
     status,
     changeBean,

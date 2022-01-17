@@ -3,9 +3,10 @@ import router from "@/utils/router";
 import { useDidShow, useShareAppMessage } from "@tarojs/taro";
 import { View, Input, Button } from "@tarojs/components";
 import { fetchPhoneBill, fetchShareInfo } from "@/server/common";
-// import Barrage from "@/components/componentView/active/barrage";
+import { usePostBackData } from "@/utils/utils";
 import FooterFixed from "@/components/FooterFixed";
 import { rssConfigData } from "./components/data";
+import Barrage from "./components/Barrage";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import "./index.scss";
 
@@ -26,8 +27,11 @@ const rechargePage = () => {
     shareData: {},
   }); // 分享数据
   const [selectList, setSelectList] = useState([]); // 选择的话费列表
+  const [moneyDiscount, setMoneyDiscount] = useState(1); // 话费折扣
   const [phoneMoney, setPhoneMoney] = useState(""); // 选择的充值项目
   const [cavansShow, setCavansShow] = useState(false); // 分享绘图显示
+  const [phone, setPhone] = useState(""); // 充值的手机号
+  const [videoEnd, setVideoEnd] = useState(false); // 视频是否看完
 
   const { teleForm, teleMsg } = checkMobile;
   const { cavansObj = {}, shareData = {} } = shareDeatils;
@@ -38,9 +42,17 @@ const rechargePage = () => {
 
   useDidShow(() => {
     fetchPhoneBill().then((val) => {
-      const { phoneBillItemList = [] } = val;
+      const { phoneBillItemList = [], discount = 1 } = val;
       setSelectList(phoneBillItemList);
+      setMoneyDiscount(discount);
     });
+  });
+
+  usePostBackData((data) => {
+    const { type } = data;
+    if (type === "videoEnd") {
+      setVideoEnd(true);
+    }
   });
 
   useShareAppMessage((res) => {
@@ -82,23 +94,13 @@ const rechargePage = () => {
         teleForm,
         teleMsg: "",
       });
+      setPhone(val);
     }
   };
 
   // 充值项目点击
   const handlePhoneMoney = (val) => {
     setPhoneMoney((old) => (old === val ? "" : val));
-  };
-
-  // 立即充值
-  const handleGoRecharge = () => {
-    router({
-      routerName: "rechargeOrder",
-      args: {
-        telephone,
-        phoneMoney,
-      },
-    });
   };
 
   // 获取分享参数
@@ -122,6 +124,25 @@ const rechargePage = () => {
     );
   };
 
+  // 立即充值
+  const handleGoRecharge = () => {
+    // 还没有看视频 前往看广告
+    if (!videoEnd) {
+      router({
+        routerName: "advertisingVideo",
+      });
+      return;
+    }
+    router({
+      routerName: "favourableOrder",
+      args: {
+        mode: "phoneBill",
+        totalFee: phoneMoney,
+        virtualProductAccount: phone,
+      },
+    });
+  };
+
   const shareImageInfo = () => {
     const { backgroundImages, miniProgramUrl, qcodeUrl } = shareData;
     if (backgroundImages && miniProgramUrl && qcodeUrl) {
@@ -138,26 +159,27 @@ const rechargePage = () => {
           maxlength={11}
           placeholder={"请输入手机号码"}
           className="recharge_content_input"
-          onConfirm={(e) => regExpMobile(parseInt(e.detail.value))}
-          onBlur={(e) => regExpMobile(parseInt(e.detail.value))}
+          onConfirm={(e) => regExpMobile(e.detail.value)}
+          onBlur={(e) => regExpMobile(e.detail.value)}
         />
         <View className="recharge_content_liner"></View>
         {teleMsg && <View className="recharge_wrong">{teleMsg}</View>}
         <View className="recharge_title">充值金额</View>
-        {/* <Barrage></Barrage> */}
+        <Barrage></Barrage>
         <View className="recharge_select_info">
           {selectList.map((item) => {
             return (
               <View
                 key={item.totalFee}
                 onClick={() => handlePhoneMoney(item.totalFee)}
+                // app
                 className={`recharge_select_cell ${
                   phoneMoney === item.totalFee && "select"
-                } app`}
+                }`}
               >
                 <View className="recharge_select_price">{item.totalFee}元</View>
                 <View className="recharge_select_title">
-                  {`卡豆抵扣\n最高可享受88折`}
+                  {`卡豆抵扣\n最高可享受${moneyDiscount * 10}折`}
                 </View>
               </View>
             );
@@ -176,11 +198,11 @@ const rechargePage = () => {
             分享
           </View>
           <Button
-            disabled={!phoneMoney || teleMsg || !telephone}
+            disabled={!phoneMoney || teleMsg || !phone}
             onClick={handleGoRecharge}
             className={"recharge_select_btn"}
           >
-            立即充值
+            {videoEnd ? "立即充值" : "看视频享受卡豆折扣充值"}
           </Button>
         </View>
       </FooterFixed>

@@ -76,7 +76,9 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     recharge: "/pages/perimeter/recharge/index", // 话费充值
     rechargeMemberList: "/pages/perimeter/rechargeMemberList/index", // 会员充值列表
     rechargeMember: "/pages/perimeter/rechargeMember/index", // 会员充值
+    enterGroup: "/pages/perimeter/enterGroup/index", // 加入社群
     advertisingVideo: "/pages/perimeter/AdvertisingVideo/index", // 视频广告
+    beanWelfareZone: "/pages/perimeter/beanWelfareZone/index", // 卡豆福利专区
     payCouponList: "/pages/perimeter/couponList/index", //有价券列表
     commer: "/pages/perimeter/commer/index", //电商商品
     orderDetails: "/pages/goods/orderDetails/index", //订单详情
@@ -88,7 +90,6 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     pay: "/pages/goods/payWeex/index", //支付页
     paySuccess: "/pages/goods/paySuccess/index", //支付成功页
     xnPay: "/pages/goods/code_wx_pay/index",
-    rechargeOrder: "/pages/goods/rechargeOrder/index", //话费支付页
     recharge: "/pages/perimeter/recharge/index", //话费充值
     prefecture: "/pages/perimeter/prefecture/index", //卡豆专区
     preChildTure: "/pages/perimeter/preChildTure/index", //吃喝玩乐购

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
+import router from "@/utils/router";
 import { useDidShow, useShareAppMessage } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-// import Barrage from "@/components/componentView/active/barrage";
-import Router from "@/utils/router";
-import TaroShareDrawer from "./components/TaroShareDrawer";
 import { fetchShareInfo, fetchRechargeMemberList } from "@/server/common";
 import { rssConfigData } from "./components/data";
+import TaroShareDrawer from "./components/TaroShareDrawer";
 import "./index.scss";
 
 const rechargeMemberList = () => {
@@ -22,9 +21,9 @@ const rechargeMemberList = () => {
     fetchGetShareData(); // 获取分享图数据
   }, []);
 
-  // useDidShow(() => {
-  //   fetchGetList();
-  // });
+  useDidShow(() => {
+    fetchGetList();
+  });
 
   useShareAppMessage((res) => {
     const { miniProgramUrl, backgroundImages, title } = shareData;
@@ -102,22 +101,42 @@ const rechargeMemberList = () => {
             data[key] && (
               <View className="rechargeMemberList_cell" key={key}>
                 <View className={`rechargeMemberList_cell_head ${key}`}>
-                  <View className="rechargeMemberList_cell_rule">充值规则</View>
+                  <View
+                    className="rechargeMemberList_cell_rule"
+                    onClick={() => {
+                      router({
+                        routerName: "webView",
+                        args: {
+                          link: "https://resource-new.dakale.net/product/html/rule/ab5c5286-b9a4-459a-9682-29969c129668.html?newPage=true&shareKey=1481501671906394114&showTitle=true",
+                        },
+                      });
+                    }}
+                  >
+                    充值规则
+                  </View>
                 </View>
                 <View className="rechargeMemberList_cell_list">
                   {/* 会员列表 */}
-                  {data[key]?.lsxdSubMemberItemList?.map((cell) => {
+                  {data[key].map((cell, index) => {
                     return (
                       <View
+                        key={`${cell.image}${index}`}
                         className="rechargeMemberList_list_cell"
-                        key={cell.productNo}
+                        onClick={() => {
+                          router({
+                            routerName: "rechargeMember",
+                            args: {
+                              type: cell.type,
+                            },
+                          });
+                        }}
                       >
-                        <View
+                        <Image
+                          src={cell.image}
                           className="rechargeMemberList_cell_img"
-                          style={{ backgroundImage: cell.image }}
-                        ></View>
+                        ></Image>
                         <View className="rechargeMemberList_cell_name">
-                          {item.name}
+                          {cell.name}
                         </View>
                       </View>
                     );
@@ -128,14 +147,7 @@ const rechargeMemberList = () => {
           );
         })}
       </View>
-      <View className="rechargeMemberList_footer">
-        <Image
-          src={
-            "https://wechat-config.dakale.net/miniprogram/image/dkl_slogan.png"
-          }
-          className="rechargeMemberList_dkl_slogan"
-        ></Image>
-      </View>
+      <View className="rechargeMemberList_footer dkl_slogan"></View>
       <TaroShareDrawer
         {...cavansObj}
         start={cavansShow}

@@ -217,3 +217,60 @@ export const getRootAndParent = (data, fn) => {
   );
 };
 //用户奖励
+
+export const fetchRechargeMemberLsxdList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/listLsxdProduct",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 会员充值项目列表
+
+export const fetchRechargeMemberLsxdDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/getLsxdVirtualProductOrderPrice",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 会员充值项目详情
+
+export const fetchMemberOrderSumbit = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/saveVirtualProductOrder",
+      data: data,
+    },
+    (res) => {
+      fn && fn(res);
+    }
+  );
+};
+// 会员充值确认下单
+
+export const fetchPhoneBillDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/getPhoneBillVirtualProductOrderPrice",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 话费充值项目详情;
+
+export const fetchSpecialBarrage = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/getPhoneBillBarrage",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 活动卡豆弹幕;

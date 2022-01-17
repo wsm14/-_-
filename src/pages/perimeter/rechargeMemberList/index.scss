@@ -20,7 +20,7 @@ page {
   .rechargeMemberList_head {
     position: relative;
     height: 210px;
-    background-image: url(https://wechat-config.dakale.net/miniprogram/image/rechargeMemberList_head.png);
+    background-image: url(https://wechat-config.dakale.net/miniprogram/image/rechargeMember_head.png);
     background-size: 100% 100%;
     .rechargeMemberList_i_share {
       position: absolute;
@@ -28,7 +28,7 @@ page {
       height: 48px;
       top: 76px;
       right: 24px;
-      background-image: url(https://wechat-config.dakale.net/miniprogram/image/rechargeMemberList_share.png);
+      background-image: url(https://wechat-config.dakale.net/miniprogram/image/rechargeMember_share.png);
       background-size: 100% 100%;
     }
   }
@@ -55,17 +55,17 @@ page {
         }
         &.video {
           @include head_titile(
-            "https://wechat-config.dakale.net/miniprogram/image/rechargeMemberList_video.png"
+            "https://wechat-config.dakale.net/miniprogram/image/rechargeMember_video.png"
           );
         }
         &.music {
           @include head_titile(
-            "https://wechat-config.dakale.net/miniprogram/image/rechargeMemberList_music.png"
+            "https://wechat-config.dakale.net/miniprogram/image/rechargeMember_music.png"
           );
         }
         &.choice {
           @include head_titile(
-            "https://wechat-config.dakale.net/miniprogram/image/rechargeMemberList_exquisite.png"
+            "https://wechat-config.dakale.net/miniprogram/image/rechargeMember_exquisite.png"
           );
         }
       }
@@ -80,13 +80,13 @@ page {
           background: #ffffff;
           border-radius: 16px;
           margin-bottom: 20px;
-          padding: 0 32px;
+          padding: 0 10px 0 32px;
           display: flex;
           align-items: center;
           .rechargeMemberList_cell_img {
             width: 100px;
             height: 100px;
-            background-size: 100% 100%;
+            border-radius: 50%;
           }
           .rechargeMemberList_cell_name {
             font-size: 28px;
@@ -104,9 +104,5 @@ page {
     display: flex;
     align-items: center;
     justify-content: center;
-    .rechargeMemberList_dkl_slogan {
-      width: 409px;
-      height: 57px;
-    }
   }
 }

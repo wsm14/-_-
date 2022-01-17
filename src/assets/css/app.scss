@@ -3236,6 +3236,16 @@ image {
     }
   }
 }
+
+.dkl_slogan::before {
+  content: "";
+  display: inline-block;
+  width: 409px;
+  height: 57px;
+  background-image: url("https://wechat-config.dakale.net/miniprogram/image/dkl_slogan.png");
+  background-size: 100% 100%;
+}
+
 .video_tags_box {
   width: 300px;
   height: 92px;
