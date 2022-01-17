@@ -295,3 +295,19 @@ export const fetchGetRandomPlatformMoment = (data) => {
   });
 };
 // 随机获取一个广告视频
+
+export const fetchGetBeanGiftPackDetail = (data) => {
+  return httpGet({
+    url: "/user/platform/gift/getPlatformGiftPackByType",
+    data: data,
+  });
+};
+// 卡豆福利专区 - 礼包获取
+
+export const fetchGetBeanCommerceGoodsDetail = (data) => {
+  return httpGet({
+    url: "/user/commerceGoods/getCommerceGoodsConfigList",
+    data: data,
+  });
+};
+// 卡豆福利专区 - 电商品数据

@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "@tarojs/taro";
+import router from "@/utils/router";
 import {
   View,
   Text,
@@ -8,6 +9,7 @@ import {
   Image,
   Button,
 } from "@tarojs/components";
+import BeanWelfareDetail from "../BeanWelfareDetail";
 import "./index.scss";
 
 /**
@@ -68,27 +70,7 @@ export default ({ data }) => {
     },
     beanWelfare: {
       class: "beanWelfare",
-      showDom: (
-        <View>
-          <View
-            className="bwzgc_beanWelfare_Swiper"
-            style={{ justifyContent: "center" }}
-          >
-            <View className="bwzgc_beanWelfare_cell">
-              <View className="bwzgc_beanWelfare_type">商品通用券</View>
-              <View className="bwzgc_beanWelfare_price">
-                <Text>25</Text>
-              </View>
-              <View className="bwzgc_beanWelfare_rule">满100可用</View>
-              <View className="bwzgc_beanWelfare_num">数量：2张</View>
-            </View>
-          </View>
-          <View className="bwzgc_beanWelfare_name">100元平台通用券包</View>
-          <View className="bwzgc_beanWelfare_groupPrice">原价：¥10.00</View>
-          <View className="bwzgc_beanWelfare_buyPrice">¥5.00+500</View>
-          <Button className="bwzgc_beanWelfareZone_btn">500卡豆抵扣购买</Button>
-        </View>
-      ),
+      showDom: <BeanWelfareDetail data={data}></BeanWelfareDetail>,
     },
   }[mode];
 
