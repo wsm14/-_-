@@ -1,40 +1,25 @@
 import React from "react";
-import router from "@/utils/router";
 import { View, Text, Button } from "@tarojs/components";
 import "./index.scss";
 
 /**
  * mode
- * telephoneCharges-话费福利券包
- * commerceGoods-电商品
  * beanWelfare-卡豆福利券包
  */
-export default ({ data }) => {
+export default ({ data, handleGoBuyGoods }) => {
   const {
     giftName = "", // 礼包名
     giftValue = 0, // 价值
     buyPrice = 0, // 购买价格
     buyFlag, // 0-免费，1-有价
-    platformGiftId, // 平台礼包id
     paymentModeObject = {}, // 卡豆加现金支付
     platformGiftPackRelateList: goodsList = [], // 券列表
   } = data;
 
   const { bean = 0, cash = 0, type } = paymentModeObject; // 卡豆加现金支付
 
-  // 前往购买商品
-  const hanleGoBuyGoods = () => {
-    router({
-      routerName: "favourableOrder",
-      args: {
-        mode: "beanWelfare",
-        platformGiftId,
-      },
-    });
-  };
-
   return (
-    <View>
+    <View className="bwzGoodContent_content beanWelfare">
       <View
         className="bwzgc_beanWelfare_Swiper"
         style={goodsList.length > 3 ? {} : { justifyContent: "center" }}
@@ -84,7 +69,7 @@ export default ({ data }) => {
       <View className="bwzgc_beanWelfare_buyPrice">
         ¥{type === "self" ? `${cash}+${bean}` : buyPrice}
       </View>
-      <Button className="bwzgc_beanWelfareZone_btn" onClick={hanleGoBuyGoods}>
+      <Button className="bwzgc_beanWelfareZone_btn" onClick={handleGoBuyGoods}>
         {buyFlag === "1"
           ? type === "self"
             ? `${bean}卡豆抵扣购买`

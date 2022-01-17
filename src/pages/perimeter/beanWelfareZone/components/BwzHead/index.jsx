@@ -17,7 +17,7 @@ export default ({ data = {} }) => {
     giftName = "", // 礼包名
     giftValue = 0, // 价值
     buyPrice = 0, // 购买价格
-    buyFlag, // 0-免费，1-有价
+    buyFlag = "1", // 0-免费，1-有价
     paymentModeObject = {}, // 卡豆加现金支付
   } = data;
 
@@ -26,25 +26,25 @@ export default ({ data = {} }) => {
   const showContent = {
     telephoneCharges: {
       bag: "https://wechat-config.dakale.net/miniprogram/image/beanWelfareZone_500.png",
+      text: `价值${giftValue}元${giftName}\n`,
       class: "telephoneCharges",
     },
     commerceGoods: {
       bag: "https://wechat-config.dakale.net/miniprogram/image/beanWelfareZone_2500.png",
+      text: `价值${giftValue}元精选商品\n`,
       class: "commerceGoods",
     },
     beanWelfare: {
       bag: "https://wechat-config.dakale.net/miniprogram/image/beanWelfareZone_5000.png",
+      text: `价值${giftValue}元${giftName}\n`,
       class: "beanWelfare",
     },
   }[mode];
 
-  const textShow = {
-    text: `价值${giftValue}元${giftName}`,
-    textTip:
-      type === "self"
-        ? `\n使用${bean}卡豆抵扣仅需${cash}元`
-        : `仅需${buyPrice}元`,
-  };
+  const textTip =
+    type === "self"
+      ? `使用${bean}卡豆抵扣仅需${cash}元`
+      : `仅需${buyPrice}元`;
 
   return (
     <View
@@ -52,8 +52,8 @@ export default ({ data = {} }) => {
       style={{ backgroundImage: `url(${showContent.bag})` }}
     >
       <View className={`bwz_head_text ${showContent.class}`}>
-        {textShow.text}
-        {buyFlag === "1" ? textShow.textTip : "免费领取"}
+        {showContent.text}
+        {buyFlag === "1" ? textTip : "免费领取"}
       </View>
     </View>
   );

@@ -1,13 +1,14 @@
 .bwzGoodContent_content.beanWelfare {
   height: 680px;
   background-image: url("https://wechat-config.dakale.net/miniprogram/image/beanWelfareZone_5000_goods.png");
-  padding-top: 58px;
+  padding-top: 20px;
   .bwzgc_beanWelfare_Swiper {
     width: 640px;
+    height: 300px;
     display: flex;
+    align-items: center;
     margin: 0 auto;
     overflow-x: auto;
-    margin-bottom: 40px;
     .bwzgc_beanWelfare_cell {
       flex-shrink: 0;
       width: 200px;

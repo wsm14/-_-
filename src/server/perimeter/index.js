@@ -311,3 +311,19 @@ export const fetchGetBeanCommerceGoodsDetail = (data) => {
   });
 };
 // 卡豆福利专区 - 电商品数据
+
+export const fetchGetGiftPackPriceDetail = (data) => {
+  return httpGet({
+    url: "/user/platform/gift/getPlatformGiftPackPrice",
+    data: data,
+  });
+};
+// 卡豆福利专区 - 礼包购买详情查询
+
+export const fetchGiftPackPricePay = (data) => {
+  return httpGet({
+    url: "/user/order/savePlatformGiftOrder",
+    data: data,
+  });
+};
+// 卡豆福利专区 - 平台礼包支付订单

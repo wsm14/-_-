@@ -14,12 +14,17 @@ import {
   fakeGoodsOrder,
   fakeCommerceGoods,
 } from "@/server/goods";
-import { fetchAddressList } from "@/server/perimeter";
+import {
+  fetchAddressList,
+  fetchGiftPackPricePay,
+  fetchGetGiftPackPriceDetail,
+} from "@/server/perimeter";
 import Specal from "./components/template/favGoods";
 import Commer from "./components/template/commerGoods";
 import Recharge from "./components/template/recharge";
 import PayBean from "@/components/public_ui/selectToast";
 import RightGoods from "./components/template/rightGoods";
+import BeanGiftPack from "./components/template/beanGiftPack";
 import evens from "@/common/evens";
 import Router from "@/utils/router";
 
@@ -63,6 +68,11 @@ class Index extends Component {
     // 话费充值详情获取
     if (mode === "phoneBill") {
       this.fetchPhoneBillDetail();
+      return;
+    }
+    // 话费券/礼包进入
+    if (mode === "beanGiftPack") {
+      this.fetchGetGiftPackPriceDetail();
       return;
     }
     this.fetchUserShareCommission();
@@ -431,6 +441,27 @@ class Index extends Component {
     });
   }
 
+  // 话费券/礼包购买详情查询
+  fetchGetGiftPackPriceDetail() {
+    const { platformGiftId } = getCurrentInstance().router.params;
+    fetchGetGiftPackPriceDetail({ platformGiftId, goodsCount: 1 }).then(
+      (res) => {
+        const { platformGiftPackInfo = {} } = res;
+        this.setState({
+          specialGoodsInfo: {
+            rightFlag: "1", // 为了显示 专区优惠 标识
+            activityType: "beanGiftPack", // 为了显示模块
+            ...(platformGiftPackInfo || {}),
+            image:
+              "https://wechat-config.dakale.net/miniprogram/image/coupon_big.png",
+            oriPrice: platformGiftPackInfo.giftValue,
+            realPrice: platformGiftPackInfo.buyPrice,
+          },
+        });
+      }
+    );
+  }
+
   // 会员确认充值 提交订单
   fetchMemberOrderSumbit() {
     const {
@@ -470,6 +501,35 @@ class Index extends Component {
     });
   }
 
+  // 话费券/礼包
+  fetchBeanGiftPackSumbit() {
+    const { platformGiftId } = getCurrentInstance().router.params;
+    const { useBeanStatus, couponObj } = this.state;
+    const { userCouponId, couponType } = couponObj;
+    fetchGiftPackPricePay({
+      platformGiftId, // 礼包id
+      useBeanStatus, // 是否使用卡豆
+      goodsCount: 1,
+      userCouponObjects: userCouponId // 是否使用优惠券
+        ? [
+            {
+              userCouponId,
+              couponType,
+            },
+          ]
+        : [],
+    }).then(({ orderSn, orderType }) => {
+      Router({
+        routerName: "paySuccess",
+        args: {
+          orderSn,
+          orderType,
+        },
+        type: "redirectTo",
+      });
+    });
+  }
+
   render() {
     const {
       specialGoodsInfo,
@@ -483,7 +543,10 @@ class Index extends Component {
     } = this.state;
     let { activityType, userBean, paymentModeObject = {} } = specialGoodsInfo;
     const { type } = paymentModeObject;
-    if (type === "self" && activityType !== "commerceGoods") {
+    if (
+      type === "self" &&
+      !["commerceGoods", "beanGiftPack"].includes(activityType)
+    ) {
       activityType = "rightGoods";
     }
     const template = {
@@ -558,6 +621,19 @@ class Index extends Component {
           }}
         ></Recharge>
       ), // 充值
+      beanGiftPack: (
+        <BeanGiftPack
+          data={specialGoodsInfo}
+          useScenesType={"beanGiftPack"}
+          status={useBeanStatus}
+          couponObj={couponObj}
+          changeBean={this.changeBean.bind(this)}
+          computedPrice={this.computedPayPrice.bind(this)}
+          submit={() => {
+            this.fetchBeanGiftPackSumbit();
+          }}
+        ></BeanGiftPack>
+      ), // 话费券/礼包
     }[activityType];
     return (
       <View className="favOrder_box">
