@@ -308,13 +308,25 @@ export const fakeTogether = (data, fn) => {
 };
 //完成合力任务
 export const fetchUserInfo = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/userInfo/getShareUserInfo",
       data: data,
     },
     (res) => {
-      return fn(res);
+      return fn && fn(res);
     }
   );
 }; //获取他人动态
+
+export const fakeShareCard = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/game/gather/receiveShareCard",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+}; //集碎片 - 获取分享福卡
