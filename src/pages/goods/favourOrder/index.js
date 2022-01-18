@@ -277,13 +277,14 @@ class Index extends Component {
       specialGoodsInfo: { userIncomeBean, userBean, realPrice },
       httpData: { goodsCount },
       useBeanStatus,
+      configUserLevelInfo,
     } = this.state;
+    const { payBeanCommission } = configUserLevelInfo;
     if (useBeanStatus === "1") {
-      return (
-        Number(realPrice) * goodsCount -
-        couponValue -
-        userBean / 100
-      ).toFixed(2);
+      let price = Number(realPrice) * goodsCount - couponValue;
+      let payBean = price * payBeanCommission;
+      let removeBean = payBean >= userBean ? userBean : payBean;
+      return (price - removeBean / 100).toFixed(2);
     } else {
       return (Number(realPrice) * goodsCount - couponValue).toFixed(2);
     }

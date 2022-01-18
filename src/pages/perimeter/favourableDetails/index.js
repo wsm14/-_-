@@ -491,9 +491,6 @@ class Index extends Component {
               configUserLevelInfo={configUserLevelInfo}
             ></Card>
             {/*适用门店*/}
-
-            <GoodsOther data={specialGoodsInfo}></GoodsOther>
-            {/*商品详情*/}
             {activityType !== "commerceGoods" && (
               <Merchant
                 serviceType={"specialGoods"}
@@ -501,6 +498,9 @@ class Index extends Component {
                 ownerServiceId={specialActivityIdString}
               ></Merchant>
             )}
+            {/*商品详情*/}
+            <GoodsOther data={specialGoodsInfo}></GoodsOther>
+
             {/*分享*/}
             {!(rightFlag === "1" || activityType === "commerceGoods") && (
               <ShareView urlLink={urlLink} data={resultInfo}></ShareView>

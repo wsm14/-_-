@@ -10,6 +10,7 @@ import { getConfigNewcomerOrders } from "@/server/index";
 import { fetchUserShareCommission } from "@/server/common";
 import { fetchOrderLinkCoupon } from "@/server/coupon";
 import Toast from "./components/uiComponents/paySuccess";
+import NewUser from "@/components/public_ui/newUserToast";
 import RecommendCoupon from "@/components/public_ui/couponActive";
 import RecommendSpecal from "@/components/public_ui/specalActive";
 import "./index.scss";
@@ -95,6 +96,7 @@ class Index extends Component {
             data={orderResult}
             beanLimit={beanLimit}
           ></PaySuccess>
+          <NewUser></NewUser>
           {orderType === "specialGoods" ? (
             <RecommendSpecal
               current={true}
@@ -122,6 +124,7 @@ class Index extends Component {
       scanPay: (
         <>
           <ScanSuccess data={orderResult}></ScanSuccess>
+          <NewUser></NewUser>
           <RecommendSpecal
             current={true}
             userInfo={configUserLevelInfo}

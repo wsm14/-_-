@@ -228,6 +228,7 @@ class Index extends Component {
                         ...this.state.httpData,
                         totalFee: value,
                       },
+                      couponObj: {},
                     },
                     (res) => {
                       const {

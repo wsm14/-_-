@@ -19,6 +19,7 @@ export default (props) => {
           address && mobile && addressName && changeSelect(index);
         }}
       >
+        {console.log(address, mobile, addressName)}
         {mode !== "list" && (
           <View
             className={`delivery_template_iconBox ${

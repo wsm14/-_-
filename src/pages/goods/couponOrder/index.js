@@ -233,13 +233,14 @@ class Index extends Component {
       ownerCouponInfo: { userBean, buyPrice },
       httpData: { couponCount },
       useBeanStatus,
+      configUserLevelInfo,
     } = this.state;
+    const { payBeanCommission } = configUserLevelInfo;
     if (useBeanStatus === "1") {
-      return (
-        Number(buyPrice) * couponCount -
-        couponValue -
-        userBean / 100
-      ).toFixed(2);
+      let price = Number(buyPrice) * couponCount - couponValue;
+      let payBean = price * payBeanCommission;
+      let removeBean = payBean >= userBean ? userBean : payBean;
+      return (price - removeBean / 100).toFixed(2);
     } else {
       return (Number(buyPrice) * couponCount - couponValue).toFixed(2);
     }
