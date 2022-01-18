@@ -76,7 +76,7 @@
     "js-base64": "^3.6.1",
     "md5": "^2.3.0",
     "mina-painter": "^1.0.0",
-    "qs": "^6.9.4",
+    "qs": "6.9.6",
     "stylelint": "9.3.0",
     "weapp-qrcode": "^1.0.0",
     "webpack-bundle-analyzer": "^4.3.0",
