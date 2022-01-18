@@ -85,12 +85,12 @@ export default (props) => {
     };
     return (
       <View className="fixedBtn_box">
-        {rightFlag === "0" ? (
+        {type === "defaultMode" ? (
           (userCouponObjects.length > 0 || userBean > 0) && (
             <View className="fixedBtn_computedBean">
               {userCouponObjects.length > 0 && (
                 <>
-                  <View className="font24 color1">商家通用券优惠 </View>
+                  <View className="font24 color1">平台优惠券 </View>
                   <View className="font24 color3">
                     {userCouponObjects[0].couponValue}元
                   </View>
@@ -114,8 +114,8 @@ export default (props) => {
           )
         ) : (
           <View className="fixedBtn_computedBean  font24">
-            平台权益 <View className="color3">¥{cash}元</View>加{" "}
-            <View className="color3"> {bean}</View>卡豆可购买
+            需用 <View className="color3">{bean}</View>卡豆抵扣
+            {(bean / 100).toFixed(2)}元
           </View>
         )}
 

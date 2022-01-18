@@ -95,6 +95,10 @@ export default ({ userInfo, type = "specalSelf" }) => {
     1: templateGame,
     2: templateActive,
   }[index];
+  const templateObj1 = {
+    0: templateGame,
+    1: templateActive,
+  }[index];
   return (
     <>
       <View className="specialSelf_box">
@@ -126,7 +130,11 @@ export default ({ userInfo, type = "specalSelf" }) => {
       <View className="specialSelf_render">
         <Waterfall
           list={list}
-          createDom={(item) => templateObj(item, userInfo)}
+          createDom={
+            type === "specalSelf"
+              ? (item) => templateObj(item, userInfo)
+              : (item) => templateObj1(item, userInfo)
+          }
           style={{ width: Taro.pxTransform(335) }}
         ></Waterfall>
       </View>

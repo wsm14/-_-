@@ -77,46 +77,54 @@ class Index extends Component {
     return (
       <View className="codeCoupon_box">
         <View className="codeCoupon_content">
-          <View className="codeCoupon_template_title">平台优惠券</View>
-          {userPlatformCouponList
-            .filter((item) => {
-              return item.availableFlag === "1";
-            })
-            .map((item, index) => {
-              return (
-                <Template
-                  change={this.onChange.bind(this)}
-                  checkedObj={selectObj}
-                  data={item}
-                  index={index}
-                ></Template>
-              );
-            })}
-          <ErrorTemplate
-            list={userPlatformCouponList.filter((item) => {
-              return item.availableFlag === "0";
-            })}
-          ></ErrorTemplate>
-          <View className="codeCoupon_template_title">商家免费券</View>
-          {userCouponList
-            .filter((item) => {
-              return item.availableFlag === "1";
-            })
-            .map((item, index) => {
-              return (
-                <Template
-                  change={this.onChange.bind(this)}
-                  checkedObj={selectObj}
-                  data={item}
-                  index={index}
-                ></Template>
-              );
-            })}
-          <ErrorTemplate
-            list={userCouponList.filter((item) => {
-              return item.availableFlag === "0";
-            })}
-          ></ErrorTemplate>
+          {userPlatformCouponList.length > 0 && (
+            <>
+              <View className="codeCoupon_template_title">平台优惠券</View>
+              {userPlatformCouponList
+                .filter((item) => {
+                  return item.availableFlag === "1";
+                })
+                .map((item, index) => {
+                  return (
+                    <Template
+                      change={this.onChange.bind(this)}
+                      checkedObj={selectObj}
+                      data={item}
+                      index={index}
+                    ></Template>
+                  );
+                })}
+              <ErrorTemplate
+                list={userPlatformCouponList.filter((item) => {
+                  return item.availableFlag === "0";
+                })}
+              ></ErrorTemplate>
+            </>
+          )}
+          {userCouponList.length > 0 && (
+            <>
+              <View className="codeCoupon_template_title">商家免费券</View>
+              {userCouponList
+                .filter((item) => {
+                  return item.availableFlag === "1";
+                })
+                .map((item, index) => {
+                  return (
+                    <Template
+                      change={this.onChange.bind(this)}
+                      checkedObj={selectObj}
+                      data={item}
+                      index={index}
+                    ></Template>
+                  );
+                })}
+              <ErrorTemplate
+                list={userCouponList.filter((item) => {
+                  return item.availableFlag === "0";
+                })}
+              ></ErrorTemplate>
+            </>
+          )}
         </View>
         <View className="codeCoupon_btn_box public_center">
           <View

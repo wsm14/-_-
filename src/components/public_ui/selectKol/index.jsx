@@ -49,6 +49,17 @@ export default (props) => {
       },
     });
   };
+  const computedPriceInfo = () => {
+    const { couponValue = 0 } = couponObj;
+    let price = Number(totalFee) - couponValue;
+    let payBean = price * payBeanCommission;
+    let removeBean = payBean >= userBean ? userBean : payBean;
+    if (removeBean && status === "1") {
+      return (removeBean / 100).toFixed(2);
+    } else {
+      return 0;
+    }
+  };
   const CouponFontTemplate = () => {
     if (type === "goods") {
       if (userCouponObjects.length === 0) {
@@ -148,7 +159,9 @@ export default (props) => {
             )}
           ></View>
           {totalFee && (
-            <View className="order_payType_showPrice">- {totalFee}</View>
+            <View className="order_payType_showPrice">
+              - {computedPriceInfo()}
+            </View>
           )}
         </View>
       </View>

@@ -118,7 +118,7 @@ export default ({ auth, stopVideo, initVideo }) => {
               onClick={() => {
                 onClose(() =>
                   Router({
-                    routerName: "login",
+                    routerName: "authPrize",
                   })
                 );
               }}
