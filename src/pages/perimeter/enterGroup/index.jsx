@@ -71,6 +71,7 @@ export default () => {
         className={`enterGroup_btn ${showType}`}
         onClick={handleBtnClick}
       ></Image>
+      {/* <cell></cell> */}
       {toastShow && (
         <Toast
           btn="立即去加群"
