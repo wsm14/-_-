@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import router from "@/utils/router";
-import { useRouter, useDidShow } from "@tarojs/taro";
+import { useRouter } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import {
   fetchGetBeanGiftPackDetail,
@@ -29,9 +29,9 @@ export default () => {
   const [goodsData, setGoodsData] = useState({}); // 当前显示商品数据
   const [beanLack, setBeanLack] = useState(false); // 卡豆不足提示框
 
-  useDidShow(() => {
+  useEffect(() => {
     fetGetData();
-  });
+  }, []);
 
   const fetGetData = () => {
     // 卡豆福利券包 话费福利券包
@@ -42,11 +42,13 @@ export default () => {
     } else if (["commerceGoods"].includes(mode)) {
       // 电商品
       fetchGetBeanCommerceGoodsDetail().then((res) => {
-        const { activityGoodsList } = res;
+        const { activityGoodsList = [], userBean } = res;
         const goods = activityGoodsList[0] || {}; // 显示第一个商品
-        setCoommList(activityGoodsList);
+        setCoommList(activityGoodsList.map((i) => ({ ...i, userBean })));
         setGoodsData({
           ...(goods || {}),
+          giftImg: goods.goodsImg,
+          giftName: goods.goodsName,
           giftValue: goods.oriPrice,
           buyPrice: goods.realPrice,
         });
@@ -71,18 +73,17 @@ export default () => {
       userBean = 0,
     } = goodsData;
     let args = {};
-
+    const { bean = 0, type } = paymentModeObject; // 卡豆加现金支付
+    // 需要卡豆支付
+    if (type === "self") {
+      // 用户当前卡豆是否比需要的卡豆少，少则跳提示
+      if (userBean - bean < 0) {
+        setBeanLack(true);
+        return;
+      }
+    }
     // 卡豆福利券包 话费福利券包
     if (["beanWelfare", "telephoneCharges"].includes(mode)) {
-      const { bean = 0, type } = paymentModeObject; // 卡豆加现金支付
-      // 需要卡豆支付
-      if (type === "self") {
-        // 用户当前卡豆是否比需要的卡豆少，少则跳提示
-        if (userBean - bean < 0) {
-          setBeanLack(true);
-          return;
-        }
-      }
       args = { mode: "beanGiftPack", platformGiftId };
     } else if (["commerceGoods"].includes(mode)) {
       args = { merchantId, specialActivityId }; // 电商品
