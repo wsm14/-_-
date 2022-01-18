@@ -58,6 +58,10 @@ export default () => {
     },
   };
 
+  const completemessage = (msg) => {
+    console.log(msg);
+  };
+
   return (
     <View className="enterGroup_box">
       {/* 小程序个人中心进入背景 */}
@@ -66,12 +70,20 @@ export default () => {
         className={`enterGroup_bag ${imageData[showType].bagClass}`}
       ></Image>
       {/* 小程序个人中心进入背景加群按钮 */}
-      <Image
-        src={imageData[showType].btn}
-        className={`enterGroup_btn ${showType}`}
-        onClick={handleBtnClick}
-      ></Image>
-      {/* <cell></cell> */}
+      <View className="enterGroup_btn_content">
+        <View className="enterGroup_btn">
+          <Image
+            src={imageData[showType].btn}
+            className={`enterGroup_btn ${showType}`}
+            onClick={handleBtnClick}
+          ></Image>
+          {/* 加入社群按钮 */}
+          <View className="enterGroup_hidden">
+            <cell url="https://resource-new.dakale.net/admin/QrCode/bybag.png" onCompleteMessage={completemessage}></cell>
+          </View>
+        </View>
+      </View>
+
       {toastShow && (
         <Toast
           btn="立即去加群"
