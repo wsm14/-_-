@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Swiper, SwiperItem, Image, Button } from "@tarojs/components";
 import "./index.scss";
 
@@ -7,6 +7,8 @@ import "./index.scss";
  * commerceGoods-电商品
  */
 export default ({ data = {}, list = [], setGoodsData, handleGoBuyGoods }) => {
+  const [index, setIndex] = useState(0);
+
   const {
     paymentModeObject = {}, // 卡豆加现金支付
   } = data;
@@ -18,10 +20,14 @@ export default ({ data = {}, list = [], setGoodsData, handleGoBuyGoods }) => {
         className="bwzgc_commerceGoods_Swiper"
         previousMargin="40rpx"
         nextMargin="40rpx"
+        current={index}
         onChange={(e) => {
+          setIndex(e.detail.current);
           const goods = list[e.detail.current];
           setGoodsData({
             ...(goods || {}),
+            giftImg: goods.goodsImg,
+            giftName: goods.goodsName,
             giftValue: goods.oriPrice,
             buyPrice: goods.realPrice,
           });
