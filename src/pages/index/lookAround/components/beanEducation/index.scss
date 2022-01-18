@@ -1,0 +1,33 @@
+.beanEducation_box {
+  margin: 48px auto 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 688px;
+  .beanEducation_icon_box {
+    width: 335px;
+    height: 160px;
+  }
+  .beanEducation_icon1 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon845.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .beanEducation_icon2 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon846.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .beanEducation_icon3 {
+    margin-top: 16px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon847.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .beanEducation_icon4 {
+    margin-top: 16px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon848.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+}

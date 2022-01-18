@@ -12,7 +12,6 @@ import {
   fetchUserShareCommission,
 } from "@/server/common";
 import { getRestapiAddress } from "@/server/other";
-import {} from "@/server/perimeter";
 import classNames from "classnames";
 import {
   fetchSpecialGoods,
@@ -33,6 +32,10 @@ import GameGoods from "./components/gameBuyMe";
 import Skeleton from "./components/SkeletonView";
 import SelfGoods from "./components/selfourOnly";
 import NewUser from "@/components/public_ui/newUserToast";
+import TopBean from "./components/topBean";
+import Education from "./components/beanEducation";
+import SpecalSelf from "./components/specialSelf";
+import { fetchBeanAndEarn } from "@/server/index";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
 @inject("store")
@@ -75,7 +78,22 @@ class Index extends Component {
       selfTourResourceList: [],
       beanCodeList: [],
       newDateList: [],
+      topBeanData: {
+        bean: 0,
+        todayTotalIncome: 0,
+      },
     };
+  }
+  getBeanInfo() {
+    fetchBeanAndEarn().then((val) => {
+      this.setState({
+        topBeanData: {
+          bean: 0,
+          todayTotalIncome: 0,
+          ...val,
+        },
+      });
+    });
   }
   topBanner() {
     fetchBanner({ bannerType: "wanderAroundMainBanner" }).then((res) => {
@@ -194,6 +212,7 @@ class Index extends Component {
       },
       (res) => {
         Taro.stopPullDownRefresh();
+        this.getBeanInfo();
         this.fetchModule();
       }
     );
@@ -205,6 +224,7 @@ class Index extends Component {
   componentDidMount() {
     this.setMap();
     this.fetchModule();
+    this.getBeanInfo();
   }
   componentDidShow() {
     this.fetchUserShare();
@@ -482,6 +502,7 @@ class Index extends Component {
         subsidyBean,
       },
       requestStatus,
+      topBeanData,
     } = this.state;
     const { cityName } = this.props.store.locationStore;
     const templateSelect = () => {
@@ -712,6 +733,19 @@ class Index extends Component {
           type={"date"}
         ></SelfGoods>
       ),
+      beanEducation: <Education></Education>,
+      specialAndSelfTourAndCommerce: (
+        <SpecalSelf
+          type="specalSelf"
+          userInfo={configUserLevelInfo}
+        ></SpecalSelf>
+      ),
+      selfTourAndCommerce: (
+        <SpecalSelf
+          type="commerceSelf"
+          userInfo={configUserLevelInfo}
+        ></SpecalSelf>
+      ),
     };
     //根据后端 显示函数 映射对应渲染模板
     return (
@@ -721,6 +755,7 @@ class Index extends Component {
         <Skeleton loading={loading}>
           <View className="lookAround_no_style">
             <View className="lookAround_goods_topHeight"></View>
+            <TopBean data={topBeanData}></TopBean>
             {!requestStatus ? (
               <Empty
                 fn={this.onReload.bind(this)}

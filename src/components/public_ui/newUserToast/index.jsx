@@ -34,7 +34,6 @@ export default () => {
       setVisible(false);
     }
   });
-  console.log(visible);
   if (visible) {
     return (
       <View

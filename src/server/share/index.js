@@ -320,7 +320,7 @@ export const fetchUserInfo = (data, fn) => {
 }; //获取他人动态
 
 export const fakeShareCard = (data, fn) => {
-  return httpGet(
+  return httpPost(
     {
       url: "/user/game/gather/receiveShareCard",
       data: data,

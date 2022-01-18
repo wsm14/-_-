@@ -6,15 +6,13 @@ import { fetchRightGoods, fetchSpecialGoods } from "@/server/index";
 import { fetchCommerceGoods, fetchSelfTourGoods } from "@/server/perimeter";
 import { fetchUserShareCommission } from "@/server/common";
 import {
-  backgroundObj,
-  computedPrice,
-  getLnt,
-  getLat,
-  GetDistance,
-} from "@/utils/utils";
+  templateActive,
+  template,
+  templateRight,
+  templateGame,
+} from "@/components/public_ui/newGoodsObj";
 import Empty from "@/components/Empty";
 import classNames from "classnames";
-import Router from "@/utils/router";
 import Task from "@/components/task";
 import "./index.scss";
 class Index extends Component {
@@ -192,266 +190,12 @@ class Index extends Component {
       specialGoodsList4,
     } = this.state;
     const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
-    const templateActive = (item) => {
-      const {
-        commission,
-        goodsImg,
-        goodsName,
-        merchantName,
-        lat,
-        lnt,
-        merchantLogo,
-        oriPrice,
-        realPrice,
-        ownerIdString,
-        specialActivityIdString,
-        paymentModeObject,
-      } = item;
-      const { bean, cash, type = "defaultMode" } = paymentModeObject;
-      return (
-        <View
-          className="bottom_shop_box"
-          onClick={() => {
-            Router({
-              routerName: "favourableDetails",
-              args: {
-                merchantId: ownerIdString,
-                specialActivityId: specialActivityIdString,
-              },
-            });
-          }}
-          key={specialActivityIdString}
-        >
-          <View
-            className="bottom_shop_img"
-            style={backgroundObj(goodsImg)}
-          ></View>
-          <View className="bottom_shop_content">
-            <View className="bottom_shop_goodsName font_noHide">
-              {goodsName}
-            </View>
-            {type !== "defaultMode" ? (
-              <>
-                <View className="bottom_shop_oldPrice1">
-                  <View className="bottom_shop_oldLabel">原价:</View>
-                  <View className="bottom_shop_oldcout">¥{oriPrice}</View>
-                </View>
-                <View className="bottom_qy_price font_hide">
-                  <View className="bottom_qy_label">卡豆价:</View>
-                  <View className="bottom_qy_bean">
-                    ¥{cash}+{bean}卡豆
-                  </View>
-                </View>
-              </>
-            ) : (
-              <>
-                {" "}
-                <View className="bottom_shop_realPrice">
-                  <View className="bottom_shop_realLabel">优惠价:</View>
-                  <View className="bottom_shop_price">¥{realPrice}</View>
-                </View>
-                <View className="bottom_shop_oldPrice">
-                  <View className="bottom_shop_oldLabel">原价:</View>
-                  <View className="bottom_shop_oldcout">¥{oriPrice}</View>
-                </View>
-                <View className="bottom_kol_info">
-                  <View className="bottom_kol_s">
-                    <View className="bottom_kol_bean">
-                      ¥{computedPrice(realPrice, payBeanCommission)}
-                    </View>
-                  </View>
-                </View>
-              </>
-            )}
-          </View>
-        </View>
-      );
-    };
-    const template = (item) => {
-      const {
-        commission,
-        goodsImg,
-        goodsName,
-        merchantName,
-        lat,
-        lnt,
-        merchantLogo,
-        oriPrice,
-        realPrice,
-        ownerIdString,
-        specialActivityIdString,
-      } = item;
-      return (
-        <View
-          onClick={() => {
-            Router({
-              routerName: "favourableDetails",
-              args: {
-                merchantId: ownerIdString,
-                specialActivityId: specialActivityIdString,
-              },
-            });
-          }}
-          className="bottom_shop_box"
-          key={specialActivityIdString}
-        >
-          <View
-            className="bottom_shop_img"
-            style={backgroundObj(goodsImg)}
-          ></View>
-          <View className="bottom_shop_content">
-            <View className="bottom_shop_goodsName font_noHide">
-              {goodsName}
-            </View>
-            <View className="bottom_shop_user font_hide">
-              <View
-                className="bottom_shop_profile merchant_dakale_logo"
-                style={backgroundObj(merchantLogo)}
-              ></View>
-              <View className="bottom_shop_name font_hide">{merchantName}</View>
-              <View className="bottom_shop_limit">
-                ｜{GetDistance(lat, lnt, getLat(), getLnt())}
-              </View>
-            </View>
-            <View className="bottom_shop_realPrice">
-              <View className="bottom_shop_realLabel">优惠价:</View>
-              <View className="bottom_shop_price">¥{realPrice}</View>
-            </View>
-            <View className="bottom_shop_oldPrice">
-              <View className="bottom_shop_oldLabel">原价:</View>
-              <View className="bottom_shop_oldcout">¥{oriPrice}</View>
-            </View>
-            <View className="bottom_kol_info">
-              <View className="bottom_kol_s">
-                <View className="bottom_kol_bean">
-                  ¥{computedPrice(realPrice, payBeanCommission)}
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-      );
-    };
-    const templateRight = (item) => {
-      const {
-        goodsImg,
-        ownerIdString,
-        goodsName,
-        merchantName,
-        lat,
-        lnt,
-        merchantLogo,
-        oriPrice,
 
-        specialActivityIdString,
-        paymentModeObject = {},
-      } = item;
-      const { bean, cash } = paymentModeObject;
-      return (
-        <View
-          onClick={() => {
-            Router({
-              routerName: "favourableDetails",
-              args: {
-                merchantId: ownerIdString,
-                specialActivityId: specialActivityIdString,
-              },
-            });
-          }}
-          className="bottom_shop_box"
-          key={specialActivityIdString}
-        >
-          <View
-            className="bottom_shop_img"
-            style={backgroundObj(goodsImg)}
-          ></View>
-          <View className="bottom_shop_content">
-            <View className="bottom_shop_goodsName font_noHide">
-              {goodsName}
-            </View>
-            <View className="bottom_shop_user font_hide">
-              <View
-                className="bottom_shop_profile merchant_dakale_logo"
-                style={backgroundObj(merchantLogo)}
-              ></View>
-              <View className="bottom_shop_name font_hide">{merchantName}</View>
-              <View className="bottom_shop_limit">
-                ｜{GetDistance(lat, lnt, getLat(), getLnt())}
-              </View>
-            </View>
-
-            <View className="bottom_shop_oldPrice1">
-              <View className="bottom_shop_oldLabel">原价:</View>
-              <View className="bottom_shop_oldcout">¥{oriPrice}</View>
-            </View>
-            <View className="bottom_qy_price font_hide">
-              <View className="bottom_qy_label">卡豆价:</View>
-              <View className="bottom_qy_bean">
-                ¥{cash}+{bean}卡豆
-              </View>
-            </View>
-          </View>
-        </View>
-      );
-    };
-    const templateGame = (item) => {
-      const {
-        commission,
-        goodsImg,
-        ownerIdString,
-        goodsName,
-
-        oriPrice,
-        realPrice,
-
-        specialActivityIdString,
-      } = item;
-      return (
-        <View
-          onClick={() => {
-            Router({
-              routerName: "favourableDetails",
-              args: {
-                merchantId: ownerIdString,
-                specialActivityId: specialActivityIdString,
-              },
-            });
-          }}
-          key={specialActivityIdString}
-          className="bottom_shop_box"
-        >
-          <View
-            className="bottom_shop_img"
-            style={backgroundObj(goodsImg)}
-          ></View>
-          <View className="bottom_shop_content">
-            <View className="bottom_shop_goodsName font_noHide">
-              {goodsName}
-            </View>
-            <View className="bottom_shop_realPrice">
-              <View className="bottom_shop_realLabel">优惠价:</View>
-              <View className="bottom_shop_price">¥{realPrice}</View>
-            </View>
-            <View className="bottom_shop_oldPrice">
-              <View className="bottom_shop_oldLabel">原价:</View>
-              <View className="bottom_shop_oldcout">¥{oriPrice}</View>
-            </View>
-            <View className="bottom_kol_info">
-              <View className="bottom_kol_s">
-                <View className="bottom_kol_bean">
-                  ¥{computedPrice(realPrice, payBeanCommission)}
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-      );
-    };
     const templateList = {
       0: (
         <Waterfall
           list={specialGoodsList1}
-          createDom={templateActive}
+          createDom={(item) => templateActive(item, configUserLevelInfo)}
           setWidth={335}
           style={{ width: Taro.pxTransform(335) }}
         ></Waterfall>
@@ -459,7 +203,7 @@ class Index extends Component {
       1: (
         <Waterfall
           list={specialGoodsList2}
-          createDom={template}
+          createDom={(item) => template(item, configUserLevelInfo)}
           setWidth={335}
           style={{ width: Taro.pxTransform(335) }}
         ></Waterfall>
@@ -467,7 +211,7 @@ class Index extends Component {
       2: (
         <Waterfall
           list={specialGoodsList3}
-          createDom={templateRight}
+          createDom={(item) => templateRight(item, configUserLevelInfo)}
           setWidth={335}
           style={{ width: Taro.pxTransform(335) }}
         ></Waterfall>
@@ -475,7 +219,7 @@ class Index extends Component {
       3: (
         <Waterfall
           list={specialGoodsList4}
-          createDom={templateGame}
+          createDom={(item) => templateGame(item, configUserLevelInfo)}
           setWidth={335}
           style={{ width: Taro.pxTransform(335) }}
         ></Waterfall>

@@ -344,3 +344,10 @@ export const fakeLinkCoupon = (data) => {
   });
 };
 //视频链路券兑换
+export const fetchBeanAndEarn = (data) => {
+  return httpGet({
+    url: "/user/userInfo/getBeanAndEarn",
+    data: data,
+  });
+};
+//视频链路券兑换
