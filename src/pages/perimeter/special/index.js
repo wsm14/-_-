@@ -25,7 +25,6 @@ class MerchantDetails extends Component {
     // 生命周期函数--监听页面初次渲染完成
   }
   getListSpecialGoods() {
-    const { getMerchantSpecialGoods } = perimeter;
     const { httpData } = this.state;
     listAllPut(httpData).then((res) => {
       const { specialGoodsList } = res;

@@ -345,6 +345,8 @@ class MerchantDetails extends Component {
             }
           ></TaroShareDrawer>
           <Header
+            saveFollow={this.saveFollow.bind(this)}
+            deleteFollow={this.deleteFollow.bind(this)}
             fetchShareInfo={this.fetchShareInfo.bind(this)}
             onOpen={() => {
               this.setState({

@@ -116,7 +116,7 @@ export default ({
               });
             }}
           >
-            已成功收藏，打开APP查看关注详情{" "}
+            已成功收藏，打开APP查看收藏详情
             <View className="shopdetails_collect_btn public_center">
               去打开
             </View>

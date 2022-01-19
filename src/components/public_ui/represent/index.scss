@@ -5,6 +5,7 @@
   .represent_buy_rules {
     display: flex;
     align-items: center;
+    padding-bottom: 34px;
     .represent_buy_rulesName {
       font-size: 28px;
       font-weight: 400;
@@ -48,7 +49,7 @@
     border: 2px solid #108588;
     display: flex;
     position: relative;
-    margin-top: 34px;
+
     align-items: center;
     position: relative;
     .represent_buy_logo {

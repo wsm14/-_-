@@ -9,7 +9,7 @@ import Taro from "@tarojs/taro";
 import Drawer from "@/components/Drawer";
 import "./index.scss";
 export default (props) => {
-  const { visible = false, close, userPlatformCouponInfo, orderResult } = props;
+  const { show = false, visible, userPlatformCouponInfo, orderResult } = props;
   const {
     couponName,
     activeBeginDate,
@@ -21,7 +21,7 @@ export default (props) => {
   const { beanFee } = orderResult;
   if (show) {
     return (
-      <Drawer close={close} show={visible}>
+      <Drawer close={visible} show={show}>
         <View className="couponToast_box">
           <View className="couponToast_bean">
             {beanFee && (
@@ -51,7 +51,7 @@ export default (props) => {
           <View className="couponToast_tags">
             可在「我的-我的券包」中查看券详情
           </View>
-          <View className="couponToast_btn public_center" onClick={close}>
+          <View className="couponToast_btn public_center" onClick={visible}>
             知道了
           </View>
         </View>

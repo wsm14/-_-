@@ -109,11 +109,6 @@ const kolView = ({ keyword, current, configUserLevelInfo }) => {
               name: "距离",
             },
             { value: "priceSort", description: "按价格排序", name: "价格" },
-            {
-              value: "commissionSort",
-              description: "按佣金排序",
-              name: "佣金",
-            },
           ],
         },
       ]);
