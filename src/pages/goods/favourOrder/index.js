@@ -290,6 +290,26 @@ class Index extends Component {
     }
   }
   //底部支付价格
+
+  computedNotUserLevelPayPrice() {
+    const {
+      couponObj: { couponValue = 0 },
+      specialGoodsInfo: { userIncomeBean, userBean, realPrice },
+      httpData: { goodsCount },
+      useBeanStatus,
+    } = this.state;
+    if (useBeanStatus === "1") {
+      return (
+        Number(realPrice) * goodsCount -
+        couponValue -
+        userBean / 100
+      ).toFixed(2);
+    } else {
+      return (Number(realPrice) * goodsCount - couponValue).toFixed(2);
+    }
+  }
+  // 无哒人抵扣逻辑支付计算
+
   fetchAddress() {
     const { userAddressIndex, userAddress } = this.state;
     const { userAddressId } = userAddress;
@@ -616,7 +636,7 @@ class Index extends Component {
           status={useBeanStatus}
           couponObj={couponObj}
           changeBean={this.changeBean.bind(this)}
-          computedPrice={this.computedPayPrice.bind(this)}
+          computedPrice={this.computedNotUserLevelPayPrice.bind(this)}
           submit={() => {
             this.fetchMemberOrderSumbit();
           }}
@@ -629,7 +649,7 @@ class Index extends Component {
           status={useBeanStatus}
           couponObj={couponObj}
           changeBean={this.changeBean.bind(this)}
-          computedPrice={this.computedPayPrice.bind(this)}
+          computedPrice={this.computedNotUserLevelPayPrice.bind(this)}
           submit={() => {
             this.fetchBeanGiftPackSumbit();
           }}
