@@ -294,17 +294,22 @@ class Index extends Component {
   computedNotUserLevelPayPrice() {
     const {
       couponObj: { couponValue = 0 },
-      specialGoodsInfo: { userIncomeBean, userBean, realPrice },
+      specialGoodsInfo: { userBean, realPrice, paymentModeObject = {} },
       httpData: { goodsCount },
       useBeanStatus,
     } = this.state;
+    const { type, cash } = paymentModeObject;
     if (useBeanStatus === "1") {
+      if (type === "self") return Number(cash).toFixed(2);
       return (
         Number(realPrice) * goodsCount -
         couponValue -
         userBean / 100
       ).toFixed(2);
     } else {
+      if (type === "self") {
+        return (Number(cash) + userBean / 100).toFixed(2);
+      }
       return (Number(realPrice) * goodsCount - couponValue).toFixed(2);
     }
   }
