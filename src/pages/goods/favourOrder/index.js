@@ -510,12 +510,13 @@ class Index extends Component {
           ]
         : [],
       totalFee, // mode === phoneBill 存在
-    }).then(({ orderSn, orderType }) => {
+    }).then(({ orderSn, orderType, payMonth }) => {
       Router({
-        routerName: "paySuccess",
+        routerName: "pay",
         args: {
           orderSn,
           orderType,
+          payMonth,
         },
         type: "redirectTo",
       });
@@ -539,12 +540,13 @@ class Index extends Component {
             },
           ]
         : [],
-    }).then(({ orderSn, orderType }) => {
+    }).then(({ orderSn, orderType, payMonth }) => {
       Router({
-        routerName: "paySuccess",
+        routerName: "pay",
         args: {
           orderSn,
           orderType,
+          payMonth,
         },
         type: "redirectTo",
       });
