@@ -86,32 +86,30 @@ export default (props) => {
     return (
       <View className="fixedBtn_box">
         {type === "defaultMode" ? (
-          (userCouponObjects.length > 0 || userBean > 0) && (
-            <View className="fixedBtn_computedBean">
-              {userCouponObjects.length > 0 && (
-                <>
-                  <View className="font24 color1">平台优惠券 </View>
-                  <View className="font24 color3">
-                    {userCouponObjects[0].couponValue}元
-                  </View>
-                </>
-              )}
-              {userCouponObjects.length > 0 &&
-                userBean > 0 &&
-                computedRel() > 0 && <View className="font24 colo1">，</View>}
-              {userBean > 0 && computedRel() > 0 && (
-                <>
-                  <View className="font24 color1">
-                    {computedBeanInfo(computedRel())}
-                    卡豆抵扣{" "}
-                  </View>
-                  <View className="font24 color3">
-                    {(computedBeanInfo(computedRel()) / 100).toFixed(2)}元
-                  </View>
-                </>
-              )}
-            </View>
-          )
+          <View className="fixedBtn_computedBean">
+            {userCouponObjects.length > 0 && (
+              <>
+                <View className="font24 color1">平台优惠券 </View>
+                <View className="font24 color3">
+                  {userCouponObjects[0].couponValue}元
+                </View>
+              </>
+            )}
+            {userCouponObjects.length > 0 &&
+              userBean > 0 &&
+              computedRel() > 0 && <View className="font24 colo1">，</View>}
+            {userBean > 0 && computedRel() > 0 && (
+              <>
+                <View className="font24 color1">
+                  {computedBeanInfo(computedRel())}
+                  卡豆抵扣{" "}
+                </View>
+                <View className="font24 color3">
+                  {(computedBeanInfo(computedRel()) / 100).toFixed(2)}元
+                </View>
+              </>
+            )}
+          </View>
         ) : (
           <View className="fixedBtn_computedBean  font24">
             需用 <View className="color3">{bean}</View>卡豆抵扣
