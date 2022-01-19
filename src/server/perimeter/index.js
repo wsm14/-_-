@@ -392,7 +392,7 @@ export const fetchGetGiftPackPriceDetail = (data) => {
 // 卡豆福利专区 - 礼包购买详情查询
 
 export const fetchGiftPackPricePay = (data) => {
-  return httpGet({
+  return httpPost({
     url: "/user/order/savePlatformGiftOrder",
     data: data,
   });
