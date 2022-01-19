@@ -129,7 +129,16 @@ export default ({
           {layer.type === "follow"
             ? "已成功关注，打开APP查看关注详情"
             : "哒人详情请打开APP查看"}
-          <View className="video_toast_btn public_center">去打开</View>
+          <View
+            className="video_toast_btn public_center"
+            onClick={() =>
+              Router({
+                routerName: "download",
+              })
+            }
+          >
+            去打开
+          </View>
         </View>
       )}
 

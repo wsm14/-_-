@@ -10,7 +10,6 @@ import {
   fakeStorage,
 } from "@/utils/utils";
 import Router from "@/utils/router";
-import days from "dayjs";
 import "./index.scss";
 export default ({ auth, stopVideo, initVideo }) => {
   let env = process.env.NODE_ENV === "development" ? "dev" : "dev";
@@ -29,7 +28,10 @@ export default ({ auth, stopVideo, initVideo }) => {
       computedTime(createTime) < 3 &&
       !fetchStorage("newUser")
     ) {
-      getUserAcquiredPlatformGift();
+      let time = setTimeout(() => {
+        clearTimeout(time);
+        getUserAcquiredPlatformGift();
+      }, 3000);
     }
   });
   useEffect(() => {
@@ -55,6 +57,7 @@ export default ({ auth, stopVideo, initVideo }) => {
       giftType: "newUser",
     }).then((val) => {
       const { platformGiftPackInfo } = val;
+      console.log(platformGiftPackInfo, 111);
       if (platformGiftPackInfo) {
         setVisibleCoupon(() => {
           setStatus("1");
@@ -174,6 +177,7 @@ export default ({ auth, stopVideo, initVideo }) => {
     initVideo && initVideo();
     fn && fn();
   };
+  console.log(status, visibleCoupon);
   const onCoupon = (fn) => {
     setVisibleCoupon(false);
     fakeStorage("newUser", true);

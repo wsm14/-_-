@@ -40,11 +40,15 @@ export default (props) => {
       : buyPrice;
   };
   const computedRelprice = () => {
-    let price = computedRel();
-    if (price > 0) {
-      return (price - computedBeanInfo(price) / 100).toFixed(2);
+    if (type === "defaultMode") {
+      let price = computedRel();
+      if (price > 0) {
+        return (price - computedBeanInfo(price) / 100).toFixed(2);
+      } else {
+        return 0;
+      }
     } else {
-      return 0;
+      return cash;
     }
   };
   if (rightFlag === "1" && type === "defaultMode") {

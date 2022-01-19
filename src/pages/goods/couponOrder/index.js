@@ -230,19 +230,24 @@ class Index extends Component {
   computedPayPrice() {
     const {
       couponObj: { couponValue = 0 },
-      ownerCouponInfo: { userBean, buyPrice },
+      ownerCouponInfo: { userBean, buyPrice, paymentModeObject },
       httpData: { couponCount },
       useBeanStatus,
       configUserLevelInfo,
     } = this.state;
     const { payBeanCommission } = configUserLevelInfo;
-    if (useBeanStatus === "1") {
-      let price = Number(buyPrice) * couponCount - couponValue;
-      let payBean = price * payBeanCommission;
-      let removeBean = payBean >= userBean ? userBean : payBean;
-      return (price - removeBean / 100).toFixed(2);
+    const { cash, type = "defaultMode" } = paymentModeObject;
+    if (type === "defaultMode") {
+      if (useBeanStatus === "1") {
+        let price = Number(buyPrice) * couponCount - couponValue;
+        let payBean = price * payBeanCommission;
+        let removeBean = payBean >= userBean ? userBean : payBean;
+        return (price - removeBean / 100).toFixed(2);
+      } else {
+        return (Number(buyPrice) * couponCount - couponValue).toFixed(2);
+      }
     } else {
-      return (Number(buyPrice) * couponCount - couponValue).toFixed(2);
+      return cash;
     }
   }
   //底部支付价格

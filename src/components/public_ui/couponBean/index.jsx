@@ -126,12 +126,7 @@ export default ({ visible, data, onChange, userMomentsList }) => {
           return true;
         });
       })
-      .catch((e) => {
-        onChange({
-          showFlag: false,
-          couponFlag: true,
-        });
-      });
+      .catch((e) => {});
   };
   return (
     <>

@@ -29,8 +29,10 @@ export default (props) => {
     ownerCouponIdString,
     availableCouponCount,
     merchantIdString,
+    paymentModeObject = {},
   } = data;
   const { payBeanCommission = 50 } = configUserLevelInfo;
+
   const linkCoupon = () => {
     if (!totalFee) {
       return toast("输入价格有误,请在输入价格后选择优惠券");
@@ -50,14 +52,19 @@ export default (props) => {
     });
   };
   const computedPriceInfo = () => {
-    const { couponValue = 0 } = couponObj;
-    let price = Number(totalFee) - couponValue;
-    let payBean = price * payBeanCommission;
-    let removeBean = payBean >= userBean ? userBean : payBean;
-    if (removeBean && status === "1") {
-      return (removeBean / 100).toFixed(2);
+    const { cash, type = "defaultMode", bean } = paymentModeObject;
+    if (type === "defaultMode") {
+      const { couponValue = 0 } = couponObj;
+      let price = Number(totalFee) - couponValue;
+      let payBean = price * payBeanCommission;
+      let removeBean = payBean >= userBean ? userBean : payBean;
+      if (removeBean && status === "1") {
+        return (removeBean / 100).toFixed(2);
+      } else {
+        return 0;
+      }
     } else {
-      return 0;
+      return bean;
     }
   };
   const CouponFontTemplate = () => {

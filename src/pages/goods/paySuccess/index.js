@@ -94,19 +94,22 @@ class Index extends Component {
           <PaySuccess
             fn={this.getOrderResult.bind(this)}
             data={orderResult}
+            visible={visible}
             beanLimit={beanLimit}
+            userPlatformCouponInfo={userPlatformCouponInfo}
           ></PaySuccess>
           <NewUser></NewUser>
-          {orderType === "specialGoods" ? (
-            <RecommendSpecal
-              current={true}
-              userInfo={configUserLevelInfo}
-            ></RecommendSpecal>
-          ) : (
+          {orderType === "rightCoupon" || orderType === "reduceCoupon" ? (
             <RecommendCoupon
               current={true}
               userInfo={configUserLevelInfo}
             ></RecommendCoupon>
+          ) : (
+            <RecommendSpecal
+              defaultData={orderResult}
+              current={true}
+              userInfo={configUserLevelInfo}
+            ></RecommendSpecal>
           )}
           <Toast
             data={configNewcomerOrdersInfo}

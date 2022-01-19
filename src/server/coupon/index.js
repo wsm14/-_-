@@ -10,7 +10,7 @@ export const fetchAllAvailableCoupon = (data, fn) => {
 };
 //获取所有可用平台券 和免费券
 export const fetchOwnerCouponDetail = (data = {}, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/merchantMainCoupon/getOwnerCouponDetail",
       data: data,
