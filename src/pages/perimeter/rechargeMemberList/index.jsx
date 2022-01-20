@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import router from "@/utils/router";
-import { useDidShow, useShareAppMessage } from "@tarojs/taro";
+import { useRouter, useDidShow, useShareAppMessage } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import { fetchShareInfo, fetchRechargeMemberList } from "@/server/common";
 import { rssConfigData } from "./components/data";
-import TaroShareDrawer from "./components/TaroShareDrawer";
+import TaroShareDrawer from "../recharge/components/TaroShareDrawer";
 import "./index.scss";
 
 /**
@@ -53,20 +53,21 @@ const rechargeMemberList = () => {
 
   // 获取分享参数
   const fetchGetShareData = () => {
-    fetchShareInfo(
-      { shareType: "virtualProduct", subType: "telephone" },
-      (res) => {
-        setShareDeatils({
-          cavansObj: {
-            data: rssConfigData({
-              wxCode: res.qcodeUrl,
-              frontImage: res.backgroundImages,
-            }),
-          },
-          shareData: res,
-        });
-      }
-    );
+    fetchShareInfo({
+      shareType: "virtualProduct",
+      subType: "member",
+      needHyaline: 1,
+    }).then((res) => {
+      setShareDeatils({
+        cavansObj: {
+          data: rssConfigData({
+            wxCode: res.qcodeUrl,
+            frontImage: res.backgroundImages,
+          }),
+        },
+        shareData: res,
+      });
+    });
   };
 
   const shareImageInfo = () => {
@@ -95,7 +96,11 @@ const rechargeMemberList = () => {
   return (
     <View className="rechargeMemberList_box">
       <View className="rechargeMemberList_head">
-        <View className="rechargeMemberList_i_share"></View>
+        {/* 分享按钮 */}
+        <View
+          className="rechargeMemberList_i_share"
+          onClick={shareImageInfo}
+        ></View>
       </View>
       <View className="rechargeMemberList_group">
         {listArr.map((item) => {
