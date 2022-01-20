@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import router from "@/utils/router";
-import { useDidShow, useShareAppMessage } from "@tarojs/taro";
+import { useRouter, useDidShow, useShareAppMessage } from "@tarojs/taro";
 import { View, Input, Button } from "@tarojs/components";
 import { fetchPhoneBill, fetchShareInfo } from "@/server/common";
 import { usePostBackData } from "@/utils/utils";
@@ -17,7 +17,14 @@ const dx = "^1(33|49|53|62|7[37]|8[019]|9[19])\\d{8}$|(^170[012]\\d{7})$"; // �
 const lt =
   "^1(3[0-2]|4[05]|5[56]|6[67]|7[156]|8[56])\\d{8}$|(^170[7-9]\\d{7}$)"; // 中国联通
 
+/**
+ * identification - 风向标配置标识
+ */
+
 const rechargePage = () => {
+  const routeParams = useRouter().params;
+  const { identification } = routeParams;
+
   const [checkMobile, setCheckMobile] = useState({
     teleForm: "",
     teleMsg: false,
@@ -41,7 +48,7 @@ const rechargePage = () => {
   }, []);
 
   useDidShow(() => {
-    fetchPhoneBill().then((val) => {
+    fetchPhoneBill({ identification }).then((val) => {
       const { phoneBillItemList = [], discount = 1 } = val;
       setSelectList(phoneBillItemList);
       setMoneyDiscount(discount);
@@ -137,6 +144,7 @@ const rechargePage = () => {
       routerName: "favourableOrder",
       args: {
         mode: "phoneBill",
+        identification,
         totalFee: phoneMoney,
         virtualProductAccount: phone,
       },
@@ -179,7 +187,7 @@ const rechargePage = () => {
               >
                 <View className="recharge_select_price">{item.totalFee}元</View>
                 <View className="recharge_select_title">
-                  {`卡豆抵扣\n最高可享受${moneyDiscount * 10}折`}
+                  {`卡豆抵扣\n最高可享受${moneyDiscount / 10}折`}
                 </View>
               </View>
             );

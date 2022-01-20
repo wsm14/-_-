@@ -439,10 +439,11 @@ class Index extends Component {
 
   // 获取会员充值详情
   fetchRechargeMemberLsxdDetail() {
-    const { productNo, virtualProductAccount } =
+    const { productNo, virtualProductAccount, identification } =
       getCurrentInstance().router.params;
     fetchRechargeMemberLsxdDetail({
       productNo,
+      identification,
       goodsCount: 1,
       virtualProductAccount,
     }).then((res) => {
@@ -459,21 +460,23 @@ class Index extends Component {
 
   // 获取话费充值详情
   fetchPhoneBillDetail() {
-    const { totalFee } = getCurrentInstance().router.params;
-    fetchPhoneBillDetail({ phoneMoney: totalFee }).then((res) => {
-      const { phoneBillInfo = {} } = res;
-      this.setState({
-        specialGoodsInfo: {
-          rightFlag: "1", // 为了显示 专区优惠 标识
-          activityType: "rechargeMember", // 为了显示模块
-          ...(phoneBillInfo || {}),
-          image:
-            "https://wechat-config.dakale.net/miniprogram/image/rechargePhone.png",
-          oriPrice: phoneBillInfo.totalFee,
-          realPrice: phoneBillInfo.totalFee,
-        },
-      });
-    });
+    const { totalFee, identification } = getCurrentInstance().router.params;
+    fetchPhoneBillDetail({ phoneMoney: totalFee, identification }).then(
+      (res) => {
+        const { phoneBillInfo = {} } = res;
+        this.setState({
+          specialGoodsInfo: {
+            rightFlag: "1", // 为了显示 专区优惠 标识
+            activityType: "rechargeMember", // 为了显示模块
+            ...(phoneBillInfo || {}),
+            image:
+              "https://wechat-config.dakale.net/miniprogram/image/rechargePhone.png",
+            oriPrice: phoneBillInfo.totalFee,
+            realPrice: phoneBillInfo.totalFee,
+          },
+        });
+      }
+    );
   }
 
   // 话费券/礼包购买详情查询
@@ -502,6 +505,7 @@ class Index extends Component {
     const {
       mode,
       productNo,
+      identification,
       virtualProductAccount,
       virtualProductSubType,
       totalFee,
@@ -509,6 +513,7 @@ class Index extends Component {
     const { useBeanStatus, useBeanType, couponObj } = this.state;
     const { userCouponId, couponType } = couponObj;
     fetchMemberOrderSumbit({
+      identification,
       useBeanType, // 使用卡豆类型
       useBeanStatus, // 是否使用卡豆
       virtualProductType: mode, // 虚拟商品类型 member-会员 phoneBill-话费
