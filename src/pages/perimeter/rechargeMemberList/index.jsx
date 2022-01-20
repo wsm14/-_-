@@ -7,7 +7,13 @@ import { rssConfigData } from "./components/data";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import "./index.scss";
 
+/**
+ * identification - 风向标配置标识
+ */
 const rechargeMemberList = () => {
+  const routeParams = useRouter().params;
+  const { identification } = routeParams;
+
   const [shareDeatils, setShareDeatils] = useState({
     cavansObj: {},
     shareData: {},
@@ -48,10 +54,7 @@ const rechargeMemberList = () => {
   // 获取分享参数
   const fetchGetShareData = () => {
     fetchShareInfo(
-      {
-        shareType: "virtualProduct",
-        subType: "telephone",
-      },
+      { shareType: "virtualProduct", subType: "telephone" },
       (res) => {
         setShareDeatils({
           cavansObj: {
@@ -127,6 +130,7 @@ const rechargeMemberList = () => {
                             routerName: "rechargeMember",
                             args: {
                               type: cell.type,
+                              identification,
                             },
                           });
                         }}

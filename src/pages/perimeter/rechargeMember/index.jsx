@@ -6,14 +6,18 @@ import { usePostBackData } from "@/utils/utils";
 import { fetchRechargeMemberLsxdList } from "@/server/common";
 import "./index.scss";
 
+/**
+ * type
+ * identification - 风向标配置标识
+ */
 const rechargeMember = () => {
+  const routeParams = useRouter().params;
+  const { type: virtualProductSubType = "", identification } = routeParams;
+
   const [list, setList] = useState([]); // 数据
   const [selectItem, setSelectItem] = useState({}); // 选择的充值项目
   const [videoEnd, setVideoEnd] = useState(false); // 视频是否看完
   const [account, setAccount] = useState(""); // 帐号
-
-  const routeParams = useRouter().params;
-  const { type: virtualProductSubType = "" } = routeParams;
 
   useEffect(() => {
     if (virtualProductSubType) fetchGetList();
@@ -48,6 +52,7 @@ const rechargeMember = () => {
       args: {
         mode: "member",
         ...val,
+        identification,
         virtualProductSubType,
         productNo: selectItem.productNo,
       },

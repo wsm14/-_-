@@ -27,7 +27,7 @@ export default (props) => {
           <View className="payWeex_value font">{totalFee}</View>
         </View>
 
-        {beanFee && (
+        {!!beanFee && (
           <View className="payWeex_scanContent_tags font_hide">
             <View className="payWeex_label">卡豆优惠抵扣</View>
             <View className="payWeex_value font">
