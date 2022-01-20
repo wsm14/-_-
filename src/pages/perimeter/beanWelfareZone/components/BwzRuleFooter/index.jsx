@@ -1,4 +1,5 @@
 import React from "react";
+import router from "@/utils/router";
 import Taro, { useRouter } from "@tarojs/taro";
 import { View, Button } from "@tarojs/components";
 import "./index.scss";
@@ -56,6 +57,7 @@ export default () => {
           backgroundImage: `url(${showContent.bag})`,
           height: Taro.pxTransform(showContent.height),
         }}
+        onClick={() => router({ routerName: "home", type: "switchTab" })}
       ></View>
       {/* 底部 跳转app */}
       <View

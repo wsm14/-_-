@@ -1,6 +1,8 @@
 page {
   .enterGroup_box {
     position: relative;
+    overflow: hidden;
+    max-height: 1769px;
     .enterGroup_bag {
       width: 100%;
       height: 1769px;

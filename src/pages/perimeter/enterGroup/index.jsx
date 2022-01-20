@@ -58,10 +58,6 @@ export default () => {
     },
   };
 
-  const completemessage = (msg) => {
-    console.log(msg);
-  };
-
   return (
     <View className="enterGroup_box">
       {/* 小程序个人中心进入背景 */}
@@ -79,7 +75,7 @@ export default () => {
           ></Image>
           {/* 加入社群按钮 */}
           <View className="enterGroup_hidden">
-            <cell url="https://resource-new.dakale.net/admin/QrCode/bybag.png" onCompleteMessage={completemessage}></cell>
+            <cell url="https://work.weixin.qq.com/gm/2bb7c5d5c05ebae070b893e0671fc458"></cell>
           </View>
         </View>
       </View>
