@@ -1,7 +1,7 @@
 import React from "react";
 import Title from "../../ui/orderTop";
 import CodeContent from "../../ui/codeContent";
-import ScanCard from "../../ui/scanCard";
+import PlatformCard from "../../ui/platformCard";
 import Btn from "../../ui/collectBtn";
 import Coupon from "./../../ui/platformGiftCoupon";
 export default (props) => {
@@ -10,7 +10,7 @@ export default (props) => {
       <Title {...props}></Title>
       <CodeContent {...props}></CodeContent>
       <Coupon {...props}></Coupon>
-      <ScanCard {...props}></ScanCard>
+      <PlatformCard {...props}></PlatformCard>
       <Btn type={"remove"} {...props}></Btn>
     </>
   );

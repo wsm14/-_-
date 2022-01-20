@@ -31,7 +31,10 @@ export default (props) => {
         {hasMerchant && (
           <View
             className="descriptionCard_merchant"
-            onClick={() => goMerchant(merchantIdString || merchantId)}
+            onClick={() =>
+              orderType !== "platformGift" &&
+              goMerchant(merchantIdString || merchantId)
+            }
           >
             <View
               className="descriptionCard_profile merchant_dakale_logo"

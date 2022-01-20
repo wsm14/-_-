@@ -60,19 +60,19 @@ export default ({ auth, stopVideo, initVideo }) => {
       if (platformGiftPackInfo) {
         setVisibleCoupon(() => {
           setStatus("1");
-
           setData(platformGiftPackInfo);
           stopVideo();
           let num = 0;
           const val = setInterval(() => {
             num = num + 1;
             if (num === 5) {
-              onCoupon();
-              Router({
-                routerName: "webView",
-                args: {
-                  link: `https://web-new.dakale.net/${env}/game/sign/index.html#/coupon`,
-                },
+              onCoupon(() => {
+                Router({
+                  routerName: "webView",
+                  args: {
+                    link: `https://web-new.dakale.net/${env}/game/sign/index.html#/coupon`,
+                  },
+                });
               });
               clearInterval(count.val);
             } else {
@@ -163,16 +163,16 @@ export default ({ auth, stopVideo, initVideo }) => {
                   onCoupon(() => {
                     setCount(() => {
                       clearInterval(count.val);
+                      Router({
+                        routerName: "webView",
+                        args: {
+                          link: `https://web-new.dakale.net/${env}/game/sign/index.html#/coupon`,
+                        },
+                      });
                       return {
                         time: 5,
                         val: null,
                       };
-                    });
-                    Router({
-                      routerName: "webView",
-                      args: {
-                        link: `https://web-new.dakale.net/${env}/game/sign/index.html#/coupon`,
-                      },
                     });
                   })
                 }
