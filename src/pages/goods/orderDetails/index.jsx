@@ -122,6 +122,14 @@ class Index extends Component {
         reload={this.getGoodsDetails.bind(this)}
       ></PlatfromGift>
     );
+    const templateVirtualProduct = (
+      <ScanTemplate
+        style={status === "6" ? { margin: `${Taro.pxTransform(24)} auto` } : {}}
+        data={orderInfo}
+        hasMerchant={false}
+        reload={this.getGoodsDetails.bind(this)}
+      ></ScanTemplate>
+    );
     const template = {
       reduceCoupon: templateSpecal,
       rightGoods: templateSpecal,
@@ -135,6 +143,7 @@ class Index extends Component {
       //扫码订单渲染模板
       communityGoods: templateCommunity,
       platformGift: templatePlatfromGift,
+      virtualProduct: templateVirtualProduct,
     }[orderType];
 
     return (

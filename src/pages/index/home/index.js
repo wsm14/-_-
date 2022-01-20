@@ -27,6 +27,7 @@ import {
   fetchShareInfo,
   fetchUgcMomentRule,
   fetchUserShareCommission,
+  fetchCollection,
 } from "@/server/common";
 import { inject, observer } from "mobx-react";
 import Toast from "@/components/public_ui/beanToast";
@@ -84,6 +85,7 @@ class Index extends React.PureComponent {
       ugcVisible2: false,
       animated: "",
       showFlag: false,
+      momentLinkBeanStage: [50, 150],
     };
     this.interReload = null;
     this.interSwper = null;
@@ -109,14 +111,15 @@ class Index extends React.PureComponent {
   filterNewsFlag() {
     const { createTime } = loginStatus() || {};
     const { userMomentsInfo } = this.state;
-    const { tippingBean } = userMomentsInfo;
+    const { tippingBean, momentLinkBeanStage } = userMomentsInfo;
+
     if (computedTime(createTime) < 3 && loginStatus()) {
       const count = computedTime(createTime);
       let countObj = fetchStorage(`day${count}`);
       const { num, current } = countObj;
       if (
-        (num + tippingBean >= 50 && !current) ||
-        (num + tippingBean >= 150 && current === 1)
+        (num + tippingBean >= momentLinkBeanStage[0] && !current) ||
+        (num + tippingBean >= momentLinkBeanStage[1] && current === 1)
       ) {
         this.setState({
           showFlag: true,
@@ -139,6 +142,7 @@ class Index extends React.PureComponent {
   }
   componentDidShow() {
     this.fetchUserShareCommission();
+    this.fetchCollection();
     fetchUgcMomentRule().then((val) => {
       const { platformRewardBeanRules, rewardRules } = val;
       this.setState({
@@ -681,6 +685,17 @@ class Index extends React.PureComponent {
     } else {
     }
   } //上拉加载
+
+  fetchCollection() {
+    fetchCollection().then((val) => {
+      const { momentLinkBeanStage = [] } = val;
+      this.setState({
+        momentLinkBeanStage: momentLinkBeanStage.map((item) => {
+          return parseInt(item.beanStage);
+        }),
+      });
+    });
+  }
   shareImageInfo() {
     const {
       userMomentsInfo: {
@@ -834,6 +849,7 @@ class Index extends React.PureComponent {
       animated,
       showFlag,
       time,
+      momentLinkBeanStage,
     } = this.state;
     const {
       homeStore = {},
@@ -975,7 +991,6 @@ class Index extends React.PureComponent {
         }
       }
     };
-
     return (
       <View className="home_box home_black">
         <View style={{ top: computedClient().top }} className="home_wait">
@@ -1129,6 +1144,7 @@ class Index extends React.PureComponent {
           )}
           <NewsPilot></NewsPilot>
           <CouponBean
+            momentLinkBeanStage={momentLinkBeanStage}
             userMomentsList={userMomentsList}
             data={userMomentsInfo}
             onChange={this.setState.bind(this)}

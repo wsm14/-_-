@@ -80,7 +80,7 @@ export default (props) => {
             <View>订单金额</View>
             <View className="color1">¥ {totalFee}</View>
           </View>
-          {beanFee > 0 && (status === "0" || status === "3") && (
+          {beanFee > 0 && (status === "1" || status === "3") && (
             <View className="descriptionCard_discount discount_top">
               <View className="color3">卡豆帮省</View>
               <View className="color3">

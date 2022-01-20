@@ -274,3 +274,14 @@ export const fetchSpecialBarrage = (data = {}, fn) => {
   );
 };
 // 活动卡豆弹幕;
+
+export const fetchCollection = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/config/collection/page/listConfigCollectionByAreaType",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 获取收集页配置卡豆规则;

@@ -57,7 +57,6 @@ export default ({ auth, stopVideo, initVideo }) => {
       giftType: "newUser",
     }).then((val) => {
       const { platformGiftPackInfo } = val;
-      console.log(platformGiftPackInfo, 111);
       if (platformGiftPackInfo) {
         setVisibleCoupon(() => {
           setStatus("1");
@@ -191,7 +190,6 @@ export default ({ auth, stopVideo, initVideo }) => {
     initVideo && initVideo();
     fn && fn();
   };
-  console.log(status, visibleCoupon);
   const onCoupon = (fn) => {
     setVisibleCoupon(false);
     fakeStorage("newUser", true);

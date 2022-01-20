@@ -10,7 +10,13 @@ import {
 } from "@/utils/utils";
 import { fakeAcquireMoment, fakeLinkCoupon } from "@/server/index";
 import "./index.scss";
-export default ({ visible, data, onChange, userMomentsList }) => {
+export default ({
+  visible,
+  data,
+  onChange,
+  userMomentsList,
+  momentLinkBeanStage,
+}) => {
   const { momentId, tippingBean, ownerId } = data;
   const [visibleFlag, setvisibleFlag] = useState(false);
   const [couponVisible, setVisible] = useState(false);
@@ -28,7 +34,8 @@ export default ({ visible, data, onChange, userMomentsList }) => {
       const { num, current = 0 } = fetchStorage(`day${count}`);
       fakeAcquireMoment({
         momentId,
-        beanStage: current === 0 ? 50 : 150,
+        beanStage:
+          current === 0 ? momentLinkBeanStage[0] : momentLinkBeanStage[1],
         newUserFlag: createTime < 3 ? 0 : 1,
         ownerId,
       })
@@ -116,7 +123,7 @@ export default ({ visible, data, onChange, userMomentsList }) => {
     const { num, current = 0 } = fetchStorage(`day${count}`);
     fakeLinkCoupon({
       platformCouponId,
-      beanStage: current == 1 ? "50" : "150",
+      beanStage: current == 1 ? momentLinkBeanStage[0] : momentLinkBeanStage[1],
     })
       .then((val) => {
         const { userPlatformCouponInfo } = val;

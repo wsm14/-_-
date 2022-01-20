@@ -19,8 +19,8 @@ export default ({
     const { commission } = val;
     return (
       <View className="templateCard_btn_box">
-        <View className="templateCard_btn_buy public_center">立即抢购</View>
-        <View className="templateCard_btn_share public_center">分享给好友</View>
+      
+        <View className="templateCard_btn_share public_center">立即抢购</View>
       </View>
     );
   };

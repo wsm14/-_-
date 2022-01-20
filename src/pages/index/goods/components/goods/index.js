@@ -1411,13 +1411,13 @@ export default (props) => {
                 {goodsName}
               </View>
               <View className="createdGood_details_time">{templateTime}</View>
-              {beanFee > 0 && status === "3" && (
+              {beanFee > 0 && (status === "3" || status === "1") && (
                 <View className="createdGood_details_color">
                   卡豆帮省{" "}
                   <Text className="bold">¥{(beanFee / 100).toFixed(2)}</Text>
                 </View>
               )}
-              {status === "0" && (
+              {status === "0" && logisticsType === "self" && (
                 <View className="createdGood_details_color font_hide">
                   <View className="font_hide color2 font24">{`自提地点：${liftingAddress}`}</View>
                 </View>
@@ -1557,7 +1557,7 @@ export default (props) => {
                 {goodsName}
               </View>
               <View className="createdGood_details_time">{templateTime}</View>
-              {beanFee > 0 && status === "3" && (
+              {beanFee > 0 && (status === "3" || status === "1") && (
                 <View className="createdGood_details_color">
                   卡豆帮省{" "}
                   <Text className="bold">¥{(beanFee / 100).toFixed(2)}</Text>

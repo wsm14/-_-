@@ -25,7 +25,11 @@ import evens from "@/common/evens";
 import Toast from "@/components/public_ui/beanToast";
 import Coupon from "@/components/public_ui/freeCoupon";
 import Lead from "@/components/public_ui/lead";
-import { fetchShareInfo, fetchUserShareCommission } from "@/server/common";
+import {
+  fetchShareInfo,
+  fetchUserShareCommission,
+  fetchCollection,
+} from "@/server/common";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import Comment from "@/components/public_ui/comment";
@@ -61,6 +65,7 @@ class Index extends React.PureComponent {
       },
       commentShow: false,
       showFlag: false,
+      momentLinkBeanStage: [50, 150],
     };
     this.interReload = null;
     this.interSwper = null;
@@ -68,14 +73,15 @@ class Index extends React.PureComponent {
   filterNewsFlag() {
     const { createTime } = loginStatus() || {};
     const { userMomentsInfo } = this.state;
-    const { tippingBean } = userMomentsInfo;
+    const { tippingBean, momentLinkBeanStage } = userMomentsInfo;
+
     if (computedTime(createTime) < 3 && loginStatus()) {
       const count = computedTime(createTime);
       let countObj = fetchStorage(`day${count}`);
       const { num, current } = countObj;
       if (
-        (num + tippingBean >= 50 && !current) ||
-        (num + tippingBean >= 150 && current === 1)
+        (num + tippingBean >= momentLinkBeanStage[0] && !current) ||
+        (num + tippingBean >= momentLinkBeanStage[1] && current === 1)
       ) {
         this.setState({
           showFlag: true,
@@ -85,6 +91,16 @@ class Index extends React.PureComponent {
       return false;
     }
     return false;
+  }
+  fetchCollection() {
+    fetchCollection().then((val) => {
+      const { momentLinkBeanStage = [] } = val;
+      this.setState({
+        momentLinkBeanStage: momentLinkBeanStage.map((item) => {
+          return parseInt(item.beanStage);
+        }),
+      });
+    });
   }
   onChange(e) {
     const { countStatus, httpData, userMomentsList } = this.state;
@@ -424,10 +440,11 @@ class Index extends React.PureComponent {
   componentDidHide() {}
   componentDidShow() {
     const { time, player } = this.state;
-    // this.listParentCategory();
     this.fetchUserShareCommission();
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.fetchCollection();
+  }
   componentWillMount() {
     const { selectObj, list, index } = this.props.store.homeStore;
     if (
@@ -630,6 +647,7 @@ class Index extends React.PureComponent {
       cavansObj,
       commentShow,
       showFlag,
+      momentLinkBeanStage,
     } = this.state;
     const { homeStore = {}, commonStore = {} } = this.props.store;
     const { beanLimitStatus } = homeStore;
@@ -731,6 +749,7 @@ class Index extends React.PureComponent {
           data={userMomentsInfo}
           onChange={this.setState.bind(this)}
           visible={showFlag}
+          momentLinkBeanStage={momentLinkBeanStage}
         ></CouponBean>
       </View>
     );

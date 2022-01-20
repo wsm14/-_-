@@ -284,6 +284,7 @@ class Index extends Component {
         useStartTime,
         useEndTime,
         buyPrice,
+        couponCount,
       },
       useBeanStatus,
       useBeanType,
@@ -300,7 +301,7 @@ class Index extends Component {
           {/*商品数量操作组件 */}
           <SelectBean
             configUserLevelInfo={configUserLevelInfo}
-            data={{ ...ownerCouponInfo, totalFee: buyPrice }}
+            data={{ ...ownerCouponInfo, totalFee: buyPrice * couponCount }}
             useScenesType={"goodsBuy"}
             status={useBeanStatus}
             couponObj={couponObj}

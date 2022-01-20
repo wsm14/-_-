@@ -102,6 +102,7 @@
   .templateCard_btn_box {
     margin: 16px 0 0 140px;
     display: flex;
+    justify-content: flex-end;
     .templateCard_btn_buy {
       width: 136px;
       height: 40px;
@@ -119,7 +120,7 @@
       font-size: 24px;
       font-weight: 600;
       color: #ffffff;
-      margin-left: 12px;
+      margin-right: 32px;
     }
     .templateCard_btn_initbuy {
       padding: 0 20px;
