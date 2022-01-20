@@ -1,17 +1,24 @@
+.specialSelf_liner {
+  height: 48px;
+  background: #f5f5f5;
+}
 .specialSelf_box {
-  width: 750px;
   height: 128px;
-  background: #ffffff;
-  border-radius: 40px 40px 0px 0px;
-  margin-top: 48px;
+  background: #f5f5f5;
+  position: relative;
+  z-index: 10;
   .specialSelf_commer {
-    padding: 40px 187px 0;
+    background: #ffffff;
+    border-radius: 40px 40px 0px 0px;
+    padding: 40px 187px 20px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
   }
   .specialSelf_perimeter {
-    padding: 40px 80px 0;
+    padding: 40px 80px 20px;
+    background: #ffffff;
+    border-radius: 40px 40px 0px 0px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;

@@ -48,10 +48,12 @@ export default ({ userInfo, type = "specalSelf" }) => {
     }
   }, [page]);
   useReachBottom(() => {
-    setPage({
-      ...page,
-      page: page.page + 1,
-    });
+    if (type === "specalSelf" && index === 0) {
+      setPage({
+        ...page,
+        page: page.page + 1,
+      });
+    }
   });
   const fetchCommerce = () => {
     fetchCommerceGoods({ ...page }).then((val) => {
@@ -101,6 +103,7 @@ export default ({ userInfo, type = "specalSelf" }) => {
   }[index];
   return (
     <>
+      <View className="specialSelf_liner"></View>
       <View className="specialSelf_box">
         <View
           className={

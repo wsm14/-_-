@@ -3,7 +3,7 @@ import { View, Text } from "@tarojs/components";
 import Router from "@/utils/router";
 import "./index.scss";
 export default (props) => {
-  const { computedPrice, submit } = props;
+  const { computedPrice, submit, payFlag = true } = props;
   return (
     <View className="order_details_btn">
       <View className="order_details_payLabel">
@@ -13,8 +13,9 @@ export default (props) => {
       </View>
       <View
         className="order_details_button public_center"
+        style={{ opacity: payFlag ? 1 : 0.4 }}
         onClick={() => {
-          submit();
+          payFlag && submit();
         }}
       >
         立即支付

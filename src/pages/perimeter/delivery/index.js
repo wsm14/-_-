@@ -10,6 +10,8 @@ import {
   fakeRemoveAddress,
   fakeUpdateAddress,
 } from "@/server/perimeter";
+import { fetchBindAddress } from "@/server/blindBox";
+
 import { getRestapiAddress } from "@/server/other";
 import Empty from "@/components/Empty";
 import Bottom from "./conponents/bottomAddress";
@@ -27,6 +29,7 @@ class Index extends Component {
         ? null
         : getCurrentInstance().router.params.selectIndex || 0,
       defaultData: {},
+      blindBoxRewardId: getCurrentInstance().router.params.blindBoxRewardId,
       type: "edit",
       mode: getCurrentInstance().router.params.mode,
       blindType: getCurrentInstance().router.params.blindType || 0, // 盲盒进入存在
@@ -153,7 +156,7 @@ class Index extends Component {
   }
   //获取新增地址
   changeSelect(index) {
-    const { mode, userAddressList, blindType } = this.state;
+    const { mode, userAddressList, blindType, blindBoxRewardId } = this.state;
     if (mode == "select") {
       this.setState(
         {
@@ -168,6 +171,8 @@ class Index extends Component {
             content: `${userAddressList[index].address}`,
             success: function (res) {
               if (res.confirm) {
+                const { userAddressId } = userAddressList[index];
+                console.log(blindBoxRewardId, userAddressId, blindType);
                 if (blindType) {
                   fetchBindAddress({ blindBoxRewardId, userAddressId }).then(
                     (res) => {
@@ -176,7 +181,6 @@ class Index extends Component {
                   );
                   return;
                 }
-                console.log(userAddressList[index]);
                 navigatePostBack({
                   ...getCurrentInstance().router.params,
                   userAddressId: userAddressList[index].userAddressId,

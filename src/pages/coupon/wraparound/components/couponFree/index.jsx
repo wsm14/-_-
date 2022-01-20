@@ -10,7 +10,6 @@ export default ({ data, status }) => {
     dayNum,
     activeBeginDate,
     activeEndDate,
-    couponType,
     couponValue,
     thresholdPrice,
     unavailableReason,
@@ -25,20 +24,26 @@ export default ({ data, status }) => {
     commerce: "电商券",
     community: "团购券",
   }[useScenesType];
+  const renderDesc = () => {
+    if (classType === "universal" && useScenesType === "goodsBuy") {
+      return "限特惠商品、优惠券可用";
+    } else if (classType === "category" && useScenesType === "goodsBuy") {
+      return "限指定行业的特惠商品、优惠券使用可用";
+    } else if (classType === "merchant" && useScenesType === "goodsBuy") {
+      return "限指定商家的特惠商品、优惠券使用";
+    } else if (classType === "goods" && useScenesType === "goodsBuy") {
+      return "限指定商品的特惠商品、优惠券使用";
+    } else if (classType === "universal" && useScenesType === "virtual") {
+      return "限话费充值、会员充值可用";
+    } else if (classType === "goods" && useScenesType === "virtual") {
+      return "限会员充值可用";
+    } else if (classType === "universal" && useScenesType === "commerce") {
+      return "限电商商品可用";
+    } else if (classType === "goods" && useScenesType === "commerce") {
+      return "限指定电商商品可用";
+    }
+  };
 
-  const renderType = {
-    universal: "通用券",
-    category: "行业券",
-    merchant: "店铺券",
-    goods: "商品券",
-  }[classType];
-  const renderOs = {
-    all: "全部",
-    app: "用户端",
-    wechat: "哒卡乐小程序",
-    markWechat: "哒小卡小程序",
-    communityWechat: "哒小团小程序",
-  }[consortUserOs];
   return (
     <View
       className={classNames(
@@ -61,7 +66,7 @@ export default ({ data, status }) => {
           >
             {dayNum < 3 && dayNum >= 0
               ? `${dayNum}天后过期`
-              : `${activeBeginDate} 至 ${activeEndDate}`}
+              : `${activeBeginDate} 至 ${activeEndDate}可用`}
           </View>
         </View>
       </View>
@@ -82,17 +87,11 @@ export default ({ data, status }) => {
               : "couponFree_coupon_bottomIcon1"
           }
         >
-          {unavailableReason}
+          {renderDesc()}
         </View>
         {visible && (
           <>
             <View className="couponFree_coupon_marginTop">{otherDesc}</View>
-            <View className="couponFree_coupon_marginTop">
-              限「{renderType}」使用
-            </View>
-            <View className="couponFree_coupon_marginTop">
-              限在「{renderOs}」使用
-            </View>
           </>
         )}
       </View>

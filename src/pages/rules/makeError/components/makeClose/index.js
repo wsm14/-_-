@@ -16,7 +16,7 @@ export default (props) => {
           onClick={() => {
             Router({
               routerName: "home",
-              type: "switchTab",
+              type: "reLaunch",
             });
           }}
         >

@@ -183,7 +183,6 @@ class Index extends Component {
       );
     });
   }
-
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
       const {
@@ -296,7 +295,7 @@ class Index extends Component {
         return (Number(realPrice) * goodsCount - couponValue).toFixed(2);
       }
     } else {
-      return cash;
+      return (cash * goodsCount).toFixed(2);
     }
   }
   //底部支付价格
@@ -562,7 +561,25 @@ class Index extends Component {
       });
     });
   }
-
+  saveGoodsRule() {
+    const { specialGoodsInfo } = this.state;
+    const {
+      rightFlag,
+      paymentModeObject = {},
+      goodsCount,
+      userBean,
+    } = specialGoodsInfo;
+    const { cash, type = "defaultMode", bean } = paymentModeObject;
+    if (rightFlag === "1") {
+      if (userBean < bean * goodsCount) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  }
   render() {
     const {
       specialGoodsInfo,
@@ -636,6 +653,7 @@ class Index extends Component {
           changeBean={this.changeBean.bind(this)}
           computedCount={this.computedCount.bind(this)}
           computedPrice={this.computedPayPrice.bind(this)}
+          payFlag={this.saveGoodsRule()}
           submit={() => {
             this.saveGoodsOrder();
           }}

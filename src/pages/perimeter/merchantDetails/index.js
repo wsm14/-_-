@@ -169,7 +169,7 @@ class MerchantDetails extends Component {
       merchantHttpData: { merchantId },
     } = this.state;
     fetchAllPutShelfGoods({ merchantId: merchantId }).then((res) => {
-      const { goodsList } = res;
+      const { goodsList = [] } = res;
       this.setState({
         goodsList,
       });

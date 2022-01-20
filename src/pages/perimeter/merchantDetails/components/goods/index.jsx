@@ -1,10 +1,11 @@
 import React from "react";
 import Taro from "@tarojs/taro";
-import { View, ScrollView } from "@tarojs/taro";
+import { View, ScrollView } from "@tarojs/components";
 import { billboard } from "@/components/public_ui/shopInfo";
 
 export default ({ data, list }) => {
   const { merchantId } = data;
+  console.log(list, data);
   if (list.length > 0) {
     return (
       <>
@@ -16,7 +17,7 @@ export default ({ data, list }) => {
           <View className="merchant_active_dec">本店商品展示</View>
         </View>
         <ScrollView scrollX className="merchant_billboard">
-          {goodsList.map((item, index) => {
+          {list.map((item, index) => {
             return billboard(item, merchantId);
           })}
         </ScrollView>

@@ -7,9 +7,10 @@ import { fakeUpdateOrder } from "@/server/goods";
 import Router from "@/utils/router";
 import "./index.scss";
 export default (props) => {
-  const { data, type = "collect", reload } = props;
+  const { data, type = "collect", reload, deleteOrderSn } = props;
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [upDateVisible, setUpdateVisible] = useState(false);
+  const [closeVisible, setCloseVisible] = useState(false);
   const {
     ownerIdString,
     ownerCouponIdString,
@@ -19,6 +20,7 @@ export default (props) => {
     orderSn,
     status,
   } = data;
+
   const getPay = () => {
     const { orderType } = data;
     Router({
@@ -35,6 +37,7 @@ export default (props) => {
       orderType === "rightGoods" ||
       orderType === "commerceGoods"
     ) {
+      console.log(ownerIdString, ownerIdString);
       Router({
         routerName: "favourableDetails",
         args: {
@@ -60,7 +63,7 @@ export default (props) => {
             <View className="kolGoods_bottom_btn">
               <View
                 className="kolGoods_submit color2"
-                onClick={() => closeSn()}
+                onClick={() => setCloseVisible(true)}
                 style={{ marginRight: `${Taro.pxTransform(24)}` }}
               >
                 取消订单
@@ -204,9 +207,19 @@ export default (props) => {
           <StopBean
             content={"确认关闭订单?"}
             cancel={() => {
-              this.setState({ closeVisible: false });
+              setCloseVisible(false);
             }}
-            canfirm={() => this.closeSn()}
+            canfirm={() =>
+              setCloseVisible(() => {
+                fakeUpdateOrder({
+                  orderSn: orderSn,
+                  status: "2",
+                }).then((val) => {
+                  reload();
+                });
+                return false;
+              })
+            }
             cancelText={"确认"}
             canfirmText={"取消"}
           ></StopBean>

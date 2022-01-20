@@ -24,7 +24,7 @@ export default (props) => {
       <Drawer close={visible} show={show}>
         <View className="couponToast_box">
           <View className="couponToast_bean">
-            {beanFee && (
+            {beanFee > 0 && (
               <>
                 <View>本单卡豆帮你节省</View>
                 <View> ¥ {(Number(beanFee) / 100).toFixed(2)}元</View>

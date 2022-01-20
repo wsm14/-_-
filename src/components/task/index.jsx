@@ -130,6 +130,11 @@ export default (props) => {
       });
     }
   }, [task]);
+  const templateStyle = {
+    sign: "task_icon",
+    free: "task_icon_free",
+    collect: "task_icon_collect",
+  }[gameInfo];
   if (visible) {
     const { rewardNum } = taskInfo;
     return (
@@ -139,7 +144,7 @@ export default (props) => {
         }}
         className="task_view"
       >
-        <View className={gameInfo === "sign" ? "task_icon" : "task_icon_free"}>
+        <View className={templateStyle}>
           <View className="task_reload_count">+{rewardNum}</View>
         </View>
         <View className="task_toast public_center">{filterBottomText()}</View>

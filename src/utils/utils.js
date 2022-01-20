@@ -378,10 +378,12 @@ export const filterGoods = (data) => {
   const {
     reduceCoupon = {},
     specialGoods = {},
-    rightCoupon,
-    rightGoods,
+    rightCoupon = {},
+    rightGoods = {},
+    commerceGoods = {},
   } = orderDesc;
   return {
+    ...commerceGoods,
     ...reduceCoupon,
     ...specialGoods,
     ...rightGoods,

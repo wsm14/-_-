@@ -10,10 +10,11 @@ import CouponToast from "./couponToast";
 import { objStatus } from "@/utils/utils";
 export default (props) => {
   const { data = {}, userPlatformCouponInfo = {} } = props;
+  console.log(userPlatformCouponInfo);
   const { taskStatus } = data;
   if (taskStatus === "0" || taskStatus === "1") {
     return <ThreeGoods {...props}></ThreeGoods>;
-  } else if (objStatus(userPlatformCouponInfo).length > 0) {
+  } else if (objStatus(userPlatformCouponInfo)) {
     return <CouponToast {...props}></CouponToast>;
   } else {
     return null;

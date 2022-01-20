@@ -18,7 +18,7 @@ export default (props) => {
   } = props;
   const {
     userCouponObjects = [],
-    rightFlag,
+    rightFlag = "0",
     userBean,
     cityCode = "",
     categoryIds = "",
@@ -30,6 +30,9 @@ export default (props) => {
     availableCouponCount,
     merchantIdString,
     paymentModeObject = {},
+    goodsCount = 1,
+    couponType,
+    couponCount,
   } = data;
   const { payBeanCommission = 50 } = configUserLevelInfo;
 
@@ -64,7 +67,27 @@ export default (props) => {
         return 0;
       }
     } else {
-      return bean;
+      return userBean;
+    }
+  };
+  const computedRight = () => {
+    const { bean } = paymentModeObject;
+    if (rightFlag === "1") {
+      if (couponType) {
+        if (userBean < bean * couponCount) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        if (userBean < bean * goodsCount) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    } else {
+      return true;
     }
   };
   const CouponFontTemplate = () => {
@@ -79,10 +102,8 @@ export default (props) => {
         if (objStatus(couponObj)) {
           const { couponValue } = couponObj;
           return (
-            <View className="selectKol_coupon_coupons">
-              <View onClick={linkCoupon} className="font28 color3 bold">
-                -{couponValue}
-              </View>
+            <View onClick={linkCoupon} className="selectKol_coupon_coupons">
+              <View className="font28 color3 bold">-{couponValue}</View>
             </View>
           );
         } else {
@@ -109,19 +130,14 @@ export default (props) => {
         if (objStatus(couponObj)) {
           const { couponPrice } = couponObj;
           return (
-            <View className="selectKol_coupon_coupons">
-              <View onClick={linkCoupon} className="font28 color3 bold">
-                -{couponPrice}
-              </View>
+            <View onClick={linkCoupon} className="selectKol_coupon_coupons">
+              <View className="font28 color3 bold">-{couponPrice}</View>
             </View>
           );
         } else {
           return (
-            <View className="selectKol_coupon_coupons">
-              <View
-                className="selectKol_coupon_toast public_center"
-                onClick={linkCoupon}
-              >
+            <View onClick={linkCoupon} className="selectKol_coupon_coupons">
+              <View className="selectKol_coupon_toast public_center">
                 请选择
               </View>
             </View>
@@ -156,16 +172,24 @@ export default (props) => {
               ></View>
             )}
           </View>
-          <View className="order_pay_font">
-            可用{parseInt(userBean)}卡豆优惠抵扣{parseInt(userBean) / 100}元
-          </View>
+          {computedRight() ? (
+            <View className="order_pay_font">
+              可用{parseInt(userBean)}卡豆优惠抵扣{parseInt(userBean) / 100}元
+            </View>
+          ) : (
+            <View className="order_pay_font">暂无卡豆可用</View>
+          )}
           <View
             className={classNames(
               "order_pay_iconBox",
-              status === "1" ? "order_pay_icon2" : "order_pay_icon1"
+              computedRight()
+                ? status === "1"
+                  ? "order_pay_icon2"
+                  : "order_pay_icon1"
+                : "order_pay_icon4"
             )}
           ></View>
-          {totalFee && (
+          {totalFee > 0 && computedRight() && (
             <View className="order_payType_showPrice">
               - {computedPriceInfo()}
             </View>

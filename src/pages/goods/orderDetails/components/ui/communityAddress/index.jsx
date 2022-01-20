@@ -2,14 +2,7 @@ import React from "react";
 import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.scss";
-import {
-  backgroundObj,
-  filterPayfont,
-  objStatus,
-  getLat,
-  getLnt,
-  mapGo,
-} from "@/utils/utils";
+import { mapGo } from "@/utils/utils";
 export default (props) => {
   const { data = {} } = props;
   const GOODS_BY_TYPE = {

@@ -38,6 +38,7 @@ export default ({ detail }) => {
                 args: {
                   blindType: 1,
                   blindBoxRewardId,
+                  mode: "select",
                 },
               })
             }

@@ -129,9 +129,7 @@ export default (props) => {
             onClick={() =>
               Router({
                 routerName: "home",
-                args: {
-                  type: "switchTab",
-                },
+                type: "switchTab",
               })
             }
           >

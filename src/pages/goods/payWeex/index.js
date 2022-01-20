@@ -35,6 +35,7 @@ class Index extends Component {
       if (result_status == "succeeded") {
         Router({
           routerName: "paySuccess",
+          type: "redirectTo",
           args: {
             orderSn,
           },

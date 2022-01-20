@@ -479,6 +479,7 @@ export default class Index extends React.Component {
         <View className="search_shop_padding">
           <View className="search_shop_inputBox">
             <Input
+              alwaysEmbed={true}
               type={"text"}
               confirmType={"search"}
               onConfirm={() => {

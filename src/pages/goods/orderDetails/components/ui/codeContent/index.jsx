@@ -38,7 +38,7 @@ export default (props) => {
               style={merchantImg ? backgroundObj(merchantImg) : {}}
             ></View>
             <View className="descriptionCard_merchantTitle font_hide">
-              {merchantName}
+              {orderType === "platformGift" ? "哒卡乐官方号" : merchantName}
             </View>
             <View className="descriptionCard_goIcon"></View>
           </View>

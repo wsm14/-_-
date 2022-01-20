@@ -75,3 +75,15 @@ export function fetchGetOnlinePackagePrize(data) {
     url: "/user/package/onlineGoodsAddress",
   });
 }
+export const fetchBindAddress = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/activity/blindBox/reward/blindBoxRewardAddAddress",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+// 商品绑定地址

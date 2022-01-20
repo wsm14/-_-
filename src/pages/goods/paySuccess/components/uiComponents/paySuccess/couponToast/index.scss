@@ -37,6 +37,9 @@
       font-size: 20px;
       font-weight: 400;
       color: #ef476f;
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
     }
   }
   .couponToast_tags {
@@ -70,6 +73,7 @@
     padding: 16px 32px;
   }
   .couponToast_price {
+    padding: 0 32px;
     display: flex;
     align-items: baseline;
   }

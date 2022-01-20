@@ -6,7 +6,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
   const normalList = [
     {
       coverImg:
-        "https://wechat-config.dakale.net/miniprogram/image/icon707.png",
+        "https://wechat-config.dakale.net/miniprogram/image/icon889.png",
       fn: () => {
         Router({
           routerName: "perimeterShops",
@@ -15,7 +15,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
     },
     {
       coverImg:
-        "https://wechat-config.dakale.net/miniprogram/image/icon708.png",
+        "https://wechat-config.dakale.net/miniprogram/image/icon890.png",
       fn: () => {
         Router({
           routerName: "publicTypeGoods",
@@ -29,7 +29,7 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
     },
     {
       coverImg:
-        "https://wechat-config.dakale.net/miniprogram/image/icon709.png",
+        "https://wechat-config.dakale.net/miniprogram/image/icon891.png",
       fn: () => {
         Router({
           routerName: "publicTypeGoods",

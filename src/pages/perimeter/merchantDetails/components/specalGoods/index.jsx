@@ -41,7 +41,7 @@ export default ({ data, list }) => {
               style={{ width: Taro.pxTransform(335) }}
             ></Waterfall>
           ) : (
-            goodsCard(specialGoodsList[0])
+            goodsCard(list[0])
           )}
         </View>
       </>

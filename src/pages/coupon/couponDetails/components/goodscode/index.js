@@ -12,8 +12,13 @@ export default (props) => {
   const [current, setCurrent] = useState(0);
   const [list, setList] = useState([]);
   const qrwh = (304 / 750) * Taro.getSystemInfoSync().windowWidth;
+  const {
+    ownerIdString,
+    ownerCouponIdString,
+    merchantCount,
+    merchantIdString,
+  } = orderResult;
   const goMerchant = (val) => {
-    const { ownerType, merchantIdString, ownerIdString } = val;
     Router({
       routerName: "merchantDetails",
       args: {
@@ -151,12 +156,7 @@ export default (props) => {
     });
   };
   //商品详情
-  const {
-    ownerIdString,
-    ownerCouponIdString,
-    merchantCount,
-    merchantIdString,
-  } = orderResult;
+
   return (
     <View className="couponDetails_title" style={style ? style : {}}>
       <View className="couponDetails_box">

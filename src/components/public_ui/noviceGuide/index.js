@@ -29,8 +29,8 @@ export default ({ auth, stopVideo, initVideo }) => {
       !fetchStorage("newUser")
     ) {
       let time = setTimeout(() => {
-        clearTimeout(time);
         getUserAcquiredPlatformGift();
+        clearTimeout(time);
       }, 3000);
     }
   });
@@ -61,6 +61,7 @@ export default ({ auth, stopVideo, initVideo }) => {
       if (platformGiftPackInfo) {
         setVisibleCoupon(() => {
           setStatus("1");
+
           setData(platformGiftPackInfo);
           stopVideo();
           let num = 0;
@@ -68,6 +69,12 @@ export default ({ auth, stopVideo, initVideo }) => {
             num = num + 1;
             if (num === 5) {
               onCoupon();
+              Router({
+                routerName: "webView",
+                args: {
+                  link: `https://web-new.dakale.net/${env}/game/sign/index.html#/coupon`,
+                },
+              });
               clearInterval(count.val);
             } else {
               setCount({
@@ -154,14 +161,21 @@ export default ({ auth, stopVideo, initVideo }) => {
               <View
                 className="noviceCoupon_btn public_center"
                 onClick={() =>
-                  onCoupon(() =>
+                  onCoupon(() => {
+                    setCount(() => {
+                      clearInterval(count.val);
+                      return {
+                        time: 5,
+                        val: null,
+                      };
+                    });
                     Router({
                       routerName: "webView",
                       args: {
                         link: `https://web-new.dakale.net/${env}/game/sign/index.html#/coupon`,
                       },
-                    })
-                  )
+                    });
+                  })
                 }
               >
                 更多新人福利({count.time}S){" "}

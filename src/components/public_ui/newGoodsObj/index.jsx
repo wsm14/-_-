@@ -56,7 +56,7 @@ export const templateActive = (item, configUserLevelInfo) => {
               </View>
               <View className="bottom_qy_price font_hide">
                 <View className="bottom_qy_label">卡豆价:</View>
-                <View className="bottom_qy_bean">
+                <View className="bottom_qy_bean font_hide">
                   ¥{cash}+{bean}卡豆
                 </View>
               </View>
@@ -201,7 +201,7 @@ export const templateRight = (item, configUserLevelInfo) => {
         </View>
         <View className="bottom_qy_price font_hide">
           <View className="bottom_qy_label">卡豆价:</View>
-          <View className="bottom_qy_bean">
+          <View className="bottom_qy_bean font_hide">
             ¥{cash}+{bean}卡豆
           </View>
         </View>

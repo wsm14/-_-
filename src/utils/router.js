@@ -34,7 +34,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     home: "/pages/index/home/index", //首页
     takeCard: "/pages/index/takeCard/index", //打卡地图
     user: "/pages/index/user/index", //首页个人
-    sign: "/pages/index/sign/index", //首页
+    sign: "/pages/index/sign/index", //游戏
 
     //tab页面和分享
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
@@ -89,7 +89,6 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     commerOrder: "/pages/goods/commerOrder/index", //特惠商品下单
     pay: "/pages/goods/payWeex/index", //支付页
     paySuccess: "/pages/goods/paySuccess/index", //支付成功页
-    xnPay: "/pages/goods/code_wx_pay/index",
     recharge: "/pages/perimeter/recharge/index", //话费充值
     prefecture: "/pages/perimeter/prefecture/index", //卡豆专区
     preChildTure: "/pages/perimeter/preChildTure/index", //吃喝玩乐购

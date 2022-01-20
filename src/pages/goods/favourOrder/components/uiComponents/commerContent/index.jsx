@@ -5,8 +5,8 @@ import Router from "@/utils/router";
 import "./index.scss";
 export default (props) => {
   const { data } = props;
-  const { goodsImg, goodsName, paymentModeObject = {} } = data;
-  const { bean = 0, cash = 0 } = paymentModeObject;
+  const { goodsImg, goodsName, paymentModeObject = {}, realPrice } = data;
+  const { bean = 0, cash = 0, type = "defaultMode" } = paymentModeObject;
 
   return (
     <>
@@ -25,9 +25,13 @@ export default (props) => {
         </View>
         <View className="order_shop_price">
           <View className="order_shop_label">商品总额</View>
-          <View className="order_shop_count">
-            ¥{cash}+{bean}卡豆
-          </View>
+          {type === "defaultMode" ? (
+            <View className="order_shop_count">{realPrice}</View>
+          ) : (
+            <View className="order_shop_count">
+              ¥{cash}+{bean}卡豆
+            </View>
+          )}
         </View>
       </View>
     </>

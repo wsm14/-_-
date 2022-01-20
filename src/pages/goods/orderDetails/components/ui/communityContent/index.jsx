@@ -12,7 +12,14 @@ export default (props) => {
     status,
     communityOrganizationGoods = {},
   } = data;
-
+  const filterCount = (list) => {
+    let num = 0;
+    list.forEach((item) => {
+      const { goodsCount } = item;
+      num += goodsCount;
+    });
+    return num;
+  };
   const { relateOwnerProfile, relateOwnerName, communityGoodsObjectList } =
     communityOrganizationGoods;
   const template = (item) => {
@@ -31,7 +38,7 @@ export default (props) => {
           </View>
           {Object.keys(specificationMap)[0] !== "" && (
             <View className="community_content_text2 font_hide">
-              {Object.keys(specificationMap).join(",")}
+              {Object.values(specificationMap).join(",")}
             </View>
           )}
           <View className="community_content_text3 font_hide">
@@ -56,7 +63,7 @@ export default (props) => {
           <View className="descriptionCard_merchant">
             <View
               className="descriptionCard_profile merchant_dakale_logo"
-              style={relateOwnerProfile}
+              style={backgroundObj(relateOwnerProfile)}
             ></View>
             <View className="descriptionCard_merchantTitle font_hide">
               {relateOwnerName}
@@ -73,16 +80,24 @@ export default (props) => {
             <View>订单金额</View>
             <View className="color1">¥ {totalFee}</View>
           </View>
-          <View className="descriptionCard_discount discount_top">
-            <View className="color3">卡豆帮省</View>
-            <View className="color3">
-              -{beanFee}(¥ {" " + (beanFee / 100).toFixed(2)})
+          {beanFee > 0 && (status === "0" || status === "3") && (
+            <View className="descriptionCard_discount discount_top">
+              <View className="color3">卡豆帮省</View>
+              <View className="color3">
+                -{beanFee}(¥ {" " + (beanFee / 100).toFixed(2)})
+              </View>
             </View>
-          </View>
+          )}
         </View>
         <View className="descriptionCard_liner"></View>
         <View className="descriptionCard_payPrice">
-          <View className="color1">{filterPayfont(status)}金额</View>
+          <View className="color1">
+            {filterPayfont(status)}金额{" "}
+            <Text className="font20 color2">
+              共{filterCount(communityGoodsObjectList)}件
+            </Text>
+          </View>
+          <View className="color2 font20"></View>
           <View className="color3 font20">
             ¥ <Text className="font40 bold">{payFee.split(".")[0]}</Text>
             <Text className="font28">

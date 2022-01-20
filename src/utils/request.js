@@ -111,6 +111,7 @@ const loadBeadRequest = [
   "/user/specialGoods/getPromotionInfo",
   "/user/userInfo/getUserShareCommission",
   "/user/userMerchant/getOwnerExistPromotionStatus",
+  "/user/moment/relate/listMomentRelate",
 ];
 export const httpGet = (obj, fn) => {
   const { header = {}, data = {} } = obj;

@@ -5,11 +5,11 @@ import SpecalTemplate from "./components/template/specialTemplate";
 import CommerceTemplate from "./components/template/commerceTemplate";
 import ScanTemplate from "./components/template/scanTemplate";
 import CommunityTemplate from "./components/template/communityTemplate";
+import PlatfromGift from "./components/template/platformGiftTemplate";
 import { fetchOrderDetails } from "@/server/goods";
 import { fakeRemoveOrder, fakeUpdateOrder } from "@/server/goods";
 import { fetchUserShareCommission } from "@/server/common";
-
-import { filterGoods, goBack } from "@/utils/utils";
+import { filterGoods, goBack, toast } from "@/utils/utils";
 import RecommendSpecal from "@/components/public_ui/specalActive";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
@@ -115,6 +115,13 @@ class Index extends Component {
     const templateCommunity = (
       <CommunityTemplate data={orderInfo}></CommunityTemplate>
     );
+    const templatePlatfromGift = (
+      <PlatfromGift
+        style={status === "6" ? { margin: `${Taro.pxTransform(24)} auto` } : {}}
+        data={orderInfo}
+        reload={this.getGoodsDetails.bind(this)}
+      ></PlatfromGift>
+    );
     const template = {
       reduceCoupon: templateSpecal,
       rightGoods: templateSpecal,
@@ -127,6 +134,7 @@ class Index extends Component {
       scan: templateScan,
       //扫码订单渲染模板
       communityGoods: templateCommunity,
+      platformGift: templatePlatfromGift,
     }[orderType];
 
     return (

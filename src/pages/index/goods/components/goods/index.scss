@@ -103,6 +103,7 @@
         width: 120px;
         height: 120px;
         border-radius: 8px;
+        flex-shrink: 0;
       }
       .createdGood_details_title {
         padding-top: 8px;
@@ -118,6 +119,7 @@
       font-weight: 400;
       color: #ef476f;
       line-height: 24px;
+      max-width: 448px;
     }
     .createdGood_details_time {
       padding-top: 12px;

@@ -492,26 +492,21 @@ class Index extends React.PureComponent {
           followUserId: relateId,
         },
         () =>
-          that.setState(
-            {
-              userMomentsInfo: {
-                ...userMomentsInfo,
-                followStatus: "1",
-              },
-              userMomentsList: this.state.userMomentsList.map((item) => {
-                if (item.relateId === relateId) {
-                  return {
-                    ...item,
-                    followStatus: "1",
-                  };
-                }
-                return item;
-              }),
+          that.setState({
+            userMomentsInfo: {
+              ...userMomentsInfo,
+              followStatus: "1",
             },
-            (res) => {
-              toast("关注成功");
-            }
-          )
+            userMomentsList: this.state.userMomentsList.map((item) => {
+              if (item.relateId === relateId) {
+                return {
+                  ...item,
+                  followStatus: "1",
+                };
+              }
+              return item;
+            }),
+          })
       );
     }
   }

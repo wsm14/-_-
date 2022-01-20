@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Video, Swiper, SwiperItem, View } from "@tarojs/components";
-import BottomView from "./bottom";
+import BottomView from "@/components/videoComponents/videoBottom";
 import { computedVideoSize } from "@/utils/utils";
 import InterVal from "@/components/videoComponents";
 import "./../index.scss";

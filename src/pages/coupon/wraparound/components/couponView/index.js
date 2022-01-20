@@ -181,7 +181,6 @@ export default (props) => {
             className="wraparound_topBox"
             onClick={(e) => {
               e.stopPropagation();
-              goMerchant(item);
             }}
           >
             <View className="wraparound_logo">
@@ -247,7 +246,6 @@ export default (props) => {
             className="wraparound_topBox"
             onClick={(e) => {
               e.stopPropagation();
-              goMerchant(item);
             }}
           >
             <View className="wraparound_logo">

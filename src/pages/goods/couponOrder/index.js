@@ -230,8 +230,7 @@ class Index extends Component {
   computedPayPrice() {
     const {
       couponObj: { couponValue = 0 },
-      ownerCouponInfo: { userBean, buyPrice, paymentModeObject },
-      httpData: { couponCount },
+      ownerCouponInfo: { userBean, buyPrice, paymentModeObject, couponCount },
       useBeanStatus,
       configUserLevelInfo,
     } = this.state;
@@ -247,11 +246,30 @@ class Index extends Component {
         return (Number(buyPrice) * couponCount - couponValue).toFixed(2);
       }
     } else {
-      return cash;
+      return cash * couponCount;
     }
   }
   //底部支付价格
-
+  saveCouponRule() {
+    const { ownerCouponInfo } = this.state;
+    const {
+      rightFlag,
+      paymentModeObject = {},
+      couponCount,
+      userBean,
+    } = ownerCouponInfo;
+    console.log(ownerCouponInfo);
+    const { cash, type = "defaultMode", bean } = paymentModeObject;
+    if (rightFlag === "1") {
+      if (userBean < bean * couponCount) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  }
   render() {
     const {
       ownerCouponInfo,
@@ -290,6 +308,7 @@ class Index extends Component {
           ></SelectBean>
           <BuyDesc data={ownerCouponInfo}></BuyDesc>
           <Submit
+            payFlag={this.saveCouponRule()}
             computedPrice={this.computedPayPrice.bind(this)}
             submit={this.saveCancel.bind(this)}
           ></Submit>
