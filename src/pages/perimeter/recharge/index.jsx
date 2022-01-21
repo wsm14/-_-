@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import router from "@/utils/router";
 import { useRouter, useDidShow, useShareAppMessage } from "@tarojs/taro";
 import { View, Input, Button } from "@tarojs/components";
-import { fetchPhoneBill, fetchShareInfo } from "@/server/common";
+import {
+  fetchPhoneBill,
+  fetchShareInfo,
+  fetchVirtualProductCheckBuyLimit,
+} from "@/server/common";
 import { usePostBackData } from "@/utils/utils";
 import FooterFixed from "@/components/FooterFixed";
 import { rssConfigData } from "./components/data";
@@ -20,11 +24,17 @@ const lt =
 /**
  * identification - 风向标配置标识
  */
-
 const rechargePage = () => {
   const routeParams = useRouter().params;
   const { identification } = routeParams;
 
+  const [selectList, setSelectList] = useState([]); // 选择的话费列表
+  const [moneyDiscount, setMoneyDiscount] = useState(1); // 话费折扣
+  const [phoneMoney, setPhoneMoney] = useState(""); // 选择的充值项目
+  const [cavansShow, setCavansShow] = useState(false); // 分享绘图显示
+  const [phone, setPhone] = useState(""); // 充值的手机号
+  const [videoEnd, setVideoEnd] = useState(false); // 视频是否看完
+  const [limit, setLimit] = useState(""); // 充值限制提示
   const [checkMobile, setCheckMobile] = useState({
     teleForm: "",
     teleMsg: false,
@@ -33,17 +43,12 @@ const rechargePage = () => {
     cavansObj: {},
     shareData: {},
   }); // 分享数据
-  const [selectList, setSelectList] = useState([]); // 选择的话费列表
-  const [moneyDiscount, setMoneyDiscount] = useState(1); // 话费折扣
-  const [phoneMoney, setPhoneMoney] = useState(""); // 选择的充值项目
-  const [cavansShow, setCavansShow] = useState(false); // 分享绘图显示
-  const [phone, setPhone] = useState(""); // 充值的手机号
-  const [videoEnd, setVideoEnd] = useState(false); // 视频是否看完
 
   const { teleForm, teleMsg } = checkMobile;
   const { cavansObj = {}, shareData = {} } = shareDeatils;
 
   useEffect(() => {
+    fetchCheckLimit(); // 充值限制查询
     fetchGetShareData(); // 获取分享图数据
   }, []);
 
@@ -59,6 +64,8 @@ const rechargePage = () => {
     const { type } = data;
     if (type === "videoEnd") {
       setVideoEnd(true);
+      // 直接前往充值
+      handleUpRecharge(true);
     }
   });
 
@@ -75,6 +82,41 @@ const rechargePage = () => {
       return data;
     }
   });
+
+  // 获取分享参数
+  const fetchGetShareData = () => {
+    fetchShareInfo(
+      {
+        shareType: "virtualProduct",
+        subType: "telephone",
+      },
+      (res) => {
+        setShareDeatils({
+          cavansObj: {
+            data: rssConfigData({
+              wxCode: res.qcodeUrl,
+              frontImage: res.backgroundImages,
+            }),
+          },
+          shareData: res,
+        });
+      }
+    );
+  };
+
+  // 检查充值限制
+  const fetchCheckLimit = () => {
+    fetchVirtualProductCheckBuyLimit({
+      productType: "phoneBill",
+      identification,
+    }).then((res) => {
+      if (res.limitFlag === "1") {
+        const msg = res.msg ? res.msg : "您充值已达上限";
+        Taro.showToast({ title: msg, icon: "none" });
+        setLimit(msg);
+      }
+    });
+  };
 
   // 校验手机号
   const regExpMobile = (val) => {
@@ -110,31 +152,10 @@ const rechargePage = () => {
     setPhoneMoney((old) => (old === val ? "" : val));
   };
 
-  // 获取分享参数
-  const fetchGetShareData = () => {
-    fetchShareInfo(
-      {
-        shareType: "virtualProduct",
-        subType: "telephone",
-      },
-      (res) => {
-        setShareDeatils({
-          cavansObj: {
-            data: rssConfigData({
-              wxCode: res.qcodeUrl,
-              frontImage: res.backgroundImages,
-            }),
-          },
-          shareData: res,
-        });
-      }
-    );
-  };
-
   // 立即充值
-  const handleGoRecharge = () => {
+  const handleUpRecharge = (status = false) => {
     // 还没有看视频 前往看广告
-    if (!videoEnd) {
+    if (!videoEnd && !status) {
       router({
         routerName: "advertisingVideo",
       });
@@ -206,11 +227,11 @@ const rechargePage = () => {
             分享
           </View>
           <Button
-            disabled={!phoneMoney || teleMsg || !phone}
-            onClick={handleGoRecharge}
+            disabled={limit || !phoneMoney || teleMsg || !phone}
+            onClick={() => handleUpRecharge()}
             className={"recharge_select_btn"}
           >
-            {videoEnd ? "立即充值" : "看视频享受卡豆折扣充值"}
+            {limit || videoEnd ? "立即充值" : "看视频享受卡豆折扣充值"}
           </Button>
         </View>
       </FooterFixed>

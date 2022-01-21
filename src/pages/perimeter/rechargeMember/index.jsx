@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import router from "@/utils/router";
-import { useRouter } from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { View, Form, Input, Text, Image, Button } from "@tarojs/components";
 import { usePostBackData } from "@/utils/utils";
-import { fetchRechargeMemberLsxdList } from "@/server/common";
+import {
+  fetchRechargeMemberLsxdList,
+  fetchVirtualProductCheckBuyLimit,
+} from "@/server/common";
 import "./index.scss";
 
 /**
@@ -18,8 +21,10 @@ const rechargeMember = () => {
   const [selectItem, setSelectItem] = useState({}); // 选择的充值项目
   const [videoEnd, setVideoEnd] = useState(false); // 视频是否看完
   const [account, setAccount] = useState(""); // 帐号
+  const [limit, setLimit] = useState(""); // 充值限制提示
 
   useEffect(() => {
+    fetchCheckLimit(); // 充值限制查询
     if (virtualProductSubType) fetchGetList();
   }, []);
 
@@ -27,6 +32,8 @@ const rechargeMember = () => {
     const { type } = data;
     if (type === "videoEnd") {
       setVideoEnd(true);
+      // 直接前往充值
+      handleUpRecharge(true);
     }
   });
 
@@ -37,10 +44,24 @@ const rechargeMember = () => {
     });
   };
 
+  // 检查充值限制
+  const fetchCheckLimit = () => {
+    fetchVirtualProductCheckBuyLimit({
+      productType: "member",
+      identification,
+    }).then((res) => {
+      if (res.limitFlag === "1") {
+        const msg = res.msg ? res.msg : "您充值已达上限";
+        Taro.showToast({ title: msg, icon: "none" });
+        setLimit(msg);
+      }
+    });
+  };
+
   // 提交充值
-  const handleUpRecharge = (val) => {
+  const handleUpRecharge = (status = false) => {
     // 还没有看视频 前往看广告
-    if (!videoEnd) {
+    if (!videoEnd && !status) {
       router({
         routerName: "advertisingVideo",
       });
@@ -51,7 +72,7 @@ const rechargeMember = () => {
       routerName: "favourableOrder",
       args: {
         mode: "member",
-        ...val,
+        virtualProductAccount: account,
         identification,
         virtualProductSubType,
         productNo: selectItem.productNo,
@@ -65,7 +86,7 @@ const rechargeMember = () => {
   };
 
   return (
-    <Form onSubmit={(e) => handleUpRecharge(e.detail.value)}>
+    <Form onSubmit={() => handleUpRecharge()}>
       <View className="rechargeMember_box">
         <View className="rechargeMember_head">
           <Image src={selectItem.image} className="rechargeMember_logo"></Image>
@@ -76,11 +97,12 @@ const rechargeMember = () => {
                 原价：<Text>¥{selectItem.oriPrice || 0}</Text>
               </View>
               <View className="rechargeMember_info_bean">
-                ¥{selectItem.price || 0}+{selectItem.price || 0}
+                ¥{selectItem.price || 0}+{selectItem.maxBeanAndCoupon || 0}
                 <Text className="bean">卡豆</Text>
               </View>
               <View className="rechargeMember_info_beanTip">
-                最高可用{selectItem.price || 0}卡豆抵扣3元
+                最高可用{selectItem.maxBeanAndCoupon || 0}卡豆抵扣
+                {(selectItem.maxBeanAndCoupon || 0) / 100}元
               </View>
             </View>
           </View>
@@ -115,11 +137,11 @@ const rechargeMember = () => {
         </View>
         <View className="recharge_footer">
           <Button
-            disabled={!selectItem || !account}
+            disabled={limit || !selectItem || !account}
             formType="submit"
             className="recharge_button"
           >
-            {videoEnd ? "立即充值" : "看视频享受卡豆折扣充值"}
+            {limit || (videoEnd ? "立即充值" : "看视频享受卡豆折扣充值")}
           </Button>
         </View>
       </View>
