@@ -264,6 +264,14 @@ export const fetchPhoneBillDetail = (data = {}, fn) => {
 };
 // 话费充值项目详情;
 
+export const fetchVirtualProductCheckBuyLimit = (data) => {
+  return httpGet({
+    url: "/common/third/virtualProduct/checkBuyLimit",
+    data: data,
+  });
+};
+// 虚拟商品充值限制查询
+
 export const fetchSpecialBarrage = (data = {}, fn) => {
   return httpGet(
     {
