@@ -380,13 +380,16 @@ export default ({ data, updateInfo, list, updateList }) => {
                 <View
                   className="countVisible_order_btnBox countVisible_order_btnStyle2 public_center"
                   onClick={() => {
-                    setTabKey(() => {
-                      setCountVisible(false);
-                      return "invitation";
+                    Router({
+                      routerName: "nearVideo",
+                      args: {
+                        type: "goods",
+                      },
                     });
+                    setCountVisible(false);
                   }}
                 >
-                  去邀请场
+                  看视频捡豆
                 </View>
               </View>
             </View>

@@ -2,6 +2,7 @@ import React from "react";
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { coupon } from "@/components/public_ui/CouponView";
+import Router from "@/utils/router";
 export default ({ data, list }) => {
   const { merchantId } = data;
   if (list.length > 0) {

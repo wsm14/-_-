@@ -98,7 +98,28 @@ export default ({
       couponValue,
       thresholdPrice,
       couponType,
+      useScenesType,
+      classType,
     } = userPlatformCouponInfo;
+    const renderDesc = () => {
+      if (classType === "universal" && useScenesType === "goodsBuy") {
+        return "商品通用券";
+      } else if (classType === "category" && useScenesType === "goodsBuy") {
+        return "行业商品券";
+      } else if (classType === "merchant" && useScenesType === "goodsBuy") {
+        return "店铺商品券";
+      } else if (classType === "goods" && useScenesType === "goodsBuy") {
+        return "指定商品券";
+      } else if (classType === "universal" && useScenesType === "virtual") {
+        return "虚拟通用券";
+      } else if (classType === "goods" && useScenesType === "virtual") {
+        return "指定虚拟券";
+      } else if (classType === "universal" && useScenesType === "commerce") {
+        return "电商通用券";
+      } else if (classType === "goods" && useScenesType === "commerce") {
+        return "指定电商券";
+      }
+    };
     return (
       <View className="couponNews_content">
         <View className="couponNews_title font_hide">{couponName}</View>
@@ -112,9 +133,7 @@ export default ({
             满{thresholdPrice}可用
           </View>
         </View>
-        <View className="couponNews_icon public_center">
-          {couponType === "fullReduce" ? "满减券" : "折扣券"}
-        </View>
+        <View className="couponNews_icon public_center">{renderDesc()}</View>
       </View>
     );
   };
@@ -165,14 +184,51 @@ export default ({
                   thresholdPrice,
                   couponValue,
                   platformCouponId,
+                  classType,
                 } = item;
-                const renter = {
-                  goodsBuy: "商品通用券",
-                  scan: "扫码通用券",
-                  virtual: "虚拟商品券",
-                  commerce: "电商券",
-                  community: "团购券",
-                }[useScenesType];
+                const renderDesc = () => {
+                  if (
+                    classType === "universal" &&
+                    useScenesType === "goodsBuy"
+                  ) {
+                    return "商品通用券";
+                  } else if (
+                    classType === "category" &&
+                    useScenesType === "goodsBuy"
+                  ) {
+                    return "行业商品券";
+                  } else if (
+                    classType === "merchant" &&
+                    useScenesType === "goodsBuy"
+                  ) {
+                    return "店铺商品券";
+                  } else if (
+                    classType === "goods" &&
+                    useScenesType === "goodsBuy"
+                  ) {
+                    return "指定商品券";
+                  } else if (
+                    classType === "universal" &&
+                    useScenesType === "virtual"
+                  ) {
+                    return "虚拟通用券";
+                  } else if (
+                    classType === "goods" &&
+                    useScenesType === "virtual"
+                  ) {
+                    return "指定虚拟券";
+                  } else if (
+                    classType === "universal" &&
+                    useScenesType === "commerce"
+                  ) {
+                    return "电商通用券";
+                  } else if (
+                    classType === "goods" &&
+                    useScenesType === "commerce"
+                  ) {
+                    return "指定电商券";
+                  }
+                };
                 return (
                   <View className="couponBean_coupon_details">
                     <View className="couponBean_coupon_absolute">
@@ -182,7 +238,9 @@ export default ({
                         </View>
                       )}
                     </View>
-                    <View className="couponBean_coupon_title">{renter}</View>
+                    <View className="couponBean_coupon_title">
+                      {renderDesc()}
+                    </View>
                     <View className="couponBean_coupon_price">
                       <View className="couponBean_coupon_price1">¥</View>
                       <View className="couponBean_coupon_price2">

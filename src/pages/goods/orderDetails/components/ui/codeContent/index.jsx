@@ -15,8 +15,8 @@ export default (props) => {
     status,
   } = data;
   orderDesc = JSON.parse(orderDesc);
-  console.log(orderDesc);
-  const { merchantImg, merchantName, merchantIdString, merchantId } = orderDesc;
+  const { merchantImg, merchantName, merchantIdString, merchantId, relateId } =
+    orderDesc;
   const goMerchant = (merchantId) => {
     Router({
       routerName: "merchantDetails",
@@ -31,10 +31,14 @@ export default (props) => {
         {hasMerchant && (
           <View
             className="descriptionCard_merchant"
-            onClick={() =>
-              orderType !== "platformGift" &&
-              goMerchant(merchantIdString || merchantId)
-            }
+            onClick={() => {
+              if (orderType === "commerceGoods") {
+                goMerchant(relateId);
+              } else {
+                orderType !== "platformGift" &&
+                  goMerchant(merchantIdString || merchantId);
+              }
+            }}
           >
             <View
               className="descriptionCard_profile merchant_dakale_logo"

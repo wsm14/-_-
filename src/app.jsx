@@ -31,6 +31,7 @@ class App extends Component {
   }
 
   componentDidShow() {
+    this.fetchCheckUpdate();
     if (!Taro.cloud) {
       console.error("请使用 2.2.3 或以上的基础库以使用云能力");
     } else {
@@ -43,7 +44,6 @@ class App extends Component {
         traceUser: true,
       });
     }
-    this.fetchCheckUpdate();
   }
   getShareType() {
     const {

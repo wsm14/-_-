@@ -268,7 +268,8 @@ export const filterWeek = (str) => {
   return str;
 };
 export const computedBeanPrice = (price, scale) => {
-  let size = (price * (1 - scale / 100)).toFixed(2);
+  let size = (price * (1 - scale / 100)).toFixed(3);
+  size = size.substring(0, size.length - 1);
   if (size === "0.00") {
     return 0.01;
   } else return size;

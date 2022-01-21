@@ -56,23 +56,25 @@ export default (props) => {
   };
   const computedPriceInfo = () => {
     const { cash, type = "defaultMode", bean } = paymentModeObject;
-    if (type === "defaultMode") {
-      const { couponValue = 0 } = couponObj;
-      let price = Number(totalFee) - couponValue;
-      let payBean = price * payBeanCommission;
-      let removeBean = payBean >= userBean ? userBean : payBean;
-      if (removeBean && status === "1") {
-        return (removeBean / 100).toFixed(2);
+    if (useScenesType !== "virtual") {
+      if (type === "defaultMode") {
+        const { couponValue = 0 } = couponObj;
+        let price = Number(totalFee) - couponValue;
+        let payBean = price * payBeanCommission;
+        let removeBean = payBean >= userBean ? userBean : payBean;
+        if (removeBean && status === "1") {
+          return (removeBean / 100).toFixed(2);
+        } else {
+          return 0;
+        }
       } else {
-        return 0;
+        return userBean;
       }
-    } else {
-      return userBean;
-    }
+    } else return (userBean / 100).toFixed(2);
   };
   const computedRight = () => {
     const { bean } = paymentModeObject;
-    if (rightFlag === "1") {
+    if (rightFlag === "1" && useScenesType !== "virtual") {
       if (couponType) {
         if (userBean < bean * couponCount) {
           return false;
@@ -146,6 +148,14 @@ export default (props) => {
       }
     }
   };
+  const templateBean = () => {
+    if (type === "defaultMode") {
+      return `可用${parseInt(computedPriceInfo() * 100)}卡豆优惠抵扣
+      ${computedPriceInfo()}元`;
+    } else {
+      return `可用${userBean}卡豆优惠抵扣${(userBean / 100).toFixed(2)}元`;
+    }
+  };
   return (
     <View className="selectKol_box">
       <View className="selectKol_coupon public_auto">
@@ -173,10 +183,7 @@ export default (props) => {
             )}
           </View>
           {computedRight() ? (
-            <View className="order_pay_font">
-              可用{parseInt(userBean - couponValue * 100)}卡豆优惠抵扣
-              {((userBean - couponValue * 100) / 100).toFixed(2)}元
-            </View>
+            <View className="order_pay_font">{templateBean()}</View>
           ) : (
             <View className="order_pay_font">暂无卡豆可用</View>
           )}

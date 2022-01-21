@@ -9,7 +9,7 @@ import "./index.scss";
  * 底部显示说明和提示，logo
  * mode
  * telephoneCharges-话费福利券包
- * commerceGoods-电商品
+ * ecGoods-电商品
  * beanWelfare-卡豆福利券包
  */
 export default () => {
@@ -29,7 +29,7 @@ export default () => {
       goAppColor: "#FF5A38",
       desc,
     },
-    commerceGoods: {
+    ecGoods: {
       bag: "https://wechat-config.dakale.net/miniprogram/image/beanWelfareZone_2500_tip.png",
       height: 420,
       goAppBag: "#2EA6EE",

@@ -11,7 +11,6 @@ import {
   fetchUserShareCommission,
   fetchShareInfo,
 } from "@/server/common";
-import {} from "@/server/index";
 import { backgroundObj, loginStatus, toast } from "@/utils/utils";
 import { goodsView } from "./components/shop";
 import { rssConfigData } from "./components/shareView/components/data";

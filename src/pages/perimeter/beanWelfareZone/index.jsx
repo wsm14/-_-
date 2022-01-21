@@ -18,7 +18,7 @@ import "./index.scss";
 /**
  * mode
  * telephoneCharges-话费福利券包
- * commerceGoods-电商品
+ * ecGoods-电商品
  * beanWelfare-卡豆福利券包
  */
 export default () => {
@@ -39,7 +39,7 @@ export default () => {
       fetchGetBeanGiftPackDetail({ giftType: mode, buyFlag: 1 }).then((res) => {
         setGoodsData(res.platformGiftPackInfo);
       });
-    } else if (["commerceGoods"].includes(mode)) {
+    } else if (["ecGoods"].includes(mode)) {
       // 电商品
       fetchGetBeanCommerceGoodsDetail().then((res) => {
         const { activityGoodsList = [], userBean } = res;
@@ -85,7 +85,7 @@ export default () => {
     // 卡豆福利券包 话费福利券包
     if (["beanWelfare", "telephoneCharges"].includes(mode)) {
       args = { mode: "beanGiftPack", platformGiftId };
-    } else if (["commerceGoods"].includes(mode)) {
+    } else if (["ecGoods"].includes(mode)) {
       args = { merchantId, specialActivityId }; // 电商品
     }
 
@@ -105,7 +105,7 @@ export default () => {
         />
       ),
     },
-    commerceGoods: {
+    ecGoods: {
       bagColor: "#74CBFF",
       showDom: (
         <DetailCommerceGoods

@@ -30,7 +30,7 @@ export default ({ data = {} }) => {
       text: `价值${giftValue}元${giftName}\n`,
       class: "telephoneCharges",
     },
-    commerceGoods: {
+    ecGoods: {
       bag: "https://wechat-config.dakale.net/miniprogram/image/beanWelfareZone_2500.png",
       text: `价值${giftValue}元精选商品\n`,
       class: "commerceGoods",

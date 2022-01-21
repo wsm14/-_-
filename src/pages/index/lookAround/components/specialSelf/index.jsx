@@ -131,6 +131,7 @@ export default ({ userInfo, type = "specalSelf" }) => {
         </View>
       </View>
       <View className="specialSelf_render">
+        <View className="specialSelf_init_bg"></View>
         <Waterfall
           list={list}
           createDom={

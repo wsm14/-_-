@@ -17,7 +17,28 @@ export default (props) => {
     couponValue,
     thresholdPrice,
     couponType,
+    classType,
+    useScenesType,
   } = userPlatformCouponInfo;
+  const renderDesc = () => {
+    if (classType === "universal" && useScenesType === "goodsBuy") {
+      return "商品通用券";
+    } else if (classType === "category" && useScenesType === "goodsBuy") {
+      return "行业商品券";
+    } else if (classType === "merchant" && useScenesType === "goodsBuy") {
+      return "店铺商品券";
+    } else if (classType === "goods" && useScenesType === "goodsBuy") {
+      return "指定商品券";
+    } else if (classType === "universal" && useScenesType === "virtual") {
+      return "虚拟通用券";
+    } else if (classType === "goods" && useScenesType === "virtual") {
+      return "指定虚拟券";
+    } else if (classType === "universal" && useScenesType === "commerce") {
+      return "电商通用券";
+    } else if (classType === "goods" && useScenesType === "commerce") {
+      return "指定电商券";
+    }
+  };
   const { beanFee = 0 } = orderResult;
   if (show) {
     return (
@@ -42,9 +63,7 @@ export default (props) => {
                 满{thresholdPrice}可用
               </View>
             </View>
-            <View className="couponToast_icon public_center">
-              {couponType === "fullReduce" ? "满减券" : "折扣券"}
-            </View>
+            <View className="couponToast_icon public_center">{renderDesc()}</View>
           </View>
           <View className="couponToast_tags">
             可在「我的-我的券包」中查看券详情

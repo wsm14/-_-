@@ -8,7 +8,6 @@ import { useEffect } from "react";
 export default () => {
   let env = process.env.NODE_ENV === "development" ? "dev" : "product";
   const [visible, setVisible] = useState(false);
-  console.log(loginStatus().createTime);
   useEffect(() => {
     if (loginStatus() && computedTime(loginStatus().createTime) < 3) {
       if (visible) {

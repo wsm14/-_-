@@ -26,22 +26,22 @@ export default ({ bannerList }) => {
         },
       },
       {
-        icon: "user_centerBar_iconTwo",
-        val: `卡豆农场`,
-        fn: () => {
-          if (loginStatus()) {
-          } else {
-            Router({
-              routerName: "login",
-            });
-          }
-        },
-      },
-      {
         icon: "user_centerBar_iconThree",
         val: `集碎片`,
         fn: () => {
           if (loginStatus()) {
+            const env =
+              process.env.NODE_ENV === "development"
+                ? "development"
+                : "production";
+            Router({
+              routerName: "webView",
+              args: {
+                link: `https://web-new.dakale.net/${
+                  env === "development" ? "dev" : "product"
+                }/game/collectGame/index.html#/collect`,
+              },
+            });
           } else {
             Router({
               routerName: "login",
@@ -54,6 +54,10 @@ export default ({ bannerList }) => {
         val: `签到赚豆`,
         fn: () => {
           if (loginStatus()) {
+            Router({
+              routerName: "sign",
+              type: "reLaunch",
+            });
           } else {
             Router({
               routerName: "login",
@@ -66,6 +70,18 @@ export default ({ bannerList }) => {
         val: `免费领商品`,
         fn: () => {
           if (loginStatus()) {
+            const env =
+              process.env.NODE_ENV === "development"
+                ? "development"
+                : "production";
+            Router({
+              routerName: "webView",
+              args: {
+                link: `https://web-new.dakale.net/${
+                  env === "development" ? "dev" : "product"
+                }/game/receiveGame/index.html#/index`,
+              },
+            });
           } else {
             Router({
               routerName: "login",

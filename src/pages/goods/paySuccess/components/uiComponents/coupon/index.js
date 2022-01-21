@@ -10,7 +10,13 @@ export default (props) => {
   const [saveVal, setSaveVal] = useState(null);
   useEffect(() => {
     const { relateOwnerId, merchantId, merchantIdString } = data;
-    if (relateOwnerId && merchantId && list.length === 0) {
+    if (
+      relateOwnerId &&
+      merchantId &&
+      list.length === 0 &&
+      merchantIdString !== -1 &&
+      relateOwnerId !== -1
+    ) {
       getListFreeCoupon(
         { relateOwnerId, merchantId: merchantIdString },
         () => {}
@@ -22,7 +28,6 @@ export default (props) => {
   }, [data]);
   const saveCoupon = (obj) => {
     const { ownerCouponId } = obj;
-
     if (saveVal) {
       return;
     }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { toast } from "@/utils/utils";
+import { objStatus, toast } from "@/utils/utils";
 import { inject, observer } from "mobx-react";
 import {
   fetchPhoneBillDetail,
@@ -265,9 +265,24 @@ class Index extends Component {
   }
   //选择是否使用卡豆
   setCoupon(item) {
-    this.setState({
-      couponObj: item,
-    });
+    this.setState(
+      {
+        couponObj: item,
+      },
+      (res) => {
+        const { mode } = getCurrentInstance().router.params;
+        // 充值会员获取详情接口 防止和其他杂糅
+        if (mode === "member") {
+          this.fetchRechargeMemberLsxdDetail();
+          return;
+        }
+        // 话费充值详情获取
+        if (mode === "phoneBill") {
+          this.fetchPhoneBillDetail();
+          return;
+        }
+      }
+    );
   }
   //设置优惠券
   computedPayPrice() {
@@ -441,12 +456,17 @@ class Index extends Component {
   fetchRechargeMemberLsxdDetail() {
     const { productNo, virtualProductAccount, identification } =
       getCurrentInstance().router.params;
+    const { couponObj } = this.state;
+    const { userCouponId } = couponObj;
     fetchRechargeMemberLsxdDetail({
       productNo,
       identification,
       goodsCount: 1,
       virtualProductAccount,
+      userCouponId,
     }).then((res) => {
+      const { lsxdSubMemberInfo = {} } = res;
+      const { realCouponValue } = lsxdSubMemberInfo;
       this.setState({
         specialGoodsInfo: {
           rightFlag: "1", // 为了显示 专区优惠 标识
@@ -454,6 +474,9 @@ class Index extends Component {
           ...(res.lsxdSubMemberInfo || {}),
           realPrice: res.lsxdSubMemberInfo.price,
         },
+        couponObj: objStatus(couponObj)
+          ? { ...couponObj, couponValue: realCouponValue }
+          : {},
       });
     });
   }
@@ -461,43 +484,54 @@ class Index extends Component {
   // 获取话费充值详情
   fetchPhoneBillDetail() {
     const { totalFee, identification } = getCurrentInstance().router.params;
-    fetchPhoneBillDetail({ phoneMoney: totalFee, identification }).then(
-      (res) => {
-        const { phoneBillInfo = {} } = res;
-        this.setState({
-          specialGoodsInfo: {
-            rightFlag: "1", // 为了显示 专区优惠 标识
-            activityType: "rechargeMember", // 为了显示模块
-            ...(phoneBillInfo || {}),
-            image:
-              "https://wechat-config.dakale.net/miniprogram/image/rechargePhone.png",
-            oriPrice: phoneBillInfo.totalFee,
-            realPrice: phoneBillInfo.totalFee,
-          },
-        });
-      }
-    );
+    const { couponObj } = this.state;
+    const { userCouponId } = couponObj;
+    fetchPhoneBillDetail({
+      phoneMoney: totalFee,
+      userCouponId,
+      identification,
+    }).then((res) => {
+      const { phoneBillInfo = {} } = res;
+      const { realCouponValue } = phoneBillInfo;
+      this.setState({
+        specialGoodsInfo: {
+          rightFlag: "1", // 为了显示 专区优惠 标识
+          activityType: "rechargeMember", // 为了显示模块
+          ...(phoneBillInfo || {}),
+          image:
+            "https://wechat-config.dakale.net/miniprogram/image/rechargePhone.png",
+          oriPrice: phoneBillInfo.totalFee,
+          realPrice: phoneBillInfo.totalFee,
+        },
+        couponObj: objStatus(couponObj)
+          ? { ...couponObj, couponValue: realCouponValue }
+          : {},
+      });
+    });
   }
 
   // 话费券/礼包购买详情查询
   fetchGetGiftPackPriceDetail() {
     const { platformGiftId } = getCurrentInstance().router.params;
-    fetchGetGiftPackPriceDetail({ platformGiftId, goodsCount: 1 }).then(
-      (res) => {
-        const { platformGiftPackInfo = {} } = res;
-        this.setState({
-          specialGoodsInfo: {
-            rightFlag: "1", // 为了显示 专区优惠 标识
-            activityType: "beanGiftPack", // 为了显示模块
-            ...(platformGiftPackInfo || {}),
-            image:
-              "https://wechat-config.dakale.net/miniprogram/image/coupon_big.png",
-            oriPrice: platformGiftPackInfo.giftValue,
-            realPrice: platformGiftPackInfo.buyPrice,
-          },
-        });
-      }
-    );
+
+    fetchGetGiftPackPriceDetail({
+      platformGiftId,
+      goodsCount: 1,
+      userCouponId,
+    }).then((res) => {
+      const { platformGiftPackInfo = {} } = res;
+      this.setState({
+        specialGoodsInfo: {
+          rightFlag: "1", // 为了显示 专区优惠 标识
+          activityType: "beanGiftPack", // 为了显示模块
+          ...(platformGiftPackInfo || {}),
+          image:
+            "https://wechat-config.dakale.net/miniprogram/image/coupon_big.png",
+          oriPrice: platformGiftPackInfo.giftValue,
+          realPrice: platformGiftPackInfo.buyPrice,
+        },
+      });
+    });
   }
 
   // 会员确认充值 提交订单
@@ -676,7 +710,7 @@ class Index extends Component {
       rechargeMember: (
         <Recharge
           data={specialGoodsInfo}
-          useScenesType={"rechargeMember"}
+          useScenesType={"virtual"}
           status={useBeanStatus}
           couponObj={couponObj}
           changeBean={this.changeBean.bind(this)}
@@ -689,7 +723,7 @@ class Index extends Component {
       beanGiftPack: (
         <BeanGiftPack
           data={specialGoodsInfo}
-          useScenesType={"beanGiftPack"}
+          useScenesType={"virtual"}
           status={useBeanStatus}
           couponObj={couponObj}
           changeBean={this.changeBean.bind(this)}

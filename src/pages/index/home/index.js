@@ -112,7 +112,6 @@ class Index extends React.PureComponent {
     const { createTime } = loginStatus() || {};
     const { userMomentsInfo, momentLinkBeanStage } = this.state;
     const { tippingBean } = userMomentsInfo;
-
     if (computedTime(createTime) < 3 && loginStatus()) {
       const count = computedTime(createTime);
       let countObj = fetchStorage(`day${count}`);

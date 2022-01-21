@@ -4,6 +4,7 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { loginStatus } from "@/utils/utils";
 import { fakeShareCard } from "@/server/share";
 import { fetchNewShareInfo } from "@/server/common";
+import { fetchShareParamInfo } from "@/server/common";
 import "./index.scss";
 import Router from "@/utils/router";
 class Index extends Component {
@@ -25,6 +26,21 @@ class Index extends Component {
         shareInfo,
       });
     });
+  }
+  fetchShareType() {
+    const { scene } = getCurrentInstance().router.params;
+    if (scene) {
+      fetchShareParamInfo({ uniqueKey: scene }, (res) => {
+        const {
+          shareParamInfo: { param },
+        } = res;
+        if (param && JSON.parse(param)) {
+          this.setState({
+            ...JSON.parse(param),
+          });
+        }
+      });
+    }
   }
   linkTo() {
     const env =
@@ -100,6 +116,7 @@ class Index extends Component {
   }
   componentDidMount() {
     const { userType } = this.state;
+    this.fetchShareType();
     if (userType !== "submit") {
       this.shareInfo();
     }

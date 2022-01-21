@@ -117,22 +117,22 @@
     align-items: center;
     height: 36px;
     margin-right: 8px;
-    padding: 0 8px;
-    background: #fff9e4;
+    padding: 0 8px 0 0;
+    background: #fef1f4;
     border-radius: 4px;
   }
   .bottom_kol_s::before {
     display: block;
-    width: 57px;
-    height: 20px;
+    width: 69px;
+    height: 36px;
     margin-right: 14px;
-    background: url(https://wechat-config.dakale.net/miniprogram/image/s_icon.png)
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon895.png)
       no-repeat;
     background-size: 100% 100%;
     content: "";
   }
   .bottom_kol_bean {
-    color: #ffb41c;
+    color: rgba(239, 71, 111, 1);
     font-weight: bold;
     font-size: 28px;
   }
