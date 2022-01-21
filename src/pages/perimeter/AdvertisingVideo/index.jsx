@@ -53,6 +53,8 @@ const AdvertisingVideo = () => {
           console.log("video end");
           clearTimeout(refTimer.current);
           setPrizeStatus(true);
+          // 直接跳回充值页面
+          navigatePostBack({ type: "videoEnd" });
         }
       }, 1000);
     } else {

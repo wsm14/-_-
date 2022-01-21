@@ -27,6 +27,8 @@ const rechargeMember = () => {
     const { type } = data;
     if (type === "videoEnd") {
       setVideoEnd(true);
+      // 直接前往充值
+      handleUpRecharge(true);
     }
   });
 

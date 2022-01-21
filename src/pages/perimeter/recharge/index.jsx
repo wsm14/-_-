@@ -20,7 +20,6 @@ const lt =
 /**
  * identification - 风向标配置标识
  */
-
 const rechargePage = () => {
   const routeParams = useRouter().params;
   const { identification } = routeParams;
@@ -59,6 +58,8 @@ const rechargePage = () => {
     const { type } = data;
     if (type === "videoEnd") {
       setVideoEnd(true);
+      // 直接前往充值
+      handleUpRecharge(true);
     }
   });
 
@@ -75,6 +76,27 @@ const rechargePage = () => {
       return data;
     }
   });
+
+  // 获取分享参数
+  const fetchGetShareData = () => {
+    fetchShareInfo(
+      {
+        shareType: "virtualProduct",
+        subType: "telephone",
+      },
+      (res) => {
+        setShareDeatils({
+          cavansObj: {
+            data: rssConfigData({
+              wxCode: res.qcodeUrl,
+              frontImage: res.backgroundImages,
+            }),
+          },
+          shareData: res,
+        });
+      }
+    );
+  };
 
   // 校验手机号
   const regExpMobile = (val) => {
@@ -110,31 +132,10 @@ const rechargePage = () => {
     setPhoneMoney((old) => (old === val ? "" : val));
   };
 
-  // 获取分享参数
-  const fetchGetShareData = () => {
-    fetchShareInfo(
-      {
-        shareType: "virtualProduct",
-        subType: "telephone",
-      },
-      (res) => {
-        setShareDeatils({
-          cavansObj: {
-            data: rssConfigData({
-              wxCode: res.qcodeUrl,
-              frontImage: res.backgroundImages,
-            }),
-          },
-          shareData: res,
-        });
-      }
-    );
-  };
-
   // 立即充值
-  const handleGoRecharge = () => {
+  const handleUpRecharge = (status = false) => {
     // 还没有看视频 前往看广告
-    if (!videoEnd) {
+    if (!videoEnd && !status) {
       router({
         routerName: "advertisingVideo",
       });
@@ -207,7 +208,7 @@ const rechargePage = () => {
           </View>
           <Button
             disabled={!phoneMoney || teleMsg || !phone}
-            onClick={handleGoRecharge}
+            onClick={handleUpRecharge}
             className={"recharge_select_btn"}
           >
             {videoEnd ? "立即充值" : "看视频享受卡豆折扣充值"}

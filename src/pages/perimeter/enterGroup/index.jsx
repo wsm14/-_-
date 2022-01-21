@@ -75,7 +75,10 @@ export default () => {
           ></Image>
           {/* 加入社群按钮 */}
           <View className="enterGroup_hidden">
-            <cell url="https://work.weixin.qq.com/gm/2bb7c5d5c05ebae070b893e0671fc458"></cell>
+            <cell
+              url="https://work.weixin.qq.com/gm/2bb7c5d5c05ebae070b893e0671fc458"
+              onCompleteMessage={(e) => console.log(e.detail)}
+            ></cell>
           </View>
         </View>
       </View>
