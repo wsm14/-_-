@@ -572,7 +572,7 @@ class Index extends Component {
     });
   }
   saveGoodsRule() {
-    const { specialGoodsInfo } = this.state;
+    const { specialGoodsInfo, useBeanStatus } = this.state;
     const {
       rightFlag,
       paymentModeObject = {},
@@ -581,10 +581,14 @@ class Index extends Component {
     } = specialGoodsInfo;
     const { cash, type = "defaultMode", bean } = paymentModeObject;
     if (rightFlag === "1") {
-      if (userBean < bean * goodsCount) {
-        return false;
+      if (useBeanStatus === "1") {
+        if (userBean < bean * goodsCount) {
+          return false;
+        } else {
+          return true;
+        }
       } else {
-        return true;
+        return false;
       }
     } else {
       return true;

@@ -6,10 +6,11 @@ import "./index.scss";
 import Router from "@/utils/router";
 import { useEffect } from "react";
 export default () => {
-  let env = process.env.NODE_ENV === "development" ? "dev" : "dev";
+  let env = process.env.NODE_ENV === "development" ? "dev" : "product";
   const [visible, setVisible] = useState(false);
+  console.log(loginStatus().createTime);
   useEffect(() => {
-    if (loginStatus() && computedTime(loginStatus().computedTime) < 3) {
+    if (loginStatus() && computedTime(loginStatus().createTime) < 3) {
       if (visible) {
         return;
       }
@@ -22,7 +23,7 @@ export default () => {
     }
   }, []);
   useDidShow(() => {
-    if (loginStatus() && computedTime(loginStatus().computedTime) < 3) {
+    if (loginStatus() && computedTime(loginStatus().createTime) < 3) {
       if (visible) {
         return;
       }

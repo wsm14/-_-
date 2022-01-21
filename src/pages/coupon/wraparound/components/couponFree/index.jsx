@@ -64,7 +64,9 @@ export default ({ data, status }) => {
               dayNum < 3 && dayNum > 0 ? "color3" : "color2"
             }`}
           >
-            {dayNum < 3 && dayNum >= 0
+            {dayNum <= 1
+              ? "今日过期"
+              : dayNum < 3 && dayNum >= 0
               ? `${dayNum}天后过期`
               : `${activeBeginDate} 至 ${activeEndDate}可用`}
           </View>
@@ -79,12 +81,14 @@ export default ({ data, status }) => {
       <View className="couponFree_content">
         <View
           onClick={() => {
-            setVisible(!visible);
+            otherDesc && setVisible(!visible);
           }}
           className={
-            visible
-              ? "couponFree_coupon_bottomIcon"
-              : "couponFree_coupon_bottomIcon1"
+            otherDesc
+              ? visible
+                ? "couponFree_coupon_bottomIcon"
+                : "couponFree_coupon_bottomIcon1"
+              : "couponFree_coupon_bottomNoIcon"
           }
         >
           {renderDesc()}

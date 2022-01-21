@@ -14,6 +14,7 @@ import {
   computedPrice,
   toast,
   filterStrList,
+  objStatus,
 } from "@/utils/utils";
 import Router from "@/utils/router";
 import NullStatus from "./components/nullStatus";
@@ -364,160 +365,170 @@ class Index extends Component {
     const { bean = "", cash = "" } = paymentModeObject;
     const { beanLimitStatus } = this.props.store.homeStore;
     const { beanLimit } = this.props.store.commonStore;
-    if (ownerCouponStatus === "1") {
-      return (
-        <View className="payCoupon_box">
-          <TaroShareDrawer
-            {...cavansObj}
-            onSave={() => console.log("点击保存")}
-            onClose={() =>
-              this.setState({ cavansObj: { start: false, data: null } })
-            }
-          ></TaroShareDrawer>
-          <Coupon
-            configUserLevelInfo={configUserLevelInfo}
-            data={couponDetail}
-            setCollection={this.setCollection.bind(this)}
-            getShareInfo={this.getShareInfo.bind(this)}
-            close={() =>
-              this.setState({
-                showDownload: false,
-              })
-            }
-            show={showDownload}
-            onChange={() =>
-              this.setState({
-                mxVisible: true,
-              })
-            }
-          ></Coupon>
-          <Card
-            configUserLevelInfo={configUserLevelInfo}
-            data={{
-              ...couponDetail,
-              allowRefund: anytimeRefund,
-              allowExpireRefund: expireRefund,
-            }}
-          ></Card>
-
-          <Merchant
-            serviceType={"coupon"}
-            ownerServiceId={ownerCouponIdString}
-            data={couponDetail}
-          ></Merchant>
-          {(couponDetail.couponDetail || couponDetailImg) && (
-            <View className="shopdetails_shop_details">
-              <View className="shopdetails_shop_merchantDetails">商品描述</View>
-              {couponDetail.couponDetail && (
-                <View className="shopdetails_dec">
-                  <Text>{couponDetail.couponDetail.replace(/\\n/g, "\n")}</Text>
-                </View>
-              )}
-              <View className="shopdetails_Image">
-                {couponDetailImg &&
-                  filterStrList(couponDetailImg).map((item) => {
-                    return (
-                      <Image
-                        mode="widthFix"
-                        src={item}
-                        onClick={() => {
-                          Taro.previewImage({
-                            urls: [item],
-                          });
-                        }}
-                        style={{ width: "100%" }}
-                      ></Image>
-                    );
-                  })}
-              </View>
-            </View>
-          )}
-          {richText && (
-            <View className="shopdetails_shop_details">
-              <View className="shopdetails_shop_merchantDetails">商品描述</View>
-              <RichText
-                nodes={richText}
-                className="temPlateComment_desc"
-              ></RichText>
-            </View>
-          )}
-          {/*使用须知*/}
-          <KnowPay data={couponDetail} type="coupon"></KnowPay>
-          {/*使用方法*/}
-          <Rule></Rule>
-          {/*使用规则*/}
-          <Recommend
-            defaultData={couponDetail}
-            current={true}
-            userInfo={configUserLevelInfo}
-          ></Recommend>
-          {/*商品底部 按钮以及优惠提示栏*/}
-          <FixedBtn
-            configUserLevelInfo={configUserLevelInfo}
-            shareInfo={this.getShareInfo.bind(this)}
-            saveInfo={this.saveCouponOrder.bind(this)}
-            beanLimit={beanLimit}
-            data={couponDetail}
-            httpData={httpData}
-          ></FixedBtn>
-          <Wares
-            close={(fn) =>
-              this.setState({ mxVisible: false }, (res) => {
-                fn && fn();
-              })
-            }
-            visible={mxVisible}
-            configUserLevelInfo={configUserLevelInfo}
-            data={couponDetail}
-            status={beanLimitStatus}
-          ></Wares>
-          {drawerVisible && (
-            <Drawer
-              show={drawerVisible}
-              close={() => {
+    if (objStatus(couponDetail)) {
+      if (ownerCouponStatus === "1") {
+        return (
+          <View className="payCoupon_box">
+            <TaroShareDrawer
+              {...cavansObj}
+              onSave={() => console.log("点击保存")}
+              onClose={() =>
+                this.setState({ cavansObj: { start: false, data: null } })
+              }
+            ></TaroShareDrawer>
+            <Coupon
+              configUserLevelInfo={configUserLevelInfo}
+              data={couponDetail}
+              setCollection={this.setCollection.bind(this)}
+              getShareInfo={this.getShareInfo.bind(this)}
+              close={() =>
                 this.setState({
-                  drawerVisible: false,
-                });
+                  showDownload: false,
+                })
+              }
+              show={showDownload}
+              onChange={() =>
+                this.setState({
+                  mxVisible: true,
+                })
+              }
+            ></Coupon>
+            <Card
+              configUserLevelInfo={configUserLevelInfo}
+              data={{
+                ...couponDetail,
+                allowRefund: anytimeRefund,
+                allowExpireRefund: expireRefund,
               }}
-            >
-              <RightFlag
-                data={{
-                  img: couponDetailImg,
-                  name: couponName,
-                  price: cash,
-                  bean: bean - userBean,
-                }}
-                close={(e) => {
-                  this.setState({ drawerVisible: false }, (res) => {
-                    e && e();
+            ></Card>
+
+            <Merchant
+              serviceType={"coupon"}
+              ownerServiceId={ownerCouponIdString}
+              data={couponDetail}
+            ></Merchant>
+            {(couponDetail.couponDetail || couponDetailImg) && (
+              <View className="shopdetails_shop_details">
+                <View className="shopdetails_shop_merchantDetails">
+                  商品描述
+                </View>
+                {couponDetail.couponDetail && (
+                  <View className="shopdetails_dec">
+                    <Text>
+                      {couponDetail.couponDetail.replace(/\\n/g, "\n")}
+                    </Text>
+                  </View>
+                )}
+                <View className="shopdetails_Image">
+                  {couponDetailImg &&
+                    filterStrList(couponDetailImg).map((item) => {
+                      return (
+                        <Image
+                          mode="widthFix"
+                          src={item}
+                          onClick={() => {
+                            Taro.previewImage({
+                              urls: [item],
+                            });
+                          }}
+                          style={{ width: "100%" }}
+                        ></Image>
+                      );
+                    })}
+                </View>
+              </View>
+            )}
+            {richText && (
+              <View className="shopdetails_shop_details">
+                <View className="shopdetails_shop_merchantDetails">
+                  商品描述
+                </View>
+                <RichText
+                  nodes={richText}
+                  className="temPlateComment_desc"
+                ></RichText>
+              </View>
+            )}
+            {/*使用须知*/}
+            <KnowPay data={couponDetail} type="coupon"></KnowPay>
+            {/*使用方法*/}
+            <Rule></Rule>
+            {/*使用规则*/}
+            <Recommend
+              defaultData={couponDetail}
+              current={true}
+              userInfo={configUserLevelInfo}
+            ></Recommend>
+            {/*商品底部 按钮以及优惠提示栏*/}
+            <FixedBtn
+              configUserLevelInfo={configUserLevelInfo}
+              shareInfo={this.getShareInfo.bind(this)}
+              saveInfo={this.saveCouponOrder.bind(this)}
+              beanLimit={beanLimit}
+              data={couponDetail}
+              httpData={httpData}
+            ></FixedBtn>
+            <Wares
+              close={(fn) =>
+                this.setState({ mxVisible: false }, (res) => {
+                  fn && fn();
+                })
+              }
+              visible={mxVisible}
+              configUserLevelInfo={configUserLevelInfo}
+              data={couponDetail}
+              status={beanLimitStatus}
+            ></Wares>
+            {drawerVisible && (
+              <Drawer
+                show={drawerVisible}
+                close={() => {
+                  this.setState({
+                    drawerVisible: false,
                   });
                 }}
-              ></RightFlag>
-            </Drawer>
-          )}
-          {visible && (
-            <Toast
-              title={"哒卡乐温馨提示"}
-              close={() => this.setState({ visible: false })}
-            >
-              <View className="shop_dakale_content">
-                {buyRule === "dayLimit" ? (
-                  <>
-                    <View>
-                      每人每天限购{dayMaxBuyAmount}
-                      份，您今天已享受本次优惠，请明天再来
-                    </View>
-                  </>
-                ) : (
-                  <View>每人限购{personLimit}份，您已享受本次优惠</View>
-                )}
-              </View>
-            </Toast>
-          )}
-        </View>
-      );
+              >
+                <RightFlag
+                  data={{
+                    img: couponDetailImg,
+                    name: couponName,
+                    price: cash,
+                    bean: bean - userBean,
+                  }}
+                  close={(e) => {
+                    this.setState({ drawerVisible: false }, (res) => {
+                      e && e();
+                    });
+                  }}
+                ></RightFlag>
+              </Drawer>
+            )}
+            {visible && (
+              <Toast
+                title={"哒卡乐温馨提示"}
+                close={() => this.setState({ visible: false })}
+              >
+                <View className="shop_dakale_content">
+                  {buyRule === "dayLimit" ? (
+                    <>
+                      <View>
+                        每人每天限购{dayMaxBuyAmount}
+                        份，您今天已享受本次优惠，请明天再来
+                      </View>
+                    </>
+                  ) : (
+                    <View>每人限购{personLimit}份，您已享受本次优惠</View>
+                  )}
+                </View>
+              </Toast>
+            )}
+          </View>
+        );
+      } else {
+        return <NullStatus userInfo={configUserLevelInfo}></NullStatus>;
+      }
     } else {
-      return <NullStatus userInfo={configUserLevelInfo}></NullStatus>;
+      return null;
     }
   }
 }

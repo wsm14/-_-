@@ -11,8 +11,9 @@ import {
 } from "@/utils/utils";
 import Router from "@/utils/router";
 import "./index.scss";
+let timeOutInfo = null;
 export default ({ auth, stopVideo, initVideo }) => {
-  let env = process.env.NODE_ENV === "development" ? "dev" : "dev";
+  let env = process.env.NODE_ENV === "development" ? "dev" : "product";
   const [visible, setVisible] = useState(false);
   const [visibleCoupon, setVisibleCoupon] = useState(false);
   const [status, setStatus] = useState(null);
@@ -20,6 +21,7 @@ export default ({ auth, stopVideo, initVideo }) => {
   const [count, setCount] = useState({
     time: 5,
     val: null,
+    init: null,
   });
   useDidShow(() => {
     const { createTime } = loginStatus() || {};
@@ -28,9 +30,8 @@ export default ({ auth, stopVideo, initVideo }) => {
       computedTime(createTime) < 3 &&
       !fetchStorage("newUser")
     ) {
-      let time = setTimeout(() => {
+      setTimeout(() => {
         getUserAcquiredPlatformGift();
-        clearTimeout(time);
       }, 3000);
     }
   });
@@ -47,8 +48,8 @@ export default ({ auth, stopVideo, initVideo }) => {
   }, [auth]);
   useEffect(() => {
     return () => {
-      if (count.val) {
-        clearInterval(count);
+      if (timeOutInfo) {
+        clearInterval(timeOutInfo);
       }
     };
   }, []);
@@ -57,28 +58,27 @@ export default ({ auth, stopVideo, initVideo }) => {
       giftType: "newUser",
     }).then((val) => {
       const { platformGiftPackInfo } = val;
-      if (platformGiftPackInfo) {
+      if (platformGiftPackInfo && !timeOutInfo) {
         setVisibleCoupon(() => {
           setStatus("1");
           setData(platformGiftPackInfo);
           stopVideo();
           let num = 0;
-          const val = setInterval(() => {
+          timeOutInfo = setInterval(() => {
             num = num + 1;
             if (num === 5) {
-              onCoupon(() => {
+              clearInterval(timeOutInfo);
+              !fetchStorage("newUser") &&
                 Router({
                   routerName: "webView",
                   args: {
                     link: `https://web-new.dakale.net/${env}/game/sign/index.html#/coupon`,
                   },
                 });
-              });
-              clearInterval(count.val);
+              onCoupon();
             } else {
               setCount({
                 time: 5 - num,
-                val: val,
               });
             }
           }, 1000);
@@ -162,7 +162,7 @@ export default ({ auth, stopVideo, initVideo }) => {
                 onClick={() =>
                   onCoupon(() => {
                     setCount(() => {
-                      clearInterval(count.val);
+                      clearInterval(timeOutInfo);
                       Router({
                         routerName: "webView",
                         args: {
@@ -172,6 +172,7 @@ export default ({ auth, stopVideo, initVideo }) => {
                       return {
                         time: 5,
                         val: null,
+                        init: {},
                       };
                     });
                   })
@@ -197,6 +198,5 @@ export default ({ auth, stopVideo, initVideo }) => {
     fn && fn();
   };
   /* 显示隐藏动画  */
-
   return template();
 };

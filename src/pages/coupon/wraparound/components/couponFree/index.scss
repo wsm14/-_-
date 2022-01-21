@@ -107,6 +107,10 @@
   margin: 80px 32px 0;
   font-size: 24px;
   color: #999999;
+  .couponFree_coupon_bottomNoIcon {
+    display: flex;
+    align-items: center;
+  }
   .couponFree_coupon_bottomIcon {
     display: flex;
     align-items: center;

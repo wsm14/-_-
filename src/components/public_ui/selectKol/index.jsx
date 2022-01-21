@@ -35,7 +35,7 @@ export default (props) => {
     couponCount,
   } = data;
   const { payBeanCommission = 50 } = configUserLevelInfo;
-
+  const { couponValue = 0 } = couponObj;
   const linkCoupon = () => {
     if (!totalFee) {
       return toast("输入价格有误,请在输入价格后选择优惠券");
@@ -174,7 +174,8 @@ export default (props) => {
           </View>
           {computedRight() ? (
             <View className="order_pay_font">
-              可用{parseInt(userBean)}卡豆优惠抵扣{parseInt(userBean) / 100}元
+              可用{parseInt(userBean - couponValue * 100)}卡豆优惠抵扣
+              {((userBean - couponValue * 100) / 100).toFixed(2)}元
             </View>
           ) : (
             <View className="order_pay_font">暂无卡豆可用</View>

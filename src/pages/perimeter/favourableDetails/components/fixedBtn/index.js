@@ -29,7 +29,7 @@ export default (props) => {
   const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
   const computedBeanInfo = (price) => {
     if (userBean >= computedPrice(price, payBeanCommission) * 100) {
-      return Number(computedPrice(price, payBeanCommission) * 100);
+      return Number(computedPrice(price, payBeanCommission) * 100).toFixed(2);
     } else {
       return userBean;
     }
@@ -99,20 +99,19 @@ export default (props) => {
                 </View>
               </>
             )}
-            {userCouponObjects.length > 0 &&
-              userBean > 0 &&
-              computedRel() > 0 && <View className="font24 colo1">，</View>}
-            {userBean > 0 && computedRel() > 0 && (
-              <>
-                <View className="font24 color1">
-                  {computedBeanInfo(computedRel())}
-                  卡豆抵扣{" "}
-                </View>
-                <View className="font24 color3">
-                  {(computedBeanInfo(computedRel()) / 100).toFixed(2)}元
-                </View>
-              </>
+            {userCouponObjects.length > 0 && (
+              <View className="font24 colo1">，</View>
             )}
+
+            <>
+              <View className="font24 color1">
+                {computedBeanInfo(computedRel())}
+                卡豆抵扣{" "}
+              </View>
+              <View className="font24 color3">
+                {(computedBeanInfo(computedRel()) / 100).toFixed(2)}元
+              </View>
+            </>
           </View>
         ) : (
           <View className="fixedBtn_computedBean  font24">

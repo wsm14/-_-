@@ -251,7 +251,7 @@ class Index extends Component {
   }
   //底部支付价格
   saveCouponRule() {
-    const { ownerCouponInfo } = this.state;
+    const { ownerCouponInfo, useBeanStatus } = this.state;
     const {
       rightFlag,
       paymentModeObject = {},
@@ -261,10 +261,14 @@ class Index extends Component {
     console.log(ownerCouponInfo);
     const { cash, type = "defaultMode", bean } = paymentModeObject;
     if (rightFlag === "1") {
-      if (userBean < bean * couponCount) {
-        return false;
+      if (useBeanStatus === "1") {
+        if (userBean < bean * couponCount) {
+          return false;
+        } else {
+          return true;
+        }
       } else {
-        return true;
+        return false;
       }
     } else {
       return true;

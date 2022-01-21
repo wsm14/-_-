@@ -18,18 +18,16 @@ export default (props) => {
     thresholdPrice,
     couponType,
   } = userPlatformCouponInfo;
-  const { beanFee } = orderResult;
+  const { beanFee = 0 } = orderResult;
   if (show) {
     return (
       <Drawer close={visible} show={show}>
         <View className="couponToast_box">
           <View className="couponToast_bean">
-            {beanFee > 0 && (
-              <>
-                <View>本单卡豆帮你节省</View>
-                <View> ¥ {(Number(beanFee) / 100).toFixed(2)}元</View>
-              </>
-            )}
+            <>
+              <View>本单卡豆帮你节省</View>
+              <View> ¥ {(Number(beanFee) / 100).toFixed(2)}元</View>
+            </>
           </View>
           <View className="couponToast_desc">再送你一张通用券</View>
           <View className="couponToast_content">

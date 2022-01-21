@@ -19,10 +19,10 @@ export default (props) => {
     paymentModeObject = {},
     rightFlag = "0",
     activityType,
-    rightGoods,
   } = data;
   const { bean = 0, cash = "0", type = "defaultMode" } = paymentModeObject;
   const { payBeanCommission = 50 } = userInfo;
+
   if (rightFlag === "1" && type === "defaultMode") {
     //权益商品样式展示
     return (
@@ -65,16 +65,6 @@ export default (props) => {
           <View className="shopdetails_beanTitle_name font_fourHide">
             {goodsName}
           </View>
-          {activityType !== "commerceGoods" && (
-            <View
-              onClick={() => this.setCollection()}
-              className={classNames(
-                userCollectionStatus === "1"
-                  ? "shopdetails_isCollect"
-                  : "shopdetails_collect"
-              )}
-            ></View>
-          )}
         </View>
         <View className="shopdetails_bean_handerRight">
           {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
@@ -111,16 +101,16 @@ export default (props) => {
             {" "}
             {goodsName}
           </View>
-          {!(activityType === "commerceGoods" || rightGoods === "1") && (
-            <View
-              onClick={() => collect()}
-              className={classNames(
-                userCollectionStatus === "1"
-                  ? "shopdetails_isCollect"
-                  : "shopdetails_collect"
-              )}
-            ></View>
-          )}
+
+          <View
+            onClick={() => collect()}
+            className={classNames(
+              userCollectionStatus === "1"
+                ? "shopdetails_isCollect"
+                : "shopdetails_collect"
+            )}
+          ></View>
+
           {show && (
             <View
               className="shopdetails_collect_toast public_center"

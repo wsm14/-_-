@@ -72,8 +72,8 @@ class Index extends React.PureComponent {
   }
   filterNewsFlag() {
     const { createTime } = loginStatus() || {};
-    const { userMomentsInfo } = this.state;
-    const { tippingBean, momentLinkBeanStage } = userMomentsInfo;
+    const { userMomentsInfo, momentLinkBeanStage } = this.state;
+    const { tippingBean } = userMomentsInfo;
 
     if (computedTime(createTime) < 3 && loginStatus()) {
       const count = computedTime(createTime);

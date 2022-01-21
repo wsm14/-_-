@@ -139,10 +139,8 @@ class Index extends Component {
     const { httpData, index } = this.state;
     fetchSpecialGoods(httpData)
       .then((res) => {
-        const {
-          specialGoodsInfo,
-          specialGoodsInfo: { status },
-        } = res;
+        const { specialGoodsInfo = {} } = res;
+        const { status } = specialGoodsInfo;
         Taro.stopPullDownRefresh();
         if (status) {
           this.setState(
@@ -151,8 +149,7 @@ class Index extends Component {
               index: index + 1,
             },
             (res) => {
-              const { rightFlag, paymentModeObject, activityType } =
-                specialGoodsInfo;
+              const { rightFlag, activityType } = specialGoodsInfo;
               if (!(rightFlag === "1" || activityType === "commerceGoods")) {
                 this.fetchConfig();
               }
@@ -498,13 +495,13 @@ class Index extends Component {
                 ownerServiceId={specialActivityIdString}
               ></Merchant>
             )}
-            {/*商品详情*/}
-            <GoodsOther data={specialGoodsInfo}></GoodsOther>
 
             {/*分享*/}
             {!(rightFlag === "1" || activityType === "commerceGoods") && (
               <ShareView urlLink={urlLink} data={resultInfo}></ShareView>
             )}
+            {/*商品详情*/}
+            <GoodsOther data={specialGoodsInfo}></GoodsOther>
             {/*使用须知*/}
             {activityType !== "commerceGoods" && (
               <KnowPay data={specialGoodsInfo}></KnowPay>
