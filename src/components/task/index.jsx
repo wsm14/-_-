@@ -67,7 +67,7 @@ export default (props) => {
     } else if (taskStatus === "1") {
       return "立即领取";
     } else {
-      return `已领取${gameInfo === "sign" ? "成长值" : "星豆"}`;
+      return `已领取`;
     }
   };
   const fetchTask = () => {

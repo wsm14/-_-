@@ -517,7 +517,6 @@ class Index extends Component {
     fetchGetGiftPackPriceDetail({
       platformGiftId,
       goodsCount: 1,
-      userCouponId,
     }).then((res) => {
       const { platformGiftPackInfo = {} } = res;
       this.setState({

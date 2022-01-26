@@ -3240,7 +3240,20 @@ image {
     }
   }
 }
-
+.public_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.public_auto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+img {
+  width: 100%;
+  vertical-align: middle;
+}
 .dkl_slogan::before {
   content: "";
   display: inline-block;
