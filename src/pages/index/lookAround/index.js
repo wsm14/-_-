@@ -766,8 +766,15 @@ class Index extends Component {
             ) : (
               <React.Fragment>
                 <View className="lookAround_content_margin">
-                  {wanderAroundModule.map((item) => {
+                  {wanderAroundModule.map((item, index) => {
                     if (templateObj[item]) {
+                      if (index === wanderAroundModule.length - 2) {
+                        return (
+                          <View style={{ marginBottom: Taro.pxTransform(36) }}>
+                            {templateObj[item]}
+                          </View>
+                        );
+                      }
                       return templateObj[item];
                     }
                     return null;

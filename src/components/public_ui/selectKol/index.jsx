@@ -160,7 +160,7 @@ export default (props) => {
     <View className="selectKol_box">
       <View className="selectKol_coupon public_auto">
         <View className="selectKol_coupon_title">优惠券</View>
-        {CouponFontTemplate()}
+        <CouponFontTemplate></CouponFontTemplate>
       </View>
       <View className="selectKol_bean">
         <View onClick={changeBean} className="order_payType_box">

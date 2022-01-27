@@ -1,5 +1,5 @@
 .specialSelf_liner {
-  height: 48px;
+  height: 16px;
   background: #f5f5f5;
 }
 .specialSelf_box {
@@ -9,7 +9,6 @@
   z-index: 10;
   .specialSelf_commer {
     background: #ffffff;
-    border-radius: 40px 40px 0px 0px;
     padding: 40px 187px 40px;
     display: flex;
     align-items: flex-start;
@@ -18,7 +17,6 @@
   .specialSelf_perimeter {
     padding: 40px 80px 40px;
     background: #ffffff;
-    border-radius: 40px 40px 0px 0px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -54,4 +52,5 @@
     no-repeat;
   background-size: 100% 455px;
   background-position: 0 0;
+  min-height: 455px;
 }

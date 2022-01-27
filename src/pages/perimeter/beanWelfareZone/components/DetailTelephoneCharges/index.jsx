@@ -19,7 +19,9 @@ export default ({ data = {}, handleGoBuyGoods }) => {
   return (
     <View className="bwzGoodContent_content telephoneCharges">
       <View className="bwzgc_telephoneCharges_name">
-        <View>{giftName}</View>
+        <View className="bwzgc_telephoneCharges_oriName font_hide">
+          {giftName}
+        </View>
         <View className="bwzgc_telephoneCharges_oriPrice">
           原价：¥{giftValue}
         </View>
