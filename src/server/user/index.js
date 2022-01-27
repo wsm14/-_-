@@ -1,10 +1,9 @@
-import { httpGet, httpPost } from "@/api/newRequest";
+import { httpGet, httpPost } from "@/utils/request";
 import Taro from "@tarojs/taro";
-import { loginStatus } from "@/common/utils";
+import { loginStatus, objStatus } from "@/utils/utils";
 /*
  * params token
  * */
-import { objStatus } from "@/common/utils";
 
 export const getMainPage = (data, fn) => {
   return httpGet(

@@ -2,10 +2,12 @@ import React, { PureComponent } from "react";
 import Taro from "@tarojs/taro";
 import classNames from "classnames";
 import { View } from "@tarojs/components";
-import { getCouponList } from "@/server/coupon";
+import { getCouponList, fetchListUserPlatformCoupon } from "@/server/coupon";
 import Tabs from "@/components/tabs";
 import CouponStatus from "./components/couponStatus";
-import NullStatus from "./components/nullStatus";
+import SelectTab from "./components/couponSelect";
+import Empty from "@/components/Empty";
+import TemplateInfo from "./components/couponFree";
 import "./index.scss";
 const shine = (index) => {
   switch (index) {
@@ -27,10 +29,12 @@ class Index extends PureComponent {
     this.state = {
       nearUseList: [],
       otherUseList: [],
+      tabStatus: "merchant",
       setting: {
         tabList: ["可使用", "即将过期", "已使用", "已过期"],
         current: 0,
       },
+      userPlatformCouponList: [],
     };
   }
 
@@ -54,10 +58,44 @@ class Index extends PureComponent {
       Taro.stopPullDownRefresh();
     });
   }
-
+  getListUser() {
+    const {
+      setting: { current },
+    } = this.state;
+    fetchListUserPlatformCoupon({ couponStatus: String(shine(current)) }).then(
+      (val) => {
+        const { userPlatformCouponList = [] } = val;
+        this.setState({
+          userPlatformCouponList,
+        });
+      }
+    );
+  }
+  onChangeSelect(val) {
+    if (val === "merchant") {
+      this.setState(
+        {
+          tabStatus: "merchant",
+        },
+        (res) => {
+          this.getCouponList();
+        }
+      );
+    } else {
+      this.setState(
+        {
+          tabStatus: "platform",
+        },
+        (res) => {
+          this.getListUser();
+        }
+      );
+    }
+  }
   setIndex(index) {
     const {
       setting: { current },
+      tabStatus,
     } = this.state;
     if (index != current) {
       this.setState(
@@ -68,9 +106,14 @@ class Index extends PureComponent {
           },
           nearUseList: [],
           otherUseList: [],
+          userPlatformCouponList: [],
         },
         (res) => {
-          this.getCouponList();
+          if (tabStatus === "merchant") {
+            this.getCouponList();
+          } else {
+            this.getListUser();
+          }
         }
       );
     }
@@ -100,6 +143,7 @@ class Index extends PureComponent {
       background: "#FFFFFF",
       padding: `0 ${Taro.pxTransform(71)}`,
       position: "fixed",
+      top: Taro.pxTransform(88),
       left: 0,
       right: 0,
       zIndex: 100,
@@ -109,6 +153,8 @@ class Index extends PureComponent {
       otherUseList,
       setting,
       setting: { current },
+      tabStatus,
+      userPlatformCouponList,
     } = this.state;
     const status = {
       0: (
@@ -153,8 +199,31 @@ class Index extends PureComponent {
         </>
       ),
     }[current];
+    const renderTemplate = () => {
+      return (
+        <>
+          {userPlatformCouponList.map((item) => {
+            return <TemplateInfo status={current} data={item}></TemplateInfo>;
+          })}
+        </>
+      );
+    };
     return (
       <View className="wraparound_box">
+        <SelectTab
+          onChange={this.onChangeSelect.bind(this)}
+          list={[
+            {
+              label: "商品券",
+              value: "merchant",
+            },
+            {
+              label: "优惠券",
+              value: "platform",
+            },
+          ]}
+          val={tabStatus}
+        ></SelectTab>
         <Tabs
           fn={this.setIndex.bind(this)}
           style={tabStyle}
@@ -169,9 +238,17 @@ class Index extends PureComponent {
           {...setting}
         ></Tabs>
         <View className="wraparound_content_box">
-          {status}
+          {tabStatus === "merchant" ? status : renderTemplate()}
           {!nearUseList.length && !otherUseList.length && (
-            <NullStatus></NullStatus>
+            <Empty
+              show={
+                tabStatus === "merchant"
+                  ? [...nearUseList, ...otherUseList].length === 0
+                  : userPlatformCouponList.length === 0
+              }
+              toast={"没有当前状态的卡券哦~"}
+              type={"coupon"}
+            ></Empty>
           )}
         </View>
       </View>

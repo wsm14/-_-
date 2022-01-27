@@ -5,40 +5,46 @@ import VideoView from "./components/videoView";
 import {
   computedClient,
   toast,
-  saveFollow,
   loginStatus,
   backgroundObj,
-} from "@/common/utils";
+  fetchStorage,
+  computedTime,
+  fakeStorage,
+} from "@/utils/utils";
 import { ScrollView, View } from "@tarojs/components";
 import {
+  fakeUserFollow,
   getUserMomentList,
   saveWatchBean,
   fakeInsertUserCollectionMoment,
   fakeDeleteUserCollection,
   saveMomentType,
   checkPuzzleBeanLimitStatus,
-  updateUserMomentParam,
-  fetchUserShareCommission,
   fakeNewUserVideo,
+  fakRewarde,
 } from "@/server/index";
-import { getShareInfo, fetchUgcMomentRule } from "@/server/common";
-import { fakRewarde } from "@/server/user";
+import {
+  fetchShareInfo,
+  fetchUgcMomentRule,
+  fetchUserShareCommission,
+  fetchCollection,
+} from "@/server/common";
 import { inject, observer } from "mobx-react";
-import Toast from "@/components/beanToast";
-import Coupon from "@/components/freeCoupon";
-import Lead from "@/components/lead";
+import Toast from "@/components/public_ui/beanToast";
+import Coupon from "@/components/public_ui/freeCoupon";
+import Lead from "@/components/public_ui/lead";
 import evens from "@/common/evens";
-import Comment from "@/components/componentView/comment";
+import Comment from "@/components/public_ui/comment";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
-import NewToast from "@/components/noviceGuide";
-import Router from "@/common/router";
-import { fetchStorage } from "@/common/utils";
+import NewToast from "@/components/public_ui/noviceGuide";
 import Drawer from "@/components/Drawer";
 import UgcCanvas from "@/components/videoComponents/components/ugcTimeOver";
 import Waterfall from "@/components/waterfall";
-import { nearList } from "@/components/nearList";
+import { nearList } from "@/components/public_ui/nearList";
 import NearTitle from "./components/nearTitle";
+import NewsPilot from "./components/newsPilot";
+import CouponBean from "@/components/public_ui/couponBean";
 import "./index.scss";
 @inject("store")
 @observer
@@ -78,6 +84,8 @@ class Index extends React.PureComponent {
       ugcVisible1: false,
       ugcVisible2: false,
       animated: "",
+      showFlag: false,
+      momentLinkBeanStage: [50, 150],
     };
     this.interReload = null;
     this.interSwper = null;
@@ -100,8 +108,40 @@ class Index extends React.PureComponent {
       }
     });
   }
+  filterNewsFlag() {
+    const { createTime } = loginStatus() || {};
+    const { userMomentsInfo, momentLinkBeanStage } = this.state;
+    const { tippingBean } = userMomentsInfo;
+    if (computedTime(createTime) < 3 && loginStatus()) {
+      const count = computedTime(createTime);
+      let countObj = fetchStorage(`day${count}`);
+      const { num, current } = countObj;
+      if (
+        (num + tippingBean >= momentLinkBeanStage[0] && !current) ||
+        (num + tippingBean >= momentLinkBeanStage[1] && current === 1)
+      ) {
+        this.setState({
+          showFlag: true,
+        });
+        return true;
+      }
+      return false;
+    }
+    return false;
+  }
+  addStorage(bean) {
+    const { createTime } = loginStatus() || {};
+    const count = computedTime(createTime);
+    let countObj = fetchStorage(`day${count}`);
+    const { current = 0, num = 0 } = countObj;
+    fakeStorage(`day${count}`, {
+      num: num + bean,
+      current,
+    });
+  }
   componentDidShow() {
     this.fetchUserShareCommission();
+    this.fetchCollection();
     fetchUgcMomentRule().then((val) => {
       const { platformRewardBeanRules, rewardRules } = val;
       this.setState({
@@ -341,12 +381,17 @@ class Index extends React.PureComponent {
             }
           });
         } else {
+          if (this.filterNewsFlag()) {
+            return;
+          }
           saveWatchBean(
             {
               momentId: momentId,
               ownerId,
             },
             (res) => {
+              const { tippingBean } = userMomentsInfo;
+              this.addStorage(tippingBean);
               this.setState(
                 {
                   userMomentsInfo: {
@@ -444,32 +489,27 @@ class Index extends React.PureComponent {
     if (followStatus === "1") {
       return;
     } else {
-      saveFollow(
+      fakeUserFollow(
         {
           followType: relateType,
           followUserId: relateId,
         },
         () =>
-          that.setState(
-            {
-              userMomentsInfo: {
-                ...userMomentsInfo,
-                followStatus: "1",
-              },
-              userMomentsList: this.state.userMomentsList.map((item) => {
-                if (item.relateId === relateId) {
-                  return {
-                    ...item,
-                    followStatus: "1",
-                  };
-                }
-                return item;
-              }),
+          that.setState({
+            userMomentsInfo: {
+              ...userMomentsInfo,
+              followStatus: "1",
             },
-            (res) => {
-              toast("关注成功");
-            }
-          )
+            userMomentsList: this.state.userMomentsList.map((item) => {
+              if (item.relateId === relateId) {
+                return {
+                  ...item,
+                  followStatus: "1",
+                };
+              }
+              return item;
+            }),
+          })
       );
     }
   }
@@ -611,7 +651,6 @@ class Index extends React.PureComponent {
       })
       .catch((val) => {
         const { resultCode } = val;
-        console.log(val);
         if (resultCode === "5037") {
           this.setState({
             ugcVisible1: true,
@@ -644,6 +683,17 @@ class Index extends React.PureComponent {
     } else {
     }
   } //上拉加载
+
+  fetchCollection() {
+    fetchCollection().then((val) => {
+      const { momentLinkBeanStage = [] } = val;
+      this.setState({
+        momentLinkBeanStage: momentLinkBeanStage.map((item) => {
+          return parseInt(item.beanStage);
+        }),
+      });
+    });
+  }
   shareImageInfo() {
     const {
       userMomentsInfo: {
@@ -660,7 +710,7 @@ class Index extends React.PureComponent {
       player,
     } = this.state;
     const { address = "" } = addressContentObject;
-    getShareInfo(
+    fetchShareInfo(
       {
         shareType: "newVideo",
         shareId: momentId,
@@ -795,17 +845,21 @@ class Index extends React.PureComponent {
       ugcVisible1,
       ugcVisible2,
       animated,
+      showFlag,
       time,
+      momentLinkBeanStage,
     } = this.state;
     const {
       homeStore = {},
       authStore = {},
       activeInfoStore = {},
       locationStore = {},
+      commonStore = {},
     } = this.props.store;
     const { locationStatus = false } = locationStore;
     const { beanLimitStatus } = homeStore;
-    const { login, shareType } = authStore;
+    const { login } = authStore;
+    const { balance } = commonStore;
     const { platformRewardBeanRules = {}, rewardRules = {} } = ugcMomentRules;
 
     const templateView = () => {
@@ -935,7 +989,6 @@ class Index extends React.PureComponent {
         }
       }
     };
-
     return (
       <View className="home_box home_black">
         <View style={{ top: computedClient().top }} className="home_wait">
@@ -962,6 +1015,7 @@ class Index extends React.PureComponent {
         <Coupon
           data={userMomentsInfo}
           show={couponFlag}
+          showFlag={showFlag}
           beanflag={beanflag}
           visible={() => {
             this.setState({
@@ -969,7 +1023,7 @@ class Index extends React.PureComponent {
             });
           }}
         ></Coupon>
-        <Lead beanLimitStatus={beanLimitStatus}></Lead>
+        <Lead balance={balance} beanLimitStatus={beanLimitStatus}></Lead>
         {!Taro.getStorageSync("deviceFlag") && (
           <NewToast
             type={"index"}
@@ -982,7 +1036,6 @@ class Index extends React.PureComponent {
               });
             }}
             auth={login}
-            data={{ ...shareType }}
           ></NewToast>
         )}
         <TaroShareDrawer
@@ -1087,6 +1140,14 @@ class Index extends React.PureComponent {
               </View>
             </Drawer>
           )}
+          <NewsPilot></NewsPilot>
+          <CouponBean
+            momentLinkBeanStage={momentLinkBeanStage}
+            userMomentsList={userMomentsList}
+            data={userMomentsInfo}
+            onChange={this.setState.bind(this)}
+            visible={showFlag}
+          ></CouponBean>
         </View>
       </View>
     );

@@ -1,11 +1,10 @@
 import React, { Component, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import "./index.scss";
-import { toast, backgroundObj } from "@/common/utils";
 import { getUserBeanInfo } from "@/server/user";
-import { navigateTo } from "../../../common/utils";
-import { fetchUserShareCommission } from "@/server/index";
-import Toast from "@/components/dakale_toast";
+import { fetchUserShareCommission } from "@/server/common";
+import Toast from "@/components/public_ui/selectToast";
+import router from "@/utils/router";
 
 class Index extends Component {
   constructor() {
@@ -72,7 +71,7 @@ class Index extends Component {
           </View>
           <View
             className="page_link_go public_center"
-            onClick={() => navigateTo("/pages/newUser/rewardDetails/index")}
+            onClick={() => router({ routerName: "rewardDetails" })}
           >
             <View className="font24 color4"> 查看明细</View>
             <View className="page_link_icon"></View>

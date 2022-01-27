@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Button } from "@tarojs/components";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import { observer, MobXProviderContext } from "mobx-react";
 import "./index.scss";
-import { loginStatus } from "@/common/utils";
+import { loginStatus } from "@/utils/utils";
 
 /**
  * 获取盲盒机会

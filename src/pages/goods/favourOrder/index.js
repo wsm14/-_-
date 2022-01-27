@@ -1,26 +1,34 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { Text, View } from "@tarojs/components";
-import { goods } from "@/api/api";
-import { httpGet, httpPost } from "@/api/newRequest";
-import "./index.scss";
-import {
-  toast,
-  backgroundObj,
-  filterActive,
-  goBack,
-  navigateTo,
-  redirectTo,
-  filterStrList,
-  filterWeek,
-} from "@/common/utils";
-import PayBean from "@/components/stopBean";
+import { View } from "@tarojs/components";
+import { objStatus, toast } from "@/utils/utils";
 import { inject, observer } from "mobx-react";
-import ButtonView from "@/components/Button";
-import { fetchUserShareCommission } from "@/server/index";
-import SelectBean from "@/components/componentView/selectBean";
-import ShareView from "@/components/componentView/shareView";
-import Router from "@/common/router";
+import {
+  fetchPhoneBillDetail,
+  fetchMemberOrderSumbit,
+  fetchUserShareCommission,
+  fetchRechargeMemberLsxdDetail,
+} from "@/server/common";
+import {
+  fetchKolGoodsOrder,
+  fakeGoodsOrder,
+  fakeCommerceGoods,
+} from "@/server/goods";
+import {
+  fetchAddressList,
+  fetchGiftPackPricePay,
+  fetchGetGiftPackPriceDetail,
+} from "@/server/perimeter";
+import Specal from "./components/template/favGoods";
+import Commer from "./components/template/commerGoods";
+import Recharge from "./components/template/recharge";
+import PayBean from "@/components/public_ui/selectToast";
+import RightGoods from "./components/template/rightGoods";
+import BeanGiftPack from "./components/template/beanGiftPack";
+import evens from "@/common/evens";
+import Router from "@/utils/router";
+
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends Component {
@@ -33,25 +41,147 @@ class Index extends Component {
         goodsCount: 1,
       },
       useBeanStatus: "1",
-      useBeanType: "reward",
-      momentId: getCurrentInstance().router.params.momentId,
       specialGoodsInfo: {},
       configUserLevelInfo: {},
+      userAddressList: [],
+      userAddressIndex: -1,
+      userAddress: {
+        userAddressId: "",
+      },
+      remark: "",
+      couponObj: {},
       visible: false,
     };
   }
-  componentWillUnmount() {
-    if (
-      !getCurrentInstance().router.params.merchantId ||
-      !getCurrentInstance().router.params.specialActivityId
-    ) {
-      goBack(() => toast("参数缺失"));
+
+  //商品支付
+  componentDidMount() {
+    evens.$on("payCoupon", this.setCoupon.bind(this));
+  }
+  componentDidShow() {
+    const { mode } = getCurrentInstance().router.params;
+    // 充值会员获取详情接口 防止和其他杂糅
+    if (mode === "member") {
+      this.fetchRechargeMemberLsxdDetail();
+      return;
     }
+    // 话费充值详情获取
+    if (mode === "phoneBill") {
+      this.fetchPhoneBillDetail();
+      return;
+    }
+    // 话费券/礼包进入
+    if (mode === "beanGiftPack") {
+      this.fetchGetGiftPackPriceDetail();
+      return;
+    }
+    this.fetchUserShareCommission();
+    this.fetchKolGoodsOrder();
+  }
+  //获取订单详情
+  componentWillUnmount() {
+    evens.$off("payCoupon");
   }
 
-  componentDidShow() {
-    this.getKolGoodsOrder();
-    this.fetchUserShareCommission();
+  saveCommerceGoods() {
+    const {
+      useBeanStatus,
+      specialGoodsInfo: { ownerIdString },
+      httpData: { merchantId, specialActivityId, goodsCount },
+      remark,
+      userAddress,
+      couponObj,
+    } = this.state;
+    const { shareType } = this.props.store.authStore;
+    const { shareUserId, shareUserType, sourceKey, sourceType } = shareType;
+    const { userAddressId = "" } = userAddress;
+    const { userCouponId, couponType } = couponObj;
+    if (!userAddressId) {
+      return toast("请完善收货地址");
+    }
+    fakeCommerceGoods({
+      ownerId: ownerIdString,
+      useBeanStatus,
+      specialGoodsDTO: {
+        id: specialActivityId,
+        goodsCount,
+      },
+      shareUserId,
+      shareUserType,
+      sourceKey,
+      sourceType,
+      remark,
+      userAddressId,
+      userCouponObjects: userCouponId
+        ? [
+            {
+              userCouponId,
+              couponType,
+            },
+          ]
+        : [],
+    }).then((val) => {
+      const { orderSn, status, orderType } = val;
+      this.setState({
+        visible: false,
+      });
+      if (status === "1") {
+        Router({
+          routerName: "paySuccess",
+          args: {
+            orderSn,
+            orderType,
+          },
+          type: "redirectTo",
+        });
+      } else {
+        Router({
+          routerName: "pay",
+          args: {
+            orderSn,
+            orderType,
+          },
+          type: "redirectTo",
+        });
+      }
+    });
+  }
+  saveCancel() {
+    const {
+      specialGoodsInfo: { userBean },
+      useBeanStatus,
+      userAddress,
+    } = this.state;
+    const { userAddressId } = userAddress;
+    if (userBean > 0 && useBeanStatus === "1") {
+      if (!userAddressId) {
+        return toast("请完善收货地址");
+      }
+      this.setState({
+        visible: true,
+      });
+    } else {
+      this.saveCommerceGoods();
+    }
+  }
+  fetchKolGoodsOrder() {
+    const { httpData } = this.state;
+    fetchKolGoodsOrder(httpData).then((res) => {
+      const { specialGoodsInfo } = res;
+      const { userBean } = specialGoodsInfo;
+      this.setState(
+        {
+          specialGoodsInfo,
+          useBeanStatus: userBean > 0 ? "1" : "0",
+        },
+        (res) => {
+          const { activityType } = specialGoodsInfo;
+          if (activityType === "commerceGoods") {
+            this.fetchAddress();
+          }
+        }
+      );
+    });
   }
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
@@ -67,6 +197,7 @@ class Index extends Component {
       });
     });
   }
+  //获取哒人等级
   computedCount(type) {
     const {
       httpData,
@@ -94,7 +225,10 @@ class Index extends Component {
           },
         },
         (res) => {
-          this.getKolGoodsOrder();
+          this.setState({
+            couponObj: {},
+          });
+          this.fetchKolGoodsOrder();
         }
       );
     } else {
@@ -107,320 +241,530 @@ class Index extends Component {
             },
           },
           (res) => {
-            this.getKolGoodsOrder();
+            this.setState({
+              couponObj: {},
+            });
+            this.fetchKolGoodsOrder();
           }
         );
       } else return toast("购买数量不能为0");
     }
   }
-  getKolGoodsOrder() {
-    const { httpData } = this.state;
-    const {
-      favourOrder: { getSpecialGoods },
-    } = goods;
-    httpGet(
+  //当商品为特惠或者 权益商品时设置商品数量
+  changeBean() {
+    const { useBeanStatus } = this.state;
+    if (useBeanStatus === "1") {
+      this.setState({
+        useBeanStatus: "0",
+      });
+    } else {
+      this.setState({
+        useBeanStatus: "1",
+      });
+    }
+  }
+  //选择是否使用卡豆
+  setCoupon(item) {
+    this.setState(
       {
-        data: httpData || {},
-        url: getSpecialGoods,
+        couponObj: item,
       },
       (res) => {
-        const { specialGoodsInfo } = res;
-        this.setState({
-          specialGoodsInfo,
-        });
+        const { mode } = getCurrentInstance().router.params;
+        // 充值会员获取详情接口 防止和其他杂糅
+        if (mode === "member") {
+          this.fetchRechargeMemberLsxdDetail();
+          return;
+        }
+        // 话费充值详情获取
+        if (mode === "phoneBill") {
+          this.fetchPhoneBillDetail();
+          return;
+        }
       }
     );
   }
-  showBean() {
+  //设置优惠券
+  computedPayPrice() {
     const {
-      useBeanType,
+      couponObj: { couponValue = 0 },
+      specialGoodsInfo: {
+        userIncomeBean,
+        userBean,
+        realPrice,
+        paymentModeObject = {},
+      },
+      httpData: { goodsCount },
       useBeanStatus,
-      specialGoodsInfo: { userIncomeBean = 0, userBean = 0 },
+      configUserLevelInfo,
     } = this.state;
-    if (useBeanStatus === "0") {
-      return "0.00";
+    const { cash, type = "defaultMode" } = paymentModeObject;
+    const { payBeanCommission } = configUserLevelInfo;
+    if (type === "defaultMode") {
+      if (useBeanStatus === "1") {
+        let price = Number(realPrice) * goodsCount - couponValue;
+        let payBean = price * payBeanCommission;
+        let removeBean = payBean >= userBean ? userBean : payBean;
+        return (price - removeBean / 100).toFixed(2);
+      } else {
+        return (Number(realPrice) * goodsCount - couponValue).toFixed(2);
+      }
     } else {
-      return (userBean / 100).toFixed(2);
+      return (cash * goodsCount).toFixed(2);
     }
   }
-  saveKolGoodsOrder() {
+  //底部支付价格
+
+  computedNotUserLevelPayPrice() {
+    const {
+      couponObj: { couponValue = 0 },
+      specialGoodsInfo: { userBean, realPrice, paymentModeObject = {} },
+      httpData: { goodsCount },
+      useBeanStatus,
+    } = this.state;
+    const { type, cash } = paymentModeObject;
+    if (useBeanStatus === "1") {
+      if (type === "self") return Number(cash).toFixed(2);
+      return (
+        Number(realPrice) * goodsCount -
+        couponValue -
+        userBean / 100
+      ).toFixed(2);
+    } else {
+      if (type === "self") {
+        return (Number(cash) + userBean / 100).toFixed(2);
+      }
+      return (Number(realPrice) * goodsCount - couponValue).toFixed(2);
+    }
+  }
+  // 无哒人抵扣逻辑支付计算
+
+  fetchAddress() {
+    const { userAddressIndex, userAddress } = this.state;
+    const { userAddressId } = userAddress;
+    fetchAddressList({}).then((val) => {
+      const { userAddressList = [] } = val;
+      this.setState(
+        {
+          userAddressList,
+        },
+        (res) => {
+          if (userAddressList.length > 0) {
+            if (userAddressIndex === -1) {
+              this.setState({
+                userAddressIndex: userAddressList.length > 0 ? 0 : -1,
+                userAddress:
+                  userAddressList.length > 0
+                    ? {
+                        ...userAddressList[0],
+                      }
+                    : { userAddressId: "" },
+              });
+            }
+            const pages = Taro.getCurrentPages(); // 获取页面堆栈
+            const currPage = pages[pages.length - 1]; // 获取上一页栈
+            const { data } = currPage.data; // 获取上一页回传数据
+            console.log(data);
+            if (data) {
+              this.setState({
+                userAddress: {
+                  ...userAddressList.filter((item) => {
+                    return item.userAddressId === data.userAddressId;
+                  })[0],
+                },
+                userAddressIndex: userAddressList
+                  .map((val, index) => {
+                    return { userAddressId: val.userAddressId, index };
+                  })
+                  .filter((item) => {
+                    return item.userAddressId === data.userAddressId;
+                  })[0].index,
+              });
+            }
+          } else {
+            this.setState({
+              userAddressIndex: -1,
+              userAddress: { userAddressId: "" },
+            });
+          }
+        }
+      );
+    });
+  }
+  saveGoodsOrder() {
     const {
       useBeanStatus,
       useBeanType,
       momentId,
       specialGoodsInfo: { ownerIdString, rightFlag },
-      httpData: { merchantId, specialActivityId, goodsCount },
+      httpData: { specialActivityId, goodsCount },
+      couponObj,
     } = this.state;
     const { shareType } = this.props.store.authStore;
     const { shareUserId, shareUserType, sourceKey, sourceType } = shareType;
-    const {
-      favourOrder: { saveSpecialGoods },
-    } = goods;
-    httpPost(
-      {
-        data: {
-          ownerId: ownerIdString,
-          useBeanStatus,
-          useBeanType,
-          momentId,
-          specialGoodsDTO: {
-            id: specialActivityId,
-            goodsCount,
-          },
-          shareUserId,
-          shareUserType,
-          sourceKey,
-          sourceType,
-          rightFlag,
-        },
-        url: saveSpecialGoods,
-      },
-      (res) => {
-        const { orderSn, status, orderType } = res;
-        this.setState({
-          visible: false,
-        });
-        if (status === "1") {
-          return redirectTo(
-            `/pages/goods/paySuccess/index?orderSn=${orderSn}&orderType=${orderType}`
-          );
-        } else {
-          return redirectTo(
-            `/pages/goods/payWeex/index?orderSn=${orderSn}&orderType=${orderType}`
-          );
-        }
-      }
-    );
-  }
-
-  saveCancel() {
-    const {
-      specialGoodsInfo: { userBean },
+    const { userCouponId, couponType } = couponObj;
+    fakeGoodsOrder({
+      ownerId: ownerIdString,
       useBeanStatus,
-    } = this.state;
-    if (userBean > 0 && useBeanStatus === "1") {
+      useBeanType,
+      momentId,
+      specialGoodsDTO: {
+        id: specialActivityId,
+        goodsCount,
+      },
+      shareUserId,
+      shareUserType,
+      sourceKey,
+      sourceType,
+      rightFlag,
+      userCouponObjects: userCouponId
+        ? [
+            {
+              userCouponId,
+              couponType,
+            },
+          ]
+        : [],
+    }).then((res) => {
+      const { orderSn, status, orderType } = res;
       this.setState({
-        visible: true,
+        visible: false,
       });
-    } else {
-      this.saveKolGoodsOrder();
-    }
-  }
-
-  useBean(val) {
-    this.setState({
-      ...val,
+      if (status === "1") {
+        Router({
+          routerName: "paySuccess",
+          args: {
+            orderSn,
+            orderType,
+          },
+          type: "redirectTo",
+        });
+      } else {
+        Router({
+          routerName: "pay",
+          args: {
+            orderSn,
+            orderType,
+          },
+          type: "redirectTo",
+        });
+      }
     });
   }
-  computedPrice(price, bean) {
-    if (Number(bean) > price * 100) {
-      return price.toFixed(2);
-    } else return (Number(bean) / 100).toFixed(2);
+
+  // 获取会员充值详情
+  fetchRechargeMemberLsxdDetail() {
+    const { productNo, virtualProductAccount, identification } =
+      getCurrentInstance().router.params;
+    const { couponObj } = this.state;
+    const { userCouponId } = couponObj;
+    fetchRechargeMemberLsxdDetail({
+      productNo,
+      identification,
+      goodsCount: 1,
+      virtualProductAccount,
+      userCouponId,
+    }).then((res) => {
+      const { lsxdSubMemberInfo = {} } = res;
+      const { realCouponValue } = lsxdSubMemberInfo;
+      this.setState({
+        specialGoodsInfo: {
+          rightFlag: "1", // 为了显示 专区优惠 标识
+          activityType: "rechargeMember", // 为了显示模块
+          ...(res.lsxdSubMemberInfo || {}),
+          realPrice: res.lsxdSubMemberInfo.price,
+        },
+        couponObj: objStatus(couponObj)
+          ? { ...couponObj, couponValue: realCouponValue }
+          : {},
+      });
+    });
   }
 
-  computedPayPrice() {
+  // 获取话费充值详情
+  fetchPhoneBillDetail() {
+    const { totalFee, identification } = getCurrentInstance().router.params;
+    const { couponObj } = this.state;
+    const { userCouponId } = couponObj;
+    fetchPhoneBillDetail({
+      phoneMoney: totalFee,
+      userCouponId,
+      identification,
+    }).then((res) => {
+      const { phoneBillInfo = {} } = res;
+      const { realCouponValue } = phoneBillInfo;
+      this.setState({
+        specialGoodsInfo: {
+          rightFlag: "1", // 为了显示 专区优惠 标识
+          activityType: "rechargeMember", // 为了显示模块
+          ...(phoneBillInfo || {}),
+          image:
+            "https://wechat-config.dakale.net/miniprogram/image/rechargePhone.png",
+          oriPrice: phoneBillInfo.totalFee,
+          realPrice: phoneBillInfo.totalFee,
+        },
+        couponObj: objStatus(couponObj)
+          ? { ...couponObj, couponValue: realCouponValue }
+          : {},
+      });
+    });
+  }
+
+  // 话费券/礼包购买详情查询
+  fetchGetGiftPackPriceDetail() {
+    const { platformGiftId } = getCurrentInstance().router.params;
+
+    fetchGetGiftPackPriceDetail({
+      platformGiftId,
+      goodsCount: 1,
+    }).then((res) => {
+      const { platformGiftPackInfo = {} } = res;
+      this.setState({
+        specialGoodsInfo: {
+          rightFlag: "1", // 为了显示 专区优惠 标识
+          activityType: "beanGiftPack", // 为了显示模块
+          ...(platformGiftPackInfo || {}),
+          image:
+            "https://wechat-config.dakale.net/miniprogram/image/coupon_big.png",
+          oriPrice: platformGiftPackInfo.giftValue,
+          realPrice: platformGiftPackInfo.buyPrice,
+        },
+      });
+    });
+  }
+
+  // 会员确认充值 提交订单
+  fetchMemberOrderSumbit() {
     const {
-      useBeanType,
-      specialGoodsInfo: { userIncomeBean, userBean, realPrice },
-      httpData: { goodsCount },
-      useBeanStatus,
-    } = this.state;
-    if (useBeanStatus === "1") {
-      return (Number(realPrice) * goodsCount - userBean / 100).toFixed(2);
+      mode,
+      productNo,
+      identification,
+      virtualProductAccount,
+      virtualProductSubType,
+      totalFee,
+    } = getCurrentInstance().router.params;
+    const { useBeanStatus, useBeanType, couponObj } = this.state;
+    const { userCouponId, couponType } = couponObj;
+    fetchMemberOrderSumbit({
+      identification,
+      useBeanType, // 使用卡豆类型
+      useBeanStatus, // 是否使用卡豆
+      virtualProductType: mode, // 虚拟商品类型 member-会员 phoneBill-话费
+      virtualProductId: productNo, // 虚拟商品id mode === member
+      virtualProductAccount, // 充值账号
+      virtualProductSubType, // 虚拟商品子类型 mode === member
+      userCouponObjects: userCouponId // 是否使用优惠券
+        ? [
+            {
+              userCouponId,
+              couponType,
+            },
+          ]
+        : [],
+      totalFee, // mode === phoneBill 存在
+    }).then(({ orderSn, orderType, payMonth }) => {
+      Router({
+        routerName: "pay",
+        args: {
+          orderSn,
+          orderType,
+          payMonth,
+        },
+        type: "redirectTo",
+      });
+    });
+  }
+
+  // 话费券/礼包
+  fetchBeanGiftPackSumbit() {
+    const { platformGiftId } = getCurrentInstance().router.params;
+    const { useBeanStatus, couponObj } = this.state;
+    const { userCouponId, couponType } = couponObj;
+    fetchGiftPackPricePay({
+      platformGiftId, // 礼包id
+      useBeanStatus, // 是否使用卡豆
+      goodsCount: 1,
+      userCouponObjects: userCouponId // 是否使用优惠券
+        ? [
+            {
+              userCouponId,
+              couponType,
+            },
+          ]
+        : [],
+    }).then(({ orderSn, orderType, payMonth }) => {
+      Router({
+        routerName: "pay",
+        args: {
+          orderSn,
+          orderType,
+          payMonth,
+        },
+        type: "redirectTo",
+      });
+    });
+  }
+  saveGoodsRule() {
+    const { specialGoodsInfo, useBeanStatus } = this.state;
+    const {
+      rightFlag,
+      paymentModeObject = {},
+      goodsCount,
+      userBean,
+      activityType,
+    } = specialGoodsInfo;
+    const { cash, type = "defaultMode", bean } = paymentModeObject;
+    if (rightFlag === "1") {
+      if (useBeanStatus === "1") {
+        if (userBean < bean * goodsCount) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return false;
+      }
+    } else if (
+      activityType === "commerceGoods" &&
+      useBeanStatus === "0" &&
+      type !== "defaultMode"
+    ) {
+      console.log(111);
+      return false;
     } else {
-      return (Number(realPrice) * goodsCount).toFixed(2);
+      return true;
     }
   }
-
   render() {
     const {
       specialGoodsInfo,
-      visible,
-      specialGoodsInfo: {
-        merchantLogo,
-        merchantName,
-        goodsImg,
-        goodsName,
-        realPrice,
-        needOrder,
-        allowExpireRefund,
-        allowRefund,
-        useStartTime,
-        useEndTime,
-        useTime,
-        userBean,
-        merchantIdString,
-        telephone,
-        useWeek,
-        activeDays,
-        delayDays,
-        userIncomeBean,
-        rightFlag = "0",
-        paymentModeObject = {},
-      },
-      httpData: { goodsCount },
-      useBeanType,
-      useBeanStatus,
       configUserLevelInfo,
+      httpData,
+      useBeanStatus,
+      couponObj,
+      visible,
+      userAddressIndex,
+      userAddress,
     } = this.state;
-    const { bean = 0, cash = 0 } = paymentModeObject;
-    const templateTime = () => {
-      if (activeDays) {
-        return `购买后${
-          delayDays === 0 ? "立刻" : delayDays + "天"
-        }生效，有效期${activeDays}天`;
-      } else {
-        return `${useStartTime}至${useEndTime}`;
-      }
-    };
-    if (Object.keys(specialGoodsInfo).length > 0) {
-      return (
-        <View className="favOrder_box">
-          <View className="order_details_box">
-            <View className="order_details_merchant">
-              <View
-                className="order_merchant_details"
-                onClick={() =>
-                  navigateTo(
-                    `/pages/perimeter/merchantDetails/index?merchantId=${merchantIdString}`
-                  )
-                }
-              >
-                <View
-                  className="order_merchant_userProfile merchant_dakale_logo"
-                  style={{ ...backgroundObj(merchantLogo) }}
-                ></View>
-                <View className="order_name font_hide">
-                  {merchantName || ""}
-                </View>
-                <View className="order_merchant_go"></View>
-              </View>
-            </View>
-            <View className="order_shopDetails">
-              <View className="order_shopDetails_box">
-                <View
-                  className="order_shopDetails_Img dakale_nullImage"
-                  style={{ ...backgroundObj(goodsImg) }}
-                ></View>
-                <View className="order_shopDetails_dec">
-                  <View className="order_shopDetails_title font_hide">
-                    {goodsName}
-                  </View>
-                  {rightFlag === "1" ? (
-                    <View className="order_price">
-                      ¥{cash.toFixed(2)} + {bean}卡豆
-                    </View>
-                  ) : (
-                    <View className="order_price">
-                      <Text
-                        className="font20"
-                        style={{ color: "rgba(51, 51, 51, 1)" }}
-                      >
-                        ¥
-                      </Text>
-                      {" " + realPrice}
-                    </View>
-                  )}
-
-                  <View className="order_toast">购买数量</View>
-                </View>
-                <View className="order_shopDetails_price">
-                  <View
-                    className="order_shop_btnBox order_shop_btn1"
-                    onClick={() => this.computedCount()}
-                  ></View>
-                  <View className="order_shop_num">{goodsCount}</View>
-                  <View
-                    className="order_shop_btnBox order_shop_btn2"
-                    onClick={() => this.computedCount("add")}
-                  ></View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <SelectBean
-            fn={this.useBean.bind(this)}
-            useBeanType={useBeanType}
-            data={specialGoodsInfo}
-            configUserLevelInfo={configUserLevelInfo}
-            useBeanStatus={useBeanStatus}
-          ></SelectBean>
-          <View className="order_shop_desc">
-            <View className="order_shop_descBox">
-              <View className="order_shop_descTitle">购买须知</View>
-              <View className="order_shop_getTime font28 color2">
-                使用有效期：
-              </View>
-              <View className="order_shop_timeDesc font28">
-                <Text>{templateTime()}</Text>
-                <Text className="color1">
-                  {needOrder === "0" ? " | 免预约" : " | 需要预约"}
-                </Text>
-              </View>
-              <View className="order_shop_getTime font28 color2">
-                到店核销时段：
-              </View>
-              <View className="order_shop_week color1 font28">
-                {filterWeek(useWeek)}
-                {"  " + useTime}
-              </View>
-              <View className="order_shop_getTime font28 color2">
-                退款原则：
-              </View>
-              <View className="order_shop_week color1 font28">
-                {allowExpireRefund === "1" ? "支持" : "不支持"}
-                随时退、{allowRefund === "1" ? "支持" : "不支持"}过期自动退
-              </View>
-            </View>
-          </View>
-          <View className="order_details_sumbit">
-            <View className="order_rmb">
-              实付：
-              <Text style={{ fontSize: Taro.pxTransform(20) }}>
-                ¥
-                <Text
-                  style={{ fontSize: Taro.pxTransform(32), fontWeight: "bold" }}
-                >
-                  {this.computedPayPrice()}
-                </Text>
-              </Text>
-            </View>
-            <View className="order_beanRmb">
-              抵扣：¥
-              {this.showBean()}
-            </View>
-            <ButtonView
-              data={{
-                path: "pages/goods/favourOrder/index",
-                type: "favourOrder_pay",
-                name: "商品订单支付",
-              }}
-            >
-              <View className="payBtn" onClick={() => this.saveCancel()}>
-                立即支付
-              </View>
-            </ButtonView>
-          </View>
-          <ShareView></ShareView>
-          {visible && (
-            <PayBean
-              cancel={() =>
-                this.setState({
-                  visible: false,
-                })
-              }
-              visible={visible}
-              canfirm={() => this.saveKolGoodsOrder()}
-              content={`是否确认使用${userBean}卡豆支付？`}
-              canfirmText="再想想"
-              cancelText="确定"
-            ></PayBean>
-          )}
-        </View>
-      );
-    } else {
-      return null;
+    let { activityType, userBean, paymentModeObject = {} } = specialGoodsInfo;
+    const { type } = paymentModeObject;
+    if (
+      type === "self" &&
+      !["commerceGoods", "beanGiftPack"].includes(activityType)
+    ) {
+      activityType = "rightGoods";
     }
+    const template = {
+      specialGoods: (
+        <Specal
+          configUserLevelInfo={configUserLevelInfo}
+          data={specialGoodsInfo}
+          useScenesType={"goodsBuy"}
+          status={useBeanStatus}
+          couponObj={couponObj}
+          changeBean={this.changeBean.bind(this)}
+          computedCount={this.computedCount.bind(this)}
+          computedPrice={this.computedPayPrice.bind(this)}
+          submit={() => {
+            if (useBeanStatus === "1" && userBean > 0) {
+              this.setState({
+                visible: true,
+              });
+            } else {
+              this.saveGoodsOrder();
+            }
+          }}
+        ></Specal>
+      ),
+      commerceGoods: (
+        <Commer
+          userAddress={userAddress}
+          userAddressIndex={userAddressIndex}
+          configUserLevelInfo={configUserLevelInfo}
+          data={specialGoodsInfo}
+          useScenesType={"commerce"}
+          status={useBeanStatus}
+          couponObj={couponObj}
+          changeBean={this.changeBean.bind(this)}
+          computedCount={this.computedCount.bind(this)}
+          computedPrice={this.computedPayPrice.bind(this)}
+          payFlag={this.saveGoodsRule()}
+          changeLabel={(e) => {
+            this.setState({
+              remake: e,
+            });
+          }}
+          submit={() => {
+            this.saveCancel();
+          }}
+        ></Commer>
+      ),
+      rightGoods: (
+        <RightGoods
+          configUserLevelInfo={configUserLevelInfo}
+          data={specialGoodsInfo}
+          useScenesType={"goodsBuy"}
+          status={useBeanStatus}
+          couponObj={couponObj}
+          changeBean={this.changeBean.bind(this)}
+          computedCount={this.computedCount.bind(this)}
+          computedPrice={this.computedPayPrice.bind(this)}
+          payFlag={this.saveGoodsRule()}
+          submit={() => {
+            this.saveGoodsOrder();
+          }}
+        ></RightGoods>
+      ),
+      rechargeMember: (
+        <Recharge
+          data={specialGoodsInfo}
+          useScenesType={"virtual"}
+          status={useBeanStatus}
+          couponObj={couponObj}
+          changeBean={this.changeBean.bind(this)}
+          computedPrice={this.computedNotUserLevelPayPrice.bind(this)}
+          submit={() => {
+            this.fetchMemberOrderSumbit();
+          }}
+        ></Recharge>
+      ), // 充值
+      beanGiftPack: (
+        <BeanGiftPack
+          data={specialGoodsInfo}
+          useScenesType={"virtual"}
+          status={useBeanStatus}
+          couponObj={couponObj}
+          changeBean={this.changeBean.bind(this)}
+          computedPrice={this.computedNotUserLevelPayPrice.bind(this)}
+          submit={() => {
+            this.fetchBeanGiftPackSumbit();
+          }}
+        ></BeanGiftPack>
+      ), // 话费券/礼包
+    }[activityType];
+    return (
+      <View className="favOrder_box">
+        {template}
+        {visible && (
+          <PayBean
+            cancel={() =>
+              this.setState({
+                visible: false,
+              })
+            }
+            visible={visible}
+            canfirm={() =>
+              activityType === "commerceGoods"
+                ? this.saveCommerceGoods()
+                : this.saveGoodsOrder()
+            }
+            content={`是否确认使用${userBean}卡豆支付？`}
+            canfirmText="再想想"
+            cancelText="确定"
+          ></PayBean>
+        )}
+      </View>
+    );
   }
 }
 

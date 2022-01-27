@@ -2,13 +2,16 @@ page {
   width: 100%;
   height: 100%;
   background: #ffffff;
+  View {
+    box-sizing: border-box;
+  }
   .recharge_box {
     width: 100%;
     height: 100%;
     line-height: 1;
     background: #ffffff;
     .recharge_content_box {
-      padding: 40px 28px 0;
+      padding: 40px 32px 0;
     }
     .recharge_content_label {
       font-size: 28px;
@@ -25,8 +28,7 @@ page {
       line-height: 60px;
     }
     .recharge_content_liner {
-      width: 686px;
-      height: 2px;
+      height: 1px;
       background: #e5e5e5;
       border-radius: 1px;
       margin-top: 12px;
@@ -43,182 +45,107 @@ page {
     font-size: 28px;
     font-weight: 400;
     color: #333333;
-    line-height: 28px;
   }
+
   .recharge_select_info {
     margin-top: 24px;
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
-  }
-  .recharge_select_box {
-    width: 218px;
-    padding: 36px 0 24px;
-    box-sizing: border-box;
-    border-radius: 8px;
-    margin-bottom: 16px;
-  }
-  .recharge_select_right {
-    margin-right: 16px;
-  }
-  .recharge_select_boxStyle1 {
-    background: #e3c763;
-    .recharge_select_price {
-      font-size: 40px;
-      font-weight: 600;
-      color: #ffffff;
-      text-align: center;
-    }
-    .recharge_select_pay {
-      font-size: 24px;
-      font-weight: 400;
-      color: #ffffff;
-      padding-top: 8px;
-      text-align: center;
-    }
-    .recharge_select_title {
-      padding-top: 8px;
-      font-size: 24px;
-      font-weight: 400;
-      color: #ffffff;
-      text-align: center;
-    }
-    .recharge_select_font {
-      font-size: 24px;
-      font-weight: 400;
-      color: #ffffff;
-      text-align: center;
-      padding-top: 6px;
-    }
-  }
-  .recharge_select_boxStyle2 {
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    .recharge_select_price {
-      font-size: 40px;
-      font-weight: 600;
-      color: rgba(51, 51, 51, 1);
-      text-align: center;
-    }
-    .recharge_select_pay {
-      font-size: 24px;
-      font-weight: 400;
-      color: #ef476f;
-      padding-top: 8px;
-      text-align: center;
-    }
-    .recharge_select_title {
-      padding-top: 8px;
-      font-size: 24px;
-      font-weight: 400;
-      color: rgba(218, 158, 43, 1);
-      text-align: center;
-    }
-    .recharge_select_font {
-      font-size: 24px;
-      font-weight: 400;
-      color: rgba(218, 158, 43, 1);
-      text-align: center;
-      padding-top: 6px;
+    .recharge_select_cell {
+      width: 218px;
+      padding: 40px 0 25px;
+      box-sizing: border-box;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      position: relative;
+      &.select {
+        background: #e3c763;
+        border: none;
+        .recharge_select_price {
+          color: #ffffff;
+        }
+        .recharge_select_title {
+          color: #ffffff;
+        }
+      }
+      & + .recharge_select_cell {
+        margin-left: 16px;
+      }
+      &:nth-child(3n + 1) {
+        margin-left: 0;
+      }
+      &.app::before {
+        content: "";
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 108px;
+        height: 84px;
+        background-image: url("https://wechat-config.dakale.net/miniprogram/image/recharge_tag.png");
+        background-size: 100% 100%;
+      }
+      .recharge_select_price {
+        font-size: 40px;
+        font-weight: 600;
+        color: rgba(51, 51, 51, 1);
+        text-align: center;
+      }
+      .recharge_select_title {
+        margin-top: 40px;
+        font-size: 24px;
+        font-weight: 400;
+        color: rgba(218, 158, 43, 1);
+        text-align: center;
+        white-space: pre-line;
+        line-height: 30px;
+      }
     }
   }
-  .recharge_select_toast {
-    margin: 40px auto 0;
+
+  .recharge_select_toast,
+  .recharge_select_toast1 {
+    margin-top: 15px;
     font-size: 24px;
     font-weight: 400;
-    color: #999999;
+    color: #333333;
     line-height: 24px;
     text-align: center;
   }
   .recharge_select_toast1 {
-    margin: 16px auto 0;
-    font-size: 24px;
-    font-weight: 400;
+    margin-top: 16px;
     color: #999999;
-    line-height: 24px;
-    text-align: center;
   }
-  .recharge_video_box {
-    width: 523px;
-    height: 56px;
-    background: #fef4f7;
-    border-radius: 30px;
-    border: 1px solid #ef476f;
-    margin: 0 auto;
-    border-radius: 42px;
+  .recharge_footer {
     display: flex;
     align-items: center;
-    font-size: 24px;
-    font-weight: 400;
-    color: #333333;
-    line-height: 24px;
-    position: fixed;
-    bottom: 162px;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    .recharge_icon {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      z-index: 100;
-      width: 90px;
-      height: 90px;
-      background: url(https://wechat-config.dakale.net/miniprogram/image/icon703.png)
-        no-repeat;
-      background-size: 100% 100%;
+    justify-content: space-between;
+    .recharge_select_btn {
+      border-radius: 40px;
+      font-size: 36px;
+      font-weight: 600;
+      margin-left: 32px;
+      background-color: #ef476f;
+      color: #ffffff;
+      &[disabled] {
+        opacity: 0.4;
+      }
     }
-    .videoBean_desc {
-      text-indent: 90px;
-    }
-    .recharge_left {
-      margin-left: 24px;
+    .recharge_bottom_share {
+      font-size: 24px;
       font-weight: 400;
-      color: #ef476f;
+      color: #333333;
+      &::before {
+        content: "";
+        display: block;
+        width: 48px;
+        height: 48px;
+        background-image: url(https://wechat-config.dakale.net/miniprogram/image/icon575.png);
+        background-size: 100% 100%;
+        margin-bottom: 3px;
+      }
     }
-  }
-  .recharge_select_btn {
-    width: 606px;
-    height: 80px;
-    border-radius: 40px;
-    font-size: 36px;
-    font-weight: 600;
-    margin-right: 32px;
-  }
-  .recharge_select_color1 {
-    background: #ef476f;
-    color: #ffffff;
-  }
-  .recharge_select_color2 {
-    opacity: 0.1;
-    background: #ef476f;
-    color: #ffffff;
-  }
-  .recharge_bottom_share {
-    font-size: 24px;
-    font-weight: 400;
-    color: #333333;
-    margin-left: 32px;
-  }
-  .recharge_bottom_share::before {
-    width: 48px;
-    height: 48px;
-    background: url(https://wechat-config.dakale.net/miniprogram/image/icon575.png)
-      no-repeat;
-    background-size: 100% 100%;
-    margin: 0 auto;
-    display: block;
-    content: "";
-    margin-bottom: 3px;
-  }
-  .recharge_bottom_layer {
-    height: 128px;
-    background: #ffffff;
-    bottom: 0;
-    right: 0px;
-    left: 0px;
-    border-top: 2px solid #e5e5e5;
-    position: fixed;
-    background: #ffffff;
   }
 }

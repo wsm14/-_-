@@ -1,14 +1,222 @@
 page {
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background: #f5f5f5;
+}
+.paySuccess_box {
+  width: 100%;
+  padding: 32px 0;
+  background: #ffffff;
+  margin: 24px auto 0;
   line-height: 1;
+  .paySuccess_download {
+    margin: 32px 32px 0;
+    padding: 24px 32px;
+    height: 28px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+    background: #fef4f7;
+    border-radius: 20px;
+    .paySuccess_download_btn {
+      width: 136px;
+      height: 50px;
+      background: #ef476f;
+      border-radius: 25px;
+      border: 1px solid;
+      border-image: linear-gradient(
+          158deg,
+          rgba(255, 255, 255, 0.86),
+          rgba(255, 255, 255, 0.63),
+          rgba(255, 255, 255, 0.86)
+        )
+        1 1;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+  }
+  .paySuccess_yd_game {
+    margin: 40px 60px 0;
+    .paySuccess_game_one {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #666666;
+    }
+    .paySuccess_game_one::before {
+      display: block;
+      content: "";
+      width: 80px;
+      height: 80px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon813.png)
+        no-repeat;
+      background-size: 100% 100%;
+
+      margin: 0 auto 12px;
+    }
+    .paySuccess_game_two {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #666666;
+    }
+    .paySuccess_game_two::before {
+      display: block;
+      content: "";
+      width: 80px;
+      height: 80px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon814.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 0 auto 12px;
+    }
+    .paySuccess_game_three {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #666666;
+    }
+    .paySuccess_game_three::before {
+      display: block;
+      content: "";
+      width: 80px;
+      height: 80px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon815.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 0 auto 12px;
+    }
+    .paySuccess_game_four {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #666666;
+    }
+    .paySuccess_game_four::before {
+      display: block;
+      content: "";
+      width: 80px;
+      height: 80px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon816.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 0 auto 12px;
+    }
+  }
+  .paySuccess_top_info {
+    padding: 0 32px;
+    display: flex;
+    align-items: flex-start;
+    .paySuccess_content {
+      margin-left: 24px;
+      padding-top: 12px;
+    }
+  }
+  .paySuccess_yd {
+    margin: 28px;
+    display: flex;
+    justify-content: flex-end;
+    .paySuccess_yd_icon {
+      width: 24px;
+      height: 24px;
+      background: rgba(254, 244, 247, 1);
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      margin-left: -12px;
+      transform: rotateZ(45deg);
+      border-radius: 4px;
+    }
+    .paySuccess_yd_box {
+      display: inline-flex;
+      align-items: center;
+      background: #fef4f7;
+      height: 70px;
+      padding: 0 24px 0 12px;
+      border-radius: 8px;
+      position: relative;
+      .paySuccess_yd_logo {
+        width: 54px;
+        height: 54px;
+        background: url(https://wechat-config.dakale.net/miniprogram/image/icon727.png);
+        background-size: 100% 100%;
+      }
+      .paySuccess_yd_bean {
+        font-size: 26px;
+        font-weight: 400;
+        color: #333333;
+        margin-left: 16px;
+      }
+    }
+  }
+  .paySuccess_collect {
+    margin: 48px auto 0;
+    display: flex;
+    align-items: center;
+    width: 520px;
+    .paySuccess_collect_btnBox {
+      width: 240px;
+      height: 60px;
+      border-radius: 30px;
+      font-size: 28px;
+    }
+    .paySuccess_style1 {
+      border: 2px solid #07c0c2;
+      color: #07c0c2;
+      margin-right: 40px;
+    }
+    .paySuccess_style2 {
+      border: 2px solid #ef476f;
+      color: #ef476f;
+    }
+  }
+  .paySuccess_cover {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .paySuccess_goodName {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    max-width: 428px;
+  }
+  .paySuccess_count {
+    max-width: 428px;
+    margin: 16px auto 0;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+  }
+  .codeBox {
+    position: relative;
+    height: 360px;
+    margin: 48px 80px 0;
+    .code_swiper {
+      width: 360px;
+      height: 360px;
+      position: relative;
+    }
+    .code_left {
+      position: absolute;
+      top: 137px;
+      left: 0;
+    }
+    .code_right {
+      position: absolute;
+    }
+    .codePosition {
+      width: 36px;
+      height: 36px;
+      top: 156px;
+      right: 0;
+    }
+  }
 }
 .pay_details_payDetails {
   width: 100%;
   color: #f5f5f5;
-  padding-bottom: 39px;
   .payTitle_top {
     height: 168px;
     background: #ffffff;
@@ -22,7 +230,7 @@ page {
         height: 60px;
       }
       .payTitle_icon1 {
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon539.png")
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon539.png")
           no-repeat;
         background-size: 100% 100%;
       }
@@ -61,12 +269,11 @@ page {
           width: 64px;
           height: 64px;
           border-radius: 50%;
+          flex-shrink: 0;
         }
         .descriptionCard_merchantTitle {
-          max-width: 280px;
           height: 42px;
           font-size: 28px;
-          font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 600;
           color: #333333;
           line-height: 42px;
@@ -75,7 +282,7 @@ page {
         .descriptionCard_goIcon {
           width: 36px;
           height: 36px;
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon260.png")
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon260.png")
             no-repeat;
           background-size: 100% 100%;
           margin-left: 16px;
@@ -191,57 +398,4 @@ page {
 }
 .pay_dec_margin {
   margin-top: 20px;
-}
-.paySuccess_box {
-  width: 100%;
-  padding-top: 32px;
-  background: #ffffff;
-  margin: 24px auto 0;
-  .paySuccess_cover {
-    width: 100px;
-    height: 100px;
-    margin: 0px auto 0;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  .paySuccess_goodName {
-    font-size: 32px;
-    font-weight: 600;
-    color: #333333;
-    max-width: 580px;
-    margin: 30px auto 0;
-    text-align: center;
-  }
-  .paySuccess_count {
-    max-width: 480px;
-    margin: 16px auto 0;
-    font-size: 28px;
-    font-weight: 400;
-    color: #999999;
-    text-align: center;
-  }
-  .codeBox {
-    position: relative;
-    height: 304px;
-    margin: 48px 80px 0;
-    .code_swiper {
-      width: 304px;
-      height: 304px;
-      position: relative;
-    }
-    .code_left {
-      position: absolute;
-      top: 137px;
-      left: 0;
-    }
-    .code_right {
-      position: absolute;
-    }
-    .codePosition {
-      width: 36px;
-      height: 36px;
-      top: 137px;
-      right: 0;
-    }
-  }
 }

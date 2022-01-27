@@ -3,8 +3,7 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
 import "./index.scss";
 import { getUserCoupon } from "@/server/perimeter";
-import { coupon } from "@/components/componentView/CouponView";
-import { toast } from "@/common/utils";
+import { coupon } from "@/components/public_ui/CouponView";
 class Index extends Component {
   constructor() {
     super(...arguments);

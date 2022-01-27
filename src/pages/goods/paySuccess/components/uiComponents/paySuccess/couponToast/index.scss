@@ -1,0 +1,79 @@
+.couponToast_box {
+  width: 540px;
+  height: 852px;
+  background: url(https://wechat-config.dakale.net/miniprogram/image/icon810.png)
+    no-repeat;
+  background-size: 100% 100%;
+  line-height: 1;
+  .couponToast_bean {
+    padding: 176px 0 0;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 600;
+    color: #fff1ac;
+    line-height: 64px;
+    min-height: 128px;
+  }
+  .couponToast_desc {
+    padding-top: 120px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ffffff;
+    text-align: center;
+  }
+  .couponToast_content {
+    margin: 24px auto;
+    width: 476px;
+    height: 168px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon811.png)
+      no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    .couponToast_icon {
+      padding: 0 8px;
+      height: 32px;
+      background: rgba(239, 71, 111, 0.1);
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #ef476f;
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+    }
+  }
+  .couponToast_tags {
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: center;
+  }
+  .couponToast_btn {
+    margin: 40px auto 0;
+    width: 400px;
+    height: 80px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon812.png)
+      no-repeat;
+    background-size: 100% 100%;
+    font-size: 28px;
+    color: #ff4035;
+    font-weight: 600;
+  }
+  .couponToast_title {
+    padding: 24px 32px 0;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+  }
+  .couponToast_time {
+    font-size: 20px;
+    font-weight: 400;
+    color: #999999;
+    padding: 16px 32px;
+  }
+  .couponToast_price {
+    padding: 0 32px;
+    display: flex;
+    align-items: baseline;
+  }
+}

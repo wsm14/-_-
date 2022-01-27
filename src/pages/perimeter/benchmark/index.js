@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { ScrollView, View, Text, Button } from "@tarojs/components";
-import SearchView from "@/components/searchView";
+import SearchView from "@/components/public_ui/searchView";
 import SelectView from "./components/select";
 import {
   getLat,
@@ -10,12 +10,10 @@ import {
   backgroundObj,
   loginStatus,
   mapGo,
-  navigateTo,
-  toast,
-} from "@/common/utils";
+} from "@/utils/utils";
 import { getSearchConditions } from "@/server/perimeter";
 import { scanCode } from "@/common/authority";
-import NullStatus from "@/components/nullStatus";
+import Empty from "@/components/Empty";
 import "./index.scss";
 
 class index extends Component {
@@ -33,6 +31,7 @@ class index extends Component {
       },
       countStatus: true,
       userMerchantList: [],
+      //商家列表
       visible: false,
     };
   }
@@ -67,7 +66,7 @@ class index extends Component {
       }
     });
   }
-
+  //获取风向标商家
   onSuccess(obj) {
     const { httpData } = this.state;
     this.setState(
@@ -146,9 +145,12 @@ class index extends Component {
         <View
           className="benchMark_template"
           onClick={() =>
-            navigateTo(
-              `/pages/perimeter/merchantDetails/index?merchantId=${userMerchantIdString}`
-            )
+            Router({
+              routerName: "merchantDetails",
+              args: {
+                merchantId: userMerchantIdString,
+              },
+            })
           }
         >
           <View
@@ -265,6 +267,7 @@ class index extends Component {
           }}
           title={"搜索商家"}
         ></SearchView>
+        {/* //顶部 搜索 组件 */}
         <SelectView
           onClose={() => this.setState({ visible: false })}
           onShow={() => this.setState({ visible: true })}
@@ -272,7 +275,7 @@ class index extends Component {
           httpData={httpData}
           visible={visible}
         ></SelectView>
-
+        {/* //筛选组件 */}
         {userMerchantList.length > 0 ? (
           <ScrollView
             onScrollToLower={this.onPage.bind(this)}
@@ -285,12 +288,14 @@ class index extends Component {
           </ScrollView>
         ) : (
           <View className="merchant_list">
-            <NullStatus
-              type="4"
-              title="暂无店铺信息，切换筛选条件试试"
-            ></NullStatus>
+            <Empty
+              show={userMerchantList.length === 0}
+              type={"home"}
+              toast={"暂无商家"}
+            ></Empty>
           </View>
         )}
+        {/* //筛选数据 */}
       </View>
     );
   }

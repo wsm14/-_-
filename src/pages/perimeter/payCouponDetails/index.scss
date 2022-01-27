@@ -7,6 +7,48 @@ page {
   background: #f5f5f5;
   width: 100%;
   padding-bottom: 220px;
+  .shopdetails_collect {
+    width: 48px;
+    height: 48px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon574.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin-left: auto;
+    flex-shrink: 1;
+  }
+
+  .shopdetails_isCollect {
+    width: 48px;
+    height: 48px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon584.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin-left: auto;
+    flex-shrink: 1;
+  }
+
+  .shopdetails_collect_toast {
+    position: absolute;
+    width: 595px;
+    height: 70px;
+    background: rgba(51, 51, 51, 0.7);
+    border-radius: 8px;
+    right: 92px;
+    top: 0;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ffffff;
+    .shopdetails_collect_btn {
+      width: 96px;
+      height: 40px;
+      background: #07c0c2;
+      border-radius: 22px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-left: 16px;
+    }
+  }
   .shopdetails_shop_btnBox {
     display: flex;
   }
@@ -82,7 +124,7 @@ page {
   }
   .coupon_bg {
     background: #ffffff;
-    padding-top: 32px;
+    padding: 32px 0;
     .coupon_setting {
       width: 424px;
       margin: 40px auto 0;
@@ -101,7 +143,7 @@ page {
     .coupon_collect::before {
       width: 48px;
       height: 48px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon574.png")
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon574.png")
         no-repeat;
       background-size: 100% 100%;
       display: block;
@@ -123,7 +165,7 @@ page {
     .coupon_isCollect::before {
       width: 48px;
       height: 48px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon584.png")
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon584.png")
         no-repeat;
       background-size: 100% 100%;
       display: block;
@@ -143,7 +185,7 @@ page {
     .coupon_share::before {
       width: 48px;
       height: 48px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon575.png")
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon575.png")
         no-repeat;
       background-size: 100% 100%;
       display: block;
@@ -214,7 +256,7 @@ page {
       min-width: 239px;
       padding: 0 12px;
       height: 52px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon631.png")
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon631.png")
         no-repeat;
       background-size: 100% 100%;
       .coupon_bean_price {
@@ -262,7 +304,7 @@ page {
     width: 686px;
     height: 272px;
     margin: 0 auto 0;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon537.png")
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon537.png")
       no-repeat;
     background-size: 100% 100%;
 
@@ -297,7 +339,7 @@ page {
       .shopDetails_tab_icon {
         width: 24px;
         height: 24px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon123.png")
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon123.png")
           no-repeat;
         background-size: 100% 100%;
         margin-right: 8px;
@@ -428,6 +470,7 @@ page {
     display: flex;
     align-items: baseline;
     padding: 32px 32px 0;
+    position: relative;
     .couponInfo_box_left {
       font-size: 28px;
       font-weight: 400;
@@ -443,7 +486,7 @@ page {
     // .couponInfo_box_right::after {
     //   width: 40px;
     //   height: 40px;
-    //   background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon462.png)
+    //   background: url(https://wechat-config.dakale.net/miniprogram/image/icon462.png)
     //     no-repeat;
     //   background-size: 100% 100%;
     //   margin-left: 8px;
@@ -456,5 +499,6 @@ page {
     margin-top: 16px;
     display: flex;
     align-items: center;
+    position: relative;
   }
 }

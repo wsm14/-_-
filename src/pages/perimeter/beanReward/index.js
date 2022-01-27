@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import BodyView from "./components/beanList";
-import Toast from "@/components/dakale_toast";
+import Toast from "@/components/toast";
 import {
   getUserWatchMomentEarn,
   getListWatchMomentBeanDetail,
 } from "@/server/index";
-import { toast, navigateTo } from "@/common/utils";
+import { toast } from "@/utils/utils";
+import Router from "@/utils/router";
 import "./index.scss";
-
 class businessSell extends Component {
   constructor() {
     super(...arguments);
@@ -70,9 +70,6 @@ class businessSell extends Component {
       toast("暂无更多");
     }
   }
-  //获取商家信息
-
-  //获取商家轮播图
 
   render() {
     const {
@@ -97,7 +94,11 @@ class businessSell extends Component {
                 </View>
                 <View
                   className="beanReward_title_right"
-                  onClick={() => navigateTo("/pages/newUser/wallet/index")}
+                  onClick={() =>
+                    Router({
+                      routerName: "wallet",
+                    })
+                  }
                 >
                   卡豆账户
                 </View>

@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import Taro, { getCurrentInstance } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import classNames from "classnames";
-import { fetchUserShareCommission } from "@/server/index";
+import { fetchUserShareCommission } from "@/server/common";
 import { fetchCommerceGoods } from "@/server/perimeter";
-import SelectView from "@/components/searchView";
-import { computedPrice } from "@/common/utils";
+import SelectView from "@/components/public_ui/searchView";
+import { computedPrice } from "@/utils/utils";
 import Empty from "@/components/Empty";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -163,11 +162,7 @@ class Index extends Component {
             </View>
             {templatePrice(item)}
             {templatBtnStyle(item)}
-            <View className="preSelfour_btn public_center">
-              {shareCommission > 0 && commission > 0
-                ? `分享赚¥${computedPrice(commission, shareCommission)}`
-                : "立即抢购"}
-            </View>
+            <View className="preSelfour_btn public_center">立即抢购</View>
           </View>
         </View>
       );

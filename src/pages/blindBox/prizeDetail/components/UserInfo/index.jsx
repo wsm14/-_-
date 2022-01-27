@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import "./index.scss";
 
 /**
@@ -38,6 +38,7 @@ export default ({ detail }) => {
                 args: {
                   blindType: 1,
                   blindBoxRewardId,
+                  mode: "select",
                 },
               })
             }

@@ -1,8 +1,6 @@
 import React from "react";
 import Taro from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
-import ButtonView from "@/components/Button";
-import classNames from "classnames";
 import {
   getLat,
   getLnt,
@@ -11,7 +9,7 @@ import {
   computedBeanPrice,
   computedPrice,
   format,
-} from "@/common/utils";
+} from "@/utils/utils";
 import "./index.scss";
 export const goodsView = (item, userInfo, fn, flag = true) => {
   const {
@@ -49,9 +47,7 @@ export const goodsView = (item, userInfo, fn, flag = true) => {
     } else {
       return (
         <View className="activeView_btn_box activeView_btn_style2">
-          {shareCommission > 0 && flag
-            ? `分享赚¥${computedPrice(commission, shareCommission)}`
-            : "立即抢购"}
+          立即抢购
         </View>
       );
     }

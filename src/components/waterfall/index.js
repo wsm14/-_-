@@ -9,7 +9,7 @@
 
 import React, { useEffect, useState } from "react";
 import { View } from "@tarojs/components";
-import { getDom, computedHeight } from "@/common/utils";
+import { getDom, computedHeight } from "@/utils/utils";
 import Taro from "@tarojs/taro";
 import "./index.scss";
 export default (props) => {

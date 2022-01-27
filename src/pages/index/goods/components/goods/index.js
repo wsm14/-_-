@@ -3,14 +3,31 @@ import Taro from "@tarojs/taro";
 import classNames from "classnames";
 import { ScrollView, Text, View } from "@tarojs/components";
 import InterTime from "@/components/InterTime";
-import { filterPayStatus, backgroundObj, filterPayColor } from "@/common/utils";
+import { filterPayStatus, backgroundObj } from "@/utils/utils";
+import Router from "@/utils/router";
 import "./index.scss";
-import { navigateTo } from "@/common/utils";
-import Router from "@/common/router";
-
 export default (props) => {
   const { list, pageDown } = props;
   const [data, setData] = useState([]);
+  const filterPayColor = (string) => {
+    switch (string) {
+      case "0":
+        return "status_color2";
+      case "1":
+        return "status_color2";
+      case "2":
+        return "status_color1";
+      case "3":
+        return "status_color1";
+      case "4":
+        return "status_color2";
+      case "5":
+        return "status_color2";
+      case "6":
+        return "status_color2";
+    }
+  };
+  //订单列表颜色配置
   useEffect(() => {
     setData(list);
   }, [list]);
@@ -101,7 +118,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color1"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -172,7 +189,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color2"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -230,7 +247,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "kolShopGoods",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -266,6 +283,7 @@ export default (props) => {
       </View>
     );
   };
+  //券渲染模板
   const createCodeGoods = (item) => {
     let { payFee, orderDesc, orderSn, createTime, beanFee = "", status } = item;
     orderDesc = JSON.parse(orderDesc) || {};
@@ -302,7 +320,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "codeGoodDetails",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -412,7 +430,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color1"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -481,7 +499,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color2"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -540,7 +558,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "kolShopGoods",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -571,6 +589,7 @@ export default (props) => {
       </View>
     );
   };
+  //特惠商品渲模板
   const createVirtualProduct = (item) => {
     let {
       payFee,
@@ -606,7 +625,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "codeGoodDetails",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -646,6 +665,7 @@ export default (props) => {
       </View>
     );
   };
+  //虚拟商品模板
   const createRightCoupon = (item) => {
     let {
       payFee,
@@ -726,7 +746,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color1"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -797,7 +817,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color2"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -855,7 +875,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "kolShopGoods",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -891,7 +911,7 @@ export default (props) => {
       </View>
     );
   };
-
+  //卡豆商品券模板
   const createRightGoods = (item) => {
     let {
       payFee,
@@ -962,7 +982,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color1"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -1031,7 +1051,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color2"
                 onClick={() =>
                   Router({
-                    routerName: "kolShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -1090,7 +1110,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "kolShopGoods",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -1121,7 +1141,7 @@ export default (props) => {
       </View>
     );
   };
-
+  //卡豆商品模板
   const createCommerceGoods = (item) => {
     let {
       payFee,
@@ -1165,7 +1185,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color1"
                 onClick={() =>
                   Router({
-                    routerName: "xnPay",
+                    routerName: "pay",
                     args: {
                       orderSn: orderSn,
                       orderType: orderType,
@@ -1249,7 +1269,7 @@ export default (props) => {
                 className="createGood_btn_right createGood_btn_color2"
                 onClick={() =>
                   Router({
-                    routerName: "commerceShopGoods",
+                    routerName: "orderDetails",
                     args: {
                       orderSn: orderSn,
                     },
@@ -1285,7 +1305,7 @@ export default (props) => {
           className="createGood_content"
           onClick={() =>
             Router({
-              routerName: "commerceShopGoods",
+              routerName: "orderDetails",
               args: {
                 orderSn: orderSn,
               },
@@ -1326,6 +1346,240 @@ export default (props) => {
       </View>
     );
   };
+  //电商商品模板
+  const createCommunity = (item) => {
+    let {
+      payFee,
+      organizationGoodsOrderDescObject = {},
+      orderSn,
+      orderType,
+      status,
+      closeType,
+      createTime,
+      beanFee,
+      payTime,
+    } = item;
+    const {
+      communityGoodsList = [],
+      logisticsType,
+      liftingAddress,
+    } = organizationGoodsOrderDescObject;
+    const templateTime = {
+      0: `创建时间：${createTime}`,
+      1: `支付时间：${payTime}`,
+      2: `创建时间:${createTime}`,
+      3: `支付时间:${payTime}`,
+    }[status];
+    const { goodsImg, goodsName } = communityGoodsList[0];
+    return (
+      <View
+        onClick={() =>
+          Router({
+            routerName: "orderDetails",
+            args: {
+              orderSn: orderSn,
+            },
+          })
+        }
+        className="createGood_box"
+      >
+        <View className="createGood_title">
+          <View className="createGood_title_box">
+            <View className="createGood_iconBox createGood_bg2">团购订单</View>
+
+            <View className="createGood_merchantName font_hide">
+              共{communityGoodsList.length}商品
+            </View>
+            <View
+              className={classNames(
+                "createGood_status",
+                filterPayColor(status)
+              )}
+            >
+              {filterPayStatus(status, closeType)}
+            </View>
+          </View>
+        </View>
+        <View className="createGood_content">
+          <View className="createdGood_details_box">
+            <View
+              className="createdGood_details_image merchant_dakale_logo"
+              style={goodsImg ? backgroundObj(goodsImg) : {}}
+            ></View>
+            <View className="createdGood_details_setting">
+              <View className="createdGood_details_title bold font_hide">
+                {goodsName}
+              </View>
+              <View className="createdGood_details_time">{templateTime}</View>
+              {beanFee > 0 && (status === "3" || status === "1") && (
+                <View className="createdGood_details_color">
+                  卡豆帮省{" "}
+                  <Text className="bold">¥{(beanFee / 100).toFixed(2)}</Text>
+                </View>
+              )}
+              {status === "0" && logisticsType === "self" && (
+                <View className="createdGood_details_color font_hide">
+                  <View className="font_hide color2 font24">{`自提地点：${liftingAddress}`}</View>
+                </View>
+              )}
+            </View>
+            <View className="createdGood_details_price">
+              <Text className="createdGood_details_priceFont1">¥</Text>
+              <Text className="createdGood_details_priceFont2">
+                {" " + payFee.split(".")[0]}
+              </Text>
+              <Text className="createdGood_details_priceFont3">
+                {payFee.split(".")[1] && `.${payFee.split(".")[1]}`}
+              </Text>
+            </View>
+          </View>
+          {((logisticsType === "self" && status !== "2") || status === "0") && (
+            <View className="createGood_self font_hide font24 color2">
+              {status === "0" ? (
+                <>
+                  <View className="font28 color2">待付款：</View>
+                  <View className="color1 font28 bold">
+                    <InterTime
+                      fn={() => updateStatus(item)}
+                      times={createTime}
+                    ></InterTime>
+                  </View>
+                </>
+              ) : (
+                <View className="font_hide">{`自提地点：${liftingAddress}`}</View>
+              )}
+            </View>
+          )}
+        </View>
+      </View>
+    );
+  };
+  //团购模板
+
+  const createPlatformGift = (item) => {
+    let {
+      payFee,
+      orderSn,
+      orderType,
+      status,
+      closeType,
+      createTime,
+      beanFee,
+      payTime,
+      orderDesc,
+    } = item;
+    orderDesc = orderDesc && JSON.parse(orderDesc);
+    const {
+      platformGift = {},
+      merchantName,
+      merchantIdString,
+      relateId,
+      relateType,
+      ownerIdString,
+    } = orderDesc;
+    const templateTime = {
+      0: `创建时间：${createTime}`,
+      1: `支付时间：${payTime}`,
+      2: `创建时间:${createTime}`,
+      3: `支付时间:${payTime}`,
+    }[status];
+    const createBottom = () => {
+      return {
+        0: (
+          <View className="createGood_bottom">
+            <View className="createGood_btn_style">
+              <View className="createGood_btn_left">
+                待付款：
+                <Text style={{ color: "rgba(51, 51, 51, 1)" }}>
+                  {
+                    <InterTime
+                      fn={() => updateStatus(item)}
+                      times={createTime}
+                    ></InterTime>
+                  }
+                </Text>
+              </View>
+              <View
+                className="createGood_btn_right createGood_btn_color1"
+                onClick={() =>
+                  Router({
+                    routerName: "pay",
+                    args: {
+                      orderSn: orderSn,
+                      orderType: orderType,
+                    },
+                  })
+                }
+              >
+                去付款
+              </View>
+            </View>
+          </View>
+        ),
+      }[status];
+    };
+    const { goodsName } = platformGift;
+    //按钮
+    return (
+      <View
+        onClick={() =>
+          Router({
+            routerName: "orderDetails",
+            args: {
+              orderSn: orderSn,
+            },
+          })
+        }
+        className="createGood_box"
+      >
+        <View className="createGood_title">
+          <View className="createGood_title_box">
+            <View className="createGood_iconBox createGood_bg1">官方</View>
+            <View className="createGood_merchantName font_hide">
+              哒卡乐官方
+            </View>
+
+            <View
+              className={classNames(
+                "createGood_status",
+                filterPayColor(status)
+              )}
+            >
+              {filterPayStatus(status, closeType)}
+            </View>
+          </View>
+        </View>
+        <View className="createGood_content">
+          <View className="createdGood_details_box">
+            <View className="createdGood_details_image merchant_dakale_logo"></View>
+            <View className="createdGood_details_setting">
+              <View className="createdGood_details_title bold font_hide">
+                {goodsName}
+              </View>
+              <View className="createdGood_details_time">{templateTime}</View>
+              {beanFee > 0 && (status === "3" || status === "1") && (
+                <View className="createdGood_details_color">
+                  卡豆帮省{" "}
+                  <Text className="bold">¥{(beanFee / 100).toFixed(2)}</Text>
+                </View>
+              )}
+            </View>
+            <View className="createdGood_details_price">
+              <Text className="createdGood_details_priceFont1">¥</Text>
+              <Text className="createdGood_details_priceFont2">
+                {" " + payFee.split(".")[0]}
+              </Text>
+              <Text className="createdGood_details_priceFont3">
+                {payFee.split(".")[1] && `.${payFee.split(".")[1]}`}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  };
+  //团购模板
+
   const templateObj = {
     scan: createCodeGoods,
     specialGoods: createShopGoods,
@@ -1334,6 +1588,8 @@ export default (props) => {
     rightCoupon: createRightCoupon,
     rightGoods: createRightGoods,
     commerceGoods: createCommerceGoods,
+    communityGoods: createCommunity,
+    platformGift: createPlatformGift,
   };
   //订单支付渲染模板
   return (

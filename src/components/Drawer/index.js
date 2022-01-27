@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import { getShareInfo } from "@/server/user";
-import { getUserMomentcheckNew } from "@/server/share";
-import Router from "@/common/router";
 import "./index.scss";
 export default ({ show, children, close, closeBtn = true }) => {
   const [animate, setAnimated] = useState(null);

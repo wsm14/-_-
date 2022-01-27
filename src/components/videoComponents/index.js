@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
-import Taro from "@tarojs/taro";
-import { Button, Text, View, Canvas } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import classNames from "classnames";
-import { computedClient } from "@/common/utils";
+import { computedClient } from "@/utils/utils";
 import User from "./components/userDetails";
 import "./index.scss";
 export default (props) => {

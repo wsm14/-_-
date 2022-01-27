@@ -1,25 +1,18 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
-import { goods } from "@/api/api";
-import { httpGet, httpPost } from "@/api/newRequest";
-import { getConfigNewcomerOrders } from "@/server/goods";
-import {
-  toast,
-  backgroundObj,
-  filterActive,
-  goBack,
-  switchTab,
-  filterGoods,
-} from "@/common/utils";
-import { fetchUserShareCommission } from "@/server/index";
-import Title from "./components/goodsTitle";
-import ShopCard from "./components/descriptionCard";
-import Router from "@/common/router";
-import Toast from "@/components/paySuccess";
+import { filterGoods, objStatus } from "@/utils/utils";
 import { inject, observer } from "mobx-react";
-import RecommendCoupon from "@/components/couponActive";
-import RecommendSpecal from "@/components/specalActive";
+import PaySuccess from "./components/template/payTemplate";
+import ScanSuccess from "./components/template/scanTemplate";
+import { fetchOrderResult } from "@/server/goods";
+import { getConfigNewcomerOrders } from "@/server/index";
+import { fetchUserShareCommission } from "@/server/common";
+import { fetchOrderLinkCoupon } from "@/server/coupon";
+import Toast from "./components/uiComponents/paySuccess";
+import NewUser from "@/components/public_ui/newUserToast";
+import RecommendCoupon from "@/components/public_ui/couponActive";
+import RecommendSpecal from "@/components/public_ui/specalActive";
 import "./index.scss";
 @inject("store")
 @observer
@@ -27,53 +20,18 @@ class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      httpData: {
-        orderSn: getCurrentInstance().router.params.orderSn,
-      },
+      httpData: { ...getCurrentInstance().router.params },
       orderResult: {},
       visible: false,
       configNewcomerOrdersInfo: {},
       configUserLevelInfo: {},
+      userPlatformCouponInfo: {},
     };
   }
-
-  componentWillUnmount() {
-    if (!getCurrentInstance().router.params.orderSn) {
-      goBack();
-    }
-  }
   componentDidMount() {
-    this.fetchConfigNewcomerOrders();
-    this.fetchUserShareCommission();
-  }
-  componentDidShow() {
     this.getOrderResult();
-  }
-  getOrderResult() {
-    const { getOrderResult } = goods;
-    httpGet(
-      {
-        data: this.state.httpData,
-        url: getOrderResult,
-      },
-      (res) => {
-        const { orderResult } = res;
-        this.setState({
-          orderResult: filterGoods(orderResult),
-        });
-      }
-    );
-  }
-  goGoodsDetails() {
-    const {
-      orderResult: { orderSn },
-    } = this.state;
-    Router({
-      routerName: "kolShopGoods",
-      args: {
-        orderSn: orderSn,
-      },
-    });
+    this.fetchUserShareCommission();
+    this.fetchConfigNewcomerOrders();
   }
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
@@ -83,8 +41,17 @@ class Index extends Component {
       });
     });
   }
+  fetchOrderLinkCoupon() {
+    fetchOrderLinkCoupon().then((res) => {
+      const { userPlatformCouponInfo = {} } = res;
+      this.setState({
+        userPlatformCouponInfo,
+        visible: objStatus(userPlatformCouponInfo),
+      });
+    });
+  }
   fetchConfigNewcomerOrders() {
-    getConfigNewcomerOrders({}, (res) => {
+    getConfigNewcomerOrders({}).then((res) => {
       const { configNewcomerOrdersInfo = {} } = res;
       const { taskStatus = "2" } = configNewcomerOrdersInfo;
       this.setState(
@@ -92,69 +59,98 @@ class Index extends Component {
           configNewcomerOrdersInfo: { ...configNewcomerOrdersInfo, taskStatus },
         },
         (res) => {
-          const { beanLimitStatus } = this.props.store.homeStore;
           if (taskStatus === "0" || taskStatus === "1") {
             this.setState({ visible: true });
+          } else {
+            this.fetchOrderLinkCoupon();
           }
         }
       );
     });
   }
-  onError(msg) {}
+  getOrderResult() {
+    const { httpData } = this.state;
+    fetchOrderResult(httpData).then((res) => {
+      const { orderResult } = res;
+      this.setState({
+        orderResult: filterGoods(orderResult),
+      });
+    });
+  }
   render() {
     const {
       orderResult,
-      orderResult: { orderType = "specialGoods", beanFee },
       visible,
       configUserLevelInfo,
       configNewcomerOrdersInfo,
+      userPlatformCouponInfo,
     } = this.state;
-    const { beanLimitStatus } = this.props.store.homeStore;
+    const { orderType, frontViewType } = orderResult;
     const { beanLimit } = this.props.store.commonStore;
-    return (
-      <View className="pay_details_payDetails">
-        <Title></Title>
-        <ShopCard
-          visible={visible}
-          fn={() => this.getOrderResult()}
-          data={orderResult}
-        ></ShopCard>
-        <View className="pay_goGoods public_center">
-          <View className="color8 font24">
-            可在卡包和订单详情中查看
-            {orderType === "specialGoods" ? "商品" : "券"}详细情况
-          </View>
-          <View
-            className="pay_goods_btn color4 font28 public_center"
-            onClick={() => this.goGoodsDetails()}
-          >
-            查看订单
-          </View>
-        </View>
-        <Toast
-          data={configNewcomerOrdersInfo}
-          show={visible}
-          beanLimit={beanLimit}
-          beanLimitStatus={beanLimitStatus}
-          visible={() => {
-            this.setState({
-              visible: false,
-            });
-          }}
-        ></Toast>
-        {orderType === "specialGoods" ? (
+
+    const template = {
+      verificationPay: (
+        <>
+          <PaySuccess
+            fn={this.getOrderResult.bind(this)}
+            data={orderResult}
+            visible={visible}
+            beanLimit={beanLimit}
+            userPlatformCouponInfo={userPlatformCouponInfo}
+          ></PaySuccess>
+          <NewUser></NewUser>
+          {orderType === "rightCoupon" || orderType === "reduceCoupon" ? (
+            <RecommendCoupon
+              current={true}
+              userInfo={configUserLevelInfo}
+            ></RecommendCoupon>
+          ) : (
+            <RecommendSpecal
+              defaultData={orderResult}
+              current={true}
+              userInfo={configUserLevelInfo}
+            ></RecommendSpecal>
+          )}
+          <Toast
+            data={configNewcomerOrdersInfo}
+            show={visible}
+            orderResult={orderResult}
+            userPlatformCouponInfo={userPlatformCouponInfo}
+            visible={() => {
+              this.setState({
+                visible: false,
+              });
+            }}
+          ></Toast>
+        </>
+      ),
+      scanPay: (
+        <>
+          <ScanSuccess data={orderResult}></ScanSuccess>
+          <NewUser></NewUser>
           <RecommendSpecal
             current={true}
             userInfo={configUserLevelInfo}
           ></RecommendSpecal>
-        ) : (
-          <RecommendCoupon
-            current={true}
-            userInfo={configUserLevelInfo}
-          ></RecommendCoupon>
-        )}
-      </View>
-    );
+          <Toast
+            data={configNewcomerOrdersInfo}
+            show={visible}
+            orderResult={orderResult}
+            userPlatformCouponInfo={userPlatformCouponInfo}
+            visible={() => {
+              this.setState({
+                visible: false,
+              });
+            }}
+          ></Toast>
+        </>
+      ),
+    }[frontViewType];
+    if (template) {
+      return template;
+    } else {
+      return null;
+    }
   }
 }
 

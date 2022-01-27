@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import "./index.scss";
 export default (props) => {
   const { proxy, store, showNewsInfo, setPlayer } = props;

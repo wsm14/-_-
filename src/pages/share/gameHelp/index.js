@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image, Button } from "@tarojs/components";
-import { backgroundObj, toast } from "@/common/utils";
+import { backgroundObj, toast } from "@/utils/utils";
 import { fetchNewShareInfo } from "@/server/common";
 import "./index.scss";
 class Index extends Component {

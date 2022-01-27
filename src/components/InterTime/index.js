@@ -1,8 +1,11 @@
+/*
+1天内时分秒组件
+times: formdate
+mint :倒计时的分钟输
+fn: 倒计时完成的回调
+*/
 import React, { useEffect, useState } from "react";
-import Taro, { useDidHide } from "@tarojs/taro";
-import { toast } from "../../common/utils";
-
-function getSeconds(s) {
+const getSeconds = (s) => {
   var sTime = parseInt(s); // 秒
   var mTime = 0; // 分
   var hTime = 0; // 时
@@ -31,15 +34,10 @@ function getSeconds(s) {
   } else {
     result = "" + parseInt(mTime) + ":" + result;
   }
-  // if(hTime >= 0 && hTime < 10) {
-  //   result = "0" + parseInt(hTime) + ":" + result;
-  // }else{
-  //   result = "" + parseInt(hTime) + ":" + result;
-  // }
   if (sTime > 0) {
     return result;
   } else return "";
-}
+};
 
 export default (props) => {
   const { times, fn, mint } = props;

@@ -1,0 +1,86 @@
+.represent_box {
+  padding: 42px 24px 32px;
+  background: #ffffff;
+  margin-top: 16px;
+  .represent_buy_rules {
+    display: flex;
+    align-items: center;
+    padding-bottom: 34px;
+    .represent_buy_rulesName {
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+      line-height: 28px;
+      padding-right: 24px;
+    }
+  }
+  .shopDetails_tab_icon {
+    width: 24px;
+    height: 24px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon123.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin-right: 8px;
+    margin-left: 16px;
+  }
+  .shopDetails_tab_font {
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+  }
+  .shop_question {
+    width: 36px;
+    height: 36px;
+    margin-left: auto;
+  }
+  .represent_buy_lever {
+    margin-top: 22px;
+    .represent_buy_goLink {
+      width: 24px;
+      height: 24px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon632.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .represent_buy_kefu {
+    height: 64px;
+    border-radius: 35px;
+    border: 2px solid #108588;
+    display: flex;
+    position: relative;
+
+    align-items: center;
+    position: relative;
+    .represent_buy_logo {
+      width: 56px;
+      height: 56px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon633.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin-left: 4px;
+    }
+    .represent_buy_font {
+      margin-left: 16px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #108588;
+      line-height: 24px;
+    }
+    .represent_buy_btn {
+      width: 80px;
+      height: 40px;
+      background: #108588;
+      border-radius: 20px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #ffffff;
+      position: absolute;
+      right: 12px;
+      top: 12px;
+    }
+    button::after {
+      border: none;
+    }
+  }
+}

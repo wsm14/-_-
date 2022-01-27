@@ -5,8 +5,8 @@ import Taro from "@tarojs/taro";
 import { fetchBlindBoxReward, fetchBlindBoxHelp } from "@/server/blindBox";
 import { getUserMomentcheckNew } from "@/server/share";
 import Drawer from "@/components/Drawer";
-import { loginStatus, backgroundObj } from "@/common/utils";
-import Router from "@/common/router";
+import { loginStatus, backgroundObj } from "@/utils/utils";
+import Router from "@/utils/router";
 import "./index.scss";
 import classNames from "classnames";
 const filterList = (list) => {
@@ -103,7 +103,7 @@ export default ({ data, updateInfo, list, updateList }) => {
       if (ruleTypeBeanStatus === "1") {
         return (
           <View
-            className="blind_start_beanInfo"
+            className="blind_start_beanInfo public_center"
             onClick={(e) => {
               saveBlindBoxReward();
             }}
@@ -111,37 +111,22 @@ export default ({ data, updateInfo, list, updateList }) => {
             <View className="blind_start_count">
               {blindBoxBeanNum}卡豆拆一次
             </View>
-            <View className="blind_start_our">
-              剩余抽奖次数: {surplusBoxBeanTimes}
-            </View>
           </View>
         );
       } else {
         return (
           <View
-            className="blind_start_beanInfo"
+            className="blind_start_beanInfo public_center"
             onClick={() => {
-              getUserMomentcheckNew({}).then((val) => {
-                const { newUserFlag = "1", newUserBean = "300" } = val;
-                if (newUserFlag === "1") {
-                  Router({
-                    routerName: "userNewArtist",
-                  });
-                } else {
-                  Router({
-                    routerName: "nearVideo",
-                    args: {
-                      type: "goods",
-                    },
-                  });
-                }
+              Router({
+                routerName: "nearVideo",
+                args: {
+                  type: "goods",
+                },
               });
             }}
           >
             <View className="blind_start_count">卡豆不足? 去捡卡豆</View>
-            <View className="blind_start_our">
-              剩余抽奖次数: {surplusBoxBeanTimes}
-            </View>
           </View>
         );
       }
@@ -192,7 +177,7 @@ export default ({ data, updateInfo, list, updateList }) => {
       <View className="blind_content">
         {/* 可用卡豆 */}
         <View className="blindC_bean">{beanNum}</View>
-        {/* 切换区域 */}
+        {/* 切换区域
         <View className="blind_tab">
           {Object.keys(bindTab).map((item) => (
             <View
@@ -204,7 +189,7 @@ export default ({ data, updateInfo, list, updateList }) => {
               {bindTab[item]}
             </View>
           ))}
-        </View>
+        </View> */}
         {/* 抽奖区域 */}
         <View
           className={classNames(
@@ -231,19 +216,7 @@ export default ({ data, updateInfo, list, updateList }) => {
         <Template></Template>
         {/* 開始按鈕 */}
 
-        {/* 邀请好友获得免费机会/查看我的助力进度 */}
-        {tabKey === "bean" ? (
-          <View
-            className="blind_invint"
-            onClick={() => setTabKey("invitation")}
-          >
-            去邀请专场 免费抽
-          </View>
-        ) : (
-          <View className="blind_invint" onClick={() => getBlindHelp()}>
-            查看我的助力进度{" "}
-          </View>
-        )}
+        <View className="blind_logo"></View>
       </View>
       <JackNow
         list={list}
@@ -395,7 +368,6 @@ export default ({ data, updateInfo, list, updateList }) => {
               </View>
               <View className="countVisible_order_desc">已达上限</View>
               <View className="countVisible_order_desc">
-                可以去邀请场继续玩哦～
               </View>
               <View className="countVisible_order_btn public_auto">
                 <View
@@ -407,13 +379,16 @@ export default ({ data, updateInfo, list, updateList }) => {
                 <View
                   className="countVisible_order_btnBox countVisible_order_btnStyle2 public_center"
                   onClick={() => {
-                    setTabKey(() => {
-                      setCountVisible(false);
-                      return "invitation";
+                    Router({
+                      routerName: "nearVideo",
+                      args: {
+                        type: "goods",
+                      },
                     });
+                    setCountVisible(false);
                   }}
                 >
-                  去邀请场
+                  看视频捡豆
                 </View>
               </View>
             </View>

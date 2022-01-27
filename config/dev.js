@@ -10,6 +10,9 @@ module.exports = {
     webpackChain(chain, webpack) {
       chain.plugin("bundle analyzer").use(BundleAnalyzerPlugin);
     },
+    miniCssExtractPluginOption: {
+      ignoreOrder: true,
+    },
   },
   h5: {},
 };

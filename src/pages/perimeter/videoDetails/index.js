@@ -1,34 +1,25 @@
 import React from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { Button, Image, ScrollView, View } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import VideoView from "./components/videoView";
-import {
-  computedClient,
-  toast,
-  setIntive,
-  saveFollow,
-  goBack,
-  loginStatus,
-  filterPath,
-} from "@/common/utils";
+import { toast, loginStatus } from "@/utils/utils";
 import {
   fakeInsertUserCollectionMoment,
   fakeDeleteUserCollection,
-  checkPuzzleBeanLimitStatus,
-  updateUserMomentParam,
-  fetchUserShareCommission,
+  fakeUserFollow,
   getUserMomentDetailById,
   saveWatchBean,
 } from "@/server/index";
+import { fetchUserShareCommission } from "@/server/common";
 import { fetchFormMomentDetail } from "@/server/share";
 import { inject, observer } from "mobx-react";
-import Toast from "@/components/beanToast";
-import Coupon from "@/components/freeCoupon";
-import { getShareInfo, getShareParamInfo } from "@/server/common";
+import Toast from "@/components/public_ui/beanToast";
+import Coupon from "@/components/public_ui/freeCoupon";
+import { fetchShareInfo, fetchShareParamInfo } from "@/server/common";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
 import classNames from "classnames";
-import Comment from "@/components/componentView/comment";
+import Comment from "@/components/public_ui/comment";
 import "./index.scss";
 @inject("store")
 @observer
@@ -141,7 +132,7 @@ class Index extends React.PureComponent {
     if (followStatus === "1") {
       return;
     } else {
-      saveFollow(
+      fakeUserFollow(
         {
           followType: relateType,
           followUserId: relateId,
@@ -243,7 +234,7 @@ class Index extends React.PureComponent {
     let { momentId, scene } = getCurrentInstance().router.params;
     if (scene || momentId) {
       if (scene) {
-        getShareParamInfo({ uniqueKey: scene }, (res) => {
+        fetchShareParamInfo({ uniqueKey: scene }, (res) => {
           let {
             shareParamInfo: { param },
           } = res;
@@ -298,7 +289,7 @@ class Index extends React.PureComponent {
       player,
     } = this.state;
     const { address = "" } = addressContentObject;
-    getShareInfo(
+    fetchShareInfo(
       {
         shareType: "newVideo",
         shareId: momentId,
@@ -365,13 +356,6 @@ class Index extends React.PureComponent {
         ownerId,
       },
     } = this.state;
-    updateUserMomentParam(
-      {
-        updateType: "share",
-        id: momentId,
-      },
-      (res) => {}
-    );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {
       const { userIdString } = userInfo;

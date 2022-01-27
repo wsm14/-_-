@@ -6,15 +6,17 @@ import {
   fakeReceiveReward,
   fetchFissionReward,
 } from "@/server/share";
-import { getShareParamInfo } from "@/server/common";
-import { fetchUserShareCommission } from "@/server/index";
-import { backgroundObj, loginStatus, toast } from "@/common/utils";
-import { getShareInfo } from "@/server/common";
+import {
+  fetchShareParamInfo,
+  fetchUserShareCommission,
+  fetchShareInfo,
+} from "@/server/common";
+import { backgroundObj, loginStatus, toast } from "@/utils/utils";
 import { goodsView } from "./components/shop";
 import { rssConfigData } from "./components/shareView/components/data";
 import ShareActive from "./components/shareView";
 import Drawer from "@/components/Drawer";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import BestView from "./components/sucessToast";
 import ErrorView from "./components/errorToast";
 import "./index.scss";
@@ -94,7 +96,7 @@ class Index extends Component {
     const { httpData } = this.state;
     const { fissionId } = httpData;
     if (scene && !fissionId) {
-      getShareParamInfo({ uniqueKey: scene }, (res) => {
+      fetchShareParamInfo({ uniqueKey: scene }, (res) => {
         const {
           shareParamInfo: { param },
         } = res;
@@ -141,7 +143,7 @@ class Index extends Component {
         const { profile, username } = loginStatus() || {};
         const { httpData } = this.state;
         const { fissionId } = httpData;
-        getShareInfo(
+        fetchShareInfo(
           {
             shareType: "helpFission",
             shareId: fissionId,

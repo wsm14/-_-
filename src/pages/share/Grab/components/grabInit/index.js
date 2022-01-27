@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Taro from "@tarojs/taro";
-import { backgroundObj, getLat, getLnt } from "@/common/utils";
-import { View, Text, WebView, ScrollView } from "@tarojs/components";
+import React from "react";
+import { View, Text, ScrollView } from "@tarojs/components";
 import classNames from "classnames";
-import RecommendSpecal from "@/components/specalActive";
-import Router from "@/common/router";
+import RecommendSpecal from "@/components/public_ui/specalActive";
+import { backgroundObj } from "@/utils/utils";
+import Router from "@/utils/router";
 export default ({ data = {}, list = [], configUserLevelInfo }) => {
   const {
     userRedEnvelopesReceive,

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import Taro, {
   useReachBottom,
   usePullDownRefresh,
   useRouter,
 } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { usePostBackData } from "@/relay/common/hooks";
+import { usePostBackData } from "@/utils/utils";
 import {
   fetchGetMyPrizeRecord,
   fetchGetPackagePrize,
   fetchGetOnlinePackagePrize,
 } from "@/server/blindBox";
-import { toast } from "@/common/utils";
+import { toast } from "@/utils/utils";
 import PrizeCell from "./components/PrizeCell";
 import Empty from "@/components/Empty";
 import "./index.scss";

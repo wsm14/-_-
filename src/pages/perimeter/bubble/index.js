@@ -7,22 +7,21 @@ import {
   computedWinHeight,
   computedSize,
   setNavTitle,
-  getDom,
-} from "@/common/utils";
-import { getCategory, getBusinessHub } from "@/server/common";
+} from "@/utils/utils";
+import { fetchCategory, fetchBusinessHub } from "@/server/common";
+import { fetchSpecialGoods } from "@/server/index";
 import {
-  fetchSpecialGoods,
   fetchListCouponByFilterType,
   fetchRecommendMerchantList,
-  fetchUserShareCommission,
-} from "@/server/index";
+} from "@/server/perimeter";
+import { fetchUserShareCommission } from "@/server/common";
 import Goods from "./components/goods";
 import Coupon from "./components/coupon";
 import Shop from "./components/shop";
-import FilterDropdown from "@/components/componentView/filterDropdown";
+import FilterDropdown from "@/components/public_ui/filterDropdown";
 import classNames from "classnames";
 import "./index.scss";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 class Index extends React.Component {
   constructor() {
     super(...arguments);
@@ -97,8 +96,8 @@ class Index extends React.Component {
   }
   initSelect() {
     Promise.all([
-      getCategory({ parentId: "0" }, () => {}),
-      getBusinessHub({}),
+      fetchCategory({ parentId: "0" }, () => {}),
+      fetchBusinessHub({}),
       fetchSpecialGoods({
         page: 1,
         limit: 6,

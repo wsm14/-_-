@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, WebView } from "@tarojs/components";
-import { toast, loginStatus, backgroundObj, fakeStorage } from "@/common/utils";
+import { toast, loginStatus, backgroundObj, fakeStorage } from "@/utils/utils";
 import { fakeBlindBoxHelp, fetchBlindBoxHelp } from "@/server/blindBox";
 import Init from "./componetns/init";
 import { inject, observer } from "mobx-react";
-import Button from "@/components/Button";
 import Drawer from "@/components/Drawer";
-import { getUserMomentcheckNew, saveNewUserBean } from "@/server/share";
+import { getUserMomentcheckNew } from "@/server/share";
 import SaveBean from "./componetns/saveBean";
 import NewsInfo from "./componetns/newsInfo";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import "./index.scss";
 @inject("store")
 @observer
@@ -185,29 +184,25 @@ class Index extends Component {
               <View className="shareBox_liner"></View>
               {userType === "other" ? (
                 <View className="shareBox_btn_box public_center">
-                  <Button>
-                    <View
-                      className="shareBox_btnInfo_btn public_center"
-                      onClick={this.saveBlindBoxHelp.bind(this)}
-                    >
-                      为TA助力
-                    </View>
-                  </Button>
+                  <View
+                    className="shareBox_btnInfo_btn public_center"
+                    onClick={this.saveBlindBoxHelp.bind(this)}
+                  >
+                    为TA助力
+                  </View>
                 </View>
               ) : (
                 <View className="shareBox_btn_box public_center">
-                  <Button>
-                    <View
-                      className="shareBox_btnInfo_btn public_center"
-                      onClick={() =>
-                        Router({
-                          routerName: "blindIndex",
-                        })
-                      }
-                    >
-                      {freeTime > 0 ? "助力成功 马上拆盲盒" : "马上拆盲盒"}
-                    </View>
-                  </Button>
+                  <View
+                    className="shareBox_btnInfo_btn public_center"
+                    onClick={() =>
+                      Router({
+                        routerName: "blindIndex",
+                      })
+                    }
+                  >
+                    {freeTime > 0 ? "助力成功 马上拆盲盒" : "马上拆盲盒"}
+                  </View>
                 </View>
               )}
 

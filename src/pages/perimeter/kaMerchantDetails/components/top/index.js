@@ -11,9 +11,9 @@ import {
   filterStrList,
   getDom,
   computedSize,
-} from "@/common/utils";
+} from "@/utils/utils";
 import classNames from "classnames";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 export default ({ data }) => {
   const {
     mainImages,

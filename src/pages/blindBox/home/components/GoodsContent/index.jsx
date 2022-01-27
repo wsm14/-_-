@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { View, Image, Text } from "@tarojs/components";
 import { observer, MobXProviderContext } from "mobx-react";
-import { fetchRightGoods, fetchUserShareCommission } from "@/server/index";
+import { fetchRightGoods } from "@/server/index";
+import { fetchUserShareCommission } from "@/server/common";
 import {
   template,
   prefectrueGoodsTemplate,
   couponTemplate,
-} from "@/components/specalTemplate";
+} from "@/components/public_ui/specalTemplate";
 import Taro, { useDidShow } from "@tarojs/taro";
 import { getListMayLikeCoupon, getGoodsByMerchantId } from "@/server/perimeter";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import "./index.scss";
 /**
  * 盲盒购物区域

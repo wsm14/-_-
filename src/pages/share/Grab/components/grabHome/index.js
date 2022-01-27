@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
-import { backgroundObj, getLat, getLnt } from "@/common/utils";
-import { View, Text, WebView, ScrollView } from "@tarojs/components";
-import classNames from "classnames";
-import Router from "@/common/router";
+import { backgroundObj } from "@/utils/utils";
+import { View } from "@tarojs/components";
+
 export default ({ data = {}, onChange, animate }) => {
   const { sendUser = {} } = data;
   const { username, profile } = sendUser;

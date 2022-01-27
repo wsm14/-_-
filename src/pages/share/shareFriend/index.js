@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
 import { Swiper, SwiperItem, View, Image } from "@tarojs/components";
-import { getShareInfo } from "@/server/common";
-import { backgroundObj, filterStrList } from "@/common/utils";
+import { fetchShareInfo } from "@/server/common";
+import { backgroundObj, filterStrList } from "@/utils/utils";
 import { rssConfigData } from "./components/data";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import classNames from "classnames";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import "./index.scss";
-class Record extends Component {
+class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -17,13 +17,17 @@ class Record extends Component {
         needHyaline: "1",
       },
       userInfo: {},
+      //用户信息
       current: 0,
+      //选中的索引
       cavansObj: {
         data: null,
         start: false,
         type: null,
       },
+      //画图工具配置
       qcodeUrl: "",
+      // 二维码照片
       selectList: [
         {
           url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_1.png",
@@ -50,19 +54,20 @@ class Record extends Component {
           color: "#E83D3D",
         },
       ],
+      // 背景图片数组
     };
   }
   setCurrent(e) {
     console.log(e);
     const { current } = e.detail;
-    console.log(e);
     this.setState({
       current,
     });
   }
+  //设置轮播选中图片
   fetchShareInfo() {
     const { httpData } = this.state;
-    getShareInfo(httpData, (res) => {
+    fetchShareInfo(httpData, (res) => {
       const { qcodeUrl, backgroundImages } = res;
       if (backgroundImages) {
         this.setState({
@@ -78,6 +83,7 @@ class Record extends Component {
       }
     });
   }
+  //获取后端配置分享背景图
   getShareInfo(type) {
     const {
       current,
@@ -97,6 +103,7 @@ class Record extends Component {
       },
     });
   }
+  //把选中的 生成海报图并保存相册
   componentDidShow() {
     let userInfo = Taro.getStorageSync("userInfo") || {};
     if (Object.keys(userInfo).length === 0) {
@@ -130,6 +137,7 @@ class Record extends Component {
             })
           }
         ></TaroShareDrawer>
+        {/* 画图工具 */}
         <Swiper
           previousMargin={Taro.pxTransform(94)}
           circular
@@ -183,6 +191,7 @@ class Record extends Component {
             );
           })}
         </Swiper>
+        {/* 生成滑动轮播图 */}
         <View className="share_slider_box public_center">
           {selectList.map((item, index) => {
             return (
@@ -196,6 +205,7 @@ class Record extends Component {
             );
           })}
         </View>
+        {/* slider 动画 */}
         <View className="share_wx">
           <View
             className="share_friend"
@@ -206,8 +216,9 @@ class Record extends Component {
             className="share_image"
           ></View>
         </View>
+        {/* 操作按钮 */}
       </View>
     );
   }
 }
-export default Record;
+export default Index;

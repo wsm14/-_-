@@ -1,0 +1,51 @@
+@import "@/assets/css/global.scss";
+
+.GetPrizeTip_box {
+  position: relative;
+  // 光环效果
+  &::after {
+    content: "";
+    position: absolute;
+    top: 72px;
+    left: 46px;
+    @include whEqual(538px);
+    z-index: 0;
+    display: block;
+    border-radius: 50%;
+    animation: light 0.8s ease-in-out infinite alternate;
+  }
+  @keyframes light {
+    from {
+      box-shadow: 0px 0px 0px #b59b47;
+    }
+    to {
+      box-shadow: 0px 0px 50px #fff4cc;
+    }
+  }
+  .GetPrizeTip_ImgBag {
+    position: relative;
+    @include whEqual(631px, 230px);
+    background-image: url("https://wechat-config.dakale.net/miniprogram/mark/PunchTransition/authBag.png");
+    background-size: 100% 100%;
+    padding-top: 401px;
+    z-index: 1;
+    .punchTransition_text {
+      margin: 0 auto;
+      text-align: center;
+      width: 380px;
+      font-size: 32px;
+      font-weight: 600;
+      color: #fff8cf;
+      line-height: 44px;
+      text-shadow: 0px 2px 2px #b41111;
+      white-space: pre-wrap;
+    }
+    .punchTransition_tip {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #f7a78f;
+    }
+  }
+}

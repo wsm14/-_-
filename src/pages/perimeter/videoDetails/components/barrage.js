@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { View, Swiper, SwiperItem, Image } from "@tarojs/components";
-import Taro from "@tarojs/taro";
 import classNames from "classnames";
 import "./../index.scss";
 export default ({ data = [] }) => {

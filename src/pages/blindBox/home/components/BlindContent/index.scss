@@ -5,8 +5,8 @@
     box-sizing: border-box;
   }
   position: relative;
-  @include whEqual(750px, 906px);
-  background: url("https://wechat-config.dakale.net/miniprogram/blind/home/home_machine.png")
+  @include whEqual(750px, 1028px);
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon839.png")
     no-repeat;
   background-size: 100% 100%;
   .blindC_bean {
@@ -44,7 +44,7 @@
   }
   .blind_bean {
     @include whEqual(640px, 333px);
-    margin: 16px auto 0;
+    margin: 76px auto 0;
     background: url("https://wechat-config.dakale.net/miniprogram/blind/blind_bean.gif")
       no-repeat;
     background-size: 100% 100%;
@@ -77,9 +77,17 @@
       background-size: 100% 100%;
     }
   }
+  .blind_logo {
+    margin: 152px auto 0;
+    width: 409px;
+    height: 57px;
+    background: url("https://wechat-config.dakale.net/miniprogram/blind/home/dakele_footer.png")
+      no-repeat;
+    background-size: 100%;
+  }
   .blind_start_beanInfo {
     @include whEqual(600px, 90px);
-    margin: 68px auto 0;
+    margin: 108px auto 0;
     background: linear-gradient(360deg, #ff4545 0%, #ff4545 71%, #ff7a6b 100%);
     box-shadow: 0px 0px 10px 0px #ebad1c, 0px 0px 6px 2px #ff796b;
     border-radius: 45px;
@@ -91,9 +99,7 @@
     position: relative;
     text-align: center;
     line-height: 1;
-    .blind_start_count {
-      padding-top: 12px;
-    }
+
     .blind_start_our {
       padding-top: 6px;
       font-size: 24px;
@@ -136,6 +142,7 @@
     font-size: 36px;
     font-weight: 500;
     color: #333333;
+    height: 36px;
     line-height: 48px;
   }
   .countVisible_order_btn {

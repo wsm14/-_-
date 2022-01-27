@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import {
-  getUserCoupon,
+  fetchUserCouponDetail,
   listAllPut,
   fetchGroupDetail,
 } from "@/server/perimeter";
@@ -15,10 +15,14 @@ class Index extends Component {
     super(...arguments);
     this.state = {
       specialGoodsList: [],
+      //集团关联商品列表
       merchantGroupInfo: {},
+      //集团信息
       userMerchantInfo: {},
+      //最近的集团子门店信息系
       merchantGroupId: getCurrentInstance().router.params.merchantGroupId,
       couponList: [],
+      //券列表
     };
   }
   componentWillMount() {}
@@ -28,54 +32,45 @@ class Index extends Component {
   }
   getSpecalList() {
     const { merchantGroupId } = this.state;
-    listAllPut(
-      {
-        page: 1,
-        limit: 6,
-        merchantGroupId,
-      },
-      (res) => {
-        const { specialGoodsList = [] } = res;
-        this.setState({
-          specialGoodsList,
-        });
-      }
-    );
+    listAllPut({
+      page: 1,
+      limit: 6,
+      merchantGroupId,
+    }).then((res) => {
+      const { specialGoodsList = [] } = res;
+      this.setState({
+        specialGoodsList,
+      });
+    });
   }
   getUserCoupon() {
     const { merchantGroupId } = this.state;
-    getUserCoupon(
-      {
-        page: 1,
-        limit: 3,
-        merchantGroupId,
-      },
-      (res) => {
-        const { couponList = [] } = res;
-        this.setState({
-          couponList,
-        });
-      }
-    );
+    fetchUserCouponDetail({
+      page: 1,
+      limit: 3,
+      merchantGroupId,
+    }).then((res) => {
+      const { couponList = [] } = res;
+      this.setState({
+        couponList,
+      });
+    });
   }
   fetchDetail() {
     const { merchantGroupId } = this.state;
-    fetchGroupDetail(
-      {
-        merchantGroupId,
-      },
-      (res) => {
-        const { merchantGroupInfo = {}, userMerchantInfo = {} } = res;
-        const { brandName } = merchantGroupInfo;
-        Taro.setNavigationBarTitle({
-          title: brandName,
-        });
-        this.setState({
-          merchantGroupInfo,
-          userMerchantInfo,
-        });
-      }
-    );
+    fetchGroupDetail({
+      merchantGroupId,
+    }).then((res) => {
+      const { merchantGroupInfo = {}, userMerchantInfo = {} } = res;
+      const { brandName } = merchantGroupInfo;
+      Taro.setNavigationBarTitle({
+        title: brandName,
+      });
+      this.setState({
+        merchantGroupInfo,
+        userMerchantInfo,
+      });
+    });
   }
   // 获取周边特价
   componentDidMount() {

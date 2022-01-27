@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import "./index.scss";
-import { filterStrList } from "../../../common/utils";
 import { getUserMerchantSimpleDetail } from "@/server/perimeter";
 
 class businessSell extends Component {
@@ -42,7 +41,6 @@ class businessSell extends Component {
         specialServices = [],
       },
     } = this.state;
-    console.log(services);
     return (
       <View className="businessSell_box">
         <View className="businessSell_title">

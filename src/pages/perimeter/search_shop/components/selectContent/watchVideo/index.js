@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { createdShareKol } from "@/components/publicShopStyle";
 import Waterfall from "@/components/waterfall";
 import { View } from "@tarojs/components";
 import Taro, { useReachBottom } from "@tarojs/taro";
-import { searchList } from "@/components/nearList";
-import "./../../../index.scss";
+import { searchList } from "@/components/public_ui/nearList";
 import { getListUserMomentBySearch } from "@/server/perimeter";
 const kolView = ({ keyword, current, store }) => {
   const [data, setData] = useState({

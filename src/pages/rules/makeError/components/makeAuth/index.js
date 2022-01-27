@@ -4,7 +4,7 @@
 import React from "react";
 import Taro, { useDidShow } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { goBack } from "@/common/utils";
+import { goBack } from "@/utils/utils";
 import { useState } from "react";
 import evens from "@/common/evens";
 import { getAuthStatus, scanCard } from "@/common/authority";

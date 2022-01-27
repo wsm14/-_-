@@ -1,0 +1,57 @@
+.login_Box_father {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10088;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .login_Box_loginImg {
+    width: 540px;
+    height: 320px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon645.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .login_Box_loginBody {
+    width: 540px;
+    height: 336px;
+    background: #ffffff;
+    border-radius: 0 0 20px 20px;
+    .login_Box_title {
+      padding-top: 40px;
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 32px;
+      text-align: center;
+    }
+    .login_Box_message {
+      padding: 36px 60px 0;
+      font-size: 28px;
+      font-weight: 400;
+      color: #333333;
+      line-height: 28px;
+    }
+    .login_Box_phone {
+      padding: 16px 60px 0;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      line-height: 24px;
+    }
+    .login_Box_btn {
+      margin: 49px auto 0;
+      width: 420px;
+      height: 70px;
+      background: #07c0c2;
+      border-radius: 8px;
+      font-size: 32px;
+      font-weight: 400;
+      color: #ffffff;
+    }
+  }
+}

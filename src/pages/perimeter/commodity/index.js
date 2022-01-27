@@ -1,21 +1,13 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { Image, ScrollView, Text, View } from "@tarojs/components";
+import { Image, Text, View } from "@tarojs/components";
 import Banner from "@/components/banner";
-import classNames from "classnames";
-import {
-  filterStrList,
-  filterWeek,
-  mapGo,
-  onShareFriend,
-  onTimeline,
-} from "@/common/utils";
-import { shopCard, shopGoodsDetails } from "@/components/publicShopStyle";
+import { filterStrList, mapGo } from "@/utils/utils";
+import { shopGoodsDetails } from "@/components/public_ui/shopGoodsDetails";
 import MakePhone from "@/components/payTelephone";
-import "./index.scss";
 import { loginBtn } from "@/common/authority";
-import { navigateTo } from "@/common/utils";
 import { getListGoodsDetail } from "@/server/perimeter";
+import "./index.scss";
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
@@ -49,29 +41,16 @@ class MerchantDetails extends Component {
   render() {
     const {
       goods: {
-        oriPrice,
-        realPrice,
-        activityEndTime,
         goodsName,
-        allowExpireRefund,
-        allowRefund,
-        needOrder,
-        goodsStock,
-        useStartTime,
-        useEndTime,
-        useWeek,
-        useTime,
         goodsDesc,
         telephone,
         packageGoods,
-        specialActivityIdString,
-        merchantIdString,
         allImgs,
         goodsDescImg,
         status,
         price,
         lat,
-        lnt
+        lnt,
       },
       goods,
       visible,
@@ -155,14 +134,14 @@ class MerchantDetails extends Component {
                 className="shopdetails_shop_goshop"
                 onClick={() =>
                   loginBtn(() =>
-                   mapGo({
-                    lat,
-                    lnt,
-                   })
+                    mapGo({
+                      lat,
+                      lnt,
+                    })
                   )
                 }
               >
-               到店购买
+                到店购买
               </View>
             </View>
             {visible && (
@@ -175,7 +154,7 @@ class MerchantDetails extends Component {
           </View>
         );
       } else {
-        return <ActivityStatus></ActivityStatus>;
+        return null;
       }
     } else return null;
   }

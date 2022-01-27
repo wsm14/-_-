@@ -3,7 +3,6 @@ import Tabs from "@/components/tabs";
 import Taro from "@tarojs/taro";
 import MerchantView from "./merchant/index";
 import KolView from "./watchVideo/index";
-import UserView from "./user/index";
 import ShopView from "./shop/index";
 export default ({
   setting,
@@ -21,7 +20,7 @@ export default ({
     justifyContent: "space-between",
     alignItems: "center",
     background: "#FFFFFF",
-    padding: `0 ${Taro.pxTransform(97)}`,
+    padding: `0 ${Taro.pxTransform(176)}`,
     position: "fixed",
     left: 0,
     right: 0,
@@ -66,7 +65,6 @@ export default ({
           // child={childRef}
         ></ShopView>
       }
-      {<UserView current={count} keyword={keywords}></UserView>}
     </>
   );
 };

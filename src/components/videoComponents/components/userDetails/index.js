@@ -4,12 +4,11 @@ import { Button, Text, View, Canvas } from "@tarojs/components";
 import classNames from "classnames";
 import {
   setPeople,
-  navigateTo,
   backgroundObj,
   fetchStorage,
   fakeStorage,
-} from "@/common/utils";
-import Router from "@/common/router";
+} from "@/utils/utils";
+import Router from "@/utils/router";
 import "./../../index.scss";
 export default ({
   follow,
@@ -50,8 +49,18 @@ export default ({
         },
       });
     } else if (relateType === "user") {
-      Router({
-        routerName: "download",
+      setLayer(() => {
+        let time = setTimeout(() => {
+          clearTimeout(time);
+          setLayer({
+            type: "follow",
+            show: false,
+          });
+        }, 6000);
+        return {
+          type: "user",
+          show: true,
+        };
       });
     } else if (relateType === "group") {
       Router({
@@ -86,6 +95,10 @@ export default ({
       }, 6000);
     }
   }, [showFlag]);
+  const [layer, setLayer] = useState({
+    show: false,
+    type: "follow",
+  });
   const [showFlag, setShowFlag] = useState(false);
   const fakeBean = () => {
     setShowFlag(() => {
@@ -94,7 +107,41 @@ export default ({
     });
   };
   return (
-    <View className="video_stem_layer">
+    <View
+      className="video_stem_layer"
+      onClick={(e) => {
+        e.stopPropagation();
+        setLayer(() => {
+          return {
+            type: "follow",
+            show: false,
+          };
+        });
+      }}
+    >
+      {layer.show && (
+        <View
+          onClick={(e) => {
+            e.stopPropagation();
+            Router({
+              routerName: "download",
+            });
+          }}
+          style={{
+            width:
+              layer.type === "follow"
+                ? Taro.pxTransform(595)
+                : Taro.pxTransform(456),
+          }}
+          className="video_toast_info public_center"
+        >
+          {layer.type === "follow"
+            ? "已成功关注，打开APP查看关注详情"
+            : "哒人详情请打开APP查看"}
+          <View className="video_toast_btn public_center">去打开</View>
+        </View>
+      )}
+
       <View
         style={backgroundObj(relateImg)}
         className="video_stem_userProfile merchant_dakale_logo"
@@ -107,7 +154,22 @@ export default ({
           (relateType === "user" || relateType === "merchant") &&
           !jumpUrl && (
             <View
-              onClick={(e) => follow(e)}
+              onClick={(e) => {
+                follow(e);
+                setLayer(() => {
+                  let time = setTimeout(() => {
+                    clearTimeout(time);
+                    setLayer({
+                      type: "follow",
+                      show: false,
+                    });
+                  }, 6000);
+                  return {
+                    type: "follow",
+                    show: true,
+                  };
+                });
+              }}
               className={classNames("video_stem_fallStatus video_stem_status1")}
             ></View>
           )}

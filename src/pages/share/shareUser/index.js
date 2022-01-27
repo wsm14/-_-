@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, WebView } from "@tarojs/components";
-import { toast, loginStatus, backgroundObj, fakeStorage } from "@/common/utils";
+import { toast, loginStatus, backgroundObj, fakeStorage } from "@/utils/utils";
 import { inject, observer } from "mobx-react";
-import Button from "@/components/Button";
 import Drawer from "@/components/Drawer";
 import { fetchFissionHelps, fetchInvitationUser } from "@/server/share";
-import { getShareParamInfo } from "@/server/common";
+import { fetchShareParamInfo } from "@/server/common";
 import SaveBean from "./componetns/saveBean";
 import NewsInfo from "./componetns/newsInfo";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import "./index.scss";
-import { httpPost } from "@/api/newRequest";
+
 @inject("store")
 @observer
 class Index extends Component {
@@ -56,7 +55,7 @@ class Index extends Component {
   fetchShareType() {
     const { scene } = getCurrentInstance().router.params;
     if (scene) {
-      getShareParamInfo({ uniqueKey: scene }, (res) => {
+      fetchShareParamInfo({ uniqueKey: scene }, (res) => {
         const {
           shareParamInfo: { param },
         } = res;
@@ -146,14 +145,12 @@ class Index extends Component {
               </View>
               <View className="shareUser_liner"></View>
               <View className="shareUser_btn_box public_center">
-                <Button>
-                  <View
-                    className="shareUser_btnInfo_btn public_center"
-                    onClick={this.fetchInvitation.bind(this)}
-                  >
-                    帮TA助力
-                  </View>
-                </Button>
+                <View
+                  className="shareUser_btnInfo_btn public_center"
+                  onClick={this.fetchInvitation.bind(this)}
+                >
+                  帮TA助力
+                </View>
               </View>
 
               <View className="shareUser_share_profileBox">

@@ -1,0 +1,104 @@
+.rechargeContent {
+  padding: 24px;
+  .rechargeContent_content_Box {
+    background: #ffffff;
+    padding: 32px 32px 40px;
+    border-radius: 20px;
+    .commerOrder_shop_card {
+      display: flex;
+      align-items: flex-start;
+
+      .commerOrder_shop_img {
+        width: 152px;
+        height: 152px;
+        background: #f8f2e9;
+        border-radius: 4px;
+      }
+      .commerOrder_shop_content {
+        flex: 1;
+        margin-left: 24px;
+        padding: 8px 0 0;
+        .commerOrder_shop_name {
+          font-size: 28px;
+          font-weight: 600;
+          color: #333333;
+          line-height: 28px;
+        }
+        .commerOrder_shop_price {
+          margin-top: 16px;
+          font-size: 28px;
+          font-weight: 600;
+          color: #333333;
+          line-height: 28px;
+        }
+        .commerOrder_shop_count {
+          margin-top: 36px;
+          font-size: 24px;
+          font-weight: 400;
+          color: #999999;
+          line-height: 24px;
+        }
+      }
+    }
+    .order_shop_price {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .order_shop_label {
+        font-size: 28px;
+        font-weight: 400;
+        color: #999999;
+      }
+      .order_shop_count {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333333;
+      }
+    }
+  }
+
+  .selectKol_box {
+    background: #ffffff;
+    border-radius: 20px;
+    margin: 16px 0 0;
+    padding: 0 32px;
+  }
+
+  .commerOrder_pay_info {
+    padding: 32px 32px;
+    margin: 16px 0 0;
+    background: #ffffff;
+    border-radius: 20px;
+    .commerOrder_pay_title {
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+      padding-bottom: 24px;
+    }
+    .commerOrder_pay_desc {
+      font-size: 28px;
+      font-weight: 400;
+      color: #666666;
+      line-height: 42px;
+    }
+  }
+  .commerOrder_address_user {
+    max-width: 466px;
+    display: flex;
+    align-items: baseline;
+  }
+  .commerOrder_address_details {
+    margin-top: 24px;
+    font-size: 26px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 26px;
+    max-width: 466px;
+    word-break: break-all;
+  }
+  .commerOrder_address_mobile {
+    flex-shrink: 0;
+    margin-left: 24px;
+  }
+}

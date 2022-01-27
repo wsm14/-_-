@@ -6,7 +6,9 @@
 .cleanfix {
   display: flex;
 }
-
+.scroll_padding_info {
+  padding: 0 32px;
+}
 page {
   background: #f2f2f2;
   width: 100%;
@@ -3039,7 +3041,7 @@ image {
   -webkit-box-orient: vertical;
 }
 .dakale_nullImage {
-  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/morenLogo.png")
+  background: url("https://wechat-config.dakale.net/miniprogram/image/morenLogo.png")
     no-repeat;
   background-size: 100% 100%;
 }
@@ -3048,7 +3050,7 @@ image {
   border: 1px solid #ffffff;
   box-sizing: border-box;
   border-radius: 50%;
-  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/useProfile.png")
+  background: url("https://wechat-config.dakale.net/miniprogram/image/useProfile.png")
     no-repeat center/cover;
 }
 .public_fixed {
@@ -3059,6 +3061,10 @@ image {
   left: 0;
   z-index: 1000;
   background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
 }
 .public_image_radius {
 }
@@ -3234,6 +3240,29 @@ image {
     }
   }
 }
+.public_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.public_auto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+img {
+  width: 100%;
+  vertical-align: middle;
+}
+.dkl_slogan::before {
+  content: "";
+  display: inline-block;
+  width: 409px;
+  height: 57px;
+  background-image: url("https://wechat-config.dakale.net/miniprogram/image/dkl_slogan.png");
+  background-size: 100% 100%;
+}
+
 .video_tags_box {
   width: 300px;
   height: 92px;

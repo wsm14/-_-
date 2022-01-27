@@ -1,0 +1,32 @@
+.shareSign_box {
+  width: 100%;
+  height: 1624px;
+  background: url(https://wechat-config.dakale.net/miniprogram/image/icon840.png)
+    no-repeat;
+  background-size: 100% auto;
+  position: relative;
+  .shareSign_btn {
+    width: 500px;
+    height: 120px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon841.png)
+      no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    bottom: 100px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  .shareSign_share {
+    width: 500px;
+    height: 120px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon842.png)
+      no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    bottom: 100px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,37 @@
+.newsPilot_box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 80;
+  background: rgba(21, 21, 21, 0.7);
+  .newsPilot_title {
+    font-size: 48px;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 67px;
+    text-align: center;
+  }
+  .newsPilot_icon {
+    position: relative;
+    width: 300px;
+    height: 477px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon830.png);
+    background-size: 100% 100%;
+    margin: 40px auto 0;
+    animation-name: newsPilol;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  @keyframes newsPilol {
+    from {
+      transform: translateY(100px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+}

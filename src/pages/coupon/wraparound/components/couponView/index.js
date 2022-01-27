@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Image, View } from "@tarojs/components";
-import { navigateTo, filterWeek } from "@/common/utils";
+import { filterWeek } from "@/utils/utils";
 import classNames from "classnames";
 import "./../../index.scss";
+import Router from "@/utils/router";
 export default (props) => {
   const { item } = props;
   const [status, setStatus] = useState(false);
@@ -29,9 +30,9 @@ export default (props) => {
     verificationType,
   } = item;
   let nullImage =
-    "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/conpon_shop.png";
+    "https://wechat-config.dakale.net/miniprogram/image/conpon_shop.png";
   let nullCoupon =
-    "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_big.png";
+    "https://wechat-config.dakale.net/miniprogram/image/coupon_big.png";
   const templateTag = () => {
     if (verificationType === "0" && couponType === "rightGoods") {
       return "wraparound_couponContent_iconStyle4";
@@ -43,14 +44,14 @@ export default (props) => {
       return "wraparound_couponContent_iconStyle2";
     }
   };
-  const goMerchant = (val) => {};
 
   const goCouponDetails = (couponType, userCouponIdString) => {
-    if (couponType !== "reduceCoupon" && couponType !== "freeReduceCoupon") {
-      navigateTo(`/pages/coupon/couponDetails/index?id=${userCouponIdString}`);
-    } else {
-      navigateTo(`/pages/coupon/voucherDetails/index?id=${userCouponIdString}`);
-    }
+    Router({
+      routerName: "couponDetails",
+      args: {
+        id: userCouponIdString,
+      },
+    });
   };
   const templateContent = () => {
     if (
@@ -180,7 +181,6 @@ export default (props) => {
             className="wraparound_topBox"
             onClick={(e) => {
               e.stopPropagation();
-              goMerchant(item);
             }}
           >
             <View className="wraparound_logo">
@@ -246,7 +246,6 @@ export default (props) => {
             className="wraparound_topBox"
             onClick={(e) => {
               e.stopPropagation();
-              goMerchant(item);
             }}
           >
             <View className="wraparound_logo">

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
-import { toast } from "@/common/utils";
-import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
-import { getBanner } from "@/server/common";
+import { toast } from "@/utils/utils";
+import { fetchSpecialGoods } from "@/server/index";
+import { fetchBanner, fetchUserShareCommission } from "@/server/common";
 import Banner from "@/components/banner";
-import { childTemplate } from "@/components/specalTemplate";
+import { childTemplate } from "@/components/public_ui/specalTemplate";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -37,7 +37,7 @@ class Index extends Component {
     this.getBanner();
   }
   getBanner() {
-    getBanner({ bannerType: "hotWeal" }, (res) => {
+    fetchBanner({ bannerType: "hotWeal" }, (res) => {
       const { bannerList } = res;
       this.setState({
         bannerList,

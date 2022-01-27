@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text, ScrollView, Image } from "@tarojs/components";
-import {
-  toast,
-  backgroundObj,
-  GetDistance,
-  getLat,
-  getLnt,
-  computedPrice,
-} from "@/common/utils";
-import classNames from "classnames";
-import Router from "@/common/router";
+import { GetDistance, getLat, getLnt, computedPrice } from "@/utils/utils";
+import Router from "@/utils/router";
 export default ({ list, userInfo, name, categoryIds }) => {
   const template = (item, userInfo, linkTo) => {
     const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
@@ -55,7 +47,7 @@ export default ({ list, userInfo, name, categoryIds }) => {
                   mode={"aspectFill"}
                   src={
                     merchantLogo ||
-                    "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_dakale.png"
+                    "https://wechat-config.dakale.net/miniprogram/image/merchant_dakale.png"
                   }
                   lazyLoad
                   className="bubble_conpon_image"
@@ -70,13 +62,7 @@ export default ({ list, userInfo, name, categoryIds }) => {
                 </View>
               </View>
             </View>
-            {shareCommission > 0 ? (
-              <View className="bubble_coupon_btn">
-                分享赚¥{computedPrice(commission, shareCommission)}
-              </View>
-            ) : (
-              <View className="bubble_coupon_btn1 public_center">抢购</View>
-            )}
+            <View className="bubble_coupon_btn1 public_center">抢购</View>
           </View>
         </View>
       </View>

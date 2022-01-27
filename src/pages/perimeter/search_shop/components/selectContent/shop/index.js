@@ -3,15 +3,11 @@ import { Image, View } from "@tarojs/components";
 import Taro, { useReachBottom } from "@tarojs/taro";
 import Waterfall from "@/components/waterfall";
 import { fetchSearchGoods } from "@/server/perimeter";
-import { selectShop } from "@/components/componentView/selectShop";
-import Tags from "@/components/componentView/goodsTagView";
-import {
-  getCategory,
-  getConfigWindVaneBySize,
-  getBusinessHub,
-} from "@/server/common";
-import FilterDropdown from "@/components/componentView/filterDropdown";
-import Router from "@/common/router";
+import { selectShop } from "@/components/public_ui/selectSpecal";
+import Tags from "@/components/public_ui/goodsTagView";
+import { fetchCategory, fetchBusinessHub } from "@/server/common";
+import FilterDropdown from "@/components/public_ui/filterDropdown";
+import Router from "@/utils/router";
 const kolView = ({ keyword, current, configUserLevelInfo }) => {
   const [data, setData] = useState({
     page: 1,
@@ -21,7 +17,6 @@ const kolView = ({ keyword, current, configUserLevelInfo }) => {
   const [list, setList] = useState([]);
   const [selectList, setSelectList] = useState([]);
   const [countStatus, setCountStatus] = useState(true);
-  const { categoryIds, goodsTags } = data;
   useEffect(() => {
     setData({
       ...data,
@@ -52,8 +47,8 @@ const kolView = ({ keyword, current, configUserLevelInfo }) => {
   };
   const initSelect = () => {
     Promise.all([
-      getCategory({ parentId: "0" }, () => {}),
-      getBusinessHub({}),
+      fetchCategory({ parentId: "0" }, () => {}),
+      fetchBusinessHub({}),
     ]).then((val = []) => {
       const { businessHubList = [] } = val[1];
       const { categoryList } = val[0];
@@ -114,11 +109,6 @@ const kolView = ({ keyword, current, configUserLevelInfo }) => {
               name: "距离",
             },
             { value: "priceSort", description: "按价格排序", name: "价格" },
-            {
-              value: "commissionSort",
-              description: "按佣金排序",
-              name: "佣金",
-            },
           ],
         },
       ]);

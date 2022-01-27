@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { View, ScrollView } from "@tarojs/components";
 import classNames from "classnames";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import { fetchTabTag } from "@/server/common";
 import { scanCode } from "@/common/authority";
 import "./../index.scss";

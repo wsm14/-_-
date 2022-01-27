@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, Image } from "@tarojs/components";
-import {
-  toast,
-  backgroundObj,
-  GetDistance,
-  getLat,
-  getLnt,
-  computedPrice,
-} from "@/common/utils";
+import { View } from "@tarojs/components";
+
 import classNames from "classnames";
-import ShopView from "@/components/componentView/ownerView/ownerShop";
-import Router from "@/common/router";
+import ShopView from "@/components/public_ui/ownerView/ownerShop";
 export default ({ list, userInfo, height, flag = false }) => {
   return (
     <View

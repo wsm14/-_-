@@ -1,18 +1,13 @@
 import React from "react";
 import Taro from "@tarojs/taro";
 import { Input, Text, View, RichText } from "@tarojs/components";
-import { removeStorage, GetDistance, getLat, getLnt } from "@/common/utils";
-import "./index.scss";
-import {
-  getSearchDataStatistic,
-  getSearchRecommend,
-  getSearchConditions,
-  fetchMultiSearchData,
-} from "@/server/perimeter";
-import { fetchUserShareCommission } from "@/server/index";
+import { removeStorage, GetDistance, getLat, getLnt } from "@/utils/utils";
+import { getSearchRecommend, fetchMultiSearchData } from "@/server/perimeter";
+import { fetchUserShareCommission } from "@/server/common";
 import ContentData from "./components/selectContent/index";
 import { inject, observer } from "mobx-react";
-import Router from "@/common/router";
+import Router from "@/utils/router";
+import "./index.scss";
 @inject("store")
 @observer
 export default class Index extends React.Component {
@@ -34,7 +29,7 @@ export default class Index extends React.Component {
       configUserLevelInfo: {},
       storageList: Taro.getStorageSync("storageList") || [],
       setting: {
-        tabList: ["商品", "商家", "视频", "用户"],
+        tabList: ["商品", "商家", "视频"],
         current: 0,
       },
       // childRef: null,
@@ -203,7 +198,6 @@ export default class Index extends React.Component {
       status,
       keywords,
       configUserLevelInfo,
-      childRef,
     } = this.state;
 
     const hasListObj = {
@@ -380,7 +374,7 @@ export default class Index extends React.Component {
                 onClick={() => {
                   this.setState({
                     setting: {
-                      tabList: ["商品", "商家", "视频", "用户"],
+                      tabList: ["商品", "商家", "视频"],
                       current: 0,
                     },
                   });
@@ -399,7 +393,7 @@ export default class Index extends React.Component {
             onClick={() => {
               this.setState({
                 setting: {
-                  tabList: ["商品", "商家", "视频", "用户"],
+                  tabList: ["商品", "商家", "视频"],
                   current: 0,
                 },
               });
@@ -419,7 +413,7 @@ export default class Index extends React.Component {
             onClick={() => {
               this.setState({
                 setting: {
-                  tabList: ["商品", "商家", "视频", "用户"],
+                  tabList: ["商品", "商家", "视频"],
                   current: 1,
                 },
               });
@@ -439,7 +433,7 @@ export default class Index extends React.Component {
             onClick={() => {
               this.setState({
                 setting: {
-                  tabList: ["商品", "商家", "视频", "用户"],
+                  tabList: ["商品", "商家", "视频"],
                   current: 2,
                 },
               });
@@ -452,26 +446,6 @@ export default class Index extends React.Component {
             </View>
             <View className="font24 color2 search_shop_right">
               约{userMomentNum}个视频
-            </View>
-          </View>
-          <View
-            className="search_shop_layer"
-            onClick={() => {
-              this.setState({
-                setting: {
-                  tabList: ["商品", "商家", "视频", "用户"],
-                  current: 3,
-                },
-              });
-              this.changeClick(keyword);
-            }}
-          >
-            <View className="search_user_icon"></View>
-            <View className="font28 color1 font_hide search_hide">
-              {keyword}
-            </View>
-            <View className="font24 color2 search_shop_right">
-              约{searchInfo.userNum}个用户
             </View>
           </View>
           {userMerchantNameList.map((item) => {
@@ -505,6 +479,7 @@ export default class Index extends React.Component {
         <View className="search_shop_padding">
           <View className="search_shop_inputBox">
             <Input
+              alwaysEmbed={true}
               type={"text"}
               confirmType={"search"}
               onConfirm={() => {

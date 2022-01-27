@@ -1,17 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-import { getShareNewYearSpecialActivity } from "@/server/share";
 import "./index.scss";
-import {
-  backgroundObj,
-  GetDistance,
-  getLat,
-  getLnt,
-  toast,
-  navigateTo,
-} from "@/common/utils";
-
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -20,7 +10,6 @@ class Index extends Component {
   componentWillUnmount() {}
   componentDidMount() {}
   render() {
-    const {} = this.state;
     return (
       <View className="interests_box">
         <View className="interests_title">1、随时退</View>
@@ -55,7 +44,7 @@ class Index extends Component {
           <Image
             lazyLoad
             className="desc_img"
-            src="https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon600.png"
+            src="https://wechat-config.dakale.net/miniprogram/image/icon600.png"
           ></Image>
         </View>
         <View className="interests_title">

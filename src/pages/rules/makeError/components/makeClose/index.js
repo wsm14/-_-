@@ -3,7 +3,7 @@
 */
 import React from "react";
 import { View } from "@tarojs/components";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 export default (props) => {
   return (
     <View className="makeError_makeRepeat_init">
@@ -16,7 +16,7 @@ export default (props) => {
           onClick={() => {
             Router({
               routerName: "home",
-              type: "switchTab",
+              type: "reLaunch",
             });
           }}
         >

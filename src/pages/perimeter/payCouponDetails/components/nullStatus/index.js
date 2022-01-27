@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
-import Recommend from "@/components/couponActive";
+import Recommend from "@/components/public_ui/couponActive";
 import "./index.scss";
 export default ({ userInfo, children }) => {
   return (

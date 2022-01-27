@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-import { toast, loginStatus, backgroundObj, fakeStorage } from "@/common/utils";
+import { toast, loginStatus, backgroundObj, fakeStorage } from "@/utils/utils";
 import { fetchListBlindBoxReward } from "@/server/blindBox";
 import Empty from "@/components/Empty";
 import classNames from "classnames";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import "./index.scss";
 
 class Index extends Component {

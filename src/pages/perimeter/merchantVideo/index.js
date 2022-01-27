@@ -1,31 +1,23 @@
 import React from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import VideoView from "./components/videoView";
-import {
-  computedClient,
-  toast,
-  setIntive,
-  saveFollow,
-  goBack,
-  loginStatus,
-} from "@/common/utils";
+import { computedClient, toast, goBack, loginStatus } from "@/utils/utils";
 import { View } from "@tarojs/components";
 import {
   fakeInsertUserCollectionMoment,
   fakeDeleteUserCollection,
-  updateUserMomentParam,
-  fetchUserShareCommission,
+  fakeUserFollow,
+  listOtherMomentByType,
+  listMomentByUserId,
 } from "@/server/index";
-import { listParentCategory } from "@/server/common";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import evens from "@/common/evens";
-import { listOtherMomentByType, listMomentByUserId } from "@/server/user";
 import { getListUserMomentBySearch } from "@/server/perimeter";
-import { getShareInfo } from "@/server/common";
+import { fetchShareInfo, fetchUserShareCommission } from "@/server/common";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
-import Comment from "@/components/componentView/comment";
+import Comment from "@/components/public_ui/comment";
 import "./index.scss";
 @inject("store")
 @observer
@@ -190,7 +182,7 @@ class Index extends React.PureComponent {
     if (followStatus === "1") {
       return;
     } else {
-      saveFollow(
+      fakeUserFollow(
         {
           followType: relateType,
           followUserId: relateId,
@@ -301,7 +293,7 @@ class Index extends React.PureComponent {
       player,
     } = this.state;
     const { address = "" } = addressContentObject;
-    getShareInfo(
+    fetchShareInfo(
       {
         shareType: "newVideo",
         shareId: momentId,
@@ -367,13 +359,6 @@ class Index extends React.PureComponent {
         ownerId,
       },
     } = this.state;
-    updateUserMomentParam(
-      {
-        updateType: "share",
-        id: momentId,
-      },
-      (res) => {}
-    );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {
       const { userIdString } = userInfo;

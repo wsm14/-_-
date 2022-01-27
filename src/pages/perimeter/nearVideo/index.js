@@ -5,31 +5,36 @@ import VideoView from "./components/videoView";
 import {
   computedClient,
   toast,
-  saveFollow,
   goBack,
   loginStatus,
-} from "@/common/utils";
+  fetchStorage,
+  computedTime,
+  fakeStorage,
+} from "@/utils/utils";
 import {
   getUserMomentList,
   saveWatchBean,
   fakeInsertUserCollectionMoment,
   fakeDeleteUserCollection,
   checkPuzzleBeanLimitStatus,
-  updateUserMomentParam,
-  fetchUserShareCommission,
+  fakeUserFollow,
 } from "@/server/index";
 import classNames from "classnames";
 import { inject, observer } from "mobx-react";
 import evens from "@/common/evens";
-import Toast from "@/components/beanToast";
-import Coupon from "@/components/freeCoupon";
-import Lead from "@/components/lead";
-import { getShareInfo } from "@/server/common";
+import Toast from "@/components/public_ui/beanToast";
+import Coupon from "@/components/public_ui/freeCoupon";
+import Lead from "@/components/public_ui/lead";
+import {
+  fetchShareInfo,
+  fetchUserShareCommission,
+  fetchCollection,
+} from "@/server/common";
 import TaroShareDrawer from "./components/TaroShareDrawer";
 import { rssConfigData } from "./components/data";
-import Comment from "@/components/componentView/comment";
+import Comment from "@/components/public_ui/comment";
+import CouponBean from "@/components/public_ui/couponBean";
 import "./index.scss";
-import { httpPost } from "@/api/newRequest";
 @inject("store")
 @observer
 class Index extends React.PureComponent {
@@ -59,11 +64,44 @@ class Index extends React.PureComponent {
         start: false,
       },
       commentShow: false,
+      showFlag: false,
+      momentLinkBeanStage: [50, 150],
     };
     this.interReload = null;
     this.interSwper = null;
   }
+  filterNewsFlag() {
+    const { createTime } = loginStatus() || {};
+    const { userMomentsInfo, momentLinkBeanStage } = this.state;
+    const { tippingBean } = userMomentsInfo;
 
+    if (computedTime(createTime) < 3 && loginStatus()) {
+      const count = computedTime(createTime);
+      let countObj = fetchStorage(`day${count}`);
+      const { num, current } = countObj;
+      if (
+        (num + tippingBean >= momentLinkBeanStage[0] && !current) ||
+        (num + tippingBean >= momentLinkBeanStage[1] && current === 1)
+      ) {
+        this.setState({
+          showFlag: true,
+        });
+        return true;
+      }
+      return false;
+    }
+    return false;
+  }
+  fetchCollection() {
+    fetchCollection().then((val) => {
+      const { momentLinkBeanStage = [] } = val;
+      this.setState({
+        momentLinkBeanStage: momentLinkBeanStage.map((item) => {
+          return parseInt(item.beanStage);
+        }),
+      });
+    });
+  }
   onChange(e) {
     const { countStatus, httpData, userMomentsList } = this.state;
     let { current } = e.detail;
@@ -209,6 +247,9 @@ class Index extends React.PureComponent {
     checkPuzzleBeanLimitStatus({}, (res) => {
       const { beanLimitStatus = "1" } = res;
       if (beanLimitStatus === "1") {
+        if (this.filterNewsFlag()) {
+          return;
+        }
         saveWatchBean(
           {
             momentId: momentId,
@@ -301,7 +342,7 @@ class Index extends React.PureComponent {
     if (followStatus === "1") {
       return;
     } else {
-      saveFollow(
+      fakeUserFollow(
         {
           followType: relateType,
           followUserId: relateId,
@@ -399,10 +440,11 @@ class Index extends React.PureComponent {
   componentDidHide() {}
   componentDidShow() {
     const { time, player } = this.state;
-    // this.listParentCategory();
     this.fetchUserShareCommission();
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.fetchCollection();
+  }
   componentWillMount() {
     const { selectObj, list, index } = this.props.store.homeStore;
     if (
@@ -476,7 +518,7 @@ class Index extends React.PureComponent {
       player,
     } = this.state;
     const { address = "" } = addressContentObject;
-    getShareInfo(
+    fetchShareInfo(
       {
         shareType: "newVideo",
         shareId: momentId,
@@ -542,13 +584,6 @@ class Index extends React.PureComponent {
         ownerId,
       },
     } = this.state;
-    updateUserMomentParam(
-      {
-        updateType: "share",
-        id: momentId,
-      },
-      (res) => {}
-    );
     let userInfo = loginStatus() || {};
     if (loginStatus()) {
       const { userIdString } = userInfo;
@@ -611,8 +646,12 @@ class Index extends React.PureComponent {
       player,
       cavansObj,
       commentShow,
+      showFlag,
+      momentLinkBeanStage,
     } = this.state;
-    const { beanLimitStatus } = this.props.store.homeStore;
+    const { homeStore = {}, commonStore = {} } = this.props.store;
+    const { beanLimitStatus } = homeStore;
+    const { balance } = commonStore;
     const templateView = () => {
       if (userMomentsList.length > 0) {
         return (
@@ -674,13 +713,14 @@ class Index extends React.PureComponent {
           data={userMomentsInfo}
           show={couponFlag}
           beanflag={beanflag}
+          showFlag={showFlag}
           visible={() => {
             this.setState({
               couponFlag: false,
             });
           }}
         ></Coupon>
-        <Lead beanLimitStatus={beanLimitStatus}></Lead>
+        <Lead balance={balance} beanLimitStatus={beanLimitStatus}></Lead>
         {!player && (
           <View
             onClick={() => this.stopVideoPlayerControl()}
@@ -704,6 +744,13 @@ class Index extends React.PureComponent {
             this.setState({ cavansObj: { start: false, data: null } })
           }
         ></TaroShareDrawer>
+        <CouponBean
+          userMomentsList={userMomentsList}
+          data={userMomentsInfo}
+          onChange={this.setState.bind(this)}
+          visible={showFlag}
+          momentLinkBeanStage={momentLinkBeanStage}
+        ></CouponBean>
       </View>
     );
   }

@@ -3,8 +3,8 @@
 */
 import React from "react";
 import { View } from "@tarojs/components";
-import Router from "@/common/router";
-import { goBack } from "@/common/utils";
+import Router from "@/utils/router";
+import { goBack } from "@/utils/utils";
 export default (props) => {
   const {} = props;
   return (

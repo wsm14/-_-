@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import TaroCanvasDrawer from "@/components/taro-plugin-canvas";
 import { View, Button, Image } from "@tarojs/components";
-import { toast } from "@/common/utils";
+import { toast } from "@/utils/utils";
 import "./index.scss";
 
 /**
@@ -18,9 +18,8 @@ const shareImg = ({ start = false, data = [], onClose, onSave }) => {
   useEffect(() => {
     if (start) {
       canvasDrawFunc();
-    }
-    else {
-      setShareImage(null)
+    } else {
+      setShareImage(null);
     }
   }, [start]);
 

@@ -9,15 +9,15 @@ import PersonnelSwiper from "./components/PersonnelSwiper";
 import BlindContent from "./components/BlindContent";
 import BindGetNumber from "./components/BindGetNumber";
 import GoodsContent from "./components/GoodsContent";
-import Footer from "./components/Footer";
+  import Footer from "./components/Footer";
 import {
   fetchBlindBoxConfig,
   fetchBlindBoxBarrage,
   fetchBlindBoxRewardJackpot,
 } from "@/server/blindBox";
-import { getShareInfo } from "@/server/common";
-import { loginStatus } from "@/common/utils";
-import Router from "@/common/router";
+import { fetchShareInfo } from "@/server/common";
+import { loginStatus } from "@/utils/utils";
+import Router from "@/utils/router";
 import "./index.scss";
 /**
  * 盲盒首页
@@ -66,12 +66,12 @@ export default () => {
   });
   const getShareData = () => {
     if (loginStatus() && (!shareZl || !shareMh)) {
-      getShareInfo({ shareType: "blindBox", subType: "invitation" }).then(
+      fetchShareInfo({ shareType: "blindBox", subType: "invitation" }).then(
         (val = {}) => {
           setShareZl(val);
         }
       );
-      getShareInfo({ shareType: "blindBox" }).then((val) => {
+      fetchShareInfo({ shareType: "blindBox" }).then((val) => {
         setShareMh(val);
       });
     }
@@ -99,29 +99,6 @@ export default () => {
       {/* 头部 */}
       <View className="blind_home_head">
         <View
-          className="blind_home_share"
-          onClick={() => {
-            if (!loginStatus()) {
-              Router({
-                routerName: "login",
-              });
-            }
-          }}
-        >
-          {loginStatus() && (
-            <Button
-              style={{
-                width: "100%",
-                height: "100%",
-                background: "none",
-                position: "absolute",
-              }}
-              openType={"share"}
-              data-info="mh"
-            ></Button>
-          )}
-        </View>
-        <View
           className="blind_home_rule"
           onClick={() =>
             Router({
@@ -147,11 +124,11 @@ export default () => {
         updateInfo={setData}
       ></BlindContent>
       {/* 获取盲盒机会 */}
-      <BindGetNumber data={data}></BindGetNumber>
+      {/* <BindGetNumber data={data}></BindGetNumber> */}
       {/* 购物区域 */}
-      <GoodsContent data={data}></GoodsContent>
+      {/* <GoodsContent data={data}></GoodsContent> */}
       {/* 底部logo */}
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
     </View>
   );
 };

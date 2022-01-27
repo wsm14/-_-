@@ -1,0 +1,229 @@
+.goodsCard_box {
+  width: 686px;
+  height: 226px;
+  background: #ffffff;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  margin: 0 auto;
+  .goodsCard_desc_box {
+    padding: 24px;
+    display: flex;
+    .goodsCard_desc_image {
+      width: 240px;
+      height: 178px;
+      border-radius: 4px;
+    }
+    .goodsCard_right {
+      margin-left: 35px;
+      padding-top: 8px;
+      .goodsCard_right_title {
+        font-size: 32px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #333333;
+        line-height: 32px;
+        max-width: 303px;
+      }
+      .goodsCard_right_price {
+        padding-top: 16px;
+        width: 359px;
+        .shopDetails_left {
+          height: 32px;
+          font-size: 32px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 600;
+          color: #ef476f;
+          line-height: 32px;
+        }
+        .shopDetails_right {
+          font-size: 20px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #cccccc;
+          position: relative;
+          line-height: 32px;
+          text-decoration: line-through;
+          margin-left: 12px;
+          display: inline-block;
+        }
+        .shop_zhekou {
+          width: 64px;
+          height: 32px;
+          background: rgba(239, 71, 111, 0.1);
+          border-radius: 4px;
+          line-height: 32px;
+          text-align: center;
+          color: rgba(239, 71, 111, 1);
+        }
+      }
+    }
+  }
+  .goodsCard_btn {
+    margin-top: 40px;
+    width: 359px;
+    height: 50px;
+    color: rgba(239, 71, 111, 1);
+    font-size: 24px;
+  }
+  .shopDetails_btn {
+    width: 160px;
+    height: 50px;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 28px;
+  }
+  .shopDetails_btnColor1 {
+    background: #07c0c2;
+    color: white;
+  }
+  .shopDetails_btnColor2 {
+    background: #07c0c2;
+    color: white;
+    opacity: 0.5;
+  }
+  .shopDetails_btnColor3 {
+    background: rgba(229, 229, 229, 1);
+    color: #ffffff;
+  }
+}
+.shopDetails_box {
+  width: 335px;
+  height: 466px;
+  margin-bottom: 20px;
+  background: #ffffff;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  display: inline-block;
+  margin-right: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+
+  .shopDetails_Img {
+    height: 248px;
+    width: 331px;
+    box-shadow: 0px 2px 24px 0px rgba(0, 0, 0, 0.05);
+    position: relative;
+    .image_box {
+      height: 248px;
+      width: 331px;
+    }
+  }
+
+  .shopDetails_dec {
+    padding: 0 16px;
+    position: relative;
+
+    .shopDetails_shopName {
+      margin-top: 24px;
+      font-size: 32px;
+      max-width: 303px;
+      font-weight: 600;
+      color: #333333;
+    }
+
+    .shopDetails_price {
+      height: 32px;
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+
+      .shopDetails_left {
+        height: 32px;
+        font-size: 32px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 600;
+        color: #ef476f;
+        line-height: 32px;
+      }
+
+      .shopDetails_right {
+        font-size: 20px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #cccccc;
+        position: relative;
+        line-height: 32px;
+        text-decoration: line-through;
+        margin-left: 12px;
+        display: inline-block;
+      }
+      .shop_zhekou {
+        width: 64px;
+        height: 32px;
+        background: rgba(239, 71, 111, 0.1);
+        border-radius: 4px;
+        line-height: 32px;
+        text-align: center;
+        color: rgba(239, 71, 111, 1);
+      }
+    }
+
+    .shopDetails_bean {
+      color: rgba(239, 71, 111, 1);
+      height: 20px;
+      font-size: 20px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #ef476f;
+      margin-top: 2px;
+    }
+
+    .shopDetails_btnBox {
+      margin-top: 40px;
+      height: 50px;
+      .shopDetails_btnTitle {
+        height: 50px;
+        line-height: 50px;
+        color: #ef476f;
+      }
+      .shopDetails_btn {
+        width: 160px;
+        height: 50px;
+        border-radius: 8px;
+        text-align: center;
+        line-height: 50px;
+        font-size: 28px;
+      }
+      .shopDetails_btnColor1 {
+        background: #07c0c2;
+        color: white;
+      }
+      .shopDetails_btnColor2 {
+        background: #07c0c2;
+        color: white;
+        opacity: 0.5;
+      }
+      .shopDetails_btnColor3 {
+        background: rgba(229, 229, 229, 1);
+        color: #ffffff;
+      }
+    }
+  }
+}
+.billboard_box {
+  width: 335px;
+  display: inline-block;
+  margin-right: 16px;
+
+  .billboard_img {
+    width: 335px;
+    height: 248px;
+    border-radius: 4px;
+  }
+
+  .billboard_title {
+    height: 28px;
+    font-size: 28px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #666666;
+    line-height: 28px;
+    margin-top: 24px;
+  }
+}
+
+.billboard_box:last-child {
+  margin-right: 0;
+}

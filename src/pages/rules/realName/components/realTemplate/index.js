@@ -3,9 +3,8 @@
 */
 import React, { useState, useEffect } from "react";
 import { View, Input } from "@tarojs/components";
-import Router from "@/common/router";
-import { fakeSubmitRealName } from "@/server/user";
-import { goBack, toast } from "@/common/utils";
+import { fakeSubmitRealName } from "@/server/perimeter";
+import { goBack, toast } from "@/utils/utils";
 export default (props) => {
   const { data } = props;
   const [form, changeForm] = useState({});

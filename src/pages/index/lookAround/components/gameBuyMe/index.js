@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
 import { View } from "@tarojs/components";
-import NallStatus from "@/components/nullStatus";
 import Waterfall from "@/components/waterfall";
 import Taro from "@tarojs/taro";
-import { gameShop } from "@/components/componentView/selectShop";
+import { gameShop } from "@/components/public_ui/selectSpecal";
+import Empty from "@/components/Empty";
 export default ({ data = [], userInfo = {}, linkTo }) => {
   const memo = useMemo(() => {
     const template = (item) => {
@@ -23,7 +23,11 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
               style={{ width: Taro.pxTransform(335) }}
             ></Waterfall>
           ) : (
-            <NallStatus type={0} title={"暂无商品"}></NallStatus>
+            <Empty
+              show={data.length === 0}
+              type={"shop"}
+              toast={"暂无商品"}
+            ></Empty>
           )}
         </View>
       </React.Fragment>

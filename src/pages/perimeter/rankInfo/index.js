@@ -9,16 +9,17 @@ import {
   mapGo,
   computedClient,
   goBack,
-} from "@/common/utils";
+} from "@/utils/utils";
 import { fetchMerchantNearRank } from "@/server/perimeter";
 import "./index.scss";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 
 class index extends PureComponent {
   constructor() {
     super(...arguments);
     this.state = {
       userMerchantList: [],
+      //附近商家列表
       cityName: "杭州",
     };
   }

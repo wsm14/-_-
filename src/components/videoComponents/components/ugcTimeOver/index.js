@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import Taro from "@tarojs/taro";
 import { Button, Text, View, Canvas } from "@tarojs/components";
-import classNames from "classnames";
-
-import { fakeMomentReward } from "@/server/user";
-import Router from "@/common/router";
+import { fakeMomentReward } from "@/server/index";
+import Router from "@/utils/router";
 import "./index.scss";
 const scale = Taro.getSystemInfoSync().windowWidth / 375;
 

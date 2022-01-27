@@ -1,4 +1,6 @@
 export default {
-  navigationBarTitleText: " ",
+  navigationBarTitleText: "支付成功",
+  navigationBarBackgroundColor: "#FFFFFF",
+  navigationBarTextStyle: "black",
   navigationStyle: "default",
 };

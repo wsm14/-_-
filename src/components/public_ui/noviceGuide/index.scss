@@ -1,0 +1,145 @@
+.noviceGuide_box {
+  width: 560px;
+  height: 760px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon818.png")
+    no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+  line-height: 1;
+  .noviceGuide_priceTitle {
+    padding: 267px 0 0;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ef3636;
+  }
+  .noviceGuide_priceContent {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 7px;
+    color: #ef3636;
+  }
+  .noviceGuide_priceContent_line1 {
+    padding-top: 16px;
+    font-size: 52px;
+  }
+  .noviceGuide_priceContent_line2 {
+    font-size: 72px;
+  }
+  .noviceGuide_newDesc {
+    padding-top: 36px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ef3636;
+  }
+  .noviceGuide_desc {
+    padding-top: 24px;
+    text-align: center;
+    font-weight: 400;
+    color: #999999;
+    font-size: 24px;
+  }
+  .noviceGuide_btn {
+    margin: 121px auto 0;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon819.png")
+      no-repeat;
+    background-size: 100% 100%;
+    width: 400px;
+    height: 80px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ef3636;
+  }
+}
+.noviceCoupon_box {
+  width: 560px;
+  height: 760px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon825.png")
+    no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+  position: relative;
+  .noviceCoupon_title1 {
+    padding-top: 267px;
+    text-align: center;
+    color: #ef3636;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+  }
+  .noviceCoupon_title2 {
+    padding-top: 16px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ef3636;
+  }
+  .noviceCoupon_content_scroll {
+    width: 496px;
+    white-space: nowrap;
+    padding: 32px 0 0;
+    margin: auto;
+  }
+  .noviceCoupon_content {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    .noviceCoupon_content_coupon {
+      margin-right: 8px;
+      width: 160px;
+      text-align: center;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon826.png")
+        no-repeat;
+      background-size: 100% 100%;
+      height: 168px;
+      flex-shrink: 0;
+      .noviceCoupon_coupon_title1 {
+        font-size: 20px;
+        font-weight: 400;
+        color: #999999;
+        padding-top: 16px;
+        max-width: 120px;
+        margin: 0 auto;
+      }
+      .noviceCoupon_coupon_title2 {
+        padding-top: 32px;
+        font-size: 30px;
+        font-weight: bold;
+        color: #fb462f;
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+      }
+      .noviceCoupon_coupon_title3 {
+        padding-top: 8px;
+        font-size: 20px;
+        font-weight: 400;
+        color: #fdb5ac;
+      }
+    }
+    .noviceCoupon_content_coupon:last-child {
+      margin-right: 0px;
+    }
+  }
+  .noviceCoupon_btn {
+    margin: 111px auto 0;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon819.png")
+      no-repeat;
+    background-size: 100% 100%;
+    width: 400px;
+    height: 80px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ef3636;
+  }
+  .noviceCoupon_bom {
+    position: absolute;
+    width: 560px;
+    height: 247px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon827.png")
+      no-repeat;
+    background-size: 100% 100%;
+    bottom: 0;
+    z-index: 10;
+  }
+}

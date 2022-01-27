@@ -1,30 +1,24 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
-import { ScrollView, View, Text } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import Banner from "@/components/banner";
+import { toast, getLat, getLnt } from "@/utils/utils";
+import { resiApiKey } from "@/common/constant";
 import {
-  backgroundObj,
-  toast,
-  getDom,
-  getLat,
-  getLnt,
-  navigateTo,
-  resiApiKey,
-  computedClient,
-} from "@/common/utils";
-import {
-  getBanner,
+  fetchBanner,
   fetchConfigWindVaneBySizeNew,
   getSpecialGoodsCategory,
-  getRestapiAddress,
   fetchAroundModule,
+  fetchUserShareCommission,
 } from "@/server/common";
-import { fetchSelfTourGoods } from "@/server/perimeter";
+import { getRestapiAddress } from "@/server/other";
 import classNames from "classnames";
-import { fetchSpecialGoods, fetchUserShareCommission } from "@/server/index";
-import { getConfigNewcomerOrders } from "@/server/goods";
-import { inject, observer } from "mobx-react";
-import Router from "@/common/router";
+import {
+  fetchSpecialGoods,
+  fetchSelfTourGoods,
+  getConfigNewcomerOrders,
+} from "@/server/index";
+import Router from "@/utils/router";
 import TabCity from "./components/tabCity";
 import Navition from "./components/navition";
 import Plate from "./components/plate";
@@ -37,6 +31,12 @@ import Empty from "@/components/Empty";
 import GameGoods from "./components/gameBuyMe";
 import Skeleton from "./components/SkeletonView";
 import SelfGoods from "./components/selfourOnly";
+import NewUser from "@/components/public_ui/newUserToast";
+import TopBean from "./components/topBean";
+import Education from "./components/beanEducation";
+import SpecalSelf from "./components/specialSelf";
+import { fetchBeanAndEarn } from "@/server/index";
+import { inject, observer } from "mobx-react";
 import "./index.scss";
 @inject("store")
 @observer
@@ -78,10 +78,25 @@ class Index extends Component {
       selfTourResourceList: [],
       beanCodeList: [],
       newDateList: [],
+      topBeanData: {
+        bean: 0,
+        todayTotalIncome: 0,
+      },
     };
   }
+  getBeanInfo() {
+    fetchBeanAndEarn().then((val) => {
+      this.setState({
+        topBeanData: {
+          bean: 0,
+          todayTotalIncome: 0,
+          ...val,
+        },
+      });
+    });
+  }
   topBanner() {
-    getBanner({ bannerType: "wanderAroundMainBanner" }, (res) => {
+    fetchBanner({ bannerType: "wanderAroundMainBanner" }).then((res) => {
       const { bannerList } = res;
       this.setState({
         specialHeadList: bannerList,
@@ -96,8 +111,9 @@ class Index extends Component {
       });
     });
   }
+  //周边游模块
   contentBanner() {
-    getBanner({ bannerType: "wanderAroundCapsule" }, (res) => {
+    fetchBanner({ bannerType: "wanderAroundCapsule" }).then((res) => {
       const { bannerList = [] } = res;
       this.setState({
         specialShopping: bannerList,
@@ -105,7 +121,7 @@ class Index extends Component {
     });
   }
   selfTourBanner() {
-    getBanner({ bannerType: "wanderAroundRecharge" }, (res) => {
+    fetchBanner({ bannerType: "wanderAroundRecharge" }).then((res) => {
       const { bannerList = [] } = res;
       this.setState({
         selfTourBanner: bannerList,
@@ -113,7 +129,7 @@ class Index extends Component {
     });
   }
   beanCodeBanner() {
-    getBanner({ bannerType: "wanderAroundBean" }, (res) => {
+    fetchBanner({ bannerType: "wanderAroundBean" }).then((res) => {
       const { bannerList = [] } = res;
       this.setState({
         beanCodeList: bannerList,
@@ -175,7 +191,7 @@ class Index extends Component {
     });
     this.fetchUserShare();
   }
-  //上拉刷新
+  //根据后端配置 请求接口
   onReload() {
     const { specialHttp } = this.state;
     this.setState(
@@ -196,17 +212,19 @@ class Index extends Component {
       },
       (res) => {
         Taro.stopPullDownRefresh();
+        this.getBeanInfo();
         this.fetchModule();
       }
     );
   }
+  //下拉刷新
   onPullDownRefresh() {
     this.onReload();
   }
   componentDidMount() {
-    // Taro.setStorageSync("toast", num + 1);
     this.setMap();
     this.fetchModule();
+    this.getBeanInfo();
   }
   componentDidShow() {
     this.fetchUserShare();
@@ -244,14 +262,16 @@ class Index extends Component {
       }
     );
   }
+  //获取后端逛逛显示配置项
   fetchgNewcomerOrders() {
-    getConfigNewcomerOrders({}, (res) => {
+    getConfigNewcomerOrders({}).then((res) => {
       const { configNewcomerOrdersInfo = {} } = res;
       this.setState({
         configNewcomerOrdersInfo,
       });
     });
   }
+  //获取是否有三单福利
   setMap() {
     const latitude = getLat();
     const longitude = getLnt();
@@ -282,8 +302,9 @@ class Index extends Component {
         }
       );
   }
+  //获取当前定位
   getshopList(data, key = "kolGoodsList") {
-    fetchSpecialGoods(data, (res) => {
+    fetchSpecialGoods(data).then((res) => {
       const { specialGoodsList = [] } = res;
       this.setState({
         [key]: [...this.state[key], ...specialGoodsList],
@@ -292,30 +313,32 @@ class Index extends Component {
   }
 
   getConfigWindVaneBySize() {
-    fetchConfigWindVaneBySizeNew({}, (res) => {
+    fetchConfigWindVaneBySizeNew({}).then((res) => {
       const { configWindVaneList } = res;
       this.setState({
         configWindVaneList,
       });
     });
   }
-
+  //获取风向标配置
   fetchUserShare() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
-      this.setState({
-        configUserLevelInfo,
-        loading: false,
+    fetchUserShareCommission({})
+      .then((res) => {
+        const { configUserLevelInfo = {} } = res;
+        this.setState({
+          configUserLevelInfo,
+          loading: false,
+        });
+      })
+      .catch((e) => {
+        this.setState({
+          loading: false,
+        });
       });
-    }).catch((e) => {
-      this.setState({
-        loading: false,
-      });
-    });
   }
-
+  //获取达人身份
   getSpecialGoodsCategory() {
-    getSpecialGoodsCategory({}, (res) => {
+    getSpecialGoodsCategory({}).then((res) => {
       const { categoryList = [] } = res;
       if (categoryList.length > 0) {
         this.setState(
@@ -333,7 +356,6 @@ class Index extends Component {
       }
     });
   }
-
   tabGoods(item) {
     const { categoryIdString } = item;
     const {
@@ -381,6 +403,7 @@ class Index extends Component {
       });
     } else return toast("该风向标无跳转路径");
   }
+  //风向标跳转函数
   onPageScroll(e) {
     const { flagDom } = this.state;
     if (!flagDom) {
@@ -389,7 +412,6 @@ class Index extends Component {
         .boundingClientRect((rect) => {
           if (rect) {
             const { top } = rect;
-            console.log(top);
             if (top >= 32) {
               if (flagDom) {
                 this.setState({
@@ -429,8 +451,9 @@ class Index extends Component {
         .exec();
     }
   }
+  //移动指定位置 特惠筛选置顶函数
   onReachBottom() {
-    const { countStatus, specialHttp } = this.state;
+    const { specialHttp } = this.state;
     this.setState(
       {
         specialHttp: {
@@ -452,6 +475,7 @@ class Index extends Component {
       },
     });
   }
+  //点击函数跳转商品详情页
   render() {
     const {
       specialHeadList,
@@ -478,9 +502,9 @@ class Index extends Component {
         subsidyBean,
       },
       requestStatus,
+      topBeanData,
     } = this.state;
     const { cityName } = this.props.store.locationStore;
-
     const templateSelect = () => {
       return (
         <>
@@ -522,7 +546,6 @@ class Index extends Component {
               )}
             </View>
           </View>
-
           <View
             onClick={() => {
               this.setState(
@@ -564,38 +587,45 @@ class Index extends Component {
         </>
       );
     };
+    //筛选特惠样式
     const bannerStyle = {
       width: Taro.pxTransform(686),
       height: Taro.pxTransform(200),
       margin: `${Taro.pxTransform(32)} auto  ${Taro.pxTransform(24)}`,
       position: "relative",
     };
+    //主轮播图
     const bottom = {
       bottom: Taro.pxTransform(-24),
       justifyContent: "flex-end",
     };
+    //切换点
     const bannerContentStyle = {
       width: Taro.pxTransform(686),
       height: Taro.pxTransform(160),
       margin: `${Taro.pxTransform(40)} auto  0`,
       position: "relative",
     };
+    //逛逛胶囊轮播样式
     const bottomContent = {
       bottom: Taro.pxTransform(-12),
       justifyContent: "center",
     };
+    //逛逛胶囊底部点
     const selfContentStyle = {
       width: Taro.pxTransform(702),
       height: Taro.pxTransform(380),
       margin: `${Taro.pxTransform(40)} auto  0`,
       position: "relative",
     };
+    //周边游玩轮播样式
     const beanCodeStyle = {
       width: Taro.pxTransform(688),
       height: Taro.pxTransform(240),
       margin: `${Taro.pxTransform(24)} auto  0`,
       position: "relative",
     };
+    //卡豆专区轮播样式
     let templateObj = {
       beanSpecialArea: (
         <Banner
@@ -703,14 +733,29 @@ class Index extends Component {
           type={"date"}
         ></SelfGoods>
       ),
+      beanEducation: <Education></Education>,
+      specialAndSelfTourAndCommerce: (
+        <SpecalSelf
+          type="specalSelf"
+          userInfo={configUserLevelInfo}
+        ></SpecalSelf>
+      ),
+      selfTourAndCommerce: (
+        <SpecalSelf
+          type="commerceSelf"
+          userInfo={configUserLevelInfo}
+        ></SpecalSelf>
+      ),
     };
-
+    //根据后端 显示函数 映射对应渲染模板
     return (
       <View className="lookAround_box">
         <Navition city={cityName}></Navition>
+        <NewUser></NewUser>
         <Skeleton loading={loading}>
           <View className="lookAround_no_style">
             <View className="lookAround_goods_topHeight"></View>
+            <TopBean data={topBeanData}></TopBean>
             {!requestStatus ? (
               <Empty
                 fn={this.onReload.bind(this)}
@@ -721,8 +766,15 @@ class Index extends Component {
             ) : (
               <React.Fragment>
                 <View className="lookAround_content_margin">
-                  {wanderAroundModule.map((item) => {
+                  {wanderAroundModule.map((item, index) => {
                     if (templateObj[item]) {
+                      if (index === wanderAroundModule.length - 2) {
+                        return (
+                          <View style={{ marginBottom: Taro.pxTransform(36) }}>
+                            {templateObj[item]}
+                          </View>
+                        );
+                      }
                       return templateObj[item];
                     }
                     return null;
@@ -732,11 +784,6 @@ class Index extends Component {
             )}
           </View>
         </Skeleton>
-        {/* {num === 0 && (
-          <View className="wechant_init color6 font28">
-            “添加到我的小程序”，更多优惠抢不停
-          </View>
-        )} */}
         <TabCity
           reload={this.onReload.bind(this)}
           store={this.props.store}

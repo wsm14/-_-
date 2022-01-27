@@ -22,19 +22,6 @@ export default (props) => {
   useEffect(() => {
     setCount(current);
   }, [current]);
-  // useEffect(() => {
-  //   const query = Taro.createSelectorQuery()
-  //   query.select(`.index${count}`).boundingClientRect()
-  //   query.exec(function(res){
-  //       if(res && res.length !=0 && res[0] != null){
-  //         let width =res[0].width
-  //         let left = (parseInt(res[0].left)+(width/2)-7)
-  //         setLineStyle({
-  //           left: left
-  //         })
-  //       }
-  //   })
-  // },[count])
   if (tabList) {
     return (
       <View style={style}>

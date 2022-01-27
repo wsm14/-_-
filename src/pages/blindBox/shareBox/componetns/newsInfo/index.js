@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import "./index.scss";
-import { backgroundObj, fetchStorage } from "@/common/utils";
+import { backgroundObj, fetchStorage } from "@/utils/utils";
 export default ({ change }) => {
   return (
     <View className="newsInfo_img">

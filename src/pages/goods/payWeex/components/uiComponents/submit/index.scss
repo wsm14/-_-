@@ -1,0 +1,17 @@
+.payWeex_submit_box {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 24px 32px;
+  background: #ffffff;
+  .payWeex_submit {
+    width: 686px;
+    height: 80px;
+    background: #07c0c2;
+    border-radius: 8px;
+    font-size: 32px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+}

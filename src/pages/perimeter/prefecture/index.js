@@ -1,21 +1,16 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import classNames from "classnames";
-import {
-  fetchRightGoods,
-  fetchRightCoupon,
-  fetchSpecialGoods,
-  fetchUserShareCommission,
-} from "@/server/index";
+import { fetchRightGoods, fetchRightCoupon } from "@/server/index";
 import { fetchCommerceGoods, fetchSelfTourGoods } from "@/server/perimeter";
 import {
   prefectrueGoodsTemplate,
   prefectrueCouponTemplate,
   commerGoodsTemplate,
   template,
-} from "@/components/specalTemplate";
-import Router from "@/common/router";
+} from "@/components/public_ui/specalTemplate";
+import { fetchUserShareCommission } from "@/server/common";
+import Router from "@/utils/router";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -23,8 +18,11 @@ class Index extends Component {
     this.state = {
       selectIndex: "0",
       ownerCouponList: [],
+      //权益券列表
       specialGoodsList: [],
+      //权益商品列表
       selfList: [],
+      //周边游玩列表
       changeObj: {
         0: "specialGoodsList",
         1: "ownerCouponList",

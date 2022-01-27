@@ -1,6 +1,6 @@
 import React, { Component, PureComponent } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { ScrollView, View, Text, Button, Input } from "@tarojs/components";
+import { ScrollView, View, Text } from "@tarojs/components";
 import {
   getLat,
   getLnt,
@@ -8,13 +8,13 @@ import {
   backgroundObj,
   toast,
   filterStrList,
-} from "@/common/utils";
+} from "@/utils/utils";
 import { scanCode } from "@/common/authority";
 import { getMerchantLat } from "@/server/index";
-import { getCategory, getConfigWindVaneBySize } from "@/server/common";
+import { fetchCategory, fetchConfigWindVaneBySize } from "@/server/common";
 import ShopView from "./components/shopView";
 import SelectList from "./components/selectView";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import classNames from "classnames";
 import "./index.scss";
 const filterSelectData = (obj) => {
@@ -111,8 +111,8 @@ class index extends PureComponent {
 
   initSelect() {
     Promise.all([
-      getCategory({ parentId: "0" }, () => {}),
-      getConfigWindVaneBySize({ size: 10 }, () => {}),
+      fetchCategory({ parentId: "0" }, () => {}),
+      fetchConfigWindVaneBySize({ size: 10 }, () => {}),
     ])
       .then((val = []) => {
         this.setState({
@@ -495,7 +495,7 @@ class index extends PureComponent {
               className="template_shop_img"
               style={backgroundObj(
                 logoImg ||
-                  "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/merchant_dakale.png"
+                  "https://wechat-config.dakale.net/miniprogram/image/merchant_dakale.png"
               )}
             ></View>
             <View className="template_shop_font">

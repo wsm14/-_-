@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { index } from "@/api/api";
-import { httpGet } from "@/api/newRequest";
-import { toast, filterGoodsStatus, loginStatus } from "@/common/utils";
+import { loginStatus } from "@/utils/utils";
 import Tabs from "@/components/tabs";
 import Goods from "./components/goods";
-import { goodsNullStatus } from "@/components/publicShopStyle";
 import { inject, observer } from "mobx-react";
-import { fetchOrderTotalBean } from "@/server/goods";
-import Router from "@/common/router";
+import { fetchOrderTotalBean, fetchOrderList } from "@/server/goods";
+import NewUser from "@/components/public_ui/newUserToast";
+import Router from "@/utils/router";
 import "./index.scss";
 @inject("store")
 @observer
@@ -30,6 +28,22 @@ class Index extends Component {
       countStatus: true,
     };
   }
+  filterGoodsStatus = (status) => {
+    switch (status) {
+      case 0:
+        return "";
+      //全部订单
+      case 1:
+        return "0";
+      //待支付
+      case 2:
+        return "1";
+      //已支付
+      case 3:
+        return "6,2";
+      //退款
+    }
+  };
   setIndex(index) {
     const that = this;
     if (index != this.state.setting.current) {
@@ -47,7 +61,7 @@ class Index extends Component {
           httpData: {
             ...this.state.httpData,
             page: 1,
-            orderStatus: filterGoodsStatus(index),
+            orderStatus: this.filterGoodsStatus(index),
             closeType,
           },
           countStatus: true,
@@ -59,6 +73,7 @@ class Index extends Component {
     }
     return;
   }
+  //切换订单类型
   getOrderTotalBean() {
     fetchOrderTotalBean().then((val) => {
       const { saveBean = "0" } = val;
@@ -67,15 +82,19 @@ class Index extends Component {
       });
     });
   }
-
+  //订单卡豆总量
+  componentWillUnmount() {
+    this.props.store.goodsStore.setNullList([]);
+  }
+  //退出订单页清除Model层数据
   componentDidMount() {
     const { defaultRouter } = getCurrentInstance().router.params;
-    const {
-      store: {
-        goodsStore: { orderList },
-      },
-    } = this.props;
-    this.setIndex(parseInt(defaultRouter));
+    if (defaultRouter == 0) {
+      this.getOrder();
+    } else {
+      this.setIndex(parseInt(defaultRouter));
+    }
+
     if (loginStatus()) {
       this.getOrderTotalBean();
     }
@@ -83,41 +102,23 @@ class Index extends Component {
   getOrder() {
     const { httpData } = this.state;
     let that = this;
-    const {
-      goods: { orderDetails },
-    } = index;
-    httpGet(
-      {
-        data: httpData,
-        url: orderDetails,
-      },
-      (res) => {
+    fetchOrderList(httpData)
+      .then((res) => {
         const { orderList } = res;
         Taro.stopPullDownRefresh();
         if (orderList && orderList.length > 0) {
           that.props.store.goodsStore.setOrderList(orderList);
         } else {
-          this.setState(
-            {
-              countStatus: false,
-            },
-            (res) => {}
-          );
+          this.setState({
+            countStatus: false,
+          });
         }
-      }
-    ).catch((e) => {
-      Taro.stopPullDownRefresh();
-    });
+      })
+      .catch((e) => {
+        Taro.stopPullDownRefresh();
+      });
   }
-  errorToast(e) {
-    this.setState({
-      Toast: {
-        status: "error",
-        text: e,
-        isOpened: true,
-      },
-    });
-  }
+  //获取订单数据
   onPullDownRefresh() {
     let that = this;
     const { httpData } = this.state;
@@ -141,6 +142,7 @@ class Index extends Component {
       });
     }
   }
+  //下拉刷新
   onReachBottom() {
     const { httpData, countStatus } = this.state;
     this.setState(
@@ -179,6 +181,7 @@ class Index extends Component {
     };
     return (
       <View className="goods_tabbar_box">
+        <NewUser></NewUser>
         <Tabs
           fn={this.setIndex.bind(this)}
           lineStyle={{

@@ -1,0 +1,65 @@
+.communityAddress_box {
+  margin: 16px 32px 0;
+  padding: 32px;
+  background: #ffffff;
+  .communityAddress_title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+  }
+  .communityAddress_useName {
+    padding-top: 32px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    display: flex;
+    align-items: center;
+  }
+  .communityAddress_details {
+    padding-top: 16px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+  }
+  .communityAddress_self_top {
+    font-size: 28px;
+    padding-top: 32px;
+    color: rgba(51, 51, 51, 1);
+  }
+  .communityAddress_self_content {
+    max-width: 488px;
+    padding-top: 20px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    color: #999999;
+  }
+  .communityAddress_self_content::after {
+    display: block;
+    content: "";
+    width: 32px;
+    height: 32px;
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_24.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin-left: 8px;
+    flex-shrink: 0;
+  }
+  .communityAddress_self_mobile {
+    padding-top: 26px;
+    color: #333333;
+    font-size: 28px;
+    display: flex;
+  }
+  .communityAddress_self_mobile::after {
+    display: block;
+    content: "";
+    width: 32px;
+    height: 32px;
+    background: url("https://wechat-config.dakale.net/miniprogram/relay/icon_25.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin-left: 8px;
+    flex-shrink: 0;
+  }
+}

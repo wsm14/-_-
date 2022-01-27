@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, WebView } from "@tarojs/components";
 import { getRedEnvelopesDetail, saveUserRedEnvelopes } from "@/server/share";
-import Login from "@/components/componentView/LoginComponent";
+import Login from "@/components/public_ui/LoginComponent";
 import Template from "./components/grabHandle";
-import { toast, loginStatus } from "@/common/utils";
-import { fetchUserShareCommission } from "@/server/index";
+import { toast, loginStatus } from "@/utils/utils";
+import { fetchUserShareCommission } from "@/server/common";
 import "./index.scss";
 class Index extends Component {
   defaultProps = {};

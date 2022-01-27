@@ -16,6 +16,7 @@ export default (props) => {
     home: <View className="empty_img_home  empty_img_box"></View>,
     error: <View className="empty_img_error  empty_img_box"></View>,
     shop: <View className="empty_img_nullShop  empty_img_box"></View>,
+    coupon: <View className="empty_img_coupon  empty_img_box"></View>,
   }[type];
   if (show) {
     return (

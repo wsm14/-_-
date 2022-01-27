@@ -4,22 +4,16 @@
 import React from "react";
 import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
-import Router from "@/common/router";
-import {
-  computedPrice,
-  setBuyRule,
-  backgroundObj,
-  computedBeanPrice,
-} from "@/common/utils";
+import { computedPrice } from "@/utils/utils";
 import classNames from "classnames";
-import ButtonView from "@/components/Button";
-import "./../../index.scss";
+import Router from "@/utils/router";
 export default ({
   data,
   configUserLevelInfo,
-  setCollection,
-  getShareInfo,
   onChange,
+  setCollection,
+  close,
+  show,
 }) => {
   const {
     anytimeRefund,
@@ -40,7 +34,7 @@ export default ({
   const { bean = 10, cash = 1 } = paymentModeObject;
   const templateSelect = () => {
     if (buyRule === "unlimited") {
-      return `不限购`;
+      return `每人不限购买数量`;
     } else {
       if (buyRule === "personLimit") {
         return `每人限购${personLimit}份`;
@@ -49,7 +43,6 @@ export default ({
       }
     }
   };
-
   return (
     <View className="coupon_bg">
       <View className="coupon_top_bg">
@@ -58,66 +51,83 @@ export default ({
         </View>
         <View className="coupon_top_name  font_noHide">{couponName}</View>
       </View>
-      {rightFlag === "1" ? (
-        <>
-          <View className="couponInfo_box">
-            <View className="couponInfo_box_left">卡豆价:</View>
-            <View className="couponInfo_box_right">
-              ¥{cash.toFixed(2)}+{bean}卡豆 
+      <View style={{ position: "relative" }}>
+        {rightFlag === "1" ? (
+          <>
+            <View className="couponInfo_box">
+              <View className="couponInfo_box_left">卡豆价:</View>
+              <View className="couponInfo_box_right">
+                ¥{cash}+{bean}卡豆
+              </View>
+            </View>
+            <View className="couponInfo_rel">
+              <Text className="color2 font28"> 原价:</Text>
+              <Text className="font36 font_hide price_margin4 color2 bold text_through">
+                ¥{couponPrice}
+              </Text>
+              {rightFlag !== "1" && (
+                <View
+                  onClick={() => collect()}
+                  className={classNames(
+                    userCollectionStatus === "1"
+                      ? "shopdetails_isCollect"
+                      : "shopdetails_collect"
+                  )}
+                ></View>
+              )}
+            </View>
+          </>
+        ) : (
+          <>
+            <View className="coupon_price_people font_hide">
+              <Text className="font28 color1">优惠价: </Text>
+              <Text className="font48 color1 bold price_margin4">
+                ¥{buyPrice}
+              </Text>
+              <Text className="coupon_price_style color2">原价:</Text>
+              <Text className="font36 font_hide price_margin8 color2 bold text_through">
+                ¥{couponPrice}
+              </Text>
+              <View
+                onClick={() => setCollection()}
+                className={classNames(
+                  userCollectionStatus === "1"
+                    ? "shopdetails_isCollect"
+                    : "shopdetails_collect"
+                )}
+              ></View>
+            </View>
+            <View onClick={() => onChange()} className="coupon_bean_showPay">
+              <View className="color3 font24">卡豆再省</View>
+              <View className="color3 font36 bold price_margin8">
+                ¥{computedPrice(buyPrice, payBeanCommission)}
+              </View>
+              <View className="coupon_bean_mx">{"卡豆抵扣明细" + " >"}</View>
+            </View>
+          </>
+        )}
+        {show && (
+          <View
+            className="shopdetails_collect_toast public_center"
+            onClick={() => {
+              close();
+              Router({
+                routerName: "download",
+              });
+            }}
+          >
+            已成功收藏，打开APP查看收藏详情
+            <View className="shopdetails_collect_btn public_center">
+              去打开
             </View>
           </View>
-          <View className="couponInfo_rel">
-            <Text className="color2 font28"> 原价:</Text>
-            <Text className="font36 font_hide price_margin4 color2 bold text_through">
-              ¥{couponPrice}
-            </Text>
-          </View>
-        </>
-      ) : (
-        <View>
-          <View className="coupon_price_people font_hide">
-            <Text className="font28 color1">优惠价: </Text>
-            <Text className="font48 color1 bold price_margin4">
-              ¥{buyPrice}
-            </Text>
-            <Text className="coupon_price_style color2">原价:</Text>
-            <Text className="font36 font_hide price_margin8 color2 bold text_through">
-              ¥{couponPrice}
-            </Text>
-          </View>
-          <View onClick={() => onChange()} className="coupon_bean_showPay">
-            <View className="color3 font24">卡豆再省</View>
-            <View className="color3 font36 bold price_margin8">
-              ¥{computedPrice(buyPrice, payBeanCommission)}
-            </View>
-            <View className="coupon_bean_mx">{"卡豆抵扣明细" + " >"}</View>
-          </View>
-        </View>
-      )}
+        )}
+      </View>
 
       <View className="coupon_top_price">
         <View className="coupon_top_right">
           <View className="coupon_getPrice_tag">{templateSelect()}</View>
         </View>
-      </View>
-      <View className="coupon_setting public_auto">
-        <ButtonView>
-          <View
-            onClick={() => setCollection()}
-            className={classNames(
-              userCollectionStatus === "1"
-                ? "coupon_isCollect"
-                : "coupon_collect"
-            )}
-          >
-            {userCollectionStatus === "1" ? "已收藏" : "收藏"}
-          </View>
-        </ButtonView>
-        <ButtonView>
-          <View onClick={() => getShareInfo()} className="coupon_share">
-            分享
-          </View>
-        </ButtonView>
       </View>
     </View>
   );

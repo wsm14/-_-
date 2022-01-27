@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
-import { View, Text, WebView } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import "./index.scss";
-import { toast } from "@/common/utils";
+import { toast } from "@/utils/utils";
 class Index extends Component {
   defaultProps = {};
   constructor() {

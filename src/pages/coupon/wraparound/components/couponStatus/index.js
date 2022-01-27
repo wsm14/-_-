@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Image, View } from "@tarojs/components";
-import { navigateTo } from "@/common/utils";
 import CouponView from "./../couponView";
 export default (props) => {
-  const { data = [], visible = true, type } = props;
+  const { data = [], visible = true } = props;
   const [close, onClose] = useState(true);
   const [list, setList] = useState([]);
   useEffect(() => {
@@ -20,7 +18,6 @@ export default (props) => {
   return (
     <>
       {list.map((item, index) => {
-        const { couponStatus } = item;
         return <CouponView item={item}></CouponView>;
       })}
     </>

@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { View } from "@tarojs/components";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 import { fetchSpecialForRecommend } from "@/server/index";
-import { getBanner } from "@/server/common";
+import { fetchBanner } from "@/server/common";
+import { backgroundObj, computedBeanPrice } from "@/utils/utils";
 import "./index.scss";
-import {
-  backgroundObj,
-  getLat,
-  getLnt,
-  computedBeanPrice,
-} from "@/common/utils";
 export default (props) => {
-  const { reload, configUserLevelInfo, browseType } = props;
+  const { reload, configUserLevelInfo } = props;
   const [list, setList] = useState([]);
   const [bannerList, setBannerList] = useState([]);
   const { payBeanCommission = 50 } = configUserLevelInfo;
@@ -28,8 +23,8 @@ export default (props) => {
       }
     );
   };
-  const fetchBanner = () => {
-    getBanner({ bannerType: "popularityRanking" }, (res) => {
+  const getBanner = () => {
+    fetchBanner({ bannerType: "popularityRanking" }, (res) => {
       const { bannerList = [] } = res;
       setBannerList(bannerList);
     });
@@ -37,12 +32,12 @@ export default (props) => {
 
   useEffect(() => {
     fetchGoods();
-    fetchBanner();
+    getBanner();
   }, []);
   useEffect(() => {
     if (reload) {
       fetchGoods();
-      fetchBanner();
+      getBanner();
     }
   }, [reload]);
 

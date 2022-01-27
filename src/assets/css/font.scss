@@ -1,39 +1,47 @@
-  .bold {
-    font-weight: 600;
-  }
-  .font18 {
-    font-size: 18px;
-  }
-  .font20 {
-    font-size: 20px;
-  }
-  .font22 {
-    font-size: 22px;
-  }
-  .font24 {
-    font-size: 24px;
-  }
-  .font28 {
-    font-size: 28px;
-  }
-  .font32 {
-    font-size: 32px;
-  }
-  .font36 {
-    font-size: 36px;
-  }
-  .font40 {
-    font-size: 40px;
-  }
-  .font48 {
-    font-size: 48px;
-  }
-  .text_through {
-    text-decoration: line-through;
-  }
-  .price_margin4 {
-    margin-left: 4px;
-  }
-  .price_margin8 {
-    margin-left: 8px;
-  }
+.bold {
+  font-weight: 600;
+}
+.font18 {
+  font-size: 18px;
+}
+.font20 {
+  font-size: 20px;
+}
+.font22 {
+  font-size: 22px;
+}
+.font24 {
+  font-size: 24px;
+}
+.font28 {
+  font-size: 28px !important;
+}
+.font30 {
+  font-size: 30px;
+}
+.font32 {
+  font-size: 32px;
+}
+.font36 {
+  font-size: 36px;
+}
+
+.font40 {
+  font-size: 40px;
+}
+.font48 {
+  font-size: 48px;
+}
+.font60 {
+  font-size: 60px;
+  line-height: 60px;
+}
+.text_through {
+  text-decoration: line-through;
+}
+.price_margin4 {
+  margin-left: 4px;
+}
+.price_margin8 {
+  margin-left: 8px;
+}

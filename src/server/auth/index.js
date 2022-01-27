@@ -1,4 +1,4 @@
-import { httpGet, httpPost } from "@/api/newRequest";
+import { httpGet, httpPost } from "@/utils/request";
 export const getOpenId = (data, fn) => {
   return httpGet(
     {

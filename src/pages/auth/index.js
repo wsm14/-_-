@@ -2,13 +2,12 @@ import Taro, { getCurrentPages } from "@tarojs/taro";
 import React, { Component } from "react";
 import { View, Text, Button } from "@tarojs/components";
 import { observer, inject } from "mobx-react";
-import { navigateTo, removeLogin } from "@/common/utils";
 import { authWxLogin } from "@/common/authority";
-import { getOpenId, getUserInfo, bindTelephone } from "@/server/auth";
-import "./index.scss";
-import { goBack, toast } from "../../common/utils";
+import { getOpenId, bindTelephone } from "@/server/auth";
+import { goBack, toast, removeLogin } from "@/utils/utils";
 import evens from "@/common/evens";
-import Router from "@/common/router";
+import Router from "@/utils/router";
+import "./index.scss";
 @inject("store")
 @observer
 class Index extends Component {
@@ -17,7 +16,6 @@ class Index extends Component {
     this.state = {
       openId: "",
       unionId: "",
-      visible: false,
     };
   }
   componentWillUnmount() {
@@ -37,15 +35,25 @@ class Index extends Component {
 
   goConceal() {
     const link = "https://web-new.dakale.net/product/page/policy/conceal.html";
-    navigateTo(`/pages/share/webView/index?link=${link}&title=隐私协议`);
+    Router({
+      rouerName: "webView",
+      args: {
+        link,
+      },
+    });
   }
-
+  //跳转隐私协议
   goUserConceal() {
     const link =
       "https://dakale-wx-hutxs-1302395972.tcloudbaseapp.com/dakale-web-page/wechant/page/policy/userConceal.html";
-    navigateTo(`/pages/share/webView/index?link=${link}&title=用户协议`);
+    Router({
+      rouerName: "webView",
+      args: {
+        link,
+      },
+    });
   }
-
+  //跳转用户协议
   getOpenId(code) {
     const that = this;
     getOpenId(
@@ -55,6 +63,7 @@ class Index extends Component {
       (res) => {
         const { openId, unionId, userInfo } = res;
         if (userInfo && userInfo.mobile.length >= 11) {
+          //用户存在手机号的情况视为已登录 返回上一页
           Taro.setStorageSync("userInfo", userInfo);
           that.props.store.authStore.setUserInfoStore(userInfo);
           return goBack(() => toast("登录成功"));
@@ -62,110 +71,13 @@ class Index extends Component {
           this.setState({
             openId: openId,
             unionId: unionId,
-            visible: true,
           });
+          //保存检验字段用户获取 手机号码
         }
       }
     );
   }
-
-  // bindUser() {
-  //   const { btnStatus, openId, unionId } = this.state;
-  //   if (openId && unionId) {
-  //     if (btnStatus === 0 && wx.getUserProfile) {
-  //       wx.getUserProfile({
-  //         desc: "用于完善会员资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-  //         success: (res) => {
-  //           const { errMsg, userInfo } = res;
-  //           if (errMsg === "getUserProfile:ok") {
-  //             getUserInfo(
-  //               {
-  //                 openId,
-  //                 unionId,
-  //                 ...userInfo,
-  //               },
-  //               (res) => {
-  //                 const { mobile } = res.userInfo;
-  //                 const { userInfo = {} } = res;
-  //                 if (mobile && mobile.length === 11) {
-  //                   Taro.setStorageSync("userInfo", res.userInfo);
-  //                   return goBack(() => toast("登录成功"));
-  //                 } else {
-  //                   let oldObj = Taro.getStorageSync("userInfo") || {};
-  //                   Object.keys(userInfo).forEach((item) => {
-  //                     if (!userInfo[item] || userInfo[item] === "") {
-  //                       delete userInfo[item];
-  //                     }
-  //                   });
-  //                   let obj = { ...oldObj, ...userInfo };
-  //                   Taro.setStorageSync("userInfo", obj);
-  //                   this.setState({
-  //                     btnStatus: 1,
-  //                     visible: true,
-  //                   });
-  //                 }
-  //               }
-  //             );
-  //           } else {
-  //             console.log(errMsg);
-  //             toast("获取失败");
-  //           }
-  //         },
-  //       });
-  //     }
-  //   } else {
-  //     authWxLogin(this.getOpenId.bind(this));
-  //     toast("获取OpenId失败，请重试");
-  //   }
-  // }
-
-  // async getUserInfo(e) {
-  //   const { openId, unionId } = this.state;
-  //   console.log(e);
-  //   if (openId) {
-  //     const {
-  //       detail: { errMsg },
-  //     } = e;
-  //     const {
-  //       encryptedData,
-  //       iv,
-  //       rawData,
-  //       userInfo: { nickName, gender, avatarUrl },
-  //     } = e.detail;
-  //     if (errMsg === "getUserInfo:ok") {
-  //       getUserInfo(
-  //         { avatarUrl, gender, nickName, encryptedData, iv, openId, unionId },
-  //         (res) => {
-  //           const { mobile } = res.userInfo;
-  //           const { userInfo = {} } = res;
-  //           if (mobile && mobile.length === 11) {
-  //             Taro.setStorageSync("userInfo", res.userInfo);
-  //             return goBack(() => toast("登录成功"));
-  //           } else {
-  //             let oldObj = Taro.getStorageSync("userInfo") || {};
-  //             Object.keys(userInfo).forEach((item) => {
-  //               if (!userInfo[item] || userInfo[item] === "") {
-  //                 delete userInfo[item];
-  //               }
-  //             });
-  //             let obj = { ...oldObj, ...userInfo };
-  //             Taro.setStorageSync("userInfo", obj);
-  //             this.setState({
-  //               btnStatus: 1,
-  //               visible: true,
-  //             });
-  //           }
-  //         }
-  //       );
-  //     } else {
-  //       toast("授权用户信息失败");
-  //     }
-  //   } else {
-  //     await authWxLogin(this.getOpenId.bind(this));
-  //     toast("获取OpenId失败，请重试");
-  //   }
-  // }
-
+  //获取用户openId unionId
   async getTelephone(e) {
     let that = this;
     const {
@@ -173,6 +85,7 @@ class Index extends Component {
     } = e;
     const { openId, unionId } = this.state;
     const { shareType } = this.props.store.authStore;
+    //拿取全局绑定关系
     if (errMsg === "getPhoneNumber:ok") {
       //如果用户点击同意授权
       if (openId) {
@@ -204,37 +117,33 @@ class Index extends Component {
       toast("授权手机号码失败");
     }
   }
+  //用户注册手机号
   render() {
-    const { btnStatus, visible } = this.state;
     return (
       <View className="auth_box">
-        <View className="auth_login"></View>
-        <View className="auth_btn">
-          {visible ? (
-            <View className="auth_animate_toast">
-              <Button
-                openType={"getPhoneNumber"}
-                onGetPhoneNumber={(e) => this.getTelephone(e)}
-                className="clearBtn"
-              ></Button>
-            </View>
-          ) : null}
-          <Button
-            openType={"getPhoneNumber"}
-            onGetPhoneNumber={(e) => this.getTelephone(e)}
-            className="clearBtn"
-          ></Button>
-        </View>
-
-        <View className="auth_bottom color2 font24">
-          登录表示您已阅读并同意{" "}
-          <Text className="textThould" onClick={() => this.goUserConceal()}>
-            用户协议
-          </Text>{" "}
-          和{" "}
-          <Text className="textThould" onClick={() => this.goConceal()}>
-            隐私政策
-          </Text>
+        <View className="auth_login">
+          <View className="auth_btnTitle1">哒卡乐小程序</View>
+          <View className="auth_btnTitle2">
+            <Text className="bold">哒卡乐小程序</Text>获得以下授权
+          </View>
+          <View className="auth_btnTitle3">获取您的手机号，以享受更多优惠</View>
+          <View className="auth_btn">
+            <Button
+              openType={"getPhoneNumber"}
+              onGetPhoneNumber={(e) => this.getTelephone(e)}
+              className="clearBtn"
+            ></Button>
+          </View>
+          <View className="auth_bottom color2 font24">
+            登录表示您已阅读并同意{" "}
+            <Text className="textThould" onClick={() => this.goUserConceal()}>
+              用户协议
+            </Text>{" "}
+            和{" "}
+            <Text className="textThould" onClick={() => this.goConceal()}>
+              隐私政策
+            </Text>
+          </View>
         </View>
       </View>
     );

@@ -2,18 +2,13 @@ import React, { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
 import { ScrollView, View, Input } from "@tarojs/components";
 import { getMerchantLat } from "@/server/index";
-import classNames from "classnames";
-import ButtonView from "@/components/Button";
 import {
   getLat,
   getLnt,
   GetDistance,
   backgroundObj,
-  loginStatus,
   mapGo,
-  navigateTo,
-  toast,
-} from "@/common/utils";
+} from "@/utils/utils";
 import "./index.scss";
 export default (props) => {
   const { keyword = "", close, onInput, onConfirm } = props;

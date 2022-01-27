@@ -7,6 +7,23 @@ page {
   width: 100%;
   overflow-x: hidden;
   padding-bottom: 220px;
+  .favourable_toastInfo {
+    position: fixed;
+    z-index: 10;
+    width: 530px;
+    height: 92px;
+    top: 17px;
+    right: 18px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon809.png)
+      no-repeat center/cover;
+    .favourable_toastClose {
+      position: absolute;
+      top: 42px;
+      right: 24px;
+      width: 48px;
+      height: 48px;
+    }
+  }
   .shop_dakale_content {
     margin: 30px 40px 40px;
     font-size: 28px;
@@ -22,6 +39,32 @@ page {
     font-weight: 600;
     color: #333333;
     margin-top: 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+  }
+  .shopdetails_collect_toast {
+    position: absolute;
+    width: 595px;
+    height: 70px;
+    background: rgba(51, 51, 51, 0.7);
+    border-radius: 8px;
+    right: 72px;
+    top: 0;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ffffff;
+    .shopdetails_collect_btn {
+      width: 96px;
+      height: 40px;
+      background: #07c0c2;
+      border-radius: 22px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-left: 16px;
+    }
   }
   .shopdetails_beanTitle_name {
     max-height: 192px;
@@ -29,11 +72,7 @@ page {
     line-height: 48px;
     width: 606px;
   }
-  .shopDetails_banner {
-    width: 750px;
-    height: 600px;
-    position: relative;
-  }
+
   .shopDetails_activeStatus {
     width: 100%;
     height: 92px;
@@ -44,7 +83,7 @@ page {
       width: 174px;
       height: 32px;
       margin-left: 24px;
-      background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon630.png)
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon630.png)
         no-repeat center/cover;
     }
     .shopDetails_avtiveTime {
@@ -148,7 +187,7 @@ page {
   .shopdetails_collect {
     width: 48px;
     height: 48px;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon574.png")
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon574.png")
       no-repeat;
     background-size: 100% 100%;
     margin-left: auto;
@@ -157,7 +196,7 @@ page {
   .shopdetails_isCollect {
     width: 48px;
     height: 48px;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon584.png")
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon584.png")
       no-repeat;
     background-size: 100% 100%;
 
@@ -244,7 +283,7 @@ page {
       width: 686px;
       height: 940px;
       margin-top: 24px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon469.png")
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon469.png")
         no-repeat;
       background-size: 100% 100%;
     }
@@ -349,7 +388,7 @@ page {
     // .favourInfo_box_right::after {
     //   width: 40px;
     //   height: 40px;
-    //   background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon462.png)
+    //   background: url(https://wechat-config.dakale.net/miniprogram/image/icon462.png)
     //     no-repeat;
     //   background-size: 100% 100%;
     //   margin-left: 8px;

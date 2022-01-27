@@ -23,7 +23,7 @@
     .user_centerBar_iconOne::before {
       width: 88px;
       height: 88px;
-      background: url(https://wechat-config.dakale.net/miniprogram/image/new_user16.png)
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon896.png)
         no-repeat;
       background-size: 100% 100%;
       display: block;
@@ -40,7 +40,7 @@
     .user_centerBar_iconTwo::before {
       width: 88px;
       height: 88px;
-      background: url(https://wechat-config.dakale.net/miniprogram/image/new_user17.png)
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon897.png)
         no-repeat;
       background-size: 100% 100%;
       display: block;
@@ -57,7 +57,7 @@
     .user_centerBar_iconThree::before {
       width: 88px;
       height: 88px;
-      background: url(https://wechat-config.dakale.net/miniprogram/image/new_user18.png)
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon898.png)
         no-repeat;
       background-size: 100% 100%;
       display: block;
@@ -74,7 +74,7 @@
     .user_centerBar_iconFour::before {
       width: 88px;
       height: 88px;
-      background: url(https://wechat-config.dakale.net/miniprogram/image/new_user19.png)
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon899.png)
         no-repeat;
       background-size: 100% 100%;
       display: block;
@@ -91,7 +91,7 @@
     .user_centerBar_iconFive::before {
       width: 88px;
       height: 88px;
-      background: url(https://wechat-config.dakale.net/miniprogram/image/new_user20.png)
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon900.png)
         no-repeat;
       background-size: 100% 100%;
       display: block;
@@ -100,6 +100,7 @@
       margin-bottom: 8px;
     }
   }
+
   .user_centerBar_banner {
     width: 686px;
     height: 200px;
@@ -138,25 +139,25 @@
         }
 
         .users_setting_icon1 {
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon627.png");
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon627.png");
           background-size: 100% 100%;
         }
 
         .users_setting_icon2 {
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon735.png");
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon735.png");
           background-size: 100% 100%;
         }
 
         .users_setting_icon3 {
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon629.png");
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon629.png");
           background-size: 100% 100%;
         }
         .users_setting_icon4 {
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon758.png");
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon758.png");
           background-size: 100% 100%;
         }
         .users_setting_icon5 {
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon_782.png");
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon_782.png");
           background-size: 100% 100%;
         }
       }
@@ -170,19 +171,16 @@
     height: 200px;
   }
   .user_share_img1 {
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon530.png")
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon530.png")
       no-repeat;
     background-size: 100% 100%;
   }
   .user_share_img2 {
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon531.png")
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon531.png")
       no-repeat;
     background-size: 100% 100%;
   }
-  .page_user_liner {
-    height: 16px;
-    background: #f5f5f5;
-  }
+
   .share_name {
     padding: 24px 16px 0;
     font-size: 32px;

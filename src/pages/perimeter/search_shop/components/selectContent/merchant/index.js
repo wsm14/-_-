@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Waterfall from "@/components/waterfall";
 import { View } from "@tarojs/components";
 import Taro, { useReachBottom } from "@tarojs/taro";
 import { fetchMerchantListByKeyword } from "@/server/perimeter";
-import GroupView from "@/components/componentView/ownerView/ownerGroup";
-import ShopView from "@/components/componentView/ownerView/ownerShop";
+import GroupView from "@/components/public_ui/ownerView/ownerGroup";
+import ShopView from "@/components/public_ui/ownerView/ownerShop";
 export default ({ keyword, current, configUserLevelInfo }) => {
   const [data, setData] = useState({
     page: 1,

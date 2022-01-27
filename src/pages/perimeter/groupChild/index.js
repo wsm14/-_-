@@ -1,12 +1,9 @@
-import React, { Component, PureComponent } from "react";
-import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { CoverView, Image, ScrollView, View } from "@tarojs/components";
-import SearchView from "@/components/searchView";
-import { fetchGroupSubMerchant } from "@/server/user";
-import { loginStatus, mapGo } from "@/common/utils";
+import React, { PureComponent } from "react";
+import { getCurrentInstance } from "@tarojs/taro";
+import { ScrollView, View } from "@tarojs/components";
+import { fetchGroupSubMerchant } from "@/server/perimeter";
 import { list } from "./components/listView";
 import "./index.scss";
-import Router from "@/common/router";
 class Index extends PureComponent {
   constructor() {
     super(...arguments);

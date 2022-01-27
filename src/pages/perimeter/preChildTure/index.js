@@ -6,7 +6,7 @@ import { fetchRightGoods, fetchRightCoupon } from "@/server/index";
 import {
   prefectrueGoodsTemplate,
   prefectrueCouponTemplate,
-} from "@/components/specalTemplate";
+} from "@/components/public_ui/specalTemplate";
 import "./index.scss";
 class Index extends Component {
   constructor() {

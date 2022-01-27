@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-import { backgroundObj, toast } from "@/common/utils";
+import { backgroundObj, toast } from "@/utils/utils";
 import {
   fakefillSign,
   fakeBoxPrize,
@@ -9,7 +9,7 @@ import {
   fakeTogether,
 } from "@/server/share";
 import "./index.scss";
-import Router from "@/common/router";
+import Router from "@/utils/router";
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -76,6 +76,8 @@ class Index extends Component {
   }
   fakeTogether() {
     const { progressId, shareUserId } = this.state;
+    const env =
+      process.env.NODE_ENV === "development" ? "development" : "production";
     fakeTogether({
       gameProcessId: progressId,
       userIdStr: shareUserId,
@@ -84,7 +86,9 @@ class Index extends Component {
       Router({
         routerName: "webView",
         args: {
-          link: "https://web-new.dakale.net/dev/game/receiveGame/index.html#/index",
+          link: `https://web-new.dakale.net/${
+            env === "development" ? "dev" : "product"
+          }/game/receiveGame/index.html#/index`,
           url: "actionType|together",
         },
       });
@@ -93,6 +97,8 @@ class Index extends Component {
 
   fetfreeTaskHelp() {
     const { strapId, shareUserId } = this.state;
+    const env =
+      process.env.NODE_ENV === "development" ? "development" : "production";
     fetchDoneTask({
       taskStrapId: strapId,
       inviteFlag: "1",
@@ -102,7 +108,9 @@ class Index extends Component {
       Router({
         routerName: "webView",
         args: {
-          link: "https://web-new.dakale.net/dev/game/receiveGame/index.html#/index",
+          link: `https://web-new.dakale.net/${
+            env === "development" ? "dev" : "product"
+          }/game/receiveGame/index.html#/index`,
         },
       });
     });

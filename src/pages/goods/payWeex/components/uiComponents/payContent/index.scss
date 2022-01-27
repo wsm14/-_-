@@ -1,0 +1,29 @@
+.payWeex_payContent {
+  margin: 32px 32px 0;
+  padding: 49px 32px;
+  background: #ffffff;
+  text-align: center;
+  line-height: 1;
+  border-radius: 8px;
+  .payWeex_title {
+    font-size: 36px;
+    font-weight: 400;
+    color: #666666;
+  }
+  .payWeex_price {
+    padding-top: 28px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+  }
+  .payWeex_icon {
+    font-size: 36px;
+    font-weight: 600;
+    color: #333333;
+  }
+  .payWeex_total {
+    font-size: 60px;
+    font-weight: 600;
+    color: #333333;
+  }
+}
