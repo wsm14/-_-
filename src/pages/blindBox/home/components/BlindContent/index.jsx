@@ -368,7 +368,6 @@ export default ({ data, updateInfo, list, updateList }) => {
               </View>
               <View className="countVisible_order_desc">已达上限</View>
               <View className="countVisible_order_desc">
-                可以去邀请场继续玩哦～
               </View>
               <View className="countVisible_order_btn public_auto">
                 <View
