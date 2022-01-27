@@ -269,6 +269,7 @@ page {
           width: 64px;
           height: 64px;
           border-radius: 50%;
+          flex-shrink: 0;
         }
         .descriptionCard_merchantTitle {
           height: 42px;

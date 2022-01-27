@@ -611,6 +611,7 @@ class Index extends Component {
       paymentModeObject = {},
       goodsCount,
       userBean,
+      activityType,
     } = specialGoodsInfo;
     const { cash, type = "defaultMode", bean } = paymentModeObject;
     if (rightFlag === "1") {
@@ -623,6 +624,13 @@ class Index extends Component {
       } else {
         return false;
       }
+    } else if (
+      activityType === "commerceGoods" &&
+      useBeanStatus === "0" &&
+      type !== "defaultMode"
+    ) {
+      console.log(111);
+      return false;
     } else {
       return true;
     }
@@ -680,6 +688,7 @@ class Index extends Component {
           changeBean={this.changeBean.bind(this)}
           computedCount={this.computedCount.bind(this)}
           computedPrice={this.computedPayPrice.bind(this)}
+          payFlag={this.saveGoodsRule()}
           changeLabel={(e) => {
             this.setState({
               remake: e,

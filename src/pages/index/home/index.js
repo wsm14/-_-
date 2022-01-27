@@ -651,7 +651,6 @@ class Index extends React.PureComponent {
       })
       .catch((val) => {
         const { resultCode } = val;
-        console.log(val);
         if (resultCode === "5037") {
           this.setState({
             ugcVisible1: true,
