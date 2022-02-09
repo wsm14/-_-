@@ -99,6 +99,23 @@
       content: "";
       margin-bottom: 8px;
     }
+    .user_centerBar_iconSix {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #333333;
+    }
+    .user_centerBar_iconSix::before {
+      width: 88px;
+      height: 88px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon903.png)
+        no-repeat;
+      background-size: 100% 100%;
+      display: block;
+      margin: 0 auto;
+      content: "";
+      margin-bottom: 8px;
+    }
   }
 
   .user_centerBar_banner {

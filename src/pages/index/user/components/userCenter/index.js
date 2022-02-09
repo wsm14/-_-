@@ -89,6 +89,21 @@ export default ({ bannerList }) => {
           }
         },
       },
+      {
+        icon: "user_centerBar_iconSix",
+        val: `财运视频`,
+        fn: () => {
+          if (loginStatus()) {
+            Router({
+              routerName: "imper",
+            });
+          } else {
+            Router({
+              routerName: "login",
+            });
+          }
+        },
+      },
     ];
     return (
       <View className="user_centerBar_beanBox">

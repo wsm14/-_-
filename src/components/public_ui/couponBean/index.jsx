@@ -22,7 +22,6 @@ export default ({
   const [couponVisible, setVisible] = useState(false);
   const [couponInfo, setCouponInfo] = useState([]);
   const [userPlatformCouponInfo, setUserPlatformCouponInfo] = useState({});
-  console.log(momentLinkBeanStage[0], momentLinkBeanStage[1]);
   useEffect(() => {
     if (!visible) {
       setCouponInfo([]);

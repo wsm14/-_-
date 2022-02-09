@@ -119,6 +119,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     shareFriend: "/pages/share/shareFriend/index", //分享赚豆
     userNewArtist: "/pages/share/userNewArtist/index", //新人红包
     Grab: "/pages/share/Grab/index", //领取他人红包
+    imper: "/pages/share/ImperVideo/index",
 
     //规则类
 

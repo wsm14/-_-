@@ -8,8 +8,37 @@
   z-index: 10001;
   .kol_bean_box {
     width: 512px;
-    height: 678px;
+    height: 741px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon901.png")
+      no-repeat;
+    background-size: 100% 100%;
     position: relative;
+    .kol_imper_btnBox {
+      width: 420px;
+      height: 80px;
+      background: #ef476f;
+      border-radius: 50px;
+      margin: 40px auto 0;
+      font-size: 32px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .kol_imper_close {
+      margin: 32px auto 0;
+      font-size: 32px;
+      font-weight: 400;
+      color: #999999;
+      text-align: center;
+    }
+    .kol_imper_btnBox::before {
+      width: 48px;
+      height: 48px;
+      margin-right: 16px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon902.png")
+        no-repeat;
+      background-size: 100% 100%;
+      content: "";
+    }
     .kol_details_padding {
       padding-top: 423px;
       text-align: center;

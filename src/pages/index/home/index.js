@@ -45,6 +45,7 @@ import { nearList } from "@/components/public_ui/nearList";
 import NearTitle from "./components/nearTitle";
 import NewsPilot from "./components/newsPilot";
 import CouponBean from "@/components/public_ui/couponBean";
+
 import "./index.scss";
 @inject("store")
 @observer

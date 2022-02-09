@@ -22,7 +22,7 @@ export const toast = (value) => {
   return Taro.showToast({
     title: value,
     icon: "none",
-    duration: 2000,
+    duration: 3000,
     mask: true,
   });
 };
