@@ -37,18 +37,18 @@ class Index extends Component {
       this.rewardedVideoAd = Taro.createRewardedVideoAd({
         adUnitId: "adunit-553335e2a0b581b2",
       });
-      Taro.showLoading({
-        title: "页面初始化",
-      });
+      // Taro.showLoading({
+      //   title: "页面初始化",
+      // });
       this.rewardedVideoAd.onLoad(() => {
-        Taro.hideLoading();
+        // Taro.hideLoading();
       });
       this.rewardedVideoAd.onError((err) => {
-        Taro.hideLoading();
+        // Taro.hideLoading();
         toast("暂无更多视频，请稍后再试");
       });
       this.rewardedVideoAd.onClose((err) => {
-        Taro.hideLoading();
+        // Taro.hideLoading();
         console.log(err);
         const { isEnded } = err;
         if (isEnded) {
