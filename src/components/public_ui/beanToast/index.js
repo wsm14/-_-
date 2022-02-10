@@ -134,7 +134,7 @@ export default (props) => {
   const templateBean = {
     0: (
       <View
-        className="kol_bean_box happyBean"
+        className="kol_bean_box"
         catchMove
         animation={animate}
         onClick={(e) => {
@@ -147,8 +147,19 @@ export default (props) => {
             {data.tippingBean}卡豆
           </View>
 
-          <View className="getBean_btn font32 color6" onClick={() => onClose()}>
-            立即领取
+          <View
+            className="kol_imper_btnBox public_center"
+            onClick={() => {
+              onClose();
+              Router({
+                routerName: "imper",
+              });
+            }}
+          >
+            再领最高60卡豆
+          </View>
+          <View className="kol_imper_close" onClick={() => onClose()}>
+            开心收下
           </View>
         </View>
       </View>

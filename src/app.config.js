@@ -84,6 +84,7 @@ export default {
         "shareActive/index", //活动主会场
         "shareUser/index", //活动页助力
         "shareSign/index", //集碎片助力
+        "ImperVideo/index", // 激励视频
       ],
     },
     {

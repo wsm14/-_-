@@ -1,0 +1,36 @@
+.imper_bean {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10001;
+  .imper_bean_box {
+    width: 512px;
+    height: 678px;
+    position: relative;
+    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/happygetBean.png")
+      no-repeat;
+    background-size: 100% 100%;
+    .imper_details_padding {
+      padding-top: 423px;
+      text-align: center;
+      .bean_padding {
+        padding-top: 16px;
+      }
+    }
+    .getBean_btn {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      width: 420px;
+      height: 80px;
+      background: #ef476f;
+      border-radius: 50px;
+      text-align: center;
+      line-height: 80px;
+    }
+  }
+
+}

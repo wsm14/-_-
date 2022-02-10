@@ -330,3 +330,10 @@ export const fakeShareCard = (data, fn) => {
     }
   );
 }; //集碎片 - 获取分享福卡
+
+export const fakeImperMomentReward = (data) => {
+  return httpPost({
+    url: "/user/moment/watch/giveAdvertMomentReward",
+    data: data,
+  });
+}; //微信广告视频-领豆
