@@ -3,11 +3,9 @@ import Taro from "@tarojs/taro";
 const authStore = observable({
   userInfo: Taro.getStorageSync("userInfo") || {},
   login: 0,
-  shareType: {
-  },
+  shareType: {},
   setUserInfoStore(obj) {
     this.userInfo = obj;
-
   },
   setShareType(obj) {
     this.shareType = {
@@ -15,7 +13,7 @@ const authStore = observable({
     };
   },
   setLoginStatus() {
-    this.login = this.login + 1
-  }
+    this.login = this.login + 1;
+  },
 });
 export default authStore;

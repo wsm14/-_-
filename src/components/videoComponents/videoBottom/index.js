@@ -9,12 +9,12 @@ import {
   backgroundObj,
   computedPrice,
 } from "@/utils/utils";
-import Taro from "@tarojs/taro";
 import { fetchMomentRelate, fetchPromotionStatus } from "@/server/index";
 import Router from "@/utils/router";
 import { mapGo, computedBeanPrice } from "@/utils/utils";
 import TemplateCard from "./components/shopcard";
 import { city } from "@/common/city";
+import Tarking from "@/components/tracking";
 import "./index.scss";
 const cityObj = {};
 city.forEach((item) => {
@@ -114,83 +114,93 @@ export default (props) => {
     const { type = "defaultMode", bean = "", cash = "" } = paymentModeObject;
     if (type === "defaultMode" || activityType === "specialGoods") {
       return (
-        <View className="test_debug">
-          <View className="templateStated_box" onClick={() => callback(val)}>
-            <View
-              className="templateStated_img coupon_shop_icon"
-              style={backgroundObj(goodsImg)}
-            ></View>
-            <View className="templateStated_font">
-              <View className="templateStated_title font_hide">
-                {goodsName}
+        <Tarking args={val} name={"视频带货商品小卡片"}>
+          <View className="test_debug">
+            <View className="templateStated_box" onClick={() => callback(val)}>
+              <View
+                className="templateStated_img coupon_shop_icon"
+                style={backgroundObj(goodsImg)}
+              ></View>
+              <View className="templateStated_font">
+                <View className="templateStated_title font_hide">
+                  {goodsName}
+                </View>
+                <View className="templateStated_price font_hide">
+                  <Text className="font18">卡豆再省:</Text>
+                  <Text className="font20 bold templateStated_margin">¥</Text>
+                  <Text className="font28 bold templateStated_margin">
+                    {computedBeanPrice(realPrice, 100 - payBeanCommission)}
+                  </Text>
+                </View>
               </View>
-              <View className="templateStated_price font_hide">
-                <Text className="font18">卡豆再省:</Text>
-                <Text className="font20 bold templateStated_margin">¥</Text>
-                <Text className="font28 bold templateStated_margin">
-                  {computedBeanPrice(realPrice, 100 - payBeanCommission)}
-                </Text>
-              </View>
+              <View className="templateStated_pay public_center">抢购</View>
             </View>
-            <View className="templateStated_pay public_center">抢购</View>
           </View>
-        </View>
+        </Tarking>
       );
     } else {
       if (activityType === "commerceGoods") {
         if (!bean) {
           return (
-            <View className="test_debug">
-              <View
-                className="templateStated_box"
-                onClick={() => callback(val)}
-              >
+            <Tarking args={val} name={"视频带货商品小卡片"}>
+              <View className="test_debug">
                 <View
-                  className="templateStated_img coupon_shop_icon"
-                  style={backgroundObj(goodsImg)}
-                ></View>
-                <View className="templateStated_font">
-                  <View className="templateStated_title font_hide">
-                    {goodsName}
+                  className="templateStated_box"
+                  onClick={() => callback(val)}
+                >
+                  <View
+                    className="templateStated_img coupon_shop_icon"
+                    style={backgroundObj(goodsImg)}
+                  ></View>
+                  <View className="templateStated_font">
+                    <View className="templateStated_title font_hide">
+                      {goodsName}
+                    </View>
+                    <View className="templateStated_price font_hide">
+                      <Text className="font18">卡豆再省:</Text>
+                      <Text className="font20 bold templateStated_margin">
+                        ¥
+                      </Text>
+                      <Text className="font28 bold templateStated_margin">
+                        {computedBeanPrice(realPrice, 100 - payBeanCommission)}
+                      </Text>
+                    </View>
                   </View>
-                  <View className="templateStated_price font_hide">
-                    <Text className="font18">卡豆再省:</Text>
-                    <Text className="font20 bold templateStated_margin">¥</Text>
-                    <Text className="font28 bold templateStated_margin">
-                      {computedBeanPrice(realPrice, 100 - payBeanCommission)}
-                    </Text>
-                  </View>
+                  <View className="templateStated_pay public_center">抢购</View>
                 </View>
-                <View className="templateStated_pay public_center">抢购</View>
               </View>
-            </View>
+            </Tarking>
           );
         } else {
           return (
-            <View className="test_debug">
-              <View
-                className="templateStated_box"
-                onClick={() => callback(val)}
-              >
+            <Tarking args={val} name={"视频带货商品小卡片"}>
+              <View className="test_debug">
                 <View
-                  className="templateStated_img coupon_shop_icon"
-                  style={backgroundObj(goodsImg)}
-                ></View>
-                <View className="templateStated_font">
-                  <View className="templateStated_title font_hide">
-                    {goodsName}
+                  className="templateStated_box"
+                  onClick={() => callback(val)}
+                >
+                  <View
+                    className="templateStated_img coupon_shop_icon"
+                    style={backgroundObj(goodsImg)}
+                  ></View>
+                  <View className="templateStated_font">
+                    <View className="templateStated_title font_hide">
+                      {goodsName}
+                    </View>
+                    <View className="templateStated_price font_hide">
+                      <Text className="font18">卡豆价:</Text>
+                      <Text className="font20 bold templateStated_margin">
+                        ¥
+                      </Text>
+                      <Text className="font28 bold templateStated_margin">
+                        {cash}+{bean}卡豆
+                      </Text>
+                    </View>
                   </View>
-                  <View className="templateStated_price font_hide">
-                    <Text className="font18">卡豆价:</Text>
-                    <Text className="font20 bold templateStated_margin">¥</Text>
-                    <Text className="font28 bold templateStated_margin">
-                      {cash}+{bean}卡豆
-                    </Text>
-                  </View>
+                  <View className="templateStated_pay public_center">抢购</View>
                 </View>
-                <View className="templateStated_pay public_center">抢购</View>
               </View>
-            </View>
+            </Tarking>
           );
         }
       }
@@ -215,30 +225,34 @@ export default (props) => {
         } = item;
         if (index === 0) {
           return (
-            <View className="test_debug">
-              <View
-                className="templateStated_box"
-                onClick={() => callback(item)}
-              >
+            <Tarking args={val} name={"视频带货商品小卡片"}>
+              <View className="test_debug">
                 <View
-                  className="templateStated_img coupon_shop_icon"
-                  style={backgroundObj(ownerImg)}
-                ></View>
-                <View className="templateStated_font">
-                  <View className="templateStated_title font_hide">
-                    {couponName}
+                  className="templateStated_box"
+                  onClick={() => callback(item)}
+                >
+                  <View
+                    className="templateStated_img coupon_shop_icon"
+                    style={backgroundObj(ownerImg)}
+                  ></View>
+                  <View className="templateStated_font">
+                    <View className="templateStated_title font_hide">
+                      {couponName}
+                    </View>
+                    <View className="templateStated_price font_hide">
+                      <Text className="font18">卡豆再省:</Text>
+                      <Text className="font20 bold templateStated_margin">
+                        ¥
+                      </Text>
+                      <Text className="font28 bold templateStated_margin">
+                        {computedBeanPrice(buyPrice, 100 - payBeanCommission)}
+                      </Text>
+                    </View>
                   </View>
-                  <View className="templateStated_price font_hide">
-                    <Text className="font18">卡豆再省:</Text>
-                    <Text className="font20 bold templateStated_margin">¥</Text>
-                    <Text className="font28 bold templateStated_margin">
-                      {computedBeanPrice(buyPrice, 100 - payBeanCommission)}
-                    </Text>
-                  </View>
+                  <View className="templateStated_pay public_center">抢购</View>
                 </View>
-                <View className="templateStated_pay public_center">抢购</View>
               </View>
-            </View>
+            </Tarking>
           );
         } else return null;
       });

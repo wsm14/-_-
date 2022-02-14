@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { View, Text, Swiper, SwiperItem } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import { backgroundObj, computedPrice, computedBeanPrice } from "@/utils/utils";
+import Tarking from "@/components/tracking";
 import classNames from "classnames";
 export default ({
   val = {},
@@ -75,38 +76,40 @@ export default ({
               item;
             return (
               <SwiperItem>
-                <View
-                  style={{ position: "relative" }}
-                  onClick={(e) => {
-                    callback(item);
-                  }}
-                >
-                  <View className="templateCard_details_box">
-                    <View
-                      className="templateCard_image coupon_shop_icon"
-                      style={backgroundObj(goodsImg)}
-                    ></View>
-                    <View className="templateCard_goods_box">
-                      <View className="templateCard_title font_hide">
-                        {goodsName}
+                <Tarking args={item} name={"视频带货商品大卡片"}>
+                  <View
+                    style={{ position: "relative" }}
+                    onClick={(e) => {
+                      callback(item);
+                    }}
+                  >
+                    <View className="templateCard_details_box">
+                      <View
+                        className="templateCard_image coupon_shop_icon"
+                        style={backgroundObj(goodsImg)}
+                      ></View>
+                      <View className="templateCard_goods_box">
+                        <View className="templateCard_title font_hide">
+                          {goodsName}
+                        </View>
+                        <View className="templateCard_price font_hide">
+                          <Text className="font22 bold color6">优惠价:</Text>
+                          <Text className="font28 bold color6 templateCard_margin1">
+                            ¥{realPrice}
+                          </Text>
+                          <Text className="font20 color6 bold templateCard_margin2 templateCard_opcity">
+                            原价:
+                          </Text>
+                          <Text className="font20 color6 bold templateCard_margin1 templateCard_opcity templateCard_through">
+                            ¥{oriPrice}
+                          </Text>
+                        </View>
+                        {templateCommerce(item)}
                       </View>
-                      <View className="templateCard_price font_hide">
-                        <Text className="font22 bold color6">优惠价:</Text>
-                        <Text className="font28 bold color6 templateCard_margin1">
-                          ¥{realPrice}
-                        </Text>
-                        <Text className="font20 color6 bold templateCard_margin2 templateCard_opcity">
-                          原价:
-                        </Text>
-                        <Text className="font20 color6 bold templateCard_margin1 templateCard_opcity templateCard_through">
-                          ¥{oriPrice}
-                        </Text>
-                      </View>
-                      {templateCommerce(item)}
                     </View>
+                    {templateBtn(item)}
                   </View>
-                  {templateBtn(item)}
-                </View>
+                </Tarking>
               </SwiperItem>
             );
           })}
@@ -119,46 +122,51 @@ export default ({
             } = item;
             return (
               <SwiperItem>
-                <View
-                  style={{ position: "relative" }}
-                  onClick={(e) => {
-                    callback(item);
-                  }}
-                >
-                  <View className="templateCard_details_box">
-                    <View
-                      className="templateCard_image coupon_shop_icon"
-                      style={backgroundObj(ownerImg)}
-                    ></View>
-                    <View className="templateCard_goods_box">
-                      <View className="templateCard_title font_hide">
-                        {couponName}
-                      </View>
-                      <View className="templateCard_price font_hide">
-                        <Text className="font22 bold color6">优惠价:</Text>
-                        <Text className="font28 bold color6 templateCard_margin1">
-                          ¥{buyPrice}
-                        </Text>
-                        <Text className="font20 color6 bold templateCard_margin2 templateCard_opcity">
-                          原价:
-                        </Text>
-                        <Text className="font20 color6 bold templateCard_margin1 templateCard_opcity templateCard_through">
-                          ¥{couponPrice}
-                        </Text>
-                      </View>
-                      <View className="templateCard_beanPrice font_hide">
-                        <Text className="font20">卡豆再省:</Text>
-                        <Text className="font20 bold templateCard_margin1">
-                          ¥{" "}
-                        </Text>
-                        <Text className="font28 bold templateCard_margin1">
-                          {computedBeanPrice(buyPrice, 100 - payBeanCommission)}
-                        </Text>
+                <Tarking args={item} name={"视频带货商品大卡片"}>
+                  <View
+                    style={{ position: "relative" }}
+                    onClick={(e) => {
+                      callback(item);
+                    }}
+                  >
+                    <View className="templateCard_details_box">
+                      <View
+                        className="templateCard_image coupon_shop_icon"
+                        style={backgroundObj(ownerImg)}
+                      ></View>
+                      <View className="templateCard_goods_box">
+                        <View className="templateCard_title font_hide">
+                          {couponName}
+                        </View>
+                        <View className="templateCard_price font_hide">
+                          <Text className="font22 bold color6">优惠价:</Text>
+                          <Text className="font28 bold color6 templateCard_margin1">
+                            ¥{buyPrice}
+                          </Text>
+                          <Text className="font20 color6 bold templateCard_margin2 templateCard_opcity">
+                            原价:
+                          </Text>
+                          <Text className="font20 color6 bold templateCard_margin1 templateCard_opcity templateCard_through">
+                            ¥{couponPrice}
+                          </Text>
+                        </View>
+                        <View className="templateCard_beanPrice font_hide">
+                          <Text className="font20">卡豆再省:</Text>
+                          <Text className="font20 bold templateCard_margin1">
+                            ¥{" "}
+                          </Text>
+                          <Text className="font28 bold templateCard_margin1">
+                            {computedBeanPrice(
+                              buyPrice,
+                              100 - payBeanCommission
+                            )}
+                          </Text>
+                        </View>
                       </View>
                     </View>
+                    {templateBtn(item)}
                   </View>
-                  {templateBtn(item)}
-                </View>
+                </Tarking>
               </SwiperItem>
             );
           })}
