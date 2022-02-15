@@ -76,7 +76,7 @@ export default ({
               item;
             return (
               <SwiperItem>
-                <Tarking args={item} name={"视频带货商品大卡片"}>
+                <Tarking args={item} name={"homeCard"}>
                   <View
                     style={{ position: "relative" }}
                     onClick={(e) => {
@@ -122,7 +122,7 @@ export default ({
             } = item;
             return (
               <SwiperItem>
-                <Tarking args={item} name={"视频带货商品大卡片"}>
+                <Tarking args={item} name={"homeCard"}>
                   <View
                     style={{ position: "relative" }}
                     onClick={(e) => {

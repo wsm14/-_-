@@ -114,7 +114,7 @@ export default (props) => {
     const { type = "defaultMode", bean = "", cash = "" } = paymentModeObject;
     if (type === "defaultMode" || activityType === "specialGoods") {
       return (
-        <Tarking args={val} name={"视频带货商品小卡片"}>
+        <Tarking args={val} name={"homeCardSm"}>
           <View className="test_debug">
             <View className="templateStated_box" onClick={() => callback(val)}>
               <View
@@ -142,7 +142,7 @@ export default (props) => {
       if (activityType === "commerceGoods") {
         if (!bean) {
           return (
-            <Tarking args={val} name={"视频带货商品小卡片"}>
+            <Tarking args={val} name={"homeCardSm"}>
               <View className="test_debug">
                 <View
                   className="templateStated_box"
@@ -173,7 +173,7 @@ export default (props) => {
           );
         } else {
           return (
-            <Tarking args={val} name={"视频带货商品小卡片"}>
+            <Tarking args={val} name={"homeCardSm"}>
               <View className="test_debug">
                 <View
                   className="templateStated_box"
@@ -225,7 +225,7 @@ export default (props) => {
         } = item;
         if (index === 0) {
           return (
-            <Tarking args={val} name={"视频带货商品小卡片"}>
+            <Tarking args={val} name={"homeCardSm"}>
               <View className="test_debug">
                 <View
                   className="templateStated_box"

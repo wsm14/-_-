@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, Button } from "@tarojs/components";
+import Tarking from "@/components/tracking";
 import "./index.scss";
 
 /**
@@ -69,13 +70,18 @@ export default ({ data, handleGoBuyGoods }) => {
       <View className="bwzgc_beanWelfare_buyPrice">
         ¥{type === "self" ? `${cash}+${bean}` : buyPrice}
       </View>
-      <Button className="bwzgc_beanWelfareZone_btn" onClick={handleGoBuyGoods}>
-        {buyFlag === "1"
-          ? type === "self"
-            ? `${bean}卡豆抵扣购买`
-            : `直接购买`
-          : "直接购买"}
-      </Button>
+      <Tarking name={"beanWelfareZone"} args={data}>
+        <Button
+          className="bwzgc_beanWelfareZone_btn"
+          onClick={handleGoBuyGoods}
+        >
+          {buyFlag === "1"
+            ? type === "self"
+              ? `${bean}卡豆抵扣购买`
+              : `直接购买`
+            : "直接购买"}
+        </Button>
+      </Tarking>
     </View>
   );
 };

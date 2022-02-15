@@ -174,6 +174,8 @@ export const getUserMomentList = (data = {}, fn) => {
 };
 //获取连刷视频动态
 export const saveWatchBean = (data, fn) => {
+  const { momentId, ownerId } = data;
+  fakeUpdateMomentParam({ id: momentId, ownerId, updateType: "view" });
   return httpPost(
     {
       url: "/user/moment/watch/acquireMomentTipping",
@@ -183,6 +185,17 @@ export const saveWatchBean = (data, fn) => {
   );
 };
 //看动态领取卡豆
+export const fakeUpdateMomentParam = (data, fn) => {
+  httpPost(
+    {
+      url: "/user/moment/updateMomentParam",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//新版异步更新动态参数
+
 export const fakeInsertUserCollectionMoment = (data, fn) => {
   httpPost(
     {

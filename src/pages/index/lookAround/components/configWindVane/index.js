@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import Taro from "@tarojs/taro";
 import { View, ScrollView } from "@tarojs/components";
 import { backgroundObj } from "@/utils/utils";
+import Tarking from "@/components/tracking";
 export default ({ list = [], onChange }) => {
   const width = Taro.getSystemInfoSync().windowWidth / 5;
   const windowWidth = Taro.getSystemInfoSync().windowWidth;
@@ -43,17 +44,21 @@ export default ({ list = [], onChange }) => {
                         className="configWindVane_user"
                         onClick={() => onChange(item)}
                       >
-                        <View
-                          style={backgroundObj(image)}
-                          className="configWindVane_profile"
-                        >
-                          {bubbleFlag === "1" && bubbleContent && (
-                            <View className="bubbleContent-info">
-                              {bubbleContent}
+                        <>
+                          <Tarking args={item} name={"lookAroundConfig"}>
+                            <View
+                              style={backgroundObj(image)}
+                              className="configWindVane_profile"
+                            >
+                              {bubbleFlag === "1" && bubbleContent && (
+                                <View className="bubbleContent-info">
+                                  {bubbleContent}
+                                </View>
+                              )}
                             </View>
-                          )}
-                        </View>
-                        <View className="configWindVane_text">{name}</View>
+                            <View className="configWindVane_text">{name}</View>
+                          </Tarking>
+                        </>
                       </View>
                     );
                   }
@@ -77,17 +82,21 @@ export default ({ list = [], onChange }) => {
                         }}
                         className="configWindVane_user"
                       >
-                        <View
-                          style={backgroundObj(image)}
-                          className="configWindVane_profile"
-                        >
-                          {bubbleFlag === "1" && bubbleContent && (
-                            <View className="bubbleContent-info">
-                              {bubbleContent}
+                        <>
+                          <Tarking args={item} name={"lookAroundConfig"}>
+                            <View
+                              style={backgroundObj(image)}
+                              className="configWindVane_profile"
+                            >
+                              {bubbleFlag === "1" && bubbleContent && (
+                                <View className="bubbleContent-info">
+                                  {bubbleContent}
+                                </View>
+                              )}
                             </View>
-                          )}
-                        </View>
-                        <View className="configWindVane_text">{name}</View>
+                            <View className="configWindVane_text">{name}</View>
+                          </Tarking>
+                        </>
                       </View>
                     );
                   }
@@ -136,17 +145,21 @@ export default ({ list = [], onChange }) => {
                     }}
                     className="configWindVane_user"
                   >
-                    <View
-                      style={backgroundObj(image)}
-                      className="configWindVane_profile"
-                    >
-                      {bubbleFlag === "1" && bubbleContent && (
-                        <View className="bubbleContent-info">
-                          {bubbleContent}
+                    <>
+                      <Tarking args={item} name={"lookAroundConfig"}>
+                        <View
+                          style={backgroundObj(image)}
+                          className="configWindVane_profile"
+                        >
+                          {bubbleFlag === "1" && bubbleContent && (
+                            <View className="bubbleContent-info">
+                              {bubbleContent}
+                            </View>
+                          )}
                         </View>
-                      )}
-                    </View>
-                    <View className="configWindVane_text">{name}</View>
+                        <View className="configWindVane_text">{name}</View>
+                      </Tarking>
+                    </>
                   </View>
                 );
               })}

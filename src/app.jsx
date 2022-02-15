@@ -30,10 +30,10 @@ class App extends Component {
 
     // this.fetchGlobalConfig();
   }
-  onLoad() {
+  componentDidHide() {
     const data = Taro.getStorageSync("operatingLog");
     if (data) {
-      fakeOperatingLog(data).then((val) => {
+      fakeOperatingLog({ wechatLogObjectList: data }).then((val) => {
         Taro.removeStorageSync("operatingLog");
       });
     }

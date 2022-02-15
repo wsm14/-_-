@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Swiper, SwiperItem, Image, Button } from "@tarojs/components";
+import Tarking from "@/components/tracking";
 import "./index.scss";
 
 /**
@@ -75,9 +76,14 @@ export default ({ data = {}, list = [], setGoodsData, handleGoBuyGoods }) => {
           );
         })}
       </Swiper>
-      <Button className="bwzgc_beanWelfareZone_btn" onClick={handleGoBuyGoods}>
-        {type === "self" ? `${bean}卡豆抵扣购买` : `直接购买`}
-      </Button>
+      <Tarking name={"beanWelfareZone"} args={data}>
+        <Button
+          className="bwzgc_beanWelfareZone_btn"
+          onClick={handleGoBuyGoods}
+        >
+          {type === "self" ? `${bean}卡豆抵扣购买` : `直接购买`}
+        </Button>
+      </Tarking>
     </View>
   );
 };

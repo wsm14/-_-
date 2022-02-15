@@ -2,6 +2,7 @@ import React, { Component, useEffect } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
 import { format, computedPrice, computedBeanPrice } from "@/utils/utils";
+import Tarking from "@/components/tracking";
 import Router from "@/utils/router";
 import "./index.scss";
 
@@ -73,7 +74,9 @@ export default (props) => {
             onClick={saveInfo}
             className="fixedBtn_payBtn public_center fixedBtn_payStyle1"
           >
-            ¥{cash} 立即购买
+            <Tarking args={data} name={"favourableDetails"}>
+              ¥{cash} 立即购买
+            </Tarking>
           </View>
         );
       } else {
@@ -82,7 +85,9 @@ export default (props) => {
             className="fixedBtn_payBtn public_center fixedBtn_payStyle1"
             onClick={saveInfo}
           >
-            ¥{computedRelprice() + " "} 立即购买
+            <Tarking args={data} name={"favourableDetails"}>
+              ¥{computedRelprice() + " "} 立即购买
+            </Tarking>
           </View>
         );
       }

@@ -219,7 +219,7 @@ export default ({
             <View className="ugc_template_count">{ugcRewardAmount}</View>
           </React.Fragment>
         ) : (
-          <Tarking   name={"记录视频倒计时"}>
+          <Tarking   name={"videoInval"}>
             <View
               onClick={() => {
                 Router({

@@ -3,6 +3,7 @@ import router from "@/utils/router";
 import Taro, { useRouter } from "@tarojs/taro";
 import { View, Button } from "@tarojs/components";
 import Router from "@/utils/router";
+import Tarking from "@/components/tracking";
 import "./index.scss";
 
 /**
@@ -66,15 +67,17 @@ export default () => {
         style={{ backgroundColor: showContent.goAppBag }}
       >
         <View className="goApp_text">打开哒卡乐APP 每天再领200卡豆</View>
-        <Button
-          onClick={() => {
-            Router({ routerName: "download" });
-          }}
-          className="open_app"
-          style={{ color: showContent.goAppColor }}
-        >
-          立即打开
-        </Button>
+        <Tarking name={"beanWelfareZone_video"}>
+          <Button
+            onClick={() => {
+              Router({ routerName: "download" });
+            }}
+            className="open_app"
+            style={{ color: showContent.goAppColor }}
+          >
+            立即打开
+          </Button>
+        </Tarking>
       </View>
       {/* 底部 购买说明 */}
       <View className="bwzRuleFooter_Rule">

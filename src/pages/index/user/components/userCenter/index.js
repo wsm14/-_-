@@ -4,10 +4,9 @@ import Banner from "@/components/banner";
 import { View, Button } from "@tarojs/components";
 import Router from "@/utils/router";
 import { loginStatus } from "@/utils/utils";
+import Tarking from "@/components/tracking";
 import "./index.scss";
 export default ({ bannerList }) => {
-  console.log(bannerList);
-
   const BeanBar = () => {
     const list = [
       {
@@ -111,14 +110,16 @@ export default ({ bannerList }) => {
         <View className="user_centerBar_icon">
           {list.map((item) => {
             return (
-              <View
-                onClick={() => {
-                  item.fn && item.fn();
-                }}
-                className={item.icon}
-              >
-                {item.val}
-              </View>
+              <Tarking args={item} name={"userCenter"}>
+                <View
+                  onClick={() => {
+                    item.fn && item.fn();
+                  }}
+                  className={item.icon}
+                >
+                  {item.val}
+                </View>
+              </Tarking>
             );
           })}
         </View>

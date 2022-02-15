@@ -4,6 +4,7 @@ import JackNow from "./JackNow";
 import Taro from "@tarojs/taro";
 import { fetchBlindBoxReward, fetchBlindBoxHelp } from "@/server/blindBox";
 import { getUserMomentcheckNew } from "@/server/share";
+import Tarking from "@/components/tracking";
 import Drawer from "@/components/Drawer";
 import { loginStatus, backgroundObj } from "@/utils/utils";
 import Router from "@/utils/router";
@@ -102,16 +103,18 @@ export default ({ data, updateInfo, list, updateList }) => {
     if (tabKey === "bean") {
       if (ruleTypeBeanStatus === "1") {
         return (
-          <View
-            className="blind_start_beanInfo public_center"
-            onClick={(e) => {
-              saveBlindBoxReward();
-            }}
-          >
-            <View className="blind_start_count">
-              {blindBoxBeanNum}卡豆拆一次
+          <Tarking name={"blindBox"}>
+            <View
+              className="blind_start_beanInfo public_center"
+              onClick={(e) => {
+                saveBlindBoxReward();
+              }}
+            >
+              <View className="blind_start_count">
+                {blindBoxBeanNum}卡豆拆一次
+              </View>
             </View>
-          </View>
+          </Tarking>
         );
       } else {
         return (
@@ -367,8 +370,7 @@ export default ({ data, updateInfo, list, updateList }) => {
                 您今日在赚豆场抽奖次数
               </View>
               <View className="countVisible_order_desc">已达上限</View>
-              <View className="countVisible_order_desc">
-              </View>
+              <View className="countVisible_order_desc"></View>
               <View className="countVisible_order_btn public_auto">
                 <View
                   className="countVisible_order_btnBox countVisible_order_btnStyle1 public_center"

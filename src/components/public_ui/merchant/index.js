@@ -11,6 +11,7 @@ import {
   backgroundObj,
 } from "@/utils/utils";
 import MakePhone from "@/components/payTelephone";
+import Tarking from "@/components/tracking";
 import Router from "@/utils/router";
 import "./index.scss";
 
@@ -47,7 +48,10 @@ export default (props) => {
         }
         className="merchantcom_name public_auto"
       >
-        <View className="merchant_card_link">进店看看 {" >"}</View>
+        <Tarking args={data} name={"merchantLook"}>
+          <View className="merchant_card_link">进店看看 {" >"}</View>
+        </Tarking>
+
         <View className="merchant_card_box">
           <View
             style={backgroundObj(merchantLogo)}
