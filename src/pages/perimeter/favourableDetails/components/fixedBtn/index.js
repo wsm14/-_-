@@ -140,9 +140,12 @@ export default (props) => {
             </View>
             {shareUserId ? "首页捡豆" : "去捡豆"}
           </View>
-          <View className="fixedBtn_getShare" onClick={shareInfo}>
-            推荐给好友
-          </View>
+          <Tarking args={data} name={"share_goods"}>
+            <View className="fixedBtn_getShare" onClick={shareInfo}>
+              推荐给好友
+            </View>
+          </Tarking>
+
           {payBtn()}
         </View>
       </View>

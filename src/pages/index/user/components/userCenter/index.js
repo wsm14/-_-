@@ -110,7 +110,7 @@ export default ({ bannerList }) => {
         <View className="user_centerBar_icon">
           {list.map((item) => {
             return (
-              <Tarking args={item} name={"userCenter"}>
+              <Tarking blockName={item.val} name={"userCenter"}>
                 <View
                   onClick={() => {
                     item.fn && item.fn();

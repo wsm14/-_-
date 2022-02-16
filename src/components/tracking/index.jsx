@@ -8,7 +8,14 @@ import React from "react";
 import Taro, { getCurrentPages } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { loginStatus, fetchStorage, fakeStorage } from "@/utils/utils";
-export default ({ children, type = "click", args = {}, name, style }) => {
+export default ({
+  children,
+  type = "click",
+  args = {},
+  name,
+  style,
+  blockName,
+}) => {
   const handleOpen = () => {
     const pageName = getCurrentPages()[getCurrentPages().length - 1].route;
     const { userIdString } = loginStatus() || {};
@@ -16,6 +23,7 @@ export default ({ children, type = "click", args = {}, name, style }) => {
       userId: userIdString,
       channel: "wechat",
       actionType: type,
+      blockName: blockName,
       time: Date.parse(new Date()),
       extraParams: JSON.stringify(args),
       actionName: name,

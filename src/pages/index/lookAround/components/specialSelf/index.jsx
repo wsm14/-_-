@@ -113,7 +113,7 @@ export default ({ userInfo, type = "specalSelf" }) => {
           >
             {renderObj.map((val, current) => {
               return (
-                <Tarking args={val} name={"lookAroundTab"}>
+                <Tarking blockName={val.key} name={"lookAroundTab"}>
                   <View
                     onClick={() => {
                       selectIndex(val.val);
