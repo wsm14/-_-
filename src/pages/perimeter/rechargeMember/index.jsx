@@ -97,8 +97,7 @@ const rechargeMember = () => {
                 原价：<Text>¥{selectItem.oriPrice || 0}</Text>
               </View>
               <View className="rechargeMember_info_bean">
-                ¥{selectItem.price || 0}+{selectItem.maxBeanAndCoupon || 0}
-                <Text className="bean">卡豆</Text>
+                ¥{selectItem.price || 0}
               </View>
               <View className="rechargeMember_info_beanTip">
                 最高可用{selectItem.maxBeanAndCoupon || 0}卡豆抵扣
