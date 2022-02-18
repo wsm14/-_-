@@ -1,0 +1,497 @@
+.specialOffer_shop {
+  height: 224px;
+  margin: 0 auto 32px;
+  display: flex;
+  position: relative;
+}
+.specialOffer_shop_box {
+  margin: 0 auto 32px;
+  line-height: 1;
+}
+.specialOffer_shop_child {
+  width: 688px;
+  height: 224px;
+  display: flex;
+  position: relative;
+}
+.specialOffer_new_btn {
+  padding: 0 16px;
+  min-width: 96px;
+  height: 52px;
+  background: #ef476f;
+  border-radius: 26px;
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.specialOffer_bottom_btn {
+  padding: 0 24px;
+  height: 52px;
+  background: #ef476f;
+  border-radius: 26px;
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.specialOffer_shopImg {
+  width: 224px;
+  height: 224px;
+  background: #d8d8d8;
+  border-radius: 8px;
+}
+.specialOffer_old_height {
+  height: 26px;
+}
+.specialOffer_desc {
+  margin-left: 24px;
+  height: 224px;
+  width: 448px;
+  .specialOffer_coupon_title {
+    width: 410px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 40px;
+    padding-top: 4px;
+  }
+  .specialOffer_coupon_details {
+    width: 410px;
+    padding-top: 8px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+    line-height: 24px;
+    height: 24px;
+  }
+  .specialOffer_title {
+    width: 410px;
+    height: 40px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 40px;
+    padding-top: 4px;
+  }
+  .specialOffer_userDetails {
+    margin-top: 16px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+    line-height: 30px;
+    .specialOffer_userprofile {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+    .specialOffer_userHide {
+      width: 340px;
+      display: flex;
+      align-content: center;
+    }
+
+    .specialOffer_username {
+      margin-left: 8px;
+      max-width: 250px;
+    }
+  }
+  .specialOffer_toast {
+    margin-top: 28px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ef476f;
+    line-height: 20px;
+  }
+  .specialOffer_date_price {
+    margin-top: 8px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 32px;
+    display: flex;
+    align-items: baseline;
+  }
+  .specialOffer_date_relMargin {
+    margin-left: 8px;
+  }
+  .specialOffer_date_rel {
+    font-size: 20px;
+    font-weight: 400;
+    color: #cccccc;
+    line-height: 20px;
+    text-decoration: line-through;
+  }
+  .specialOffer_price_text {
+    font-size: 20px;
+    vertical-align: text-bottom;
+  }
+  .specialOffer_bean_box {
+    padding: 4px 8px;
+    line-height: normal;
+    font-size: 22px;
+    font-weight: 400;
+    color: #ef476f;
+    display: inline-block;
+    border-radius: 4px;
+  }
+  .specialOffer_price_text {
+    font-size: 20px;
+    vertical-align: text-bottom;
+  }
+  .specialOffer_share_text {
+    display: inline-block;
+    margin-left: 4px;
+    vertical-align: bottom;
+    font-size: 22px;
+    font-weight: 500;
+    color: #ef476f;
+  }
+  .specialOffer_hotOld_price {
+    margin-top: 32px;
+    color: rgba(153, 153, 153, 1);
+    display: flex;
+    align-items: center;
+    max-width: 398px;
+  }
+  .specialOffer_real_price {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+  }
+  .specialOffer_bean_price {
+    margin-top: 14px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ef476f;
+    line-height: 20px;
+  }
+  .specialOffer_new_bean {
+    margin-top: 8px;
+    height: 32px;
+    background: #ffffff;
+    box-sizing: border-box;
+    border-radius: 24px;
+    display: inline-flex;
+    align-items: center;
+    .specialOffer_new_img {
+      width: 98px;
+      height: 32px;
+    }
+    .specialOffer_new_pay {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ef476f;
+      max-width: 180px;
+      padding: 0 8px 0 4px;
+    }
+  }
+  .specialOffer_real_max {
+    max-width: 398px;
+  }
+  .specialOffer_bean_show {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    .specialOffer_bean_showText {
+      display: flex;
+      align-items: baseline;
+    }
+  }
+  .specialOffer_hot_price {
+    margin-top: 32px;
+    display: flex;
+    align-items: baseline;
+  }
+  .specialOffer_bean_price {
+    margin-top: 12px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ef476f;
+    line-height: 20px;
+  }
+  .specialOffer_bean_show {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    .specialOffer_bean_showText {
+      display: flex;
+      align-items: baseline;
+    }
+  }
+  .specialOffer_bean_getMoney {
+    max-width: 113px;
+    margin-left: 8px;
+    padding: 4px 8px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ef476f;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+  }
+}
+.specialOffer_bean_border {
+  margin-top: 6px;
+}
+.specialOffer_shop_bottom {
+  height: 52px;
+  margin-top: 24px;
+}
+.specialOffer_shop_btn {
+  display: inline-flex;
+  padding: 0 32px;
+  height: 52px;
+  background: #ef476f;
+  border-radius: 26px;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.specialOffer_shop_text {
+  font-size: 28px;
+  font-weight: 400;
+  color: #333333;
+  display: flex;
+  align-items: center;
+}
+.specialOffer_profile {
+  display: flex;
+  align-items: center;
+  .specialOffer_profile_box {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #ffffff;
+  }
+  .specialOffer_profile_left {
+    margin-left: -8px;
+  }
+  .specialOffer_left_pay {
+    margin-left: 12px;
+    font-size: 24px;
+    color: #333333;
+  }
+}
+@keyframes loadAnimate {
+  from {
+    transform: rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+.specialOffer_shop_text::before {
+  display: block;
+  position: relative;
+  width: 32px;
+  height: 32px;
+  content: "";
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon548.png")
+    no-repeat;
+  background-size: 100% 100%;
+  margin-right: 16px;
+  animation-name: loadAnimate;
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.prefecture_bg_title {
+  width: 100%;
+  height: 500px;
+}
+.prefecture_image {
+  width: 100%;
+  height: 100%;
+}
+.prefecture_bg_desc {
+  width: 100%;
+  height: 270px;
+  margin-top: 10px;
+}
+.prefecture_bg_logo {
+  width: 409px;
+  height: 57px;
+  margin: 40px auto 0;
+  background: url(https://wechat-config.dakale.net/miniprogram/active/8.8/active8_8_21.png)
+    no-repeat;
+  background-size: 100% 100%;
+}
+.prefecture_select_box {
+  width: 540px;
+  height: 80px;
+  margin: 0 auto;
+  display: flex;
+  .prefecture_select_left {
+    flex: 1;
+  }
+  .prefecture_select_right {
+    flex: 1;
+  }
+  .prefecture_template_box {
+    margin-top: 40px;
+  }
+}
+.prefecture_content {
+  margin: 10px 22px 0;
+  padding: 40px 24px 48px;
+  background: #ffffff;
+  border-radius: 20px;
+
+  // .prefecture_fure_bean::after {
+  //   width: 32px;
+  //   height: 32px;
+  //   background: url(https://wechat-config.dakale.net/miniprogram/image/icon462.png)
+  //     no-repeat;
+  //   background-size: 100% 100%;
+  //   margin-left: 8px;
+  //   display: block;
+  //   content: "";
+  // }
+}
+.prefecture_fure_box {
+  display: flex;
+  margin-bottom: 24px;
+  position: relative;
+  .prefecture_fure_img {
+    width: 224px;
+    height: 224px;
+    border-radius: 8px;
+  }
+  .prefecture_fure_content {
+    margin-left: 16px;
+    width: 414px;
+    .prefecture_fure_quan {
+      padding-top: 8px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+    }
+    .prefecture_fure_twoTitle {
+      padding-top: 4px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #333333;
+      line-height: 40px;
+      height: 80px;
+    }
+
+    .prefecture_fure_title {
+      padding-top: 4px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #333333;
+      line-height: 40px;
+    }
+    .prefecture_fure_margin1 {
+      margin-top: 12px;
+    }
+    .prefecture_fure_margin2 {
+      margin-top: 36px;
+    }
+    .prefecture_fure_user {
+      padding-top: 16px;
+      display: flex;
+      align-items: center;
+      .prefecture_fure_userProfile {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .prefecture_fure_userName {
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+        margin-left: 8px;
+      }
+      .prefecture_fure_limit {
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+        margin-left: 8px;
+      }
+    }
+    .prefecture_fure_price {
+      padding-top: 28px;
+      color: #999999;
+    }
+    .prefecture_fure_tag {
+      width: 70px;
+      height: 28px;
+      border-radius: 4px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon776.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .prefecture_fure_bean {
+      margin-top: 6px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #ef476f;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .prefecture_tabbar1 {
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon773.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .prefecture_tabbar2 {
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon774.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .prefecture_btn {
+    min-width: 96px;
+    padding: 0 12px;
+    height: 52px;
+    background: #ef476f;
+    border-radius: 26px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ffffff;
+    position: absolute;
+    right: 0;
+    bottom: 4px;
+  }
+}
+.prefecture_null_start {
+  margin: 64px auto 105px;
+  .prefecture_null_image {
+    width: 300px;
+    height: 300px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon339.png)
+      no-repeat;
+    background-size: 100% 100%;
+    margin: 0 auto;
+  }
+  .prefecture_null_desc {
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    text-align: center;
+    margin-top: 32px;
+  }
+}
+.prefecture_content_top {
+  padding-top: 40px;
+}

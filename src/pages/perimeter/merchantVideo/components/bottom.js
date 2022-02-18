@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, Image, Text, ScrollView } from "@tarojs/components";
 import { useReady } from "@tarojs/taro";
 import classNames from "classnames";
@@ -8,102 +8,174 @@ import {
   getLat,
   getLnt,
   backgroundObj,
-} from "@/common/utils";
+  computedPrice,
+} from "@/utils/utils";
 import Taro from "@tarojs/taro";
-import { getPromotionInfo } from "@/server/index";
-import Router from "@/common/router";
+import { fetchMomentRelate } from "@/server/index";
+import Router from "@/utils/router";
+import { mapGo, computedBeanPrice } from "@/utils/utils";
+import TemplateCard from "./shopcard";
 import "./../index.scss";
 export default (props) => {
-  const { server = {}, list = [], children, index } = props;
+  const { server = {}, children, index, userInfo, current } = props;
+  const { payBeanCommission = 50, shareCommission = 0 } = userInfo;
   const [flag, setFlag] = useState({
     flagType: false,
     boolean: false,
   });
   const [couponInfo, setCouponInfo] = useState({});
+  const [showFlag, setShowFlag] = useState(false);
 
   useEffect(() => {
     getPromotion(server);
-    setTimeout(() => computedFont(), 1);
+    let time = setTimeout(() => {
+      computedFont();
+      clearTimeout(time);
+    }, 1);
   }, []);
 
+  useEffect(() => {
+    const { promotionFlag } = server;
+    setShowFlag(false);
+    if (promotionFlag === "1" && current === index) {
+      let time = setTimeout(() => {
+        clearTimeout(time);
+        setShowFlag(true);
+      }, 3000);
+    }
+  }, [current]);
   const { flagType, boolean } = flag;
   const {
     message,
     cityName,
     categoryName,
-    lat,
-    lnt,
-    merchantAddress,
-    userIdString,
-    merchantLnt,
-    merchantLat,
+    addressContentObject = {},
+    ownerName,
+    momentId,
+    ownerImg,
+    momentType,
+    cityCode,
+    relateType,
+    relateId,
   } = server;
+  const { address, lat, lnt } = addressContentObject;
   const getPromotion = (item) => {
-    const { promotionType, promotionIdString, userIdString } = item;
-    if (promotionIdString) {
-      getPromotionInfo(
+    const { promotionFlag, ownerId, promotionNum, momentId, momentType } = item;
+    if (promotionFlag === "1" && promotionNum > 0) {
+      fetchMomentRelate(
         {
-          promotionId: promotionIdString,
-          promotionType,
-          merchantId: userIdString,
+          ownerId,
+          momentId,
+          momentType,
         },
         (res) => {
-          const { promotionInfo } = res;
-          setCouponInfo(promotionInfo);
+          const { momentRelateInfo } = res;
+          setCouponInfo(momentRelateInfo);
         }
       );
     }
   };
-  // console.log(data);
-  const activeView = () => {
-    const {
-      promotionType,
-      promotionImg = "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png",
-      promotionName,
-      promotionBuyPrice,
-      promotionIdString,
-    } = couponInfo;
-    const linkTo = () => {
-      if (promotionType === "special") {
-        Router({
-          routerName: "favourableDetails",
-          args: {
-            specialActivityId: promotionIdString,
-            merchantId: userIdString,
-          },
-        });
-      } else {
-        Router({ routerName: "download" });
-      }
-    };
-    if (Object.keys(couponInfo).length > 0) {
-      return (
-        <View
-          onClick={() => linkTo()}
-          className={classNames("home_active_box", `home_active_box${index}`)}
-        >
-          <View className="home_active_image">
-            <View
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: Taro.pxTransform(4),
-                ...backgroundObj(promotionImg),
-              }}
-            />
-          </View>
-          <View className="home_active_details">
-            <View className="home_active_font1  font_hide">
-              {promotionName}
+  const templateStated = (val, callback) => {
+    const { activityGoodsList = [], ownerCouponList = [] } = val;
+    if (activityGoodsList.length > 0) {
+      return activityGoodsList.map((item, index) => {
+        const {
+          activityGoodsId,
+          goodsImg,
+          goodsName,
+          realPrice,
+          commission,
+          oriPrice,
+        } = item;
+        if (index === 0) {
+          return (
+            <View className="test_debug">
+              <View
+                className="templateStated_box"
+                onClick={() => callback(item)}
+              >
+                <View
+                  className="templateStated_img coupon_shop_icon"
+                  style={backgroundObj(goodsImg)}
+                ></View>
+                <View className="templateStated_font">
+                  <View className="templateStated_title font_hide">
+                    {goodsName}
+                  </View>
+                  <View className="templateStated_price font_hide">
+                    <Text className="font18">卡豆再省:</Text>
+                    <Text className="font20 bold templateStated_margin">¥</Text>
+                    <Text className="font28 bold templateStated_margin">
+                      {computedBeanPrice(realPrice, 100 - payBeanCommission)}
+                    </Text>
+                  </View>
+                </View>
+                <View className="templateStated_pay public_center">抢购</View>
+              </View>
             </View>
-            <View className="home_active_font2 font_hide">
-              专享特价 <Text className={"font20 color3"}>¥ </Text>{" "}
-              <Text className={"font28 color3 bold"}>{promotionBuyPrice} </Text>
+          );
+        }
+        return null;
+      });
+    } else {
+      return ownerCouponList.map((item, index) => {
+        const {
+          couponName,
+          reduceObject: { couponPrice },
+          commission,
+          buyPrice,
+        } = item;
+        if (index === 0) {
+          return (
+            <View className="test_debug">
+              <View
+                className="templateStated_box"
+                onClick={() => callback(item)}
+              >
+                <View
+                  className="templateStated_img coupon_shop_icon"
+                  style={backgroundObj(ownerImg)}
+                ></View>
+                <View className="templateStated_font">
+                  <View className="templateStated_title font_hide">
+                    {couponName}
+                  </View>
+                  <View className="templateStated_price font_hide">
+                    <Text className="font18">卡豆再省:</Text>
+                    <Text className="font20 bold templateStated_margin">¥</Text>
+                    <Text className="font28 bold templateStated_margin">
+                      {computedBeanPrice(buyPrice, 100 - payBeanCommission)}
+                    </Text>
+                  </View>
+                </View>
+                <View className="templateStated_pay public_center">抢购</View>
+              </View>
             </View>
-          </View>
-          <View className={classNames("home_active_btn")}>立即抢购</View>
-        </View>
-      );
+          );
+        } else return null;
+      });
+    }
+  };
+  const routerInfo = () => {
+    console.log(relateType);
+    if (relateType === "user") {
+      Router({
+        routerName: "download",
+      });
+    } else if (relateType === "group") {
+      Router({
+        routerName: "groupDetails",
+        args: {
+          merchantGroupId: relateId,
+        },
+      });
+    } else if (relateType === "merchant") {
+      Router({
+        routerName: "merchantDetails",
+        args: {
+          merchantId: relateId,
+        },
+      });
     } else {
       return;
     }
@@ -125,6 +197,9 @@ export default (props) => {
     } else {
       return (
         <View
+          onClick={() => {
+            updateDec();
+          }}
           className={classNames(
             `home_bottom_decBox`,
             `home_bottom_decBox${index}`,
@@ -160,32 +235,179 @@ export default (props) => {
       boolean: !boolean,
     });
   };
-
-  return (
-    <View className="home_bottom">
-      {children}
-      {activeView()}
-      {descView()}
-      <View className="home_desc_coll public_auto">
-        <View className="color6 home_desc_city">
-          <View className="home_city_icon"></View>
-          <View className="home_desc_text font_hide">
-            {cityName}·{categoryName}｜
-            {GetDistance(
-              getLat(),
-              getLnt(),
-              merchantLat || lat,
-              merchantLnt || lnt
+  const {
+    activityGoodsList = [],
+    ownerCouponList = [],
+    freeOwnerCouponList = [],
+  } = couponInfo;
+  const linkTo = (val) => {
+    console.log(val);
+    if (val.couponName) {
+      const { ownerIdString, ownerCouponIdString } = val;
+      Router({
+        routerName: "payCouponDetails",
+        args: {
+          merchantId: ownerIdString,
+          ownerId: ownerIdString,
+          ownerCouponId: ownerCouponIdString,
+        },
+      });
+    } else {
+      const { ownerIdString, activityGoodsId } = val;
+      Router({
+        routerName: "favourableDetails",
+        args: {
+          specialActivityId: activityGoodsId,
+          merchantId: ownerIdString,
+          momentId: momentId,
+        },
+      });
+    }
+  };
+  if (
+    (activityGoodsList.length > 0 || ownerCouponList.length > 0) &&
+    showFlag === true
+  ) {
+    return (
+      <View className="test">
+        <TemplateCard
+          shareCommission={shareCommission}
+          payBeanCommission={payBeanCommission}
+          val={couponInfo}
+          callback={linkTo}
+          ownerImg={ownerImg}
+          onClose={() => setShowFlag(false)}
+        ></TemplateCard>
+        <View className="home_bottom">
+          <View className="home_desc_coll public_auto">
+            {relateType === "user" || relateType === "brand" ? (
+              <View></View>
+            ) : (
+              <View
+                className="color6 home_desc_city"
+                onClick={() =>
+                  mapGo({
+                    lat: lat,
+                    lnt: lnt,
+                    address: address,
+                    merchantName: ownerName,
+                  })
+                }
+              >
+                <View className="home_city_icon"></View>
+                <ScrollView scrollX className="home_desc_text font_hide">
+                  {cityCode === "3301"
+                    ? "杭州"
+                    : cityCode === "4331"
+                    ? "湘西"
+                    : "全国"}
+                  ·{categoryName}
+                  {GetDistance(getLat(), getLnt(), lat, lnt)
+                    ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
+                    : ""}
+                  {address}
+                </ScrollView>
+              </View>
             )}
-            ｜{merchantAddress}
           </View>
         </View>
-        {flagType && (
-          <View className="bold" onClick={() => updateDec()}>
-            {!boolean ? "展开" : "收起"}
-          </View>
-        )}
       </View>
-    </View>
-  );
+    );
+  } else if (
+    (activityGoodsList.length > 0 || ownerCouponList.length > 0) &&
+    !showFlag
+  ) {
+    return (
+      <View className="home_bottom">
+        {templateStated(couponInfo, linkTo)}
+        <View onClick={() => routerInfo()} className="home_username font_hide">
+          <View className="font_hide"> @{ownerName} </View>
+          {momentType === "platform" && (
+            <View className="home_momentType public_center">广告</View>
+          )}
+        </View>
+        {descView()}
+        <View className="home_desc_coll public_auto">
+          {relateType === "user" || relateType === "brand" ? (
+            <View></View>
+          ) : (
+            <View
+              className="color6 home_desc_city"
+              onClick={() =>
+                mapGo({
+                  lat: lat,
+                  lnt: lnt,
+                  address: address,
+                  merchantName: ownerName,
+                })
+              }
+            >
+              <View className="home_city_icon"></View>
+              <ScrollView scrollX className="home_desc_text font_hide">
+                {cityCode === "3301"
+                  ? "杭州"
+                  : cityCode === "4331"
+                  ? "湘西"
+                  : "全国"}
+                ·{categoryName}
+                {GetDistance(getLat(), getLnt(), lat, lnt)
+                  ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
+                  : ""}
+                {address}
+              </ScrollView>
+            </View>
+          )}
+        </View>
+      </View>
+    );
+  } else {
+    return (
+      <View>
+        <View className="home_bottom">
+          {children}
+          <View
+            className="home_username font_hide"
+            onClick={() => routerInfo()}
+          >
+            <View className="font_hide"> @{ownerName} </View>
+            {momentType === "platform" && (
+              <View className="home_momentType public_center">广告</View>
+            )}
+          </View>
+          {descView()}
+          <View className="home_desc_coll public_auto">
+            {relateType === "user" || relateType === "brand" ? (
+              <View></View>
+            ) : (
+              <View
+                className="color6 home_desc_city"
+                onClick={() =>
+                  mapGo({
+                    lat: lat,
+                    lnt: lnt,
+                    address: address,
+                    merchantName: ownerName,
+                  })
+                }
+              >
+                <View className="home_city_icon"></View>
+                <ScrollView scrollX className="home_desc_text font_hide">
+                  {cityCode === "3301"
+                    ? "杭州"
+                    : cityCode === "4331"
+                    ? "湘西"
+                    : "全国"}
+                  ·{categoryName}
+                  {GetDistance(getLat(), getLnt(), lat, lnt)
+                    ? `｜${GetDistance(getLat(), getLnt(), lat, lnt)}｜`
+                    : ""}
+                  {address}
+                </ScrollView>
+              </View>
+            )}
+          </View>
+        </View>
+      </View>
+    );
+  }
 };

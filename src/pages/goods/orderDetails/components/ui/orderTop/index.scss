@@ -1,0 +1,70 @@
+.orderDetails_top {
+  padding: 0 32px;
+  height: 232px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon258.png")
+    center/cover;
+  position: relative;
+
+  .orderDetails_pad {
+    padding-top: 32px;
+  }
+
+  .orderDetails_noPrice {
+    width: 112px;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 4px;
+    border: 1px solid #ffffff;
+    position: absolute;
+    right: 32px;
+    bottom: 100px;
+    text-align: center;
+  }
+
+  .orderDetails_status {
+    height: 60px;
+    display: flex;
+    align-items: center;
+
+    .orderDetails_iconBox {
+      width: 60px;
+      height: 60px;
+    }
+
+    .orderDetails_icon1 {
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon259.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .orderDetails_icon2 {
+      background: url("https://wechat-config.dakale.net/miniprogram/image/wait.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .orderDetails_icon3 {
+      background: url("https://wechat-config.dakale.net/miniprogram/image/closeing.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .orderDetails_font {
+      height: 60px;
+      line-height: 60px;
+      font-size: 48px;
+      margin-left: 16px;
+      font-weight: 600;
+    }
+  }
+
+  .orderDetails_dec {
+    margin-top: 16px;
+    height: 24px;
+    font-size: 24px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    line-height: 24px;
+    margin-left: 76px;
+  }
+}

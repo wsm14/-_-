@@ -1,0 +1,197 @@
+.selectKol_box {
+  background: #ffffff;
+  border-radius: 20px;
+  margin: 16px 24px 0;
+  padding: 0 32px;
+  .selectKol_coupon {
+    height: 109px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .selectKol_coupon_title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+    display: flex;
+    align-items: center;
+  }
+  .selectKol_coupon_title::before {
+    width: 36px;
+    height: 36px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon416.png)
+      no-repeat;
+    background-size: 100% 100%;
+    content: "";
+    display: block;
+    margin-right: 8px;
+  }
+  .selectKol_coupon_coupons {
+    font-size: 24px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+  }
+  .selectKol_coupon_coupons::after {
+    width: 24px;
+    height: 24px;
+    margin-left: 16px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon425.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+  }
+  .selectKol_coupon_toast {
+    height: 37px;
+    background: #ef476f;
+    border-radius: 19px;
+    padding: 0 16px;
+    font-size: 22px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+  .order_payType_box {
+    padding: 34px 0;
+    position: relative;
+    //.order_pay_line{
+    //  border-bottom: rgba(229, 229, 229, 1) 1px solid;
+    //}
+  }
+  .order_payType_showPrice {
+    position: absolute;
+    right: 66px;
+    bottom: 54px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ef476f;
+    line-height: 1;
+  }
+  .order_payTypeBug_box {
+    padding: 34px 32px 0px;
+  }
+  .order_paybug_box {
+    padding: 0px 32px 34px;
+  }
+  .order_payType_top {
+    padding-left: 44px;
+    position: relative;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    .order_payType_six {
+      border-radius: 4px;
+      display: inline-block;
+      margin-left: 8px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      color: #ef476f;
+      box-sizing: border-box;
+      padding: 0 8px;
+      line-height: normal;
+      height: 30px;
+      line-height: 30px;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+  }
+  .order_payType_top::before {
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    display: inline-block;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon473.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .order_payType_question {
+    width: 28px;
+    height: 28px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon472.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin-left: 8px;
+  }
+
+  .order_pay_font {
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+    padding: 16px 44px 0;
+  }
+  .order_pay_iconBox {
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 46px;
+    right: 0px;
+  }
+  .order_pay_icon1 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon256.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .order_pay_icon2 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon257.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .order_pay_icon4 {
+    opacity: 0.4;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon256.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .order_pay_icon3 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon541.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .order_select_box {
+    height: 48px;
+  }
+  .order_select_top1 {
+    padding-top: 32px;
+    position: relative;
+  }
+  .order_select_top2 {
+    padding-top: 16px;
+  }
+  .order_select_left {
+    display: flex;
+    align-items: center;
+  }
+  .order_select_right {
+    width: 48px;
+    height: 48px;
+  }
+  .order_select_title {
+    width: 112px;
+    height: 36px;
+    background: #ef476f;
+    border-radius: 4px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+  .order_select_title2 {
+    font-size: 24px;
+    height: 36px;
+    font-weight: 400;
+    color: #333333;
+    margin-left: 16px;
+  }
+  .order_select_title3 {
+    font-size: 24px;
+    height: 36px;
+    font-weight: 400;
+    color: #cccccc;
+    margin-left: 16px;
+  }
+}

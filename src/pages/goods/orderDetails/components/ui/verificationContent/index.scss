@@ -1,0 +1,183 @@
+.verificationContent_box {
+  .descriptionCard_title {
+    width: 686px;
+    margin: -74px auto 0;
+    background: #ffffff;
+    border-radius: 12px;
+    position: relative;
+    z-index: 10;
+
+    .descriptionCard_box {
+      padding: 24px 32px 0px;
+      font-size: 24px;
+
+      .descriptionCard_merchant {
+        height: 64px;
+        display: flex;
+        align-items: center;
+
+        .descriptionCard_profile {
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+          flex-shrink: 0;
+        }
+
+        .descriptionCard_merchantTitle {
+          height: 42px;
+          font-size: 28px;
+          font-weight: 600;
+          color: #333333;
+          line-height: 42px;
+          margin-left: 29px;
+          margin-right: 16px;
+        }
+        .descriptionCard_group_liner {
+          font-size: 24px;
+          font-weight: 400;
+          color: #07c0c2;
+          display: flex;
+          align-items: center;
+          margin-left: auto;
+          flex-shrink: 0;
+        }
+        .descriptionCard_group_liner::after {
+          width: 24px;
+          height: 24px;
+          margin-left: 4px;
+          content: "";
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon692.png")
+            no-repeat;
+          background-size: 100% 100%;
+          display: block;
+        }
+        .descriptionCard_goIcon {
+          width: 36px;
+          height: 36px;
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon260.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+
+      .descriptionCard_merchantShop {
+        height: 120px;
+        margin-top: 32px;
+        display: flex;
+
+        .descriptionCard_merchantLogo {
+          width: 120px;
+          height: 120px;
+          border-radius: 8px;
+        }
+
+        .descriptionCard_shop_details {
+          margin-left: 24px;
+
+          .descriptionCard_goods_name {
+            width: 280px;
+            max-height: 84px;
+            line-height: 42px;
+          }
+
+          .descriptionCard_goods_num {
+            padding-top: 8px;
+            max-width: 320px;
+          }
+          .descriptionCard_goods_time {
+            padding-top: 16px;
+          }
+        }
+      }
+
+      .descriptionCard_shop_price {
+        height: 32px;
+        margin-top: 5px;
+        margin-left: auto;
+      }
+
+      .descriptionCard_goods_liner {
+        width: 622px;
+        height: 1px;
+        background: #e5e5e5;
+        margin: 31px auto 0;
+      }
+
+      .descriptionCard_goods_tags {
+        height: 84px;
+
+        .kolTagBox {
+          height: 36px;
+
+          .kolTagIcons {
+            width: 36px;
+            height: 36px;
+          }
+
+          .kolTag_font {
+            height: 36px;
+            line-height: 36px;
+            margin-left: 4px;
+            margin-right: 16px;
+          }
+        }
+      }
+
+      .codeBox {
+        position: relative;
+        height: 304px;
+        .code_swiper {
+          width: 304px;
+          height: 304px;
+        }
+
+        .code_left {
+          position: absolute;
+          top: 137px;
+          left: 0;
+        }
+
+        .code_right {
+          position: absolute;
+        }
+
+        .codePosition {
+          width: 36px;
+          height: 36px;
+          top: 137px;
+          right: 0;
+        }
+      }
+    }
+  }
+
+  .kolGoods_details {
+    width: 686px;
+    background: #ffffff;
+    border-radius: 12px;
+    margin: 24px 32px 0;
+
+    .kolGoods_details_price {
+      height: 104px;
+    }
+
+    .kolGoods_detailsBox {
+      padding: 32px 32px 0;
+
+      .kolGoods_details_height {
+        height: 24px;
+      }
+
+      .kolGoods_details_top {
+        margin-top: 24px;
+      }
+
+      .kolGoods_details_liner {
+        width: 622px;
+        height: 2px;
+        background: #e5e5e5;
+        margin: 31px auto 0;
+      }
+    }
+  }
+}

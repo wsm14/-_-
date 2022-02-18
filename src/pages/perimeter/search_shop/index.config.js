@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: '店铺搜索',
+  navigationBarTitleText: '搜索',
   navigationStyle: 'default',
 }

@@ -1,0 +1,114 @@
+.atomicActivity_save_box {
+  width: 612px;
+  height: 620px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon780.png")
+    no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+}
+.atomicActivity_save_title {
+  padding-top: 64px;
+  width: 520px;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 auto;
+  color: #333333;
+}
+.atomicActivity_save_merchant {
+  padding-top: 16px;
+  width: 520px;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 auto;
+  color: #999999;
+  font-size: 24px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  .atomicActivity_save_text {
+    max-width: 320px;
+    display: inline-block;
+  }
+}
+.atomicActivity_save_toast {
+  padding-top: 40px;
+  width: 520px;
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 auto;
+  color: rgba(239, 71, 111, 1);
+}
+.atomicActivity_save_goods {
+  width: 536px;
+  height: 184px;
+  margin: 32px auto 0;
+  background: url("https://web-new.dakale.net/public/image/atomicActivity/2021_2_4_15.png")
+    no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  .positionSave {
+    position: absolute;
+    top: 68px;
+    right: 40px;
+    height: 48px;
+    line-height: 48px;
+    font-weight: 600;
+    color: #ef476f;
+    font-size: 48px;
+  }
+}
+.atomicActivity_save_goodName {
+  padding-top: 40px;
+  padding-left: 38px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #333333;
+  max-width: 280px;
+}
+.atomicActivity_save_city {
+  padding-top: 12px;
+  padding-left: 38px;
+  font-size: 24px;
+  font-weight: 400;
+  color: #999999;
+  min-height: 24px;
+}
+.atomicActivity_save_time {
+  padding-top: 16px;
+  padding-left: 38px;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgba(239, 71, 111, 1);
+  max-width: 480px;
+}
+.atomicActivity_save_btn {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  height: 80px;
+  width: 420px;
+  background: rgba(255, 201, 91, 1);
+  border-radius: 48px;
+  border: 4px solid #222222;
+  line-height: 80px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.atomicActivity_layer_box {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(102, 102, 102, 0.8);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}

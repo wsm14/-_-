@@ -1,8 +1,5 @@
 export default {
-  navigationBarTitleText: "热销特惠",
-  navigationBarBackgroundColor: "#FFFFFF",
-  navigationBarTextStyle: "black",
-  backgroundColor: "#ffffff",
-  backgroundTextStyle: "light",
+  navigationBarTitleText: "限时抢购",
   navigationStyle: "default",
+  enablePullDownRefresh: true,
 };

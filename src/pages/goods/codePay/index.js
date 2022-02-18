@@ -1,20 +1,17 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, Input } from "@tarojs/components";
-import "./index.scss";
-import PayGo from "@/components/pay_btn";
-import classNames from "classnames";
 import { getReserveOrder, saveScanCodeOrder } from "@/server/goods";
-import {
-  backgroundObj,
-  goBack,
-  toast,
-  navigateTo,
-  redirectTo,
-} from "@/common/utils";
-import Evens from  '@/common/evens'
-import Router from "@/common/router";
-
+import { backgroundObj, toast, objStatus } from "@/utils/utils";
+import { fetchUserShareCommission } from "@/server/common";
+import PayGo from "./components/pay_btn";
+import Router from "@/utils/router";
+import evens from "@/common/evens";
+import BeanSelect from "@/components/public_ui/selectKol";
+import { inject, observer } from "mobx-react";
+import "./index.scss";
+@inject("store")
+@observer
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -23,52 +20,95 @@ class Index extends Component {
       httpData: {
         merchantId: getCurrentInstance().router.params.merchantId || "",
         totalFee: 0,
-        useBeanStatus: "1",
       },
+      useBeanStatus: "1",
       couponObj: {},
+      configUserLevelInfo: {},
     };
   }
 
   componentDidMount() {
-    Evens.$on('payCode',this.payCode.bind(this))
+    evens.$on("payCoupon", this.setCoupon.bind(this));
   }
-
+  componentWillUnmount() {
+    evens.$off("payCoupon");
+  }
   componentDidShow() {
-    this.getUserDetails();
+    this.regUrl();
+    this.fetchUserShareCommission();
   }
-  payCode(obj) {
-    this.setState({
-      couponObj: obj,
+  fetchUserShareCommission() {
+    fetchUserShareCommission({}, (res) => {
+      const { configUserLevelInfo = {} } = res;
+      this.setState({
+        configUserLevelInfo,
+      });
     });
   }
-  setBean() {
-    const { useBeanStatus } = this.state.httpData;
-    if (useBeanStatus === "0") {
-      this.setState({
-        httpData: {
-          ...this.state.httpData,
-          useBeanStatus: "1",
+  //哒人身份
+  getUrlKey(key, name) {
+    // 获取参数
+    var url = decodeURIComponent(key);
+    // 正则筛选地
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    // 匹配目标参数
+    var result = url.substr(1).match(reg);
+    //返回参数值
+    return result ? decodeURIComponent(result[2]) : null;
+  }
+  //微信扫码需要参数
+  regUrl() {
+    const { merchantId, q } = getCurrentInstance().router.params;
+    if (merchantId) {
+      this.getUserDetails();
+    } else if (q) {
+      this.setState(
+        {
+          httpData: {
+            ...this.state.httpData,
+            merchantId: this.getUrlKey(q, "merchantId"),
+          },
         },
+        (res) => {
+          this.getUserDetails();
+        }
+      );
+    } else {
+      toast("参数缺失");
+    }
+  }
+  //解析微信扫码
+  changeBean() {
+    const { useBeanStatus } = this.state;
+    if (useBeanStatus === "1") {
+      this.setState({
+        useBeanStatus: "0",
       });
     } else {
       this.setState({
-        httpData: {
-          ...this.state.httpData,
-          useBeanStatus: "0",
-        },
+        useBeanStatus: "1",
       });
     }
   }
-
+  //选择是否使用卡豆
+  setCoupon(item) {
+    this.setState({
+      couponObj: item,
+    });
+  }
+  //设置优惠券
   getUserDetails() {
     getReserveOrder(
       {
-        ...getCurrentInstance().router.params,
+        ...this.state.httpData,
       },
       (res) => {
         const { reserveOrderResult } = res;
         this.setState({
-          reserveOrderResult,
+          reserveOrderResult: {
+            ...reserveOrderResult,
+            ...this.state.reserveOrderResult,
+          },
         });
       }
     );
@@ -76,25 +116,50 @@ class Index extends Component {
 
   saveScanCodeOrder() {
     const {
-      totalFee,
-      useBeanStatus,
       httpData,
-      couponObj: { userCouponIdString = "" },
+      httpData: { totalFee },
+      couponObj: { userCouponIdString = "", couponType },
+      useBeanStatus,
     } = this.state;
-
-    if (totalFee !== 0) {
+    const { shareType } = this.props.store.authStore;
+    const { sourceKey, sourceType } = shareType;
+    if (totalFee != 0) {
       saveScanCodeOrder(
-        { ...httpData, userCouponId: userCouponIdString },
+        {
+          ...httpData,
+          userCouponObjects: userCouponIdString
+            ? [
+                {
+                  userCouponId: userCouponIdString,
+                  couponType,
+                },
+              ]
+            : [],
+          useBeanStatus,
+          sourceKey,
+          sourceType,
+        },
         (res) => {
           const { status, orderSn, orderType, payMonth } = res;
           if (status === "0" || status === "5") {
-            redirectTo(
-              `/pages/goods/code_wx_pay/index?payMonth=${payMonth}&orderType=${orderType}&orderSn=${orderSn}&merchantId=${getCurrentInstance().router.params.merchantId}`
-            );
+            Router({
+              routerName: "pay",
+              type: "redirectTo",
+              args: {
+                orderType,
+                orderSn,
+                payMonth,
+              },
+            });
           } else {
-            redirectTo(
-              `/pages/goods/code_scanPay_Susccess/index?orderSn=${orderSn}&merchantId=${getCurrentInstance().router.params.merchantId}`
-            );
+            Router({
+              routerName: "paySuccess",
+              type: "redirectTo",
+              args: {
+                orderType,
+                orderSn,
+              },
+            });
           }
         }
       );
@@ -103,32 +168,43 @@ class Index extends Component {
     }
   }
 
-  errorToast(e) {}
-
   render() {
     const {
-      status,
       reserveOrderResult,
+      configUserLevelInfo,
       reserveOrderResult: {
         merchantName,
-        merchantId,
         merchantImg,
-        userRewardBean,
-        availableCouponCount,
+
+        totalBean,
       },
-      httpData: { useBeanStatus, totalFee },
-      couponObj:{
-        couponPrice,
-        userCouponIdString
-      }   
+      httpData: { totalFee },
+      configUserLevelInfo: { payBeanCommission = 50 },
+      couponObj,
+      useBeanStatus,
     } = this.state;
-    if (Object.keys(reserveOrderResult).length > 0) {
+    const { couponPrice = 0 } = couponObj;
+    const computedScan = (value, couponPrice, scale, bean) => {
+      let setBean = (Number(value) - Number(couponPrice)) * 100 * scale;
+      if (Number(value) - Number(couponPrice) > 0) {
+        if (setBean > 0) {
+          if (setBean > bean) {
+            return bean;
+          } else return setBean.toFixed(2);
+        } else {
+          return "0";
+        }
+      } else {
+        return "0";
+      }
+    };
+    if (objStatus(reserveOrderResult)) {
       return (
         <View className="codePay_box">
           <View className="codePay_top">
             <View className="codePay_merchantDetails">
               <View
-                className="codePay_merchantDetail_shopIcon dakale_nullImage"
+                className="codePay_merchantDetail_shopIcon merchant_dakale_logo"
                 style={merchantImg ? backgroundObj(merchantImg) : {}}
               ></View>
               <View className="codePay_merchantDetail_font">
@@ -145,12 +221,36 @@ class Index extends Component {
               <Text className="codePay_mountAfter color1 font28">¥</Text>
               <Input
                 onInput={(e) => {
-                  this.setState({
-                    httpData: {
-                      ...this.state.httpData,
-                      totalFee: e.detail.value,
+                  const { value } = e.detail;
+                  this.setState(
+                    {
+                      httpData: {
+                        ...this.state.httpData,
+                        totalFee: value,
+                      },
+                      couponObj: {},
                     },
-                  });
+                    (res) => {
+                      const {
+                        reserveOrderResult: { totalBean },
+                      } = this.state;
+                      if (value > 0) {
+                        this.setState({
+                          reserveOrderResult: {
+                            ...reserveOrderResult,
+                            totalFee: value,
+                          },
+                        });
+                      } else {
+                        this.setState({
+                          reserveOrderResult: {
+                            ...reserveOrderResult,
+                            totalFee: 0,
+                          },
+                        });
+                      }
+                    }
+                  );
                 }}
                 type={"digit"}
                 className="codePay_inputStyle"
@@ -159,59 +259,25 @@ class Index extends Component {
             <View className="codePay_inputLiner"></View>
           </View>
           <View className="codePay_orderBox">
-            {parseInt(availableCouponCount) !== 0 && (
-              <>
-                <View
-                  onClick={() => {
-                    if (totalFee !== 0) {
-                      Router({
-                        routerName: "coupon",
-                        args: {
-                          merchantId: getCurrentInstance().router.params.merchantId,
-                          total: totalFee,
-                          couponId:userCouponIdString
-                        },
-                      });
-                    } else {
-                      toast("请输入金额后选择优惠券");
-                    }
-                  }}
-                  className="codePay_coupon"
-                >
-                  <View className="codePay_coupon_box public_auto">
-                    <View className="codePay_coupon_left">
-                      <View className="codePay_coupon_icon"></View>
-                      <View className="codePay_coupon_font1">优惠券</View>
-                    </View>
-                    <View className="codePay_coupon_right">
-                      {couponPrice?<View style={{color:'#EF476F'}} className="codePay_coupon_font2 color3">{couponPrice}元抵扣券</View>:<View className="codePay_coupon_font2">请选择</View>}
-                     
-                      <View className="codePay_coupon_iconGo"></View>
-                    </View>
-                  </View>
-                </View>
-                <View className="codePay_liner"></View>
-              </>
-            )}
-
-            <View className="codePay_bean" onClick={() => this.setBean()}>
-              <View className="codePay_bean_icon"></View>
-              <View className="codePay_bean_title color1 bold">卡豆抵扣</View>
-              <View className="font24 color3 codePay_bean_font">
-                可用{userRewardBean}卡豆抵扣卡豆{parseInt(userRewardBean) / 100}
-                元
-              </View>
-              <View
-                className={classNames(
-                  "codePay_pay_iconBox",
-                  useBeanStatus === "0"
-                    ? "codePay_pay_icon1"
-                    : "codePay_pay_icon2"
-                )}
-              ></View>
-            </View>
+            <BeanSelect
+              type="scan"
+              status={useBeanStatus}
+              useScenesType="scan"
+              data={{
+                ...reserveOrderResult,
+                userBean: totalFee
+                  ? computedScan(
+                      totalFee,
+                      couponPrice,
+                      payBeanCommission / 100,
+                      totalBean
+                    )
+                  : totalBean,
+              }}
+              configUserLevelInfo={configUserLevelInfo}
+              couponObj={couponObj}
+            ></BeanSelect>
           </View>
-
           <PayGo
             content={"确认支付"}
             click={() => this.saveScanCodeOrder()}

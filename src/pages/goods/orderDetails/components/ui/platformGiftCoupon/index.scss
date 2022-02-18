@@ -1,0 +1,45 @@
+.platformGiftCoupon_box {
+  padding: 32px 32px 40px;
+  background: #ffffff;
+  border-radius: 8px;
+  margin: 16px 32px 0;
+  .platformGiftCoupon_title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .platformGiftCoupon_title_left {
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 32px;
+    }
+  }
+  .platformGiftCoupon_title_right {
+    font-size: 28px;
+    font-weight: 400;
+    color: #07c0c2;
+    display: flex;
+    align-items: center;
+  }
+  .platformGiftCoupon_title_right::after {
+    font-size: 18px;
+    font-weight: 400;
+    color: #07c0c2;
+    display: block;
+    content: ">";
+    margin-left: 8px;
+    font-size: 28px;
+  }
+  .platformGiftCoupon_content {
+    margin: 32px 0 0;
+    .platformGiftCoupon_list {
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+      padding-bottom: 24px;
+    }
+    .platformGiftCoupon_list:last-child {
+      padding-bottom: 0px;
+    }
+  }
+}

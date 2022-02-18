@@ -1,0 +1,39 @@
+.videoBean_liner {
+  width: 542px;
+  height: 56px;
+  background: #fef4f7;
+  border-radius: 30px;
+  border: 1px solid #ef476f;
+  margin: 0 auto;
+  border-radius: 42px;
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 400;
+  color: #333333;
+  line-height: 24px;
+  position: fixed;
+  bottom: 140px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  .videoBean_icon {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    width: 90px;
+    height: 90px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon703.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .videoBean_desc {
+    text-indent: 90px;
+  }
+  .videoBean_left {
+    margin-left: 24px;
+    font-weight: 400;
+    color: #ef476f;
+  }
+}

@@ -4,6 +4,17 @@ page {
   line-height: 1;
   overflow: hidden;
 }
+.home_username {
+  font-size: 32px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 32px;
+  margin-top: 16px;
+  width: 518px;
+  display: flex;
+  align-items: center;
+}
+
 .home_box {
   width: 100%;
   height: 100%;
@@ -19,6 +30,7 @@ page {
     left: 0;
     right: 0;
   }
+
   .home_Waterfall_box {
     position: absolute;
     background: white;
@@ -71,7 +83,7 @@ page {
         height: 106px;
         border-radius: 4px;
         margin-left: 12px;
-        background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/coupon_sm.png)
+        background: url(https://wechat-config.dakale.net/miniprogram/image/coupon_sm.png)
           no-repeat;
         background-size: 100% 100%;
       }
@@ -86,24 +98,21 @@ page {
           padding-top: 4px;
         }
         .home_active_font2 {
-          padding-top: 8px;
+          padding-top: 16px;
           max-width: 236px;
-          line-height: 28px;
-          color: rgba(255, 255, 255, 0.8);
-          font-size: 22px;
+          color: #ffeba5;
+          font-size: 20px;
+          line-height: 20px;
         }
         .home_active_price {
-          .home_active_tags {
-            display: inline-block;
-            height: 28px;
-            text-align: center;
-            padding: 0 8px;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 20px;
-            font-weight: 400;
-            color: #ffeba5;
-            line-height: 28px;
+          padding-top: 6px;
+          display: flex;
+          align-items: baseline;
+          .home_active_specal {
+            margin-left: 8px;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: line-through;
           }
         }
       }
@@ -119,6 +128,73 @@ page {
         line-height: 48px;
         color: #ffffff;
         font-size: 24px;
+      }
+    }
+    .home_active_shareCommission {
+      position: relative;
+      width: 534px;
+      height: 145px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      .home_shareCommission_image {
+        width: 121px;
+        height: 121px;
+        border-radius: 4px;
+        margin-left: 12px;
+        background: url(https://wechat-config.dakale.net/miniprogram/image/coupon_sm.png)
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .home_shareCommission_details {
+        height: 121px;
+        margin-left: 12px;
+        .home_shareCommission_font1 {
+          max-width: 365px;
+          font-size: 28px;
+          color: #ffffff;
+          line-height: 28px;
+          padding-top: 4px;
+        }
+        .home_shareCommission_font2 {
+          padding-top: 8px;
+          display: flex;
+          align-items: baseline;
+          .home_shareCommission_title {
+            color: rgba(255, 235, 165, 1);
+            margin-right: 8px;
+          }
+          .home_shareCommission_specal {
+            margin-left: 8px;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: line-through;
+          }
+        }
+        .home_shareCommission_tag {
+          margin-top: 12px;
+          display: flex;
+          .home_shareCommission_tagBox {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
+            font-size: 24px;
+            font-weight: 400;
+            color: #ffffff;
+            border-radius: 4px;
+          }
+          .home_shareCommission_tagColor1 {
+            background: #07c0c2;
+          }
+          .home_shareCommission_tagColor2 {
+            background: #ef476f;
+            margin-left: 16px;
+          }
+        }
       }
     }
   }
@@ -177,7 +253,7 @@ page {
     font-size: 28px;
     color: #ffffff;
     line-height: 42px;
-    width: 686px;
+    width: 558px;
     max-height: 168px;
     z-index: 10086;
     position: relative;
@@ -200,11 +276,12 @@ page {
       height: 24px;
       display: inline-block;
       content: "";
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon503.png")
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon503.png")
         no-repeat;
       background-size: 100% 100%;
       margin-right: 4px;
       vertical-align: middle;
+      flex-shrink: 0;
     }
     .home_desc_text {
       max-width: 538px;
@@ -235,7 +312,7 @@ page {
           margin: 0 auto;
         }
         .home_stem_status1 {
-          background: url(https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon456.png)
+          background: url(https://wechat-config.dakale.net/miniprogram/image/icon456.png)
             no-repeat;
           background-size: 100% 100%;
         }
@@ -257,13 +334,41 @@ page {
         width: 72px;
         height: 72px;
         margin: 32px auto 0;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon457.png")
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon457.png")
           no-repeat;
         background-size: 100% 100%;
+      }
+      @keyframes slace {
+        25% {
+          transform: rotateZ(-15deg);
+        }
+        50% {
+          transform: rotateZ(15deg);
+        }
+        75% {
+          transform: rotateZ(-15deg);
+        }
+        100% {
+          transform: rotateZ(15deg);
+        }
+      }
+      .home_share_animate {
+        width: 80px;
+        height: 80px;
+        margin: 32px auto 0;
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon549.png")
+          no-repeat;
+        background-size: 100% 100%;
+        animation-name: slace;
+        animation-duration: 2s;
+        animation-timing-function: ease;
+        animation-iteration-count: infinite;
+        animation-fill-mode: both;
       }
     }
   }
 }
+
 .home_black {
   background: black;
   .home_order_box {
@@ -291,7 +396,212 @@ page {
   z-index: 100;
   width: 111px;
   height: 124px;
-  background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon510.png")
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon510.png")
     no-repeat;
   background-size: 100% 100%;
+}
+.templateStated_box {
+  width: 520px;
+  height: 76px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  .templateStated_img {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    margin-left: 8px;
+  }
+  .templateStated_font {
+    margin-left: 12px;
+    height: 60px;
+    .templateStated_title {
+      max-width: 288px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .templateStated_price {
+      padding-top: 8px;
+      max-width: 288px;
+      color: rgba(255, 235, 165, 1);
+      line-height: 28px;
+    }
+  }
+  .templateStated_pay {
+    margin-left: 24px;
+    width: 88px;
+    height: 40px;
+    background: #ef476f;
+    border-radius: 22px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    position: absolute;
+    right: 16px;
+    top: 18px;
+  }
+  .templateStated_margin {
+    margin-left: 4px;
+  }
+}
+.templateStated_box {
+  width: 558px;
+  height: 76px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  .templateStated_img {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    margin-left: 8px;
+  }
+  .templateStated_font {
+    margin-left: 12px;
+    height: 60px;
+    .templateStated_title {
+      max-width: 318px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .templateStated_price {
+      padding-top: 8px;
+      max-width: 318px;
+      color: rgba(255, 235, 165, 1);
+      line-height: 28px;
+    }
+  }
+  .templateStated_pay {
+    margin-left: 24px;
+    width: 88px;
+    height: 40px;
+    background: #ef476f;
+    border-radius: 22px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    position: absolute;
+    right: 16px;
+    top: 18px;
+  }
+  .templateStated_margin {
+    margin-left: 4px;
+  }
+}
+.templateCard_box {
+  position: absolute;
+  bottom: 90px;
+  left: 32px;
+  right: 32px;
+  width: 520px;
+  height: 218px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  z-index: 10;
+  .templateCard_details_box {
+    padding: 16px 16px 0;
+    display: flex;
+    .templateCard_image {
+      width: 112px;
+      height: 112px;
+      border-radius: 8px;
+    }
+    .templateCard_goods_box {
+      margin-left: 12px;
+      height: 112px;
+      .templateCard_title {
+        width: 316px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #ffffff;
+        line-height: 28px;
+        padding-top: 4px;
+      }
+      .templateCard_margin1 {
+        margin-left: 4px;
+      }
+      .templateCard_margin2 {
+        margin-left: 8px;
+      }
+      .templateCard_price {
+        padding-top: 12px;
+        width: 354px;
+        line-height: 28px;
+        color: #999999;
+      }
+      .templateCard_through {
+        text-decoration: line-through;
+      }
+      .templateCard_opcity {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .templateCard_beanPrice {
+        padding-top: 8px;
+        width: 354px;
+        line-height: 28px;
+        display: flex;
+        align-items: baseline;
+        color: rgba(255, 235, 165, 1);
+      }
+    }
+  }
+  .templateCard_btn_box {
+    margin: 16px 0 0 140px;
+    display: flex;
+    justify-content: flex-end;
+    .templateCard_btn_buy {
+      width: 136px;
+      height: 40px;
+      background: #07c0c2;
+      border-radius: 22px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .templateCard_btn_share {
+      width: 160px;
+      height: 40px;
+      background: #ef476f;
+      border-radius: 22px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-right: 32px;
+    }
+    .templateCard_btn_initbuy {
+      padding: 0 20px;
+      height: 40px;
+      background: #07c0c2;
+      border-radius: 22px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .templateCard_btn_initshare {
+      padding: 0 20px;
+      height: 40px;
+      background: #ef476f;
+      border-radius: 22px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-left: 12px;
+    }
+  }
+}
+.templateCard_close {
+  width: 24px;
+  height: 24px;
+  right: 16px;
+  top: 16px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon611.png")
+    no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
 }

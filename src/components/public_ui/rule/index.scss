@@ -1,0 +1,19 @@
+.rule_box {
+  padding: 32px 4px 12px;
+  background:#FFFFFF;
+  margin-top: 16px;
+  .rule_title {
+    padding: 0 20PX;
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+  }
+  .rule_img {
+    width: 742px;
+    height: 528px;
+    margin: 40px auto 0;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon637.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+}

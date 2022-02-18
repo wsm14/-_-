@@ -1,188 +1,224 @@
 import React, { Component } from "react";
 import Taro from "@tarojs/taro";
-import { Canvas, View } from "@tarojs/components";
-import { share } from "@/api/api";
-import { httpGet } from "@/api/newRequest";
+import { Swiper, SwiperItem, View, Image } from "@tarojs/components";
+import { fetchShareInfo } from "@/server/common";
+import { backgroundObj, filterStrList } from "@/utils/utils";
+import { rssConfigData } from "./components/data";
+import Router from "@/utils/router";
+import classNames from "classnames";
+import TaroShareDrawer from "./components/TaroShareDrawer";
 import "./index.scss";
-import { authPhotosAlbum } from "@/common/authority";
-import { navigateTo, backgroundObj, upLoadFile, toast } from "@/common/utils";
-import { inject, observer } from "mobx-react";
-import drawQrcode from "weapp-qrcode";
-@inject("store")
-@observer
-class Record extends Component {
+class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
       httpData: {
-        shareType: "activity",
-        subType: "inviteUser",
+        shareType: "mainPage",
+        needHyaline: "1",
       },
-      h5Url: "",
-      codeUrl: "",
-      canvasId: "canvasId",
-      showCanvas: false,
-      shareFile: "",
+      userInfo: {},
+      //用户信息
+      current: 0,
+      //选中的索引
+      cavansObj: {
+        data: null,
+        start: false,
+        type: null,
+      },
+      //画图工具配置
+      qcodeUrl: "",
+      // 二维码照片
+      selectList: [
+        {
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_1.png",
+          color: "#EF476F",
+        },
+        {
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_2.png",
+          color: "#FCC336",
+        },
+        {
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_3.png",
+          color: "#07C0C2",
+        },
+        {
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_4.png",
+          color: "#943EA3",
+        },
+        {
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_5.png",
+          color: "#0061A8",
+        },
+        {
+          url: "https://wechat-config.dakale.net/miniprogram/image/shareinfo_6.png",
+          color: "#E83D3D",
+        },
+      ],
+      // 背景图片数组
     };
   }
-  componentWillUnmount() {
-    let userInfo = Taro.getStorageSync("userInfo");
-    if (!userInfo || Object.keys(userInfo).length < 5) {
-      navigateTo("/pages/auth/index");
-    }
+  setCurrent(e) {
+    console.log(e);
+    const { current } = e.detail;
+    this.setState({
+      current,
+    });
   }
-  getActiveInfo() {
-    const {
-      shareFriend: { getShareInfo },
-    } = share;
+  //设置轮播选中图片
+  fetchShareInfo() {
     const { httpData } = this.state;
-    httpGet(
-      {
-        url: getShareInfo,
-        data: httpData,
-      },
-      (res) => {
-        const { h5Url } = res;
-        this.setState(
-          {
-            h5Url,
-          },
-          (val) => {
-            this.createQRcode();
-          }
-        );
-      }
-    );
-  }
-  createQRcode = () => {
-    const qrwh = (150 / 750) * Taro.getSystemInfoSync().windowWidth;
-    let canvasId = this.state.canvasId;
-    let QRdata = this.state.h5Url;
-    drawQrcode({
-      width: qrwh,
-      height: qrwh,
-      background: "#FFFFFF",
-      canvasId: canvasId,
-      correctLevel: 1,
-      text:QRdata,
-      callback: () => this.canvasToTempImage(canvasId),
-    });
-  };
-  canvasToTempImage(canvasId) {
-    let _this = this;
-    Taro.canvasToTempFilePath({
-      canvasId,
-      success: function (res) {
-        let tempFilePath = res.tempFilePath; // 临时图片地址，可在放入图片src中使用
-        console.log(res.tempFilePath);
-        _this.setState({
-          codeUrl: res.tempFilePath,
+    fetchShareInfo(httpData, (res) => {
+      const { qcodeUrl, backgroundImages } = res;
+      if (backgroundImages) {
+        this.setState({
+          selectList: filterStrList(backgroundImages).map((item) => {
+            return { url: item };
+          }),
+          qcodeUrl,
         });
+      } else {
+        this.setState({
+          qcodeUrl,
+        });
+      }
+    });
+  }
+  //获取后端配置分享背景图
+  getShareInfo(type) {
+    const {
+      current,
+      qcodeUrl,
+      userInfo: { username },
+      selectList,
+    } = this.state;
+    this.setState({
+      cavansObj: {
+        start: true,
+        type: type,
+        data: rssConfigData({
+          wxCode: qcodeUrl,
+          username,
+          background: selectList[current].url,
+        }),
       },
     });
   }
-  createImg() {
-    const _this = this;
-    const {
-      userInfo: { username, profile },
-    } = this.props.store.authStore;
-    upLoadFile([
-      "https://wechat-config.dakale.net/miniprogram/image/shareFriend2.png",
-    ]).then((res) => {
-      const { path } = res[0];
-      _this.setState(
-        {
-          shareFile: path,
-        },
-        async () => {
-          const context = Taro.createCanvasContext("imgCard", this);
-          const width = (750 / 750) * Taro.getSystemInfoSync().windowWidth;
-          const height = (1690 / 750) * Taro.getSystemInfoSync().windowWidth;
-          const codeStyle = (200 / 750) * Taro.getSystemInfoSync().windowWidth;
-          const codeTop = (1230 / 750) * Taro.getSystemInfoSync().windowWidth;
-          const codeLeft = (275 / 750) * Taro.getSystemInfoSync().windowWidth;
-          const fontLeft = (245 / 750) * Taro.getSystemInfoSync().windowWidth;
-          const fontTop = (1483 / 750) * Taro.getSystemInfoSync().windowWidth;
-          console.log(width, height);
-          context.drawImage(_this.state.shareFile, 0, 0, width, height);
-          context.setFillStyle("#FFFFFF");
-          context.setFontSize(12);
-          context.fillText(`${username} 邀请你加入哒卡乐!`, fontLeft, fontTop);
-          context.drawImage(
-            _this.state.codeUrl,
-            codeLeft,
-            codeTop,
-            codeStyle,
-            codeStyle,
-            0,
-            0
-          );
-          context.draw(false, () => {
-            Taro.canvasToTempFilePath({
-              canvasId: "imgCard",
-              success: function (res) {
-                const { tempFilePath } = res;
-                authPhotosAlbum(tempFilePath);
-              },
-              fail: (res1) => {
-                toast("图片生成失败");
-              },
-            });
-          });
-        }
-      );
-    });
-  }
-  setImg = () => {
-    if (!this.state.showCanvas) {
-      this.setState(
-        {
-          showCanvas: true,
-        },
-        (res) => {
-          this.createImg();
-        }
-      );
-    } else {
-      this.createImg();
-    }
-  };
+  //把选中的 生成海报图并保存相册
   componentDidShow() {
-    this.getActiveInfo();
+    let userInfo = Taro.getStorageSync("userInfo") || {};
+    if (Object.keys(userInfo).length === 0) {
+      Router({
+        routerName: "login",
+      });
+    } else {
+      this.setState({
+        userInfo,
+      });
+      this.fetchShareInfo();
+    }
   }
   render() {
-    const { showCanvas } = this.state;
     const {
-      userInfo: { username, profile },
-    } = this.props.store.authStore;
+      selectList,
+      qcodeUrl,
+      userInfo: { username },
+      current,
+      cavansObj,
+    } = this.state;
+
     return (
       <View className="share_box">
-        {showCanvas && (
-          <View className="img_layer">
-            <Canvas
-              className="imgCard"
-              id="imgCard"
-              canvas-id="imgCard"
-            ></Canvas>
-          </View>
-        )}
-        <View className="share_img_box">
-          <View className="share_Canvas_padding">
-            <Canvas
-              id={this.state.canvasId}
-              canvasId={this.state.canvasId}
-              className="share_Canvas"
-            ></Canvas>
-          </View>
-
-          <View className="share_font">{username + "  邀请你加入哒卡乐"}</View>
+        <TaroShareDrawer
+          {...cavansObj}
+          onSave={() => console.log("点击保存")}
+          onClose={() =>
+            this.setState({
+              cavansObj: { start: false, data: null, type: null },
+            })
+          }
+        ></TaroShareDrawer>
+        {/* 画图工具 */}
+        <Swiper
+          previousMargin={Taro.pxTransform(94)}
+          circular
+          current={current}
+          nextMargin={Taro.pxTransform(94)}
+          onChange={this.setCurrent.bind(this)}
+          className="share_swiper_box"
+        >
+          {selectList.map((item, index) => {
+            return (
+              <SwiperItem className={classNames("share_swiperItem_box")}>
+                <View
+                  className={classNames(
+                    "share_swiperItem",
+                    current === index && "scale_select"
+                  )}
+                  style={{
+                    background: item.color,
+                  }}
+                >
+                  <View
+                    className={classNames(
+                      "share_bg_style",
+                      current !== index && "share_swiper_boxScale"
+                    )}
+                    style={{
+                      ...backgroundObj(item.url),
+                      borderRadius: 20,
+                    }}
+                  >
+                    <View className="share_swiperItem_code">
+                      <Image
+                        lazyLoad
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          borderRadius: 4,
+                        }}
+                        src={qcodeUrl}
+                      ></Image>
+                    </View>
+                    <View className="share_user">
+                      <View className="font24 share_user_margin">
+                        {username}
+                      </View>
+                      <View className="font20">邀请你加入哒卡乐</View>
+                    </View>
+                  </View>
+                </View>
+              </SwiperItem>
+            );
+          })}
+        </Swiper>
+        {/* 生成滑动轮播图 */}
+        <View className="share_slider_box public_center">
+          {selectList.map((item, index) => {
+            return (
+              <View
+                className={classNames(
+                  index !== current
+                    ? "share_slider_noSelect"
+                    : "share_slider_select"
+                )}
+              ></View>
+            );
+          })}
         </View>
-        <View className="share_wx" onClick={this.setImg}>
-          <View className="share_wx_icon"></View>
-          <View className="share_wx_font">点击保存分享图片</View>
+        {/* slider 动画 */}
+        <View className="share_wx">
+          <View
+            className="share_friend"
+            onClick={() => this.getShareInfo("friend")}
+          ></View>
+          <View
+            onClick={() => this.getShareInfo("image")}
+            className="share_image"
+          ></View>
         </View>
+        {/* 操作按钮 */}
       </View>
     );
   }
 }
-export default Record;
+export default Index;

@@ -1,16 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
-import {
-  Video,
-  Swiper,
-  SwiperItem,
-  View,
-  Image,
-  Button,
-} from "@tarojs/components";
-import Taro, { pxTransform, useReady } from "@tarojs/taro";
-import BottomView from "./bottom";
-import { backgroundObj, navigateTo, setPeople } from "@/common/utils";
-import classNames from "classnames";
+import { Video, Swiper, SwiperItem, View } from "@tarojs/components";
+import BottomView from "@/components/videoComponents/videoBottom";
+import { computedVideoSize } from "@/utils/utils";
+import InterVal from "@/components/videoComponents";
 import "./../index.scss";
 export default ({
   data = [],
@@ -23,12 +15,27 @@ export default ({
   onTransition,
   stop,
   userInfo,
+  shareInfo,
+  beanLimitStatus,
+  saveBean,
+  dataInfo,
+  initVideo,
+  changeComment,
+  ugcBeanCount,
+  saveUgcBean,
+  onTimeUpdate,
 }) => {
   const [scale, setScale] = useState(0);
+  const [time, setTime] = useState(0);
+  const [walk, setWalk] = useState(false);
+  //进度条缓冲状态
   useEffect(() => {
     setScale(0);
+    setTime(0);
+    setWalk(false);
   }, [current]);
   const expensive = useMemo(() => {
+    const { shareCommission = 0 } = userInfo;
     if (data.length > 0) {
       return (
         <View
@@ -52,18 +59,9 @@ export default ({
                 frontImageHeight,
                 frontImageWidth,
                 videoContent,
-                userProfile,
-                merchantFollowStatus,
-                userIdString,
-                merchantCollectionStatus,
-                collectionAmount,
-                shareAmount,
+                watchStatus,
+                beanFlag,
               } = item;
-
-              let height =
-                ((Taro.getSystemInfoSync().windowWidth / 375) * 750) /
-                (frontImageWidth / frontImageHeight);
-
               if (
                 index === current ||
                 index === current + 1 ||
@@ -81,9 +79,26 @@ export default ({
                         height: "100%",
                       }}
                     >
+                      <InterVal
+                        userInfo={userInfo}
+                        shareInfo={shareInfo}
+                        follow={follow}
+                        collection={collection}
+                        data={item}
+                        current={current}
+                        beanLimitStatus={beanLimitStatus}
+                        index={index}
+                        id={`video${index}`}
+                        time={time}
+                        show={index === current}
+                        dataInfo={dataInfo}
+                        saveUgcBean={saveUgcBean}
+                        changeComment={changeComment}
+                        ugcBeanCount={ugcBeanCount}
+                      ></InterVal>
                       <View
                         style={{
-                          height: Taro.pxTransform(height),
+                          height: "100%",
                           width: "100%",
                         }}
                         onClick={(e) => {
@@ -92,45 +107,77 @@ export default ({
                         }}
                       >
                         <Video
-                          src={JSON.parse(videoContent || "{}").url}
-                          poster={frontImage}
+                          src={
+                            JSON.parse(videoContent || "{}").m3u8Url ||
+                            JSON.parse(videoContent || "{}").url
+                          }
                           style={{
                             height: "100%",
                             width: "100%",
                           }}
                           controls={false}
-                          // custom-cache={false}
+                          custom-cache={false}
                           enableProgressGesture={false}
                           autoplay={index === current ? true : false}
                           showFullscreenBtn={false}
                           // enablePlayGesture={true}
                           loop={true}
                           showPlayBtn={false}
-                          objectFit="fill"
+                          objectFit={
+                            computedVideoSize(frontImageWidth, frontImageHeight)
+                              ? "fill"
+                              : "cover"
+                          }
                           showCenterPlayBtn={false}
                           initialTime="0"
+                          onWaiting={(e) => {
+                            setWalk(true);
+                          }}
                           onTimeUpdate={(e) => {
                             if (index === current) {
                               const { currentTime, duration } = e.detail;
+                              initVideo();
+                              setWalk(false);
+                              setTime(parseInt(currentTime));
                               setScale(
                                 ((currentTime / duration) * 100).toFixed(2)
                               );
+                              onTimeUpdate && onTimeUpdate(e);
+                            }
+                          }}
+                          onPause={() => {
+                            if (index === current) {
+                            }
+                          }}
+                          onPlay={() => {
+                            if (index === current) {
+                            }
+                          }}
+                          onEnded={() => {
+                            if (
+                              index === current &&
+                              watchStatus === "0" &&
+                              beanFlag === "1"
+                            ) {
+                              saveBean();
                             }
                           }}
                           id={`video${index}`}
-                          // onPause={onPause}
-                          // onPlay={onPlay}
                           muted={false}
                         ></Video>
                         {index === current && (
                           <View className="video_liner">
-                            <View
-                              style={{
-                                height: "100%",
-                                width: `${scale}%`,
-                                background: "rgba(239, 71, 111, 1)",
-                              }}
-                            ></View>
+                            {walk ? (
+                              <View className="video_loadding"></View>
+                            ) : (
+                              <View
+                                style={{
+                                  height: "100%",
+                                  width: `${scale}%`,
+                                  background: "rgba(255, 235, 165, 1)",
+                                }}
+                              ></View>
+                            )}
                           </View>
                         )}
                       </View>
@@ -138,56 +185,10 @@ export default ({
                         userInfo={userInfo}
                         index={index}
                         server={item}
+                        current={current}
                       >
-                        {children}
+                        {current === index && children}
                       </BottomView>
-                      <View className="home_stem_layer">
-                        <View
-                          style={userProfile ? backgroundObj(userProfile) : {}}
-                          className="home_stem_userProfile dakale_profile"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigateTo(
-                              `/pages/perimeter/merchantDetails/index?merchantId=${userIdString}`
-                            );
-                          }}
-                        >
-                          {merchantFollowStatus === "0" && (
-                            <View
-                              onClick={(e) => follow(e)}
-                              className={classNames(
-                                "home_stem_fallStatus home_stem_status1"
-                              )}
-                            ></View>
-                          )}
-                        </View>
-                        <View
-                          onClick={() => collection()}
-                          className={classNames(
-                            "collected_box",
-                            merchantCollectionStatus === "0"
-                              ? "share_shoucang_icon1"
-                              : "share_shoucang_icon2"
-                          )}
-                        ></View>
-                        <View className="collected_font">
-                          {setPeople(collectionAmount)}
-                        </View>
-
-                        <View className="home_share_wechat">
-                          <Button
-                            open-type="share"
-                            style={{
-                              border: "0px soild white",
-                              background: (0, 0, 0, 0),
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          ></Button>
-                        </View>
-
-                        <View className="collected_font">{shareAmount}</View>
-                      </View>
                     </View>
                   </SwiperItem>
                 );
@@ -201,6 +202,6 @@ export default ({
     } else {
       return null;
     }
-  }, [data.length, current, scale]);
+  }, [data, current, scale, time, walk]);
   return expensive;
 };

@@ -1,92 +1,68 @@
-page{
-  background: #FFFFFF;
+page {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
-.clearfix{
+.clearfix {
   display: flex;
 }
 .auth_box {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: rgba(255, 121, 71, 1);
   line-height: 1;
-  .auth_login{
-    width: 160px;
-    height: 160px;
-    margin: 136px  auto 0;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon326.png") no-repeat;
+  .auth_login {
+    width: 100%;
+    height: 1496px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon821.png")
+      no-repeat;
     background-size: 100% 100%;
-  }
-  .auth_dec{
-    height: 32px;
-    margin-top: 32px;
+    margin: 0 auto;
     text-align: center;
-  }
-  .auth_btn{
-    width: 500px;
-    height: 80px;
-    background: #07C0C2;
-    border-radius: 8px;
-    line-height: 80px !important;
-    color: #FFFFFF;
-    font-size: 32px;
-    margin: 398px auto 0;
-    display: block;
-  }
-  .auth_bottom{
-    margin-top: 260px;
-    height: 36px;
-    line-height: 36px;
-    text-align: center;
-  }
-  .auth_layer{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 11;
-    background: rgba(0, 0, 0, 0.6);
-    .auth_toast{
-      width: 500px;
-      height: 314px;
-      background: #FFFFFF;
-      border-radius: 12px;
-      .auth_title{
-        width: 360px;
-        height: 96px;
-        font-size: 32px;
-        color: #333333;
-        line-height: 48px;
-        margin: 60px auto 0;
+    color: #333333;
+    .auth_btnTitle1 {
+      padding-top: 755px;
+      font-size: 36px;
+      font-weight: 600;
+    }
+    .auth_btnTitle2 {
+      padding-top: 97px;
+      font-size: 32px;
+    }
+    .auth_btnTitle3 {
+      padding-top: 26px;
+      font-size: 28px;
+    }
+    .auth_btn {
+      width: 430px;
+      height: 87px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon822.png")
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 76px auto 0;
+      position: relative;
+      .clearBtn {
+        background: none;
+        border: none;
+        width: 100%;
+        height: 100%;
       }
-      .auth_toast_btn{
-        margin: 48px 40px 0;
-        height: 70px;
-        .auth_toast_btnBox{
-          width: 200px;
-          height: 70px;
-          line-height: 70px;
-          text-align: center;
-          font-size: 32px;
-        }
-        .auth_color1{
-          color: #07C0C2;
-          border-radius: 8px;
-          border: 2px solid #07C0C2;
-          box-sizing: border-box;
-        }
-        .auth_color2{
-
-          border-radius: 8px;
-          color: #FFFFFF;
-          background: #07C0C2;
-        }
+      .clearBtn::after {
+        border: none;
       }
     }
+    .auth_bottom {
+      margin: 239px auto 100px;
+      text-align: center;
+      color: #ffffff;
+      font-size: 24px;
+    }
+  }
+
+  .textThould {
+    text-decoration: underline;
   }
 }

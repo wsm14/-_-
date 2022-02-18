@@ -1,51 +1,37 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { ScrollView, Text, View } from "@tarojs/components";
-import Banner from "@/components/banner";
-import {
-  goodsCard,
-  billboard,
-  shopDetails,
-} from "@/components/publicShopStyle";
+import { View } from "@tarojs/components";
+import { fakeUserFollow, fakeRemoveFollow } from "@/server/index";
 import MarkPhone from "@/components/payTelephone";
-import { wxapiGet, perimeter } from "@/api/api";
-import { httpGet } from "@/api/newRequest";
-import APPShare from "@/components/shareApp";
 import { scanCode } from "@/common/authority";
-import Toast from "@/components/beanToast";
-import Waterfall from "@/components/waterfall";
-import { getShareParamInfo } from "@/server/common";
-import classNames from "classnames";
+import Toast from "@/components/public_ui/selectToast";
+import { fetchShareParamInfo, fetchShareInfo } from "@/server/common";
 import {
-  backgroundObj,
-  saveFollow,
-  deleteFollow,
-  navigateTo,
-  deleteFall,
-  saveFall,
-  toast,
-  onShareFriend,
-  onTimeline,
-  GetDistance,
-  filterSetting,
-  filterStrList,
-  getLat,
-  getLnt,
-  filterTime,
-  mapGo,
-  loginStatus,
-} from "@/common/utils";
-import "./merchantDetails.scss";
-import evens from "@/common/evens";
-import Coupons from "@/components/coupon";
+  getUserCoupon,
+  fetchAllPutShelfGoods,
+  fetchMerchantDetail,
+  listAllPut,
+} from "@/server/perimeter";
+import NullStatus from "./components/undercarriage";
+import { toast, filterStrList, loginStatus } from "@/utils/utils";
+import Header from "./components/header";
+import Coupons from "@/components/public_ui/coupon";
+import ConponInfo from "./components/coupon";
+import Specal from "./components/specalGoods";
+import Goods from "./components/goods";
 import { getAvailableCoupon } from "@/server/coupon";
-
+import { rssConfigData } from "./components/data";
+import TaroShareDrawer from "./components/TaroShareDrawer";
+import { inject, observer } from "mobx-react";
+import "./merchantDetails.scss";
+@inject("store")
+@observer
 class MerchantDetails extends Component {
   constructor() {
     super(...arguments);
     this.state = {
       merchantHttpData: {
-        merchantId: getCurrentInstance().router.params.merchantId,
+        ...getCurrentInstance().router.params,
       },
       bannerList: [],
       userMerchantInfo: {},
@@ -59,6 +45,11 @@ class MerchantDetails extends Component {
       getBeanStatus: false,
       conpouVisible: false,
       couponList: [],
+      priceCoupon: [],
+      cavansObj: {
+        data: null,
+        start: false,
+      },
     };
   }
 
@@ -91,7 +82,7 @@ class MerchantDetails extends Component {
     let { scene } = getCurrentInstance().router.params;
     let { merchantHttpData, banner, userInfo } = this.state;
     if (scene) {
-      getShareParamInfo({ uniqueKey: scene }, (res) => {
+      fetchShareParamInfo({ uniqueKey: scene }, (res) => {
         let {
           shareParamInfo: { param },
         } = res;
@@ -110,6 +101,7 @@ class MerchantDetails extends Component {
             (res) => {
               this.getMerchantById();
               this.getGoodList();
+              this.getUserCoupon();
             }
           );
         }
@@ -117,408 +109,269 @@ class MerchantDetails extends Component {
     } else {
       this.getMerchantById();
       this.getGoodList();
+      this.getUserCoupon();
     }
   }
 
-  componentDidShow() {}
-
-  getGoodList() {
-    const {
-      merchantDetails: { getListMerchant },
-    } = perimeter;
-    const {
-      merchantHttpData: { merchantId },
-    } = this.state;
-    return httpGet(
-      {
-        data: { merchantId: merchantId },
-        url: getListMerchant,
-      },
-      (res) => {
-        const { goodsList } = res;
-        this.setState({
-          goodsList,
-        });
-      }
-    );
-  }
-
-  //获取商家信息
-  getMerchantById() {
+  getUserCoupon() {
     const { merchantHttpData } = this.state;
-    return httpGet(
-      {
-        data: merchantHttpData,
-        url: wxapiGet.wechatGetUserMerchant,
-      },
-      (res) => {
-        const { userMerchant } = res;
+    getUserCoupon({ ...merchantHttpData, page: 1, limit: 3 }).then((res) => {
+      const { couponList } = res;
+      this.setState({
+        priceCoupon: couponList,
+      });
+    });
+  }
+  //获取商家有价券
+  saveFollow() {
+    const { userMerchantInfo } = this.state;
+    const { merchantId } = userMerchantInfo;
+    fakeUserFollow({
+      followType: "merchant",
+      followUserId: merchantId,
+    }).then((val) => {
+      this.setState(
+        {
+          userMerchantInfo: {
+            ...this.state.userMerchantInfo,
+            merchantFollowStatus: "1",
+          },
+        },
+        () => {
+          toast("关注成功");
+        }
+      );
+    });
+  }
+  //关注
+  deleteFollow() {
+    const { userMerchantInfo } = this.state;
+    const { merchantId } = userMerchantInfo;
+    fakeRemoveFollow({ followUserId: merchantId, followType: "merchant" }).then(
+      (val) => {
         this.setState(
           {
-            userMerchantInfo: { ...userMerchant },
+            userMerchantInfo: {
+              ...this.state.userMerchantInfo,
+              merchantFollowStatus: "0",
+            },
           },
-          (res) => {
-            this.getMerchantLove();
+          () => {
+            toast("取消成功");
           }
         );
       }
     );
   }
-
-  //获取商家轮播图
-
-  onShareAppMessage() {
+  //取消关注
+  getGoodList() {
     const {
-      userMerchantInfo: { merchantName, coverImg },
       merchantHttpData: { merchantId },
     } = this.state;
-    let userInfo = loginStatus() || {};
-    const { userIdString } = userInfo;
-    if (loginStatus()) {
-      return {
-        title: merchantName,
-        imageUrl: coverImg,
-        path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
-      };
-    } else {
-      return {
-        title: merchantName,
-        imageUrl: coverImg,
-      };
-    }
+    fetchAllPutShelfGoods({ merchantId: merchantId }).then((res) => {
+      const { goodsList = [] } = res;
+      this.setState({
+        goodsList,
+      });
+    });
   }
-
-  onShareTimeline() {
-    const {
-      userMerchantInfo: { merchantName, coverImg },
-      merchantHttpData: { merchantId },
-    } = this.state;
-    let userInfo = loginStatus() || {};
-    const { userIdString } = userInfo;
-    if (loginStatus()) {
-      return {
-        title: merchantName,
-        imageUrl: coverImg,
-        path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
-      };
-    } else {
-      return {
-        title: merchantName,
-        imageUrl: coverImg,
-      };
-    }
+  //获取商家信息
+  getMerchantById() {
+    const { merchantHttpData } = this.state;
+    fetchMerchantDetail(merchantHttpData)
+      .then((res) => {
+        Taro.stopPullDownRefresh();
+        const { userMerchant = {} } = res;
+        this.setState(
+          {
+            userMerchantInfo: {
+              ...userMerchant,
+              merchantStatus: Object.keys(userMerchant).length > 0 ? "1" : "2",
+            },
+          },
+          (res) => {
+            this.getMerchantLove();
+          }
+        );
+      })
+      .catch((e) => {
+        Taro.stopPullDownRefresh();
+      });
   }
-
-  getMerchantLove() {
+  //获取商家详情
+  fetchShareInfo() {
     const {
-      userMerchantInfo: { merchantId },
+      userMerchantInfo: {
+        merchantName,
+        scenesNames,
+        coverImg,
+        address,
+        businessTime,
+        telephone,
+        tag,
+        merchantId,
+      },
+      userMerchantInfo,
     } = this.state;
-    const { getMerchantSpecialGoods } = perimeter;
-    httpGet(
+    fetchShareInfo(
       {
-        url: getMerchantSpecialGoods,
-        data: {
-          merchantId: merchantId,
-          page: 1,
-          limit: 6,
-        },
+        shareType: "merchant",
+        shareId: merchantId,
       },
       (res) => {
-        const { specialGoodsList } = res;
+        const { qcodeUrl, image } = res;
+        const { profile, username } = Taro.getStorageSync("userInfo");
         this.setState({
-          specialGoodsList: specialGoodsList,
+          cavansObj: {
+            start: true,
+            data: rssConfigData({
+              merchantName,
+              scenesList: filterStrList(scenesNames),
+              merchantLogo: image,
+              address,
+              businessTime,
+              username,
+              userProfile: profile,
+              telephone,
+              tag: filterStrList(tag).join(" | "),
+              wxCode: qcodeUrl,
+            }),
+          },
+          userMerchantInfo: {
+            ...userMerchantInfo,
+            weChatImg: res.frontImage,
+            weChatTitle: res.title,
+          },
         });
       }
     );
   }
+  //分享商家海报图
+  onShareAppMessage(res) {
+    const {
+      userMerchantInfo: { merchantName, coverImg, weChatImg, weChatTitle },
+      merchantHttpData: { merchantId },
+    } = this.state;
+    let userInfo = loginStatus() || {};
+    const { userIdString } = userInfo;
+    if (loginStatus()) {
+      if (res.from === "button") {
+        return {
+          title: weChatTitle || merchantName,
+          imageUrl: weChatImg || coverImg,
+          path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
+          complete: function () {
+            // 转发结束之后的回调（转发成不成功都会执行）
+            console.log("---转发完成---");
+          },
+        };
+      } else {
+        return {
+          title: merchantName,
+          imageUrl: coverImg,
+          path: `/pages/perimeter/merchantDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}`,
+        };
+      }
+    } else {
+      return {
+        title: merchantName,
+        imageUrl: coverImg,
+      };
+    }
+  }
+  getMerchantLove() {
+    const {
+      userMerchantInfo: { merchantId },
+    } = this.state;
+    listAllPut({
+      merchantId: merchantId,
+      page: 1,
+      limit: 6,
+    }).then((res) => {
+      const { specialGoodsList } = res;
+      this.setState({
+        specialGoodsList: specialGoodsList,
+      });
+    });
+  }
 
+  onPullDownRefresh() {
+    Taro.stopPullDownRefresh();
+    this.setState(
+      {
+        bannerList: [],
+        userMerchantInfo: {},
+        countStatus: true,
+        visible: false,
+        specialGoodsList: [],
+        goodsList: [],
+        conpouVisible: false,
+        couponList: [],
+        priceCoupon: [],
+        cavansObj: {
+          data: null,
+          start: false,
+        },
+      },
+      (res) => {
+        this.getMerchantById();
+        this.getGoodList();
+        this.getUserCoupon();
+      }
+    );
+  }
   //猜你喜欢
   render() {
     const {
       userMerchantInfo,
-      userMerchantInfo: {
-        businessHub,
-        perCapitaConsumption,
-        businessStatus,
-        businessTime,
-        allImgs,
-        services,
-        address,
-        districtName,
-        categoryName,
-        lat,
-        lnt,
-        userIdString,
-        telephone,
-        merchantFollowStatus,
-        tag,
-        merchantId,
-        headerImg = "",
-        merchantName,
-      },
+      userMerchantInfo: { telephone, merchantStatus = "1" },
       visible,
       specialGoodsList,
       goodsList,
       getBeanStatus,
       conpouVisible,
       couponList,
-      userInfo: { userId },
+      priceCoupon = [],
+      cavansObj,
     } = this.state;
-    if (Object.keys(userMerchantInfo).length > 0) {
+    if (Object.keys(userMerchantInfo).length > 0 && merchantStatus === "1") {
       return (
         <View className="merchantBox">
-          {userId && (
-            <APPShare
-              {...{
-                content: "我在哒卡乐发现一家实惠的店铺",
-                userId: userId,
-                jumpObj: {
-                  jumpUrl: "shopDetailPage",
-                  id: merchantId,
-                  type: "jumpToPage",
-                  jumpType: "native",
-                  path: "DKLShopDetailViewController",
-                  params: {
-                    shopId: merchantId,
-                  },
-                },
-              }}
-            ></APPShare>
-          )}
-          <Banner
-            autoplay={headerImg.split(",").length > 1 ? true : false}
-            imgStyle
-            data={headerImg ? headerImg.split(",") : []}
-            imgName={"coverImg"}
-            style={{ width: "100%", height: Taro.pxTransform(440) }}
-            boxStyle={{ width: "100%", height: Taro.pxTransform(440) }}
-          ></Banner>
-          <View className="merchantDetails_shop">
-            <View className="merchant_name font_noHide">{merchantName}</View>
-            <View className="merchant_desc">
-              「{businessHub && businessHub + "·"}
-              {categoryName}{" "}
-              {perCapitaConsumption && "人均" + perCapitaConsumption + "元"}」
-            </View>
-            <View className="merchant_tag">
-              {filterStrList(tag).map((item) => {
-                return <View className="merchat_tag_box">{item}</View>;
-              })}
-            </View>
-            <ScrollView scrollX className="merchant_shopImg">
-              {filterStrList(allImgs).map((item) => {
-                return (
-                  <View
-                    className="shopImgBox"
-                    style={{ ...backgroundObj(item) }}
-                  ></View>
-                );
-              })}
-            </ScrollView>
-            <View
-              className="share_btn public_center"
-              onClick={() =>
-                navigateTo(
-                  `/pages/newUser/merchantDetails/index?userId=${userIdString}`
-                )
-              }
-            >
-              <View className="share_icon"></View>
-              <View>看商家分享捡豆</View>
-            </View>
-            <View className="merchant_shop_details">
-              <View
-                className="merchat_time"
-                onClick={() =>
-                  navigateTo(
-                    `/pages/perimeter/businessSell/index?services=${services}&businessStatus=${businessStatus}&businessTime=${businessTime}`
-                  )
-                }
-              >
-                <View className="merchant_time_go"></View>
-                <View className="merchant_time_box">
-                  <View className="merchant_bisinissStatus">
-                    <Text>
-                      {businessStatus === "0" ? "休息中 | " : "营业中 | "}
-                    </Text>
-                    <Text style={{ color: "rgba(153, 153, 153, 1)" }}>
-                      {businessTime}
-                    </Text>
-                  </View>
-                  <View className="merchant_time_tags">
-                    {services &&
-                      services.map((item, index) => {
-                        if (index < 5) {
-                          return (
-                            <View className={"merchant_tag_shop"}>{item}</View>
-                          );
-                        }
-                      })}
-                  </View>
-                </View>
-              </View>
-              <View className="merchat_city_accress">
-                <View className="merchant_accBox">
-                  <View
-                    className="merchant_city_icon1"
-                    onClick={() =>
-                      mapGo({
-                        lat,
-                        lnt,
-                        address,
-                        merchantName: merchantName,
-                      })
-                    }
-                  ></View>
-                  <View className="merchant_city_icon2"></View>
-                  <View
-                    className="merchant_city_icon3"
-                    onClick={() => this.setState({ visible: true })}
-                  ></View>
-                </View>
-                <View className="merchat_city_details">
-                  <View className="merchat_city_names font_hide">
-                    {address}
-                  </View>
-                  <View className="merchat_city_limit">
-                    距您{GetDistance(getLat(), getLnt(), lat, lnt) + " "}{" "}
-                    {filterSetting(GetDistance(getLat(), getLnt(), lat, lnt))}
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          {/*<View className='merchant_active'>*/}
-          {/*  <View className='merchant_active_title'>*/}
-          {/*    <View className='merchant_active_iconBox active_icon1'>*/}
-
-          {/*    </View>*/}
-          {/*    <View className='merchant_active_biaoti'>*/}
-          {/*      到店优惠*/}
-          {/*    </View>*/}
-
-          {/*  </View>*/}
-          {/*  <View className='merchant_active_dec'>*/}
-          {/*    店铺超级优惠权益 到店消费直接抵扣*/}
-          {/*  </View>*/}
-          {/*  <View className='active_go'></View>*/}
-          {/*</View>*/}
-          {/*{coupons()}*/}
-          {/*{coupons()}*/}
-          {/*{coupons()}*/}
-          {specialGoodsList.length > 0 && (
-            <>
-              <View
-                className="merchant_active"
-                onClick={() =>
-                  navigateTo(
-                    `/pages/perimeter/special/index?merchantId=${merchantId}`
-                  )
-                }
-              >
-                <View className="merchant_active_title">
-                  <View className="merchant_active_iconBox active_icon2"></View>
-                  <View className="merchant_active_biaoti">特价活动</View>
-                </View>
-                <View className="merchant_active_dec">
-                  店铺超限时特价活动 限时限量
-                </View>
-                <View className="active_go"></View>
-              </View>
-              <View className="merchant_newPrice">
-                {specialGoodsList.length > 1 ? (
-                  <Waterfall
-                    list={specialGoodsList}
-                    createDom={shopDetails}
-                    setWidth={335}
-                    style={{ width: Taro.pxTransform(335) }}
-                  ></Waterfall>
-                ) : (
-                  goodsCard(specialGoodsList[0])
-                )}
-              </View>
-            </>
-          )}
-
-          {goodsList && goodsList.length > 0 && (
-            <>
-              <View className="merchant_active">
-                <View className="merchant_active_title">
-                  <View className="merchant_active_iconBox active_icon3"></View>
-                  <View className="merchant_active_biaoti">商品橱窗</View>
-                </View>
-                <View className="merchant_active_dec">本店商品展示</View>
-              </View>
-              <ScrollView scrollX className="merchant_billboard">
-                {goodsList.map((item, index) => {
-                  return billboard(this, item, userIdString);
-                })}
-              </ScrollView>
-            </>
-          )}
+          <TaroShareDrawer
+            {...cavansObj}
+            onSave={() => console.log("点击保存")}
+            onClose={() =>
+              this.setState({ cavansObj: { start: false, data: null } })
+            }
+          ></TaroShareDrawer>
+          <Header
+            saveFollow={this.saveFollow.bind(this)}
+            deleteFollow={this.deleteFollow.bind(this)}
+            fetchShareInfo={this.fetchShareInfo.bind(this)}
+            onOpen={() => {
+              this.setState({
+                visible: true,
+              });
+            }}
+            data={userMerchantInfo}
+          ></Header>
+          {/* //商家详情头部 */}
+          <ConponInfo data={userMerchantInfo} list={priceCoupon}></ConponInfo>
+          {/* //店铺抵扣券 */}
+          <Specal data={userMerchantInfo} list={specialGoodsList}></Specal>
+          {/* //店铺商品 */}
+          <Goods data={userMerchantInfo} list={goodsList}></Goods>
+          {/* //店铺商品橱窗 */}
           <View className="merchant_layer">
             <View className="merchant_layer_btn">
               <View className="merchant_layer_btn1" onClick={() => scanCode()}>
                 <View className="merchant_layer_btnBox merchant_layer_btnIcon1"></View>
                 <View>买单</View>
               </View>
-              <View className="merchant_layer_limit"></View>
               <View className="merchant_layer_btn2" onClick={() => scanCode()}>
                 <View className="merchant_layer_btnBox merchant_layer_btnIcon3"></View>
-                <View>到店打卡</View>
+                <View>打卡领豆</View>
               </View>
-              <View className="merchant_layer_limit"></View>
-              {merchantFollowStatus === "0" ? (
-                <View
-                  className="merchant_layer_btn2"
-                  onClick={() =>
-                    saveFollow(
-                      {
-                        followType: "merchant",
-                        followUserId: userIdString,
-                      },
-                      (res) => {
-                        this.setState(
-                          {
-                            userMerchantInfo: {
-                              ...this.state.userMerchantInfo,
-                              merchantFollowStatus: "1",
-                            },
-                          },
-                          () => {
-                            toast("关注成功");
-                          }
-                        );
-                      }
-                    )
-                  }
-                >
-                  <View className="merchant_layer_btnBox merchant_layer_btnIcon2"></View>
-                  <View>关注</View>
-                </View>
-              ) : (
-                <View
-                  className="merchant_layer_btn2"
-                  onClick={() =>
-                    deleteFollow({ followUserId: userIdString }, (res) => {
-                      this.setState(
-                        {
-                          userMerchantInfo: {
-                            ...this.state.userMerchantInfo,
-                            merchantFollowStatus: "0",
-                          },
-                        },
-                        () => {
-                          toast("取消成功");
-                        }
-                      );
-                    })
-                  }
-                >
-                  <View className="merchant_layer_btnBox merchant_layer_btnIcon4"></View>
-                  <View>已关注</View>
-                </View>
-              )}
             </View>
             <View
               className="merchant_shop"
@@ -527,12 +380,14 @@ class MerchantDetails extends Component {
               预约/预定
             </View>
           </View>
+          {/* //店铺底部按钮 */}
           {getBeanStatus && (
             <Toast
               data={{
-                beanAmount:
+                tippingBean:
                   getCurrentInstance().router.params.beanAmount || "0",
               }}
+              show={getBeanStatus}
               visible={() => {
                 if (couponList.length > 0) {
                   this.setState({
@@ -566,8 +421,9 @@ class MerchantDetails extends Component {
           )}
         </View>
       );
+    } else {
+      return <NullStatus data={userMerchantInfo}></NullStatus>;
     }
-    return null;
   }
 }
 

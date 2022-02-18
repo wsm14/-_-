@@ -1,0 +1,50 @@
+.goodThings_box {
+  width: 100%;
+  height: 100%;
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  .goodThings_swiper_scrollView {
+    height: 100%;
+    width: 100%;
+  }
+  .goodThings_select_title {
+    padding: 40px 32px 24px;
+    display: flex;
+    align-items: center;
+
+    .goodThings_select_right {
+      margin-right: 40px;
+    }
+    .goodThings_select_font {
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .goodThings_select_noFont {
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+    }
+    .goodThings_select_liner {
+      width: 40px;
+      height: 6px;
+      border-radius: 3px;
+      margin: 12px auto 0;
+    }
+    .goodThings_select_bg {
+      background: #07c0c2;
+      transition: all 300ms linear;
+      transform: scaleX(1);
+    }
+  }
+  .goodThings_swiper_box {
+    flex: 1;
+  }
+  .goodThings_swiper_info {
+    width: 100%;
+    height: 100%;
+  }
+
+}
+

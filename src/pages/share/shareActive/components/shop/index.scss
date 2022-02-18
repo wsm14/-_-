@@ -1,0 +1,122 @@
+.activeView_box {
+  width: 335px;
+  position: relative;
+  margin-bottom: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  line-height: 1;
+  .activeView_image {
+    width: 335px;
+    height: 248px;
+    border-radius: 8px 8px 0 0;
+    .activeView_image_box {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px 8px 0 0;
+    }
+  }
+  .activeView_about {
+    padding: 16px 16px 24px;
+    .activeView_name {
+      width: 303px;
+      font-size: 32px;
+      font-weight: 400;
+      color: #333333;
+      line-height: 44px;
+    }
+    .activeView_user {
+      display: flex;
+      height: 30px;
+      margin-top: 16px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      align-items: center;
+      .activeView_user_userProfile {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
+      .activeView_user_userHide {
+        width: 265px;
+        display: flex;
+        align-items: center;
+      }
+      .activeView_user_merchantName {
+        margin-left: 8px;
+        max-width: 180px;
+      }
+    }
+    .activeView_oldPrice {
+      padding-top: 24px;
+      color: #666666;
+      display: flex;
+      align-items: baseline;
+    }
+    .activeView_relPrice {
+      padding-top: 14px;
+      color: #333333;
+      display: flex;
+      font-weight: bold;
+      align-items: baseline;
+    }
+    .activeView_card_box {
+      height: 32px;
+      border-radius: 16px;
+      border: 1px solid #ef476f;
+      display: inline-flex;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      margin-top: 14px;
+    }
+    .activeView_card_left {
+      height: inherit;
+      background: #ef476f;
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 400;
+      color: #ffffff;
+      padding-left: 8px;
+      padding-right: 6px;
+    }
+    .activeView_card_san {
+      width: 0;
+      height: 0;
+      border-top: 32px solid #ef476f;
+      border-right: 4px solid transparent;
+    }
+    .activeView_card_right {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ef476f;
+      background: #ffffff;
+      border-radius: 0px 100px 100px 0px;
+      padding-right: 8px;
+      display: flex;
+    }
+    .activeView_card_maxRight {
+      max-width: 210px;
+    }
+  }
+  .activeView_btn_box {
+    margin: 20px auto 0;
+    width: 303px;
+    height: 48px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 600;
+  }
+  .activeView_btn_style1 {
+    background: #fdecf0;
+    color: rgba(239, 71, 111, 0.5);
+  }
+  .activeView_btn_style2 {
+    background: rgba(239, 71, 111, 1);
+    color: #ffffff;
+  }
+}

@@ -2,134 +2,113 @@ import React from "react";
 import Taro, { getCurrentPages } from "@tarojs/taro";
 import { Button, Image, View } from "@tarojs/components";
 import UserTitle from "./components/userTop";
-import UserContent from "./components/userContent";
-import UserBottom from "./components/userBottom";
-import { getMainPage, getUserSub, getLevel } from "@/server/user";
-import { getBanner } from "@/server/common";
-import {
-  backgroundObj,
-  removeLogin,
-  navigateTo,
-  filterStrList,
-} from "@/common/utils";
+import { fetchMainPage } from "@/server/index";
+import { fetchBanner } from "@/server/common";
+import { objStatus } from "@/utils/utils";
+import UserContent from "./components/userCenter";
+import Skeleton from "./components/SkeletonView";
+import { inject, observer } from "mobx-react";
+import NewUser from "@/components/public_ui/newUserToast";
 import "./index.scss";
+@inject("store")
+@observer
 class Index extends React.Component {
   constructor() {
     super(...arguments);
     this.state = {
       bannerList: [],
+      //轮播图数组
       bannerHttp: {
         bannerType: "person",
       },
-      list: [
-        {
-          style: "users_setting_icon1",
-          font: "客服中心",
-          fn: () =>
-            this.setState({
-              telephone: true,
-            }),
-        },
-        {
-          style: "users_setting_icon2",
-          font: "意见反馈",
-        },
-        {
-          style: "users_setting_icon3",
-          font: "我要合作",
-          fn: () =>
-            navigateTo(
-              `/pages/share/webView/index?link=${this.state.link1}&title=我要合作`
-            ),
-        },
-      ],
+      //轮播图参数
       loginStatus: 0,
+      //登录状态
       userInfo: {},
-      nextLevel: {},
-      levelDetails: {},
+      //用户信息
+      loading: false,
+      //骨架屏是否展示
+      size: 0,
+      //与骨架屏关联
     };
   }
-
-  getBannerList() {
+  onPullDownRefresh() {
+    this.setState(
+      {
+        bannerList: [],
+        loginStatus: 0,
+        userInfo: {},
+      },
+      (res) => {
+        let time = setTimeout(() => {
+          Taro.stopPullDownRefresh();
+          clearTimeout(time);
+        }, 500);
+        this.fetchBannerList();
+        this.fetchUser();
+      }
+    );
+  }
+  fetchBannerList() {
     const { bannerHttp } = this.state;
-    getBanner(bannerHttp, (res) => {
+    fetchBanner(bannerHttp).then((res) => {
       const { bannerList } = res;
       this.setState({
         bannerList,
       });
     });
   }
-  getLevel() {
-    getLevel({}, (res) => {
-      const { nextLevel } = res;
-      this.setState({
-        nextLevel,
-      });
-    });
-  }
-  getUserDetails() {
-    getMainPage({}, (res) => {
-      const { userInfo } = res;
-      if (!userInfo) {
-        removeLogin();
-        this.setState({
-          userInfo: {},
-          loginStatus: 0,
-        });
-        return;
-      } else {
-        this.setState(
-          {
-            loginStatus: 1,
-            userInfo,
-          },
-          (res) => {
-            this.getLevel();
-            this.getUserSub();
-          }
-        );
-      }
-    });
-  }
 
-  getUserSub() {
-    getUserSub({}, (res) => {
+  fetchUser() {
+    const { size } = this.state;
+    if (size === 0) {
       this.setState({
-        levelDetails: { ...res },
+        size: 1,
+        loading: true,
+      });
+    }
+    fetchMainPage().then((val) => {
+      const { userInfo = {} } = val;
+      this.setState({
+        userInfo: userInfo,
+        loginStatus: objStatus(userInfo) ? 1 : 0,
+        loading: false,
       });
     });
   }
+  //获取用户信息
   componentDidMount() {
-    this.getBannerList();
+    this.fetchBannerList();
   }
 
   componentDidShow() {
-    this.getUserDetails();
+    this.fetchUser();
   }
 
   render() {
-    const {
-      bannerList = [],
-      list,
-      loginStatus,
-      userInfo,
-      nextLevel,
-      levelDetails,
-    } = this.state;
-    return (
-      <View className="page_userBox">
-        <UserTitle status={loginStatus} data={userInfo}></UserTitle>
+    const { bannerList = [], loginStatus, userInfo, loading } = this.state;
 
-        <View className="page_user_liner"></View>
-        <UserContent
-          levelDetails={levelDetails}
-          nextLevel={nextLevel}
-          status={loginStatus}
-          data={userInfo}
-        ></UserContent>
-        <View className="page_user_liner"></View>
-        <UserBottom list={bannerList}></UserBottom>
-      </View>
+    return (
+      <Skeleton loading={loading}>
+        <View className="page_userBox">
+          <NewUser></NewUser>
+          <UserTitle
+            reload={() => {
+              this.fetchUser();
+              this.setState({
+                visible: true,
+              });
+            }}
+            status={loginStatus}
+            data={userInfo}
+          ></UserTitle>
+          <View className="page_user_liner"></View>
+          <UserContent bannerList={bannerList}></UserContent>
+        </View>
+        <View className="page_user_logo public_center">
+          <View className="page_user_dakalelogo"></View>
+        </View>
+      </Skeleton>
     );
   }
 }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Taro from "@tarojs/taro";
-import TaroCanvasDrawer from "./../taro-plugin-canvas";
+import TaroCanvasDrawer from "@/components/taro-plugin-canvas";
 import { View, Button, Image } from "@tarojs/components";
-import  {toast} from '@/common/utils'
+import { toast } from "@/utils/utils";
 import "./index.scss";
 
 /**
@@ -97,7 +97,7 @@ const shareImg = ({ start = false, data = [], onClose, onSave }) => {
     console.log(res);
     if (res.errMsg === "saveImageToPhotosAlbum:ok") {
       Taro.showToast({
-        title: "保存图片成功",
+        title: "图片已保存到手机相册",
         icon: "success",
         duration: 2000,
       });
@@ -120,7 +120,7 @@ const shareImg = ({ start = false, data = [], onClose, onSave }) => {
             src={shareImage}
             mode="widthFix"
             lazy-load
-            className="share_image"
+            className="share_image public_image_radius"
           />
           <View className="share_image_save">
             <View

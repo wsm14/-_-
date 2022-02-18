@@ -10,11 +10,11 @@
   }
   .benchMark_template {
     width: 686px;
-    height: 520px;
     background: #ffffff;
     border-radius: 20px;
     position: relative;
     margin-bottom: 24px;
+    padding-bottom: 84px;
     .template_filterImage {
       height: 180px;
       width: 100%;
@@ -37,7 +37,7 @@
         position: absolute;
         top: 12px;
         left: 12px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon515.png")
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon515.png")
           no-repeat;
         background-size: 100% 100%;
       }
@@ -60,7 +60,7 @@
         .template_bean::before {
           width: 32px;
           height: 32px;
-          background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon462.png")
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon462.png")
             no-repeat;
           background-size: 100% 100%;
           content: "";
@@ -86,7 +86,7 @@
             .template_hui {
               width: 23px;
               height: 22px;
-              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon513.png")
+              background: url("https://wechat-config.dakale.net/miniprogram/image/icon513.png")
                 no-repeat;
               background-size: 100% 100%;
             }
@@ -118,7 +118,7 @@
             .template_cou {
               width: 23px;
               height: 22px;
-              background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon514.png")
+              background: url("https://wechat-config.dakale.net/miniprogram/image/icon514.png")
                 no-repeat;
               background-size: 100% 100%;
             }
@@ -147,6 +147,8 @@
         line-height: 24px;
         max-width: 622px;
         color: #999999;
+        display: flex;
+        align-items: center;
       }
       .list_font_type::before {
         width: 24px;
@@ -154,7 +156,7 @@
         display: inline-block;
         content: "";
         margin-right: 8px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon497.png")
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon497.png")
           no-repeat;
         background-size: 100% 100%;
         vertical-align: middle;
@@ -187,7 +189,7 @@
     .template_share {
       width: 48px;
       height: 48px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon516.png")
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon516.png")
         no-repeat;
       background-size: 100% 100%;
       position: absolute;
@@ -197,7 +199,7 @@
     .template_go {
       width: 48px;
       height: 48px;
-      background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon517.png")
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon517.png")
         no-repeat;
       background-size: 100% 100%;
       position: absolute;

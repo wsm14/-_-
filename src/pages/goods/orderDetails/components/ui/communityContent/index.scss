@@ -1,0 +1,141 @@
+.descriptionCard_title {
+  width: 686px;
+  margin: -74px auto 0;
+  background: #ffffff;
+  border-radius: 12px;
+  position: relative;
+  z-index: 10;
+  padding-bottom: 24px;
+}
+.descriptionCard_community_box {
+  padding: 24px 32px 0;
+  margin: 16px 32px 0;
+  background: #ffffff;
+  border-radius: 12px;
+  font-size: 24px;
+  .descriptionCard_payPrice {
+    height: 104px;
+    line-height: 104px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+  .discount_top {
+    margin-top: 24px;
+  }
+  .descriptionCard_dec {
+    padding-top: 32px;
+
+    .descriptionCard_discount {
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #999999;
+    }
+  }
+  .descriptionCard_liner {
+    width: 622px;
+    height: 1px;
+    background: #e5e5e5;
+    margin: 31px auto 0;
+  }
+}
+.descriptionCard_box {
+  padding: 24px 32px 0;
+  font-size: 24px;
+  .descriptionCard_payPrice {
+    height: 104px;
+    line-height: 104px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+  .discount_top {
+    margin-top: 24px;
+  }
+
+  .descriptionCard_liner {
+    width: 622px;
+    height: 1px;
+    background: #e5e5e5;
+    margin: 31px auto 0;
+  }
+
+  .descriptionCard_merchant {
+    height: 64px;
+    display: flex;
+    align-items: center;
+
+    .descriptionCard_profile {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .descriptionCard_merchantTitle {
+      width: 498px;
+      height: 42px;
+      font-size: 28px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 42px;
+      margin-left: 29px;
+    }
+
+    .descriptionCard_goIcon {
+      width: 36px;
+      height: 36px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon260.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+}
+.community_box {
+  padding: 0 32px;
+  height: 120px;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 24px;
+  line-height: 1;
+  .community_img {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    flex-shrink: 1;
+  }
+  .community_content_box {
+    margin-left: 24px;
+    padding-top: 8px;
+  }
+  .community_content_price {
+    margin-left: auto;
+    display: flex;
+    align-items: baseline;
+    color: #333333;
+  }
+  .community_content_text1 {
+    width: 349px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #333333;
+    line-height: 28px;
+  }
+  .community_content_text2 {
+    padding-top: 12px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+  }
+  .community_content_text3 {
+    padding-top: 16px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+  }
+}
+.community_box:first-child {
+  margin-top: 32px;
+}

@@ -1,0 +1,55 @@
+.bwzGoodContent_content.telephoneCharges {
+  height: 540px;
+  background-image: url("https://wechat-config.dakale.net/miniprogram/image/beanWelfareZone_500_goods.png");
+  .bwzgc_telephoneCharges_name {
+    font-size: 50px;
+    font-weight: 600;
+    color: #f5503c;
+    line-height: 50px;
+    height: 271px;
+    padding-top: 97px;
+    .bwzgc_telephoneCharges_oriName {
+      max-width: 580px;
+      margin: 0 auto;
+    }
+    .bwzgc_telephoneCharges_oriPrice {
+      font-size: 28px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 600;
+      color: #999999;
+      line-height: 28px;
+      text-decoration: line-through;
+      margin-top: 24px;
+    }
+  }
+  .bwzgc_telephoneCharges_price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff3d8;
+    margin-bottom: 40px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    &::before {
+      content: "";
+      display: block;
+      width: 100px;
+      height: 44px;
+      background-image: url("https://wechat-config.dakale.net/miniprogram/image/beanWelfareZone_bean_tag.png");
+      background-size: 100% 100%;
+    }
+    &.bean::after {
+      content: "卡豆";
+      font-size: 32px;
+      font-weight: 600;
+      font-family: PingFangSC-Medium, PingFang SC;
+      line-height: 32px;
+      margin-left: 8px;
+    }
+    .bwzgc_telephoneCharges_buyPrice {
+      font-size: 40px;
+      font-weight: bold;
+      line-height: 40px;
+      margin-left: 16px;
+    }
+  }
+}

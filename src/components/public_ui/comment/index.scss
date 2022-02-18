@@ -1,0 +1,130 @@
+.comment_box {
+  position: fixed;
+  z-index: 1;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: transparent;
+  display: flex;
+  align-items: flex-end;
+  line-height: 1;
+  .comment_content_box {
+    border-radius: 20px 20px 0px 0px;
+    position: absolute;
+    background: #151515;
+    height: 900px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: #ffffff;
+    .temPlateComment_box {
+      margin-top: 32px;
+      display: flex;
+      align-items: flex-start;
+      .temPlateComment_profile {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+      }
+      .temPlateComment_content {
+        width: 582px;
+        margin-left: 16px;
+      }
+      .temPlateComment_username {
+        padding-top: 4px;
+        width: 582px;
+        font-size: 28px;
+        font-weight: 600;
+        color: #666666;
+        padding-bottom: 16px;
+      }
+      .temPlateComment_desc {
+        width: 582px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #ffffff;
+        line-height: 42px;
+      }
+      .temPlateComment_time {
+        padding-top: 20px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #666666;
+        line-height: 24px;
+      }
+    }
+    .comment_content_top {
+      padding: 40px 24px 0;
+      position: relative;
+      font-size: 28px;
+      font-weight: 600;
+      color: #ffffff;
+      text-align: center;
+    }
+    .comment_content_scroll {
+      max-height: 680px;
+      width: 688px;
+      padding: 8px 32px 24px;
+    }
+    .comment_content_close {
+      position: absolute;
+      display: block;
+      top: 24px;
+      right: 24px;
+      width: 32px;
+      height: 32px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon766.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .comment_content_root {
+    margin: 64px auto 24px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #666666;
+    line-height: 24px;
+    text-align: center;
+  }
+  .comment_bottom_box {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000000;
+    display: flex;
+    align-items: flex-start;
+    padding: 24px 32px;
+    .comment_input_text {
+      width: 480px;
+      background: #151515;
+      border-radius: 8px;
+      position: relative;
+      min-height: 80px;
+    }
+    .comment_bottom_btn {
+      margin-left: auto;
+      width: 112px;
+      height: 64px;
+      background: #07c0c2;
+      border-radius: 8px;
+      font-size: 32px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-top: 8px;
+    }
+    .Textarea_box {
+      width: 446px;
+      height: 80px;
+      background: #151515;
+      border-radius: 8px;
+      font-size: 32px;
+      font-weight: 400;
+      color: #666666;
+      line-height: 80px;
+      padding-left: 24px;
+    }
+  }
+}

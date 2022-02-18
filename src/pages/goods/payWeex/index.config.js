@@ -1,5 +1,5 @@
 export default {
-  navigationBarTitleText: '收银台',
+  navigationBarTitleText: '确认订单',
   navigationBarBackgroundColor: '#FFFFFF',
   navigationBarTextStyle: 'black',
   navigationStyle: 'default'

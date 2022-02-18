@@ -7,9 +7,8 @@ import {
   backgroundObj,
   loginStatus,
   mapGo,
-} from "@/common/utils";
-import Router from "@/common/router";
-import "./../index.scss";
+} from "@/utils/utils";
+import Router from "@/utils/router";
 export const list = (item, index) => {
   const {
     businessStatus,
@@ -23,69 +22,68 @@ export const list = (item, index) => {
     merchantName,
     perCapitaConsumption,
     address = "",
+    userMerchantIdString,
   } = item;
   return (
-    <View className="list_box">
-      <View className="list_descBox">
+    <View
+      className="list_shop_box"
+      onClick={() =>
+        Router({
+          routerName: "merchantDetails",
+          args: {
+            merchantId: userMerchantIdString,
+          },
+        })
+      }
+    >
+      <View
+        className="list_shop_mapTo"
+        onClick={(e) => {
+          e.stopPropagation();
+          mapGo({
+            lat: lat,
+            lnt: lnt,
+            address,
+            merchantName,
+          });
+        }}
+      ></View>
+      <View className="list_shop_detailsBox">
         <View
-          className="list_image dakale_nullImage"
+          className="list_shop_img merchant_dakale_logo"
           style={backgroundObj(coverImg)}
         ></View>
-        <View className="list_font_box">
-          <View className="list_font_title font_hide">{merchantName}</View>
-          <View className="list_font_type  font_hide">
-            {GetDistance(getLat(), getLnt(), lat, lnt)}｜{districtName}｜
-            {categoryName}｜人均￥{perCapitaConsumption}
+        <View className="list_shop_font">
+          <View className="list_shop_merchantName font_hide">
+            {merchantName}
           </View>
-          <View className="list_font_bottom font_hide">
-            {businessStatus === "1" ? (
-              <Text className="color1">营业中</Text>
-            ) : (
-              "暂停营业"
-            )}{" "}
-            ｜{businessTime}
-          </View>
-        </View>
-      </View>
-      <View className="list_bottom">
-        <View className="list_bottom">
-          <View className="list_bottom_left">
-            {loginStatus() ? (
-              <Button
-                style={{ width: "100%", height: "100%", background: "none" }}
-                openType="share"
-                data-index={index}
-              >
-                {" "}
-              </Button>
-            ) : (
-              <View
-                style={{ width: "100%", height: "100%", background: "none" }}
-                onClick={() => {
-                  Router({ routerName: "login" });
-                }}
-              >
-                {" "}
+          <View className="list_shop_bussionTime font_hide">
+            {businessTime && (
+              <View className="bussionTime_tag font_hide">
+                <Text className="font22 bold color9">营业时间</Text>
+                <Text className="bussionTime_liner bussionTime_margin"></Text>
+                <Text className="bussionTime_margin font22 bold  color9">
+                  {businessTime}
+                </Text>
               </View>
             )}
+            <View className="list_shop_peoplePay">
+              人均￥{perCapitaConsumption}
+            </View>
           </View>
 
-          <View
-            className="list_bottom_right"
-            onClick={() =>
-              mapGo({
-                lat,
-                lnt,
-                address,
-                name: merchantName,
-              })
-            }
-          >
-            <View className="list_bottom_rightIcon"></View>
-            <View className="list_bottom_rightFont">导航</View>
+          <View className="list_shop_address">
+            <View className="list_shop_addressFont font_hide">
+              {" "}
+              {categoryName + " " + address}
+            </View>
+            <View className="list_shop_limit">
+              {GetDistance(getLat(), getLnt(), lat, lnt)}
+            </View>
           </View>
         </View>
       </View>
+      <View className="list_shop_liner"></View>
     </View>
   );
 };

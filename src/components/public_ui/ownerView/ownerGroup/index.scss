@@ -1,0 +1,193 @@
+.ownerGroup_box {
+  width: 750px;
+  background: #ffffff;
+  position: relative;
+  .ownerGroup_new_active {
+    margin: 28px 0 0;
+    display: flex;
+    align-items: center;
+    .ownerGroup_new_bean {
+      display: flex;
+      align-items: center;
+      height: 32px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ef476f;
+      margin-right: 8px;
+    }
+    .ownerGroup_info_specal {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      font-weight: 400;
+      color: #333333;
+      margin-right: 12px;
+    }
+    .ownerGroup_info_specal::before {
+      display: block;
+      content: "";
+      width: 32px;
+      height: 30px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon617.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin-right: 8px;
+    }
+    .ownerGroup_new_bean::before {
+      width: 32px;
+      height: 32px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon462.png")
+        no-repeat;
+      background-size: 100% 100%;
+      content: "";
+      display: block;
+      margin-right: 8px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .ownerGroup_new_specal {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      border-radius: 8px 2px 2px 2px;
+      margin-right: 8px;
+      ownerGroup_new_icon1 {
+        border-radius: 8px 2px 8px 2px;
+        .ownerGroup_new_hui {
+          width: 32px;
+          height: 30px;
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon617.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+      .ownerGroup_new_text1 {
+        height: 30px;
+        padding: 0 8px;
+        text-align: center;
+        line-height: 30px;
+        font-size: 22px;
+        font-weight: 400;
+        color: #333333;
+      }
+    }
+    .ownerGroup_new_coupon {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      border-radius: 8px 2px 2px 2px;
+      .ownerGroup_new_icon2 {
+        border-radius: 8px 2px 8px 2px;
+        .ownerGroup_new_cou {
+          width: 32px;
+          height: 30px;
+          background: url("https://wechat-config.dakale.net/miniprogram/image/icon616.png")
+            no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+      .ownerGroup_new_text2 {
+        padding: 0 8px;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 400;
+        color: #333333;
+        max-width: 488px;
+      }
+    }
+  }
+  .ownerGroup_info_box {
+    padding: 32px 24px 32px;
+  }
+  .ownerGroup_info_userTop {
+    display: flex;
+  }
+  .ownerGroup_info_profile {
+    width: 102px;
+    height: 102px;
+    border-radius: 4px;
+  }
+  .ownerGroup_info_image {
+    width: 100%;
+    height: 100%;
+  }
+  .ownerGroup_frontImage {
+    margin: 23px auto 0;
+    width: 702px;
+    height: 394px;
+    background: #d8d8d8;
+    border-radius: 8px;
+  }
+  .ownerGroup_info_content {
+    height: 102px;
+    margin-left: 24px;
+    .ownerGroup_info_title_box {
+      display: flex;
+      align-items: center;
+      padding-top: 15px;
+    }
+    .ownerGroup_info_title {
+      max-width: 410px;
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .ownerGroup_info_icon {
+      display: flex;
+      align-items: center;
+    }
+    .ownerGroup_info_icon::after {
+      display: block;
+      content: "";
+      width: 50px;
+      height: 28px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon684.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin-left: 8px;
+    }
+    .ownerGroup_info_contentbox {
+      margin-top: 16px;
+      height: 30px;
+      align-items: center;
+      display: flex;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      .ownerGroup_info_address {
+        max-width: 398px;
+      }
+    }
+    .ownerGroup_info_contentbox::before {
+      width: 28px;
+      height: 28px;
+      display: block;
+      content: "";
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon739.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin-right: 8px;
+    }
+    .ownerGroup_info_contentbox::after {
+      width: 24px;
+      height: 24px;
+      display: block;
+      content: "";
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon740.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin-left: 8px;
+    }
+  }
+  .ownerGroup_info_link {
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    right: 24px;
+    top: 61px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon683.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+}

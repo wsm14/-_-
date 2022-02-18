@@ -1,29 +1,48 @@
 import React, { Component } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
-import { Image, ScrollView, Text, View } from "@tarojs/components";
-import Banner from "@/components/banner";
-import { perimeter } from "@/api/api";
-import { httpGet } from "@/api/newRequest";
+import { Image, ScrollView, Text, View, RichText } from "@tarojs/components";
 import {
-  filterStrList,
-  filterWeek,
   loginStatus,
-  format,
-  setBuyRule,
-} from "@/common/utils";
-import { shopCard } from "@/components/publicShopStyle";
-import "./index.scss";
-import { loginBtn } from "@/common/authority";
-import { navigateTo } from "../../../common/utils";
-import ActivityStatus from "./components/index";
-import { getShareParamInfo, getShareInfo } from "@/server/common";
-import { fetchUserShareCommission } from "@/server/index";
+  computedPrice,
+  toast,
+  objStatus,
+  fakeStorage,
+} from "@/utils/utils";
+import {
+  fetchShareParamInfo,
+  fetchShareInfo,
+  fetchShareConfig,
+  fetchUserShareCommission,
+} from "@/server/common";
+import {
+  fetchSpecialGoods,
+  fakeSaveCollection,
+  fakeDeleteCollection,
+} from "@/server/perimeter";
+import BannerTop from "./components/bannerTop";
+import GoodTemplate from "./components/goodTemplate";
+import Card from "@/components/public_ui/represent";
+import Merchant from "@/components/public_ui/merchant";
+import KnowPay from "@/components/public_ui/KnowPay";
+import ShareView from "./components/shareCmt";
+import Rule from "@/components/public_ui/rule";
+import Recommend from "@/components/public_ui/specalActive";
 import TaroShareDrawer from "./components/TaroShareDrawer";
-import Router from "@/common/router";
+import GoodsOther from "./components/goodOther";
 import { rssConfigData } from "./components/data";
-import ButtonView from "@/components/Button";
-import classNames from "classnames";
-class MerchantDetails extends Component {
+import Toast from "@/components/toast";
+import Wares from "@/components/public_ui/wares";
+import RightDrawer from "./components/RightDrawer";
+import ActivityStatus from "./components/errorStatus";
+import Router from "@/utils/router";
+import { inject, observer } from "mobx-react";
+import FixedBtn from "./components/fixedBtn";
+import { fetchStorage } from "@/utils/utils";
+import NewUser from "@/components/public_ui/newUserToast";
+import "./index.scss";
+@inject("store")
+@observer
+class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
@@ -31,9 +50,8 @@ class MerchantDetails extends Component {
         specialActivityId:
           getCurrentInstance().router.params.specialActivityId || "",
         merchantId: getCurrentInstance().router.params.merchantId || "",
+        shareUserId: getCurrentInstance().router.params.shareUserId || "",
       },
-      lnt: Taro.getStorageSync("lnt"),
-      lat: Taro.getStorageSync("lat"),
       specialGoodsInfo: {}, //商品详情
       index: 0,
       visible: false,
@@ -42,13 +60,40 @@ class MerchantDetails extends Component {
         data: null,
         start: false,
       },
+      mxVisible: false,
+      drawerVisible: false,
+      resultInfo: {},
+      urlLink: null,
+      showDownload: false,
+      toastVisible: false,
     };
+  }
+  componentDidMount() {
+    if (
+      fetchStorage("toast_dakale") !== 1 &&
+      (getCurrentInstance().router.params.shareUserId ||
+        getCurrentInstance().router.params.scene)
+    ) {
+      this.setState(
+        {
+          toastVisible: true,
+        },
+        (res) => {
+          setTimeout(() => {
+            fakeStorage("toast_dakale", 1);
+            this.setState({
+              toastVisible: false,
+            });
+          }, 10000);
+        }
+      );
+    }
   }
   componentWillMount() {
     let { scene } = getCurrentInstance().router.params;
     let { httpData } = this.state;
     if (scene) {
-      getShareParamInfo({ uniqueKey: scene }, (res) => {
+      fetchShareParamInfo({ uniqueKey: scene }, (res) => {
         let {
           shareParamInfo: { param },
         } = res;
@@ -60,12 +105,14 @@ class MerchantDetails extends Component {
             },
             (res) => {
               this.getDetailsById();
+              this.fetchUrlLink();
             }
           );
         }
       });
     } else {
       this.getDetailsById();
+      this.fetchUrlLink();
     }
   }
   componentDidShow() {
@@ -75,22 +122,51 @@ class MerchantDetails extends Component {
     }
     this.fetchUserShareCommission();
   }
+  fetchConfig() {
+    const { httpData } = this.state;
+    const { specialActivityId, merchantId } = httpData;
+    fetchShareConfig({
+      goodId: specialActivityId,
+      ownerId: merchantId,
+    }).then((val) => {
+      const { resultInfo } = val;
+      this.setState({
+        resultInfo,
+      });
+    });
+  }
   getDetailsById() {
-    const { getSpecialGoodsDetail } = perimeter;
     const { httpData, index } = this.state;
-    httpGet(
-      {
-        url: getSpecialGoodsDetail,
-        data: httpData,
-      },
-      (res) => {
-        const { specialGoodsInfo } = res;
-        this.setState({
-          specialGoodsInfo,
-          index: index + 1,
-        });
-      }
-    );
+    fetchSpecialGoods(httpData)
+      .then((res) => {
+        const { specialGoodsInfo = {} } = res;
+        const { status } = specialGoodsInfo;
+        Taro.stopPullDownRefresh();
+        if (status) {
+          this.setState(
+            {
+              specialGoodsInfo,
+              index: index + 1,
+            },
+            (res) => {
+              const { rightFlag, activityType } = specialGoodsInfo;
+              if (!(rightFlag === "1" || activityType === "commerceGoods")) {
+                this.fetchConfig();
+              }
+            }
+          );
+        } else {
+          this.setState({
+            specialGoodsInfo: {
+              status: "0",
+            },
+            index: index + 1,
+          });
+        }
+      })
+      .catch((e) => {
+        Taro.stopPullDownRefresh();
+      });
   }
   fetchUserShareCommission() {
     fetchUserShareCommission({}, (res) => {
@@ -99,6 +175,43 @@ class MerchantDetails extends Component {
         configUserLevelInfo,
       });
     });
+  }
+  fetchUrlLink() {
+    const { httpData } = this.state;
+    const { userIdString } = loginStatus() || {};
+    let obj = {
+      ...httpData,
+      shareUserId: userIdString,
+      shareUserType: userIdString ? "user" : undefined,
+    };
+    let str = "";
+    for (let item in obj) {
+      if (obj[item]) {
+        str = str + `${item}=${obj[item]}&`;
+      }
+    }
+    str = str.slice(0, str.length - 1);
+    if (str) {
+      Taro.cloud
+        .callFunction({
+          name: "setUrl",
+          action: "setWxUrl",
+          data: {
+            path: "pages/perimeter/favourableDetails/index",
+            action: "setWxUrl",
+            query: str,
+          },
+        })
+        .then((val) => {
+          const { result = {} } = val;
+          const { urlLink, errMsg } = result;
+          if (errMsg === "openapi.urllink.generate:ok") {
+            this.setState({
+              urlLink: urlLink,
+            });
+          }
+        });
+    }
   }
   getShareInfo() {
     const {
@@ -110,32 +223,59 @@ class MerchantDetails extends Component {
         goodsName,
         cityName,
         merchantLogo,
+        activityGoodsImg,
+        districtName,
+        rightFlag,
+        paymentModeObject = {},
       },
+      specialGoodsInfo,
     } = this.state;
     const { profile, username } = Taro.getStorageSync("userInfo");
-    getShareInfo(
+    fetchShareInfo(
       {
         shareType: "specialActivity",
         shareId: specialActivityIdString,
       },
       (res) => {
-        const { body, oriPrice, title, realPrice, qcodeUrl } = res;
+        const {
+          body,
+          oriPrice,
+          image = "",
+          title,
+          realPrice,
+          qcodeUrl,
+          buyPrice = 0,
+          saveMoney = "",
+          shareImg,
+        } = res;
         this.setState({
           cavansObj: {
             start: true,
             data: rssConfigData({
               merchantName,
-              time: activityEndTime||'长期有效',
+              time: activityEndTime
+                ? activityEndTime + "  24点结束"
+                : "长期有效",
               oldPrice: oriPrice,
               price: realPrice,
               wxCode: qcodeUrl,
               username,
               userProfile: profile,
               name: goodsName,
-              address,
-              city: cityName,
-              merchantLogo: merchantLogo,
+              city: cityName + districtName + address,
+              merchantLogo: image,
+              buyPrice,
+              saveMoney,
+              shareImg,
+              rightFlag: rightFlag,
+              paymentModeObject: paymentModeObject,
             }),
+          },
+          specialGoodsInfo: {
+            ...specialGoodsInfo,
+            weChatImg: res.frontImage,
+            weChatTitle: res.title,
+            weChatUrl: res.miniProgramUrl,
           },
         });
       }
@@ -143,26 +283,29 @@ class MerchantDetails extends Component {
   }
   onShareAppMessage(res) {
     const {
-      specialGoodsInfo: { goodsName },
+      specialGoodsInfo: { goodsName, weChatImg, weChatTitle, weChatUrl },
       specialGoodsInfo,
       httpData: { merchantId, specialActivityId },
     } = this.state;
     let userInfo = loginStatus() || {};
     let img = specialGoodsInfo.activityGoodsImg.split(",")[0];
     const { userIdString } = userInfo;
-    console.log(goodsName);
     if (res.from === "button") {
       return {
-        title: goodsName,
-        imageUrl: img,
-        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+        title: weChatTitle || goodsName,
+        imageUrl: weChatImg || img,
+        path:
+          weChatUrl ||
+          `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     }
     if (loginStatus()) {
       return {
         title: goodsName,
         imageUrl: img,
-        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
+        path:
+          weChatUrl ||
+          `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
       };
     } else {
       return {
@@ -171,25 +314,103 @@ class MerchantDetails extends Component {
       };
     }
   }
-  onShareTimeline() {
+  setCollection() {
     const {
-      specialGoodsInfo: { goodsName, allImgs },
-      httpData: { merchantId, specialActivityId },
+      specialGoodsInfo: { userCollectionStatus = "0", specialActivityIdString },
+      specialGoodsInfo,
     } = this.state;
-    let userInfo = loginStatus() || {};
-    const { userIdString } = userInfo;
-    if (loginStatus()) {
-      return {
-        title: goodsName,
-        imageUrl: allImgs[0],
-        path: `/pages/perimeter/favourableDetails/index?shareUserId=${userIdString}&shareUserType=user&merchantId=${merchantId}&specialActivityId=${specialActivityId}`,
-      };
+    if (userCollectionStatus === "0") {
+      fakeSaveCollection({
+        collectionType: "special",
+        collectionId: specialActivityIdString,
+      }).then((res) => {
+        this.setState(
+          {
+            specialGoodsInfo: {
+              ...specialGoodsInfo,
+              userCollectionStatus: "1",
+            },
+            showDownload: true,
+          },
+          (res) => {
+            setTimeout(() => {
+              this.setState({
+                showDownload: false,
+              });
+            }, 5000);
+          }
+        );
+      });
     } else {
-      return {
-        title: goodsName,
-        imageUrl: allImgs[0],
-      };
+      fakeDeleteCollection({
+        collectionType: "special",
+        collectionId: specialActivityIdString,
+      }).then((res) => {
+        this.setState(
+          {
+            specialGoodsInfo: {
+              ...specialGoodsInfo,
+              userCollectionStatus: "0",
+            },
+            showDownload: false,
+          },
+          (res) => {
+            toast("取消成功");
+          }
+        );
+      });
     }
+  }
+  //收藏
+  saveGoodsOrder() {
+    const {
+      specialGoodsInfo: {
+        merchantIdString,
+        personLimit,
+        dayMaxBuyAmount,
+        boughtActivityGoodsNum,
+        buyRule,
+        specialActivityIdString,
+        paymentModeObject,
+        userBean,
+        activityType,
+      },
+    } = this.state;
+    const { bean, type } = paymentModeObject;
+    if (buyRule === "dayLimit" && dayMaxBuyAmount === boughtActivityGoodsNum) {
+      this.setState({
+        visible: true,
+      });
+      return;
+    } else if (
+      buyRule === "personLimit" &&
+      personLimit === boughtActivityGoodsNum
+    ) {
+      this.setState({
+        visible: true,
+      });
+      return;
+    } else if (type !== "defaultMode") {
+      if (userBean < bean) {
+        this.setState({
+          drawerVisible: true,
+        });
+        return;
+      }
+    }
+    Router({
+      routerName: "favourableOrder",
+      args: {
+        merchantId: merchantIdString,
+        specialActivityId: specialActivityIdString,
+      },
+    });
+  }
+  //跳到确认订单页面
+  onPullDownRefresh() {
+    Taro.stopPullDownRefresh();
+    this.getDetailsById();
+    this.fetchUserShareCommission();
   }
   onReady() {
     // 生命周期函数--监听页面初次渲染完成
@@ -197,133 +418,50 @@ class MerchantDetails extends Component {
   render() {
     const {
       specialGoodsInfo: {
-        oriPrice,
-        realPrice,
-        activityEndTime,
-        goodsName,
-        allowExpireRefund,
-        allowRefund,
-        needOrder,
-        useStartTime,
-        useEndTime,
-        useWeek,
-        useTime,
-        goodsDesc,
-        buyDesc = "",
         specialActivityIdString,
-        merchantIdString,
-        goodsDescImg,
         status,
-        ownerType = "merchant",
-        activityStartTime,
         buyRule = "unlimited",
         dayMaxBuyAmount = 0,
-        maxBuyAmount = 0,
-        goodsType = "single",
-        activityTimeRule,
-        activityGoodsImg,
-        packageGroupObjects = [],
-        activeDays,
-        delayDays,
-        merchantCount,
-        merchantPrice,
+        personLimit,
+        rightFlag = "0",
+        paymentModeObject = {},
+        activityType,
       },
-      configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
-      specialGoodsInfo,
-      kolMomentsInfo,
       visible,
+      configUserLevelInfo: { payBeanCommission = 50, shareCommission = 0 },
+      configUserLevelInfo,
+      specialGoodsInfo,
       cavansObj,
-      // https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon469.png
+      mxVisible,
+      drawerVisible,
+      resultInfo,
+      urlLink,
+      showDownload,
+      toastVisible,
+      httpData,
     } = this.state;
-    const templateTime = () => {
-      if (activeDays) {
-        return `购买后${
-          delayDays === 0 ? "立刻" : delayDays
-        }天生效，有效期${activeDays}天，请在有效期内使用`;
-      } else {
-        return `${useStartTime}至${useEndTime}`;
-      }
-    };
-    const payBtn = () => {
-      if (!format(activityStartTime) && activityTimeRule === "fixed") {
-        return (
-          <ButtonView>
-            <View className="shopdetails_shop_goshop shopdetails_shop_option">
-              即将开抢
-            </View>
-          </ButtonView>
-        );
-      } else if (shareCommission !== 0) {
-        return (
-          <View className="shopdetails_kol_goshop">
-            <ButtonView>
-              <View className="shopdetails_kol_btnBox shopdetails_kol_btnColor1">
-                <View
-                  className="shopdetails_kol_font1"
-                  onClick={() =>
-                    loginBtn(() =>
-                      navigateTo(
-                        `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
-                      )
-                    )
-                  }
-                >
-                  自购返
-                </View>
-                <View className="shopdetails_kol_font2">
-                  {" "}
-                  省¥
-                  {(
-                    (realPrice - merchantPrice) *
-                    (shareCommission / 100)
-                  ).toFixed(2)}
-                </View>
-              </View>
-            </ButtonView>
-            <ButtonView>
-              <View
-                className="shopdetails_kol_btnBox shopdetails_kol_btnColor2"
-                onClick={() => loginBtn(() => this.getShareInfo())}
-              >
-                <View className="shopdetails_kol_font1">分享赚</View>
-                <View className="shopdetails_kol_font2">
-                  {" "}
-                  赚¥
-                  {(
-                    (realPrice - merchantPrice) *
-                    (shareCommission / 100)
-                  ).toFixed(2)}
-                </View>
-              </View>
-            </ButtonView>
-          </View>
-        );
-      } else {
-        return (
-          <ButtonView>
-            <View
-              className="shopdetails_shop_goshop"
-              onClick={() =>
-                loginBtn(() =>
-                  navigateTo(
-                    `/pages/goods/favourOrder/index?specialActivityId=${specialActivityIdString}&merchantId=${merchantIdString}`
-                  )
-                )
-              }
-            >
-              立即抢购
-            </View>
-          </ButtonView>
-        );
-      }
-    };
-    if (Object.keys(specialGoodsInfo).length > 0) {
+    const { type = "defaultMode" } = paymentModeObject;
+    const { beanLimitStatus } = this.props.store.homeStore;
+    const { beanLimit } = this.props.store.commonStore;
+    if (objStatus(specialGoodsInfo)) {
       if (status !== "0") {
-        {
-          console.log(cavansObj);
-        }
         return (
           <View className="favourable_Details">
+            <NewUser></NewUser>
+            {toastVisible && (
+              <View className="favourable_toastInfo">
+                <View
+                  className="favourable_toastClose"
+                  onClick={() => {
+                    fakeStorage("toast_dakale", 1);
+                    this.setState({
+                      toastVisible: false,
+                    });
+                  }}
+                ></View>
+              </View>
+            )}
+            {/*分享卡片*/}
             <TaroShareDrawer
               {...cavansObj}
               onSave={() => console.log("点击保存")}
@@ -331,245 +469,115 @@ class MerchantDetails extends Component {
                 this.setState({ cavansObj: { start: false, data: null } })
               }
             ></TaroShareDrawer>
-            <View className="shopDetails_banner dakale_nullImage">
-              <Banner
-                autoplay={
-                  filterStrList(activityGoodsImg).length > 1 ? true : false
-                }
-                imgStyle
-                data={filterStrList(activityGoodsImg) || []}
-                style={{ width: "100%", height: "100%" }}
-                boxStyle={{ width: "100%", height: "100%" }}
-              ></Banner>
-            </View>
-            <View className="shopdetails_price">
-              <View className="shopdetails_priceBox">
-                <View className="shopdetails_top public_auto">
-                  <View className="shopdetails_priceIcon">哒卡乐专享价</View>
-                  <View className="shopdetails_time">
-                    活动截止日期：
-                    {activityTimeRule === "fixed"
-                      ? activityEndTime
-                      : "长期有效"}
-                  </View>
-                </View>
-                <View className="shopdetails_bottom public_auto">
-                  <View className="shopdetails_setprice">
-                    <Text className="shopdetails_bigFont">¥</Text>
-                    {realPrice || "--"}
-                    <Text className="shopdetails_lineFont">
-                      ¥ {oriPrice || "--"}
-                    </Text>
-                  </View>
-                  <View className="shopdetails_setbean">
-                    {format(activityStartTime) || activityTimeRule !== "fixed"
-                      ? "门店抢购中"
-                      : "即将开抢"}
-                  </View>
-                </View>
-              </View>
-            </View>
-            {/*使用商家*/}
-            <View className="shopdetails_getShop">
-              <View className="shopdetails_title font_noHide">
-                {goodsName || "--"}
-              </View>
-              <View className="shopDetails_tab">
-                {/*<View className='shopDetails_tab_icon'></View>*/}
-                {/*<View className='shopDetails_tab_font'>可叠加3张使用</View>*/}
-                {needOrder === "0" && (
-                  <>
-                    <View className="shopDetails_tab_icon"></View>
-                    <View className="shopDetails_tab_font">免预约</View>
-                  </>
-                )}
-
-                {allowRefund === "1" && (
-                  <>
-                    <View className="shopDetails_tab_icon"></View>
-                    <View className="shopDetails_tab_font">随时退</View>
-                  </>
-                )}
-                {allowExpireRefund === "1" && (
-                  <>
-                    <View className="shopDetails_tab_icon"></View>
-                    <View className="shopDetails_tab_font">过期退</View>
-                  </>
-                )}
-
-                <>
-                  <View className="shopDetails_tab_icon"></View>
-                  <View className="shopDetails_tab_font">卡豆抵扣</View>
-                </>
-                <View
-                  onClick={() => Router({ routerName: "interests" })}
-                  className="shop_question question_icon"
-                ></View>
-              </View>
-              <View className="shopdetails_getPrice">
-                <View className="shopdetails_getPrice_tag">
-                  卡豆可抵¥
-                  {(realPrice * (payBeanCommission / 100))
-                    .toFixed(3)
-                    .substring(
-                      0,
-                      (realPrice * (payBeanCommission / 100)).toFixed(3)
-                        .length - 1
-                    )}
-                </View>
-
-                {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount) && (
-                  <View className="shopdetails_getPrice_tag">
-                    {setBuyRule(buyRule, dayMaxBuyAmount, maxBuyAmount)}
-                  </View>
-                )}
-              </View>
-            </View>
-
-            <View className="shopdetails_shop_merchantShop">
-              {shopCard(this, specialGoodsInfo)}
-              {ownerType === "group" && (
-                <View
-                  className="shopdetails_group"
-                  onClick={() =>
-                    Router({
-                      routerName: "groupList",
-                      args: {
-                        specialActivityId: specialActivityIdString,
-                      },
-                    })
-                  }
-                >
-                  查看全部{merchantCount}家适用商家{" >"}
-                </View>
-              )}
-            </View>
-
-            {goodsType === "package" && (
-              <View className="shopdetails_shop_packageGroup">
-                <View className="shopdetails_shop_groupTitle">套餐详情</View>
-                {packageGroupObjects.map((item) => {
-                  const { packageGoodsObjects = [], groupName } = item;
-                  return (
-                    <View className="shopdetails_shop_package">
-                      <View className="shopdetails_package_title font_hide">
-                        ·{groupName}（{packageGoodsObjects.length}）
-                      </View>
-                      {packageGoodsObjects.map((val) => {
-                        const { goodsName, goodsNum, goodsPrice } = val;
-                        return (
-                          <View className="shopdetails_package_goods public_auto">
-                            <View>
-                              <Text className="shopdetails_package_width font_hide">
-                                {goodsName}
-                              </Text>
-                              <Text>（{goodsNum}份）</Text>
-                            </View>
-                            <View>¥{goodsPrice}</View>
-                          </View>
-                        );
-                      })}
-                    </View>
-                  );
-                })}
-              </View>
+            <BannerTop data={specialGoodsInfo}></BannerTop>
+            <GoodTemplate
+              show={showDownload}
+              close={() =>
+                this.setState({
+                  showDownload: false,
+                })
+              }
+              collect={this.setCollection.bind(this)}
+              showToast={() => this.setState({ mxVisible: true })}
+              userInfo={configUserLevelInfo}
+              data={specialGoodsInfo}
+            ></GoodTemplate>
+            {/*保障*/}
+            <Card
+              data={specialGoodsInfo}
+              configUserLevelInfo={configUserLevelInfo}
+            ></Card>
+            {/*适用门店*/}
+            {activityType !== "commerceGoods" && (
+              <Merchant
+                serviceType={"specialGoods"}
+                data={specialGoodsInfo}
+                ownerServiceId={specialActivityIdString}
+              ></Merchant>
             )}
 
-            {(goodsDesc || goodsDescImg) && (
-              <View className="shopdetails_shop_details">
-                <View className="shopdetails_shop_merchantDetails">
-                  商品描述
-                </View>
-                {goodsDesc && (
-                  <View className="shopdetails_dec">
-                    <Text>{goodsDesc.replace(/\\n/g, "\n")}</Text>
-                  </View>
-                )}
-                <View className="shopdetails_Image">
-                  {goodsDescImg &&
-                    filterStrList(goodsDescImg).map((item) => {
-                      return (
-                        <Image
-                          mode="widthFix"
-                          src={item}
-                          style={{ width: "100%" }}
-                        ></Image>
-                      );
-                    })}
-                </View>
-              </View>
+            {/*分享*/}
+            {!(rightFlag === "1" || activityType === "commerceGoods") && (
+              <ShareView urlLink={urlLink} data={resultInfo}></ShareView>
+            )}
+            {/*商品详情*/}
+            <GoodsOther data={specialGoodsInfo}></GoodsOther>
+            {/*使用须知*/}
+            {activityType !== "commerceGoods" && (
+              <KnowPay data={specialGoodsInfo}></KnowPay>
             )}
             {/*使用方法*/}
-            <View className="shopdetails_shop_player">
-              <View className="shopdetails_play_title">使用方法</View>
-              <View className="shopdetails_play_img"></View>
-            </View>
-            {/*使用须知*/}
-            <View className="shopdetails_shop_toast">
-              <View className="shop_toastTitle">使用须知</View>
-              <View className="shop_toastDec shop_toastDate">有效期：</View>
-              <View className="shop_toastText">
-                <Text className="shop_toastTextColor">{templateTime()}</Text>
-              </View>
-              <View className="shop_toastDec shop_getDate">使用时间：</View>
-              <View className="shop_toastText">
-                <Text className="shop_toastTextColor">
-                  {filterWeek(useWeek) + " " + useTime}
-                </Text>
-                ，具体以门店供应时段为准；
-              </View>
-              {buyDesc.length > 0 && (
-                <>
-                  <View className="shop_toastDec shop_showNow">购买须知：</View>
-                  <View
-                    style={{ lineHeight: Taro.pxTransform(36) }}
-                    className="shop_toastText"
-                  >
-                    {buyDesc.slice(2, buyDesc.length - 3)}
-                  </View>
-                </>
-              )}
-            </View>
-            {/*使用规则*/}
-            <View className="shopdetails_shop_toast">
-              <View className="shop_toastTitle">购买须知</View>
-
-              <View className="shop_toastText shop_toastTextHeight">
-                本券不可拆分使用，不支持外卖点餐、电商订购等；不可转让、转售、转发、截图，也不能兑换现金；不可伪造，伪造无效。
-              </View>
-              <View className="shop_toastText shop_toastTextHeight">
-                本券一经核销即为使用，卡券详情可查看存根信息；
-              </View>
-              <View className="shop_toastText shop_toastTextHeight">
-                如对订单有疑问，请到商家咨询，或者拨打哒卡乐官方客服电话：400-800-5881进行咨询。
-              </View>
-              <View className="shop_toastText shop_toastTextHeight">
-                *最终解释权归杭州哒卡乐智能科技有限公司所有
-              </View>
-            </View>
-            <View className="shopdetails_shop_btn">
-              <View className="shopdetails_shop_price">
-                <View className="shopdetails_shop_priceTop">
-                  <Text className="font20">¥</Text>
-                  {realPrice}
+            {activityType !== "commerceGoods" && <Rule></Rule>}
+            {/*为你推荐*/}
+            {activityType !== "commerceGoods" && (
+              <Recommend
+                current={true}
+                defaultData={specialGoodsInfo}
+                userInfo={configUserLevelInfo}
+              ></Recommend>
+            )}
+            {/*卡豆可省弹层 */}
+            <Wares
+              close={(fn) =>
+                this.setState({ mxVisible: false }, (res) => {
+                  fn && fn();
+                })
+              }
+              visible={mxVisible}
+              configUserLevelInfo={configUserLevelInfo}
+              data={specialGoodsInfo}
+              status={beanLimitStatus}
+            ></Wares>
+            {/*权益商品卡豆不足时弹层 */}
+            <RightDrawer
+              close={(fn) => {
+                this.setState(
+                  {
+                    drawerVisible: false,
+                  },
+                  (res) => {
+                    fn && fn();
+                  }
+                );
+              }}
+              data={specialGoodsInfo}
+              show={drawerVisible}
+            ></RightDrawer>
+            {/*限购或者购买达到最大数量的时候的提示  */}
+            {visible && (
+              <Toast
+                title={"哒卡乐温馨提示"}
+                close={() => this.setState({ visible: false })}
+              >
+                <View className="shop_dakale_content">
+                  {buyRule === "dayLimit" ? (
+                    <>
+                      <View>
+                        每人每天限购{dayMaxBuyAmount}
+                        份，您今天已享受本次优惠，请明天再来
+                      </View>
+                    </>
+                  ) : (
+                    <View>每人限购{personLimit}份，您已享受本次优惠</View>
+                  )}
                 </View>
-                <View className="shopdetails_shop_real">
-                  <Text className="shopdetails_shop_realStatus1">
-                    ¥ {oriPrice}
-                  </Text>
-                  <Text className="shopdetails_shop_realStatus2">
-                    {((Number(realPrice) / Number(oriPrice)) * 10).toFixed(1)}折
-                  </Text>
-                </View>
-              </View>
-              {payBtn()}
-            </View>
+              </Toast>
+            )}
+            {/*商品底部 按钮以及优惠提示栏*/}
+            <FixedBtn
+              httpData={httpData}
+              configUserLevelInfo={configUserLevelInfo}
+              shareInfo={this.getShareInfo.bind(this)}
+              saveInfo={this.saveGoodsOrder.bind(this)}
+              beanLimit={beanLimit}
+              data={specialGoodsInfo}
+            ></FixedBtn>
           </View>
         );
       } else {
-        return <ActivityStatus></ActivityStatus>;
+        return <ActivityStatus userInfo={configUserLevelInfo}></ActivityStatus>;
       }
     } else return null;
   }
 }
-export default MerchantDetails;
+export default Index;

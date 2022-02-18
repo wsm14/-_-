@@ -1,0 +1,178 @@
+page {
+  width: 100%;
+  height: 100%;
+  .preChildTure_box {
+    width: 100%;
+    background: #ffffff;
+    line-height: 1;
+    padding-bottom: 40px;
+    .preChildTure_bg {
+      width: 100%;
+      height: 460px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon800.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .preChildTure_bg_title {
+      width: 100%;
+      height: 500px;
+    }
+    .preChildTure_image {
+      width: 100%;
+      height: 100%;
+    }
+    .preChildTure_bg_desc {
+      width: 100%;
+      height: 270px;
+      margin-top: 10px;
+    }
+    .preChildTure_bg_logo {
+      width: 409px;
+      height: 57px;
+      margin: 64px auto 0;
+    }
+  }
+  .preChildTure_content {
+    margin-top: -20px;
+    z-index: 20;
+    position: relative;
+    border-radius: 20px 20px 0px 0px;
+    padding: 40px 24px 0px;
+    background: #ffffff;
+    border-radius: 20px;
+    .preChildTure_select_box {
+      width: 540px;
+      height: 80px;
+      margin: 0 auto;
+      display: flex;
+      .preChildTure_select_left {
+        flex: 1;
+      }
+      .preChildTure_select_right {
+        flex: 1;
+      }
+      .preChildTure_template_box {
+        margin-top: 40px;
+      }
+    }
+    .preChildTure_fure_box {
+      display: flex;
+      margin-bottom: 24px;
+      position: relative;
+      .preChildTure_fure_img {
+        width: 224px;
+        height: 224px;
+        border-radius: 8px;
+      }
+      .preChildTure_fure_content {
+        margin-left: 16px;
+        width: 414px;
+        .preChildTure_fure_quan {
+          padding-top: 8px;
+          font-size: 24px;
+          font-weight: 400;
+          color: #999999;
+        }
+        .preChildTure_fure_title {
+          padding-top: 4px;
+          font-size: 28px;
+          font-weight: 400;
+          color: #333333;
+          line-height: 40px;
+        }
+        .preChildTure_fure_margin1 {
+          margin-top: 12px;
+        }
+        .preChildTure_fure_margin2 {
+          margin-top: 36px;
+        }
+        .preChildTure_fure_user {
+          padding-top: 16px;
+          display: flex;
+          align-items: center;
+          .preChildTure_fure_userProfile {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            flex-shrink: 0;
+          }
+          .preChildTure_fure_userName {
+            font-size: 24px;
+            font-weight: 400;
+            color: #999999;
+            margin-left: 8px;
+          }
+          .preChildTure_fure_limit {
+            font-size: 24px;
+            font-weight: 400;
+            color: #999999;
+            margin-left: 8px;
+          }
+        }
+        .preChildTure_fure_price {
+          padding-top: 28px;
+          color: #999999;
+        }
+        .preChildTure_fure_tag {
+          width: 70px;
+          height: 28px;
+          border-radius: 4px;
+          background: url(https://wechat-config.dakale.net/miniprogram/image/icon776.png)
+            no-repeat;
+          background-size: 100% 100%;
+        }
+        .preChildTure_fure_bean {
+          margin-top: 6px;
+          font-size: 28px;
+          font-weight: bold;
+          color: #ef476f;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+    .preChildTure_tabbar1 {
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon773.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .preChildTure_tabbar2 {
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon774.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .preChildTure_btn {
+      width: 160px;
+      height: 52px;
+      background: #ef476f;
+      border-radius: 26px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #ffffff;
+      position: absolute;
+      right: 0;
+      bottom: 4px;
+    }
+  }
+  .preChildTure_null_start {
+    margin: 64px auto 105px;
+    .preChildTure_null_image {
+      width: 300px;
+      height: 300px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon339.png)
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 0 auto;
+    }
+    .preChildTure_null_desc {
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+      text-align: center;
+      margin-top: 32px;
+    }
+  }
+  .preChildTure_content_top {
+    padding-top: 40px;
+  }
+}

@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Video, Swiper, SwiperItem, View, Image,Button } from "@tarojs/components";
-import Taro, { pxTransform, useReady } from "@tarojs/taro";
-import BottomView from "./bottom";
-import { backgroundObj, navigateTo, setPeople } from "@/common/utils";
-import classNames from "classnames";
+import { Video, Swiper, SwiperItem, View } from "@tarojs/components";
+import BottomView from "@/components/videoComponents/videoBottom";
+import { computedVideoSize } from "@/utils/utils";
+import InterVal from "@/components/videoComponents";
 import "./../index.scss";
 export default ({
   data = [],
@@ -15,12 +14,19 @@ export default ({
   collection,
   onTransition,
   stop,
+  userInfo,
+  shareInfo,
+  beanLimitStatus,
+  changeComment,
 }) => {
   const [scale, setScale] = useState(0);
+  const [player, setPlayer] = useState(false);
   useEffect(() => {
     setScale(0);
+    setPlayer(false);
   }, [current]);
   const expensive = useMemo(() => {
+    const { shareCommission = 0 } = userInfo;
     if (data.length > 0) {
       return (
         <View
@@ -32,9 +38,9 @@ export default ({
           <Swiper
             style={{ width: "100%", height: "100%" }}
             vertical
-            current={current}
             onChange={onChange}
             duration={200}
+            current={current}
             circular={circular}
             onTransition={onTransition}
           >
@@ -42,13 +48,9 @@ export default ({
               const {
                 frontImage,
                 frontImageHeight,
+                frontImageWidth,
                 videoContent,
-                userProfile,
-                merchantFollowStatus,
-                userIdString,
-                merchantCollectionStatus,
-                collectionAmount,
-                shareAmount,
+                watchStatus,
               } = item;
               if (
                 index === current ||
@@ -60,15 +62,31 @@ export default ({
                     <View
                       style={{
                         width: "100%",
-                        height: "100%",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        position: "relative",
+                        height: "100%",
                       }}
                     >
+                      <InterVal
+                        initBean={false}
+                        userInfo={userInfo}
+                        shareInfo={shareInfo}
+                        follow={follow}
+                        collection={collection}
+                        data={item}
+                        current={current}
+                        beanLimitStatus={beanLimitStatus}
+                        index={index}
+                        id={`video${index}`}
+                        changeComment={changeComment}
+                        play={player}
+                        show={index === current}
+                      ></InterVal>
                       <View
                         style={{
-                          height: Taro.pxTransform(frontImageHeight),
+                          height: "100%",
                           width: "100%",
                         }}
                         onClick={(e) => {
@@ -77,7 +95,10 @@ export default ({
                         }}
                       >
                         <Video
-                          src={JSON.parse(videoContent || "{}").url}
+                          src={
+                            JSON.parse(videoContent || "{}").m3u8Url ||
+                            JSON.parse(videoContent || "{}").url
+                          }
                           poster={frontImage}
                           style={{
                             height: "100%",
@@ -88,77 +109,57 @@ export default ({
                           enableProgressGesture={false}
                           autoplay={index === current ? true : false}
                           showFullscreenBtn={false}
-                          enablePlayGesture={true}
+                          // enablePlayGesture={true}
                           loop={true}
                           showPlayBtn={false}
+                          objectFit={
+                            computedVideoSize(frontImageWidth, frontImageHeight)
+                              ? "fill"
+                              : "cover"
+                          }
                           showCenterPlayBtn={false}
-                          objectFit="cover"
                           initialTime="0"
                           onTimeUpdate={(e) => {
-                            const { currentTime, duration } = e.detail;
-                            setScale(
-                              ((currentTime / duration) * 100).toFixed(2)
-                            );
+                            if (index === current) {
+                              const { currentTime, duration } = e.detail;
+                              setScale(
+                                ((currentTime / duration) * 100).toFixed(2)
+                              );
+                            }
                           }}
-                          id={`video${index}`}
-                          // onPause={onPause}
-                          // onPlay={onPlay}
+                          onPause={() => {
+                            if (index === current) {
+                              setPlayer(false);
+                            }
+                          }}
+                          onPlay={() => {
+                            if (index === current) {
+                              setPlayer(true);
+                            }
+                          }}
+                          id={`merchantVideo${index}`}
                           muted={false}
                         ></Video>
-                        <View className="video_liner">
-                          <View
-                            style={{
-                              height: "100%",
-                              width: `${scale}%`,
-                              background: "rgba(239, 71, 111, 1)",
-                            }}
-                          ></View>
-                        </View>
+                        {index === current && (
+                          <View className="video_liner">
+                            <View
+                              style={{
+                                height: "100%",
+                                width: `${scale}%`,
+                                background: "rgba(255, 235, 165, 1)",
+                              }}
+                            ></View>
+                          </View>
+                        )}
                       </View>
-                      <BottomView index={index} server={item}>
+                      <BottomView
+                        userInfo={userInfo}
+                        index={index}
+                        server={item}
+                        current={current}
+                      >
                         {children}
                       </BottomView>
-                      <View className="home_stem_layer">
-                        <View
-                          style={userProfile ? backgroundObj(userProfile) : {}}
-                          className="home_stem_userProfile dakale_profile"
-                        >
-                          {merchantFollowStatus === "0" && (
-                            <View
-                              onClick={(e) => follow(e)}
-                              className={classNames(
-                                "home_stem_fallStatus home_stem_status1"
-                              )}
-                            ></View>
-                          )}
-                        </View>
-                        <View
-                          onClick={() => collection()}
-                          className={classNames(
-                            "collected_box",
-                            merchantCollectionStatus === "0"
-                              ? "share_shoucang_icon1"
-                              : "share_shoucang_icon2"
-                          )}
-                        ></View>
-                        <View className="collected_font">
-                          {setPeople(collectionAmount)}
-                        </View>
-
-                        <View className="home_share_wechat">
-                          <Button
-                            open-type="share"
-                            style={{
-                              border: "0px soild white",
-                              background: (0, 0, 0, 0),
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          ></Button>
-                        </View>
-
-                        <View className="collected_font">{shareAmount}</View>
-                      </View>
                     </View>
                   </SwiperItem>
                 );
@@ -172,6 +173,6 @@ export default ({
     } else {
       return null;
     }
-  }, [data, current, scale]);
+  }, [data.length, current, scale, player]);
   return expensive;
 };

@@ -1,12 +1,12 @@
-.banner_box{
-  width:100%;
+.banner_box {
+  width: 100%;
   height: 100%;
   position: relative;
 }
-.bordersRadius{
+.bordersRadius {
   border-radius: 20px;
 }
-.banner_toast{
+.banner_toast {
   position: absolute;
   left: 0;
   right: 0;
@@ -14,23 +14,23 @@
   bottom: 12px;
   text-align: center;
 }
-.banner_tags{
+.banner_tags {
   height: 40px;
   background: rgba(0, 0, 0, 0.6);
   border-radius: 5px;
   font-size: 24px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0 31px;
   line-height: 40px;
   display: inline-block;
 }
-.test{
+.test {
   overflow: auto;
   height: auto;
 }
-.show_near{
+.show_near {
   position: absolute;
   height: 6px;
   left: 0;
@@ -38,19 +38,16 @@
   bottom: 24px;
   display: flex;
   justify-content: center;
-  .show_near_linerTrue{
-    width: 24px;
+  .show_near_linerTrue {
+    width: 30px;
     height: 6px;
-    background: rgba(16, 133, 136, 1);
     border-radius: 3px;
     margin-right: 8px;
   }
-  .show_near_false{
-    width: 16px;
+  .show_near_false {
+    width: 20px;
     height: 6px;
-    background: rgba(229, 229, 229, 1);
     border-radius: 3px;
     margin-right: 8px;
-    
   }
 }

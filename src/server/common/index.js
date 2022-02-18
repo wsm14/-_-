@@ -1,87 +1,26 @@
-import { httpGet, httpPost, httpOtherGet } from "@/api/newRequest";
-import Taro from "@tarojs/taro";
-/*
- * params
- *
- * 用户奖励卡豆支出：root：userTrade，parent：expenses
- * 用户奖励卡豆收入：root：userTrade，parent：earn
- * 用户收益卡豆支出：root：userIncomeTrade，parent：expenses
- * 用户收益卡豆收入：root：userIncomeTrade，parent：earn
- * 现金 root：userCashTrade
- * */
-import { objStatus } from "@/common/utils";
-export const getRootAndParent = (data, fn) => {
-  httpGet(
-    {
-      url: "/common/dictionary/listDictionaryByRootAndParent",
-      data: data,
-    },
-    (res) => {
-      return fn(res);
-    }
-  );
-};
-//我的页面数据
-export const getAddress = (data, fn) => {
-  httpOtherGet(
-    {
-      data: data,
-      url: "https://apis.map.qq.com/ws/geocoder/v1/",
-    },
-    (res) => {
-      return fn(res);
-    }
-  );
-};
-//获取城市定位信息
+import { httpGet, httpPost } from "@/utils/request";
+import store from "./../../model";
 
-export const getCategory = (data, fn) => {
-  httpGet(
-    {
-      url: "/common/category/listCategory",
-      data: data,
-    },
-    (res) => {
-      return fn && fn(res);
-    }
-  );
-};
-//获取品类
-
-export const getLimit = (data, fn) => {
-  httpGet(
-    {
-      data: data,
-      url: "/common/property/getLastProperty",
-    },
-    (res) => {
-      fn && fn(res);
-    }
-  );
-};
-//获取距离
-
-export const getBanner = (data, fn) => {
-  httpGet(
-    {
-      data: data,
-      url: "/common/banner/listBanner",
-    },
-    (res) => {
-      fn && fn(res);
-    }
-  );
+export const fetchBanner = (data = {}) => {
+  return httpGet({
+    data: data,
+    url: "/common/banner/listBanner",
+  });
 };
 //获取轮播图
 
-/*
-*
-*
-
-parent：activity
-child：hideStatus*/
-export const getDictionary = (data, fn) => {
+export const fetchShareParamInfo = (data = {}, fn) => {
   httpGet(
+    {
+      url: "/common/shareParam/getShareParam",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取解密分享码
+export const fetchDictionary = (data, fn) => {
+  return httpGet(
     {
       data: data,
       url: "/common/dictionary/getDictionaryByParentAndChild",
@@ -91,113 +30,109 @@ export const getDictionary = (data, fn) => {
     }
   );
 };
-
 //通过父节点和子节点获取字典
-export const getListTopic = (data, fn) => {
-  httpGet(
+export const fetchShareInfo = (data = {}, fn) => {
+  const { authStore } = store;
+  const { shareType = {} } = authStore;
+  const { sourceKey, sourceType } = shareType;
+  return httpGet(
     {
+      url: "/common/share/getShareInfo",
+      data: {
+        ...data,
+        sourceKey,
+        sourceType,
+      },
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户分享通用接口
+export const fetchConfigWindVaneBySizeNew = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/category/scenes/listConfigWindVaneBySizeNew",
       data: data,
-      url: "/common/topic/listTopicBySearchContent",
+    },
+    (res) => fn && fn(res)
+  );
+};
+//逛逛风向标
+export const getSpecialGoodsCategory = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/category/listSpecialGoodsCategory",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//逛逛特惠商品筛选项
+export const fetchAroundModule = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/configModule/getWanderAroundModule",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//逛逛配置项;
+export const fetchUserShareCommission = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userInfo/getUserShareCommission",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取卡豆抵扣详情
+
+export const fetchShareConfig = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/share/getShareConfig",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取分享配置
+export const fetchCategory = (data, fn) => {
+  return httpGet(
+    {
+      url: "/common/category/listCategoryByParentId",
+      data: data,
     },
     (res) => {
-      fn && fn(res);
+      return fn && fn(res);
     }
-  );
-};
-/*
- * page: 页数
- * limit: 行数，
- * keyword 话题名称
- * */
-//通过名字搜索话题
-
-export const getTopicDetail = (data, fn) => {
-  httpGet(
-    {
-      data: data,
-      url: "/common/topic/getTopicDetail",
-    },
-    (res) => {
-      fn && fn(res);
-    }
-  );
-};
-//話題詳情
-
-export const checkLocation = (data, fn) => {
-  httpGet(
-    {
-      data: data,
-      url: "/common/locationCity/checkLocationCityStatus",
-    },
-    (res) => {
-      fn && fn(res);
-    }
-  );
-};
-//查询城市开通状态
-
-export const listAllLocationCity = (data, fn) => {
-  httpGet(
-    {
-      data: data,
-      url: "/common/locationCity/listAllLocationCity",
-    },
-    (res) => {
-      fn && fn(res);
-    }
-  );
-};
-//查询所有的开通城市
-
-export const getLocationCity = (data, fn) => {
-  httpGet(
-    {
-      data: data,
-      url: "/common/locationCity/getLocationCity",
-    },
-    (res) => {
-      fn && fn(res);
-    }
-  );
-};
-//城市码查询开通城市
-
-export const getMomentBarrage = (data = {}, fn) => {
-  httpGet(
-    {
-      url: "/common/dictionary/listMomentBarrage",
-      data: data,
-    },
-    (res) => fn(res)
-  );
-};
-//获取连刷视频弹幕动态
-
-export const listParentCategory = (data = {}, fn) => {
-  httpGet(
-    {
-      url: "/common/category/listParentCategory",
-      data: data,
-    },
-    (res) => fn(res)
   );
 };
 //获取品类
-
-export const getShareParamInfo = (data = {}, fn) => {
-  httpGet(
+export const fetchBusinessHub = (data = {}, fn) => {
+  return httpGet(
     {
-      url: "/common/shareParam/getShareParam",
+      url: "/common/businessHub/lisBusinessHubByCityCode",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
-//获取解密分享码
-
-export const getConfigWindVaneBySize = (data = {}, fn) => {
-  httpGet(
+//获取商圈
+export const fetchGoodsTag = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/config/goods/tag/listGoodsTag",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//通过行业id & 端类型获取商品标签;
+export const fetchConfigWindVaneBySize = (data = {}, fn) => {
+  return httpGet(
     {
       url: "/common/category/scenes/listConfigWindVaneBySize",
       data: data,
@@ -206,37 +141,166 @@ export const getConfigWindVaneBySize = (data = {}, fn) => {
   );
 };
 //获取风向标
-
-export const getSpecialGoodsCategory = (data = {}, fn) => {
-  httpGet(
+export const fetchGetAdderssInfo = (data = {}, fn) => {
+  return httpGet(
     {
-      url: "/common/category/listSpecialGoodsCategory",
+      url: "/common/third/aliyun/address/getAliyunAddressInfo",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
-//获取解密分享码
-
-export const getShareInfo = (data = {}, fn) => {
-  httpGet(
+// 粘贴获取地址识别接口;
+export const fetchNewShareInfo = (data, fn) => {
+  return httpGet(
     {
-      url: "/common/share/getShareInfo",
+      data: data,
+      url: "/common/share/getNewShareInfo",
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取新分享配置
+export const fetchTabTag = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/indexTab/listIndexTabTag",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
-//获取解密分享码
-
-export const getBusinessHub = (data = {}, fn) => {
-  httpGet(
+//视频配置项
+export const fetchUgcMomentRule = (data = {}, fn) => {
+  return httpGet(
     {
-      url: "/common/businessHub/lisBusinessHubByCityCode",
+      url: "/common/dictionary/getUgcMomentRule",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
-//获取解密分享码
+//ugc配置项
 
+export const fetchPhoneBill = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/listPhoneBill",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 话费充值列表
+
+export const fetchRechargeMemberList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/listNewAllLsxdProduct",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 会员充值列表
+export const getRootAndParent = (data, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/listDictionaryByRootAndParent",
+      data: data,
+    },
+    (res) => {
+      return fn(res);
+    }
+  );
+};
+//用户奖励
+
+export const fetchRechargeMemberLsxdList = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/listLsxdProduct",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 会员充值项目列表
+
+export const fetchRechargeMemberLsxdDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/getLsxdVirtualProductOrderPrice",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 会员充值项目详情
+
+export const fetchMemberOrderSumbit = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/order/saveVirtualProductOrder",
+      data: data,
+    },
+    (res) => {
+      fn && fn(res);
+    }
+  );
+};
+// 会员充值确认下单
+
+export const fetchPhoneBillDetail = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/third/virtualProduct/getPhoneBillVirtualProductOrderPrice",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 话费充值项目详情;
+
+export const fetchVirtualProductCheckBuyLimit = (data) => {
+  return httpGet({
+    url: "/common/third/virtualProduct/checkBuyLimit",
+    data: data,
+  });
+};
+// 虚拟商品充值限制查询
+
+export const fetchSpecialBarrage = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/dictionary/getPhoneBillBarrage",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 活动卡豆弹幕;
+
+export const fetchCollection = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/common/config/collection/page/listConfigCollectionByAreaType",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 获取收集页配置卡豆规则;
+
+export const fakeOperatingLog = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/common/operatingLog/saveOperatingSystemLog",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 获取收集页配置卡豆规则;

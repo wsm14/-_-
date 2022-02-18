@@ -1,0 +1,167 @@
+.bottom_shop_box {
+  margin-bottom: 24px;
+  width: 335px;
+  line-height: 1;
+  background: #ffffff;
+  border-radius: 8px;
+}
+.bottom_shop_box:last-child {
+  margin-right: 0px;
+}
+.bottom_shop_img {
+  width: 335px;
+  height: 268px;
+  background: #d8d8d8;
+  border-radius: 8px 8px 0 0;
+}
+.bottom_shop_content {
+  padding: 16px 16px 24px;
+}
+.bottom_shop_goodsName {
+  height: 88px;
+  color: #333333;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 44px;
+}
+.bottom_shop_user {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  .bottom_shop_profile {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    background: #d8d8d8;
+    border-radius: 50%;
+  }
+  .bottom_shop_name {
+    margin-left: 8px;
+    color: #999999;
+    font-weight: 400;
+    font-size: 24px;
+  }
+  .bottom_shop_limit {
+    flex-shrink: 0;
+    color: #999999;
+    font-weight: 400;
+    font-size: 24px;
+  }
+}
+.bottom_shop_realPrice {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  color: #333333;
+}
+.bottom_shop_realLabel {
+  color: #333333;
+  font-weight: 400;
+  font-size: 22px;
+}
+.bottom_shop_price {
+  margin-left: 4px;
+  color: #333333;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.bottom_shop_oldPrice {
+  display: flex;
+  align-items: center;
+  padding-top: 8px;
+  color: #999999;
+}
+.bottom_shop_oldLabel {
+  color: #999999;
+  font-weight: 400;
+  font-size: 20px;
+}
+.bottom_shop_oldPrice1 {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  color: #999999;
+}
+.bottom_shop_oldcout {
+  color: #999999;
+  font-weight: bold;
+  font-weight: bold;
+  font-size: 28px;
+  text-decoration: line-through;
+}
+.bottom_qy_price {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  color: #ef476f;
+  .bottom_qy_label {
+    color: #ef476f;
+    font-weight: 400;
+    font-size: 22px;
+  }
+  .bottom_qy_bean {
+    margin-left: 4px;
+    color: #ef476f;
+    font-weight: bold;
+    font-size: 32px;
+  }
+}
+.bottom_kol_info {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  .bottom_kol_s {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    height: 36px;
+    margin-right: 8px;
+    padding: 0 8px 0 0;
+    background: #fef1f4;
+    border-radius: 4px;
+  }
+  .bottom_kol_s::before {
+    display: block;
+    width: 69px;
+    height: 36px;
+    margin-right: 14px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon895.png)
+      no-repeat;
+    background-size: 100% 100%;
+    content: "";
+  }
+  .bottom_kol_bean {
+    color: rgba(239, 71, 111, 1);
+    font-weight: bold;
+    font-size: 28px;
+  }
+  .bottom_kol_z {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 8px;
+    background: #fef1f4;
+    border-radius: 4px;
+  }
+  .bottom_kol_z::before {
+    display: block;
+    flex-shrink: 0;
+    width: 23px;
+    height: 20px;
+    margin-right: 14px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/z_icon.png)
+      no-repeat;
+    background-size: 100% 100%;
+    content: "";
+  }
+  .bottom_kol_money {
+    color: #ef476f;
+    font-weight: bold;
+    font-size: 28px;
+  }
+
+  .bottom_dakale_height {
+    height: 48px;
+  }
+}

@@ -1,83 +1,89 @@
 page {
-  background: #F2F2F2;;
+  background: #f2f2f2;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   overflow: hidden;
 }
-.businessSell_box{
+.businessSell_box {
   width: 100%;
   height: 100%;
-  background: #F2F2F2;;
+  background: #ffffff;
   box-sizing: border-box;
   overflow: hidden;
   line-height: 1;
-  .businessSell_title{
-    height: 86px;
+  .businessSell_title {
+    height: 36px;
     display: flex;
     align-items: center;
-    padding: 0 30px;
-    background: #FFFFFF;
-    .businessSell_title_box{
+    padding: 32px 32px 0;
+    background: #ffffff;
+    .businessSell_title_box {
       height: 36px;
       display: flex;
       align-items: center;
-      .businessSell_title_icon1{
+      .businessSell_title_icon1 {
         width: 36px;
         height: 36px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon378.png") no-repeat;
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon542.png")
+          no-repeat;
         background-size: 100% 100%;
         margin-right: 9px;
       }
-      .businessSell_title_icon2{
+      .businessSell_title_icon2 {
         width: 36px;
         height: 36px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon379.png") no-repeat;
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon543.png")
+          no-repeat;
         background-size: 100% 100%;
         margin-right: 9px;
       }
-      .businessSell_title_name{
+      .businessSell_title_name {
         font-size: 28px;
         height: 36px;
         line-height: 36px;
+        font-weight: bold;
       }
-
     }
   }
-  .businessSell_liner{
+  .businessSell_liner {
     width: 690px;
     height: 2px;
-    background: #E6E6E6;
+    background: #e6e6e6;
     margin: 0 auto;
   }
-  .businessSell_tagsBox{
-    padding: 20px 76px 30px 76px;
-    font-size: 24px;
-    background: #FFFFFF;
-    .businessSell_tagsType{
+  .businessSell_tagsBox {
+    padding: 38px 76px 0px 76px;
+    font-size: 28px;
+    background: #ffffff;
+    .businessSell_tagsType {
+      line-height: 28px;
+      font-weight: bold;
+    }
+    .businessSell_tagsData {
+      margin-top: 24px;
+      color: #666666;
       height: 24px;
       line-height: 24px;
     }
-    .businessSell_tagsData{
-      margin-top: 30px;
-      color: #555555;
-      height: 24px;
-      line-height: 24px;
-    }
-    .businessSell_tags{
+    .businessSell_tags {
       display: flex;
       width: 100%;
-
     }
-    .businessSell_tag_server{
+    .businessSell_tag_server {
       font-size: 24px;
       color: #333333;
       margin-right: 29px;
-      line-height: 36px;
+      height: 40px;
+      padding: 0 16px;
+      line-height: 40px;
+      border-radius: 8px;
+      border: 1px solid #333333;
       display: inline-block;
+      margin-bottom: 12rpx;
     }
   }
-  .businessSell_top{
-    margin-top: 20px;
+  .businessSell_top {
+    padding-top: 48px;
   }
 }

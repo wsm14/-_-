@@ -1,11 +1,12 @@
-import { httpGet, httpPost } from "@/api/newRequest";
+import { httpGet, httpPost } from "@/utils/request";
+import Taro from "@tarojs/taro";
+import { loginStatus, objStatus } from "@/utils/utils";
 /*
  * params token
  * */
-import { objStatus } from "@/common/utils";
 
 export const getMainPage = (data, fn) => {
-  httpGet(
+  return httpGet(
     {
       url: "/user/userInfo/mainPage",
       data: data,
@@ -188,3 +189,139 @@ export const getLevel = (data = {}, fn) => {
   );
 };
 //获取达人等级相关
+
+export const saveUpdateLoginUserInfo = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/userInfo/updateLoginUserInfo",
+      data: data,
+    },
+    (res) => fn(res)
+  );
+};
+//获取达人等级相关
+
+export const saveLevelTarget = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/user/level/manualUpgrade",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//升级哒人等级
+export const fetchActiveStatus = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/activity/getActivityStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取达人等级相关
+
+export const fetchGroupSubMerchant = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/listGroupSubMerchant",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取达人等级相关
+
+export const fetchRealNameInfo = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/realName/getRealNameInfo",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//获取用户实名认证状态
+
+export const fakeSubmitRealName = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/realName/submitRealName",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//提交用户提名
+
+export const fakeSubmitUserLocation = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/userLocation/saveUserLocation",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户每次打开小程序获取定位后提交定位信息
+
+export const fetchPromotionStatus = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/userMerchant/getOwnerExistPromotionStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户每次打开小程序获取定位后提交定位信息
+
+export const fakRewarde = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/moment/watch/antiReward",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户每次打开小程序获取定位后提交定位信息
+export const fakeMomentReward = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/user/moment/watch/ugcWatchMomentReward",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户获取ugc卡豆
+export const fakeWechatPayInfo = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/pay/wechat/getWechatPayInfo",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//获取微信支付需要的参数接口
+//微信支付
+export const handlePayWechat = (data = {}, callback) => {
+  const { xcxOpenId } = loginStatus();
+  return fakeWechatPayInfo({ ...data, openId: xcxOpenId }).then((val) => {
+    const { payParams } = val;
+    Taro.requestPayment({
+      ...payParams,
+      success: (res) => {
+        callback && callback({ result_status: "succeeded" });
+      },
+      fail: () => {
+        callback && callback({ result_status: "fail" });
+      },
+    });
+  });
+};

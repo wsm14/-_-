@@ -1,0 +1,80 @@
+@import "@/assets/css/global.scss";
+
+page {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+}
+
+.AdvertisingVideo_page {
+  width: 100%;
+  height: 100%;
+  .AdvertisingVideo_bean_Video {
+    width: 100%;
+    height: 100%;
+  }
+  .AdvertisingVideo_head {
+    position: absolute;
+    top: 144px;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    z-index: 100;
+    .dakaleText {
+      width: 117px;
+      height: 36px;
+      margin-right: 55px;
+    }
+
+    .video_close,
+    .step_time {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      height: 56px;
+      padding: 0 16px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #ffffff;
+      border-radius: 8px;
+      line-height: 28px;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .step_time_box {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      .timeTitle {
+        line-height: initial;
+        &::after {
+          content: "";
+          display: inline-block;
+          width: 2px;
+          height: 20px;
+          background-color: rgba(255, 255, 255, 0.3);
+          border-radius: 1px;
+          margin: 0 10px;
+        }
+      }
+    }
+    .video_close {
+      justify-content: center;
+      margin-left: 16px;
+    }
+  }
+  .AdvertisingVideo_title {
+    position: absolute;
+    bottom: 214px;
+    left: 0;
+    right: 0;
+    border-radius: 0 0 5px 5px;
+    padding: 0 32px;
+    font-size: 28px;
+    color: #ffffff;
+    line-height: 42px;
+    @include fontNoMany();
+  }
+}

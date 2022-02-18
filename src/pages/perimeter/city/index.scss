@@ -7,81 +7,132 @@ page {
 .city_box {
   width: 100%;
   min-height: 100%;
-  background: #ffffff;
-  .city_content_box {
-    width: 100%;
-    height: 440px;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon445.png")
+  padding-bottom: 30px;
+  box-sizing: border-box;
+  background: #f5f5f5;
+
+  .city_title {
+    padding: 20px 30px 0;
+    height: 33px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #777777;
+    line-height: 33px;
+  }
+
+  .city_tags {
+    padding: 20px 28px 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .city_father {
+    background: #ffffff;
+  }
+  .max_font_width {
+    max-width: 84px;
+  }
+  .city_tags_box {
+    height: 64px;
+    padding: 0 72px;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 2px solid #e5e5e5;
+    box-sizing: border-box;
+    font-size: 28px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .city_tags_select {
+    height: 64px;
+    width: 200px;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 2px solid #e5e5e5;
+    box-sizing: border-box;
+    font-size: 28px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .city_tags_error::before {
+    content: "";
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon783.png")
       no-repeat;
     background-size: 100% 100%;
-    position: relative;
-    .city_content_user {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 380px;
-      z-index: 10;
-      height: 100px;
-      width: 600px;
-      margin: 0 auto;
-      background: #108588;
-      border-radius: 60px;
-      border: 2px solid #333333;
-      .city_content_userIcon {
-        width: 98px;
-        height: 118px;
-        position: absolute;
-        bottom: 15px;
-        left: 24px;
-        background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon443.png")
-          no-repeat;
-        background-size: 100% 100%;
-      }
-      .city_content_userName {
-        text-indent: 146px;
-        padding-top: 18px;
-        font-size: 32px;
-        color: #ffffff;
-      }
-      .city_content_desc {
-        text-indent: 146px;
-        padding-top: 8px;
-        font-size: 24px;
-        color: rgba(255, 255, 255, 0.8);
-      }
-    }
   }
-  .city_content_citys {
-    margin-top: 72px;
-    .city_content_cityImage {
-      width: 100%;
-      height: 240px;
-      .city_content_font1 {
-        padding: 32px 32px 0;
-        font-size: 42px;
-        color: #ffffff;
-      }
-      .city_content_font2 {
-        padding: 12px 32px 0;
-        font-size: 36px;
-        color: #ffffff;
-      }
-    }
+  .city_tags_init::before {
+    content: "";
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon782.png")
+      no-repeat;
+    background-size: 100% 100%;
   }
-  .city_content_bottom {
-    width: 100%;
-    height: 214px;
+
+  .city_tags_boxIcon {
+    width: 34px;
+    height: 34px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon355.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin-right: 6px;
   }
-  .city_content_bottomGO {
+
+  .city_type_select {
+    height: 46px;
+    background: #fafafa;
+    line-height: 46px;
+    font-size: 26px;
+    padding: 0 32px;
+  }
+
+  .city_type_selectTab {
+    margin: 0 30px;
+    height: 88px;
+    line-height: 88px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .city_father .city_type_selectTab:last-child {
+    border-bottom: 0px solid #ffffff;
+  }
+
+  .city_right_layer {
     position: fixed;
+    right: 8px;
+    width: 44px;
+    display: flex;
+    align-items: center;
+    top: 0;
     bottom: 0;
-    left: 0;
-    right: 0;
-    height: 154px;
-    width: 360px;
-    background: url("https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/image/icon444.png")
-      no-repeat;
-    background-size: 100% 100%;
-    margin: 0 auto;
+    text-align: center;
+    .city_child_box {
+      width: 44px;
+      text-align: center;
+      height: 30px;
+      font-size: 22px;
+      font-weight: 400;
+      color: #777777;
+      line-height: 30px;
+      margin-bottom: 7px;
+    }
+  }
+  .city_toast_box {
+    margin: 32px 40px 0;
+    font-size: 28px;
+
+    font-weight: 400;
+    color: #666666;
+    line-height: 42px;
   }
 }

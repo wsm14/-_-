@@ -1,0 +1,86 @@
+.shop_seachView {
+  width: 100%;
+  min-height: 100%;
+  background: #ffffff;
+  .shop_seach_box {
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+  }
+  .search_shop_input {
+    width: 518px;
+    height: 64px;
+    border-radius: 32px;
+    background: #f5f5f5
+      url("https://wechat-config.dakale.net/miniprogram/image/icon336.png")
+      no-repeat;
+    background-size: 36px 36px;
+    background-position: 32px 14px;
+    display: block;
+    padding-left: 80px;
+    font-size: 24px;
+  }
+  .search_close {
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    margin-left: 32px;
+  }
+  .shop_seach_nullStatus {
+    width: 300px;
+    height: 300px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon615.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin: 76px auto 0;
+  }
+  .shop_seach_nullfont {
+    margin: 32px 0 0;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+  }
+  .shop_seach_top {
+    padding-top: 48px;
+  }
+  .template_map {
+    margin: 0 32px 32px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid rgba(229, 229, 229, 1);
+    .template_map_box {
+      height: 80px;
+      display: flex;
+      .template_map_img {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+      }
+      .template_map_content {
+        margin-left: 16px;
+        height: 80px;
+        .template_map_title {
+          width: 590px;
+          font-size: 32px;
+          font-weight: 400;
+          color: #333333;
+        }
+        .template_map_address {
+          width: 590px;
+          font-size: 24px;
+          font-weight: 400;
+          color: #999999;
+          display: flex;
+          padding-top: 16px;
+          .template_map_limit {
+            margin-left: auto;
+          }
+          .template_map_left {
+            width: 480px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.specalActive_box {
+  margin: 16px 0 0;
+  padding: 32px 12px 40px;
+  background: #ffffff;
+  position: relative;
+  .specalActive_title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .specalActive_goods{
+    margin-top: 40px;
+  }
+  .specalActive_liner {
+    width: 140px;
+    height: 12px;
+    background: #ef476f;
+    position: absolute;
+    top: 56px;
+    left: 50%;
+    margin-left: -70px;
+    z-index: 1;
+  }
+}

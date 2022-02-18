@@ -2,8 +2,8 @@ import { observable } from "mobx";
 import Taro from "@tarojs/taro";
 const authStore = observable({
   userInfo: Taro.getStorageSync("userInfo") || {},
-  shareType: {
-  },
+  login: 0,
+  shareType: {},
   setUserInfoStore(obj) {
     this.userInfo = obj;
   },
@@ -11,6 +11,9 @@ const authStore = observable({
     this.shareType = {
       ...obj,
     };
+  },
+  setLoginStatus() {
+    this.login = this.login + 1;
   },
 });
 export default authStore;

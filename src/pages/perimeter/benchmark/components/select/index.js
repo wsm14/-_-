@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Taro from "@tarojs/taro";
-import { getBusinessHub } from "@/server/common";
+import { fetchBusinessHub } from "@/server/common";
 import { Image, View, ScrollView } from "@tarojs/components";
 import classNames from "classnames";
 import "./index.scss";
@@ -50,7 +50,7 @@ export default (props) => {
 
   useEffect(() => {
     if (businessHubList.length === 0) {
-      getBusinessHub({}, (res) => {
+      fetchBusinessHub({}, (res) => {
         const { businessHubList } = res;
         setBusinessHubList(businessHubList);
       });

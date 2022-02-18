@@ -1,0 +1,372 @@
+//
+.perimeter_shop_box {
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+  position: relative;
+  background: #ffffff;
+  overflow: hidden;
+  .select_top_tagBox {
+    width: 136px;
+    height: 44px;
+    border-radius: 24px;
+    display: inline-block;
+    margin-right: 16px;
+    text-align: center;
+    line-height: 44px;
+    box-sizing: border-box;
+    font-size: 24px;
+    font-weight: 400;
+  }
+  .select_top_tagColor1 {
+    color: #999999;
+  }
+  .select_top_tagColor2 {
+    color: #07c0c2;
+  }
+  .perimeter_shop_searchTitle {
+    width: 688px;
+    height: 64px;
+    margin: 0 auto;
+    .perimeter_shop_searchInput {
+      width: 614px;
+      height: 64px;
+      background: #f5f5f5;
+      border-radius: 32px;
+      background: #f5f5f5
+        url(https://wechat-config.dakale.net/miniprogram/image/icon336.png)
+        no-repeat;
+      background-size: 36px 36px;
+      background-position: 32px 14px;
+      text-indent: 80px;
+      line-height: 64px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+    }
+    .perimeter_shop_scan {
+      width: 48px;
+      height: 48px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon614.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
+  .perimeter_shop_select {
+    width: 100%;
+    height: 88px;
+    display: flex;
+    align-items: center;
+    .perimeter_select_left {
+      width: 208px;
+      display: flex;
+      align-items: center;
+      height: 88px;
+      .perimeter_select_icon {
+        width: 48px;
+        height: 48px;
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon618.png")
+          no-repeat;
+        background-size: 100% 100%;
+        margin-left: 32px;
+      }
+      .perimeter_select_font {
+        margin-left: 4px;
+        font-size: 24px;
+        font-weight: 500;
+        color: #333333;
+      }
+      .perimeter_select_count {
+        margin-left: 8px;
+        width: 36px;
+        height: 36px;
+        background: rgba(7, 192, 194, 0.1);
+        font-size: 24px;
+        font-weight: 600;
+        color: #07c0c2;
+        border-radius: 50%;
+      }
+    }
+    .perimeter_select_right {
+      width: 556px;
+      height: 88px;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .perimeter_shop_scrollBox {
+    position: absolute;
+    top: 154px;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    background: #108588;
+  }
+  .perimeter_shop_scroll {
+    padding: 32px 24px 0px;
+  }
+  .shop_init_nullStatus {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto 0;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon615.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .shop_init_nullfont {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 28px;
+  }
+  .template_shop_box {
+    width: 702px;
+    background: #ffffff;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  .template_shop_detailsBox {
+    padding: 16px 16px 24px;
+    display: flex;
+    .template_shop_img {
+      width: 176px;
+      height: 176px;
+      border-radius: 4px;
+    }
+    .template_shop_font {
+      height: 176px;
+      margin-left: 16px;
+      .template_shop_merchantName {
+        padding-top: 4px;
+        width: 478px;
+        font-size: 28px;
+        font-weight: 600;
+        color: #333333;
+        line-height: 28px;
+      }
+      .template_shop_bussionTime {
+        padding-top: 20px;
+        width: 478px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        .bussionTime_tag {
+          padding: 0px 8px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          border-radius: 4px;
+        }
+        .bussionTime_tag_color1 {
+          background: rgba(16, 133, 136, 0.1);
+          color: rgba(16, 133, 136, 1);
+        }
+        .bussionTime_tag_color2 {
+          background: rgba(153, 153, 153, 0.1);
+          color: rgba(153, 153, 153, 1);
+        }
+        .bussionTime_liner {
+          width: 1px;
+          height: 20px;
+        
+          border-radius: 1px;
+        }
+        .bussionTime_liner_color1 {
+          background: rgba(16, 133, 136, 0.3);
+        }
+        .bussionTime_liner_color2 {
+          background: rgba(153, 153, 153, 0.3);
+        }
+        .bussionTime_margin {
+          margin-left: 8px;
+        }
+      }
+      .template_shop_peoplePay {
+        margin-top: 20px;
+        width: 478px;
+        height: 24px;
+        display: flex;
+        .template_peopleLeft {
+          display: flex;
+          align-items: center;
+          font-size: 24px;
+          font-weight: 400;
+          color: #999999;
+        }
+        .template_peopleRight {
+          margin-left: auto;
+          height: 32px;
+
+          .template_tags {
+            padding: 7px 12px;
+            color: #108588;
+            font-size: 24px;
+            background: rgba(16, 133, 136, 0.1);
+            border-radius: 16px;
+            margin-right: 8px;
+            max-width: 140px;
+          }
+          .template_tags:last-child {
+            margin-right: 0px;
+          }
+        }
+      }
+      .template_shop_address {
+        padding-top: 20px;
+        width: 478px;
+        display: flex;
+        font-size: 24px;
+        font-weight: 400;
+        color: #999999;
+      }
+      .template_shop_addressFont {
+        width: 378px;
+      }
+      .template_shop_limit {
+        margin-left: auto;
+      }
+    }
+  }
+}
+.page_shop_coupon {
+  height: 32px;
+  border: 2px solid #ffa432;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 8px 2px 2px 2px;
+  margin-right: 8px;
+}
+.page_shop_icon2 {
+  width: 40px;
+  height: 32px;
+  background: #ffa432;
+  border-radius: 8px 2px 8px 2px;
+  border: 2px solid #ffa432;
+}
+.page_shop_center {
+  display: flex;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.page_shop_cou {
+  width: 23px;
+  height: 22px;
+  background: url(https://wechat-config.dakale.net/miniprogram/image/icon514.png)
+    no-repeat;
+  background-size: 100% 100%;
+}
+.page_shop_text2 {
+  height: 32px;
+  padding: 0 8px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 400;
+  color: #ffa432;
+  max-width: 160px;
+  display: flex;
+  align-items: center;
+}
+.page_shop_active {
+  display: flex;
+  align-items: center;
+  padding: 0px 16px 24px;
+  .template_bean {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #ef476f;
+    margin-right: 8px;
+  }
+  .template_bean::before {
+    width: 32px;
+    height: 32px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon462.png")
+      no-repeat;
+    background-size: 100% 100%;
+    content: "";
+    display: block;
+    margin-right: 8px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333333;
+  }
+  .template_specal {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px 2px 2px 2px;
+    margin-right: 8px;
+    .template_icon1 {
+      border-radius: 8px 2px 8px 2px;
+      .template_hui {
+        width: 32px;
+        height: 30px;
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon617.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .template_text1 {
+      height: 30px;
+      padding: 0 8px;
+      text-align: center;
+      line-height: 30px;
+      font-size: 22px;
+      font-weight: 400;
+      color: #333333;
+    }
+  }
+  .template_coupon {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px 2px 2px 2px;
+    margin-right: 8px;
+
+    .template_icon2 {
+      border-radius: 8px 2px 8px 2px;
+      .template_cou {
+        width: 32px;
+        height: 30px;
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon616.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+    .template_text2 {
+      height: 32px;
+      padding: 0 8px;
+      text-align: center;
+      line-height: 32px;
+      font-size: 22px;
+      font-weight: 400;
+      color: #333333;
+      max-width: 184px;
+    }
+  }
+}
+.page_shop_activeTag {
+  width: 104px;
+  height: 32px;
+  margin-right: 8px;
+}
+.page_shop_bg1 {
+  background: url("https://web-new.dakale.net/public/image/rank/rank_3.png")
+    no-repeat;
+  background-size: 100% 100%;
+}
+.page_shop_bg2 {
+  background: url("https://web-new.dakale.net/public/image/rank/rank_4.png")
+    no-repeat;
+  background-size: 100% 100%;
+}

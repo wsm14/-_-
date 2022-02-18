@@ -1,0 +1,256 @@
+page {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 236, 209, 1);
+  .Grab_box {
+    width: 100%;
+    height: 1495px;
+    line-height: 1;
+    background-image: url("https://wechat-config.dakale.net/miniprogram/image/iconupdate_img.png");
+    background-size: 100% 100%;
+    .Grab_getbean_box {
+      padding-top: 259px;
+      padding-bottom: 128px;
+    }
+    .Grab_getbean_image {
+      width: 712px;
+      height: 920px;
+      margin: 0 auto;
+      background-image: url("https://wechat-config.dakale.net/miniprogram/image/icon751.png");
+      background-size: 100% 100%;
+      .Grab_getbean_height {
+        height: 58px;
+      }
+      .Grab_getbean_profile {
+        margin: 0 auto;
+        width: 124px;
+        height: 124px;
+        background: #e7f2f3;
+        border: 2px solid #ffffff;
+        box-sizing: border-box;
+        border-radius: 50%;
+      }
+      .Grab_getbean_name {
+        padding-top: 24px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #ffffff;
+        text-align: center;
+        max-width: 320px;
+        margin: 0 auto;
+      }
+    }
+    .Grab_showBean_height {
+      height: 248px;
+    }
+    .Grab_showBean_box {
+      max-height: 1150px;
+      background: #ffffff;
+      border-radius: 40px;
+      margin: 0 32px;
+      padding: 48px 24px 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      .Grab_showBean_user {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .Grab_showBean_userProfile {
+          width: 48px;
+          height: 48px;
+          border: 2px solid #ffffff;
+          box-sizing: border-box;
+          border-radius: 50%;
+          background: #e7f2f3;
+        }
+        .Grab_showBean_userName {
+          font-size: 32px;
+          margin-left: 16px;
+          font-weight: 600;
+          color: #333333;
+          line-height: 32px;
+          max-width: 320px;
+        }
+      }
+      .Grab_showBean_toast {
+        font-size: 24px;
+        font-weight: 400;
+        color: #666666;
+        line-height: 24px;
+        text-align: center;
+        margin-top: 24px;
+      }
+      .Grab_showBean_num {
+        padding-top: 64px;
+        color: rgba(239, 71, 111, 1);
+        text-align: center;
+        .Grab_showBean_font1 {
+          font-size: 80px;
+          font-weight: bold;
+        }
+        .Grab_showBean_font2 {
+          font-size: 32px;
+        }
+      }
+      .Grab_showBean_desc {
+        font-size: 32px;
+        font-weight: 400;
+        color: #333333;
+        line-height: 45px;
+        text-align: center;
+        margin-top: 12px;
+      }
+      .Grab_showBean_go {
+        font-size: 24px;
+        font-weight: 400;
+        color: #ef476f;
+        margin-top: 24px;
+        text-align: center;
+      }
+      .Grab_showBean_submitBox {
+        margin: 64px 48px 0;
+      }
+
+      .Grab_showBean_tagBox {
+        width: 32px;
+        height: 32px;
+        margin-left: 12px;
+      }
+      .Grab_showBean_tagBg1 {
+        background-image: url("https://wechat-config.dakale.net/miniprogram/image/icon754.png");
+        background-size: 100% 100%;
+      }
+      .Grab_showBean_tagBg2 {
+        background-image: url("https://wechat-config.dakale.net/miniprogram/image/icon755.png");
+        background-size: 100% 100%;
+      }
+      .Grab_showBean_btnBox {
+        width: 240px;
+        height: 60px;
+      }
+      .Grab_showBean_btnBg1 {
+        background-image: url("https://wechat-config.dakale.net/miniprogram/image/icon752.png");
+        background-size: 100% 100%;
+      }
+      .Grab_showBean_btnBg2 {
+        background-image: url("https://wechat-config.dakale.net/miniprogram/image/icon753.png");
+        background-size: 100% 100%;
+      }
+      .Grab_showBean_btnBg3 {
+        background-image: url("https://wechat-config.dakale.net/miniprogram/image/icon760.png");
+        background-size: 100% 100%;
+      }
+      .Grab_showBean_zhu {
+        margin: 48px auto 0;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 400;
+        color: #666666;
+        line-height: 24px;
+      }
+      .Grab_showBean_liner {
+        width: 638px;
+        height: 1px;
+        background: #e5e5e5;
+        border-radius: 40px;
+        margin: 40px auto 0;
+      }
+      .Grab_showBean_people {
+        padding-top: 32px;
+        font-size: 28px;
+        font-weight: 400;
+        color: #999999;
+        line-height: 28px;
+      }
+      .Grab_showBean_handerPeo {
+        max-height: 426px;
+        padding: 0px 0px 16px;
+      }
+      .Grab_people_contentliner {
+        width: 532px;
+        height: 2px;
+        background: #e5e5e5;
+        margin-top: 24px;
+      }
+      .Grab_people_list {
+        padding: 24px 0px 0px;
+        display: flex;
+        align-items: flex-start;
+        position: relative;
+        .Grab_people_profile {
+          width: 80px;
+          height: 80px;
+          border: 2px solid #ffffff;
+          box-sizing: border-box;
+          border-radius: 50%;
+        }
+        .Grab_people_content {
+          width: 532px;
+          margin-left: 19px;
+
+          .Grab_people_contentTop {
+            display: flex;
+            align-items: center;
+            padding-top: 4px;
+            .Grab_people_contentLeft {
+              font-size: 28px;
+              font-weight: 400;
+              color: #333333;
+            }
+            .Grab_people_contentRight {
+              font-size: 32px;
+              font-weight: 600;
+              color: #333333;
+              margin-left: auto;
+              flex: 1;
+              text-align: right;
+            }
+          }
+          .Grab_people_contentTime {
+            display: flex;
+            align-items: center;
+            padding-top: 20px;
+            font-size: 24px;
+            font-weight: 400;
+            color: #999999;
+          }
+        }
+      }
+
+      .Grab_notHandleBean_num {
+        padding-top: 64px;
+        font-size: 32px;
+        font-weight: 400;
+        color: #333333;
+        line-height: 45px;
+        text-align: center;
+      }
+      .Grab_notHandleBean_btn {
+        margin: 64px auto 0;
+      }
+    }
+  }
+  .Grab_winning {
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffb103;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 24px;
+    top: 76px;
+  }
+  .Grab_winning::before {
+    display: block;
+    width: 32px;
+    height: 28px;
+    background-image: url(https://wechat-config.dakale.net/miniprogram/image/winningIcon.png);
+    background-size: 100% 100%;
+    content: "";
+    margin-right: 8px;
+  }
+  .Grab_showBean_gg {
+    margin-top: 40px;
+  }
+}

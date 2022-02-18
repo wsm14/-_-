@@ -1,0 +1,28 @@
+.quit_video {
+  width: 631px;
+  margin-top: -100px;
+  .quit_video_tip {
+    font-size: 32px;
+    font-weight: 500;
+    color: #fff8cf;
+    line-height: 44px;
+    white-space: pre-wrap;
+    text-align: center;
+    margin-bottom: -50px;
+  }
+  .close_footer {
+    display: flex;
+    padding: 0 62px;
+    justify-content: space-between;
+    .close_footer_btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 240px;
+      height: 90px;
+      border-radius: 59px;
+      font-size: 36px;
+      font-weight: 600;
+    }
+  }
+}

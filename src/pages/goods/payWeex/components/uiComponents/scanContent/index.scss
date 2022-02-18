@@ -1,0 +1,47 @@
+.payWeex_scanContent_box {
+  margin: 32px;
+  padding: 64px 32px 48px;
+  background: #ffffff;
+  border-radius: 8px;
+  text-align: center;
+  .payWeex_scanContent_title {
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+  }
+  .payWeex_scanContent_price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    color: #333333;
+    margin-top: 32px;
+  }
+  .payWeex_scanContent_liner {
+    width: 622px;
+    height: 2px;
+    background: #e5e5e5;
+    border-radius: 1px;
+    margin: 32px auto 0;
+  }
+  .payWeex_scanContent_initBox {
+    padding: 16px 0 0;
+    .payWeex_scanContent_tags {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 24px;
+    }
+    .payWeex_label {
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      line-height: 24px;
+      flex-shrink: 1;
+    }
+    .payWeex_value {
+      font-size: 24px;
+      font-weight: 400;
+      color: #333333;
+    }
+  }
+}

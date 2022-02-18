@@ -1,0 +1,21 @@
+.beanWelfareZone_content {
+  View {
+    box-sizing: border-box;
+  }
+  .bwzGoodContent_content {
+    background-size: 100% 100%;
+    position: relative;
+    text-align: center;
+    .bwzgc_beanWelfareZone_btn {
+      width: 500px;
+      height: 96px;
+      font-weight: 600;
+      color: #ffffff;
+      text-shadow: 0px 3px 3px #ff9400;
+      background-color: transparent;
+      background-size: 100% 100%;
+      margin: 0 auto;
+      background-image: url("https://wechat-config.dakale.net/miniprogram/image/beanWelfareZone_btn.png");
+    }
+  }
+}
