@@ -54,14 +54,12 @@ export default ({ userInfo, type = "specalSelf" }) => {
         ...page,
         page: page.page + 1,
       });
-    } else {
-      if (index === 1) {
-        setPage({
-          ...page,
-          page: page.page + 1,
-        });
-      }
-    }
+    } else if (type !== "specalSelf" && index === 1) {
+      setPage({
+        ...page,
+        page: page.page + 1,
+      });
+    } else return;
   });
   const fetchCommerce = () => {
     fetchCommerceGoods({ ...page }).then((val) => {

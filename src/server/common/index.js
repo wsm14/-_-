@@ -299,6 +299,7 @@ export const fakeOperatingLog = (data = {}, fn) => {
     {
       url: "/common/operatingLog/saveOperatingSystemLog",
       data: data,
+      falg: false,
     },
     (res) => fn && fn(res)
   );
