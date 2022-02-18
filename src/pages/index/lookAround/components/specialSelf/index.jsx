@@ -10,6 +10,7 @@ import {
   template,
   templateGame,
 } from "@/components/public_ui/newGoodsObj";
+import Tarking from "@/components/tracking";
 import "./index.scss";
 export default ({ userInfo, type = "specalSelf" }) => {
   const [index, setIndex] = useState(0);
@@ -112,18 +113,20 @@ export default ({ userInfo, type = "specalSelf" }) => {
           >
             {renderObj.map((val, current) => {
               return (
-                <View
-                  onClick={() => {
-                    selectIndex(val.val);
-                  }}
-                  className={
-                    current === index
-                      ? "specialSelf_select"
-                      : "specialSelf_noSelect"
-                  }
-                >
-                  {val.key}
-                </View>
+                <Tarking blockName={val.key} name={"lookAroundTab"}>
+                  <View
+                    onClick={() => {
+                      selectIndex(val.val);
+                    }}
+                    className={
+                      current === index
+                        ? "specialSelf_select"
+                        : "specialSelf_noSelect"
+                    }
+                  >
+                    {val.key}
+                  </View>
+                </Tarking>
               );
             })}
           </View>

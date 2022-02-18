@@ -7,6 +7,7 @@ import { fetchShareParamInfo, fetchDictionary } from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
 import evens from "@/common/evens";
+import { fakeOperatingLog } from "@/server/common";
 import "./assets/css/app.scss";
 import "./assets/css/color.scss";
 import "./assets/css/font.scss";
@@ -29,8 +30,17 @@ class App extends Component {
 
     // this.fetchGlobalConfig();
   }
-
-  componentDidShow() {
+  componentDidHide() {
+    const data = Taro.getStorageSync("operatingLog");
+    if (data) {
+      fakeOperatingLog({ wechatLogObjectList: data }).then((val) => {
+        Taro.removeStorageSync("operatingLog");
+      });
+    }
+    return;
+  }
+  componentDidShow(e) {
+    this.fetchScene(e);
     this.fetchCheckUpdate();
     if (!Taro.cloud) {
       console.error("请使用 2.2.3 或以上的基础库以使用云能力");
@@ -76,11 +86,17 @@ class App extends Component {
       return;
     }
   }
+
   fetchGlobalConfig() {
     fetchGlobalConfig().then((val) => {
       console.log(val);
     });
   }
+  fetchScene(e) {
+    const { scene } = e;
+    Taro.setStorageSync("utm-medium", scene);
+  }
+  //设置渠道场景值
   fetchCheckUpdate() {
     // 判断目前微信版本是否支持自动更新
     if (Taro.canIUse("getUpdateManager")) {

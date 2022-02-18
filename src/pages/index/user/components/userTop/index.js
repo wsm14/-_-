@@ -2,6 +2,7 @@ import React from "react";
 import { View } from "@tarojs/components";
 import { backgroundObj, loginStatus, toast } from "@/utils/utils";
 import Router from "@/utils/router";
+import Tarking from "@/components/tracking";
 import { fakeUpdateLoginUserInfo } from "@/server/index";
 import "./index.scss";
 
@@ -222,14 +223,16 @@ export default (props) => {
   // 加入社群模块
   const EnterGroup = () => {
     return (
-      <View
-        className="user_top_enterGroup"
-        onClick={() => {
-          Router({
-            routerName: "enterGroup",
-          });
-        }}
-      ></View>
+      <Tarking name={"enterGroup"}>
+        <View
+          className="user_top_enterGroup"
+          onClick={() => {
+            Router({
+              routerName: "enterGroup",
+            });
+          }}
+        ></View>
+      </Tarking>
     );
   };
 

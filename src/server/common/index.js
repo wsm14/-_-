@@ -293,3 +293,14 @@ export const fetchCollection = (data = {}, fn) => {
   );
 };
 // 获取收集页配置卡豆规则;
+
+export const fakeOperatingLog = (data = {}, fn) => {
+  return httpPost(
+    {
+      url: "/common/operatingLog/saveOperatingSystemLog",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+// 获取收集页配置卡豆规则;

@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import Router from "@/utils/router";
+import Tarking from "@/components/tracking";
 import { format, backgroundObj } from "@/utils/utils";
 import "./index.scss";
 export const goodsCard = (item) => {
@@ -43,45 +44,47 @@ export const goodsCard = (item) => {
     }
   };
   return (
-    <View
-      className="goodsCard_box"
-      onClick={() => {
-        if (status === "0" || (status === "1" && remain === "0")) {
-          return;
-        }
-        return Router({
-          routerName: "favourableDetails",
-          args: {
-            merchantId: merchantIdString,
-            specialActivityId: specialActivityIdString,
-          },
-        });
-      }}
-    >
-      <View className="goodsCard_desc_box">
-        <View
-          className="goodsCard_desc_image dakale_nullImage"
-          style={backgroundObj(goodsImg)}
-        ></View>
-        <View className="goodsCard_right">
-          <View className="goodsCard_right_title font_hide">{goodsName}</View>
-          <View className="goodsCard_right_price public_auto">
-            <View className="shopDetails_left">
-              <Text style={{ fontSize: Taro.pxTransform(20) }}>¥</Text>
-              {" " + realPrice || ""}
-              <Text className="shopDetails_right">
-                ¥ {" " + oriPrice || ""}
-              </Text>
+    <Tarking args={item} name={"goodsCard"}>
+      <View
+        className="goodsCard_box"
+        onClick={() => {
+          if (status === "0" || (status === "1" && remain === "0")) {
+            return;
+          }
+          return Router({
+            routerName: "favourableDetails",
+            args: {
+              merchantId: merchantIdString,
+              specialActivityId: specialActivityIdString,
+            },
+          });
+        }}
+      >
+        <View className="goodsCard_desc_box">
+          <View
+            className="goodsCard_desc_image dakale_nullImage"
+            style={backgroundObj(goodsImg)}
+          ></View>
+          <View className="goodsCard_right">
+            <View className="goodsCard_right_title font_hide">{goodsName}</View>
+            <View className="goodsCard_right_price public_auto">
+              <View className="shopDetails_left">
+                <Text style={{ fontSize: Taro.pxTransform(20) }}>¥</Text>
+                {" " + realPrice || ""}
+                <Text className="shopDetails_right">
+                  ¥ {" " + oriPrice || ""}
+                </Text>
+              </View>
+              <View className="shop_zhekou  font20">{discount}折</View>
             </View>
-            <View className="shop_zhekou  font20">{discount}折</View>
-          </View>
-          <View className="goodsCard_btn public_auto">
-            <View>热卖中</View>
-            {templateBtn()}
+            <View className="goodsCard_btn public_auto">
+              <View>热卖中</View>
+              {templateBtn()}
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </Tarking>
   );
 };
 export const shopDetails = (data, obj) => {

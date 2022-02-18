@@ -13,6 +13,7 @@ import Taro from "@tarojs/taro";
 import { Swiper, SwiperItem, View, Image } from "@tarojs/components";
 import classNames from "classnames";
 import Router from "@/utils/router";
+import Tarking from "@/components/tracking";
 import "./index.scss";
 export default (props) => {
   const {
@@ -82,34 +83,44 @@ export default (props) => {
             {list.map((item, index) => {
               return (
                 <SwiperItem style={{ width: "100%", height: "100%" }}>
-                  <View
-                    onClick={() => linkTo(item)}
-                    style={
-                      imgStyle
-                        ? {
-                            background: `url(${
-                              item[imgName] ? item[imgName] : item
-                            }) no-repeat center/cover`,
-                          }
-                        : {
-                            background: `url(${
-                              item[imgName] ? item[imgName] : item
-                            }) no-repeat  center/cover`,
-                          }
-                    }
-                    key={index}
-                    className={classNames(
-                      "banner_box dakale_nullImage",
-                      borderRadius && "bordersRadius"
-                    )}
-                  ></View>
+                  <Tarking
+                    style={{ width: "100%", height: "100%" }}
+                    args={item}
+                    name={"banner"}
+                  >
+                    <View
+                      onClick={() => linkTo(item)}
+                      style={
+                        imgStyle
+                          ? {
+                              background: `url(${
+                                item[imgName] ? item[imgName] : item
+                              }) no-repeat center/cover`,
+                            }
+                          : {
+                              background: `url(${
+                                item[imgName] ? item[imgName] : item
+                              }) no-repeat  center/cover`,
+                            }
+                      }
+                      key={index}
+                      className={classNames(
+                        "banner_box dakale_nullImage",
+                        borderRadius && "bordersRadius"
+                      )}
+                    ></View>
+                  </Tarking>
                 </SwiperItem>
               );
             })}
           </Swiper>
         ) : (
           <View style={style}>
-            <View style={{ width: "100%", height: "100%" }}>
+            <Tarking
+              style={{ width: "100%", height: "100%" }}
+              args={list[0]}
+              name={"banner"}
+            >
               <View
                 onClick={() => linkTo(list[0])}
                 style={
@@ -130,7 +141,8 @@ export default (props) => {
                   borderRadius && "bordersRadius"
                 )}
               ></View>
-            </View>
+            </Tarking>
+            <View style={{ width: "100%", height: "100%" }}></View>
           </View>
         )}
 

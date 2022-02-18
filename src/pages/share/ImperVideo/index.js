@@ -66,7 +66,11 @@ class Index extends Component {
         <View
           className="ImperVideo_btn_box"
           onClick={() => {
-            this.rewardedVideoAd.show();
+            this.rewardedVideoAd.show().catch((err) => {
+              this.rewardedVideoAd
+                .load()
+                .then(() => this.rewardedVideoAd.show());
+            });
           }}
         ></View>
         <Bean

@@ -24,7 +24,6 @@ import "./index.scss";
 export default () => {
   const routeParams = useRouter().params;
   const { mode = "telephoneCharges" } = routeParams;
-
   const [coommList, setCoommList] = useState([]); // 电商品数组
   const [goodsData, setGoodsData] = useState({}); // 当前显示商品数据
   const [beanLack, setBeanLack] = useState(false); // 卡豆不足提示框

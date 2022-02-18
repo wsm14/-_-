@@ -1,6 +1,7 @@
 import React, { Component, useEffect } from "react";
 import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, ScrollView, Image } from "@tarojs/components";
+import Tarking from "@/components/tracking";
 import { format, computedPrice, computedBeanPrice } from "@/utils/utils";
 import Router from "@/utils/router";
 import "./index.scss";
@@ -69,21 +70,25 @@ export default (props) => {
         );
       } else if (rightFlag === "1") {
         return (
-          <View
-            onClick={saveInfo}
-            className="fixedBtn_payBtn public_center fixedBtn_payStyle1"
-          >
-            ¥{cash} 立即购买
-          </View>
+          <Tarking args={data} name={"payCouponDetails"}>
+            <View
+              onClick={saveInfo}
+              className="fixedBtn_payBtn public_center fixedBtn_payStyle1"
+            >
+              ¥{cash} 立即购买
+            </View>
+          </Tarking>
         );
       } else {
         return (
-          <View
-            className="fixedBtn_payBtn public_center fixedBtn_payStyle1"
-            onClick={saveInfo}
-          >
-            ¥{computedRelprice() + " "} 立即购买
-          </View>
+          <Tarking args={data} name={"payCouponDetails"}>
+            <View
+              className="fixedBtn_payBtn public_center fixedBtn_payStyle1"
+              onClick={saveInfo}
+            >
+              ¥{computedRelprice() + " "} 立即购买
+            </View>
+          </Tarking>
         );
       }
     };

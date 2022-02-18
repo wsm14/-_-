@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Taro from "@tarojs/taro";
 import { Button, Text, View } from "@tarojs/components";
+import Tarking from "@/components/tracking";
 import Router from "@/utils/router";
 import classNames from "classnames";
 import "./index.scss";
@@ -61,27 +62,29 @@ export default (props) => {
           ></View>
         </View>
       )}
-      <View className="represent_buy_kefu">
-        <View className="represent_buy_logo"></View>
-        <View className="represent_buy_font">
-          哒卡乐微信助手，专属福利｜活动信息
+      <Tarking args={data} name={"represent"}>
+        <View className="represent_buy_kefu">
+          <View className="represent_buy_logo"></View>
+          <View className="represent_buy_font">
+            哒卡乐微信助手，专属福利｜活动信息
+          </View>
+          <View className="represent_buy_btn public_center">添加</View>
+          <Button
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              width: "100%",
+              height: "100%",
+              border: "none",
+              background: "none",
+            }}
+            openType={"contact"}
+          ></Button>
         </View>
-        <View className="represent_buy_btn public_center">添加</View>
-        <Button
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: "100%",
-            height: "100%",
-            border: "none",
-            background: "none",
-          }}
-          openType={"contact"}
-        ></Button>
-      </View>
+      </Tarking>
     </View>
   );
 };

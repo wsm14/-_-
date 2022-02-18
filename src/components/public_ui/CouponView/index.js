@@ -5,6 +5,7 @@ import React from "react";
 import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import Router from "@/utils/router";
+import Tarking from "@/components/tracking";
 import "./index.scss";
 export const coupon = (data) => {
   const {
@@ -108,7 +109,11 @@ export const coupon = (data) => {
       );
     }
   };
-  return template();
+  return (
+    <Tarking args={data} name={"coupon"}>
+      {template()}
+    </Tarking>
+  );
 };
 
 export const couponLovely = (data) => {

@@ -9,6 +9,7 @@ import {
   fakeStorage,
 } from "@/utils/utils";
 import Router from "@/utils/router";
+import Tarking from "@/components/tracking";
 import "./../../index.scss";
 export default ({
   follow,
@@ -218,31 +219,33 @@ export default ({
             <View className="ugc_template_count">{ugcRewardAmount}</View>
           </React.Fragment>
         ) : (
-          <View
-            onClick={() => {
-              Router({
-                routerName: "beanReward",
-              });
-            }}
-            className={classNames(
-              "bean_animate",
-              watchStatus === "1" ? "bean_animate_bg2" : "bean_animate_bg1"
-            )}
-          >
+          <Tarking   name={"videoInval"}>
             <View
+              onClick={() => {
+                Router({
+                  routerName: "beanReward",
+                });
+              }}
               className={classNames(
-                watchStatus === "1"
-                  ? "bean_animate_padding"
-                  : "bean_animate_time"
+                "bean_animate",
+                watchStatus === "1" ? "bean_animate_bg2" : "bean_animate_bg1"
               )}
             >
-              {watchStatus === "1"
-                ? "已领"
-                : show
-                ? parseInt(length) - time
-                : parseInt(length)}
+              <View
+                className={classNames(
+                  watchStatus === "1"
+                    ? "bean_animate_padding"
+                    : "bean_animate_time"
+                )}
+              >
+                {watchStatus === "1"
+                  ? "已领"
+                  : show
+                  ? parseInt(length) - time
+                  : parseInt(length)}
+              </View>
             </View>
-          </View>
+          </Tarking>
         ))}
     </View>
   );

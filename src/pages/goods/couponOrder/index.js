@@ -313,6 +313,7 @@ class Index extends Component {
           ></SelectBean>
           <BuyDesc data={ownerCouponInfo}></BuyDesc>
           <Submit
+            data={ownerCouponInfo}
             payFlag={this.saveCouponRule()}
             computedPrice={this.computedPayPrice.bind(this)}
             submit={this.saveCancel.bind(this)}
