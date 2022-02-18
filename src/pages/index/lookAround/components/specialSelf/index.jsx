@@ -49,11 +49,18 @@ export default ({ userInfo, type = "specalSelf" }) => {
     ],
   }[type];
   useReachBottom(() => {
-    if (type === "specalSelf" && index === 0) {
+    if (type === "specalSelf" && index !== 1) {
       setPage({
         ...page,
         page: page.page + 1,
       });
+    } else {
+      if (index === 1) {
+        setPage({
+          ...page,
+          page: page.page + 1,
+        });
+      }
     }
   });
   const fetchCommerce = () => {
