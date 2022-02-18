@@ -191,7 +191,7 @@ export const fakeUpdateMomentParam = (data, fn) => {
       url: "/user/moment/updateMomentParam",
       data: data,
     },
-    (res) => fn(res)
+    (res) => fn && fn(res)
   );
 };
 //新版异步更新动态参数
