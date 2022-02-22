@@ -305,3 +305,9 @@ export const fakeOperatingLog = (data = {}, fn) => {
   );
 };
 // 获取收集页配置卡豆规则;
+export const fetchAllGlobalConfig = (data) => {
+  return httpGet({
+    url: "/common/configGlobalPopUp/getAllGlobalConfig",
+    data: data,
+  });
+}; //微信广告视频-领豆

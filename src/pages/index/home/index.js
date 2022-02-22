@@ -11,7 +11,7 @@ import {
   computedTime,
   fakeStorage,
 } from "@/utils/utils";
-import { ScrollView, View } from "@tarojs/components";
+import { ScrollView, View, Ad } from "@tarojs/components";
 import {
   fakeUserFollow,
   getUserMomentList,
@@ -291,6 +291,12 @@ class Index extends React.PureComponent {
         });
         return;
       }
+      let newList = [...userMomentsList];
+      newList.forEach((item, index) => {
+        if ((index + 1) % 5 === 0) {
+          userMomentsList.splice(index, 0, { imper: true });
+        }
+      });
       this.setState(
         {
           userMomentsList: [...this.state.userMomentsList, ...userMomentsList],
@@ -938,6 +944,7 @@ class Index extends React.PureComponent {
                 changeComment={() => this.setState({ commentShow: true })}
                 saveBean={this.saveBean.bind(this)}
                 saveUgcBean={this.fakeUgcBean.bind(this)}
+              
                 onTimeUpdate={(e) => {
                   const { currentTime, duration } = e.detail;
                   this.setState({
@@ -1150,6 +1157,7 @@ class Index extends React.PureComponent {
             visible={showFlag}
           ></CouponBean>
         </View>
+        <Ad adIntervals={30} unitId="adunit-3cb2f1a43dd2cf9e"></Ad>
       </View>
     );
   }

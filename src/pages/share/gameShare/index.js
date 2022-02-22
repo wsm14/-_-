@@ -25,6 +25,7 @@ class Index extends Component {
           "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/game/game_sharebg_6.png",
         freeTaskHelp:
           "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/game/game_sharebg_5.png",
+        gatherRewardHelp: "",
       },
       subType: getCurrentInstance().router.params.subType || "fillSign",
       shareUserId: getCurrentInstance().router.params.shareUserId,

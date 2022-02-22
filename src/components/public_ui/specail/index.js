@@ -8,7 +8,6 @@ import {
   computedPrice,
 } from "@/utils/utils";
 import Router from "@/utils/router";
-import Taro from "@tarojs/taro";
 import "./index.scss";
 export const specailGoods = (item, val = {}) => {
   const {

@@ -337,3 +337,10 @@ export const fakeImperMomentReward = (data) => {
     data: data,
   });
 }; //微信广告视频-领豆
+
+export const fakeExchangeReward = (data) => {
+  return httpPost({
+    url: "/user/game/gather/exchangeReward",
+    data: data,
+  });
+}; //微信广告视频-领豆
