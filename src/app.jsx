@@ -92,7 +92,7 @@ class App extends Component {
   }
 
   fetchGlobalConfig() {
-    fetchAllGlobalConfig().then((val) => {
+    fetchAllGlobalConfig({}).then((val) => {
       let { configGlobalPopUpObjectList } = val;
       Store.commonStore.setCommonData(
         "configGlobalPopUpObjectList",
