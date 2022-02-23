@@ -45,7 +45,7 @@ import { nearList } from "@/components/public_ui/nearList";
 import NearTitle from "./components/nearTitle";
 import NewsPilot from "./components/newsPilot";
 import CouponBean from "@/components/public_ui/couponBean";
-
+import Test from "@/components/GlobalDrawer";
 import "./index.scss";
 @inject("store")
 @observer
@@ -944,7 +944,6 @@ class Index extends React.PureComponent {
                 changeComment={() => this.setState({ commentShow: true })}
                 saveBean={this.saveBean.bind(this)}
                 saveUgcBean={this.fakeUgcBean.bind(this)}
-              
                 onTimeUpdate={(e) => {
                   const { currentTime, duration } = e.detail;
                   this.setState({
@@ -1157,7 +1156,6 @@ class Index extends React.PureComponent {
             visible={showFlag}
           ></CouponBean>
         </View>
-        <Ad adIntervals={30} unitId="adunit-3cb2f1a43dd2cf9e"></Ad>
       </View>
     );
   }

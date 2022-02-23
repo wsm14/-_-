@@ -86,8 +86,10 @@ export const filterStrList = (str) => {
   return str.split(",");
 };
 //字符串标签 轉數組
-export const filterPayStatus = (string, type = "") => {
-  if (type === "expiredRefund") {
+export const filterPayStatus = (string, type = "", time) => {
+  if (time && string === "1") {
+    return "已发货";
+  } else if (type === "expiredRefund") {
     return "订单已过期";
   } else if (type === "manualRefund" && string === "6") {
     return "申请退款中";

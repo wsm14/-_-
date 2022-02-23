@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useImperativeHandle } from "react";
 import { View, Text } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import "./index.scss";
 export default ({ show, children, close, closeBtn = true }) => {
   const [animate, setAnimated] = useState(null);
+
   useEffect(() => {
     if (show) {
       animated();
     } else {
+      onClose();
     }
   }, [show]);
   const onClose = () => {
@@ -19,9 +21,6 @@ export default ({ show, children, close, closeBtn = true }) => {
     });
     animateTem2.scale(0, 0).step();
     setAnimated(animateTem2);
-    setTimeout(() => {
-      close();
-    }, 300);
   };
   const animated = () => {
     let animateTem = Taro.createAnimation({
@@ -52,7 +51,7 @@ export default ({ show, children, close, closeBtn = true }) => {
       catchMove
       onClick={(e) => {
         e.stopPropagation();
-        onClose();
+        close && close();
       }}
     >
       <View
@@ -62,7 +61,10 @@ export default ({ show, children, close, closeBtn = true }) => {
       >
         {children}
         {closeBtn && (
-          <View className="Drawer_close_box" onClick={() => onClose()}></View>
+          <View
+            className="Drawer_close_box"
+            onClick={() => close && close()}
+          ></View>
         )}
       </View>
     </View>
