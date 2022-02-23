@@ -8,21 +8,19 @@ import Drawer from "@/components/Drawer";
 import Router from "@/utils/router";
 import "./index.scss";
 import { useEffect } from "react";
-let loadingInfo = null;
-let times = [];
-let day = [];
-let only = [];
-export default ({ pageName = "wanderAround" }) => {
+export default ({ pageName = "wanderAround", stopVideo, initVideo }) => {
+  const [GlobalDrawerList, setGlobalDrawerList] = useState([]);
   const [visible, setVisible] = useState({
     show: false,
     count: 0,
     showData: {},
   });
   const select = () => {
-    let drawer = [...only, ...day, ...times];
+    let drawer = [...GlobalDrawerList];
     const { count, showData } = visible;
     const { frequencyType, configGlobalPopUpId } = showData;
     let list = fetchStorage("configGlobalPopUpDTOS") || [];
+    console.log(frequencyType);
     if (frequencyType === "only") {
       let onlyFlag = false;
       list.forEach((item) => {
@@ -69,6 +67,7 @@ export default ({ pageName = "wanderAround" }) => {
         showData: drawer[count + 1],
       });
     } else {
+      initVideo && initVideo();
       setVisible({
         show: false,
         count: 0,
@@ -80,43 +79,39 @@ export default ({ pageName = "wanderAround" }) => {
   const { commonStore } = store;
   const { configGlobalPopUpObjectList = [] } = commonStore;
   useDidShow(() => {
-    day = [];
-    only = [];
-    if (loadingInfo) {
-      if (times.length > 0) {
-        setVisible({
-          show: true,
-          count: 0,
-          showData: { ...times[0] },
-        });
-      }
-    }
+    const list = fetchStorage("configGlobalPopUpDTOS") || [];
+    let changeList = configGlobalPopUpObjectList.filter((item) => {
+      return item.pageName === pageName;
+    })[0].configGlobalPopUpDTOS;
+    setGlobalDrawerList(filterList(list, changeList));
   });
+
   useEffect(() => {
     const list = fetchStorage("configGlobalPopUpDTOS") || [];
     if (configGlobalPopUpObjectList.length > 0) {
-      if (!loadingInfo) {
-        let changeList = configGlobalPopUpObjectList.filter((item) => {
-          return item.pageName === pageName;
-        })[0].configGlobalPopUpDTOS;
-        filterList(list, changeList);
-        let drawer = [...only, ...day, ...times];
-        if (drawer.length > 0) {
-          setVisible({
-            show: true,
-            count: 0,
-            showData: { ...drawer[0] },
-          });
-        }
-      }
+      let changeList = configGlobalPopUpObjectList.filter((item) => {
+        return item.pageName === pageName;
+      })[0].configGlobalPopUpDTOS;
+      setGlobalDrawerList(filterList(list, changeList));
+    } else {
+      initVideo && initVideo();
     }
   }, [configGlobalPopUpObjectList]);
-
+  useEffect(() => {
+    if (GlobalDrawerList.length > 0) {
+      stopVideo && stopVideo();
+      setVisible({
+        show: true,
+        count: 0,
+        showData: { ...GlobalDrawerList[0] },
+      });
+    }
+  }, [GlobalDrawerList]);
+  //数组发生变化并且有数据的情况下打开弹窗
   const filterList = (list, newList) => {
-    times = [];
-    day = [];
-    only = [];
-    loadingInfo = true;
+    //list 条件数组 newList 后端返回数组
+    let setList = [];
+    // 初始化满足条件的数组
     newList.forEach((item) => {
       const {
         configGlobalPopUpId,
@@ -125,7 +120,7 @@ export default ({ pageName = "wanderAround" }) => {
         activityEndTime,
       } = item;
       if (frequencyType === "times") {
-        times = [...times, { ...item }];
+        setList = [...setList, { ...item }];
       } else {
         if (frequencyType === "only") {
           let flag = false;
@@ -139,8 +134,7 @@ export default ({ pageName = "wanderAround" }) => {
             }
           });
           if (!flag) {
-            console.log(item, 12312323);
-            only = [...only, { ...item }];
+            setList = [...setList, { ...item }];
           }
         } else {
           let flag = false;
@@ -154,12 +148,14 @@ export default ({ pageName = "wanderAround" }) => {
             }
           });
           if (!flag) {
-            day = [...day, { ...item }];
+            setList = [...setList, { ...item }];
           }
         }
       }
     });
+    return setList;
   };
+  //过滤后端给的弹窗数组并且返回满足条件的弹窗数组
   const linkTo = (data) => {
     const { popUpUrl, popUpType, jumpUrl, param } = data;
     if (popUpType === "url") {
@@ -178,11 +174,11 @@ export default ({ pageName = "wanderAround" }) => {
       });
     }
   };
-  const { show, count, showData } = visible;
+  const { show, showData } = visible;
   const { popUpImage } = showData;
   if (show)
     return (
-      <Drawer show={show} close={select}>
+      <Drawer show={show} close={() => select()}>
         <Image
           onClick={() => linkTo(showData)}
           mode="widthFix"

@@ -3,6 +3,7 @@ import { View, Text, ScrollView } from "@tarojs/components";
 import Taro, { useDidShow } from "@tarojs/taro";
 import { fetchUserAcquiredPlatformGift } from "@/server/index";
 import Drawer from "@/components/Drawer";
+import GlobalDrawer from "@/components/GlobalDrawer";
 import {
   loginStatus,
   computedTime,
@@ -33,6 +34,8 @@ export default ({ auth, stopVideo, initVideo }) => {
       setTimeout(() => {
         getUserAcquiredPlatformGift();
       }, 3000);
+    } else if (fetchStorage("newUser")) {
+      setStatus("2");
     }
   });
   useEffect(() => {
@@ -140,7 +143,13 @@ export default ({ auth, stopVideo, initVideo }) => {
     } else if (status === "1" && visibleCoupon) {
       const { giftValue, giftName, platformGiftPackRelateList = [] } = data;
       return (
-        <Drawer show={visibleCoupon} close={() => onCoupon()}>
+        <Drawer
+          show={visibleCoupon}
+          close={() => {
+            onCoupon();
+            setStatus("2");
+          }}
+        >
           <View className="noviceCoupon_box">
             <View className="noviceCoupon_title1">
               <View className="font28 ">恭喜您成功领取价值</View>
@@ -163,6 +172,7 @@ export default ({ auth, stopVideo, initVideo }) => {
                   onCoupon(() => {
                     setCount(() => {
                       clearInterval(timeOutInfo);
+                      setStatus("2");
                       Router({
                         routerName: "webView",
                         args: {
@@ -184,17 +194,23 @@ export default ({ auth, stopVideo, initVideo }) => {
           </View>
         </Drawer>
       );
+    } else if (status === "2") {
+      return (
+        <GlobalDrawer
+          pageName="pickup"
+          stopVideo={stopVideo}
+          initVideo={initVideo}
+        ></GlobalDrawer>
+      );
     } else return null;
   };
   const onClose = (fn) => {
     setVisible(false);
-    initVideo && initVideo();
     fn && fn();
   };
   const onCoupon = (fn) => {
     setVisibleCoupon(false);
     fakeStorage("newUser", true);
-    initVideo && initVideo();
     fn && fn();
   };
   /* 显示隐藏动画  */

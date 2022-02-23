@@ -39,6 +39,7 @@ import { inject, observer } from "mobx-react";
 import FixedBtn from "./components/fixedBtn";
 import { fetchStorage } from "@/utils/utils";
 import NewUser from "@/components/public_ui/newUserToast";
+import GlobalDrawer from "@/components/GlobalDrawer";
 import "./index.scss";
 @inject("store")
 @observer
@@ -572,6 +573,7 @@ class Index extends Component {
               beanLimit={beanLimit}
               data={specialGoodsInfo}
             ></FixedBtn>
+            <GlobalDrawer pageName="goodsDetail"></GlobalDrawer>
           </View>
         );
       } else {

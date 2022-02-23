@@ -35,6 +35,7 @@ import NewUser from "@/components/public_ui/newUserToast";
 import TopBean from "./components/topBean";
 import Education from "./components/beanEducation";
 import SpecalSelf from "./components/specialSelf";
+import GlobalDrawer from "@/components/GlobalDrawer";
 import { fetchBeanAndEarn } from "@/server/index";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
@@ -783,6 +784,7 @@ class Index extends Component {
               </React.Fragment>
             )}
           </View>
+          <GlobalDrawer pageName="wanderAround"></GlobalDrawer>
         </Skeleton>
         <TabCity
           reload={this.onReload.bind(this)}
