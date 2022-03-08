@@ -33,6 +33,21 @@
       text-align: center;
     }
   }
+  .task_icon_team {
+    width: 120px;
+    height: 120px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon908.png")
+      no-repeat;
+    background-size: 100% 100%;
+    margin: 0 auto;
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff;
+    .task_reload_count {
+      padding: 16px 0 0;
+      text-align: center;
+    }
+  }
   .task_icon_free {
     width: 120px;
     height: 120px;

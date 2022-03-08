@@ -6,7 +6,6 @@ import { inject, observer } from "mobx-react";
 import {
   fetchPhoneBillDetail,
   fetchMemberOrderSumbit,
-  fetchUserShareCommission,
   fetchRechargeMemberLsxdDetail,
 } from "@/server/common";
 import {
@@ -27,7 +26,6 @@ import RightGoods from "./components/template/rightGoods";
 import BeanGiftPack from "./components/template/beanGiftPack";
 import evens from "@/common/evens";
 import Router from "@/utils/router";
-
 import "./index.scss";
 @inject("store")
 @observer
@@ -75,7 +73,7 @@ class Index extends Component {
       this.fetchGetGiftPackPriceDetail();
       return;
     }
-    this.fetchUserShareCommission();
+    this.setConfigUserLevelInfo();
     this.fetchKolGoodsOrder();
   }
   //获取订单详情
@@ -146,6 +144,17 @@ class Index extends Component {
       }
     });
   }
+  setConfigUserLevelInfo() {
+    const { commonStore = {} } = this.props.store;
+    const { preferentialGlobalDefaultList = [] } = commonStore;
+    let data = preferentialGlobalDefaultList.find((item) => {
+      const { identification } = item;
+      return identification === "otherDefault";
+    });
+    this.setState({
+      payBeanCommission: data.preferentialActivityRuleObject.payBeanCommission,
+    });
+  }
   saveCancel() {
     const {
       specialGoodsInfo: { userBean },
@@ -181,20 +190,6 @@ class Index extends Component {
           }
         }
       );
-    });
-  }
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const {
-        configUserLevelInfo = {
-          payBeanCommission: 50,
-          shareCommission: 0,
-          teamCommission: 0,
-        },
-      } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
     });
   }
   //获取哒人等级

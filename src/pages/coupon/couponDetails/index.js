@@ -5,11 +5,13 @@ import { getUserCouponDetail } from "@/server/coupon";
 import KnowPay from "@/components/public_ui/KnowPay";
 import Codes from "./components/goodscode/index";
 import CouponCode from "./components/couponCode";
-import { fetchUserShareCommission } from "@/server/common";
 import Recommend from "@/components/public_ui/specalActive";
 import CouponRecommend from "@/components/public_ui/couponActive";
 import { goBack, toast } from "@/utils/utils";
+import { inject, observer } from "mobx-react";
 import "./index.scss";
+@inject("store")
+@observer
 class Index extends PureComponent {
   constructor() {
     super(...arguments);
@@ -34,17 +36,20 @@ class Index extends PureComponent {
       }
     );
   }
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
+  setConfigUserLevelInfo() {
+    const { commonStore = {} } = this.props.store;
+    const { preferentialGlobalDefaultList = [] } = commonStore;
+    let data = preferentialGlobalDefaultList.find((item) => {
+      const { identification } = item;
+      return identification === "otherDefault";
+    });
+    this.setState({
+      payBeanCommission: data.preferentialActivityRuleObject.payBeanCommission,
     });
   }
   componentDidShow() {
+    this.setConfigUserLevelInfo();
     this.getUserCouponDetail();
-    this.fetchUserShareCommission();
   }
 
   componentWillMount() {

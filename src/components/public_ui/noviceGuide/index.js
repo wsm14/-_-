@@ -33,8 +33,8 @@ export default ({ auth, stopVideo, initVideo }) => {
     ) {
       setTimeout(() => {
         getUserAcquiredPlatformGift();
-      }, 3000);
-    } else if (fetchStorage("newUser")) {
+      }, 2000);
+    } else {
       setStatus("2");
     }
   });
@@ -87,6 +87,8 @@ export default ({ auth, stopVideo, initVideo }) => {
           }, 1000);
           return true;
         });
+      } else {
+        setStatus("2");
       }
     });
   };

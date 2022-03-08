@@ -1,0 +1,93 @@
+.drawer_download {
+  width: 560px;
+  height: 840px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon907.png")
+    no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  .drawer_download_left {
+    position: absolute;
+    top: 406px;
+    left: 28px;
+    width: 184px;
+    height: 202px;
+    text-align: center;
+  }
+  .drawer_download_price {
+    padding-top: 32px;
+    font-size: 40px;
+    display: flex;
+    align-items: baseline;
+    font-weight: bold;
+    color: #f43636;
+    justify-content: center;
+  }
+  .drawer_download_thou {
+    padding-top: 12px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #f73a3a;
+  }
+  .drawer_download_thou1 {
+    padding-top: 16px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #f73a3a;
+  }
+  .drawer_download_right {
+    position: absolute;
+    top: 318px;
+    right: 28px;
+    width: 244px;
+    height: 292px;
+    text-align: center;
+  }
+  .drawer_download_coupon {
+    padding-top: 48px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 24px;
+  }
+  .drawer_download_coupon1 {
+    padding-top: 78px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 24px;
+  }
+  .drawer_download_rghtPrice {
+    padding-top: 32px;
+    font-size: 60px;
+    height: 60px;
+    display: flex;
+    align-items: baseline;
+    font-weight: bold;
+    color: #f43636;
+    justify-content: center;
+  }
+  .drawer_download_max {
+    position: absolute;
+    top: 20px;
+    right: 39px;
+    width: 72px;
+    height: 28px;
+    background: #f43636;
+    border-radius: 14px 14px 14px 0px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+  .drawer_download_btn {
+    width: 420px;
+    height: 80px;
+    background: linear-gradient(138deg, #ffdd47 0%, #ffb400 100%);
+    border-radius: 40px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #af0000;
+    position: relative;
+    top: 672px;
+    margin: 0 auto;
+  }
+}

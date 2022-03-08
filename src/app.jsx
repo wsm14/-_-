@@ -7,6 +7,7 @@ import {
   fetchShareParamInfo,
   fetchDictionary,
   fetchAllGlobalConfig,
+  fetchPreferential,
 } from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
@@ -31,6 +32,7 @@ class App extends Component {
     evens.$on("setLocation", this.fetchLocation.bind(this));
     this.fetchDictionary();
     this.fetchGlobalConfig();
+    this.fetchPreferentialGlobal();
   }
   componentDidHide() {
     const data = Taro.getStorageSync("operatingLog");
@@ -90,7 +92,16 @@ class App extends Component {
       return;
     }
   }
-
+  fetchPreferentialGlobal() {
+    fetchPreferential({}).then((val) => {
+      const { preferentialGlobalDefaultList = [] } = val;
+      Store.commonStore.setCommonData(
+        "preferentialGlobalDefaultList",
+        preferentialGlobalDefaultList
+      );
+    });
+  }
+  //获取全局视频比例
   fetchGlobalConfig() {
     fetchAllGlobalConfig({}).then((val) => {
       let { configGlobalPopUpObjectList } = val;

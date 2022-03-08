@@ -20,7 +20,6 @@ export default ({ pageName = "wanderAround", stopVideo, initVideo }) => {
     const { count, showData } = visible;
     const { frequencyType, configGlobalPopUpId } = showData;
     let list = fetchStorage("configGlobalPopUpDTOS") || [];
-    console.log(frequencyType);
     if (frequencyType === "only") {
       let onlyFlag = false;
       list.forEach((item) => {
@@ -82,7 +81,12 @@ export default ({ pageName = "wanderAround", stopVideo, initVideo }) => {
     const list = fetchStorage("configGlobalPopUpDTOS") || [];
     let changeList = configGlobalPopUpObjectList.filter((item) => {
       return item.pageName === pageName;
-    })[0].configGlobalPopUpDTOS;
+    })[0];
+    changeList = changeList && changeList.configGlobalPopUpDTOS;
+    if (!changeList) {
+      initVideo && initVideo();
+      return;
+    }
     setGlobalDrawerList(filterList(list, changeList));
   });
 
@@ -91,7 +95,12 @@ export default ({ pageName = "wanderAround", stopVideo, initVideo }) => {
     if (configGlobalPopUpObjectList.length > 0) {
       let changeList = configGlobalPopUpObjectList.filter((item) => {
         return item.pageName === pageName;
-      })[0].configGlobalPopUpDTOS;
+      })[0];
+      changeList = changeList && changeList.configGlobalPopUpDTOS;
+      if (!changeList) {
+        initVideo && initVideo();
+        return;
+      }
       setGlobalDrawerList(filterList(list, changeList));
     } else {
       initVideo && initVideo();
@@ -126,9 +135,9 @@ export default ({ pageName = "wanderAround", stopVideo, initVideo }) => {
           let flag = false;
           list.forEach((val) => {
             if (
-              configGlobalPopUpId === val.configGlobalPopUpId ||
-              (Date.parse(new Date()) > days(activityBeginTime).valueOf() &&
-                Date.parse(new Date()) < days(activityEndTime))
+              configGlobalPopUpId === val.configGlobalPopUpId &&
+              Date.parse(new Date()) > days(activityBeginTime).valueOf() &&
+              Date.parse(new Date()) < days(activityEndTime)
             ) {
               flag = true;
             }
@@ -157,21 +166,25 @@ export default ({ pageName = "wanderAround", stopVideo, initVideo }) => {
   };
   //过滤后端给的弹窗数组并且返回满足条件的弹窗数组
   const linkTo = (data) => {
-    const { popUpUrl, popUpType, jumpUrl, param } = data;
-    if (popUpType === "url") {
-      Router({
-        routerName: "webView",
-        args: {
-          link: popUpUrl,
-        },
-      });
+    const { popUpUrl, jumpUrl, param, jumpUrlType } = data;
+    if (!jumpUrlType) {
+      return;
     } else {
-      Router({
-        routerName: JSON.parse(jumpUrl).weChatUrl,
-        params: {
-          ...JSON.parse(param),
-        },
-      });
+      if (jumpUrlType === "h5") {
+        Router({
+          routerName: "webView",
+          args: {
+            link: popUpUrl,
+          },
+        });
+      } else {
+        Router({
+          routerName: JSON.parse(jumpUrl).weChatUrl,
+          params: {
+            ...JSON.parse(param),
+          },
+        });
+      }
     }
   };
   const { show, showData } = visible;

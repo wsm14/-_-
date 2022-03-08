@@ -8,7 +8,6 @@ import CommunityTemplate from "./components/template/communityTemplate";
 import PlatfromGift from "./components/template/platformGiftTemplate";
 import { fetchOrderDetails } from "@/server/goods";
 import { fakeRemoveOrder, fakeUpdateOrder } from "@/server/goods";
-import { fetchUserShareCommission } from "@/server/common";
 import { filterGoods, goBack, toast } from "@/utils/utils";
 import RecommendSpecal from "@/components/public_ui/specalActive";
 import { inject, observer } from "mobx-react";
@@ -54,14 +53,17 @@ class Index extends Component {
 
   componentDidMount() {
     this.getGoodsDetails();
-    this.fetchUserShareCommission();
+    this.setConfigUserLevelInfo();
   }
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
+  setConfigUserLevelInfo() {
+    const { commonStore = {} } = this.props.store;
+    const { preferentialGlobalDefaultList = [] } = commonStore;
+    let data = preferentialGlobalDefaultList.find((item) => {
+      const { identification } = item;
+      return identification === "otherDefault";
+    });
+    this.setState({
+      payBeanCommission: data.preferentialActivityRuleObject.payBeanCommission,
     });
   }
   componentWillUnmount() {

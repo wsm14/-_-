@@ -40,6 +40,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
     wraparound: "/pages/coupon/wraparound/index", //券包
     selectCoupon: "/pages/coupon/selectCoupon/index", //选择支付关联券
+    increase: "/pages/coupon/increase/index", //平台券详情
     //券包
     bubble: "/pages/perimeter/bubble/index", //跳转风向标
     groupDetails: "/pages/perimeter/kaMerchantDetails/index", //集团详情

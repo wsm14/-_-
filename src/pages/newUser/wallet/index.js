@@ -1,11 +1,8 @@
 import React, { Component, useState } from "react";
 import { View, Text } from "@tarojs/components";
-import "./index.scss";
 import { getUserBeanInfo } from "@/server/user";
-import { fetchUserShareCommission } from "@/server/common";
 import Toast from "@/components/public_ui/selectToast";
 import router from "@/utils/router";
-
 class Index extends Component {
   constructor() {
     super(...arguments);
@@ -15,12 +12,9 @@ class Index extends Component {
       configUserLevelInfo: {},
     };
   }
-
   componentDidShow() {
     this.getUserInfo();
-    this.fetchUserShareCommission();
   }
-
   getUserInfo() {
     getUserBeanInfo({}, (res) => {
       const { userInfo } = res;
@@ -29,14 +23,7 @@ class Index extends Component {
       });
     });
   }
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
-    });
-  }
+
   tishiDom() {
     return (
       <View className="point_box">
@@ -51,13 +38,11 @@ class Index extends Component {
       </View>
     );
   }
-
   errorToast(e) {}
   render() {
     const {
       userInfo: { bean },
       visible,
-      configUserLevelInfo: { level },
     } = this.state;
     return (
       <View className="page_wallet">

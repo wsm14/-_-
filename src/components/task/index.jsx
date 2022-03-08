@@ -134,6 +134,7 @@ export default (props) => {
     sign: "task_icon",
     free: "task_icon_free",
     collect: "task_icon_collect",
+    team: "task_icon_team",
   }[gameInfo];
   if (visible) {
     const { rewardNum } = taskInfo;

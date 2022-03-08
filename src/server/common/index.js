@@ -311,3 +311,9 @@ export const fetchAllGlobalConfig = (data) => {
     data: data,
   });
 }; //微信广告视频-领豆
+export const fetchPreferential = (data) => {
+  return httpGet({
+    url: "/common/preferential/listPreferentialGlobalDefault",
+    data: data,
+  });
+}; //支付抵扣比例默认配置：

@@ -142,19 +142,6 @@ class Index extends Component {
       }
     }
   }
-  onShareAppMessage(res) {
-    const { shareInfo } = this.state;
-    if (res.from === "button") {
-      if (shareInfo) {
-        const { miniProgramUrl, title, miniProgramImage } = shareInfo;
-        return {
-          title: title,
-          imageUrl: miniProgramImage,
-          path: miniProgramUrl,
-        };
-      }
-    }
-  }
   componentDidMount() {
     const { userType } = this.state;
     this.fetchShareType();

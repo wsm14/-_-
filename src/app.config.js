@@ -146,6 +146,7 @@ export default {
         "wraparound/index", //券包
         "couponDetails/index", //券包详情
         "selectCoupon/index", //选择支付券
+        "increase/index", //平台券详情
       ],
     },
     {

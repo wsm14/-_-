@@ -247,7 +247,7 @@ export const fetchFormMomentDetail = (data = {}, fn) => {
 export const fakefillSign = (data, fn) => {
   return httpPost(
     {
-      url: "/user/game/sign/fillSign",
+      url: "/user/game/sign/saveUserFillSignRecord",
       data: data,
     },
     (res) => {
@@ -341,6 +341,13 @@ export const fakeImperMomentReward = (data) => {
 export const fakeExchangeReward = (data) => {
   return httpPost({
     url: "/user/game/gather/exchangeReward",
+    data: data,
+  });
+}; //微信广告视频-领豆
+
+export const fakeJoinTeam = (data) => {
+  return httpPost({
+    url: "/user/game/farm/joinTeam",
     data: data,
   });
 }; //微信广告视频-领豆

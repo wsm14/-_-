@@ -9,6 +9,7 @@ import {
   backgroundObj,
   computedPrice,
 } from "@/utils/utils";
+import { observer, MobXProviderContext } from "mobx-react";
 import { fetchMomentRelate, fetchPromotionStatus } from "@/server/index";
 import Router from "@/utils/router";
 import { mapGo, computedBeanPrice } from "@/utils/utils";
@@ -25,8 +26,7 @@ city.forEach((item) => {
   });
 });
 export default (props) => {
-  const { server = {}, children, index, userInfo, current } = props;
-  const { payBeanCommission = 50, shareCommission } = userInfo;
+  const { server = {}, children, index, current } = props;
   const [flag, setFlag] = useState({
     flagType: false,
     boolean: false,
@@ -34,6 +34,23 @@ export default (props) => {
   const [couponInfo, setCouponInfo] = useState({});
   const [showFlag, setShowFlag] = useState(false);
   const [momentStatus, setMomentStatus] = useState("0");
+  const [userInfo, setUserInfo] = useState({});
+  const { store } = React.useContext(MobXProviderContext);
+  const { commonStore } = store;
+  const { preferentialGlobalDefaultList } = commonStore;
+  const { payBeanCommission = 50 } = userInfo;
+  useEffect(() => {
+    if (preferentialGlobalDefaultList.length > 0) {
+      let data = preferentialGlobalDefaultList.find((item) => {
+        const { identification } = item;
+        return identification === "videoDefault";
+      });
+      setUserInfo({
+        payBeanCommission:
+          data.preferentialActivityRuleObject.payBeanCommission,
+      });
+    }
+  }, [preferentialGlobalDefaultList]);
   useEffect(() => {
     getPromotion(server);
     getPromotionStatus(server);
@@ -413,7 +430,6 @@ export default (props) => {
       return (
         <React.Fragment>
           <TemplateCard
-            shareCommission={shareCommission}
             payBeanCommission={payBeanCommission}
             val={couponInfo}
             callback={linkTo}

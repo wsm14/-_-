@@ -3,7 +3,7 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, Input } from "@tarojs/components";
 import { getReserveOrder, saveScanCodeOrder } from "@/server/goods";
 import { backgroundObj, toast, objStatus } from "@/utils/utils";
-import { fetchUserShareCommission } from "@/server/common";
+
 import PayGo from "./components/pay_btn";
 import Router from "@/utils/router";
 import evens from "@/common/evens";
@@ -35,14 +35,17 @@ class Index extends Component {
   }
   componentDidShow() {
     this.regUrl();
-    this.fetchUserShareCommission();
+    this.setConfigUserLevelInfo();
   }
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
+  setConfigUserLevelInfo() {
+    const { commonStore = {} } = this.props.store;
+    const { preferentialGlobalDefaultList = [] } = commonStore;
+    let data = preferentialGlobalDefaultList.find((item) => {
+      const { identification } = item;
+      return identification === "otherDefault";
+    });
+    this.setState({
+      payBeanCommission: data.preferentialActivityRuleObject.payBeanCommission,
     });
   }
   //哒人身份
@@ -263,6 +266,11 @@ class Index extends Component {
               type="scan"
               status={useBeanStatus}
               useScenesType="scan"
+              changeBean={() => {
+                this.setState({
+                  useBeanStatus: useBeanStatus === "1" ? "0" : "1",
+                });
+              }}
               data={{
                 ...reserveOrderResult,
                 userBean: totalFee

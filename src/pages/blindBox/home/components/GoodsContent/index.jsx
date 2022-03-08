@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { View, Image, Text } from "@tarojs/components";
 import { observer, MobXProviderContext } from "mobx-react";
 import { fetchRightGoods } from "@/server/index";
-import { fetchUserShareCommission } from "@/server/common";
 import {
   template,
   prefectrueGoodsTemplate,
@@ -17,7 +16,8 @@ import "./index.scss";
  */
 export default observer(() => {
   const { store } = React.useContext(MobXProviderContext);
-  const { locationStore, authStore } = store;
+  const { locationStore, authStore, commonStore } = store;
+  const { preferentialGlobalDefaultList = [] } = commonStore;
   const [bindGoodList, setBindGoodList] = useState([
     {
       type: "bean", // 卡豆专区
@@ -79,14 +79,19 @@ export default observer(() => {
         },
       ]);
     });
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
-      const { payBeanCommission = 50, shareCommission = 0 } =
-        configUserLevelInfo;
-      setConfigUserLevelInfo({ payBeanCommission, shareCommission });
-    });
   });
-
+  useEffect(() => {
+    if (preferentialGlobalDefaultList.length > 0) {
+      let data = preferentialGlobalDefaultList.find((item, val) => {
+        const { identification } = item;
+        return identification === "otherDefault";
+      });
+      setConfigUserLevelInfo({
+        payBeanCommission:
+          data.preferentialActivityRuleObject.payBeanCommission,
+      });
+    }
+  }, [preferentialGlobalDefaultList]);
   return (
     <View className="blind_GoodsContent">
       {bindGoodList.map((item) => {
