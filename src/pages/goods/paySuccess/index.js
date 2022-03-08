@@ -50,7 +50,10 @@ class Index extends Component {
       return identification === "otherDefault";
     });
     this.setState({
-      payBeanCommission: data.preferentialActivityRuleObject.payBeanCommission,
+      configUserLevelInfo: {
+        payBeanCommission:
+          data.preferentialActivityRuleObject.payBeanCommission,
+      },
     });
   }
   fetchConfigNewcomerOrders() {
