@@ -3,7 +3,6 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, Input } from "@tarojs/components";
 import { getReserveOrder, saveScanCodeOrder } from "@/server/goods";
 import { backgroundObj, toast, objStatus } from "@/utils/utils";
-
 import PayGo from "./components/pay_btn";
 import Router from "@/utils/router";
 import evens from "@/common/evens";

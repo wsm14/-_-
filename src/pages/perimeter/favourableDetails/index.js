@@ -12,7 +12,6 @@ import {
   fetchShareParamInfo,
   fetchShareInfo,
   fetchShareConfig,
-  fetchUserShareCommission,
 } from "@/server/common";
 import {
   fetchSpecialGoods,
@@ -52,6 +51,8 @@ class Index extends Component {
           getCurrentInstance().router.params.specialActivityId || "",
         merchantId: getCurrentInstance().router.params.merchantId || "",
         shareUserId: getCurrentInstance().router.params.shareUserId || "",
+        identification:
+          getCurrentInstance().router.params.identification || "otherDefault",
       },
       specialGoodsInfo: {}, //商品详情
       index: 0,
@@ -121,7 +122,6 @@ class Index extends Component {
     if (index !== 0) {
       this.getDetailsById();
     }
-    this.fetchUserShareCommission();
   }
   fetchConfig() {
     const { httpData } = this.state;
@@ -141,7 +141,10 @@ class Index extends Component {
     fetchSpecialGoods(httpData)
       .then((res) => {
         const { specialGoodsInfo = {} } = res;
-        const { status } = specialGoodsInfo;
+        const { status, payBeanCommission } = specialGoodsInfo;
+        this.setState({
+          configUserLevelInfo: { payBeanCommission },
+        });
         Taro.stopPullDownRefresh();
         if (status) {
           this.setState(
@@ -169,14 +172,7 @@ class Index extends Component {
         Taro.stopPullDownRefresh();
       });
   }
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
-    });
-  }
+
   fetchUrlLink() {
     const { httpData } = this.state;
     const { userIdString } = loginStatus() || {};
@@ -376,6 +372,7 @@ class Index extends Component {
         userBean,
         activityType,
       },
+      httpData: { identification },
     } = this.state;
     const { bean, type } = paymentModeObject;
     if (buyRule === "dayLimit" && dayMaxBuyAmount === boughtActivityGoodsNum) {
@@ -404,6 +401,7 @@ class Index extends Component {
       args: {
         merchantId: merchantIdString,
         specialActivityId: specialActivityIdString,
+        identification,
       },
     });
   }
@@ -411,7 +409,6 @@ class Index extends Component {
   onPullDownRefresh() {
     Taro.stopPullDownRefresh();
     this.getDetailsById();
-    this.fetchUserShareCommission();
   }
   onReady() {
     // 生命周期函数--监听页面初次渲染完成

@@ -340,6 +340,7 @@ export default (props) => {
           merchantId: ownerIdString,
           ownerId: ownerIdString,
           ownerCouponId: ownerCouponIdString,
+          identification: "videoDefault",
         },
       });
     } else {
@@ -350,6 +351,7 @@ export default (props) => {
           specialActivityId: activityGoodsId,
           merchantId: ownerIdString,
           momentId: momentId,
+          identification: "videoDefault",
         },
       });
     }
