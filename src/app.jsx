@@ -21,7 +21,6 @@ class App extends Component {
     super(...arguments);
   }
   componentDidMount() {
-    this.getShareType();
     this.fetchLocation();
     this.fetchNetwork();
     authWxLogin(this.fetchOpenId.bind(this));
@@ -42,6 +41,7 @@ class App extends Component {
   componentDidShow(e) {
     this.fetchScene(e);
     this.fetchCheckUpdate();
+    this.getShareType();
     if (!Taro.cloud) {
       console.error("请使用 2.2.3 或以上的基础库以使用云能力");
     } else {
