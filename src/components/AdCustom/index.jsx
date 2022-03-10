@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Taro from "@tarojs/taro";
-import { View, AdCustom } from "@tarojs/components";
+import { View, AdCustom, Image } from "@tarojs/components";
 export default ({}) => {
   const [visible, setVisible] = useState(true);
   const setError = (e) => {
@@ -16,6 +16,13 @@ export default ({}) => {
       ></AdCustom>
     );
   } else {
-    return <View style="height: 100vh;"></View>;
+    return (
+      <View style="height: 100vh;">
+        <Image
+          mode="widthFix"
+          src="https://wechat-config.dakale.net/miniprogram/image/video_defealt.png"
+        />
+      </View>
+    );
   }
 };
