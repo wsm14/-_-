@@ -172,7 +172,6 @@ class Index extends Component {
         Taro.stopPullDownRefresh();
       });
   }
-
   fetchUrlLink() {
     const { httpData } = this.state;
     const { userIdString } = loginStatus() || {};

@@ -6,6 +6,7 @@ import { commerGoodsTemplate } from "@/components/public_ui/specalTemplate";
 import {
   fetchCouponAvailableSpecial,
   fetchAvailableOwnerCoupon,
+  fetchCouponAvailableCommerce,
 } from "@/server/coupon";
 import "./index.scss";
 export default (props) => {
@@ -38,12 +39,14 @@ export default (props) => {
       page: httpData.page + 1,
     });
   };
-  if (data.length > 0) {
+  if (list.length > 0) {
     return (
       <View className="commerceShop_box">
-        {list.map((item) => {
-          return commerGoodsTemplate(item);
-        })}
+        <View className="commerceShop_content">
+          {list.map((item) => {
+            return commerGoodsTemplate(item);
+          })}
+        </View>
       </View>
     );
   }

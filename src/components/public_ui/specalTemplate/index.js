@@ -437,12 +437,19 @@ export const commerGoodsTemplate = (item, configUserLevelInfo) => {
     goodsName,
     oriPrice,
     realPrice,
-    paymentModeObject: { bean, cash },
+    paymentModeObject: { bean, cash, type },
     specialActivityIdString,
     ownerId,
     commission,
   } = item;
-
+  const templatePrice = {
+    self: (
+      <View className="prefecture_fure_bean">
+        ¥{cash}+{bean}卡豆
+      </View>
+    ),
+    defaultMode: <View className="prefecture_fure_bean">{realPrice}</View>,
+  }[type];
   return (
     <View
       className="prefecture_fure_box"
@@ -470,9 +477,7 @@ export const commerGoodsTemplate = (item, configUserLevelInfo) => {
           <Text className="font24 text_through">{oriPrice}</Text>
         </View>
         <View className="prefecture_fure_tag prefecture_fure_margin1"></View>
-        <View className="prefecture_fure_bean">
-          ¥{cash}+{bean}卡豆
-        </View>
+        {templatePrice}
       </View>
       <View className="prefecture_btn  public_center">抢购</View>
     </View>

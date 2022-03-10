@@ -1,0 +1,30 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/coupon/increase/index",
+          "pathName": "pages/coupon/increase/index",
+          "query": "userCouponId=1501840370640498689&useScenesType=commerce&classType=universal",
+          "scene": null
+        },
+        {
+          "name": "pages/coupon/wraparound/index",
+          "pathName": "pages/coupon/wraparound/index",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

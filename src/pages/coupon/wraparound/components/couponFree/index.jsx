@@ -24,13 +24,26 @@ export default ({ data, status, hasBtn = true }) => {
     userCouponId,
   } = data;
   const { type, beanNum, increaseMaxValue } = increaseRuleObject;
-  const renter = {
-    goodsBuy: "商品通用券",
-    scan: "扫码通用券",
-    virtual: "虚拟商品券",
-    commerce: "电商券",
-    community: "团购券",
-  }[useScenesType];
+
+  const renter = () => {
+    if (classType === "universal" && useScenesType === "goodsBuy") {
+      return "商品通用券";
+    } else if (classType === "category" && useScenesType === "goodsBuy") {
+      return "行业商品券";
+    } else if (classType === "merchant" && useScenesType === "goodsBuy") {
+      return "店铺商品券";
+    } else if (classType === "goods" && useScenesType === "goodsBuy") {
+      return "指定商品券";
+    } else if (classType === "universal" && useScenesType === "virtual") {
+      return "虚拟通用券";
+    } else if (classType === "goods" && useScenesType === "virtual") {
+      return "指定虚拟券";
+    } else if (classType === "universal" && useScenesType === "commerce") {
+      return "电商通用券";
+    } else if (classType === "goods" && useScenesType === "commerce") {
+      return "指定电商券";
+    }
+  };
   const renderDesc = () => {
     if (classType === "universal" && useScenesType === "goodsBuy") {
       return "限特惠商品、优惠券可用";
@@ -124,7 +137,7 @@ export default ({ data, status, hasBtn = true }) => {
               <View className="couponFree_title_font  font_hide">
                 {couponName}
               </View>
-              <View className="couponFree_title_icon">{renter}</View>
+              <View className="couponFree_title_icon">{renter()}</View>
             </View>
             <View
               className={`couponFree_title_time ${
@@ -155,7 +168,7 @@ export default ({ data, status, hasBtn = true }) => {
                 ? visible
                   ? "couponFree_coupon_bottomIcon"
                   : "couponFree_coupon_bottomIcon1"
-                : "couponFree_coupon_bottomNoIcon"
+                : "couponFree_coupon_bottomNoIcon font_hide"
             }
           >
             {renderDesc()}
