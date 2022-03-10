@@ -70,25 +70,25 @@ export default (props) => {
         );
       } else if (rightFlag === "1") {
         return (
-          <Tarking args={data} name={"payCouponDetails"}>
-            <View
-              onClick={saveInfo}
-              className="fixedBtn_payBtn public_center fixedBtn_payStyle1"
-            >
+          <View
+            onClick={saveInfo}
+            className="fixedBtn_payBtn public_center fixedBtn_payStyle1"
+          >
+            <Tarking args={data} name={"payCouponDetails"}>
               ¥{cash} 立即购买
-            </View>
-          </Tarking>
+            </Tarking>
+          </View>
         );
       } else {
         return (
-          <Tarking args={data} name={"payCouponDetails"}>
-            <View
-              className="fixedBtn_payBtn public_center fixedBtn_payStyle1"
-              onClick={saveInfo}
-            >
+          <View
+            className="fixedBtn_payBtn public_center fixedBtn_payStyle1"
+            onClick={saveInfo}
+          >
+            <Tarking args={data} name={"payCouponDetails"}>
               ¥{computedRelprice() + " "} 立即购买
-            </View>
-          </Tarking>
+            </Tarking>
+          </View>
         );
       }
     };
