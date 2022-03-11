@@ -85,14 +85,14 @@ const env =
 switch (env) {
   case "development":
     // baseUrl = "http://192.168.0.86:6020";
-    baseUrl = "https://devgateway.dakale.net";
+    // baseUrl = "https://devgateway.dakale.net";
     // baseUrl = "https://pregateway.dakale.net";
-    // baseUrl = "https://gateway1.dakale.net";
+    baseUrl = "https://gateway1.dakale.net";
     break;
   case "production":
     // baseUrl = "https://pregateway.dakale.net";
-    baseUrl = "https://devgateway.dakale.net";
-    // baseUrl = "https://gateway1.dakale.net";
+    // baseUrl = "https://devgateway.dakale.net";
+    baseUrl = "https://gateway1.dakale.net";
     break;
 }
 const httpCondition = {

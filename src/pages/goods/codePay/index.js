@@ -23,6 +23,7 @@ class Index extends Component {
       useBeanStatus: "1",
       couponObj: {},
       configUserLevelInfo: {},
+      payBeanCommission: 10,
     };
   }
 
@@ -34,23 +35,8 @@ class Index extends Component {
   }
   componentDidShow() {
     this.regUrl();
-    this.setConfigUserLevelInfo();
   }
-  setConfigUserLevelInfo() {
-    const { commonStore = {} } = this.props.store;
-    const { preferentialGlobalDefaultList = [] } = commonStore;
-    let data = preferentialGlobalDefaultList.find((item) => {
-      const { identification } = item;
-      return identification === "otherDefault";
-    });
-    this.setState({
-      configUserLevelInfo: {
-        payBeanCommission:
-          data.preferentialActivityRuleObject.payBeanCommission,
-      },
-    });
-  }
-  //哒人身份
+
   getUrlKey(key, name) {
     // 获取参数
     var url = decodeURIComponent(key);
@@ -108,8 +94,9 @@ class Index extends Component {
         ...this.state.httpData,
       },
       (res) => {
-        const { reserveOrderResult } = res;
+        const { reserveOrderResult, payBeanCommission } = res;
         this.setState({
+          payBeanCommission,
           reserveOrderResult: {
             ...reserveOrderResult,
             ...this.state.reserveOrderResult,

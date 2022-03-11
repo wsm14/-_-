@@ -23,6 +23,18 @@
           "pathName": "pages/coupon/wraparound/index",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/perimeter/favourableDetails/index",
+          "pathName": "pages/perimeter/favourableDetails/index",
+          "query": "specialActivityId=1501385115742306305&merchantId=-1",
+          "scene": null
+        },
+        {
+          "name": "pages/perimeter/beanWelfareZone/index",
+          "pathName": "pages/perimeter/beanWelfareZone/index",
+          "query": "mode=beanWelfare",
+          "scene": null
         }
       ]
     }

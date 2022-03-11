@@ -77,7 +77,7 @@ export default ({ pageName = "wanderAround", stopVideo, initVideo }) => {
   const { store } = React.useContext(MobXProviderContext);
   const { commonStore } = store;
   const { configGlobalPopUpObjectList = [] } = commonStore;
-  useDidShow(() => {
+  useEffect(() => {
     const list = fetchStorage("configGlobalPopUpDTOS") || [];
     let changeList = configGlobalPopUpObjectList.filter((item) => {
       return item.pageName === pageName;
@@ -88,7 +88,7 @@ export default ({ pageName = "wanderAround", stopVideo, initVideo }) => {
       return;
     }
     setGlobalDrawerList(filterList(list, changeList));
-  });
+  }, []);
 
   useEffect(() => {
     const list = fetchStorage("configGlobalPopUpDTOS") || [];
