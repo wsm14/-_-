@@ -3,9 +3,11 @@ import { ScrollView, View } from "@tarojs/components";
 import Taro, { useReachBottom } from "@tarojs/taro";
 import { getGoodsByMerchantId } from "@/server/perimeter";
 import { template } from "./../specalTemplate";
+import { observer, MobXProviderContext } from "mobx-react";
 import "./index.scss";
 export default (props) => {
-  const { title, current = false, userInfo, page, defaultData = null } = props;
+  const { title, current = false, page, defaultData = null } = props;
+  const [userInfo, setUserInfo] = useState({});
   /*
     为你推荐 商品组件  
     current @params {boolean} false 开启翻页  true  最多两条数据  
@@ -14,6 +16,21 @@ export default (props) => {
   const [data, setData] = useState([]);
   const [httpData, setHttpData] = useState(null);
   const [count, countType] = useState(true);
+  const { store } = React.useContext(MobXProviderContext);
+  const { commonStore } = store;
+  const { preferentialGlobalDefaultList } = commonStore;
+  useEffect(() => {
+    if (preferentialGlobalDefaultList.length > 0) {
+      let data = preferentialGlobalDefaultList.find((item) => {
+        const { identification } = item;
+        return identification === "otherDefault";
+      });
+      setUserInfo({
+        payBeanCommission:
+          data.preferentialActivityRuleObject.payBeanCommission,
+      });
+    }
+  }, [preferentialGlobalDefaultList]);
   useEffect(() => {
     if (!defaultData) {
       if (current) {

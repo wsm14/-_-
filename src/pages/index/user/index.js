@@ -8,6 +8,7 @@ import { objStatus } from "@/utils/utils";
 import UserContent from "./components/userCenter";
 import Skeleton from "./components/SkeletonView";
 import { inject, observer } from "mobx-react";
+import GlobalDrawer from "@/components/GlobalDrawer";
 import NewUser from "@/components/public_ui/newUserToast";
 import "./index.scss";
 @inject("store")
@@ -108,6 +109,7 @@ class Index extends React.Component {
         <View className="page_user_logo public_center">
           <View className="page_user_dakalelogo"></View>
         </View>
+        <GlobalDrawer pageName="main"></GlobalDrawer>
       </Skeleton>
     );
   }

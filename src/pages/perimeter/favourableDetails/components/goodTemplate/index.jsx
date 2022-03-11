@@ -89,7 +89,13 @@ export default (props) => {
             ¥{oriPrice}
           </Text>
         </View>
-        <View onClick={() => showToast()} className="shopdetails_bean_showPay">
+        <View
+          onClick={() => {
+            console.log(1111);
+            showToast();
+          }}
+          className="shopdetails_bean_showPay"
+        >
           <View className="color3 font24">卡豆再省</View>
           <View className="color3 font36 bold price_margin8">
             ¥{computedPrice(realPrice, payBeanCommission)}

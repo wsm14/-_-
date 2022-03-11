@@ -6,7 +6,6 @@ import { inject, observer } from "mobx-react";
 import {
   fetchPhoneBillDetail,
   fetchMemberOrderSumbit,
-  fetchUserShareCommission,
   fetchRechargeMemberLsxdDetail,
 } from "@/server/common";
 import {
@@ -27,7 +26,6 @@ import RightGoods from "./components/template/rightGoods";
 import BeanGiftPack from "./components/template/beanGiftPack";
 import evens from "@/common/evens";
 import Router from "@/utils/router";
-
 import "./index.scss";
 @inject("store")
 @observer
@@ -39,6 +37,8 @@ class Index extends Component {
         merchantId: getCurrentInstance().router.params.merchantId,
         specialActivityId: getCurrentInstance().router.params.specialActivityId,
         goodsCount: 1,
+        identification:
+          getCurrentInstance().router.params.identification || "otherDefault",
       },
       useBeanStatus: "1",
       specialGoodsInfo: {},
@@ -75,7 +75,6 @@ class Index extends Component {
       this.fetchGetGiftPackPriceDetail();
       return;
     }
-    this.fetchUserShareCommission();
     this.fetchKolGoodsOrder();
   }
   //获取订单详情
@@ -87,7 +86,7 @@ class Index extends Component {
     const {
       useBeanStatus,
       specialGoodsInfo: { ownerIdString },
-      httpData: { merchantId, specialActivityId, goodsCount },
+      httpData: { merchantId, specialActivityId, goodsCount, identification },
       remark,
       userAddress,
       couponObj,
@@ -112,6 +111,7 @@ class Index extends Component {
       sourceType,
       remark,
       userAddressId,
+      identification,
       userCouponObjects: userCouponId
         ? [
             {
@@ -146,6 +146,7 @@ class Index extends Component {
       }
     });
   }
+
   saveCancel() {
     const {
       specialGoodsInfo: { userBean },
@@ -183,21 +184,7 @@ class Index extends Component {
       );
     });
   }
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const {
-        configUserLevelInfo = {
-          payBeanCommission: 50,
-          shareCommission: 0,
-          teamCommission: 0,
-        },
-      } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
-    });
-  }
-  //获取哒人等级
+
   computedCount(type) {
     const {
       httpData,
@@ -293,13 +280,14 @@ class Index extends Component {
         userBean,
         realPrice,
         paymentModeObject = {},
+        payBeanCommission,
       },
       httpData: { goodsCount },
       useBeanStatus,
       configUserLevelInfo,
     } = this.state;
     const { cash, type = "defaultMode" } = paymentModeObject;
-    const { payBeanCommission } = configUserLevelInfo;
+
     if (type === "defaultMode") {
       if (useBeanStatus === "1") {
         let price = Number(realPrice) * goodsCount - couponValue;
@@ -397,7 +385,7 @@ class Index extends Component {
       useBeanType,
       momentId,
       specialGoodsInfo: { ownerIdString, rightFlag },
-      httpData: { specialActivityId, goodsCount },
+      httpData: { specialActivityId, goodsCount, identification },
       couponObj,
     } = this.state;
     const { shareType } = this.props.store.authStore;
@@ -412,6 +400,7 @@ class Index extends Component {
         id: specialActivityId,
         goodsCount,
       },
+      identification,
       shareUserId,
       shareUserType,
       sourceKey,
@@ -629,7 +618,6 @@ class Index extends Component {
       useBeanStatus === "0" &&
       type !== "defaultMode"
     ) {
-      console.log(111);
       return false;
     } else {
       return true;
@@ -657,7 +645,7 @@ class Index extends Component {
     const template = {
       specialGoods: (
         <Specal
-          configUserLevelInfo={configUserLevelInfo}
+          configUserLevelInfo={specialGoodsInfo}
           data={specialGoodsInfo}
           useScenesType={"goodsBuy"}
           status={useBeanStatus}
@@ -680,7 +668,7 @@ class Index extends Component {
         <Commer
           userAddress={userAddress}
           userAddressIndex={userAddressIndex}
-          configUserLevelInfo={configUserLevelInfo}
+          configUserLevelInfo={specialGoodsInfo}
           data={specialGoodsInfo}
           useScenesType={"commerce"}
           status={useBeanStatus}
@@ -701,7 +689,7 @@ class Index extends Component {
       ),
       rightGoods: (
         <RightGoods
-          configUserLevelInfo={configUserLevelInfo}
+          configUserLevelInfo={specialGoodsInfo}
           data={specialGoodsInfo}
           useScenesType={"goodsBuy"}
           status={useBeanStatus}

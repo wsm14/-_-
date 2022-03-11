@@ -19,12 +19,17 @@ class Index extends Component {
           "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/game/game_sharebg_6.png",
         freeTaskHelp:
           "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/game/game_sharebg_7.png",
+        farmTaskHelp:
+          "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/game/game_sharebg_8.png",
+        //合力任务
+        farmTogether:
+          "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/game/game_sharebg_8.png",
+        //助力任务
       },
       subType: getCurrentInstance().router.params.subType || "fillSign",
       shareUserId: getCurrentInstance().router.params.shareUserId,
       fillSignTime: getCurrentInstance().router.params.fillSignTime,
       shareId: getCurrentInstance().router.params.shareId,
-
       shareInfo: {},
     };
   }
@@ -92,6 +97,32 @@ class Index extends Component {
       });
     });
   }
+  farmTogether() {
+    const { subType, shareId } = this.state;
+    fetchNewShareInfo({
+      subType: subType,
+      shareId: shareId,
+      shareType: "game",
+    }).then((val) => {
+      const { shareInfo } = val;
+      this.setState({
+        shareInfo,
+      });
+    });
+  }
+  farmTaskHelp() {
+    const { subType, shareId } = this.state;
+    fetchNewShareInfo({
+      subType: subType,
+      shareId: shareId,
+      shareType: "game",
+    }).then((val) => {
+      const { shareInfo } = val;
+      this.setState({
+        shareInfo,
+      });
+    });
+  }
   filterRequest() {
     const { subType } = this.state;
     const requestFilter = {
@@ -100,6 +131,8 @@ class Index extends Component {
       signTaskHelp: this.fakePrize.bind(this),
       gameTogether: this.fakeTogether.bind(this),
       freeTaskHelp: this.fakefreeTaskHelp.bind(this),
+      farmTogether: this.farmTogether.bind(this),
+      farmTaskHelp: this.farmTaskHelp.bind(this),
     }[subType];
     requestFilter && requestFilter();
   }
@@ -121,6 +154,15 @@ class Index extends Component {
   }
   render() {
     const { imgList, subType } = this.state;
+    const btnFont = {
+      fillSign: "邀请TA",
+      blindBoxHelp: "邀请TA",
+      signTaskHelp: "邀请TA",
+      gameTogether: "邀请TA",
+      farmTogether: "邀请TA",
+      farmTaskHelp: "邀请TA",
+      freeTaskHelp: "邀请好友合力",
+    }[subType];
     return (
       <View className="game_help_info">
         <View
@@ -137,7 +179,7 @@ class Index extends Component {
               }}
               openType={"share"}
             ></Button>
-            {subType === "freeTaskHelp" ? "邀请好友合力" : "邀请TA"}
+            {btnFont}
           </View>
         </View>
       </View>

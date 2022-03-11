@@ -7,6 +7,7 @@ import {
   fakeBoxPrize,
   fetchDoneTask,
   fakeTogether,
+  fakeJoinTeam,
 } from "@/server/share";
 import "./index.scss";
 import Router from "@/utils/router";
@@ -25,6 +26,12 @@ class Index extends Component {
           "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/game/game_sharebg_6.png",
         freeTaskHelp:
           "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/game/game_sharebg_5.png",
+        farmTaskHelp:
+          "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/game/game_sharebg_8.png",
+        //合力任务
+        farmTogether:
+          "https://dakale-wechat-new.oss-cn-hangzhou.aliyuncs.com/miniprogram/game/game_sharebg_8.png",
+        //助力任务
       },
       subType: getCurrentInstance().router.params.subType || "fillSign",
       shareUserId: getCurrentInstance().router.params.shareUserId,
@@ -36,9 +43,9 @@ class Index extends Component {
   fakeSign() {
     const { shareUserId, fillSignTime } = this.state;
     fakefillSign({
-      signDate: fillSignTime,
-      fillSignType: "invite",
-      userId: shareUserId,
+      fillSignDate: fillSignTime,
+      fillSignWay: "1",
+      signUserId: shareUserId,
     }).then((val) => {
       toast("补签成功");
       Router({
@@ -115,6 +122,57 @@ class Index extends Component {
       });
     });
   }
+  farmTogether() {
+    const { strapId, shareUserId } = this.state;
+    const env =
+      process.env.NODE_ENV === "development" ? "development" : "production";
+    fetchDoneTask({
+      taskStrapId: strapId,
+      inviteFlag: "1",
+      userId: shareUserId,
+    }).then((val) => {
+      toast("助力成功");
+      Router({
+        routerName: "webView",
+        args: {
+          link: `https://web-new.dakale.net/${
+            env === "development" ? "dev" : "product"
+          }/game/farmGame/index.html#/farm`,
+        },
+      });
+    });
+  }
+  linkToTeam() {
+    const env =
+      process.env.NODE_ENV === "development" ? "development" : "production";
+    Router({
+      routerName: "webView",
+      args: {
+        link: `https://web-new.dakale.net/${
+          env === "development" ? "dev" : "product"
+        }/game/farmGame/index.html#/farm`,
+      },
+    });
+  }
+  fakeJoinFoTeam() {
+    const { progressId, shareUserId } = this.state;
+    const env =
+      process.env.NODE_ENV === "development" ? "development" : "production";
+    fakeJoinTeam({
+      shareUserIdStr: shareUserId,
+      gameProgressIdStr: progressId,
+    }).then((val) => {
+      toast("合力成功");
+      Router({
+        routerName: "webView",
+        args: {
+          link: `https://web-new.dakale.net/${
+            env === "development" ? "dev" : "product"
+          }/game/farmGame/index.html#/farm`,
+        },
+      });
+    });
+  }
   componentDidMount() {}
   render() {
     const { imgList, subType } = this.state;
@@ -124,6 +182,9 @@ class Index extends Component {
       signTaskHelp: this.fakeTask.bind(this),
       gameTogether: this.fakeTogether.bind(this),
       freeTaskHelp: this.fetfreeTaskHelp.bind(this),
+      farmTogether: this.fakeJoinFoTeam.bind(this),
+      farmTaskHelp: this.farmTogether.bind(this),
+      shareGameImage: this.linkToTeam.bind(this),
     }[subType];
     const requestName = {
       fillSign: "帮助TA",
@@ -131,6 +192,9 @@ class Index extends Component {
       signTaskHelp: "帮助TA",
       gameTogether: "我要拿好礼",
       freeTaskHelp: "立即合力",
+      farmTogether: "我要领水果",
+      farmTaskHelp: "我要领水果",
+      shareGameImage: "我要领水果",
     }[subType];
     return (
       <View className="game_box_info">

@@ -11,7 +11,7 @@ import {
   computedTime,
   fakeStorage,
 } from "@/utils/utils";
-import { ScrollView, View } from "@tarojs/components";
+import { ScrollView, View, Ad } from "@tarojs/components";
 import {
   fakeUserFollow,
   getUserMomentList,
@@ -45,7 +45,6 @@ import { nearList } from "@/components/public_ui/nearList";
 import NearTitle from "./components/nearTitle";
 import NewsPilot from "./components/newsPilot";
 import CouponBean from "@/components/public_ui/couponBean";
-
 import "./index.scss";
 @inject("store")
 @observer
@@ -291,6 +290,12 @@ class Index extends React.PureComponent {
         });
         return;
       }
+      let newList = [...userMomentsList];
+      newList.forEach((item, index) => {
+        if ((index + 1) % 5 === 0) {
+          userMomentsList.splice(index, 0, { imper: true });
+        }
+      });
       this.setState(
         {
           userMomentsList: [...this.state.userMomentsList, ...userMomentsList],

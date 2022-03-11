@@ -3,7 +3,6 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { Image, Text, View } from "@tarojs/components";
 import Banner from "@/components/banner";
 import { filterStrList, mapGo } from "@/utils/utils";
-import { shopGoodsDetails } from "@/components/public_ui/shopGoodsDetails";
 import MakePhone from "@/components/payTelephone";
 import { loginBtn } from "@/common/authority";
 import { getListGoodsDetail } from "@/server/perimeter";
@@ -103,7 +102,7 @@ class MerchantDetails extends Component {
             </View>
             {/*达人推荐*/}
             <View className="shopdetails_shop_details">
-              {packageGoods && shopGoodsDetails(this, packageGoods)}
+          
               {goodsDesc && (
                 <>
                   <View className="shopdetails_shop_merchantDetails">

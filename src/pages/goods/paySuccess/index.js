@@ -7,7 +7,6 @@ import PaySuccess from "./components/template/payTemplate";
 import ScanSuccess from "./components/template/scanTemplate";
 import { fetchOrderResult } from "@/server/goods";
 import { getConfigNewcomerOrders } from "@/server/index";
-import { fetchUserShareCommission } from "@/server/common";
 import { fetchOrderLinkCoupon } from "@/server/coupon";
 import Toast from "./components/uiComponents/paySuccess";
 import NewUser from "@/components/public_ui/newUserToast";
@@ -30,17 +29,10 @@ class Index extends Component {
   }
   componentDidMount() {
     this.getOrderResult();
-    this.fetchUserShareCommission();
+    this.setConfigUserLevelInfo();
     this.fetchConfigNewcomerOrders();
   }
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
-    });
-  }
+
   fetchOrderLinkCoupon() {
     fetchOrderLinkCoupon().then((res) => {
       const { userPlatformCouponInfo = {} } = res;
@@ -48,6 +40,20 @@ class Index extends Component {
         userPlatformCouponInfo,
         visible: objStatus(userPlatformCouponInfo),
       });
+    });
+  }
+  setConfigUserLevelInfo() {
+    const { commonStore = {} } = this.props.store;
+    const { preferentialGlobalDefaultList = [] } = commonStore;
+    let data = preferentialGlobalDefaultList.find((item) => {
+      const { identification } = item;
+      return identification === "otherDefault";
+    });
+    this.setState({
+      configUserLevelInfo: {
+        payBeanCommission:
+          data.preferentialActivityRuleObject.payBeanCommission,
+      },
     });
   }
   fetchConfigNewcomerOrders() {
@@ -87,7 +93,7 @@ class Index extends Component {
     } = this.state;
     const { orderType, frontViewType } = orderResult;
     const { beanLimit } = this.props.store.commonStore;
-
+    console.log(visible);
     const template = {
       verificationPay: (
         <>

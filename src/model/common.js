@@ -6,6 +6,8 @@ const commonStore = observable({
   data: {},
   overallBanner: [],
   floatList: [],
+  configGlobalPopUpObjectList: [],
+  preferentialGlobalDefaultList:[],
   setOverAllBanner(e) {
     this.overallBanner = e;
   },
@@ -20,6 +22,9 @@ const commonStore = observable({
   },
   setShareData(obj) {
     this.data = obj;
+  },
+  setCommonData(key, val) {
+    this[key] = val;
   },
 });
 export default commonStore;
