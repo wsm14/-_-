@@ -134,32 +134,33 @@ export default (props) => {
   const templateBean = {
     0: (
       <View
-        className="kol_bean_box"
-        catchMove
-        animation={animate}
+        style={show ? { display: "flex" } : { display: "none" }}
+        className="imper_bean public_center"
         onClick={(e) => {
           e.stopPropagation();
+          onClose();
         }}
       >
-        <View className="kol_details_padding">
-          <View className="color1 bold font32">恭喜您获得</View>
-          <View className="font40 bold color3 bean_padding">
-            {data.tippingBean}卡豆
-          </View>
-
-          <View
-            className="kol_imper_btnBox public_center"
-            onClick={() => {
-              onClose();
-              Router({
-                routerName: "imper",
-              });
-            }}
-          >
-            再领最高60卡豆
-          </View>
-          <View className="kol_imper_close" onClick={() => onClose()}>
-            开心收下
+        <View
+          className="imper_bean_box"
+          catchMove
+          animation={animate}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <View className="imper_details_padding">
+            <View className="color1 bold font32">恭喜您获得</View>
+            <View className="font40 bold color3 bean_padding">
+              {tippingBean}卡豆
+            </View>
+            {/* className='getBean_btn' 这里有用做数据统计上报监听 不能删改 */}
+            <View
+              className="getBean_btn font32 color6"
+              onClick={() => onClose()}
+            >
+              立即领取
+            </View>
           </View>
         </View>
       </View>

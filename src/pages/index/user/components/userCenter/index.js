@@ -9,21 +9,21 @@ import "./index.scss";
 export default ({ bannerList }) => {
   const BeanBar = () => {
     const list = [
-      {
-        icon: "user_centerBar_iconSix",
-        val: `财运视频`,
-        fn: () => {
-          if (loginStatus()) {
-            Router({
-              routerName: "imper",
-            });
-          } else {
-            Router({
-              routerName: "login",
-            });
-          }
-        },
-      },
+      // {
+      //   icon: "user_centerBar_iconSix",
+      //   val: `财运视频`,
+      //   fn: () => {
+      //     if (loginStatus()) {
+      //       Router({
+      //         routerName: "imper",
+      //       });
+      //     } else {
+      //       Router({
+      //         routerName: "login",
+      //       });
+      //     }
+      //   },
+      // },
       {
         icon: "user_centerBar_iconOne",
         val: "分享赚豆",
