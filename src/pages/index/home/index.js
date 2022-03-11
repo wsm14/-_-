@@ -290,12 +290,6 @@ class Index extends React.PureComponent {
         });
         return;
       }
-      let newList = [...userMomentsList];
-      newList.forEach((item, index) => {
-        if ((index + 1) % 5 === 0) {
-          userMomentsList.splice(index, 0, { imper: true });
-        }
-      });
       this.setState(
         {
           userMomentsList: [...this.state.userMomentsList, ...userMomentsList],
