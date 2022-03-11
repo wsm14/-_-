@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import router from "@/utils/router";
-import { useRouter } from "@tarojs/taro";
+import { useRouter, useShareAppMessage } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import {
   fetchGetBeanGiftPackDetail,
@@ -31,7 +31,11 @@ export default () => {
   useEffect(() => {
     fetGetData();
   }, []);
-
+  useShareAppMessage(() => {
+    return {
+      title: "卡豆福利专区",
+    };
+  });
   const fetGetData = () => {
     // 卡豆福利券包 话费福利券包
     if (["beanWelfare", "telephoneCharges"].includes(mode)) {
