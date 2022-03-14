@@ -96,7 +96,7 @@ class Index extends Component {
       (res) => {
         const { reserveOrderResult, payBeanCommission } = res;
         this.setState({
-          payBeanCommission,
+          configUserLevelInfo: { payBeanCommission },
           reserveOrderResult: {
             ...reserveOrderResult,
             ...this.state.reserveOrderResult,
