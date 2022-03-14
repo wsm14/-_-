@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import Taro, { useDidShow } from "@tarojs/taro";
 import Drawer from "@/components/Drawer";
-import {} from "@/utils/utils";
 import Router from "@/utils/router";
 import "./index.scss";
 

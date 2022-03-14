@@ -36,6 +36,7 @@ import TopBean from "./components/topBean";
 import Education from "./components/beanEducation";
 import SpecalSelf from "./components/specialSelf";
 import GlobalDrawer from "@/components/GlobalDrawer";
+import Sign from "./components/sign";
 import { fetchBeanAndEarn } from "@/server/index";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
@@ -767,6 +768,7 @@ class Index extends Component {
             ) : (
               <React.Fragment>
                 <View className="lookAround_content_margin">
+                  <Sign></Sign>
                   {wanderAroundModule.map((item, index) => {
                     if (templateObj[item]) {
                       if (index === wanderAroundModule.length - 2) {
