@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { View, Image } from "@tarojs/components";
 
 import Router from "@/utils/router";
-export default ({ data = [], userInfo = {}, linkTo }) => {
+export default ({  }) => {
   const normalList = [
     {
       coverImg:

@@ -1,0 +1,82 @@
+.hotMetal_box {
+  margin: 24px 24px 0;
+  padding: 24px;
+  line-height: 1;
+  .hotMetal_title {
+    padding-bottom: 8px;
+    display: flex;
+  }
+  .hotMetal_title::before {
+    width: 174px;
+    height: 32px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon915.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+  }
+  .hotMetal_link {
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+  .hotMetal_link::after {
+    width: 28px;
+    height: 28px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon361.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+  }
+  .hotMetal_content {
+    margin: 32px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .hotMetal_coupon_box {
+      width: 202px;
+      height: 180px;
+      margin: 0 auto;
+    }
+    .hotMetal_coupon_desc {
+      font-size: 28px;
+      padding-top: 132px;
+      font-weight: 600;
+      color: #ffffff;
+      text-align: center;
+    }
+    .hotMetal_coupon_icon1 {
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon916.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .hotMetal_coupon_icon2 {
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon917.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .hotMetal_coupon_icon3 {
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon918.png)
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .hotMetal_coupon_price {
+      padding: 24px 0 0;
+      text-align: center;
+      font-size: 28px;
+      font-weight: 600;
+      color: #333333;
+    }
+    .hotMetal_coupon_priceDesc {
+      padding: 16px 0 0;
+      font-size: 24px;
+      font-weight: 400;
+      color: #999999;
+      text-align: center;
+    }
+  }
+}

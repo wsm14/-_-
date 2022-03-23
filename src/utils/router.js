@@ -82,6 +82,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     beanWelfareZone: "/pages/perimeter/beanWelfareZone/index", // 卡豆福利专区
     payCouponList: "/pages/perimeter/couponList/index", //有价券列表
     commer: "/pages/perimeter/commer/index", //电商商品
+    wanderAround: "/pages/perimeter/innerComponents/index",
     orderDetails: "/pages/goods/orderDetails/index", //订单详情
     codePay: "/pages/goods/codePay/index", //
     coupon: "/pages/goods/codeCoupon/index",

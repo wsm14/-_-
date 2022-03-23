@@ -317,3 +317,23 @@ export const fetchPreferential = (data) => {
     data: data,
   });
 }; //支付抵扣比例默认配置：
+
+export const fetchFestivalConfigs = (data) => {
+  return httpGet({
+    url: "/common/festival/getFestivalConfigs",
+    data: data,
+  });
+}; //微信小程序主站顶部背景：
+
+export const fetchResourceTemplate = (data) => {
+  return httpGet({
+    url: "/common/resourceTemplateContent/getResourceTemplateContentNewById",
+    data: data,
+  });
+}; //逛逛根据模板 Id查找数据：
+export const fetchSecondKillBarrage = (data) => {
+  return httpGet({
+    url: "/common/dictionary/listSecondKillBarrage",
+    data: data,
+  });
+}; //卡豆超值弹幕

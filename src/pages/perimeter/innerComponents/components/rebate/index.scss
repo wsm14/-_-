@@ -1,0 +1,51 @@
+page {
+  background: #fff2d3;
+}
+.rebate_interval_box {
+  width: 100%;
+  min-height: 100%;
+  background: #fff2d3;
+  .rebate_interval_bg {
+    width: 100%;
+    height: 810px;
+  }
+  .rebate_barrage {
+    position: relative;
+    top: 588px;
+    margin: 0 24px;
+    width: 702px;
+    height: 182px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon920.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .rebate_barrage_style {
+    padding-top: 100px;
+  }
+  .rebate_specal {
+    width: 198px;
+    height: 48px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon921.png)
+      no-repeat;
+    background-size: 100% 100%;
+    margin: 8px 32px 32px;
+  }
+  .rebate_game {
+    width: 164px;
+    height: 48px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon922.png)
+      no-repeat;
+    background-size: 100% 100%;
+    margin: 40px 32px 32px;
+  }
+  .rebate_commer {
+    width: 162px;
+    height: 48px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon923.png)
+      no-repeat;
+    background-size: 100% 100%;
+    margin: 40px 32px 32px;
+  }
+  .rebate_shop_content {
+  }
+}

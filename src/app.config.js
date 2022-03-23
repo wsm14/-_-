@@ -127,6 +127,7 @@ export default {
         "merchantDetails/index", //商家详情
         "enterGroup/index", // 加入社群
         "beanWelfareZone/index", // 卡豆福利专区
+        "innerComponents/index",//逛逛配置内页
       ],
     },
     {

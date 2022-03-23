@@ -18,12 +18,15 @@ export const NavHeight = () => {
   );
 };
 //設置自定義導航欄 高度
-export const toast = (value) => {
+export const toast = (value, fn) => {
   return Taro.showToast({
     title: value,
     icon: "none",
     duration: 3000,
     mask: true,
+    success: () => {
+      fn && fn();
+    },
   });
 };
 //小提示弹窗

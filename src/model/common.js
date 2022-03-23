@@ -8,6 +8,7 @@ const commonStore = observable({
   floatList: [],
   configGlobalPopUpObjectList: [],
   preferentialGlobalDefaultList:[],
+  festivalConfigs:[],
   setOverAllBanner(e) {
     this.overallBanner = e;
   },

@@ -13,18 +13,21 @@ class Index extends PureComponent {
       userCouponId: getCurrentInstance().router.params.userCouponId,
       useScenesType: getCurrentInstance().router.params.useScenesType,
       classType: getCurrentInstance().router.params.classType,
+      platformCouponId: getCurrentInstance().router.params.platformCouponId,
       userPlatformCouponInfo: {},
     };
   }
 
   getCouponDetail() {
-    const { userCouponId } = this.state;
-    fetchPlatformCouponDetail({ userCouponId }).then((val) => {
-      const { userPlatformCouponInfo } = val;
-      this.setState({
-        userPlatformCouponInfo,
-      });
-    });
+    const { userCouponId, platformCouponId } = this.state;
+    fetchPlatformCouponDetail({ userCouponId, platformCouponId }).then(
+      (val) => {
+        const { userPlatformCouponInfo } = val;
+        this.setState({
+          userPlatformCouponInfo,
+        });
+      }
+    );
   }
 
   componentDidShow() {
@@ -32,8 +35,13 @@ class Index extends PureComponent {
   }
 
   render() {
-    const { userPlatformCouponInfo, classType, useScenesType, userCouponId } =
-      this.state;
+    const {
+      userPlatformCouponInfo,
+      classType,
+      useScenesType,
+      userCouponId,
+      platformCouponId,
+    } = this.state;
     const template = () => {
       if (!useScenesType) {
         return null;
@@ -41,12 +49,20 @@ class Index extends PureComponent {
       if (useScenesType === "commerce") {
         return (
           <CommerceShop
-            data={{ platformCouponId: userCouponId, classType }}
+            data={{
+              platformCouponId: userCouponId || platformCouponId,
+              classType,
+            }}
           ></CommerceShop>
         );
       } else {
         return (
-          <Specal data={{ platformCouponId: userCouponId, classType }}></Specal>
+          <Specal
+            data={{
+              platformCouponId: userCouponId || platformCouponId,
+              classType,
+            }}
+          ></Specal>
         );
       }
     };

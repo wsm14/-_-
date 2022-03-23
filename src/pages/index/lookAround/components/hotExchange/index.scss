@@ -1,0 +1,128 @@
+.hotExchange_box {
+  margin: 24px 24px 0;
+  padding: 32px;
+  line-height: 1;
+  background: #ffffff;
+  border-radius: 20px;
+  .hotExchange_title {
+    padding-bottom: 8px;
+    display: flex;
+  }
+  .hotExchange_title::before {
+    width: 174px;
+    height: 32px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon910.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+  }
+  .hotExchange_link {
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+  .hotExchange_link::after {
+    width: 28px;
+    height: 28px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon361.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: block;
+    content: "";
+  }
+  .hotExchange_template {
+    margin-top: 24px;
+    position: relative;
+  }
+  .hotExchange_template {
+    display: flex;
+    align-items: flex-start;
+  }
+  .hotExchange_profile {
+    width: 198px;
+    height: 148px;
+    background: #d8d8d8;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .hotExchange_content {
+    margin-left: 24px;
+  }
+  .hotExchange_name {
+    width: 416px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333333;
+    padding-top: 4px;
+  }
+  .hotExchange_price {
+    padding-top: 32px;
+    display: flex;
+    align-items: baseline;
+    .hotExchange_rel {
+      flex-shrink: 0;
+      font-size: 28px;
+      font-weight: bold;
+      color: #ef476f;
+      max-width: 280px;
+    }
+    .hotExchange_old {
+      flex: 1;
+      font-size: 28px;
+      font-weight: bold;
+      color: #999999;
+      text-decoration: line-through;
+      max-width: 280px;
+    }
+  }
+  .hotExchange_bean {
+    margin-top: 14px;
+    height: 36px;
+    display: flex;
+  }
+  .hotExchange_bean::before {
+    width: 120px;
+    height: 36px;
+    background: #fce2e8;
+    border-radius: 4px 0px 0px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: "卡豆最高省";
+    font-size: 20px;
+    font-weight: bold;
+    color: #ef476f;
+  }
+  .hotExchange_bean_one {
+    padding-top: 8px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #999999;
+    text-decoration: line-through;
+  }
+  .hotExchange_bean_info {
+    padding: 0 8px;
+    height: 36px;
+    background: rgba(254, 241, 244, 1);
+    border-radius: 4px 0px 0px 4px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #ef476f;
+  }
+  .hotExchange_btn {
+    width: 96px;
+    height: 48px;
+    background: linear-gradient(152deg, #ff2565 0%, #ff2b2b 100%);
+    border-radius: 30px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    position: absolute;
+    right: 0;
+    bottom: 4px;
+  }
+}

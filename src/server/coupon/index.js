@@ -134,3 +134,16 @@ export const fetchAvailableOwnerCoupon = (data) => {
   });
 };
 //查询平台可用商家券
+
+export const fakeAcquirePlatformCoupon = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/platform/coupon/acquirePlatformCoupon",
+      data: data,
+    },
+    (res) => {
+      fn && fn(res);
+    }
+  );
+};
+//限时神券领取

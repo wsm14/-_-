@@ -1,74 +1,146 @@
 .lookAround_navition_box {
-  height: 64px;
-  display: flex;
-  position: fixed;
-  background: #ffffff;
-  top: 0;
-  padding: 0 32px;
-  display: flex;
-  align-items: center;
-  z-index: 100;
-  .lookAround_navition_left {
+  width: 100%;
+  position: relative;
+  line-height: 1;
+  .lookAround_navition_title {
     height: 64px;
+    position: absolute;
+    top: 0;
+    padding: 0 32px;
     display: flex;
     align-items: center;
-    margin-right: 32px;
-    .lookAround_nation_cityIcon {
-      background: url("https://wechat-config.dakale.net/miniprogram/image/icon893.png")
-        no-repeat;
-      background-size: 100% 100%;
-      width: 40px;
-      height: 40px;
+    z-index: 100;
+    justify-content: space-between;
+    left: 0;
+    right: 0;
+    .lookAround_navition_rightVover {
+      width: 200px;
     }
-    .lookAround_nation_city {
+    .lookAround_navition_left {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      margin-right: 32px;
+      .lookAround_nation_cityIcon {
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon925.png")
+          no-repeat;
+        background-size: 100% 100%;
+        width: 40px;
+        height: 40px;
+      }
+      .lookAround_nation_city {
+        font-size: 28px;
+        font-weight: 600;
+        max-width: 100px;
+        color: rgba(255, 255, 255, 1);
+        margin-left: 8px;
+      }
+      .lookAround_nation_citySelect {
+        width: 24px;
+        height: 24px;
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon929.png")
+          no-repeat;
+        background-size: 100% 100%;
+        margin-left: 8px;
+      }
+    }
+    .lookAround_navition_center {
+      width: 438px;
+      height: 64px;
+      border-radius: 40px;
+      background: #f5f5f5
+        url("https://wechat-config.dakale.net/miniprogram/image/icon336.png")
+        no-repeat;
+      background-size: 36px 36px;
+      background-position: 32px 14px;
+      text-indent: 80px;
+      line-height: 64px;
       font-size: 28px;
-      font-weight: 600;
-      max-width: 100px;
-      color: #333333;
-      margin-left: 8px;
+      color: #999999;
     }
-    .lookAround_nation_citySelect {
-      width: 24px;
-      height: 24px;
-      background: url("https://wechat-config.dakale.net/miniprogram/image/icon484.png")
-        no-repeat;
-      background-size: 100% 100%;
-      margin-left: 8px;
+    .lookAround_navition_right {
+      display: flex;
+      height: 64px;
+      align-items: center;
+      margin-left: auto;
+      .lookAround_navition_lookCard {
+        width: 48px;
+        height: 48px;
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon486.png")
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .lookAround_navition_scanCode {
+        width: 48px;
+        height: 48px;
+        background: url("https://wechat-config.dakale.net/miniprogram/image/icon745.png")
+          no-repeat;
+        background-size: 100% 100%;
+        margin-left: 24px;
+      }
     }
   }
-  .lookAround_navition_center {
-    width: 438px;
-    height: 64px;
-    border-radius: 40px;
-    background: #f5f5f5
-      url("https://wechat-config.dakale.net/miniprogram/image/icon336.png")
+  .lookAround_navition_cover {
+    width: 203px;
+    height: 32px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon927.png")
       no-repeat;
-    background-size: 36px 36px;
-    background-position: 32px 14px;
-    text-indent: 80px;
-    line-height: 64px;
-    font-size: 28px;
-    color: #999999;
+    background-size: 100% 100%;
   }
-  .lookAround_navition_right {
-    display: flex;
-    height: 64px;
-    align-items: center;
-    margin-left: auto;
-    .lookAround_navition_lookCard {
-      width: 48px;
-      height: 48px;
-      background: url("https://wechat-config.dakale.net/miniprogram/image/icon486.png")
-        no-repeat;
-      background-size: 100% 100%;
-    }
-    .lookAround_navition_scanCode {
-      width: 48px;
-      height: 48px;
-      background: url("https://wechat-config.dakale.net/miniprogram/image/icon745.png")
-        no-repeat;
-      background-size: 100% 100%;
-      margin-left: 24px;
-    }
+  .lookAround_navition_beanLink {
+    position: absolute;
+    left: 48px;
+    top: 168px;
+    width: 180px;
+    height: 48px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon926.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .lookAround_navition_beanNum {
+    position: absolute;
+    left: 48px;
+    top: 240px;
+    font-size: 64px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  .lookAround_navition_image {
+    width: 100%;
+    height: 400px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon930.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .lookAround_navition_bigImage {
+    width: 100%;
+    height: 500px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon931.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .lookAround_navition_money {
+    width: 184px;
+    height: 180px;
+    position: absolute;
+    top: 146px;
+    right: 44px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon928.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .lookAround_navition_moneyBean {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ff495d;
+    text-align: center;
+    padding-top: 56px;
+  }
+  .lookAround_navition_moneyDesc {
+    padding-top: 8px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ff495d;
   }
 }
