@@ -848,6 +848,7 @@ class Index extends React.PureComponent {
       showFlag,
       time,
       momentLinkBeanStage,
+      httpData,
     } = this.state;
     const {
       homeStore = {},
@@ -993,7 +994,7 @@ class Index extends React.PureComponent {
       <View className="home_box home_black">
         <View style={{ top: computedClient().top }} className="home_wait">
           <TopView
-            data={momentTags}
+            data={httpData}
             onChange={this.selectList.bind(this)}
             store={locationStatus}
             session={() => this.setState({ visible: true })}

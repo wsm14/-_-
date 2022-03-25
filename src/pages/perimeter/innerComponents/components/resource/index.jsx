@@ -126,13 +126,15 @@ export default ({ data, payBeanCommission, onChange }) => {
       return (
         <View className="resource_process_box">
           <View
-            style={{ width: progress * 100 + "%" }}
+            style={{ width: remain === 0 ? "100%" : progress * 100 + "%" }}
             className="resource_process_bfb"
           ></View>
           <View className="resource_process_font">
             {showSelledGoods === 0
               ? "新开秒杀"
-              : (progress * 100).toFixed(2) + "%"}
+              : remain === 0
+              ? "100%"
+              : (progress * 100).toFixed(0) + "%"}
           </View>
         </View>
       );
@@ -141,6 +143,7 @@ export default ({ data, payBeanCommission, onChange }) => {
       specialGoods: "resource_profile_tag1",
       commerceGoods: "resource_profile_tag2",
       rightGoods: "resource_profile_tag3",
+      selfTourGoods: "resource_profile_tag1",
     }[activityGoodType];
     return (
       <View className="resource_template" onClick={() => onChange(item)}>

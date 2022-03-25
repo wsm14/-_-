@@ -8,6 +8,7 @@ import Rebate from "./components/rebate";
 import Resource from "./components/resource";
 import ListTemplate from "./components/listTemplate";
 import Brand from "./components/Brand";
+import Travel from "./components/travel";
 import { setNavTitle } from "@/utils/utils";
 import Router from "@/utils/router";
 import "./index.scss";
@@ -22,7 +23,7 @@ class Index extends Component {
       title: {
         hotBlending: "限时热兑",
         coupon: "限时神券",
-        deduction: "超值抵扣专区",
+        deduction: "抵扣专区",
         flashSale: "今日秒杀",
         listTemplate: "发现好货",
         travel: "酷爱旅行",
@@ -49,15 +50,17 @@ class Index extends Component {
     const { httpData } = this.state;
     const { identification } = httpData;
     const { platformCouponId, useScenesType, classType } = item;
-    Router({
-      routerName: "increase",
-      args: {
-        platformCouponId,
-        useScenesType,
-        classType,
-        identification,
-      },
-    });
+    if (classType !== "universal") {
+      Router({
+        routerName: "increase",
+        args: {
+          platformCouponId,
+          useScenesType,
+          classType,
+          identification,
+        },
+      });
+    }
   };
   onReady() {
     // 生命周期函数--监听页面初次渲染完成
@@ -127,13 +130,13 @@ class Index extends Component {
         ></ListTemplate>
       ),
       travel: (
-        <ListTemplate
+        <Travel
           configUserLevelInfo={{ payBeanCommission }}
           identification={identification}
           list={selfTourGoods}
           payBeanCommission={payBeanCommission}
           data={data}
-        ></ListTemplate>
+        ></Travel>
       ),
       brand: (
         <Brand

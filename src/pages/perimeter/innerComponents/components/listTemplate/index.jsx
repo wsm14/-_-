@@ -7,7 +7,8 @@ import { templateNewShop } from "@/components/public_ui/newGoodsObj";
 import "./index.scss";
 export default ({ data, identification, configUserLevelInfo, list }) => {
   const { contentInfo } = data;
-  const { topImg } = contentInfo;
+  const { topImg, image } = contentInfo;
+
   return (
     <View className="listTemplate_box">
       <View
@@ -15,6 +16,9 @@ export default ({ data, identification, configUserLevelInfo, list }) => {
         style={backgroundObj(topImg)}
       ></View>
       <View className="listTemplate_body">
+        {image && (
+          <View style={backgroundObj(image)} className="brandImg_box"></View>
+        )}
         <Waterfall
           noMargin={{ margin: 0 }}
           list={list}

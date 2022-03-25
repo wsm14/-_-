@@ -39,16 +39,12 @@ export default ({ data }) => {
         return (
           <>
             <View className="hotExchange_price font_hide">
-              <View className="hotExchange_rel font_hide">
-                <Text className="font_24">¥</Text>¥{cash}{" "}
-                {bean ? `+${bean}卡豆` : ""}
+              <View className="hotExchange_rel_1 font_hide">
+                <Text className="font_24">¥</Text>
+                {cash} {bean ? `+${bean}卡豆` : ""}
               </View>
             </View>
-            <View className="hotExchange_bean">
-              <View className="hotExchange_bean_info public_center">
-                {oriPrice}
-              </View>
-            </View>
+            <View className="hotExchange_bean_one">¥{oriPrice}</View>
           </>
         );
       } else {

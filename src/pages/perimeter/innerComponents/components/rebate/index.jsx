@@ -33,7 +33,7 @@ export default ({ data, configUserLevelInfo, identification }) => {
         identification={identification}
       ></CommerActive>
       <View className="dakale_logo">
-        <View className="dakale_logo_image"></View>
+        <View className="dakale_logo_imageYellow"></View>
       </View>
     </View>
   );

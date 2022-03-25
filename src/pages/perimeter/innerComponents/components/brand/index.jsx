@@ -16,7 +16,7 @@ export default ({ data, identification, configUserLevelInfo, list }) => {
       ></View>
       <View className="listTemplate_body">
         {list.map((item) => {
-          const { activityGoodsList, brandImg } = item;
+          const { activityGoodsList = [], brandImg } = item;
           return (
             <View>
               <View

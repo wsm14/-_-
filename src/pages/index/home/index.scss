@@ -313,10 +313,13 @@ AdCustom .home_username {
     line-height: 32px;
     text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
     display: flex;
+
     .home_select_right {
       margin-right: 40px;
       padding-top: 8px;
       position: relative;
+      max-width: 180px;
+      flex-shrink: 0;
     }
     .hode_select_line {
       width: 36px;

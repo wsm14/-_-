@@ -36,37 +36,6 @@ export const rssConfigData = (data = {}) => {
       backgroundColor: "#108588", // 画布颜色
       texts: [
         {
-          y: 85,
-          width: 646,
-          height: 32,
-          paddingRight: 32,
-          x: 57,
-          zIndex: 20,
-          text: merchantName,
-          fontSize: 32,
-          color: "#333333",
-          fontWeight: "bold",
-          lineNum: 1,
-          zIndex: 999,
-          lineHeight: 32,
-          baseLine: "middle",
-        },
-        {
-          y: 133,
-          width: 646,
-          height: 24,
-          zIndex: 20,
-          x: 57,
-          text: city,
-          fontSize: 24,
-          color: "#999999",
-          fontWeight: "bold",
-          lineNum: 1,
-          zIndex: 999,
-          lineHeight: 24,
-          baseLine: "middle",
-        },
-        {
           x: 57,
           y: 754,
           text: name, // 商品名称
@@ -168,8 +137,8 @@ export const rssConfigData = (data = {}) => {
         {
           url: merchantLogo, // 封面
           width: 700,
-          height: 525,
-          y: 169,
+          height: 670,
+          y: 24,
           x: 25,
           zIndex: 10,
         },
@@ -283,37 +252,6 @@ export const rssConfigData = (data = {}) => {
         height: 1334, // 画布高度
         backgroundColor: "#108588", // 画布颜色
         texts: [
-          {
-            y: 85,
-            width: 646,
-            height: 32,
-            paddingRight: 32,
-            x: 57,
-            zIndex: 20,
-            text: merchantName,
-            fontSize: 32,
-            color: "#333333",
-            fontWeight: "bold",
-            lineNum: 1,
-            zIndex: 999,
-            lineHeight: 32,
-            baseLine: "middle",
-          },
-          {
-            y: 133,
-            width: 646,
-            height: 24,
-            zIndex: 20,
-            x: 57,
-            text: city,
-            fontSize: 24,
-            color: "#999999",
-            fontWeight: "bold",
-            lineNum: 1,
-            zIndex: 999,
-            lineHeight: 24,
-            baseLine: "middle",
-          },
           {
             x: 57,
             y: 754,
@@ -432,8 +370,8 @@ export const rssConfigData = (data = {}) => {
           {
             url: merchantLogo, // 封面
             width: 700,
-            height: 525,
-            y: 169,
+            height: 670,
+            y: 24,
             x: 25,
             zIndex: 10,
           },

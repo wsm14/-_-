@@ -35,12 +35,15 @@
   .hotMetal_content {
     margin: 32px auto 0;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: flex-start;
+    .hotMetal_coupon_box:last-child {
+      margin-right: 0px;
+    }
     .hotMetal_coupon_box {
       width: 202px;
       height: 180px;
       margin: 0 auto;
+      margin-right: 16px;
     }
     .hotMetal_coupon_desc {
       font-size: 28px;

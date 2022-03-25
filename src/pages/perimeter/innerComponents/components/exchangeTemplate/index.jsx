@@ -17,7 +17,6 @@ export default ({ data, onChange, payBeanCommission, reload }) => {
   const style = {
     width: Taro.pxTransform(750),
     height: Taro.pxTransform(480),
-    margin: `${Taro.pxTransform(24)} auto  0`,
     position: "relative",
     zIndex: "10",
   };
@@ -87,7 +86,7 @@ export default ({ data, onChange, payBeanCommission, reload }) => {
         >
           <View
             className={
-              activityGoodType === "specialGoods"
+              activityGoodType !== "commerceGoods"
                 ? "exchangeTemplate_profile_tag1"
                 : "exchangeTemplate_profile_tag2"
             }

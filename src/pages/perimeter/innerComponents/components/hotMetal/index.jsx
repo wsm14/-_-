@@ -17,7 +17,15 @@ export default ({ data, reload, onChange }) => {
   };
   const { contentInfo } = data;
   const { mixedList, topImg, startDate, couponList } = contentInfo;
-
+  const createActiveTime = (date) => {
+    const limit = dayjs().format("YYYY-MM-DD");
+    // 86400000
+    let min = dayjs(limit).valueOf();
+    date = dayjs(date).valueOf();
+    let timeinfo = 3 - (((min - date) / 86400000) % 3) - 1;
+    const now = dayjs(min + timeinfo * 86400000).format("YYYY-MM-DD");
+    return now;
+  };
   const template = (val) => {
     const {
       platformCouponImg,
@@ -158,9 +166,7 @@ export default ({ data, reload, onChange }) => {
           fn={() => {
             reload();
           }}
-          times={dayjs(new Date(dayjs(startDate).valueOf() + 259200000)).format(
-            "YYYY-MM-DD hh:mm:ss"
-          )}
+          times={createActiveTime(startDate)}
         ></DateTime>
       </View>
       <View className="hotMetal_content">
@@ -172,7 +178,7 @@ export default ({ data, reload, onChange }) => {
       </View>
       <View className="hotMetal_shop_bottom"></View>
       <View className="dakale_logo">
-        <View className="dakale_logo_image"></View>
+        <View className="dakale_logo_imageYellow"></View>
       </View>
     </View>
   );
