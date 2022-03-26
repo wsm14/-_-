@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import Router from "@/utils/router";
 import { backgroundObj } from "@/utils/utils";
+import Tarking from "@/components/tracking";
 import days from "dayjs";
 import "./index.scss";
 export default ({ data }) => {
@@ -92,23 +93,25 @@ export default ({ data }) => {
           identification,
         } = item;
         return (
-          <View
-            style={backgroundObj(image)}
-            onClick={() =>
-              Router({
-                routerName: "wanderAround",
-                args: {
-                  type: templateType,
-                  identification: identification,
-                  resourceTemplateContentId,
-                  payBeanCommission,
-                },
-              })
-            }
-            className={`fieldResource_image_box fieldResource_image_style${
-              index + 1
-            }`}
-          ></View>
+          <Tarking blockName="fieldResource" args={item} name={"FieldResource"}>
+            <View
+              style={backgroundObj(image)}
+              onClick={() =>
+                Router({
+                  routerName: "wanderAround",
+                  args: {
+                    type: templateType,
+                    identification: identification,
+                    resourceTemplateContentId,
+                    payBeanCommission,
+                  },
+                })
+              }
+              className={`fieldResource_image_box fieldResource_image_style${
+                index + 1
+              }`}
+            ></View>
+          </Tarking>
         );
       })}
     </View>

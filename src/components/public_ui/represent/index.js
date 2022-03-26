@@ -8,7 +8,8 @@ import "./index.scss";
 
 export default (props) => {
   const { data, configUserLevelInfo } = props;
-  const { allowExpireRefund, allowRefund, needOrder, activityType } = data;
+  const { allowExpireRefund, allowRefund, needOrder, activityType, right } =
+    data;
   const {
     payBeanCommission = 50,
 
@@ -49,13 +50,17 @@ export default (props) => {
               <View className="shopDetails_tab_font">过期退</View>
             </>
           )}
-          <>
-            <View className="shopDetails_tab_icon"></View>
-            <View className="shopDetails_tab_questionRight color2 font24">
-              卡豆抵扣
-              <Text className="color11 font24">{payBeanCommission + "%"}</Text>
-            </View>
-          </>
+          {right !== "1" && (
+            <>
+              <View className="shopDetails_tab_icon"></View>
+              <View className="shopDetails_tab_questionRight color2 font24">
+                卡豆抵扣
+                <Text className="color11 font24">
+                  {payBeanCommission + "%"}
+                </Text>
+              </View>
+            </>
+          )}
           <View
             onClick={() => Router({ routerName: "interests" })}
             className="shop_question question_icon"

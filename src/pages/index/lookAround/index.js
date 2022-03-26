@@ -389,7 +389,14 @@ class Index extends Component {
     }
   }
   bubbleLink(item) {
-    let { param = "", jumpUrlNew, jumpUrlType = "", jumpUrl = "" } = item;
+    let {
+      param = "",
+      jumpUrlNew,
+      jumpUrlType = "",
+      jumpUrl = "",
+      identification,
+      payBeanCommission,
+    } = item;
     param = (param && JSON.parse(param)) || {};
     jumpUrlNew = (jumpUrlNew && JSON.parse(jumpUrlNew)) || {};
     const { weChatUrl = "" } = jumpUrlNew;
@@ -398,6 +405,8 @@ class Index extends Component {
         routerName: weChatUrl,
         args: {
           ...param,
+          payBeanCommission,
+          identification,
           categoryId: param.categoryId || param.topCategoryId,
         },
       });

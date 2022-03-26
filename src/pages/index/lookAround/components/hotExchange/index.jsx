@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import { backgroundObj, computedBeanPrice } from "@/utils/utils";
+import Tarking from "@/components/tracking";
 import Router from "@/utils/router";
 import "./index.scss";
 export default ({ data }) => {
@@ -83,30 +84,36 @@ export default ({ data }) => {
     );
   };
   return (
-    <View
-      className="hotExchange_box"
-      onClick={() =>
-        Router({
-          routerName: "wanderAround",
-          args: {
-            type: "hotExchange",
-            identification: identification,
-            resourceTemplateContentId,
-            payBeanCommission,
-          },
-        })
-      }
+    <Tarking
+      blockName="limitedTimeHotMixing"
+      args={listObj}
+      name={"hotExchange"}
     >
-      <View className="hotExchange_title">
-        <View className="hotExchange_link">领取更多</View>
-      </View>
-      {activityGoodsObjectList.map((item, index) => {
-        if (index < 2) {
-          return template(item);
-        } else {
-          return null;
+      <View
+        className="hotExchange_box"
+        onClick={() =>
+          Router({
+            routerName: "wanderAround",
+            args: {
+              type: "hotExchange",
+              identification: identification,
+              resourceTemplateContentId,
+              payBeanCommission,
+            },
+          })
         }
-      })}
-    </View>
+      >
+        <View className="hotExchange_title">
+          <View className="hotExchange_link">领取更多</View>
+        </View>
+        {activityGoodsObjectList.map((item, index) => {
+          if (index < 2) {
+            return template(item);
+          } else {
+            return null;
+          }
+        })}
+      </View>
+    </Tarking>
   );
 };

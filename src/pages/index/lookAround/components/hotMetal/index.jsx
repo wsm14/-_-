@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import { renterCouponDesc } from "@/common/constant";
 import Router from "@/utils/router";
+import Tarking from "@/components/tracking";
 import "./index.scss";
 export default ({ data }) => {
   const [listObj, setListObj] = useState({});
@@ -48,17 +49,25 @@ export default ({ data }) => {
             virtual: "hotMetal_coupon_icon3",
           }[useScenesType];
           return (
-            <View className="hotMetal_coupon_info">
-              <View className={`hotMetal_coupon_box ${templateCoupon}`}>
-                <View className="hotMetal_coupon_desc">
-                  {renterCouponDesc(item)}
+            <Tarking
+              blockName="timeLimitedCoupon"
+              args={item}
+              name={"HotMetal"}
+            >
+              <View className="hotMetal_coupon_info">
+                <View className={`hotMetal_coupon_box ${templateCoupon}`}>
+                  <View className="hotMetal_coupon_desc">
+                    {renterCouponDesc(item)}
+                  </View>
+                </View>
+                <View className="hotMetal_coupon_price">
+                  价值{couponValue}元
+                </View>
+                <View className="hotMetal_coupon_priceDesc">
+                  满{thresholdPrice}元可用
                 </View>
               </View>
-              <View className="hotMetal_coupon_price">价值{couponValue}元</View>
-              <View className="hotMetal_coupon_priceDesc">
-                满{thresholdPrice}元可用
-              </View>
-            </View>
+            </Tarking>
           );
         })}
       </View>

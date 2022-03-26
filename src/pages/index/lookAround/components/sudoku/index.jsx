@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import { backgroundObj } from "@/utils/utils";
+import Tarking from "@/components/tracking";
 import "./index.scss";
 export default ({ data, onChange }) => {
   const [listObj, setListObj] = useState({});
@@ -21,11 +22,13 @@ export default ({ data, onChange }) => {
         {configWindVaneList.map((item) => {
           const { image } = item;
           return (
-            <View
-              onClick={() => onChange(item)}
-              style={backgroundObj(image)}
-              className="sudoku_info_box"
-            ></View>
+            <Tarking blockName="sixPalaceLattice" args={item} name={"sudoku"}>
+              <View
+                onClick={() => onChange(item)}
+                style={backgroundObj(image)}
+                className="sudoku_info_box"
+              ></View>
+            </Tarking>
           );
         })}
       </View>

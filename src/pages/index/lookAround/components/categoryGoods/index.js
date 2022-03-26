@@ -23,14 +23,7 @@ export default ({
           style={!flagDom ? { display: "none" } : {}}
           className="lookAround_category_fixed"
         ></View>
-        <View
-          style={
-            flagDom
-              ? { position: "fixed", top: Taro.pxTransform(48), zIndex: 1000 }
-              : {}
-          }
-          className="lookAround_categorys_box lookAround_categorys_box1"
-        >
+        <View className="lookAround_categorys_box lookAround_categorys_box1">
           <View
             className="lookAround_categorys_orderBtn"
             onClick={() =>

@@ -29,6 +29,8 @@ class Index extends Component {
           getCurrentInstance().router.params.specialFilterType || "selfTour",
       },
       //请求参数
+      identification: getCurrentInstance().router.params.identification,
+      payBeanCommission: getCurrentInstance().router.params.payBeanCommission,
       configUserLevelInfo: {},
     };
   }
@@ -52,12 +54,21 @@ class Index extends Component {
     this.fetchSelfList();
   }
   fetchUserShare() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
+    const { payBeanCommission } = this.state;
+    if (payBeanCommission) {
       this.setState({
-        configUserLevelInfo,
+        configUserLevelInfo: {
+          payBeanCommission,
+        },
       });
-    });
+    } else {
+      fetchUserShareCommission({}, (res) => {
+        const { configUserLevelInfo = {} } = res;
+        this.setState({
+          configUserLevelInfo,
+        });
+      });
+    }
   }
   onReachBottom() {
     const { selectHttp } = this.state;
@@ -101,7 +112,8 @@ class Index extends Component {
     }
   }
   render() {
-    const { selfList, configUserLevelInfo, selectHttp } = this.state;
+    const { selfList, configUserLevelInfo, selectHttp, identification } =
+      this.state;
     const { specialFilterType } = selectHttp;
     const { payBeanCommission, shareCommission } = configUserLevelInfo;
     const template = (item) => {
@@ -128,6 +140,7 @@ class Index extends Component {
               args: {
                 merchantId: ownerIdString,
                 specialActivityId: specialActivityIdString,
+                identification,
               },
             })
           }

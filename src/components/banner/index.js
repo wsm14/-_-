@@ -39,10 +39,29 @@ export default (props) => {
   }, [data]);
   const linkTo = (item) => {
     if (typeof item === "object") {
-      let { param = "", jumpUrlNew, jumpUrlType = "", jumpUrl = "" } = item;
+      let {
+        param = "",
+        jumpUrlNew,
+        jumpUrlType = "",
+        jumpUrl = "",
+        resourceTemplateContentId,
+        payBeanCommission,
+        identification,
+      } = item;
       param = (param && JSON.parse(param)) || {};
       jumpUrlNew = (jumpUrlNew && JSON.parse(jumpUrlNew)) || {};
       const { weChatUrl = "" } = jumpUrlNew;
+      if (jumpUrlType === "template") {
+        Router({
+          routerName: weChatUrl,
+          args: {
+            ...param,
+            resourceTemplateContentId,
+            payBeanCommission,
+            identification,
+          },
+        });
+      }
       if (jumpUrlType === "native" && weChatUrl) {
         Router({
           routerName: weChatUrl,
