@@ -70,6 +70,7 @@ export default {
         "wallet/index", //钱包
         "beanRule/index", //卡豆权益
         "userConceal/index", //协议规则
+        "collage/index", //拼团详情
       ],
     },
     {
@@ -127,7 +128,7 @@ export default {
         "merchantDetails/index", //商家详情
         "enterGroup/index", // 加入社群
         "beanWelfareZone/index", // 卡豆福利专区
-        "innerComponents/index",//逛逛配置内页
+        "innerComponents/index", //逛逛配置内页
       ],
     },
     {
