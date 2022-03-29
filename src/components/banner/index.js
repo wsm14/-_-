@@ -53,7 +53,7 @@ export default (props) => {
       const { weChatUrl = "" } = jumpUrlNew;
       if (jumpUrlType === "template") {
         Router({
-          routerName: weChatUrl,
+          routerName: "wanderAround",
           args: {
             ...param,
             resourceTemplateContentId,

@@ -12,7 +12,8 @@ import {
 } from "@/components/public_ui/newGoodsObj";
 import Tarking from "@/components/tracking";
 import "./index.scss";
-export default ({ userInfo, type = "specalSelf" }) => {
+export default ({ data, type = "specalSelf" }) => {
+  const [listObj, setListObj] = useState({});
   const [index, setIndex] = useState(0);
   const [list, setList] = useState([]);
   const [page, setPage] = useState({
@@ -20,6 +21,23 @@ export default ({ userInfo, type = "specalSelf" }) => {
     limit: 10,
     specialFilterType: "aroundSpecial",
   });
+
+  useEffect(() => {
+    setListObj(
+      data.reduce((item, val) => {
+        if (
+          val.moduleName ===
+          (type = "specalSelf"
+            ? "specialAndSelfTourAndCommerce"
+            : "selfTourAndCommerce")
+        ) {
+          return val;
+        } else return item;
+      }),
+      {}
+    );
+  }, [data]);
+  const { payBeanCommission, identification } = listObj;
   useEffect(() => {
     if (type === "specalSelf") {
       if (index === 0) {
@@ -142,15 +160,17 @@ export default ({ userInfo, type = "specalSelf" }) => {
             list={list}
             createDom={
               type === "specalSelf"
-                ? (item) => templateObj(item, userInfo)
-                : (item) => templateObj1(item, userInfo)
+                ? (item) =>
+                    templateObj(item, { payBeanCommission }, identification)
+                : (item) =>
+                    templateObj1(item, { payBeanCommission }, identification)
             }
             style={{ width: Taro.pxTransform(335) }}
           ></Waterfall>
         </View>
       </>
     );
-  }, [userInfo, type, index, list, page]);
+  }, [listObj, type, index, list, page]);
   return memo;
 };
 // 头部卡豆显示区域
