@@ -3,6 +3,7 @@ import { View, Text } from "@tarojs/components";
 import { getUserBeanInfo } from "@/server/user";
 import Toast from "@/components/public_ui/selectToast";
 import router from "@/utils/router";
+import './index.scss'
 class Index extends Component {
   constructor() {
     super(...arguments);
