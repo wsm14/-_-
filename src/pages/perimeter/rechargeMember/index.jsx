@@ -38,7 +38,10 @@ const rechargeMember = () => {
   });
 
   const fetchGetList = () => {
-    fetchRechargeMemberLsxdList({ type: virtualProductSubType }).then((res) => {
+    fetchRechargeMemberLsxdList({
+      type: virtualProductSubType,
+      identification,
+    }).then((res) => {
       setList(res.productList);
       setSelectItem(res.productList[0] || {});
     });

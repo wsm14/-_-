@@ -396,18 +396,29 @@ class Index extends Component {
       jumpUrl = "",
       identification,
       payBeanCommission,
+      resourceTemplateContentId,
     } = item;
     param = (param && JSON.parse(param)) || {};
     jumpUrlNew = (jumpUrlNew && JSON.parse(jumpUrlNew)) || {};
     const { weChatUrl = "" } = jumpUrlNew;
-    if (jumpUrlType === "native" && weChatUrl) {
+    if (jumpUrlType === "template") {
+      Router({
+        routerName: "wanderAround",
+        args: {
+          ...param,
+          resourceTemplateContentId,
+          payBeanCommission,
+          identification,
+        },
+      });
+    } else if (jumpUrlType === "native" && weChatUrl) {
       Router({
         routerName: weChatUrl,
         args: {
-          ...param,
           payBeanCommission,
           identification,
           categoryId: param.categoryId || param.topCategoryId,
+          ...param,
         },
       });
     } else if (jumpUrlType === "h5" && jumpUrl) {
@@ -752,16 +763,10 @@ class Index extends Component {
       ),
       beanEducation: <Education></Education>,
       specialAndSelfTourAndCommerce: (
-        <SpecalSelf
-          type="specalSelf"
-          userInfo={configUserLevelInfo}
-        ></SpecalSelf>
+        <SpecalSelf type="specalSelf" data={wanderAroundModule}></SpecalSelf>
       ),
       selfTourAndCommerce: (
-        <SpecalSelf
-          type="commerceSelf"
-          userInfo={configUserLevelInfo}
-        ></SpecalSelf>
+        <SpecalSelf type="commerceSelf" data={wanderAroundModule}></SpecalSelf>
       ),
       sixPalaceLattice: (
         <SixPalaceLattice
@@ -770,7 +775,12 @@ class Index extends Component {
         ></SixPalaceLattice>
       ),
       //六宫格
-      signInModule: <Sign></Sign>,
+      signInModule: (
+        <Sign
+          link={this.bubbleLink.bind(this)}
+          data={wanderAroundModule}
+        ></Sign>
+      ),
       //签到
       limitedTimeHotMixing: (
         <HotExchange data={wanderAroundModule}></HotExchange>
