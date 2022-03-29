@@ -7,7 +7,7 @@ import Router from "@/utils/router";
 export default ({
   list = [],
   flagDom,
-  configUserLevelInfo,
+  data,
   specialFilterType,
   saveRouter,
   categoryList,
@@ -15,6 +15,17 @@ export default ({
   tabGoods,
   categoryIds,
 }) => {
+  const [listObj, setListObj] = useState({});
+  useEffect(() => {
+    setListObj(
+      data.reduce((item, val) => {
+        if (val.moduleName === "specialRecommend") {
+          return val;
+        } else return item;
+      }),
+      {}
+    );
+  }, [data]);
   const memo = useMemo(() => {
     return (
       <View>
@@ -69,20 +80,13 @@ export default ({
           </ScrollView>
         </View>
         <SelectSpecal
-          userInfo={configUserLevelInfo}
           data={list}
+          listObj={listObj}
           linkTo={saveRouter}
           type={specialFilterType}
         ></SelectSpecal>
       </View>
     );
-  }, [
-    list,
-    flagDom,
-    configUserLevelInfo,
-    specialFilterType,
-    categoryList,
-    categoryIds,
-  ]);
+  }, [list, flagDom, specialFilterType, categoryList, categoryIds, listObj]);
   return memo;
 };

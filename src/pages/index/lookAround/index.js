@@ -724,6 +724,7 @@ class Index extends Component {
           templateSelect={templateSelect}
           categoryIds={categoryIds}
           tabGoods={this.tabGoods.bind(this)}
+          data={wanderAroundModule}
         ></CategoryGoods>
       ),
       limitedTimeAndExplosive: (
