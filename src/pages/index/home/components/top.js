@@ -15,7 +15,7 @@ export default (props) => {
       val: "sameCity",
     },
     {
-      label: "发现",
+      label: "捡豆",
       val: "pickUp",
     },
     {
@@ -23,7 +23,7 @@ export default (props) => {
       val: "daRenShow",
     },
   ]);
-  const { browseType } = data;
+  const { browseType, momentTags } = data;
   useEffect(() => {
     if (store) {
       fetchTabTag().then((val) => {
@@ -35,7 +35,7 @@ export default (props) => {
               val: "sameCity",
             },
             {
-              label: "发现",
+              label: "捡豆",
               val: "pickUp",
             },
             {
@@ -84,11 +84,15 @@ export default (props) => {
                   }}
                   className={classNames(
                     "home_select_right font_hide",
-                    data.browseType === item.val && "home_select_checked"
+                    item.configMomentTagId
+                      ? momentTags === item.configMomentTagId
+                      : data.browseType === item.val && "home_select_checked"
                   )}
                 >
                   {item.label}
-                  {data.browseType === item.val && (
+                  {(item.configMomentTagId
+                    ? momentTags === item.configMomentTagId
+                    : data.browseType === item.val) && (
                     <View className="hode_select_line  animated fadeIn"></View>
                   )}
                 </View>
@@ -98,6 +102,6 @@ export default (props) => {
         </ScrollView>
       </View>
     ),
-    [browseType, select]
+    [browseType, select, momentTags]
   );
 };
