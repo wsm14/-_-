@@ -22,7 +22,7 @@ export default ({ data, configUserLevelInfo, identification }) => {
   ) {
     return (
       <View className="rebate_interval_empty">
-        <Empty show={true} type={"shop"} toast={"暂无商品"}></Empty>
+        <Empty show={true} type={"shop"} toast={"暂无数据"}></Empty>
       </View>
     );
   } else {

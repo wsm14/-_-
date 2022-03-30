@@ -8,7 +8,7 @@ import "./index.scss";
 
 export default (props) => {
   const { data, configUserLevelInfo } = props;
-  const { allowExpireRefund, allowRefund, needOrder, activityType, right } =
+  const { allowExpireRefund, allowRefund, needOrder, activityType, rightFlag } =
     data;
   const {
     payBeanCommission = 50,
@@ -50,7 +50,7 @@ export default (props) => {
               <View className="shopDetails_tab_font">过期退</View>
             </>
           )}
-          {right !== "1" && (
+          {rightFlag !== "1" && (
             <>
               <View className="shopDetails_tab_icon"></View>
               <View className="shopDetails_tab_questionRight color2 font24">

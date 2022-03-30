@@ -215,14 +215,11 @@ export const templateRight = (item, configUserLevelInfo, identification) => {
 //权益商品
 export const templateGame = (item, configUserLevelInfo, identification) => {
   const {
-    commission,
     goodsImg,
     ownerIdString,
     goodsName,
-
     oriPrice,
     realPrice,
-
     specialActivityIdString,
   } = item;
   const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;

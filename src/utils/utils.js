@@ -227,8 +227,6 @@ export const format = (time = "") => {
 //商品判断是否开始售卖
 export const setBuyRule = (val, day, max) => {
   switch (val) {
-    case "unlimited":
-      return "每人不限购买数量";
     case "personLimit":
       return `每人限购${max}份`;
     case "dayLimit":

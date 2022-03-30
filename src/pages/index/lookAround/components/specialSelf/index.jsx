@@ -27,7 +27,7 @@ export default ({ data, type = "specalSelf" }) => {
       data.reduce((item, val) => {
         if (
           val.moduleName ===
-          (type = "specalSelf"
+          (type === "specalSelf"
             ? "specialAndSelfTourAndCommerce"
             : "selfTourAndCommerce")
         ) {
@@ -122,6 +122,7 @@ export default ({ data, type = "specalSelf" }) => {
     0: templateGame,
     1: templateActive,
   }[index];
+  console.log(listObj, 11111);
   const memo = useMemo(() => {
     return (
       <>
