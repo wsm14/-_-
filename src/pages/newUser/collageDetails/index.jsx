@@ -18,7 +18,7 @@ class Index extends Component {
     
     return (
       <View className="collageDetails_box">
-       
+         
       </View>
     );
   }

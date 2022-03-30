@@ -22,7 +22,6 @@ export default ({ data, payBeanCommission, onChange }) => {
       let resource = parseInt(s); // 秒
       let minute = 0;
       let house = 0;
-
       if (resource > 60) {
         //如果秒数大于60，将秒数转换成整数
         //获取分钟，除以60取整数，得到整数分钟

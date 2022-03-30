@@ -1,0 +1,77 @@
+.collageTime_shopCard_box {
+  margin: 32px 32px 0;
+  background: #ffffff;
+  padding: 24px 24px 40px;
+  .clooageTime_template_box {
+    display: flex;
+    align-items: flex-start;
+    .clooageTime_shop_profile {
+      width: 240px;
+      height: 240px;
+      background: #d8d8d8;
+      border-radius: 8px;
+    }
+    .clooageTime_shop_content {
+      width: 382px;
+      margin-left: 16px;
+      .clooageTime_shop_count::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        width: 119px;
+        height: 44px;
+        background: url(https://wechat-config.dakale.net/miniprogram/image/icon948.png)
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .clooageTime_shop_username {
+        padding-top: 4px;
+        font-size: 28px;
+        font-weight: 600;
+        color: #333333;
+        line-height: 40px;
+      }
+      .clooageTime_shop_count {
+        margin: 4px 0 0;
+        padding-top: 12px;
+        position: relative;
+        display: flex;
+        width: 382px;
+        font-size: 24px;
+        font-weight: 400;
+        color: #333333;
+      }
+      .clooageTime_shop_liner {
+        width: 309px;
+        height: 28px;
+        background: #e6e6e6;
+        border-radius: 14px;
+        position: relative;
+      }
+      .clooageTime_shop_linerColor {
+        height: 29px;
+        background: linear-gradient(147deg, #ffb850 0%, #f6444a 100%);
+        border-radius: 15px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .clooageTime_shop_price {
+        margin-top: 72px;
+        display: flex;
+        align-items: flex-end;
+      }
+      .clooageTime_shop_throuer {
+        margin-left: 16px;
+        font-size: 20px;
+        font-weight: 400;
+        color: #999999;
+      }
+    }
+    .clooageTime_margin {
+      margin-left: 4px;
+    }
+  }
+}
