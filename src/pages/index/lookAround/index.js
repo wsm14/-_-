@@ -742,9 +742,10 @@ class Index extends Component {
       ),
       selfTour: (
         <GameGoods
-          userInfo={configUserLevelInfo}
+          data={wanderAroundModule}
+        
           linkTo={this.saveRouter.bind(this)}
-          data={selfTourResourceList}
+          list={selfTourResourceList}
         ></GameGoods>
       ),
       selfTourResource: (

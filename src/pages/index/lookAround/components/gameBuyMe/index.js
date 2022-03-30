@@ -1,13 +1,25 @@
-import React, { useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { View } from "@tarojs/components";
 import Waterfall from "@/components/waterfall";
 import Taro from "@tarojs/taro";
-import { gameShop } from "@/components/public_ui/selectSpecal";
+import { templateGame } from "@/components/public_ui/newGoodsObj";
 import Empty from "@/components/Empty";
-export default ({ data = [], userInfo = {}, linkTo }) => {
+export default ({ data = [], linkTo, list }) => {
+  const [listObj, setListObj] = useState({});
+  useEffect(() => {
+    setListObj(
+      data.reduce((item, val) => {
+        if (val.moduleName === "selfTour") {
+          return val;
+        } else return item;
+      }),
+      {}
+    );
+  }, [data]);
+  const { payBeanCommission, identification } = listObj;
   const memo = useMemo(() => {
     const template = (item) => {
-      return gameShop(item, userInfo, linkTo);
+      return templateGame(item, { payBeanCommission }, identification);
     };
     return (
       <React.Fragment>
@@ -16,15 +28,15 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
           style={{ paddingTop: Taro.pxTransform(24) }}
           className="lookAround_selectSpecal_box"
         >
-          {data.length > 0 ? (
+          {list.length > 0 ? (
             <Waterfall
-              list={data}
+              list={list}
               createDom={template}
               style={{ width: Taro.pxTransform(335) }}
             ></Waterfall>
           ) : (
             <Empty
-              show={data.length === 0}
+              show={list.length === 0}
               type={"shop"}
               toast={"暂无商品"}
             ></Empty>
@@ -32,6 +44,6 @@ export default ({ data = [], userInfo = {}, linkTo }) => {
         </View>
       </React.Fragment>
     );
-  }, [data, userInfo]);
+  }, [data, list, listObj]);
   return memo;
 };
