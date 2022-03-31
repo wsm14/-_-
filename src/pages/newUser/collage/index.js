@@ -14,15 +14,15 @@ class Index extends Component {
     this.state = {
       list: [
         { key: "拼赚中心", val: 0 },
-        { key: "我的开团" },
-        { key: "我的参团" },
+        { key: "我的开团", val: 1 },
+        { key: "我的参团", val: 2 },
       ],
       selectType: 0,
       userJoinPage: {
         page: 1,
         limit: 10,
       },
-      userJoinGroupList: [],
+      togetherGroupConfigList: [],
     };
   }
   componentDidMount() {
@@ -31,23 +31,23 @@ class Index extends Component {
   fetchJoinList() {
     const { userJoinPage } = this.state;
     fetchListTogether(userJoinPage).then((val) => {
-      const { userJoinGroupList = [] } = val;
+      const { togetherGroupConfigList = [] } = val;
       this.setState({
-        userJoinGroupList: [
-          ...this.state.userJoinGroupList,
-          ...userJoinGroupList,
+        togetherGroupConfigList: [
+          ...this.state.togetherGroupConfigList,
+          ...togetherGroupConfigList,
         ],
       });
     });
   }
   errorToast(e) {}
   render() {
-    const { list, selectType } = this.state;
-    const templateCard = { 0: <Card type={0}></Card> }[selectType];
+    const { list, selectType, togetherGroupConfigList } = this.state;
+
     const temlate = {
       0: (
         <View className="collage_one_margin">
-          {list.map((item) => {
+          {togetherGroupConfigList.map((item) => {
             return <Shop data={item} type={0}></Shop>;
           })}
         </View>
@@ -60,8 +60,13 @@ class Index extends Component {
             {list.map((item, index) => {
               return (
                 <View
+                  onClick={() => {
+                    this.setState({
+                      selectType: index,
+                    });
+                  }}
                   className={`collage_select ${
-                    index === 0
+                    index === selectType
                       ? "collage_select_style2"
                       : "collage_select_style1"
                   }`}
@@ -71,7 +76,7 @@ class Index extends Component {
               );
             })}
           </View>
-          {templateCard}
+          <Card type={selectType}></Card>
         </View>
         {temlate}
         {/* <Group></Group> */}

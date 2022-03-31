@@ -359,3 +359,17 @@ export const fetchJoinGroupByStatus = (data = {}, fn) => {
   );
 };
 //用户参团列表
+
+
+export const fakeStartGroup = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/start/group/startGroup",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//开团

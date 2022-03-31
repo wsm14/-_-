@@ -2,13 +2,16 @@ import React, { useEffect, useState, useRef } from "react";
 import Taro, { useReachBottom } from "@tarojs/taro";
 import { Image, Text, View } from "@tarojs/components";
 import classNames from "classnames";
+import { fakeStartGroup } from "@/server/user";
 import { toast, backgroundObj } from "@/utils/utils";
 import Router from "@/utils/router";
 export default ({ type = 0, data }) => {
+  console.log(data);
   const {
     togetherGroupConfigId,
     joinUserNum,
     status,
+    startGroupNum,
     togetherEarnGoodsObject = {},
     togetherGroupRuleObject = {},
     groupId,
@@ -44,10 +47,10 @@ export default ({ type = 0, data }) => {
             <Text className="color2 font24 text_through">¥{oriPrice}</Text>
           </View>
           <View className="collage_shop_tagsBox">
-            <View className="collage_shop_tag collage_shop_tagStyle1">
+            <View className="collage_shop_tag collage_shop_tagStyle1 public_center">
               开团返佣{teamLeaderFee}元
             </View>
-            <View className="collage_shop_tag collage_shop_tagStyle1">
+            <View className="collage_shop_tag collage_shop_tagStyle2 public_center">
               参与红包{notWinFee}元
             </View>
           </View>
@@ -61,11 +64,14 @@ export default ({ type = 0, data }) => {
         <View className="collage_shop_liner"></View>
         <View className="collage_shop_btnBox public_auto">
           <View className="collage_bottom_left">
-            10人成团 | {joinUserNum}人开团中
+            10人成团 | {startGroupNum}人开团中
           </View>
           <View
             className="collage_bottom_open"
             onClick={() => {
+              fakeStartGroup({
+                togetherGroupConfigId,
+              });
               Router({
                 routerName: "download",
               });
