@@ -32,9 +32,15 @@ import GameGoods from "./components/gameBuyMe";
 import Skeleton from "./components/SkeletonView";
 import SelfGoods from "./components/selfourOnly";
 import NewUser from "@/components/public_ui/newUserToast";
-import TopBean from "./components/topBean";
 import Education from "./components/beanEducation";
 import SpecalSelf from "./components/specialSelf";
+import GlobalDrawer from "@/components/GlobalDrawer";
+import Sign from "./components/sign";
+import HotExchange from "./components/hotExchange";
+import SixPalaceLattice from "./components/sudoku";
+import HotMetal from "./components/hotMetal";
+import Rebate from "./components/rebate";
+import FieldResource from "./components/fieldResource";
 import { fetchBeanAndEarn } from "@/server/index";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
@@ -186,9 +192,13 @@ class Index extends Component {
       },
       beanSpecialArea: () => this.beanCodeBanner(),
     };
-    wanderAroundModule.forEach((val) => {
-      requestObj[val] && requestObj[val]();
-    });
+    wanderAroundModule
+      .map((item) => {
+        return item.moduleName;
+      })
+      .forEach((val) => {
+        requestObj[val] && requestObj[val]();
+      });
     this.fetchUserShare();
   }
   //根据后端配置 请求接口
@@ -240,25 +250,26 @@ class Index extends Component {
         loading: true,
       },
       (res) => {
-        fetchAroundModule({}, (res) => {
-          const { wanderAroundModule = {} } = res;
-          const { wanderAroundModuleObjects = [] } = wanderAroundModule;
-          this.setState(
-            {
-              wanderAroundModule: wanderAroundModuleObjects.map(
-                (item) => item.moduleName
-              ),
-            },
-            (res) => {
-              this.filterRequest();
-            }
-          );
-        }).catch((e) => {
-          this.setState({
-            requestStatus: false,
-            loading: false,
+        fetchAroundModule({})
+          .then((res) => {
+            const { wanderAroundModule = {} } = res;
+            const { wanderAroundModuleObjects = [] } = wanderAroundModule;
+            this.setState(
+              {
+                wanderAroundModule: wanderAroundModuleObjects,
+                loading: false,
+              },
+              (res) => {
+                this.filterRequest();
+              }
+            );
+          })
+          .catch((e) => {
+            this.setState({
+              requestStatus: false,
+              loading: false,
+            });
           });
-        });
       }
     );
   }
@@ -327,13 +338,10 @@ class Index extends Component {
         const { configUserLevelInfo = {} } = res;
         this.setState({
           configUserLevelInfo,
-          loading: false,
         });
       })
       .catch((e) => {
-        this.setState({
-          loading: false,
-        });
+        this.setState({});
       });
   }
   //获取达人身份
@@ -381,16 +389,36 @@ class Index extends Component {
     }
   }
   bubbleLink(item) {
-    let { param = "", jumpUrlNew, jumpUrlType = "", jumpUrl = "" } = item;
+    let {
+      param = "",
+      jumpUrlNew,
+      jumpUrlType = "",
+      jumpUrl = "",
+      identification,
+      payBeanCommission,
+      resourceTemplateContentId,
+    } = item;
     param = (param && JSON.parse(param)) || {};
     jumpUrlNew = (jumpUrlNew && JSON.parse(jumpUrlNew)) || {};
     const { weChatUrl = "" } = jumpUrlNew;
-    if (jumpUrlType === "native" && weChatUrl) {
+    if (jumpUrlType === "template") {
+      Router({
+        routerName: "wanderAround",
+        args: {
+          ...param,
+          resourceTemplateContentId,
+          payBeanCommission,
+          identification,
+        },
+      });
+    } else if (jumpUrlType === "native" && weChatUrl) {
       Router({
         routerName: weChatUrl,
         args: {
-          ...param,
+          payBeanCommission,
+          identification,
           categoryId: param.categoryId || param.topCategoryId,
+          ...param,
         },
       });
     } else if (jumpUrlType === "h5" && jumpUrl) {
@@ -663,7 +691,7 @@ class Index extends Component {
           showNear
         ></Banner>
       ),
-      resource: <Plate userInfo={configUserLevelInfo}></Plate>,
+      resource: <Plate></Plate>,
       notify: (taskStatus === "0" || taskStatus === "1") && (
         <View
           className="lookAround_goods_init"
@@ -696,6 +724,7 @@ class Index extends Component {
           templateSelect={templateSelect}
           categoryIds={categoryIds}
           tabGoods={this.tabGoods.bind(this)}
+          data={wanderAroundModule}
         ></CategoryGoods>
       ),
       limitedTimeAndExplosive: (
@@ -713,9 +742,10 @@ class Index extends Component {
       ),
       selfTour: (
         <GameGoods
-          userInfo={configUserLevelInfo}
+          data={wanderAroundModule}
+        
           linkTo={this.saveRouter.bind(this)}
-          data={selfTourResourceList}
+          list={selfTourResourceList}
         ></GameGoods>
       ),
       selfTourResource: (
@@ -735,27 +765,40 @@ class Index extends Component {
       ),
       beanEducation: <Education></Education>,
       specialAndSelfTourAndCommerce: (
-        <SpecalSelf
-          type="specalSelf"
-          userInfo={configUserLevelInfo}
-        ></SpecalSelf>
+        <SpecalSelf type="specalSelf" data={wanderAroundModule}></SpecalSelf>
       ),
       selfTourAndCommerce: (
-        <SpecalSelf
-          type="commerceSelf"
-          userInfo={configUserLevelInfo}
-        ></SpecalSelf>
+        <SpecalSelf type="commerceSelf" data={wanderAroundModule}></SpecalSelf>
       ),
+      sixPalaceLattice: (
+        <SixPalaceLattice
+          onChange={this.bubbleLink.bind(this)}
+          data={wanderAroundModule}
+        ></SixPalaceLattice>
+      ),
+      //六宫格
+      signInModule: (
+        <Sign
+          link={this.bubbleLink.bind(this)}
+          data={wanderAroundModule}
+        ></Sign>
+      ),
+      //签到
+      limitedTimeHotMixing: (
+        <HotExchange data={wanderAroundModule}></HotExchange>
+        //现实热销
+      ),
+      timeLimitedCoupon: <HotMetal data={wanderAroundModule}></HotMetal>,
+      beanDeductionZone: <Rebate data={wanderAroundModule}></Rebate>,
+      fieldResource: <FieldResource data={wanderAroundModule}></FieldResource>,
     };
     //根据后端 显示函数 映射对应渲染模板
     return (
       <View className="lookAround_box">
-        <Navition city={cityName}></Navition>
+        <Navition val={topBeanData} city={cityName}></Navition>
         <NewUser></NewUser>
         <Skeleton loading={loading}>
           <View className="lookAround_no_style">
-            <View className="lookAround_goods_topHeight"></View>
-            <TopBean data={topBeanData}></TopBean>
             {!requestStatus ? (
               <Empty
                 fn={this.onReload.bind(this)}
@@ -767,15 +810,15 @@ class Index extends Component {
               <React.Fragment>
                 <View className="lookAround_content_margin">
                   {wanderAroundModule.map((item, index) => {
-                    if (templateObj[item]) {
+                    if (templateObj[item["moduleName"]]) {
                       if (index === wanderAroundModule.length - 2) {
                         return (
-                          <View style={{ marginBottom: Taro.pxTransform(36) }}>
-                            {templateObj[item]}
+                          <View style={{ marginBottom: Taro.pxTransform(24) }}>
+                            {templateObj[item["moduleName"]]}
                           </View>
                         );
                       }
-                      return templateObj[item];
+                      return templateObj[item["moduleName"]];
                     }
                     return null;
                   })}
@@ -783,6 +826,7 @@ class Index extends Component {
               </React.Fragment>
             )}
           </View>
+          <GlobalDrawer pageName="wanderAround"></GlobalDrawer>
         </Skeleton>
         <TabCity
           reload={this.onReload.bind(this)}

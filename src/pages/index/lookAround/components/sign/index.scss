@@ -1,0 +1,23 @@
+.lookAround_sign_box {
+  border-radius: 20px;
+  margin: 18px 24px 0;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  z-index: 10;
+  .lookAround_sign_content {
+    margin-left: 24px;
+    padding-top: 12px;
+  }
+  .lookAround_sign_name {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+  }
+  .lookAround_sign_desc {
+    padding-top: 16px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+  }
+}

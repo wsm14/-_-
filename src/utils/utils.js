@@ -18,12 +18,15 @@ export const NavHeight = () => {
   );
 };
 //設置自定義導航欄 高度
-export const toast = (value) => {
+export const toast = (value, fn) => {
   return Taro.showToast({
     title: value,
     icon: "none",
     duration: 3000,
     mask: true,
+    success: () => {
+      fn && fn();
+    },
   });
 };
 //小提示弹窗
@@ -86,8 +89,10 @@ export const filterStrList = (str) => {
   return str.split(",");
 };
 //字符串标签 轉數組
-export const filterPayStatus = (string, type = "") => {
-  if (type === "expiredRefund") {
+export const filterPayStatus = (string, type = "", time) => {
+  if (time && string === "1") {
+    return "已发货";
+  } else if (type === "expiredRefund") {
     return "订单已过期";
   } else if (type === "manualRefund" && string === "6") {
     return "申请退款中";
@@ -222,8 +227,6 @@ export const format = (time = "") => {
 //商品判断是否开始售卖
 export const setBuyRule = (val, day, max) => {
   switch (val) {
-    case "unlimited":
-      return "每人不限购买数量";
     case "personLimit":
       return `每人限购${max}份`;
     case "dayLimit":

@@ -30,6 +30,7 @@ export const template = (
     specialActivityIdString,
     ownerIdString,
     commission,
+    identification,
   } = item;
   return (
     <View
@@ -40,6 +41,7 @@ export const template = (
           args: {
             specialActivityId: specialActivityIdString,
             merchantId: ownerIdString,
+            identification,
           },
         })
       }
@@ -327,6 +329,7 @@ export const prefectrueGoodsTemplate = (item) => {
     paymentModeObject: { bean, cash },
     specialActivityIdString,
     ownerId,
+    identification,
   } = item;
   return (
     <View
@@ -337,6 +340,7 @@ export const prefectrueGoodsTemplate = (item) => {
           args: {
             specialActivityId: specialActivityIdString,
             merchantId: ownerId,
+            identification,
           },
         });
       }}
@@ -387,6 +391,7 @@ export const prefectrueCouponTemplate = (item) => {
     realPrice,
     ownerIdString,
     ownerCouponIdString,
+    identification,
   } = item;
   return (
     <View
@@ -398,6 +403,7 @@ export const prefectrueCouponTemplate = (item) => {
             merchantId: ownerIdString,
             ownerId: ownerIdString,
             ownerCouponId: ownerCouponIdString,
+            identification,
           },
         })
       }
@@ -437,12 +443,20 @@ export const commerGoodsTemplate = (item, configUserLevelInfo) => {
     goodsName,
     oriPrice,
     realPrice,
-    paymentModeObject: { bean, cash },
+    paymentModeObject: { bean, cash, type },
     specialActivityIdString,
     ownerId,
     commission,
+    identification,
   } = item;
-
+  const templatePrice = {
+    self: (
+      <View className="prefecture_fure_bean">
+        ¥{cash}+{bean}卡豆
+      </View>
+    ),
+    defaultMode: <View className="prefecture_fure_bean">{realPrice}</View>,
+  }[type];
   return (
     <View
       className="prefecture_fure_box"
@@ -452,6 +466,7 @@ export const commerGoodsTemplate = (item, configUserLevelInfo) => {
           args: {
             specialActivityId: specialActivityIdString,
             merchantId: ownerId,
+            identification,
           },
         });
       }}
@@ -470,9 +485,7 @@ export const commerGoodsTemplate = (item, configUserLevelInfo) => {
           <Text className="font24 text_through">{oriPrice}</Text>
         </View>
         <View className="prefecture_fure_tag prefecture_fure_margin1"></View>
-        <View className="prefecture_fure_bean">
-          ¥{cash}+{bean}卡豆
-        </View>
+        {templatePrice}
       </View>
       <View className="prefecture_btn  public_center">抢购</View>
     </View>

@@ -105,3 +105,45 @@ export const getAvailableCoupon = (data, fn) => {
   );
 };
 //多渠道可用券列表(打卡/消费/看视频)
+
+export const fetchPlatformCouponDetail = (data) => {
+  return httpGet({
+    url: "/user/platform/coupon/getUserPlatformCouponDetail",
+    data: data,
+  });
+};
+//多渠道可用券列表(打卡/消费/看视频)
+export const fetchCouponAvailableCommerce = (data) => {
+  return httpGet({
+    url: "/user/platformCoupon/listCouponAvailableCommerce",
+    data: data,
+  });
+};
+//查询平台可用电商券
+export const fetchCouponAvailableSpecial = (data) => {
+  return httpGet({
+    url: "/user/platformCoupon/listCouponAvailableSpecial",
+    data: data,
+  });
+};
+//查询平台可用特惠
+export const fetchAvailableOwnerCoupon = (data) => {
+  return httpGet({
+    url: "/user/platformCoupon/listCouponAvailableOwnerCoupon",
+    data: data,
+  });
+};
+//查询平台可用商家券
+
+export const fakeAcquirePlatformCoupon = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/platform/coupon/acquirePlatformCoupon",
+      data: data,
+    },
+    (res) => {
+      fn && fn(res);
+    }
+  );
+};
+//限时神券领取

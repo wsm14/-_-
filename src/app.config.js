@@ -84,7 +84,7 @@ export default {
         "shareActive/index", //活动主会场
         "shareUser/index", //活动页助力
         "shareSign/index", //集碎片助力
-        "ImperVideo/index", // 激励视频
+        // "ImperVideo/index", // 激励视频
       ],
     },
     {
@@ -127,6 +127,7 @@ export default {
         "merchantDetails/index", //商家详情
         "enterGroup/index", // 加入社群
         "beanWelfareZone/index", // 卡豆福利专区
+        "innerComponents/index", //逛逛配置内页
       ],
     },
     {
@@ -146,6 +147,7 @@ export default {
         "wraparound/index", //券包
         "couponDetails/index", //券包详情
         "selectCoupon/index", //选择支付券
+        "increase/index", //平台券详情
       ],
     },
     {

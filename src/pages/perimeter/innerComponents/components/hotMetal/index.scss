@@ -1,0 +1,189 @@
+.hotMetal_page_box {
+  width: 100%;
+  background: rgba(255, 242, 211, 1);
+  line-height: 1;
+  .hotMetal_box {
+    width: 512px;
+    height: 130px;
+    margin: 14px auto 0;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon911.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 500;
+    color: #ff3337;
+    text-shadow: 0px 4px 10px #ffc67d;
+    letter-spacing: 1px;
+  }
+  .hotMetal_shop_btn {
+    width: 150px;
+    height: 48px;
+    border-radius: 24px;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 36px auto 0;
+    position: relative;
+    z-index: 10;
+  }
+  .hotMetal_shop_style1 {
+    background: linear-gradient(148deg, #ff5d26 0%, #ff2a2a 100%);
+    color: #ffffff;
+  }
+  .hotMetal_shop_style2 {
+    background: linear-gradient(148deg, #ff5d26 0%, #ff2a2a 100%);
+    border-radius: 24px;
+    opacity: 0.3;
+    color: #ffffff;
+  }
+  .hotMetal_shop_iconBox {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
+  .hotMetal_shop_icon1 {
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon913.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .hotMetal_shop_icon2 {
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon914.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .hotMetal_shop_priceBox {
+    position: absolute;
+    top: 56px;
+    right: 24px;
+    min-width: 168px;
+    text-align: center;
+
+    .hotMetal_shop_price {
+      font-size: 48px;
+      font-weight: bold;
+      color: #ff4141;
+    }
+    .hotMetal_shop_priceDesc {
+      padding-top: 8px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #999999;
+    }
+  }
+
+  .hotMetal_content {
+    width: 662px;
+    min-height: 881px;
+    background: linear-gradient(180deg, #fff4df 0%, #ffeada 100%);
+    box-shadow: 0px 2px 8px 0px #ce1a1a, inset 0px 0px 8px 0px #ffffff;
+    border-radius: 50px;
+    border: 20px solid rgba(236, 49, 49, 1);
+    margin: 0 auto;
+  }
+  .hotMetal_content_box {
+    padding: 24px 12px 0;
+  }
+  .hotMetal_shop_box {
+    padding: 16px 24px 16px 16px;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    background: #ffffff;
+    margin-bottom: 24px;
+    border-radius: 20px;
+    .hotMetal_tag_margin {
+      margin-top: 16px;
+    }
+    .hotMetal_shop_profile {
+      width: 188px;
+      height: 204px;
+      background: #d8d8d8;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .hotMetal_shop_content {
+      margin-left: 16px;
+      padding-top: 4px;
+      .hotMetal_shop_title {
+        max-width: 320px;
+      }
+    }
+  }
+  .hotMetal_tag {
+    height: 40px;
+    background: #ff4141;
+    border-radius: 16px 0px 16px 0px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hotMetal_three_shop {
+    padding: 64px 0px 24px 24px;
+    position: relative;
+    background: #ffffff;
+    display: flex;
+    margin-bottom: 24px;
+    border-radius: 20px;
+    .hotMetal_tag_three {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .hotMetal_three_content {
+      width: 390px;
+      .hotMetal_three_name {
+        height: 32px;
+        font-size: 32px;
+        font-weight: 600;
+        color: #333333;
+      }
+      .hotMetal_three_img {
+        height: 120px;
+        margin-top: 24px;
+      }
+      .hotMetal_three_imgBox {
+        width: 120px;
+        height: 120px;
+        background: #d8d8d8;
+        border-radius: 10px;
+      }
+    }
+    .hotMetal_three_priceBox {
+      border-left: 1px solid #e5e5e5;
+      box-sizing: border-box;
+      margin-left: 16px;
+      padding-top: 16px;
+      text-align: center;
+      flex: 1;
+      justify-content: center;
+    }
+    .hotMetal_shop_price {
+      font-size: 48px;
+      font-weight: bold;
+      color: #ff4141;
+    }
+    .hotMetal_shop_priceDesc {
+      padding-top: 8px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #999999;
+    }
+  }
+
+  .hotMetal_shop_bottom {
+    width: 702px;
+    height: 132px;
+    margin: -48px auto 0;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon940.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+}

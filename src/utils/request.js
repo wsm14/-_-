@@ -85,9 +85,9 @@ const env =
 switch (env) {
   case "development":
     // baseUrl = "http://192.168.0.86:6020";
-    // baseUrl = "https://devgateway.dakale.net";
+    baseUrl = "https://devgateway.dakale.net";
     // baseUrl = "https://pregateway.dakale.net";
-    baseUrl = "https://gateway1.dakale.net";
+    // baseUrl = "https://gateway1.dakale.net";
     break;
   case "production":
     // baseUrl = "https://pregateway.dakale.net";
@@ -182,7 +182,7 @@ export const httpGet = (obj, fn) => {
   });
 };
 
-export const httpPost = (obj, fn) => {
+export const httpPost = (obj, fn, falg = true) => {
   const { header = {}, data = {} } = obj;
   Taro.showLoading({
     title: "加载中",
@@ -232,18 +232,18 @@ export const httpPost = (obj, fn) => {
               const { resultDesc, resultCode } = data;
               reject(res.data);
               if (resultOperate[resultCode]) {
-                toast(resultDesc);
+                falg && toast(resultDesc);
                 resultOperate[resultCode].fn();
                 return;
               }
-              return toast(resultDesc);
+              return falg && toast(resultDesc);
             }
           }
         },
         fail: (res) => {
           Taro.hideLoading();
           const { errMsg } = res;
-          toast(filterHttpStatus(errMsg));
+          falg && toast(filterHttpStatus(errMsg));
         },
         complete: () => {
           requestUrl = requestUrl.filter((item) => {

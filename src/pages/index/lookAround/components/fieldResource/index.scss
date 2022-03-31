@@ -1,0 +1,101 @@
+.fieldResource_box {
+  margin: 24px 24px 0;
+  width: 702px;
+  height: 528px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 235, 235, 1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  position: relative;
+  border-radius: 20px;
+  .resource_end_djs1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .resource_end_djs2 {
+    position: absolute;
+    top: 0;
+    left: 62px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .resource_end_djs3 {
+    position: absolute;
+    top: 0;
+    left: 124px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fieldResource_end_djs {
+    width: 164px;
+    height: 40px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon937.png)
+      no-repeat;
+    background-size: 100% 100%;
+    font-size: 28px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 28px;
+    position: absolute;
+    left: 178px;
+    top: 28px;
+  }
+  .fieldResource_s {
+    position: absolute;
+    width: 1px;
+    height: 464px;
+    background: #e5e5e5;
+    border-radius: 1px;
+    top: 32px;
+    left: 351px;
+  }
+  .fieldResource_h {
+    left: 32px;
+    top: 263px;
+    position: absolute;
+    width: 638px;
+    height: 1px;
+    background: #e5e5e5;
+    border-radius: 1px;
+  }
+  .fieldResource_image_box {
+    width: 298px;
+    height: 208px;
+  }
+  .fieldResource_image_style1 {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+  }
+  .fieldResource_image_style2 {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+  }
+  .fieldResource_image_style3 {
+    position: absolute;
+    left: 32px;
+    bottom: 32px;
+  }
+  .fieldResource_image_style4 {
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+  }
+}

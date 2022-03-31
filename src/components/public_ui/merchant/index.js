@@ -48,9 +48,11 @@ export default (props) => {
         }
         className="merchantcom_name public_auto"
       >
-        <Tarking args={data} name={"merchantLook"}>
-          <View className="merchant_card_link">进店看看 {" >"}</View>
-        </Tarking>
+        <View className="merchant_card_link">
+          <Tarking args={data} name={"merchantLook"}>
+            进店看看 {" >"}
+          </Tarking>
+        </View>
 
         <View className="merchant_card_box">
           <View

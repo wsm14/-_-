@@ -14,6 +14,7 @@ export default ({ data }) => {
     orderType,
     orderDesc,
     orderSn,
+    merchantName,
   } = data;
   const formatTime = (date) => {
     const year = date.getFullYear();
@@ -47,6 +48,14 @@ export default ({ data }) => {
             {" " + totalFee}
           </Text>
         </View>
+        {merchantName && (
+          <View className="code_scanPay_decBox  code_scanPay_decMargin public_auto font24">
+            <View className="color2">商家名称</View>
+            <View className="color1 font_hide code_scanPay_Max">
+              {merchantName}
+            </View>
+          </View>
+        )}
         {orderType === "commerceGoods" && typeof orderDesc === "string" && (
           <View className="code_scanPay_decBox  code_scanPay_decMargin public_auto font24">
             <View className="color2">商品</View>

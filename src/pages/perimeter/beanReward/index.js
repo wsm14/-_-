@@ -136,7 +136,7 @@ class businessSell extends Component {
               3、卡豆奖励不可提现，但是可以进行消费抵扣，如到店扫码消费抵扣、线上购买商家特惠活动商品抵扣等。
             </View>
             <View className="beanReward_toast">
-              4、每人每天最多可领取卡豆奖励上限值为1000卡豆。
+              4、每人每天最多可领取卡豆奖励上限值为500卡豆。
             </View>
             <View className="beanReward_toast">
               5、卡豆奖励最终解释权归哒卡乐所有。

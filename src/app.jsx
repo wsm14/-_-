@@ -3,7 +3,13 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import Store from "./model/index";
 import { Provider } from "mobx-react";
 import { authUpdateGeography } from "@/common/authority";
-import { fetchShareParamInfo, fetchDictionary } from "@/server/common";
+import {
+  fetchShareParamInfo,
+  fetchDictionary,
+  fetchAllGlobalConfig,
+  fetchPreferential,
+  fetchFestivalConfigs,
+} from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
 import evens from "@/common/evens";
@@ -21,14 +27,14 @@ class App extends Component {
     super(...arguments);
   }
   componentDidMount() {
-    this.getShareType();
     this.fetchLocation();
     this.fetchNetwork();
     authWxLogin(this.fetchOpenId.bind(this));
     evens.$on("setLocation", this.fetchLocation.bind(this));
     this.fetchDictionary();
-
-    // this.fetchGlobalConfig();
+    this.fetchGlobalConfig();
+    this.fetchPreferentialGlobal();
+    this.fetchFestival();
   }
   componentDidHide() {
     const data = Taro.getStorageSync("operatingLog");
@@ -39,9 +45,11 @@ class App extends Component {
     }
     return;
   }
+
   componentDidShow(e) {
     this.fetchScene(e);
     this.fetchCheckUpdate();
+    this.getShareType();
     if (!Taro.cloud) {
       console.error("请使用 2.2.3 或以上的基础库以使用云能力");
     } else {
@@ -86,12 +94,27 @@ class App extends Component {
       return;
     }
   }
-
-  fetchGlobalConfig() {
-    fetchGlobalConfig().then((val) => {
-      console.log(val);
+  //获取分享绑定关系
+  fetchPreferentialGlobal() {
+    fetchPreferential({}).then((val) => {
+      const { preferentialGlobalDefaultList = [] } = val;
+      Store.commonStore.setCommonData(
+        "preferentialGlobalDefaultList",
+        preferentialGlobalDefaultList
+      );
     });
   }
+  //获取全局视频比例
+  fetchGlobalConfig() {
+    fetchAllGlobalConfig({}).then((val) => {
+      let { configGlobalPopUpObjectList } = val;
+      Store.commonStore.setCommonData(
+        "configGlobalPopUpObjectList",
+        configGlobalPopUpObjectList
+      );
+    });
+  }
+  //全局弹窗
   fetchScene(e) {
     const { scene } = e;
     Taro.setStorageSync("utm-medium", scene);
@@ -143,15 +166,25 @@ class App extends Component {
       }
     );
   }
+  //获取全局登录
   fetchLocation() {
     authUpdateGeography(this.fetchUpdataLocation.bind(this));
   }
-
+  //设置默认地理位置
   fetchUpdataLocation(res = {}) {
     const { latitude, longitude } = res;
     Taro.setStorageSync("lat", latitude);
     Taro.setStorageSync("lnt", longitude);
     Store.locationStore.setLocation(latitude, longitude);
+  }
+  fetchFestival() {
+    fetchFestivalConfigs({
+      type: "topBackgroundWeChat",
+      topType: "wanderAround",
+    }).then((val) => {
+      const { festivalConfigs = [] } = val;
+      Store.commonStore.setCommonData("festivalConfigs", festivalConfigs);
+    });
   }
   fetchDictionary() {
     fetchDictionary({
@@ -165,6 +198,7 @@ class App extends Component {
       Store.commonStore.setBalancen(beanLimit - weChatBeanLimit);
     });
   }
+  //读取默认卡豆数量
   fetchNetwork() {
     Taro.onNetworkStatusChange((res) => {
       const { isConnected, networkType } = res;

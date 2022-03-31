@@ -9,7 +9,8 @@ export default (props) => {
   const { data, reload } = props;
   const [visible, setVisible] = useState(false);
   console.log(data);
-  const { status, closeReason, orderSn, allowRefund, orderType } = data;
+  const { status, closeReason, orderSn, allowRefund, orderType, deliveryTime } =
+    data;
   const updateOrder = (str) => {
     if (str) {
       setVisible(() => {
@@ -56,7 +57,9 @@ export default (props) => {
           return "请在5分钟内进行付款，超时订单将自动关闭";
         case "1":
           return orderType === "commerceGoods"
-            ? "下单成功，等待发货（7个工作日内发货）"
+            ? deliveryTime
+              ? "已发货"
+              : "下单成功，等待发货（7个工作日内发货）"
             : "到店请出示核销码";
         case "2":
           return closeReason;
@@ -76,9 +79,10 @@ export default (props) => {
           <View className="orderDetails_status">
             <View className={classNames(filterImage())}></View>
             <View className="orderDetails_font">
-              {" "}
               {orderType === "commerceGoods" && status === "1"
-                ? "待发货"
+                ? deliveryTime
+                  ? "已发货"
+                  : "待发货"
                 : filterPayStatus(status)}
             </View>
           </View>

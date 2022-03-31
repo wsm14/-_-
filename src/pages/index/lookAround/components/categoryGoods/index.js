@@ -7,7 +7,7 @@ import Router from "@/utils/router";
 export default ({
   list = [],
   flagDom,
-  configUserLevelInfo,
+  data,
   specialFilterType,
   saveRouter,
   categoryList,
@@ -15,6 +15,17 @@ export default ({
   tabGoods,
   categoryIds,
 }) => {
+  const [listObj, setListObj] = useState({});
+  useEffect(() => {
+    setListObj(
+      data.reduce((item, val) => {
+        if (val.moduleName === "specialRecommend") {
+          return val;
+        } else return item;
+      }),
+      {}
+    );
+  }, [data]);
   const memo = useMemo(() => {
     return (
       <View>
@@ -23,14 +34,7 @@ export default ({
           style={!flagDom ? { display: "none" } : {}}
           className="lookAround_category_fixed"
         ></View>
-        <View
-          style={
-            flagDom
-              ? { position: "fixed", top: Taro.pxTransform(48), zIndex: 1000 }
-              : {}
-          }
-          className="lookAround_categorys_box lookAround_categorys_box1"
-        >
+        <View className="lookAround_categorys_box lookAround_categorys_box1">
           <View
             className="lookAround_categorys_orderBtn"
             onClick={() =>
@@ -76,20 +80,13 @@ export default ({
           </ScrollView>
         </View>
         <SelectSpecal
-          userInfo={configUserLevelInfo}
           data={list}
+          listObj={listObj}
           linkTo={saveRouter}
           type={specialFilterType}
         ></SelectSpecal>
       </View>
     );
-  }, [
-    list,
-    flagDom,
-    configUserLevelInfo,
-    specialFilterType,
-    categoryList,
-    categoryIds,
-  ]);
+  }, [list, flagDom, specialFilterType, categoryList, categoryIds, listObj]);
   return memo;
 };

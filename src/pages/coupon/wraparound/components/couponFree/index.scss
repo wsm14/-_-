@@ -7,6 +7,32 @@
   line-height: 1;
   margin-bottom: 24px;
 }
+.couponFree_increase {
+  position: absolute;
+  top: 192px;
+  right: 32px;
+  display: flex;
+  align-items: center;
+  .couponFree_increase_max {
+    font-size: 20px;
+    font-weight: 400;
+    color: #ef476f;
+    height: 32px;
+    background: rgba(244, 54, 54, 0.1);
+    border-radius: 16px;
+    padding: 0 8px;
+    margin-right: 12px;
+  }
+  .couponFree_increase_payBean {
+    height: 40px;
+    background: #ef476f;
+    border-radius: 26px;
+    padding: 0 20px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+}
 .couponFree_gq {
   position: absolute;
   top: 0;
@@ -23,6 +49,15 @@
   width: 140px;
   height: 140px;
   background: url("https://wechat-config.dakale.net/miniprogram/image/icon836.png");
+  background-size: 100% 100%;
+}
+.couponFree_pz {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 80px;
+  height: 80px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon906.png");
   background-size: 100% 100%;
 }
 .couponFree_box_open {
@@ -103,13 +138,17 @@
     margin-right: 4px;
   }
 }
+.couponFree_increase {
+  position: absolute;
+  top: 196px;
+  right: 32px;
+}
 .couponFree_content {
   margin: 80px 32px 0;
   font-size: 24px;
   color: #999999;
+  max-width: 329px;
   .couponFree_coupon_bottomNoIcon {
-    display: flex;
-    align-items: center;
   }
   .couponFree_coupon_bottomIcon {
     display: flex;
@@ -128,6 +167,7 @@
     display: block;
     content: "";
     margin-left: 8px;
+    flex-shrink: 0;
   }
   .couponFree_coupon_bottomIcon1::after {
     width: 24px;
@@ -138,6 +178,7 @@
     display: block;
     content: "";
     margin-left: 8px;
+    flex-shrink: 0;
   }
   .couponFree_coupon_marginTop {
     margin-top: 16px;

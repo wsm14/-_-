@@ -9,7 +9,6 @@ import SelectBean from "@/components/public_ui/selectKol";
 import BuyDesc from "./components/buyDesc";
 import Submit from "./components/submit";
 import { fetchOwnerCouponInfo, fakeCouponOrder } from "@/server/goods";
-import { fetchUserShareCommission } from "@/server/common";
 import { inject, observer } from "mobx-react";
 import Router from "@/utils/router";
 import evens from "@/common/evens";
@@ -43,20 +42,20 @@ class Index extends Component {
 
   componentDidShow() {
     this.getOwnerCouponInfo();
-    this.fetchUserShareCommission();
+    this.setConfigUserLevelInfo();
   }
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const {
-        configUserLevelInfo = {
-          payBeanCommission: 50,
-          shareCommission: 0,
-          teamCommission: 0,
-        },
-      } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
+  setConfigUserLevelInfo() {
+    const { commonStore = {} } = this.props.store;
+    const { preferentialGlobalDefaultList = [] } = commonStore;
+    let data = preferentialGlobalDefaultList.find((item) => {
+      const { identification } = item;
+      return identification === "otherDefault";
+    });
+    this.setState({
+      configUserLevelInfo: {
+        payBeanCommission:
+          data.preferentialActivityRuleObject.payBeanCommission,
+      },
     });
   }
   computedCount(type) {

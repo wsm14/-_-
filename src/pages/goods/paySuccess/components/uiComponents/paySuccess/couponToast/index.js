@@ -19,7 +19,9 @@ export default (props) => {
     couponType,
     classType,
     useScenesType,
+    increaseRuleObject = {},
   } = userPlatformCouponInfo;
+  const { type, beanNum, increaseMaxValue } = increaseRuleObject;
   const renderDesc = () => {
     if (classType === "universal" && useScenesType === "goodsBuy") {
       return "商品通用券";
@@ -52,7 +54,14 @@ export default (props) => {
           </View>
           <View className="couponToast_desc">再送你一张通用券</View>
           <View className="couponToast_content">
-            <View className="couponToast_title font_hide">{couponName}</View>
+            <View className="couponToast_title font_hide">
+              <View className="font_hide"> {couponName}</View>
+              {type && (
+                <View className="coupon_increaseMaxValue font_hide public_center">
+                  {increaseMaxValue}
+                </View>
+              )}
+            </View>
             <View className="couponToast_time">
               有效期：{activeBeginDate} 至 {activeEndDate}
             </View>
@@ -63,7 +72,9 @@ export default (props) => {
                 满{thresholdPrice}可用
               </View>
             </View>
-            <View className="couponToast_icon public_center">{renderDesc()}</View>
+            <View className="couponToast_icon public_center">
+              {renderDesc()}
+            </View>
           </View>
           <View className="couponToast_tags">
             可在「我的-我的券包」中查看券详情

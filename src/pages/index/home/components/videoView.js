@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Video, Swiper, SwiperItem, View } from "@tarojs/components";
 import BottomView from "@/components/videoComponents/videoBottom";
+import AdCustom from "@/components/AdCustom";
 import { computedVideoSize } from "@/utils/utils";
 import InterVal from "@/components/videoComponents";
 import "./../index.scss";
@@ -61,12 +62,38 @@ export default ({
                 videoContent,
                 watchStatus,
                 beanFlag,
+                imper = false,
               } = item;
               if (
                 index === current ||
                 index === current + 1 ||
                 index === current - 1
               ) {
+                if (imper) {
+                  return (
+                    <SwiperItem style={{ width: "100%", height: "100%" }}>
+                      <View
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          position: "relative",
+                          height: "100%",
+                        }}
+                      >
+                        <View
+                          style={{
+                            height: "100%",
+                            width: "100%",
+                          }}
+                        >
+                          <AdCustom></AdCustom>
+                        </View>
+                      </View>
+                    </SwiperItem>
+                  );
+                }
                 return (
                   <SwiperItem>
                     <View

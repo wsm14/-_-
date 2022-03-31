@@ -116,8 +116,6 @@ export default (props) => {
   const {
     times,
     fn,
-    mint,
-    type,
     onlyTime = false,
     styles = false,
     showTimeInfo = false,

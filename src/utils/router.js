@@ -40,6 +40,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     couponDetails: "/pages/coupon/couponDetails/index", //券包详情
     wraparound: "/pages/coupon/wraparound/index", //券包
     selectCoupon: "/pages/coupon/selectCoupon/index", //选择支付关联券
+    increase: "/pages/coupon/increase/index", //平台券详情
     //券包
     bubble: "/pages/perimeter/bubble/index", //跳转风向标
     groupDetails: "/pages/perimeter/kaMerchantDetails/index", //集团详情
@@ -81,6 +82,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     beanWelfareZone: "/pages/perimeter/beanWelfareZone/index", // 卡豆福利专区
     payCouponList: "/pages/perimeter/couponList/index", //有价券列表
     commer: "/pages/perimeter/commer/index", //电商商品
+    wanderAround: "/pages/perimeter/innerComponents/index",
     orderDetails: "/pages/goods/orderDetails/index", //订单详情
     codePay: "/pages/goods/codePay/index", //
     coupon: "/pages/goods/codeCoupon/index",

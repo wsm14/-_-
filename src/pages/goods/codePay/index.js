@@ -3,7 +3,6 @@ import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, Input } from "@tarojs/components";
 import { getReserveOrder, saveScanCodeOrder } from "@/server/goods";
 import { backgroundObj, toast, objStatus } from "@/utils/utils";
-import { fetchUserShareCommission } from "@/server/common";
 import PayGo from "./components/pay_btn";
 import Router from "@/utils/router";
 import evens from "@/common/evens";
@@ -24,6 +23,7 @@ class Index extends Component {
       useBeanStatus: "1",
       couponObj: {},
       configUserLevelInfo: {},
+      payBeanCommission: 10,
     };
   }
 
@@ -35,17 +35,8 @@ class Index extends Component {
   }
   componentDidShow() {
     this.regUrl();
-    this.fetchUserShareCommission();
   }
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
-    });
-  }
-  //哒人身份
+
   getUrlKey(key, name) {
     // 获取参数
     var url = decodeURIComponent(key);
@@ -103,8 +94,9 @@ class Index extends Component {
         ...this.state.httpData,
       },
       (res) => {
-        const { reserveOrderResult } = res;
+        const { reserveOrderResult, payBeanCommission } = res;
         this.setState({
+          configUserLevelInfo: { payBeanCommission },
           reserveOrderResult: {
             ...reserveOrderResult,
             ...this.state.reserveOrderResult,
@@ -263,6 +255,11 @@ class Index extends Component {
               type="scan"
               status={useBeanStatus}
               useScenesType="scan"
+              changeBean={() => {
+                this.setState({
+                  useBeanStatus: useBeanStatus === "1" ? "0" : "1",
+                });
+              }}
               data={{
                 ...reserveOrderResult,
                 userBean: totalFee

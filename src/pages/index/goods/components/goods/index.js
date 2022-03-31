@@ -1153,6 +1153,7 @@ export default (props) => {
       createTime,
       beanFee,
       payTime,
+      deliveryTime,
     } = item;
     orderDesc = orderDesc && JSON.parse(orderDesc);
     const {
@@ -1295,9 +1296,9 @@ export default (props) => {
                 filterPayColor(status)
               )}
             >
-              {filterPayStatus(status, closeType) === "待核销"
+              {filterPayStatus(status, closeType, deliveryTime) === "待核销"
                 ? "待发货"
-                : filterPayStatus(status, closeType)}
+                : filterPayStatus(status, closeType, deliveryTime)}
             </View>
           </View>
         </View>

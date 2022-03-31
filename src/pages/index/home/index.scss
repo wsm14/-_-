@@ -4,7 +4,7 @@ page {
   line-height: 1;
   overflow: hidden;
 }
-.home_username {
+AdCustom .home_username {
   font-size: 32px;
   font-weight: 600;
   color: #ffffff;
@@ -304,7 +304,7 @@ page {
   }
   .home_Select_scroll {
     max-width: 351px;
-    margin-left: 40px;
+    margin-left: 84px;
   }
   .home_Select {
     font-size: 32px;
@@ -313,10 +313,13 @@ page {
     line-height: 32px;
     text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
     display: flex;
+
     .home_select_right {
       margin-right: 40px;
       padding-top: 8px;
       position: relative;
+      max-width: 180px;
+      flex-shrink: 0;
     }
     .hode_select_line {
       width: 36px;

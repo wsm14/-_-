@@ -64,6 +64,19 @@
     font-size: 28px;
     font-weight: 600;
     color: #333333;
+    display: flex;
+    align-items: center;
+  }
+  .coupon_increaseMaxValue {
+    padding: 0 12px;
+    height: 28px;
+    background: #f43636;
+    border-radius: 14px 14px 14px 0px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+    margin-left: 20px;
+    flex-shrink: 0;
   }
   .couponToast_time {
     font-size: 20px;

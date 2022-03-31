@@ -299,8 +299,41 @@ export const fakeOperatingLog = (data = {}, fn) => {
     {
       url: "/common/operatingLog/saveOperatingSystemLog",
       data: data,
+      falg: false,
     },
     (res) => fn && fn(res)
   );
 };
 // 获取收集页配置卡豆规则;
+export const fetchAllGlobalConfig = (data) => {
+  return httpGet({
+    url: "/common/configGlobalPopUp/getAllGlobalConfig",
+    data: data,
+  });
+}; //微信广告视频-领豆
+export const fetchPreferential = (data) => {
+  return httpGet({
+    url: "/common/preferential/listPreferentialGlobalDefault",
+    data: data,
+  });
+}; //支付抵扣比例默认配置：
+
+export const fetchFestivalConfigs = (data) => {
+  return httpGet({
+    url: "/common/festival/getFestivalConfigs",
+    data: data,
+  });
+}; //微信小程序主站顶部背景：
+
+export const fetchResourceTemplate = (data) => {
+  return httpGet({
+    url: "/common/resourceTemplateContent/getResourceTemplateContentNewById",
+    data: data,
+  });
+}; //逛逛根据模板 Id查找数据：
+export const fetchSecondKillBarrage = (data) => {
+  return httpGet({
+    url: "/common/dictionary/listSecondKillBarrage",
+    data: data,
+  });
+}; //卡豆超值弹幕
