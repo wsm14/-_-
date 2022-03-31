@@ -4,7 +4,7 @@ import { View } from "@tarojs/components";
 import { fakeUserFollow, fakeRemoveFollow } from "@/server/index";
 import MarkPhone from "@/components/payTelephone";
 import { scanCode } from "@/common/authority";
-import Toast from "@/components/public_ui/selectToast";
+import Toast from "@/components/public_ui/beanToast";
 import { fetchShareParamInfo, fetchShareInfo } from "@/server/common";
 import {
   getUserCoupon,
