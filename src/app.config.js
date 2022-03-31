@@ -70,7 +70,6 @@ export default {
         "wallet/index", //钱包
         "beanRule/index", //卡豆权益
         "userConceal/index", //协议规则
-        "collage/index", //拼团详情
       ],
     },
     {

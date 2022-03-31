@@ -19,7 +19,7 @@ export const rssConfigData = (data = {}) => {
     rightFlag = "0",
     paymentModeObject,
   } = data;
-  const { bean = "", cash = "" } = paymentModeObject;
+  const { bean = "", cash = "", type = "defaultMode" } = paymentModeObject;
   if (
     !userProfile.includes("resource-new.dakale.net") &&
     !userProfile.includes("wechat-config.dakale.net")
@@ -29,7 +29,7 @@ export const rssConfigData = (data = {}) => {
   if (time && time === "") {
     time = "长期有效";
   }
-  if (rightFlag === "1") {
+  if (rightFlag === "1" || type !== "defaultMode") {
     return {
       width: 750, // 画布宽度
       height: 1334, // 画布高度

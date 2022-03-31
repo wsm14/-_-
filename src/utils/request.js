@@ -90,8 +90,8 @@ switch (env) {
     // baseUrl = "https://gateway1.dakale.net";
     break;
   case "production":
-    // baseUrl = "https://pregateway.dakale.net";
-    baseUrl = "https://devgateway.dakale.net";
+    baseUrl = "https://pregateway.dakale.net";
+    // baseUrl = "https://devgateway.dakale.net";
     // baseUrl = "https://gateway1.dakale.net";
     break;  
 }
