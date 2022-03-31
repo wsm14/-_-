@@ -9,9 +9,8 @@ import { fetchBanner } from "@/server/common";
 import "./index.scss";
 export default ({ data, link }) => {
   const style = {
-    width: Taro.pxTransform(688),
+    width: Taro.pxTransform(702),
     height: Taro.pxTransform(128),
-    margin: `${Taro.pxTransform(24)} auto  0`,
     position: "relative",
   };
   const [listObj, setListObj] = useState({});
