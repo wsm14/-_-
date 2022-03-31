@@ -4,11 +4,7 @@ import { Text, View, Image, RichText } from "@tarojs/components";
 import Coupon from "./components/couponTop";
 import { fetchOwnerCouponDetail } from "@/server/coupon";
 import { fakeSaveCollection, fakeDeleteCollection } from "@/server/perimeter";
-import {
-  fetchShareParamInfo,
-  fetchShareInfo,
-  fetchUserShareCommission,
-} from "@/server/common";
+import { fetchShareParamInfo, fetchShareInfo } from "@/server/common";
 import {
   loginStatus,
   computedPrice,
@@ -43,7 +39,9 @@ class Index extends Component {
       },
       couponDetail: {},
       index: 0,
-      configUserLevelInfo: {},
+      configUserLevelInfo: {
+        payBeanCommission: 20,
+      },
       cavansObj: {
         data: null,
         start: false,
@@ -86,27 +84,24 @@ class Index extends Component {
     const { httpData, index } = this.state;
     fetchOwnerCouponDetail(httpData, (res) => {
       const { couponDetail } = res;
-      const { reduceObject = {}, ownerCouponStatus = "2" } = couponDetail;
+      const {
+        reduceObject = {},
+        ownerCouponStatus = "2",
+        payBeanCommission,
+      } = couponDetail;
       this.setState({
         couponDetail: {
           ...couponDetail,
           ...reduceObject,
           ownerCouponStatus,
         },
+        configUserLevelInfo: { payBeanCommission },
         index: index + 1,
       });
     });
   }
   //获取有价券详情
-  fetchUserShareCommission() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
-      this.setState({
-        configUserLevelInfo,
-      });
-    });
-  }
-  //获取哒人身份
+
   filterCoupon() {
     const { couponDetail } = this.state;
     const { activeDate, endDate, delayDays, activeDays } = couponDetail;
@@ -334,7 +329,6 @@ class Index extends Component {
     if (index !== 0) {
       this.fetchCouponDetail();
     }
-    this.fetchUserShareCommission();
   }
   componentDidMount() {}
   render() {

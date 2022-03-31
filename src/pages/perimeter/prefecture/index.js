@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Taro from "@tarojs/taro";
+import Taro, { getCurrentInstance } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { fetchRightGoods, fetchRightCoupon } from "@/server/index";
 import { fetchCommerceGoods, fetchSelfTourGoods } from "@/server/perimeter";
@@ -38,6 +38,8 @@ class Index extends Component {
       commerList: [],
       commerHttp: { page: 1, limit: 2 },
       configUserLevelInfo: {},
+      payBeanCommission: getCurrentInstance().router.params.payBeanCommission,
+      identification: getCurrentInstance().router.params.identification,
     };
   }
   componentDidMount() {
@@ -58,12 +60,21 @@ class Index extends Component {
     }
   }
   fetchUserShare() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
+    const { payBeanCommission } = this.state;
+    if (payBeanCommission) {
       this.setState({
-        configUserLevelInfo,
+        configUserLevelInfo: {
+          payBeanCommission,
+        },
       });
-    });
+    } else {
+      fetchUserShareCommission({}, (res) => {
+        const { configUserLevelInfo = {} } = res;
+        this.setState({
+          configUserLevelInfo,
+        });
+      });
+    }
   }
   fetchCommerceList() {
     fetchCommerceGoods(this.state.commerHttp).then((val) => {
@@ -109,6 +120,8 @@ class Index extends Component {
       selfList,
       configUserLevelInfo,
       commerList,
+      payBeanCommission,
+      identification,
     } = this.state;
 
     return (
@@ -142,6 +155,10 @@ class Index extends Component {
                 onClick={() =>
                   Router({
                     routerName: "preChildTure",
+                    args: {
+                      payBeanCommission,
+                      identification,
+                    },
                   })
                 }
               >
@@ -153,9 +170,17 @@ class Index extends Component {
                 if (index < 2) {
                   const { couponType } = item;
                   if (couponType) {
-                    return prefectrueCouponTemplate(item);
+                    return prefectrueCouponTemplate({
+                      ...item,
+                      payBeanCommission,
+                      identification,
+                    });
                   } else {
-                    return prefectrueGoodsTemplate(item);
+                    return prefectrueGoodsTemplate({
+                      ...item,
+                      payBeanCommission,
+                      identification,
+                    });
                   }
                 } else {
                   return null;
@@ -174,6 +199,10 @@ class Index extends Component {
                 onClick={() => {
                   Router({
                     routerName: "preSelfour",
+                    args: {
+                      payBeanCommission,
+                      identification,
+                    },
                   });
                 }}
               >
@@ -183,7 +212,12 @@ class Index extends Component {
             <View className="prefecture_content_top">
               {selfList.map((item, index) => {
                 if (index < 2) {
-                  return template(item, configUserLevelInfo, true, false);
+                  return template(
+                    { ...item, payBeanCommission, identification },
+                    configUserLevelInfo,
+                    true,
+                    false
+                  );
                 }
               })}
             </View>
@@ -199,6 +233,10 @@ class Index extends Component {
                 onClick={() => {
                   Router({
                     routerName: "commer",
+                    args: {
+                      payBeanCommission,
+                      identification,
+                    },
                   });
                 }}
               >
@@ -211,9 +249,17 @@ class Index extends Component {
                 const { type = "defaultMode" } = paymentModeObject;
                 if (index < 2) {
                   if (type === "defaultMode") {
-                    return template(item, configUserLevelInfo, true, false);
+                    return template(
+                      { ...item, payBeanCommission, identification },
+                      configUserLevelInfo,
+                      true,
+                      false
+                    );
                   } else {
-                    return commerGoodsTemplate(item, configUserLevelInfo);
+                    return commerGoodsTemplate(
+                      { ...item, payBeanCommission, identification },
+                      configUserLevelInfo
+                    );
                   }
                 }
               })}

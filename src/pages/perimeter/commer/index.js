@@ -18,6 +18,8 @@ class Index extends Component {
         limit: 10,
       },
       configUserLevelInfo: {},
+      payBeanCommission: getCurrentInstance().router.params.payBeanCommission,
+      identification: getCurrentInstance().router.params.identification,
     };
   }
   fetchCommerceList() {
@@ -52,12 +54,21 @@ class Index extends Component {
     );
   }
   fetchUserShare() {
-    fetchUserShareCommission({}, (res) => {
-      const { configUserLevelInfo = {} } = res;
+    const { payBeanCommission } = this.state;
+    if (payBeanCommission) {
       this.setState({
-        configUserLevelInfo,
+        configUserLevelInfo: {
+          payBeanCommission,
+        },
       });
-    });
+    } else {
+      fetchUserShareCommission({}, (res) => {
+        const { configUserLevelInfo = {} } = res;
+        this.setState({
+          configUserLevelInfo,
+        });
+      });
+    }
   }
   onReachBottom() {
     const { selectHttp } = this.state;
@@ -75,8 +86,9 @@ class Index extends Component {
   } //上拉加载
 
   render() {
-    const { commerList, configUserLevelInfo, selectHttp } = this.state;
-    const { payBeanCommission, shareCommission } = configUserLevelInfo;
+    const { commerList, configUserLevelInfo, selectHttp, identification } =
+      this.state;
+    const { payBeanCommission } = configUserLevelInfo;
     const templatePrice = (item) => {
       const { paymentModeObject = {}, realPrice, oriPrice } = item;
       const { type } = paymentModeObject;
@@ -144,6 +156,7 @@ class Index extends Component {
               args: {
                 merchantId: ownerIdString,
                 specialActivityId: specialActivityIdString,
+                identification,
               },
             })
           }

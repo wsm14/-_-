@@ -1,0 +1,18 @@
+.rebate_box {
+  margin: 24px auto;
+  width: 702px;
+  height: 378px;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon919.png")
+    no-repeat;
+  background-size: 100% 100%;
+  .rebate_img_box {
+    position: relative;
+    top: 96px;
+    padding: 0 32px;
+  }
+  .rebate_info_box{
+    width: 202px;
+    height: 250px;
+    
+  }
+}

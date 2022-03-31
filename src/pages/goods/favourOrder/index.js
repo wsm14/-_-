@@ -284,7 +284,6 @@ class Index extends Component {
       },
       httpData: { goodsCount },
       useBeanStatus,
-      configUserLevelInfo,
     } = this.state;
     const { cash, type = "defaultMode" } = paymentModeObject;
 

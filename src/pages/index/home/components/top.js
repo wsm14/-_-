@@ -5,45 +5,56 @@ import Router from "@/utils/router";
 import { fetchTabTag } from "@/server/common";
 import { scanCode } from "@/common/authority";
 import "./../index.scss";
+import { fetchStorage } from "@/utils/utils";
 export default (props) => {
-  const { onChange, data = "", session, store } = props;
-  const [type, setType] = useState(null);
+  const { onChange, data = {}, session, store } = props;
+  const { cityName } = fetchStorage("relCity");
   const [select, setSelect] = useState([
     {
-      label: "发现",
+      label: "同城",
+      val: "sameCity",
+    },
+    {
+      label: "捡豆",
       val: "pickUp",
     },
+    {
+      label: "哒人秀",
+      val: "daRenShow",
+    },
   ]);
-  useEffect(() => {
-    setType(data);
-  }, [data]);
+  const { browseType, momentTags } = data;
   useEffect(() => {
     if (store) {
       fetchTabTag().then((val) => {
         const { configMomentTagList = [] } = val;
         if (configMomentTagList.length > 0) {
-          setSelect(
-            configMomentTagList.map((val) => {
+          setSelect([
+            {
+              label: cityName ? cityName : "同城",
+              val: "sameCity",
+            },
+            {
+              label: "捡豆",
+              val: "pickUp",
+            },
+            {
+              label: "哒人秀",
+              val: "daRenShow",
+            },
+            ...configMomentTagList.map((val) => {
               const { name, type, configMomentTagId } = val;
-              if (type === "pickUp") {
-                return {
-                  label: "发现",
-                  val: type,
-                  configMomentTagId,
-                };
-              }
               return {
                 label: name,
                 val: type,
                 configMomentTagId,
               };
-            })
-          );
+            }),
+          ]);
         }
       });
     }
   }, [store]);
-
   return useMemo(
     () => (
       <View className="home_top">
@@ -72,15 +83,16 @@ export default (props) => {
                     onChange && onChange(item);
                   }}
                   className={classNames(
-                    "home_select_right",
-                    type
-                      ? type === item.configMomentTagId && "home_select_checked"
-                      : item.val === "pickUp" && "home_select_checked"
+                    "home_select_right font_hide",
+                    item.configMomentTagId
+                      ? momentTags === item.configMomentTagId
+                      : data.browseType === item.val && "home_select_checked"
                   )}
                 >
                   {item.label}
-                  {((!type && item.val === "pickUp") ||
-                    type === item.configMomentTagId) && (
+                  {(item.configMomentTagId
+                    ? momentTags === item.configMomentTagId
+                    : data.browseType === item.val) && (
                     <View className="hode_select_line  animated fadeIn"></View>
                   )}
                 </View>
@@ -90,6 +102,6 @@ export default (props) => {
         </ScrollView>
       </View>
     ),
-    [type, select]
+    [browseType, select, momentTags]
   );
 };

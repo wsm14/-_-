@@ -10,7 +10,7 @@ import {
 } from "@/utils/utils";
 import Router from "@/utils/router";
 import "./index.scss";
-export const templateActive = (item, configUserLevelInfo) => {
+export const templateActive = (item, configUserLevelInfo, identification) => {
   const {
     commission,
     goodsImg,
@@ -37,6 +37,7 @@ export const templateActive = (item, configUserLevelInfo) => {
             args: {
               merchantId: ownerIdString,
               specialActivityId: specialActivityIdString,
+              identification,
             },
           });
         }}
@@ -89,7 +90,7 @@ export const templateActive = (item, configUserLevelInfo) => {
   }
 };
 //电商商品
-export const template = (item, configUserLevelInfo) => {
+export const template = (item, configUserLevelInfo, identification) => {
   const {
     commission,
     goodsImg,
@@ -112,6 +113,7 @@ export const template = (item, configUserLevelInfo) => {
           args: {
             merchantId: ownerIdString,
             specialActivityId: specialActivityIdString,
+            identification,
           },
         });
       }}
@@ -151,7 +153,7 @@ export const template = (item, configUserLevelInfo) => {
   );
 };
 //特惠商品
-export const templateRight = (item, configUserLevelInfo) => {
+export const templateRight = (item, configUserLevelInfo, identification) => {
   const {
     goodsImg,
     ownerIdString,
@@ -175,6 +177,7 @@ export const templateRight = (item, configUserLevelInfo) => {
           args: {
             merchantId: ownerIdString,
             specialActivityId: specialActivityIdString,
+            identification,
           },
         });
       }}
@@ -210,16 +213,13 @@ export const templateRight = (item, configUserLevelInfo) => {
   );
 };
 //权益商品
-export const templateGame = (item, configUserLevelInfo) => {
+export const templateGame = (item, configUserLevelInfo, identification) => {
   const {
-    commission,
     goodsImg,
     ownerIdString,
     goodsName,
-
     oriPrice,
     realPrice,
-
     specialActivityIdString,
   } = item;
   const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
@@ -231,6 +231,7 @@ export const templateGame = (item, configUserLevelInfo) => {
           args: {
             merchantId: ownerIdString,
             specialActivityId: specialActivityIdString,
+            identification,
           },
         });
       }}
@@ -260,3 +261,86 @@ export const templateGame = (item, configUserLevelInfo) => {
   );
 };
 //周边游玩
+export const templateNewShop = (item, configUserLevelInfo, identification) => {
+  const {
+    commission,
+    goodsImg,
+    goodsName,
+    merchantName,
+    lat,
+    lnt,
+    merchantLogo,
+    oriPrice,
+    realPrice,
+    ownerIdString,
+    specialActivityIdString,
+    paymentModeObject = {},
+  } = item;
+  const { payBeanCommission = 50, shareCommission = 0 } = configUserLevelInfo;
+  const { type = "defaultMode", cash, bean } = paymentModeObject;
+  const renderPrice = {
+    defaultMode: (
+      <>
+        <View className="bottom_shop_realPrice">
+          <View className="bottom_shop_realLabel">优惠价:</View>
+          <View className="bottom_shop_price">¥{realPrice}</View>
+        </View>
+        <View className="bottom_shop_oldPrice">
+          <View className="bottom_shop_oldLabel">原价:</View>
+          <View className="bottom_shop_oldcout">¥{oriPrice}</View>
+        </View>
+        <View className="bottom_kol_info">
+          <View className="bottom_kol_s">
+            <View className="bottom_kol_bean">
+              ¥{computedPrice(realPrice, payBeanCommission)}
+            </View>
+          </View>
+        </View>
+      </>
+    ),
+    self: (
+      <>
+        <View className="bottom_kol_oldPrice">
+          原价: <Text className="font28 text_through">¥{oriPrice}</Text>
+        </View>
+        <View className="bottom_dakale_icon"></View>
+        <View className="bottom_dakale_beanorcash">
+          ¥{cash} {bean ? `+${bean}卡豆` : ""}
+        </View>
+      </>
+    ),
+  }[type];
+  return (
+    <View
+      onClick={() => {
+        Router({
+          routerName: "favourableDetails",
+          args: {
+            merchantId: ownerIdString,
+            specialActivityId: specialActivityIdString,
+            identification,
+          },
+        });
+      }}
+      className="bottom_shop_box"
+      key={specialActivityIdString}
+    >
+      <View className="bottom_shop_img" style={backgroundObj(goodsImg)}></View>
+      <View className="bottom_shop_content">
+        <View className="bottom_shop_goodsName font_noHide">{goodsName}</View>
+        <View className="bottom_shop_user font_hide">
+          <View
+            className="bottom_shop_profile merchant_dakale_logo"
+            style={backgroundObj(merchantLogo)}
+          ></View>
+          <View className="bottom_shop_name font_hide">{merchantName}</View>
+          <View className="bottom_shop_limit">
+            ｜{GetDistance(lat, lnt, getLat(), getLnt())}
+          </View>
+        </View>
+        {renderPrice}
+      </View>
+    </View>
+  );
+};
+//新版商品ui

@@ -30,6 +30,7 @@ export const template = (
     specialActivityIdString,
     ownerIdString,
     commission,
+    identification,
   } = item;
   return (
     <View
@@ -40,6 +41,7 @@ export const template = (
           args: {
             specialActivityId: specialActivityIdString,
             merchantId: ownerIdString,
+            identification,
           },
         })
       }
@@ -327,6 +329,7 @@ export const prefectrueGoodsTemplate = (item) => {
     paymentModeObject: { bean, cash },
     specialActivityIdString,
     ownerId,
+    identification,
   } = item;
   return (
     <View
@@ -337,6 +340,7 @@ export const prefectrueGoodsTemplate = (item) => {
           args: {
             specialActivityId: specialActivityIdString,
             merchantId: ownerId,
+            identification,
           },
         });
       }}
@@ -387,6 +391,7 @@ export const prefectrueCouponTemplate = (item) => {
     realPrice,
     ownerIdString,
     ownerCouponIdString,
+    identification,
   } = item;
   return (
     <View
@@ -398,6 +403,7 @@ export const prefectrueCouponTemplate = (item) => {
             merchantId: ownerIdString,
             ownerId: ownerIdString,
             ownerCouponId: ownerCouponIdString,
+            identification,
           },
         })
       }
@@ -441,6 +447,7 @@ export const commerGoodsTemplate = (item, configUserLevelInfo) => {
     specialActivityIdString,
     ownerId,
     commission,
+    identification,
   } = item;
   const templatePrice = {
     self: (
@@ -459,6 +466,7 @@ export const commerGoodsTemplate = (item, configUserLevelInfo) => {
           args: {
             specialActivityId: specialActivityIdString,
             merchantId: ownerId,
+            identification,
           },
         });
       }}

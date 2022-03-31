@@ -18,12 +18,15 @@ export const NavHeight = () => {
   );
 };
 //設置自定義導航欄 高度
-export const toast = (value) => {
+export const toast = (value, fn) => {
   return Taro.showToast({
     title: value,
     icon: "none",
     duration: 3000,
     mask: true,
+    success: () => {
+      fn && fn();
+    },
   });
 };
 //小提示弹窗
@@ -224,8 +227,6 @@ export const format = (time = "") => {
 //商品判断是否开始售卖
 export const setBuyRule = (val, day, max) => {
   switch (val) {
-    case "unlimited":
-      return "每人不限购买数量";
     case "personLimit":
       return `每人限购${max}份`;
     case "dayLimit":

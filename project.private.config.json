@@ -35,6 +35,55 @@
           "pathName": "pages/perimeter/beanWelfareZone/index",
           "query": "mode=beanWelfare",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/perimeter/innerComponents/index",
+          "query": "type=hotExchange&identification=91qfymiB7ihnp0f2",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/perimeter/innerComponents/index",
+          "query": "type=hotExchange&identification=91qfymiB7ihnp0f2&resourceTemplateContentId=1503994335922708481",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/perimeter/innerComponents/index",
+          "query": "type=hotExchange&identification=91qfymiB7ihnp0f2&resourceTemplateContentId=1503994335922708481&payBeanCommission=56",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/perimeter/innerComponents/index",
+          "query": "type=hotMetal&identification=91qfymiB7ihnp0f2&resourceTemplateContentId=1504029484274044930&title=%E9%99%90%E6%97%B6%E7%A5%9E%E5%88%B8",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/perimeter/innerComponents/index",
+          "query": "type=rebate&identification=91qfymiB7ihnp0f2&resourceTemplateContentId=1504297961899601922&payBeanCommission=50",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/perimeter/innerComponents/index",
+          "query": "type=flashSale&identification=91qfymiB7ihnp0f2&resourceTemplateContentId=1504298484589572098&payBeanCommission=50",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/perimeter/innerComponents/index",
+          "query": "type=listTemplate&identification=91qfymiB7ihnp0f2&resourceTemplateContentId=1504299755912474626&payBeanCommission=50",
+          "scene": null,
+          "launchMode": "default"
         }
       ]
     }

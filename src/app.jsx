@@ -8,6 +8,7 @@ import {
   fetchDictionary,
   fetchAllGlobalConfig,
   fetchPreferential,
+  fetchFestivalConfigs,
 } from "@/server/common";
 import { authWxLogin } from "@/common/authority";
 import { getOpenId } from "@/server/auth";
@@ -33,6 +34,7 @@ class App extends Component {
     this.fetchDictionary();
     this.fetchGlobalConfig();
     this.fetchPreferentialGlobal();
+    this.fetchFestival();
   }
   componentDidHide() {
     const data = Taro.getStorageSync("operatingLog");
@@ -92,6 +94,7 @@ class App extends Component {
       return;
     }
   }
+  //获取分享绑定关系
   fetchPreferentialGlobal() {
     fetchPreferential({}).then((val) => {
       const { preferentialGlobalDefaultList = [] } = val;
@@ -111,6 +114,7 @@ class App extends Component {
       );
     });
   }
+  //全局弹窗
   fetchScene(e) {
     const { scene } = e;
     Taro.setStorageSync("utm-medium", scene);
@@ -162,15 +166,25 @@ class App extends Component {
       }
     );
   }
+  //获取全局登录
   fetchLocation() {
     authUpdateGeography(this.fetchUpdataLocation.bind(this));
   }
-
+  //设置默认地理位置
   fetchUpdataLocation(res = {}) {
     const { latitude, longitude } = res;
     Taro.setStorageSync("lat", latitude);
     Taro.setStorageSync("lnt", longitude);
     Store.locationStore.setLocation(latitude, longitude);
+  }
+  fetchFestival() {
+    fetchFestivalConfigs({
+      type: "topBackgroundWeChat",
+      topType: "wanderAround",
+    }).then((val) => {
+      const { festivalConfigs = [] } = val;
+      Store.commonStore.setCommonData("festivalConfigs", festivalConfigs);
+    });
   }
   fetchDictionary() {
     fetchDictionary({
@@ -184,6 +198,7 @@ class App extends Component {
       Store.commonStore.setBalancen(beanLimit - weChatBeanLimit);
     });
   }
+  //读取默认卡豆数量
   fetchNetwork() {
     Taro.onNetworkStatusChange((res) => {
       const { isConnected, networkType } = res;

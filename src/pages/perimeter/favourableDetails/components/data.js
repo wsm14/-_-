@@ -19,7 +19,7 @@ export const rssConfigData = (data = {}) => {
     rightFlag = "0",
     paymentModeObject,
   } = data;
-  const { bean = "", cash = "" } = paymentModeObject;
+  const { bean = "", cash = "", type = "defaultMode" } = paymentModeObject;
   if (
     !userProfile.includes("resource-new.dakale.net") &&
     !userProfile.includes("wechat-config.dakale.net")
@@ -29,43 +29,12 @@ export const rssConfigData = (data = {}) => {
   if (time && time === "") {
     time = "长期有效";
   }
-  if (rightFlag === "1") {
+  if (rightFlag === "1" || type !== "defaultMode") {
     return {
       width: 750, // 画布宽度
       height: 1334, // 画布高度
       backgroundColor: "#108588", // 画布颜色
       texts: [
-        {
-          y: 85,
-          width: 646,
-          height: 32,
-          paddingRight: 32,
-          x: 57,
-          zIndex: 20,
-          text: merchantName,
-          fontSize: 32,
-          color: "#333333",
-          fontWeight: "bold",
-          lineNum: 1,
-          zIndex: 999,
-          lineHeight: 32,
-          baseLine: "middle",
-        },
-        {
-          y: 133,
-          width: 646,
-          height: 24,
-          zIndex: 20,
-          x: 57,
-          text: city,
-          fontSize: 24,
-          color: "#999999",
-          fontWeight: "bold",
-          lineNum: 1,
-          zIndex: 999,
-          lineHeight: 24,
-          baseLine: "middle",
-        },
         {
           x: 57,
           y: 754,
@@ -168,8 +137,8 @@ export const rssConfigData = (data = {}) => {
         {
           url: merchantLogo, // 封面
           width: 700,
-          height: 525,
-          y: 169,
+          height: 670,
+          y: 24,
           x: 25,
           zIndex: 10,
         },
@@ -283,37 +252,6 @@ export const rssConfigData = (data = {}) => {
         height: 1334, // 画布高度
         backgroundColor: "#108588", // 画布颜色
         texts: [
-          {
-            y: 85,
-            width: 646,
-            height: 32,
-            paddingRight: 32,
-            x: 57,
-            zIndex: 20,
-            text: merchantName,
-            fontSize: 32,
-            color: "#333333",
-            fontWeight: "bold",
-            lineNum: 1,
-            zIndex: 999,
-            lineHeight: 32,
-            baseLine: "middle",
-          },
-          {
-            y: 133,
-            width: 646,
-            height: 24,
-            zIndex: 20,
-            x: 57,
-            text: city,
-            fontSize: 24,
-            color: "#999999",
-            fontWeight: "bold",
-            lineNum: 1,
-            zIndex: 999,
-            lineHeight: 24,
-            baseLine: "middle",
-          },
           {
             x: 57,
             y: 754,
@@ -432,8 +370,8 @@ export const rssConfigData = (data = {}) => {
           {
             url: merchantLogo, // 封面
             width: 700,
-            height: 525,
-            y: 169,
+            height: 670,
+            y: 24,
             x: 25,
             zIndex: 10,
           },
