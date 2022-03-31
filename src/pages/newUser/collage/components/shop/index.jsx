@@ -4,6 +4,7 @@ import { Image, Text, View } from "@tarojs/components";
 import classNames from "classnames";
 import { fakeStartGroup } from "@/server/user";
 import { toast, backgroundObj } from "@/utils/utils";
+import days from "dayjs";
 import Router from "@/utils/router";
 export default ({ type = 0, data }) => {
   const {
