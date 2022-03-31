@@ -813,7 +813,7 @@ class Index extends Component {
                     if (templateObj[item["moduleName"]]) {
                       if (index === wanderAroundModule.length - 2) {
                         return (
-                          <View style={{ marginBottom: Taro.pxTransform(36) }}>
+                          <View style={{ marginBottom: Taro.pxTransform(24) }}>
                             {templateObj[item["moduleName"]]}
                           </View>
                         );

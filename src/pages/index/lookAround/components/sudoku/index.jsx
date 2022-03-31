@@ -18,15 +18,17 @@ export default ({ data, onChange }) => {
   const { configWindVaneList = [] } = listObj;
   return (
     <View className="sudoku_box">
-      <View className="sudoku_img_box public_auto">
-        {configWindVaneList.map((item) => {
+      <View className="sudoku_img_box">
+        {configWindVaneList.map((item, index) => {
           const { image } = item;
           return (
             <Tarking blockName="sixPalaceLattice" args={item} name={"sudoku"}>
               <View
                 onClick={() => onChange(item)}
                 style={backgroundObj(image)}
-                className="sudoku_info_box"
+                className={`sudoku_info_box ${
+                  index + (1 % 3) === 0 ? "" : "sudoku_info_margin"
+                }`}
               ></View>
             </Tarking>
           );

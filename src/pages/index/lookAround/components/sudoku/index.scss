@@ -1,15 +1,19 @@
 .sudoku_box {
   padding: 0 24px;
   position: relative;
-  margin-top: -32px;
+  margin: -32px auto 0;
   z-index: 1;
   overflow: hidden;
   .sudoku_img_box {
     flex-wrap: wrap;
+    display: flex;
   }
   .sudoku_info_box {
     width: 226px;
     height: 176px;
     margin-bottom: 12px;
+  }
+  .sudoku_info_margin {
+    margin-right: 9px;
   }
 }
