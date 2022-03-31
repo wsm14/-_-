@@ -2,6 +2,22 @@
   width: 100%;
   background: rgba(255, 242, 211, 1);
   line-height: 1;
+  .hotMetal_box {
+    width: 512px;
+    height: 130px;
+    margin: 14px auto 0;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon911.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 500;
+    color: #ff3337;
+    text-shadow: 0px 4px 10px #ffc67d;
+    letter-spacing: 1px;
+  }
   .hotMetal_shop_btn {
     width: 150px;
     height: 48px;
@@ -58,22 +74,7 @@
       color: #999999;
     }
   }
-  .hotMetal_box {
-    width: 512px;
-    height: 130px;
-    margin: 14px auto 0;
-    background: url(https://wechat-config.dakale.net/miniprogram/image/icon911.png)
-      no-repeat;
-    background-size: 100% 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    font-weight: 500;
-    color: #ff3337;
-    text-shadow: 0px 4px 10px #ffc67d;
-    letter-spacing: 1px;
-  }
+
   .hotMetal_content {
     width: 662px;
     min-height: 881px;
