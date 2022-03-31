@@ -55,13 +55,25 @@ export default ({ type = 0, data }) => {
     const now = days().valueOf();
     setTime(min - now);
   };
+  console.log(showTimeList);
   useEffect(() => {
-    reloadInfo();
     return () => {
       collection = false;
     };
   }, []);
-
+  useEffect(() => {
+    if (time) {
+      let computed = 0;
+      interval = setInterval(() => {
+        computed = computed + 1000;
+        if (time - computed >= 0 && collection) {
+          setShowTimeList(filterLimit((time - computed) / 1000));
+        } else {
+          clearInterval(interval);
+        }
+      }, 1000);
+    }
+  }, [time]);
   const {
     goodsIdString,
     ownerIdString,
@@ -77,6 +89,7 @@ export default ({ type = 0, data }) => {
   const { notWinFee, teamLeaderFee } = togetherRebateParamObject;
   useEffect(() => {
     if (status === "0") {
+      reloadInfo();
     }
   }, [status]);
   const template = () => {
@@ -143,7 +156,8 @@ export default ({ type = 0, data }) => {
         <View className="collage_shop_liner"></View>
         <View className="collage_shop_btnBox public_auto">
           <View className="collage_bottom_left">
-            等待成团 | {time[0]}小时{time[1]}分{time[2]}秒后结束
+            等待成团 | {showTimeList[0]}小时{showTimeList[1]}分{showTimeList[2]}
+            秒后结束
           </View>
           <View className="collage_bottom_right">邀请好友</View>
         </View>
