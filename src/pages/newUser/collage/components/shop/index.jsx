@@ -16,7 +16,52 @@ export default ({ type = 0, data }) => {
     groupId,
     togetherRebateParamObject = {},
     rewardType,
+    createTime,
   } = data;
+
+  let interval = null;
+  let collection = true;
+  const [time, setTime] = useState(null);
+  const [showTimeList, setShowTimeList] = useState([]);
+  const filterLimit = (s) => {
+    if (s && s > 0) {
+      let resource = parseInt(s); // 秒
+      let minute = 0;
+      let house = 0;
+
+      if (resource > 60) {
+        //如果秒数大于60，将秒数转换成整数
+        //获取分钟，除以60取整数，得到整数分钟
+        minute = parseInt(resource / 60);
+        //获取秒数，秒数取佘，得到整数秒数
+        resource = parseInt(resource % 60);
+        //秒数
+        if (minute > 60) {
+          //获取小时，获取分钟除以60，得到整数小时
+          house = parseInt(minute / 60);
+          //获取小时后取佘的分，获取分钟除以60取佘的分
+          minute = parseInt(minute % 60);
+        }
+      }
+      return [
+        house ? (house < 10 ? "0" + parseInt(house) : house) : "00",
+        minute ? (minute < 10 ? "0" + parseInt(minute) : minute) : "00",
+        resource ? (resource < 10 ? "0" + parseInt(resource) : resource) : "00",
+      ];
+    } else return null;
+  };
+  const reloadInfo = () => {
+    let min = days(createTime).valueOf() + 86400000;
+    const now = days().valueOf();
+    setTime(min - now);
+  };
+  useEffect(() => {
+    reloadInfo();
+    return () => {
+      collection = false;
+    };
+  }, []);
+
   const {
     goodsIdString,
     ownerIdString,
@@ -30,6 +75,10 @@ export default ({ type = 0, data }) => {
     goodsDescImg,
   } = togetherEarnGoodsObject;
   const { notWinFee, teamLeaderFee } = togetherRebateParamObject;
+  useEffect(() => {
+    if (status === "0") {
+    }
+  }, [status]);
   const template = () => {
     return (
       <View className="collage_shop_content font_hide">
@@ -94,7 +143,7 @@ export default ({ type = 0, data }) => {
         <View className="collage_shop_liner"></View>
         <View className="collage_shop_btnBox public_auto">
           <View className="collage_bottom_left">
-            等待成团 | 5小时24分32秒后结束
+            等待成团 | {time[0]}小时{time[1]}分{time[2]}秒后结束
           </View>
           <View className="collage_bottom_right">邀请好友</View>
         </View>
