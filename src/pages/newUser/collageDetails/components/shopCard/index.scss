@@ -72,6 +72,23 @@
     }
     .clooageTime_margin {
       margin-left: 4px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #999999;
+    }
+  }
+  .collageDetail_templateContent_box {
+    margin: 24px auto 0;
+    .collageDetail_templateContent_liner {
+      width: 638px;
+      height: 1px;
+      border: 1px solid #e6e6e6;
+    }
+    .collageDetail_templateContent_people {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 600;
+      color: #333333;
     }
   }
 }

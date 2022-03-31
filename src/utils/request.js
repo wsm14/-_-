@@ -93,7 +93,7 @@ switch (env) {
     // baseUrl = "https://pregateway.dakale.net";
     baseUrl = "https://devgateway.dakale.net";
     // baseUrl = "https://gateway1.dakale.net";
-    break;
+    break;  
 }
 const httpCondition = {
   header: {

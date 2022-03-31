@@ -10,7 +10,7 @@ import {
 import Taro from "@tarojs/taro";
 import days from "dayjs";
 import "./index.scss";
-export default ({}) => {
+export default ({ status }) => {
   const template = () => {
     return (
       <View className="clooageTime_template_box">
@@ -34,12 +34,25 @@ export default ({}) => {
             <View className="font20 color1">拼团价:</View>
             <View className="price_margin4 font40">¥100</View>
             <View className="clooageTime_shop_throuer">原价:</View>
-            <View className="font20 text_through clooageTime_margin">原价:</View>
+            <View className="font20 text_through clooageTime_margin">
+              123213
+            </View>
           </View>
         </View>
       </View>
     );
   };
-
+  const templateContent = {
+    0: (
+      <View className="collageDetail_templateContent_box">
+        <View className="collageDetail_templateContent_liner"></View>
+        <View className="collageDetail_templateContent_people">
+          -还差
+          <Text className="collageDetail_templateContent_peopleCount">3位</Text>
+          即可成团-
+        </View>
+      </View>
+    ),
+  }[status];
   return <View className="collageTime_shopCard_box"></View>;
 };

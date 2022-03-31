@@ -309,6 +309,7 @@ export const fakeWechatPayInfo = (data, fn) => {
   );
 };
 //获取微信支付需要的参数接口
+
 //微信支付
 export const handlePayWechat = (data = {}, callback) => {
   const { xcxOpenId } = loginStatus();
@@ -325,3 +326,36 @@ export const handlePayWechat = (data = {}, callback) => {
     });
   });
 };
+
+export const fetchListTogether = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/together/group/listTogetherGroupConfig",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//查询拼团配置
+
+export const fetchStartGroupByStatus = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/start/group/listUserStartGroupByStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户开团列表
+
+export const fetchJoinGroupByStatus = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/join/group/listUserJoinGroupByStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户参团列表
