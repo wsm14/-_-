@@ -360,6 +360,27 @@ export const fetchJoinGroupByStatus = (data = {}, fn) => {
 };
 //用户参团列表
 
+export const fetchStartGroupRebate = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/start/group/userStartGroupRebateStatistic",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户开团列表
+
+export const fetchJoinGroupRebate = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/join/group/userJoinGroupRebateStatistic",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户参团列表
 
 export const fakeStartGroup = (data, fn) => {
   return httpPost(

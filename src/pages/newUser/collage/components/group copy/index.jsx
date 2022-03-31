@@ -4,16 +4,16 @@ import { Image, Text, View } from "@tarojs/components";
 import classNames from "classnames";
 import { toast } from "@/utils/utils";
 import Shop from "./../shop";
-export default ({ type, status, onChange, data }) => {
-  console.log(data);
+export default ({}) => {
   const [select, setSelect] = useState({
     list: [
       { key: "开团中", val: 0 },
       { key: "开团成功", val: 1 },
       { key: "开团失败", val: 2 },
     ],
+    val: 0,
   });
-  const { list } = select;
+  const { list, val } = select;
   return (
     <>
       <View className="collage_tab_box">
@@ -21,21 +21,20 @@ export default ({ type, status, onChange, data }) => {
           return (
             <View
               onClick={() => {
-                onChange(index);
+                setSelect({
+                  list,
+                  val: item.val,
+                });
               }}
-              className={status === item.val && "collage_tab"}
+              className={val === item.val && "collage_tab"}
             >
               {item.key}
-              {status === item.val && (
-                <View className="collage_tab_liner"></View>
-              )}
+              {val === item.val && <View className="collage_tab_liner"></View>}
             </View>
           );
         })}
       </View>
-      {data.map((item) => {
-        return <Shop data={item} type={type}></Shop>;
-      })}
+      <Shop></Shop>
     </>
   );
 };

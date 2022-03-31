@@ -6,7 +6,6 @@ import { fakeStartGroup } from "@/server/user";
 import { toast, backgroundObj } from "@/utils/utils";
 import Router from "@/utils/router";
 export default ({ type = 0, data }) => {
-  console.log(data);
   const {
     togetherGroupConfigId,
     joinUserNum,
@@ -89,7 +88,7 @@ export default ({ type = 0, data }) => {
             <View className="collage_shop_stepContent"></View>
           </View>
           <View className="collage_shop_stepFont">
-            <Text className="color1">6</Text>/10
+            <Text className="color1">{joinUserNum}</Text>/10
           </View>
         </View>
         <View className="collage_shop_liner"></View>
