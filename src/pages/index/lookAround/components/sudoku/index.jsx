@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 import { backgroundObj } from "@/utils/utils";
 import Tarking from "@/components/tracking";
 import "./index.scss";
@@ -25,7 +26,10 @@ export default ({ data, onChange }) => {
             <Tarking blockName="sixPalaceLattice" args={item} name={"sudoku"}>
               <View
                 onClick={() => onChange(item)}
-                style={backgroundObj(image)}
+                style={{
+                  ...backgroundObj(image),
+                  marginBottom: index > 2 ? 0 : Taro.pxTransform(12),
+                }}
                 className={`sudoku_info_box ${
                   index + (1 % 3) === 0 ? "" : "sudoku_info_margin"
                 }`}
