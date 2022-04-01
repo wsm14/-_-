@@ -36,6 +36,8 @@ class Index extends Component {
       httpData: {
         merchantId: getCurrentInstance().router.params.merchantId,
         specialActivityId: getCurrentInstance().router.params.specialActivityId,
+        togetherGroupConfigId:
+          getCurrentInstance().router.params.togetherGroupConfigId,
         goodsCount: 1,
         identification:
           getCurrentInstance().router.params.identification || "otherDefault",
@@ -86,7 +88,13 @@ class Index extends Component {
     const {
       useBeanStatus,
       specialGoodsInfo: { ownerIdString },
-      httpData: { merchantId, specialActivityId, goodsCount, identification },
+      httpData: {
+        merchantId,
+        specialActivityId,
+        goodsCount,
+        identification,
+        togetherGroupConfigId,
+      },
       remark,
       userAddress,
       couponObj,
@@ -101,6 +109,7 @@ class Index extends Component {
     fakeCommerceGoods({
       ownerId: ownerIdString,
       useBeanStatus,
+      togetherGroupConfigId,
       specialGoodsDTO: {
         id: specialActivityId,
         goodsCount,

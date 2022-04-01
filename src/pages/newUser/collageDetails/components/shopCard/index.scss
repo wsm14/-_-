@@ -2,6 +2,7 @@
   margin: 32px 32px 0;
   background: #ffffff;
   padding: 24px 24px 40px;
+  border-radius: 8px;
   .clooageTime_template_box {
     display: flex;
     align-items: flex-start;
@@ -17,8 +18,8 @@
       .clooageTime_shop_count::after {
         content: "";
         position: absolute;
-        top: 0;
-        left: 0;
+        top: -4px;
+        left: -4px;
         z-index: 10;
         width: 119px;
         height: 44px;
@@ -32,6 +33,7 @@
         font-weight: 600;
         color: #333333;
         line-height: 40px;
+        height: 80px;
       }
       .clooageTime_shop_count {
         margin: 4px 0 0;
@@ -61,7 +63,7 @@
       .clooageTime_shop_price {
         margin-top: 72px;
         display: flex;
-        align-items: flex-end;
+        align-items: baseline;
       }
       .clooageTime_shop_throuer {
         margin-left: 16px;
@@ -85,10 +87,87 @@
       border: 1px solid #e6e6e6;
     }
     .collageDetail_templateContent_people {
+      padding-top: 32px;
       text-align: center;
       font-size: 32px;
       font-weight: 600;
       color: #333333;
     }
+  }
+  .collageTime_userProfile_content {
+    position: relative;
+    padding: 29px 0 0 40px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .collageTime_userProfile_box {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 29px;
+    position: relative;
+    margin-right: 32px;
+  }
+  .collageTime_userProfile_img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 11;
+    border-radius: 50%;
+  }
+  .collageTime_userProfile_icon1 {
+    width: 75px;
+    height: 87px;
+    position: absolute;
+    top: -20px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon946.png)
+      no-repeat;
+    background-size: 100% 100%;
+    z-index: 12;
+  }
+  .collageTime_userProfile_icon2 {
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon950.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .collageTime_userProfile_icon3 {
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon951.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .collageTime_userProfile_icon4 {
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon954.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .collageTime_btn {
+    box-shadow: inset 0px 0px 23px 0px rgba(255, 255, 255, 0.5);
+    background-image: linear-gradient(
+      157deg,
+      rgba(255, 76, 76, 1) 0,
+      rgba(255, 62, 62, 1) 100%
+    );
+    border-radius: 40px;
+    height: 80px;
+    margin: 40px auto 0;
+    width: 638px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  .collageTime_btn1 {
+    box-shadow: inset 0px 0px 23px 0px rgba(255, 255, 255, 0.5);
+    background-image: linear-gradient(
+      157deg,
+      rgba(182, 177, 177, 1) 0,
+      rgba(171, 171, 171, 1) 100%
+    );
+    border-radius: 40px;
+    height: 80px;
+    margin: 40px auto 0;
+    width: 638px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
   }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import Taro from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { Button, Text, View } from "@tarojs/components";
 import Router from "@/utils/router";
 import classNames from "classnames";
@@ -7,6 +7,8 @@ import { objStatus, toast } from "@/utils/utils";
 import "./index.scss";
 
 export default (props) => {
+  const routeParams = useRouter().params;
+  const { togetherGroupConfigId } = routeParams;
   const {
     data,
     type = "goods",
@@ -156,54 +158,58 @@ export default (props) => {
       return `可用${userBean}卡豆优惠抵扣${(userBean / 100).toFixed(2)}元`;
     }
   };
-  return (
-    <View className="selectKol_box">
-      <View className="selectKol_coupon public_auto">
-        <View className="selectKol_coupon_title">优惠券</View>
-        <CouponFontTemplate></CouponFontTemplate>
-      </View>
-      <View className="selectKol_bean">
-        <View onClick={changeBean} className="order_payType_box">
-          <View className="order_payType_top">
-            卡豆下单<Text className="color3">立享优惠抵扣</Text>
-            <View
-              style={{ border: "1px solid #ef476f" }}
-              className="order_payType_six"
-            >
-              {rightFlag === "1" ? `专区优惠` : `${payBeanCommission}%`}
-            </View>
-            {rightFlag !== "1" && (
+  if (togetherGroupConfigId) {
+    return null;
+  } else {
+    return (
+      <View className="selectKol_box">
+        <View className="selectKol_coupon public_auto">
+          <View className="selectKol_coupon_title">优惠券</View>
+          <CouponFontTemplate></CouponFontTemplate>
+        </View>
+        <View className="selectKol_bean">
+          <View onClick={changeBean} className="order_payType_box">
+            <View className="order_payType_top">
+              卡豆下单<Text className="color3">立享优惠抵扣</Text>
               <View
-                className="order_payType_question"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShow(true);
-                }}
-              ></View>
+                style={{ border: "1px solid #ef476f" }}
+                className="order_payType_six"
+              >
+                {rightFlag === "1" ? `专区优惠` : `${payBeanCommission}%`}
+              </View>
+              {rightFlag !== "1" && (
+                <View
+                  className="order_payType_question"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShow(true);
+                  }}
+                ></View>
+              )}
+            </View>
+            {computedRight() ? (
+              <View className="order_pay_font">{templateBean()}</View>
+            ) : (
+              <View className="order_pay_font">暂无卡豆可用</View>
+            )}
+            <View
+              className={classNames(
+                "order_pay_iconBox",
+                computedRight()
+                  ? status === "1"
+                    ? "order_pay_icon2"
+                    : "order_pay_icon1"
+                  : "order_pay_icon4"
+              )}
+            ></View>
+            {totalFee > 0 && computedRight() && (
+              <View className="order_payType_showPrice">
+                - {computedPriceInfo()}
+              </View>
             )}
           </View>
-          {computedRight() ? (
-            <View className="order_pay_font">{templateBean()}</View>
-          ) : (
-            <View className="order_pay_font">暂无卡豆可用</View>
-          )}
-          <View
-            className={classNames(
-              "order_pay_iconBox",
-              computedRight()
-                ? status === "1"
-                  ? "order_pay_icon2"
-                  : "order_pay_icon1"
-                : "order_pay_icon4"
-            )}
-          ></View>
-          {totalFee > 0 && computedRight() && (
-            <View className="order_payType_showPrice">
-              - {computedPriceInfo()}
-            </View>
-          )}
         </View>
       </View>
-    </View>
-  );
+    );
+  }
 };

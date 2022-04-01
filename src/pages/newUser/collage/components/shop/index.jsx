@@ -4,9 +4,10 @@ import { Image, Text, View } from "@tarojs/components";
 import classNames from "classnames";
 import { fakeStartGroup } from "@/server/user";
 import { toast, backgroundObj } from "@/utils/utils";
+
 import days from "dayjs";
 import Router from "@/utils/router";
-export default ({ type = 0, data }) => {
+export default ({ type = 0, data, linkToDownLoad }) => {
   const {
     togetherGroupConfigId,
     joinUserNum,
@@ -19,7 +20,6 @@ export default ({ type = 0, data }) => {
     rewardType,
     createTime,
   } = data;
-
   let interval = null;
   let collection = true;
   const [time, setTime] = useState(null);
@@ -56,7 +56,6 @@ export default ({ type = 0, data }) => {
     const now = days().valueOf();
     setTime(min - now);
   };
-  console.log(showTimeList);
   useEffect(() => {
     return () => {
       collection = false;
@@ -75,6 +74,16 @@ export default ({ type = 0, data }) => {
       }, 1000);
     }
   }, [time]);
+  const renderBottom = {
+    0: (
+      <View className="collage_bottom_left">
+        等待成团 | {showTimeList[0]}小时{showTimeList[1]}分{showTimeList[2]}
+        秒后结束
+      </View>
+    ),
+    1: <View className="collage_bottom_left">开团成功 | {createTime}团</View>,
+    2: <View className="collage_bottom_left">开团失败 | {createTime}团</View>,
+  }[status];
   const {
     goodsIdString,
     ownerIdString,
@@ -131,12 +140,7 @@ export default ({ type = 0, data }) => {
           <View
             className="collage_bottom_open"
             onClick={() => {
-              fakeStartGroup({
-                togetherGroupConfigId,
-              });
-              Router({
-                routerName: "download",
-              });
+              linkToDownLoad && linkToDownLoad();
             }}
           >
             开团
@@ -156,10 +160,7 @@ export default ({ type = 0, data }) => {
         </View>
         <View className="collage_shop_liner"></View>
         <View className="collage_shop_btnBox public_auto">
-          <View className="collage_bottom_left">
-            等待成团 | {showTimeList[0]}小时{showTimeList[1]}分{showTimeList[2]}
-            秒后结束
-          </View>
+          {renderBottom}
           <View className="collage_bottom_right">邀请好友</View>
         </View>
       </View>
@@ -171,20 +172,35 @@ export default ({ type = 0, data }) => {
             <View className="collage_shop_stepContent"></View>
           </View>
           <View className="collage_shop_stepFont">
-            <Text className="color1">6</Text>/10
+            <Text className="color1">{joinUserNum}</Text>/10
           </View>
         </View>
         <View className="collage_shop_liner"></View>
-        <View className="collage_shop_btnBox">
-          <View className="collage_bottom_left">
-            等待成团 | 5小时24分32秒后结束
-          </View>
+        <View className="collage_shop_btnBox public_auto">
+          {renderBottom}
+          <View className="collage_bottom_right">邀请好友</View>
         </View>
       </View>
     ),
   }[type];
   return (
-    <View className="collage_shop_box">
+    <View
+      className="collage_shop_box"
+      onClick={(e) => {
+        e.stopPropagation();
+        if (type != "0") {
+          Router({
+            routerName: "collageDetails",
+            args: {
+              groupId: groupId,
+              type,
+            },
+          });
+        } else {
+          return;
+        }
+      }}
+    >
       {template()}
       {bottom}
     </View>

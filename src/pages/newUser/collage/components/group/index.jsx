@@ -3,6 +3,7 @@ import Taro, { useReachBottom } from "@tarojs/taro";
 import { Image, Text, View } from "@tarojs/components";
 import classNames from "classnames";
 import { toast } from "@/utils/utils";
+import Empty from "@/components/Empty";
 import Shop from "./../shop";
 export default ({ type, status, onChange, data }) => {
   console.log(data);
@@ -33,6 +34,13 @@ export default ({ type, status, onChange, data }) => {
           );
         })}
       </View>
+      <Empty
+        pt={true}
+        pylb={"暂无开团记录"}
+        show={data.length === 0}
+        type={"shop"}
+        toast={"赶快去选品中开团赚钱吧"}
+      ></Empty>
       {data.map((item) => {
         return <Shop data={item} type={type}></Shop>;
       })}

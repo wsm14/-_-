@@ -3,17 +3,18 @@ import Taro, { useReachBottom } from "@tarojs/taro";
 import { Image, Text, View } from "@tarojs/components";
 import classNames from "classnames";
 import { toast } from "@/utils/utils";
+import Empty from "@/components/Empty";
 import Shop from "./../shop";
-export default ({}) => {
+export default ({ type, status, onChange, data }) => {
+  console.log(data);
   const [select, setSelect] = useState({
     list: [
       { key: "开团中", val: 0 },
       { key: "开团成功", val: 1 },
       { key: "开团失败", val: 2 },
     ],
-    val: 0,
   });
-  const { list, val } = select;
+  const { list } = select;
   return (
     <>
       <View className="collage_tab_box">
@@ -21,20 +22,28 @@ export default ({}) => {
           return (
             <View
               onClick={() => {
-                setSelect({
-                  list,
-                  val: item.val,
-                });
+                onChange(index);
               }}
-              className={val === item.val && "collage_tab"}
+              className={status === item.val && "collage_tab"}
             >
               {item.key}
-              {val === item.val && <View className="collage_tab_liner"></View>}
+              {status === item.val && (
+                <View className="collage_tab_liner"></View>
+              )}
             </View>
           );
         })}
       </View>
-      <Shop></Shop>
+      <Empty
+        pt={true}
+        pylb={"暂无拼团记录"}
+        show={data.length === 0}
+        type={"shop"}
+        toast={"赶快去选品中拼团赚钱吧"}
+      ></Empty>
+      {data.map((item) => {
+        return <Shop data={item} type={type}></Shop>;
+      })}
     </>
   );
 };

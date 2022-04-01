@@ -1,17 +1,20 @@
 import React, { Component, useState } from "react";
 import { View, Text } from "@tarojs/components";
 import { getUserBeanInfo } from "@/server/user";
-import Toast from "@/components/public_ui/selectToast";
 import router from "@/utils/router";
 import Card from "./components/card";
 import Group from "./components/group";
+import JoinGrounp from "./components/joinGroup";
 import {
   fetchListTogether,
   fetchStartGroupRebate,
   fetchJoinGroupRebate,
   fetchStartGroupByStatus,
+  fetchJoinGroupByStatus,
 } from "@/server/user";
+import Toast from "@/components/public_ui/selectToast";
 import Shop from "./components/shop";
+import Router from "@/utils/router";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -35,10 +38,15 @@ class Index extends Component {
         status: 0,
       },
       //我的开团
+
+      userJoinPage: { page: 1, limit: 10, status: 0 },
+      //我的参团
       startRebate: {},
       endRebate: {},
       togetherGroupConfigList: [],
       userStartGroupList: [],
+      userJoinGroupList: [],
+      visible: false,
     };
   }
   componentDidMount() {
@@ -92,6 +100,18 @@ class Index extends Component {
       });
     });
   }
+  fetchGroupByStatus() {
+    const { userJoinPage } = this.state;
+    fetchJoinGroupByStatus(userJoinPage).then((val) => {
+      const { userJoinGroupList } = val;
+      this.setState({
+        userJoinGroupList: [
+          ...this.state.userJoinGroupList,
+          ...userJoinGroupList,
+        ],
+      });
+    });
+  }
   handlerStart(e) {
     this.setState(
       {
@@ -107,6 +127,21 @@ class Index extends Component {
       }
     );
   }
+  handlerJoin(e) {
+    this.setState(
+      {
+        userJoinGroupList: [],
+        userJoinPage: {
+          page: 1,
+          limit: 10,
+          status: e,
+        },
+      },
+      () => {
+        this.fetchGroupByStatus();
+      }
+    );
+  }
   errorToast(e) {}
   render() {
     const {
@@ -117,13 +152,22 @@ class Index extends Component {
       endRebate,
       userStartGroupList,
       startByPage,
+      userJoinGroupList,
+      userJoinPage,
+      visible,
     } = this.state;
     const { status } = startByPage;
     const temlate = {
       0: (
         <View className="collage_one_margin">
           {togetherGroupConfigList.map((item) => {
-            return <Shop data={item} type={0}></Shop>;
+            return (
+              <Shop
+                linkToDownLoad={() => this.setState({ visible: true })}
+                data={item}
+                type={0}
+              ></Shop>
+            );
           })}
         </View>
       ),
@@ -134,6 +178,14 @@ class Index extends Component {
           data={userStartGroupList}
           type={selectType}
         ></Group>
+      ),
+      2: (
+        <JoinGrounp
+          status={userJoinPage.status}
+          onChange={this.handlerJoin.bind(this)}
+          data={userJoinGroupList}
+          type={selectType}
+        ></JoinGrounp>
       ),
     }[selectType];
     return (
@@ -166,6 +218,27 @@ class Index extends Component {
           ></Card>
         </View>
         {temlate}
+        {visible && (
+          <Toast
+            cancel={() =>
+              this.setState({
+                visible: false,
+              })
+            }
+            visible={visible}
+            canfirm={() => {
+              this.setState({ visible: false }, (res) => {
+                Router({
+                  routerName: "download",
+                });
+              });
+            }}
+            content={`点击下载哒卡乐App
+            一键开团，极速享收益`}
+            canfirmText="不差钱"
+            cancelText="去赚"
+          ></Toast>
+        )}
       </View>
     );
   }

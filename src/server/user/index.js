@@ -394,3 +394,16 @@ export const fakeStartGroup = (data, fn) => {
   );
 };
 //开团
+
+export const fetchGroupDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/start/group/groupDetail",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//开团

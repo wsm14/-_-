@@ -104,6 +104,8 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     fans: "/pages/kol/fans/index", //粉丝列表
     //kol
     wallet: "/pages/newUser/wallet/index", //我的钱包
+    collage: "/pages/newUser/collage/index", //拼团列表
+    collageDetails: "/pages/newUser/collageDetails/index", //拼团详情
     merchantHome: "/pages/newUser/merchantDetails/index",
     //newUser
 

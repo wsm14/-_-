@@ -10,7 +10,9 @@ import {
 import Taro from "@tarojs/taro";
 import days from "dayjs";
 import "./index.scss";
-export default ({}) => {
+export default ({ data }) => {
+  const { status, createTime } = data;
+  console.log(status, data);
   let interval = null;
   let collection = true;
   const [time, setTime] = useState(null);
@@ -46,13 +48,16 @@ export default ({}) => {
     } else return null;
   };
   const reloadInfo = () => {
-    const limit = days().format("YYYY-MM-DD");
-    let min = days(limit).valueOf() + 86400000;
+    let min = days(createTime).valueOf() + 86400000;
     const now = days().valueOf();
     setTime(min - now);
   };
   useEffect(() => {
-    reloadInfo();
+    if (status === "0") {
+      reloadInfo();
+    }
+  }, [status]);
+  useEffect(() => {
     return () => {
       collection = false;
     };
@@ -66,21 +71,23 @@ export default ({}) => {
           setShowTimeList(filterLimit((time - computed) / 1000));
         } else {
           clearInterval(interval);
-          collection && reloadInfo();
         }
       }, 1000);
     }
   }, [time]);
-
-  return (
-    <View className="collageTime_box">
-      <View className="collageTime_body">
-        {showTimeList.map((item, index) => {
-          return (
-            <View className={`collageTime_end_djs${index + 1}`}>{item}</View>
-          );
-        })}
+  if (status === "0") {
+    return (
+      <View className="collageTime_box">
+        <View className="collageTime_body">
+          {showTimeList.map((item, index) => {
+            return (
+              <View className={`collageTime_end_djs${index + 1}`}>{item}</View>
+            );
+          })}
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return null;
+  }
 };

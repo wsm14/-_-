@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { httpGet, uploadFile } from "../api/newRequest";
+import { httpGet, uploadFile } from "@/utils/request";
 import crypto from "crypto-js";
 import { Base64 } from "js-base64";
 import { toast } from "@/utils/utils";
