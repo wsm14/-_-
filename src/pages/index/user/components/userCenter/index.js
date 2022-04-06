@@ -229,7 +229,7 @@ export default ({ bannerList }) => {
           ></Banner>
         </View>
       )}
-
+     
       <BottomShare></BottomShare>
     </View>
   );

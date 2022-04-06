@@ -1,0 +1,67 @@
+.shopDrawer_box {
+  width: 540px;
+  height: 726px;
+  background: url(https://wechat-config.dakale.net/miniprogram/image/icon956.png)
+    no-repeat;
+  background-size: 100% 100%;
+  .shopDrawer_content {
+    padding-top: 170px;
+  }
+  .shopDrawer_img {
+    width: 240px;
+    height: 160px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 5px solid #ffffff;
+    margin: 0 auto;
+  }
+  .shopDrawer_font {
+    margin: 24px 72px 0;
+    font-size: 36px;
+    font-weight: bold;
+    color: #fff1ac;
+    line-height: 48px;
+  }
+  .shopDrawer_desc {
+    font-size: 26px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 34px;
+    text-align: center;
+  }
+
+  .shopDrawer_btn {
+    margin: 48px auto 0;
+    width: 400px;
+    height: 80px;
+    background-image: linear-gradient(
+      157deg,
+      rgba(255, 218, 54, 1) 0,
+      rgba(255, 185, 73, 1) 100%
+    );
+    border-radius: 40px;
+    margin: 40px auto 0;
+    font-size: 28px;
+    font-weight: 500;
+    color: #ff4035;
+  }
+}
+.shopDrawer_desc_margin {
+  margin-top: 40px;
+}
+.shopDrawer_winRed_box {
+  width: 540px;
+  height: 700px;
+  background: url(https://wechat-config.dakale.net/miniprogram/image/icon955.png)
+    no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  .shopDrawer_winRed_rel {
+    padding-top: 238px;
+    font-size: 78px;
+    text-align: center;
+    font-weight: 600;
+    color: #fff1ac;
+    line-height: 1;
+  }
+}

@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { toast } from "@/utils/utils";
 import Empty from "@/components/Empty";
 import Shop from "./../shop";
-export default ({ type, status, onChange, data }) => {
+export default ({ type, status, onChange, data, updateData }) => {
   console.log(data);
   const [select, setSelect] = useState({
     list: [
@@ -42,7 +42,7 @@ export default ({ type, status, onChange, data }) => {
         toast={"赶快去选品中拼团赚钱吧"}
       ></Empty>
       {data.map((item) => {
-        return <Shop data={item} type={type}></Shop>;
+        return <Shop updateData={updateData} data={item} type={type}></Shop>;
       })}
     </>
   );

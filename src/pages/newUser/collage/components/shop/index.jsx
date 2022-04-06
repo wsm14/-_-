@@ -7,7 +7,7 @@ import { toast, backgroundObj } from "@/utils/utils";
 
 import days from "dayjs";
 import Router from "@/utils/router";
-export default ({ type = 0, data, linkToDownLoad }) => {
+export default ({ type = 0, data, linkToDownLoad, updateData }) => {
   const {
     togetherGroupConfigId,
     joinUserNum,
@@ -69,6 +69,10 @@ export default ({ type = 0, data, linkToDownLoad }) => {
         if (time - computed >= 0 && collection) {
           setShowTimeList(filterLimit((time - computed) / 1000));
         } else {
+          if (time - computed <= 0) {
+            console.log(time - computed);
+            updateData && updateData(data);
+          }
           clearInterval(interval);
         }
       }, 1000);
@@ -140,6 +144,7 @@ export default ({ type = 0, data, linkToDownLoad }) => {
           <View
             className="collage_bottom_open"
             onClick={() => {
+              fakeStartGroup({ togetherGroupConfigId });
               linkToDownLoad && linkToDownLoad();
             }}
           >
@@ -201,6 +206,15 @@ export default ({ type = 0, data, linkToDownLoad }) => {
         }
       }}
     >
+      {type == 2 && status === "1" && (
+        <View
+          className={
+            rewardType === "winGoods"
+              ? "collage_card_successBox collage_card_success2"
+              : "collage_card_successBox collage_card_success1"
+          }
+        ></View>
+      )}
       {template()}
       {bottom}
     </View>

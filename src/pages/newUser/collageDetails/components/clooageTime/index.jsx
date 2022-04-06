@@ -10,7 +10,7 @@ import {
 import Taro from "@tarojs/taro";
 import days from "dayjs";
 import "./index.scss";
-export default ({ data }) => {
+export default ({ data, reload }) => {
   const { status, createTime } = data;
   console.log(status, data);
   let interval = null;
@@ -70,6 +70,7 @@ export default ({ data }) => {
         if (time - computed >= 0 && collection) {
           setShowTimeList(filterLimit((time - computed) / 1000));
         } else {
+          reload && reload();
           clearInterval(interval);
         }
       }, 1000);

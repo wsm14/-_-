@@ -109,7 +109,7 @@ class Index extends Component {
     fakeCommerceGoods({
       ownerId: ownerIdString,
       useBeanStatus,
-      togetherGroupConfigId,
+      togetherGroupId: togetherGroupConfigId,
       specialGoodsDTO: {
         id: specialActivityId,
         goodsCount,
@@ -626,6 +626,9 @@ class Index extends Component {
       useBeanStatus === "0" &&
       type !== "defaultMode"
     ) {
+      if (type === "cashMode") {
+        return true;
+      }
       return false;
     } else {
       return true;

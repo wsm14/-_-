@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "@tarojs/components";
+import { View, Text, Button } from "@tarojs/components";
 import {
   backgroundObj,
   GetDistance,
@@ -12,13 +12,23 @@ import DrawerList from "./../buyDrawer";
 import PayToast from "./../payToast";
 import Router from "@/utils/router";
 import "./index.scss";
-export default ({ data, list, startGroupUser, type }) => {
+export default ({
+  data,
+  list,
+  startGroupUser,
+  type,
+  userJoinStatus,
+  joinGroupUserDetail = {},
+  onChange,
+}) => {
   const {
     status,
     togetherEarnGoodsObject = {},
     joinUserNum,
     togetherGroupConfigId,
+    groupId,
   } = data;
+  const { rewardType } = joinGroupUserDetail;
   const [templateList, setlist] = useState([]);
   const [visiblePay, setVisiblePay] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -113,7 +123,17 @@ export default ({ data, list, startGroupUser, type }) => {
     } else {
       if (status === "0") {
         return (
-          <View className="collageTime_userProfile_box collageTime_userProfile_icon2"></View>
+          <View className="collageTime_userProfile_box collageTime_userProfile_icon2">
+            <Button
+              style={{
+                width: "100%",
+                height: "100%",
+                background: "none",
+                position: "absolute",
+              }}
+              openType={"share"}
+            ></Button>
+          </View>
         );
       } else {
         return (
@@ -126,12 +146,16 @@ export default ({ data, list, startGroupUser, type }) => {
     if (type === "1") {
       return {
         0: (
-          <View
-            onClick={() => {
-              Router({ routerName: "download" });
-            }}
-            className="collageTime_btn public_center"
-          >
+          <View className="collageTime_btn public_center">
+            <Button
+              style={{
+                width: "100%",
+                height: "100%",
+                background: "none",
+                position: "absolute",
+              }}
+              openType={"share"}
+            ></Button>
             邀请亲友参与拼团
           </View>
         ),
@@ -139,8 +163,8 @@ export default ({ data, list, startGroupUser, type }) => {
         2: <View className="collageTime_btn public_center">开团失败</View>,
       }[status];
     } else {
-      return {
-        0: (
+      if (status == 0 && userJoinStatus === "0") {
+        return (
           <View
             onClick={() => {
               setVisiblePay(true);
@@ -149,23 +173,27 @@ export default ({ data, list, startGroupUser, type }) => {
           >
             参与拼团并预支付
           </View>
-        ),
-        1: (
+        );
+      } else if (status == 0 && userJoinStatus === "1") {
+        return (
           <View className="collageTime_btn public_center">
             支付成功，等待成团
           </View>
-        ),
-        2: (
+        );
+      } else if (status == 1 && userJoinStatus === "1") {
+        return (
+          <View className="collageTime_btn public_center" onClick={onChange}>
+            拼团成功，恭喜您拼中
+            {rewardType === "winGoods" ? "拼中商品" : "拼中红包"}
+          </View>
+        );
+      } else {
+        return (
           <View className="collageTime_btn public_center">
             活动结束，拼团失败
           </View>
-        ),
-        3: (
-          <View className="collageTime_btn public_center">
-            拼团成功，恭喜您拼中商品
-          </View>
-        ),
-      }[status];
+        );
+      }
     }
   };
 
@@ -210,7 +238,7 @@ export default ({ data, list, startGroupUser, type }) => {
             args: {
               specialActivityId: goodsIdString,
               merchantId: ownerIdString,
-              togetherGroupConfigId: togetherGroupConfigId,
+              togetherGroupConfigId: groupId,
             },
           });
         }}

@@ -406,4 +406,17 @@ export const fetchGroupDetail = (data, fn) => {
     }
   );
 };
-//开团
+//开团详情
+
+export const fetchMarketingCash = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/userBean/getUserMarketingCash",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//现金 拼团钱包

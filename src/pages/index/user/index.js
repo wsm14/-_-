@@ -10,6 +10,7 @@ import Skeleton from "./components/SkeletonView";
 import { inject, observer } from "mobx-react";
 import GlobalDrawer from "@/components/GlobalDrawer";
 import NewUser from "@/components/public_ui/newUserToast";
+import Router from "@/utils/router";
 import "./index.scss";
 @inject("store")
 @observer
@@ -103,6 +104,15 @@ class Index extends React.Component {
             status={loginStatus}
             data={userInfo}
           ></UserTitle>
+          <View className="page_user_liner24"></View>
+          <View
+            className="user_centerBar_pt"
+            onClick={() =>
+              Router({
+                routerName: "collage",
+              })
+            }
+          ></View>
           <View className="page_user_liner"></View>
           <UserContent bannerList={bannerList}></UserContent>
         </View>

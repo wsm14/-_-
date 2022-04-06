@@ -68,6 +68,7 @@ export default {
       pages: [
         "rewardDetails/index", //奖励 明细
         "wallet/index", //钱包
+        "moneyWallet/index", //现金钱包
         "beanRule/index", //卡豆权益
         "userConceal/index", //协议规则
         "collage/index", //拼团

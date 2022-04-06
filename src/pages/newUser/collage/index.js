@@ -15,6 +15,7 @@ import {
 import Toast from "@/components/public_ui/selectToast";
 import Shop from "./components/shop";
 import Router from "@/utils/router";
+import Taro from "@tarojs/taro";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -26,7 +27,6 @@ class Index extends Component {
         { key: "我的参团", val: 2 },
       ],
       selectType: 0,
-
       userJoinPage: {
         page: 1,
         limit: 10,
@@ -39,7 +39,7 @@ class Index extends Component {
       },
       //我的开团
 
-      userJoinPage: { page: 1, limit: 10, status: 0 },
+      userByPage: { page: 1, limit: 10, status: 0 },
       //我的参团
       startRebate: {},
       endRebate: {},
@@ -53,6 +53,8 @@ class Index extends Component {
     this.fetchJoinList();
     this.fetchStartRebate();
     this.fetchStartByStatus();
+    this.fetchJoinRebate();
+    this.fetchGroupByStatus();
   }
   fetchStartRebate() {
     fetchStartGroupRebate({}).then((val) => {
@@ -88,6 +90,7 @@ class Index extends Component {
       });
     });
   }
+  //拼赚列表
   fetchStartByStatus() {
     const { startByPage } = this.state;
     fetchStartGroupByStatus(startByPage).then((val) => {
@@ -100,9 +103,10 @@ class Index extends Component {
       });
     });
   }
+  //我的开团列表
   fetchGroupByStatus() {
-    const { userJoinPage } = this.state;
-    fetchJoinGroupByStatus(userJoinPage).then((val) => {
+    const { userByPage } = this.state;
+    fetchJoinGroupByStatus(userByPage).then((val) => {
       const { userJoinGroupList } = val;
       this.setState({
         userJoinGroupList: [
@@ -112,6 +116,7 @@ class Index extends Component {
       });
     });
   }
+  //我的参团列表
   handlerStart(e) {
     this.setState(
       {
@@ -127,6 +132,7 @@ class Index extends Component {
       }
     );
   }
+  //我的开团切换tab
   handlerJoin(e) {
     this.setState(
       {
@@ -142,6 +148,100 @@ class Index extends Component {
       }
     );
   }
+  //我的参团切换tab
+  fetchUpload(item) {
+    const { selectType, userStartGroupList } = this.state;
+    if (selectType == 1) {
+      this.setState({
+        userStartGroupList: userStartGroupList.map((val) => {
+          return {
+            ...item,
+            status: item.groupId === val.groupId ? item.groupId : 2,
+          };
+        }),
+      });
+    } else {
+      return;
+    }
+  }
+  fetchPage() {
+    const { userJoinPage, startByPage, userByPage, selectType } = this.state;
+    if (selectType == 0) {
+      this.setState(
+        {
+          userJoinPage: {
+            ...userJoinPage,
+            page: userJoinPage.page + 1,
+          },
+        },
+        (res) => {
+          this.fetchJoinList();
+        }
+      );
+    } else if (selectType == 1) {
+      this.setState(
+        {
+          startByPage: {
+            ...startByPage,
+            page: startByPage.page + 1,
+          },
+        },
+        (res) => {
+          this.fetchStartByStatus();
+        }
+      );
+    } else {
+      this.setState(
+        {
+          userByPage: {
+            ...userByPage,
+            page: userByPage.page + 1,
+          },
+        },
+        (res) => {
+          this.fetchGroupByStatus();
+        }
+      );
+    }
+  }
+  onReload() {
+    const { startByPage, userByPage } = this.state;
+    this.setState(
+      {
+        userJoinPage: {
+          page: 1,
+          limit: 10,
+        },
+        //拼赚中心
+        startByPage: {
+          ...startByPage,
+          page: 1,
+        },
+        //我的开团
+        userByPage: { ...userByPage, page: 1 },
+        //我的参团
+        togetherGroupConfigList: [],
+        userStartGroupList: [],
+        userJoinGroupList: [],
+      },
+      (res) => {
+        Taro.stopPullDownRefresh();
+        this.fetchJoinList();
+        this.fetchStartRebate();
+        this.fetchStartByStatus();
+        this.fetchGroupByStatus();
+        this.fetchJoinRebate();
+      }
+    );
+  }
+  //加载新数据
+  onReachBottom() {
+    this.fetchPage();
+  }
+  //上拉加载
+  onPullDownRefresh() {
+    this.onReload();
+  }
   errorToast(e) {}
   render() {
     const {
@@ -153,7 +253,7 @@ class Index extends Component {
       userStartGroupList,
       startByPage,
       userJoinGroupList,
-      userJoinPage,
+      userByPage,
       visible,
     } = this.state;
     const { status } = startByPage;
@@ -177,14 +277,16 @@ class Index extends Component {
           onChange={this.handlerStart.bind(this)}
           data={userStartGroupList}
           type={selectType}
+          updateData={this.fetchUpload.bind(this)}
         ></Group>
       ),
       2: (
         <JoinGrounp
-          status={userJoinPage.status}
+          status={userByPage.status}
           onChange={this.handlerJoin.bind(this)}
           data={userJoinGroupList}
           type={selectType}
+          updateData={this.fetchUpload.bind(this)}
         ></JoinGrounp>
       ),
     }[selectType];
