@@ -19,7 +19,7 @@ export default ({ visible, close, data, joinGroupUserDetail = {} }) => {
               className="shopDrawer_img"
             ></View>
             <View className="shopDrawer_font">
-              恭喜您拼中本次参团商品 并额外获得{rewardValue}卡豆补贴
+              恭喜您拼中本次参团商品并额外获得{rewardValue}卡豆补贴
             </View>
             <View className="shopDrawer_desc shopDrawer_desc_margin">
               100卡豆=1元
@@ -42,7 +42,15 @@ export default ({ visible, close, data, joinGroupUserDetail = {} }) => {
         </View>
       ),
       winRed: (
-        <View className="shopDrawer_winRed_box">
+        <View
+          className="shopDrawer_winRed_box"
+          onClick={() => {
+            close();
+            Router({
+              routerName: "moneyWallet",
+            });
+          }}
+        >
           <View className="shopDrawer_winRed_rel">
             <Text className="font32">¥ </Text>
             {rewardValue}

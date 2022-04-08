@@ -72,13 +72,15 @@ class Index extends Component {
         joinGroupUserDetail,
         joinGroupUserList,
         userJoinStatus,
+        startGroupUser,
       } = val;
       this.setState({
         groupDetail: {
           ...groupDetail,
-          joinGroupUserDetail,
           joinGroupUserList,
+          startGroupUser,
         },
+        joinGroupUserDetail,
         userJoinStatus,
       });
     });

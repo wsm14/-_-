@@ -28,20 +28,20 @@ export default ({ type, startRebate, endRebate }) => {
       </>
     ),
     1: (
-      <View
-        className="collage_card_contentInfo"
-        onClick={() => {
-          Router({
-            routerName: "moneyWallet",
-          });
-        }}
-      >
+      <View className="collage_card_contentInfo">
         <View className="collageDetail_templateUser_box"></View>
         <View className="collage_card_change">
           <View className="collage_change_title">{willRebateFee}</View>
           <View className="collage_change_label">预计返佣/元</View>
         </View>
-        <View className="collage_card_change">
+        <View
+          className="collage_card_change"
+          onClick={() => {
+            Router({
+              routerName: "moneyWallet",
+            });
+          }}
+        >
           <View className="collageDetail_templateUser_box"></View>
           <View className="collage_change_title">{accumulativeRebateFee}</View>
           <View className="collage_change_label">累计返佣/元 {">"}</View>
@@ -50,19 +50,19 @@ export default ({ type, startRebate, endRebate }) => {
       </View>
     ),
     2: (
-      <View
-        className="collage_card_contentInfo"
-        onClick={() => {
-          Router({
-            routerName: "moneyWallet",
-          });
-        }}
-      >
+      <View className="collage_card_contentInfo">
         <View className="collage_card_change">
           <View className="collage_change_title">{totalWinTimes}</View>
           <View className="collage_change_label">拼中次数</View>
         </View>
-        <View className="collage_card_change">
+        <View
+          className="collage_card_change"
+          onClick={() => {
+            Router({
+              routerName: "moneyWallet",
+            });
+          }}
+        >
           <View className="collage_change_title">{totalWinRed}</View>
           <View className="collage_change_label">拼团红包 {">"}</View>
         </View>

@@ -113,13 +113,17 @@ export default ({
   }[status];
   const templateProfile = (item, index) => {
     if (item) {
-      const { togetherUserSnapshotObject = {} } = item;
+      const { togetherUserSnapshotObject = {}, rewardType } = item;
       const { profile } = togetherUserSnapshotObject;
       return (
         <View
           style={backgroundObj(profile)}
           className="collageTime_userProfile_box"
-        ></View>
+        >
+          {rewardType === "winGoods" && (
+            <View className="collageDetails_success_info"></View>
+          )}
+        </View>
       );
     } else {
       if (status === "0") {
