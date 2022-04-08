@@ -3,6 +3,15 @@
   background: #ffffff;
   padding: 24px 24px 40px;
   border-radius: 8px;
+  .collageDetail_templateUser_box {
+    position: absolute;
+    left: 343px;
+    top: 43px;
+    width: 1px;
+    height: 86px;
+    border: 1px solid #e6e6e6;
+    content: "";
+  }
   .clooageTime_template_box {
     display: flex;
     align-items: flex-start;
@@ -81,6 +90,7 @@
   }
   .collageDetail_templateContent_box {
     margin: 24px auto 0;
+    position: relative;
     .collageDetail_templateContent_liner {
       width: 638px;
       height: 1px;
@@ -94,6 +104,7 @@
       color: #333333;
     }
   }
+
   .collageTime_userProfile_content {
     position: relative;
     padding: 29px 0 0 40px;
@@ -107,6 +118,7 @@
     margin-bottom: 29px;
     position: relative;
     margin-right: 32px;
+    border-radius: 50%;
   }
   .collageTime_userProfile_img {
     width: 100%;

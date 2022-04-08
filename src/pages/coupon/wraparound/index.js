@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import Taro from "@tarojs/taro";
+import Taro, { getCurrentInstance } from "@tarojs/taro";
 import classNames from "classnames";
 import { View } from "@tarojs/components";
 import { getCouponList, fetchListUserPlatformCoupon } from "@/server/coupon";
@@ -29,7 +29,7 @@ class Index extends PureComponent {
     this.state = {
       nearUseList: [],
       otherUseList: [],
-      tabStatus: "merchant",
+      tabStatus: getCurrentInstance().router.params.tabStatus || "merchant",
       setting: {
         tabList: ["可使用", "即将过期", "已使用", "已过期"],
         current: 0,
@@ -131,7 +131,12 @@ class Index extends PureComponent {
     );
   }
   componentDidShow() {
-    this.getCouponList();
+    const { tabStatus } = this.state;
+    if (tabStatus === "merchant") {
+      this.getCouponList();
+    } else {
+      this.getListUser();
+    }
   }
 
   render() {

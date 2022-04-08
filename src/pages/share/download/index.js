@@ -23,25 +23,19 @@ class Index extends Component {
   render() {
     return (
       <View className="download_box">
-        <View className="download_content_Image">
-          <View className="download_content_height"></View>
-          <View
-            className="download_content_imageUrl public_center"
-            onClick={() => this.setClipboard("哒卡乐")}
-          >
-            复制搜索文案
-          </View>
-          <View
-            className="download_content_imageCopy public_center"
-            onClick={() =>
-              this.setClipboard(
-                "https://web-new.dakale.net/product/page/registerDownload/registration.html"
-              )
-            }
-          >
-            复制下载链接
-          </View>
-        </View>
+        <View className="download_content_imageBg"></View>
+        <View
+          className="download_content_imageUrl public_center"
+          onClick={() => this.setClipboard("哒卡乐")}
+        ></View>
+        <View
+          className="download_content_imageCopy public_center"
+          onClick={() =>
+            this.setClipboard(
+              "https://web-new.dakale.net/product/page/registerDownload/download.html"
+            )
+          }
+        ></View>
       </View>
     );
   }

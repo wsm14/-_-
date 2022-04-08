@@ -69,7 +69,7 @@ class Index extends Component {
   }
   fetchJoinRebate() {
     fetchJoinGroupRebate({}).then((val) => {
-      const { totalWinTimes, totalWinRed } = this.state;
+      const { totalWinTimes, totalWinRed } = val;
       this.setState({
         endRebate: {
           totalWinTimes,
@@ -137,7 +137,7 @@ class Index extends Component {
     this.setState(
       {
         userJoinGroupList: [],
-        userJoinPage: {
+        userByPage: {
           page: 1,
           limit: 10,
           status: e,

@@ -107,6 +107,7 @@ export default (props) => {
           if (loginStatus()) {
             Router({
               routerName: "wraparound",
+              args: { tabStatus: "platform" },
             });
           } else {
             Router({

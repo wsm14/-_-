@@ -114,15 +114,13 @@ page {
       font-weight: 400;
       color: #999999;
     }
-
-    .collage_change_liner {
-      width: 1px;
-      height: 86px;
-      border: 1px solid #e6e6e6;
-      position: absolute;
-      top: 43px;
-      left: 343px;
-    }
+  }
+  .collage_change_liner {
+    height: 86px;
+    border: 1px solid #e6e6e6;
+    position: absolute;
+    top: 43px;
+    left: 343px;
   }
   .collage_shop_box {
     padding: 24px;
@@ -132,15 +130,18 @@ page {
     .collage_shop_content {
       display: flex;
       align-items: flex-start;
+
       .collage_shop_profile {
         width: 160px;
         height: 160px;
         background: #d8d8d8;
         border-radius: 8px;
+        flex-shrink: 0;
       }
       .collage_shop_right {
         margin-left: 16px;
         padding-top: 4px;
+        flex: 1;
         .collage_shop_title {
           font-size: 28px;
           font-weight: 600;
@@ -209,7 +210,6 @@ page {
     }
     .collage_shop_liner {
       width: 638px;
-      height: 1px;
       border: 1px solid #e6e6e6;
       margin-top: 28px;
     }
@@ -236,6 +236,7 @@ page {
       font-size: 28px;
       font-weight: 600;
       color: #ffffff;
+      margin-left: auto;
     }
     .collage_bottom_open {
       height: 64px;

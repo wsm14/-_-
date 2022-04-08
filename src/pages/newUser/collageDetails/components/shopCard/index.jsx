@@ -113,7 +113,8 @@ export default ({
   }[status];
   const templateProfile = (item, index) => {
     if (item) {
-      const { profile } = item;
+      const { togetherUserSnapshotObject = {} } = item;
+      const { profile } = togetherUserSnapshotObject;
       return (
         <View
           style={backgroundObj(profile)}
@@ -221,7 +222,7 @@ export default ({
         {renderBtn()}
       </View>
       <DrawerList
-        list={list}
+        list={templateList}
         visible={visible}
         close={() => {
           setVisible(false);

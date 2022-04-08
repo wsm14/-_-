@@ -6,6 +6,7 @@ import { backgroundObj } from "@/utils/utils";
 import Taro from "@tarojs/taro";
 import "./index.scss";
 export default ({ visible, close, list }) => {
+  console.log(list);
   if (visible) {
     return (
       <Drawer show={visible} close={close}>
@@ -20,19 +21,23 @@ export default ({ visible, close, list }) => {
           ></Empty>
           <ScrollView scrollY className="buyDrawer_body">
             {list.map((item) => {
-              const { username, profile, createTime } = item;
-              return (
-                <View className="buyDrawer_list_box">
-                  <View
-                    style={backgroundObj(profile)}
-                    className="buyDrawer_list_profile merchant_dakale_logo"
-                  ></View>
-                  <View className="buyDrawer_list_userName font_hide">
-                    {username}
+              if (item) {
+                const { createTime, togetherUserSnapshotObject = {} } = item;
+                const { profile, username } = togetherUserSnapshotObject;
+                return (
+                  <View className="buyDrawer_list_box font_hide">
+                    <View
+                      style={backgroundObj(profile)}
+                      className="buyDrawer_list_profile merchant_dakale_logo"
+                    ></View>
+                    <View className="buyDrawer_list_userName font_hide">
+                      {username}
+                    </View>
+                    <View className="buyDrawer_list_right">{createTime}</View>
                   </View>
-                  <View className="buyDrawer_list_right">{createTime}</View>
-                </View>
-              );
+                );
+              }
+              return null;
             })}
           </ScrollView>
         </View>

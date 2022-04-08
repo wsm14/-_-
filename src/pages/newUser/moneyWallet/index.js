@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import { View, Text } from "@tarojs/components";
-import { getUserBeanInfo } from "@/server/user";
+import { fetchMarketingCash } from "@/server/user";
 import Toast from "@/components/toast";
 import router from "@/utils/router";
 import "./index.scss";
@@ -8,19 +8,20 @@ class Index extends Component {
   constructor() {
     super(...arguments);
     this.state = {
-      userInfo: {},
+      userBean: {},
       visible: false,
       configUserLevelInfo: {},
     };
   }
   componentDidShow() {
-    this.getUserInfo();
+    this.fetchMarketingCash();
   }
-  getUserInfo() {
-    getUserBeanInfo({}, (res) => {
-      const { userInfo } = res;
+  fetchMarketingCash() {
+    fetchMarketingCash({}, (res) => {
+      console.log(res);
+      const { userBean } = res;
       this.setState({
-        userInfo,
+        userBean,
       });
     });
   }
@@ -42,7 +43,7 @@ class Index extends Component {
   errorToast(e) {}
   render() {
     const {
-      userInfo: { bean },
+      userBean: { togetherCash = 0, totalCash = 0, incomeCash = 0 },
       visible,
     } = this.state;
     return (
@@ -52,7 +53,9 @@ class Index extends Component {
             <View className="money_userDetails_title font28 color1">
               账户余额(元)
             </View>
-            <View className="money_userDetails_bean color1 bold">{bean}</View>
+            <View className="money_userDetails_bean color1 bold">
+              {totalCash}
+            </View>
           </View>
           <View
             className="money_link_go public_center"
@@ -68,13 +71,27 @@ class Index extends Component {
             ></View>
             <View className="money_details_box">
               <View className="money_details_title">哒人收益</View>
-              <View className="money_details_money">120.00</View>
-              <View className="money_details_btn public_center">提现</View>
+              <View className="money_details_money">{incomeCash}</View>
+              <View
+                className="money_details_btn public_center"
+                onClick={() => {
+                  router({ routerName: "download" });
+                }}
+              >
+                提现
+              </View>
             </View>
             <View className="money_details_box">
               <View className="money_details_title">拼团返佣</View>
-              <View className="money_details_money">120.00</View>
-              <View className="money_details_btn public_center">提现</View>
+              <View className="money_details_money">{togetherCash}</View>
+              <View
+                className="money_details_btn public_center"
+                onClick={() => {
+                  router({ routerName: "download" });
+                }}
+              >
+                提现
+              </View>
             </View>
           </View>
         </View>

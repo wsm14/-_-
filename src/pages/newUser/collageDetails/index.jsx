@@ -67,11 +67,19 @@ class Index extends Component {
   fetchData() {
     const { groupId } = this.state;
     fetchGroupDetail({ groupId }).then((val) => {
-      const { groupDetail, userJoinStatus, joinGroupUserDetail } = val;
-      this.setState({
+      const {
         groupDetail,
-        userJoinStatus,
         joinGroupUserDetail,
+        joinGroupUserList,
+        userJoinStatus,
+      } = val;
+      this.setState({
+        groupDetail: {
+          ...groupDetail,
+          joinGroupUserDetail,
+          joinGroupUserList,
+        },
+        userJoinStatus,
       });
     });
   }

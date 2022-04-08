@@ -113,7 +113,7 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
           style={backgroundObj(goodsImg)}
           className="collage_shop_profile"
         ></View>
-        <View className="collage_shop_right">
+        <View className="collage_shop_right font_hide">
           <View className="collage_shop_title font_hide">{goodsName}</View>
           <View className="collage_shop_price">
             <Text className="color1 font20">拼团价:</Text>
@@ -157,7 +157,10 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
       <View className="collage_shop_bottom">
         <View className="collage_shop_stepBox">
           <View className="collage_shop_step">
-            <View className="collage_shop_stepContent"></View>
+            <View
+              style={{ width: joinUserNum * 10 + "%" }}
+              className="collage_shop_stepContent"
+            ></View>
           </View>
           <View className="collage_shop_stepFont">
             <Text className="color1">{joinUserNum}</Text>/10
@@ -174,7 +177,10 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
       <View className="collage_shop_bottom">
         <View className="collage_shop_stepBox">
           <View className="collage_shop_step">
-            <View className="collage_shop_stepContent"></View>
+            <View
+              style={{ width: joinUserNum * 10 + "%" }}
+              className="collage_shop_stepContent"
+            ></View>
           </View>
           <View className="collage_shop_stepFont">
             <Text className="color1">{joinUserNum}</Text>/10

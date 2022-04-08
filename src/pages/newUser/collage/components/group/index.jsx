@@ -6,7 +6,6 @@ import { toast } from "@/utils/utils";
 import Empty from "@/components/Empty";
 import Shop from "./../shop";
 export default ({ type, status, onChange, data, updateData }) => {
-  console.log(data);
   const [select, setSelect] = useState({
     list: [
       { key: "开团中", val: 0 },

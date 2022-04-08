@@ -82,12 +82,15 @@ class Index extends React.PureComponent {
     const {
       userMomentsInfo: {},
       userMomentsInfo,
+      httpData,
     } = this.state;
+    const { shareUserId } = httpData;
     const { momentId, ownerId } = userMomentsInfo;
     saveWatchBean(
       {
         momentId: momentId,
         ownerId,
+        shareUserId,
       },
       (res) => {
         this.setState({

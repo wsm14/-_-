@@ -29,7 +29,7 @@ export default (props) => {
             <View className="order_shop_count">{realPrice}</View>
           ) : (
             <View className="order_shop_count">
-              ¥{cash}+{bean}卡豆
+              ¥{cash}+{bean > 0 ? `${bean}卡豆` : ""}
             </View>
           )}
         </View>

@@ -64,7 +64,6 @@ export default ({ data, reload, onChange }) => {
             className="hotMetal_shop_btn public_center hotMetal_shop_style1"
             onClick={(e) => {
               e.stopPropagation();
-              console.log(111);
               fakeAcquirePlatformCoupon({
                 platformCouponId: platformCouponId,
               }).then((val) => {
