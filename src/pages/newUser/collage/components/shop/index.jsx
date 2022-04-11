@@ -169,7 +169,9 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
         <View className="collage_shop_liner"></View>
         <View className="collage_shop_btnBox public_auto">
           {renderBottom}
-          <View className="collage_bottom_right">邀请好友</View>
+          {status === "0" && (
+            <View className="collage_bottom_right">邀请好友</View>
+          )}
         </View>
       </View>
     ),

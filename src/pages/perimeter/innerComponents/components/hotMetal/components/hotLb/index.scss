@@ -1,0 +1,95 @@
+.hotMetal_lb_swiperBox {
+  width: 714px;
+  height: 702px;
+  position: relative;
+  margin: 24px auto 0;
+  .hotMetal_toast {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 40px;
+    bottom: 12px;
+    text-align: center;
+  }
+  .hotMetal_tags {
+    height: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    font-size: 24px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #ffffff;
+    padding: 0 31px;
+    line-height: 40px;
+    display: inline-block;
+  }
+}
+.hotMetal_lb_box {
+  width: 714px;
+  height: 702px;
+  background: url(https://wechat-config.dakale.net/miniprogram/image/icon970.png)
+    no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+  .hotMetal_lb_title {
+    padding-top: 120px;
+    font-size: 36px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  .hotMetal_lb_desc {
+    padding-top: 8px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+  .hotMetal_lb_content {
+    padding: 38px 34px 0;
+    width: 650px;
+    position: relative;
+    z-index: 15;
+  }
+  .hotMetal_lb_content_info {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  .show_near {
+    position: absolute;
+    height: 6px;
+    left: 0;
+    right: 0;
+    bottom: 24px;
+    display: flex;
+    justify-content: center;
+    .show_near_linerTrue {
+      width: 30px;
+      height: 6px;
+      border-radius: 3px;
+      margin-right: 8px;
+    }
+    .show_near_false {
+      width: 20px;
+      height: 6px;
+      border-radius: 3px;
+      margin-right: 8px;
+    }
+  }
+  .hotMetal_lb_btn {
+    width: 540px;
+    height: 96px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 153, 19, 1) 0%,
+      rgba(255, 235, 165, 1) 100%
+    );
+    box-shadow: 0px 12px 14px 0px rgba(185, 1, 0, 0.39),
+      inset 0px 1px 40px 0px rgba(255, 232, 183, 0.48),
+      inset 0px 0px 0px 2px #ff9e80;
+    border-radius: 40px;
+    margin: 42px auto 0;
+    font-size: 36px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+}

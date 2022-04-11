@@ -1,0 +1,22 @@
+.innerCouponDetails_content_box {
+  margin-top: 36px;
+  .innerCouponDetails_content_title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    .innerCouponDetails_content_titleLeft {
+      font-size: 36px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .innerCouponDetails_content_titleRight {
+      font-size: 24px;
+      font-weight: 400;
+      color: #ffffff;
+    }
+  }
+  .innerCouponDetails_content_couponBox {
+    margin: 32px 32px 0;
+  }
+}
