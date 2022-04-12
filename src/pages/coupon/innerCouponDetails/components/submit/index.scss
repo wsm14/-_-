@@ -1,0 +1,43 @@
+.submit_box {
+  height: 128px;
+  background: #fff2d3;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 32px;
+  .submit_ks_price {
+    color: rgba(255, 64, 64, 1);
+  }
+  .submit_btn {
+    width: 380px;
+    height: 80px;
+    background: #ff4040;
+    border-radius: 40px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 23px;
+  }
+  .submit_btn_font {
+    max-width: 258px;
+    height: 32px;
+  }
+  .submit_btn_font1 {
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+  .submit_ks_box {
+    padding-top: 43px;
+    display: flex;
+    align-items: baseline;
+    .submit_ks_title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #333333;
+    }
+  }
+}

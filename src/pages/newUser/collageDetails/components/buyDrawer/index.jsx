@@ -5,7 +5,7 @@ import Empty from "@/components/Empty";
 import { backgroundObj } from "@/utils/utils";
 import Taro from "@tarojs/taro";
 import "./index.scss";
-export default ({ visible, close, list }) => {
+export default ({ visible, close, list = [] }) => {
   console.log(list);
   if (visible) {
     return (

@@ -165,7 +165,7 @@ export default ({
           </View>
         ),
         1: <View className="collageTime_btn public_center">开团成功</View>,
-        2: <View className="collageTime_btn public_center">开团失败</View>,
+        2: <View className="collageTime_btn1 public_center">开团失败</View>,
       }[status];
     } else {
       if (status == 0 && userJoinStatus === "0") {

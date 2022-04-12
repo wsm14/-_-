@@ -3,8 +3,13 @@ import Taro, { useReachBottom } from "@tarojs/taro";
 import { Image, Text, View } from "@tarojs/components";
 import classNames from "classnames";
 import Router from "@/utils/router";
+import Rule from "./../drawer";
 import { toast } from "@/utils/utils";
 export default ({ type, startRebate, endRebate }) => {
+  const [visible, setVisible] = useState({
+    type: 0,
+    visible: false,
+  });
   const { willRebateFee = 0, accumulativeRebateFee = 0 } = startRebate;
   const { totalWinTimes = 0, totalWinRed = 0 } = endRebate;
   useEffect(() => {}, []);
@@ -30,7 +35,15 @@ export default ({ type, startRebate, endRebate }) => {
     1: (
       <View className="collage_card_contentInfo">
         <View className="collageDetail_templateUser_box"></View>
-        <View className="collage_card_change">
+        <View
+          className="collage_card_change"
+          onClick={() => {
+            setVisible({
+              type: 0,
+              visible: true,
+            });
+          }}
+        >
           <View className="collage_change_title">{willRebateFee}</View>
           <View className="collage_change_label">预计返佣/元</View>
         </View>
@@ -51,7 +64,15 @@ export default ({ type, startRebate, endRebate }) => {
     ),
     2: (
       <View className="collage_card_contentInfo">
-        <View className="collage_card_change">
+        <View
+          className="collage_card_change"
+          onClick={() => {
+            setVisible({
+              type: 1,
+              visible: true,
+            });
+          }}
+        >
           <View className="collage_change_title">{totalWinTimes}</View>
           <View className="collage_change_label">拼中次数</View>
         </View>
@@ -70,5 +91,18 @@ export default ({ type, startRebate, endRebate }) => {
       </View>
     ),
   }[type];
-  return <View className="collage_card_box">{template}</View>;
+  return (
+    <>
+      <View className="collage_card_box">{template}</View>
+      <Rule
+        {...visible}
+        close={() =>
+          setVisible({
+            visible: false,
+            type: 0,
+          })
+        }
+      ></Rule>
+    </>
+  );
 };

@@ -15,7 +15,9 @@ export default ({ data }) => {
           <View className="collageTime_desc_titleDont">商品详情</View>
           <View className="collageTime_desc_linerRight"></View>
         </View>
-        <RichText nodes={richText}></RichText>
+        <View className="collageTime_desc_bg">
+          <RichText nodes={richText}></RichText>
+        </View>
       </View>
     );
   } else {

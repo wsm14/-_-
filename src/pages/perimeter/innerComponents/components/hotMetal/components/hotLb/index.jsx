@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Swiper, SwiperItem } from "@tarojs/components";
 import classNames from "classnames";
 import Coupon from "@/components/public_ui/innerCoupon";
 import Taro from "@tarojs/taro";
+import Router from "@/utils/router";
 import "./index.scss";
 export default ({ data }) => {
   console.log(data);
@@ -22,6 +23,7 @@ export default ({ data }) => {
             platformGiftPackRelateList,
             paymentModeObject = {},
             buyPrice,
+            platformGiftId,
           } = item;
           const { type = "defaultMode", bean, cash } = paymentModeObject;
           return (
@@ -48,7 +50,17 @@ export default ({ data }) => {
                     })}
                   </View>
                 )}
-                <View className="hotMetal_lb_btn public_center">
+                <View
+                  className="hotMetal_lb_btn public_center"
+                  onClick={() =>
+                    Router({
+                      routerName: "innerCouponDetails",
+                      args: {
+                        platformGiftId,
+                      },
+                    })
+                  }
+                >
                   {type === "defaultMode"
                     ? `${buyPrice}元 抢购`
                     : `${cash}元${bean > 0 && `+${bean}卡豆`} 抢购`}

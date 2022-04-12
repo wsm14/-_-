@@ -88,6 +88,23 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
     1: <View className="collage_bottom_left">开团成功 | {createTime}团</View>,
     2: <View className="collage_bottom_left">开团失败 | {createTime}团</View>,
   }[status];
+  const renderTags = () => {
+    if (rewardType && rewardType === "winGoods") {
+      return (
+        <View
+          className={"collage_card_successBox collage_card_success2"}
+        ></View>
+      );
+    } else if (rewardType && rewardType === "winRed") {
+      return (
+        <View
+          className={"collage_card_successBox collage_card_success1"}
+        ></View>
+      );
+    } else {
+      return null;
+    }
+  };
   const {
     goodsIdString,
     ownerIdString,
@@ -122,9 +139,11 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
             <Text className="color2 font24 text_through">¥{oriPrice}</Text>
           </View>
           <View className="collage_shop_tagsBox">
-            <View className="collage_shop_tag collage_shop_tagStyle1 public_center">
-              开团返佣{teamLeaderFee}元
-            </View>
+            {type != "2" && (
+              <View className="collage_shop_tag collage_shop_tagStyle1 public_center">
+                开团返佣{teamLeaderFee}元
+              </View>
+            )}
             <View className="collage_shop_tag collage_shop_tagStyle2 public_center">
               参与红包{notWinFee}元
             </View>
@@ -216,15 +235,7 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
         }
       }}
     >
-      {type == 2 && status === "1" && (
-        <View
-          className={
-            rewardType === "winGoods"
-              ? "collage_card_successBox collage_card_success2"
-              : "collage_card_successBox collage_card_success1"
-          }
-        ></View>
-      )}
+      {renderTags()}
       {template()}
       {bottom}
     </View>

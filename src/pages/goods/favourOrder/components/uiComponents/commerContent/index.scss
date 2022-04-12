@@ -3,10 +3,41 @@
   padding: 24px;
   margin: 16px 32px 0;
   border-radius: 8px;
+  .order_shopDetails_price {
+    position: absolute;
+    bottom: 8px;
+    right: 0px;
+    height: 48px;
+    width: 169px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    .order_shop_btnBox {
+      width: 48px;
+      height: 48px;
+    }
+    .order_shop_num {
+      width: 73px;
+      text-align: center;
+      height: 48px;
+      line-height: 48px;
+    }
+    .order_shop_btn1 {
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon254.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+    .order_shop_btn2 {
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon255.png")
+        no-repeat;
+      background-size: 100% 100%;
+    }
+  }
   .commerOrder_shop_card {
     display: flex;
     align-items: flex-start;
-
+    position: relative;
     .commerOrder_shop_img {
       width: 152px;
       height: 152px;
@@ -24,7 +55,7 @@
         line-height: 40px;
       }
       .commerOrder_shop_count {
-        padding-top: 16px;
+        padding-top: 32px;
         font-size: 24px;
         font-weight: 400;
         color: #999999;

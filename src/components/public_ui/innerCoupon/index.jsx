@@ -3,7 +3,7 @@ import { Text, View } from "@tarojs/components";
 import Drawer from "@/components/Drawer";
 import Router from "@/utils/router";
 import "./index.scss";
-export default ({ type = 2, data }) => {
+export default ({ type = 1, data }) => {
   const { platformCoupon } = data;
   const {
     activeDate,
@@ -69,7 +69,10 @@ export default ({ type = 2, data }) => {
     3: (
       <View className="innerCoupon_box3">
         <View className="innerCoupon_title_leftInfo">
-          <View className="innerCoupon_title_font"> {couponName}</View>
+          <View className="innerCoupon_title_font font_hide">
+            {" "}
+            {couponName}
+          </View>
           <View className="innerCoupon_title_time">
             {activeDate && endDate
               ? activeDate + "至" + endDate
@@ -92,7 +95,10 @@ export default ({ type = 2, data }) => {
     4: (
       <View className="innerCoupon_box4">
         <View className="innerCoupon_title_leftInfo">
-          <View className="innerCoupon_title_font"> {couponName}</View>
+          <View className="innerCoupon_title_font font_hide">
+            {" "}
+            {couponName}
+          </View>
           <View className="innerCoupon_title_time">
             {activeDate && endDate
               ? activeDate + "至" + endDate

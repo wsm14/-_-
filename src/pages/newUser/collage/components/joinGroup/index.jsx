@@ -9,9 +9,9 @@ export default ({ type, status, onChange, data, updateData }) => {
   console.log(data);
   const [select, setSelect] = useState({
     list: [
-      { key: "开团中", val: 0 },
-      { key: "开团成功", val: 1 },
-      { key: "开团失败", val: 2 },
+      { key: "拼团中", val: 0 },
+      { key: "拼团成功", val: 1 },
+      { key: "拼团失败", val: 2 },
     ],
   });
   const { list } = select;

@@ -148,7 +148,6 @@
     position: absolute;
     top: 24px;
     right: 40px;
-    width: 180px;
 
     .innerCoupon_title_priceInfo {
       display: flex;
@@ -185,6 +184,9 @@
     border-radius: 12px;
   }
 }
+.innerCoupon_box4:first-child {
+  margin-top: 0px;
+}
 .innerCoupon_box4 {
   width: 686px;
   height: 248px;
@@ -194,6 +196,7 @@
   background-size: 100% 100%;
   flex-shrink: 0;
   line-height: 1;
+  margin-top: 16px;
   .innerCoupon_increase_odesc {
     margin: 72px 0 0 40px;
     font-size: 24px;
@@ -225,7 +228,6 @@
     position: absolute;
     top: 24px;
     right: 40px;
-    width: 180px;
 
     .innerCoupon_title_priceInfo {
       display: flex;

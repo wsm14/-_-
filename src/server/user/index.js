@@ -420,3 +420,15 @@ export const fetchMarketingCash = (data, fn) => {
   );
 };
 //现金 拼团钱包
+export const fetchGiftPackDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/platform/gift/getPlatformGiftPackDetail",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//查询礼包详情

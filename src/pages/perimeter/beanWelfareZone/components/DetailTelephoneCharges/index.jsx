@@ -1,6 +1,9 @@
 import React from "react";
 import { View, Text, Button } from "@tarojs/components";
-import Tarking from "@/components/tracking";
+import Top from "./../../../../coupon/innerCouponDetails/components/top";
+import Content from "./../../../../coupon/innerCouponDetails/components/content";
+import InnerDesc from "./../../../..//coupon/innerCouponDetails/components/hyDesc";
+import Submit from "./../../../..//coupon/innerCouponDetails/components/submit";
 import "./index.scss";
 
 /**
@@ -19,29 +22,10 @@ export default ({ data = {}, handleGoBuyGoods }) => {
 
   return (
     <View className="bwzGoodContent_content telephoneCharges">
-      <View className="bwzgc_telephoneCharges_name">
-        <View className="bwzgc_telephoneCharges_oriName font_hide">
-          {giftName}
-        </View>
-        <View className="bwzgc_telephoneCharges_oriPrice">
-          原价：¥{giftValue}
-        </View>
-      </View>
-      <View
-        className={`bwzgc_telephoneCharges_price ${type === "self" && "bean"}`}
-      >
-        <Text className="bwzgc_telephoneCharges_buyPrice">
-          ¥{type === "self" ? `${cash}+${bean}` : buyPrice}
-        </Text>
-      </View>
-      <Tarking name={"beanWelfareZone"} args={data}>
-        <Button
-          className="bwzgc_beanWelfareZone_btn"
-          onClick={handleGoBuyGoods}
-        >
-          {type === "self" ? `${bean}卡豆抵扣购买` : `仅需${buyPrice}元`}
-        </Button>
-      </Tarking>
+      <Top data={data}></Top>
+      <Content data={data}></Content>
+      <InnerDesc data={data}></InnerDesc>
+      <Submit data={data}></Submit>
     </View>
   );
 };

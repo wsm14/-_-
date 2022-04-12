@@ -152,6 +152,7 @@ export default {
         "couponDetails/index", //券包详情
         "selectCoupon/index", //选择支付券
         "increase/index", //平台券详情
+        "innerCouponDetails/index", //限时神券礼包详情
       ],
     },
     {

@@ -4,8 +4,14 @@ import { backgroundObj } from "@/utils/utils";
 import Router from "@/utils/router";
 import "./index.scss";
 export default (props) => {
-  const { data } = props;
-  const { goodsImg, goodsName, paymentModeObject = {}, realPrice } = data;
+  const { data, computedCount } = props;
+  const {
+    goodsImg,
+    goodsName,
+    paymentModeObject = {},
+    realPrice,
+    goodsCount,
+  } = data;
   const { bean = 0, cash = 0, type = "defaultMode" } = paymentModeObject;
 
   return (
@@ -22,6 +28,17 @@ export default (props) => {
             </View>
             <View className="commerOrder_shop_count">数量：1</View>
           </View>
+          <View className="order_shopDetails_price">
+            <View
+              className="order_shop_btnBox order_shop_btn1"
+              onClick={() => computedCount()}
+            ></View>
+            <View className="order_shop_num">{goodsCount}</View>
+            <View
+              className="order_shop_btnBox order_shop_btn2"
+              onClick={() => computedCount("add")}
+            ></View>
+          </View>
         </View>
         <View className="order_shop_price">
           <View className="order_shop_label">商品总额</View>
@@ -29,8 +46,8 @@ export default (props) => {
             <View className="order_shop_count">{realPrice}</View>
           ) : (
             <View className="order_shop_count">
-              ¥{cash}
-              {bean > 0 ? `+${bean}卡豆` : ""}
+              ¥{(cash * goodsCount).toFixed(2)}
+              {bean > 0 ? `+${bean * goodsCount}卡豆` : ""}
             </View>
           )}
         </View>

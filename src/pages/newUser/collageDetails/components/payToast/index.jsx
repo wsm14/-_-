@@ -49,7 +49,7 @@ export default ({
             ) : (
               <View className="payToast_btn_box public_center">
                 <View
-                  className="payToast_btn public_center"
+                  className="payToast_btn_one public_center"
                   onClick={() => {
                     canfirm && canfirm();
                   }}

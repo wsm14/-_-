@@ -19,11 +19,12 @@ export default (props) => {
   } = data;
   orderDesc = JSON.parse(orderDesc);
   const { commerceGoods = {} } = orderDesc;
-  const { goodsName, remake = "" } = commerceGoods;
+  const { goodsName, remake = "", goodsCount } = commerceGoods;
   const { deliveryTime = "", logisticsCode, logisticsCompany } = orderLogistics;
   const templateList = {
     0: [
       { label: "商品", value: goodsName },
+      { label: "数量", value: goodsCount },
       {
         label: "订单号码",
         value: orderSn,
@@ -31,10 +32,12 @@ export default (props) => {
           setClipboard(orderSn);
         },
       },
+
       { label: "创建时间", value: createTime },
     ],
     1: [
       { label: "商品", value: goodsName },
+      { label: "数量", value: goodsCount },
       {
         label: "订单号码",
         value: orderSn,
@@ -42,11 +45,13 @@ export default (props) => {
           setClipboard(orderSn);
         },
       },
+
       { label: "创建时间", value: createTime },
       { label: "支付时间", value: payTime },
     ],
     2: [
       { label: "商品", value: goodsName },
+      { label: "数量", value: goodsCount },
       {
         label: "订单号码",
         value: orderSn,
@@ -54,6 +59,7 @@ export default (props) => {
           setClipboard(orderSn);
         },
       },
+
       { label: "创建时间", value: createTime },
       { label: "支付时间", value: payTime },
       { label: "关闭时间", value: closeTime },
@@ -62,6 +68,7 @@ export default (props) => {
 
     3: [
       { label: "商品", value: goodsName },
+      { label: "数量", value: goodsCount },
       {
         label: "订单号码",
         value: orderSn,
@@ -69,12 +76,14 @@ export default (props) => {
           setClipboard(orderSn);
         },
       },
+
       { label: "创建时间", value: createTime },
       { label: "支付时间", value: payTime },
       { label: "完成时间", value: deliveryTime },
     ],
     6: [
       { label: "商品", value: goodsName },
+      { label: "数量", value: goodsCount },
       {
         label: "订单号码",
         value: orderSn,
