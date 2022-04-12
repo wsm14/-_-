@@ -4,40 +4,28 @@ import Taro from "@tarojs/taro";
 import classNames from "classnames";
 import { backgroundObj } from "@/utils/utils";
 import { computedClient } from "@/utils/utils";
-import { observer, MobXProviderContext } from "mobx-react";
 import "./index.scss";
 import Router from "@/utils/router";
 //逛逛顶部导航栏
 export default (props) => {
-  const { city, val } = props;
-  const { store } = React.useContext(MobXProviderContext);
-  const { commonStore } = store;
-  const { festivalConfigs = [] } = commonStore;
-  const [data, setData] = useState({});
+  const { city, val, data = [] } = props;
+  const [listObj, setListObj] = useState({});
   useEffect(() => {
-    setData(
-      festivalConfigs.reduce(
-        (item, val) => {
-          if (val.topType === "wanderAround") {
-            return {
-              ...item,
-              ...val,
-            };
-          }
-        },
-        {
-          height: 400,
-        }
-      )
+    setListObj(
+      data.filter((item) => {
+        return item.moduleName === "topBackground";
+      })[0] || {}
     );
-  }, [festivalConfigs]);
-
-  const { height, image } = data;
+  }, [data]);
+  console.log(listObj);
+  const { height, topBackgroundImg = "" } = listObj;
   const { bean, todayTotalIncome } = val;
   return (
     <View className="lookAround_navition_box">
       <View
-        style={backgroundObj(image)}
+        style={{
+          ...backgroundObj(topBackgroundImg),
+        }}
         className={classNames(
           height === 500
             ? "lookAround_navition_bigImage"

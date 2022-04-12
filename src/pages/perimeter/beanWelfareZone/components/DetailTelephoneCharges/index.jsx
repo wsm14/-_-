@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Button } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 import Top from "./../../../../coupon/innerCouponDetails/components/top";
 import Content from "./../../../../coupon/innerCouponDetails/components/content";
 import InnerDesc from "./../../../..//coupon/innerCouponDetails/components/hyDesc";
@@ -22,10 +23,12 @@ export default ({ data = {}, handleGoBuyGoods }) => {
 
   return (
     <View className="bwzGoodContent_content telephoneCharges">
-      <Top data={data}></Top>
-      <Content data={data}></Content>
-      <InnerDesc data={data}></InnerDesc>
-      <Submit data={data}></Submit>
+      <View className="bwzGoodContent_content_page">
+        <Top data={data}></Top>
+        <Content data={data}></Content>
+        <InnerDesc data={data}></InnerDesc>
+        <Submit data={data}></Submit>
+      </View>
     </View>
   );
 };

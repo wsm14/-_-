@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Taro from "@tarojs/taro";
 import { View, Text, Button } from "@tarojs/components";
 import Top from "./../../../../coupon/innerCouponDetails/components/top";
 import Content from "./../../../../coupon/innerCouponDetails/components/content";

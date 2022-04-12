@@ -1,5 +1,11 @@
 .bwzGoodContent_content.telephoneCharges {
-  background: rgba(255, 89, 56, 1);
+  width: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 149, 105, 1) 0%,
+    rgba(255, 89, 56, 1) 846px
+  );
+  background-color: rgba(255, 89, 56, 1);
   .bwzgc_telephoneCharges_name {
     font-size: 50px;
     font-weight: 600;

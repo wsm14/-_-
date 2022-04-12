@@ -163,7 +163,7 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
           <View
             className="collage_bottom_open"
             onClick={() => {
-              fakeStartGroup({ togetherGroupConfigId });
+              // fakeStartGroup({ togetherGroupConfigId });
               linkToDownLoad && linkToDownLoad();
             }}
           >
