@@ -12,19 +12,54 @@ page {
       no-repeat;
     background-size: 100% 100%;
   }
-  .download_content_imageBg {
+  .download_show_near {
+    position: absolute;
+    top: 1002px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .download_near_linerTrue {
+      width: 30px;
+      height: 10px;
+      border-radius: 7px;
+      margin-right: 8px;
+      background: #07c0c2;
+    }
+    .download_near_false {
+      width: 10px;
+      height: 10px;
+      border-radius: 7px;
+      margin-right: 8px;
+      background: #07c0c2;
+      opacity: 0.2;
+    }
+  }
+  .download_content_imageBox {
     position: absolute;
     width: 640px;
     height: 662px;
-    background: url("https://wechat-config.dakale.net/miniprogram/image/icon965.png")
-      no-repeat;
-    background-size: 100% 100%;
     top: 340px;
     left: 0;
     right: 0;
     margin: 0 auto;
   }
-
+  .download_content_imageBg1 {
+    width: 640px;
+    height: 662px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon988.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .download_content_imageBg2 {
+    width: 640px;
+    height: 662px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon989.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
   .download_content_imageUrl {
     position: absolute;
     width: 686px;

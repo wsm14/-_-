@@ -151,7 +151,7 @@ export default ({
     if (type === "1") {
       return {
         0: (
-          <View className="collageTime_btn public_center">
+          <View className="collageTime_btn collageTime_scale public_center">
             <Button
               style={{
                 width: "100%",
@@ -174,27 +174,30 @@ export default ({
             onClick={() => {
               setVisiblePay(true);
             }}
-            className="collageTime_btn public_center"
+            className="collageTime_btn collageTime_scale public_center"
           >
             参与拼团并预支付
           </View>
         );
       } else if (status == 0 && userJoinStatus === "1") {
         return (
-          <View className="collageTime_btn public_center">
+          <View className="collageTime_btn collageTime_scale public_center">
             支付成功，等待成团
           </View>
         );
       } else if (status == 1 && userJoinStatus === "1") {
         return (
-          <View className="collageTime_btn public_center" onClick={onChange}>
+          <View
+            className="collageTime_btn collageTime_scale public_center"
+            onClick={onChange}
+          >
             拼团成功，恭喜您拼中
             {rewardType === "winGoods" ? "拼中商品" : "拼中红包"}
           </View>
         );
       } else {
         return (
-          <View className="collageTime_btn public_center">
+          <View className="collageTime_btn collageTime_scale public_center">
             活动结束，拼团失败
           </View>
         );
