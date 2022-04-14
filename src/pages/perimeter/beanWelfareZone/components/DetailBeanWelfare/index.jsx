@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Taro from "@tarojs/taro";
 import { View, Text, Button } from "@tarojs/components";
-import Tarking from "@/components/tracking";
+import Top from "./../../../../coupon/innerCouponDetails/components/top";
+import Content from "./../../../../coupon/innerCouponDetails/components/content";
+import InnerDesc from "./../../../..//coupon/innerCouponDetails/components/innerDesc";
+import Submit from "./../../../..//coupon/innerCouponDetails/components/submit";
 import "./index.scss";
 
 /**
@@ -21,67 +25,10 @@ export default ({ data, handleGoBuyGoods }) => {
 
   return (
     <View className="bwzGoodContent_content beanWelfare">
-      <View
-        className="bwzgc_beanWelfare_Swiper"
-        style={goodsList.length > 3 ? {} : { justifyContent: "center" }}
-      >
-        {goodsList.map((item) => {
-          // 关联类型 platformCoupon-平台券 rightGoods-权益商品 rightCoupon-权益券
-          const { relateType } = item;
-          let gdata = item[relateType];
-          const showName = gdata?.couponName || gdata?.goodsName || "";
-          let showPrice,
-            thresholdPrice = "";
-          // 平台券
-          if (relateType === "platformCoupon") {
-            showPrice = gdata?.couponValue || 0; // 价值
-            thresholdPrice = gdata?.thresholdPrice || 0; // 门槛
-          }
-          // 权益商品
-          if (relateType === "rightGoods") {
-            showPrice = gdata?.realPrice || 0;
-          }
-          // 权益券
-          if (relateType === "rightCoupon") {
-            showPrice = gdata?.couponPrice || 0;
-            thresholdPrice = gdata?.thresholdPrice || 0;
-          }
-          return (
-            <View className="bwzgc_beanWelfare_cell">
-              <View className="bwzgc_beanWelfare_type">{showName}</View>
-              <View className="bwzgc_beanWelfare_price">
-                <Text>{showPrice}</Text>
-              </View>
-              <View
-                className="bwzgc_beanWelfare_rule"
-                style={{
-                  visibility: thresholdPrice ? "initial" : "hidden",
-                }}
-              >
-                满{thresholdPrice}可用
-              </View>
-              <View className="bwzgc_beanWelfare_num">数量：1张</View>
-            </View>
-          );
-        })}
-      </View>
-      <View className="bwzgc_beanWelfare_name">{giftName}</View>
-      <View className="bwzgc_beanWelfare_groupPrice">原价：¥{giftValue}</View>
-      <View className="bwzgc_beanWelfare_buyPrice">
-        ¥{type === "self" ? `${cash}+${bean}` : buyPrice}
-      </View>
-      <Tarking name={"beanWelfareZone"} args={data}>
-        <Button
-          className="bwzgc_beanWelfareZone_btn"
-          onClick={handleGoBuyGoods}
-        >
-          {buyFlag === "1"
-            ? type === "self"
-              ? `${bean}卡豆抵扣购买`
-              : `直接购买`
-            : "直接购买"}
-        </Button>
-      </Tarking>
+      <Top data={data}></Top>
+      <Content data={data}></Content>
+      <InnerDesc data={data}></InnerDesc>
+      <Submit data={data}></Submit>
     </View>
   );
 };

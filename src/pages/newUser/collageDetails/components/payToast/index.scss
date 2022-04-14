@@ -1,0 +1,81 @@
+.payToast_box {
+  width: 500px;
+  padding: 40px 0;
+  background: #ffffff;
+  border-radius: 40px;
+  .payToast_title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 32px;
+    text-align: center;
+  }
+  .payToast_body {
+    width: 364px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #666666;
+    line-height: 42px;
+    padding: 40px 68px 0;
+    white-space: pre-wrap;
+    text-align: center;
+    .payToast_list_box {
+      height: 64px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+    }
+    .payToast_list_profile {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      border-radius: 50%;
+    }
+    .payToast_list_userName {
+      margin-left: 16px;
+      max-width: 206px;
+    }
+    .payToast_list_right {
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+      margin-left: auto;
+    }
+  }
+  .payToast_btn_box {
+    margin: 32px 48px 0;
+  }
+  .payToast_btn_one{
+    box-shadow: inset 0px 0px 23px 0px rgba(255, 255, 255, 0.5);
+    background-image: linear-gradient(
+      157deg,
+      rgba(255, 76, 76, 1) 0,
+      rgba(255, 62, 62, 1) 100%
+    );
+    border-radius: 8px;
+    height: 70px;
+    width: 404px;
+    font-size: 32px;
+    font-weight: 400;
+    color: #ffffff;
+    border-radius: 35px;
+  }
+  .payToast_btn {
+    box-shadow: inset 0px 0px 23px 0px rgba(255, 255, 255, 0.5);
+    background-image: linear-gradient(
+      157deg,
+      rgba(255, 76, 76, 1) 0,
+      rgba(255, 62, 62, 1) 100%
+    );
+    border-radius: 8px;
+    height: 70px;
+    width: 192px;
+    font-size: 32px;
+    font-weight: 400;
+    color: #ffffff;
+    border-radius: 35px;
+  }
+  .payToast_list_box:last-child {
+    margin-bottom: 0;
+  }
+}

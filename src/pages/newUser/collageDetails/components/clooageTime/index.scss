@@ -1,5 +1,5 @@
 .collageTime_box {
-  padding: 112px 0 0;
+  padding: 64px 0 0;
   position: relative;
   .collageTime_body {
     width: 405px;
@@ -8,6 +8,7 @@
       no-repeat;
     background-size: 100% 100%;
     position: relative;
+    margin: 0 auto;
   }
   .collageTime_end_djs1 {
     font-size: 36px;
@@ -15,31 +16,35 @@
     position: absolute;
     top: 14px;
     left: 124px;
-    font-size: 36px;
-    font-weight: normal;
-    color: #f53d47;
+    font-weight: bold;
     line-height: 49px;
+    color: #f53d47;
+    width: 60px;
+    text-align: center;
   }
   .collageTime_end_djs2 {
-    font-size: 36px;
     color: #f53d47;
     position: absolute;
     top: 14px;
-    left: 214px;
+    left: 218px;
     font-size: 36px;
-    font-weight: normal;
+    font-weight: bold;
     color: #f53d47;
     line-height: 49px;
+    width: 60px;
+
+    text-align: center;
   }
   .collageTime_end_djs3 {
-    font-size: 36px;
     color: #f53d47;
     position: absolute;
     top: 14px;
-    left: 308px;
+    left: 312px;
     font-size: 36px;
-    font-weight: normal;
+    font-weight: bold;
     color: #f53d47;
     line-height: 49px;
+    width: 60px;
+    text-align: center;
   }
 }

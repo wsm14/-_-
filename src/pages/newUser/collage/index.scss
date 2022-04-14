@@ -1,8 +1,24 @@
 page {
   width: 100%;
-  height: 100%;
   background: #fff3e6;
-  overflow: hidden;
+  .collage_card_successBox {
+    width: 95px;
+    height: 95px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 10;
+  }
+  .collage_card_success1 {
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon959.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .collage_card_success2 {
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon960.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
   .collage_card_banner {
     position: absolute;
     width: 686px;
@@ -98,37 +114,41 @@ page {
       font-weight: 400;
       color: #999999;
     }
-
-    .collage_change_liner {
-      width: 1px;
-      height: 86px;
-      border: 1px solid #e6e6e6;
-      position: absolute;
-      top: 43px;
-      left: 343px;
-    }
+  }
+  .collage_change_liner {
+    height: 86px;
+    border: 1px solid #e6e6e6;
+    position: absolute;
+    top: 43px;
+    left: 343px;
   }
   .collage_shop_box {
     padding: 24px;
     margin: 0px 32px 24px;
     background: #ffffff;
+    position: relative;
+    border-radius: 8px;
     .collage_shop_content {
       display: flex;
       align-items: flex-start;
+
       .collage_shop_profile {
         width: 160px;
         height: 160px;
         background: #d8d8d8;
         border-radius: 8px;
+        flex-shrink: 0;
       }
       .collage_shop_right {
         margin-left: 16px;
         padding-top: 4px;
+        flex: 1;
         .collage_shop_title {
           font-size: 28px;
           font-weight: 600;
           color: #333333;
           line-height: 40px;
+          max-width: 438px;
         }
         .collage_shop_price {
           padding-top: 12px;
@@ -147,11 +167,13 @@ page {
           margin-left: 8px;
         }
         .collage_shop_tagStyle1 {
-          background: #ff4040;
+          background: rgba(255, 64, 64, 0.1);
+          color: rgba(255, 64, 64, 1);
           border-radius: 4px;
         }
         .collage_shop_tagStyle2 {
-          background: #ff9a3f;
+          background: rgba(255, 154, 63, 0.1);
+          color: rgba(255, 154, 63, 1);
           border-radius: 4px;
         }
         .collage_shop_tag:first-child {
@@ -162,7 +184,7 @@ page {
   }
   .collage_shop_bottom {
     .collage_shop_stepBox {
-      margin-left: 192px;
+      margin-left: 180px;
       display: flex;
       align-items: center;
       .collage_shop_step {
@@ -184,13 +206,12 @@ page {
         margin-left: 24px;
         font-size: 24px;
         font-weight: 400;
-        color: #333333;
+        color: #999999;
         line-height: 33px;
       }
     }
     .collage_shop_liner {
       width: 638px;
-      height: 1px;
       border: 1px solid #e6e6e6;
       margin-top: 28px;
     }
@@ -217,6 +238,7 @@ page {
       font-size: 28px;
       font-weight: 600;
       color: #ffffff;
+      margin-left: auto;
     }
     .collage_bottom_open {
       height: 64px;
@@ -232,6 +254,7 @@ page {
       align-items: center;
       justify-content: center;
       font-size: 28px;
+      color: #ffffff;
     }
   }
   .collage_tab_box {
@@ -255,5 +278,8 @@ page {
       border-radius: 5px;
       margin: 12px auto 0;
     }
+  }
+  .collage_one_margin {
+    margin-top: 96px;
   }
 }

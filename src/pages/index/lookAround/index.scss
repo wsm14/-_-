@@ -9,6 +9,9 @@ page {
   background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
   line-height: 1;
   position: relative;
+  view {
+    z-index: 10;
+  }
   .wechant_init {
     width: 530px;
     height: 92px;
@@ -62,8 +65,7 @@ page {
   .lookAround_goods_topHeight {
     height: 64px;
   }
-  .lookAround_content_margin {
-  }
+
 
   .lookAround_category_box {
     position: absolute;

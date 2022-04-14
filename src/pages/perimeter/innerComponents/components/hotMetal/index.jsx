@@ -6,6 +6,7 @@ import DateTime from "@/components/dateTime";
 import { filterStrList, backgroundObj, toast } from "@/utils/utils";
 import { renterCouponDesc } from "@/common/constant";
 import { fakeAcquirePlatformCoupon } from "@/server/coupon";
+import HotMetalCoupon from "./components/hotLb";
 import dayjs from "dayjs";
 import "./index.scss";
 export default ({ data, reload, onChange }) => {
@@ -16,7 +17,7 @@ export default ({ data, reload, onChange }) => {
     zIndex: "10",
   };
   const { contentInfo } = data;
-  const { mixedList, topImg, startDate, couponList } = contentInfo;
+  const { topImg, startDate, couponList, platformGiftPacks = [] } = contentInfo;
   const createActiveTime = (date) => {
     const limit = dayjs().format("YYYY-MM-DD");
     // 86400000
@@ -64,7 +65,6 @@ export default ({ data, reload, onChange }) => {
             className="hotMetal_shop_btn public_center hotMetal_shop_style1"
             onClick={(e) => {
               e.stopPropagation();
-              console.log(111);
               fakeAcquirePlatformCoupon({
                 platformCouponId: platformCouponId,
               }).then((val) => {
@@ -130,7 +130,6 @@ export default ({ data, reload, onChange }) => {
           <View className="hotMetal_shop_content">
             <View className="hotMetal_shop_title font_hide">{couponName}</View>
             <View className="hotMetal_tag hotMetal_tag_margin">
-              {" "}
               {renterCouponDesc(val)}
             </View>
           </View>
@@ -169,6 +168,10 @@ export default ({ data, reload, onChange }) => {
           times={createActiveTime(startDate)}
         ></DateTime>
       </View>
+
+      {platformGiftPacks.length > 0 && (
+        <HotMetalCoupon data={platformGiftPacks}></HotMetalCoupon>
+      )}
       <View className="hotMetal_content">
         <View className="hotMetal_content_box">
           {couponList.map((item) => {

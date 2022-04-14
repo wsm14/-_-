@@ -1,0 +1,45 @@
+.innerCouponDetails_top {
+  height: 259px;
+  position: relative;
+  .innerCouponDetails_share {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon982.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .innerCouponDetails_banner_height {
+    padding-top: 32px;
+    .innerCouponDetails_banner_box {
+      width: 652px;
+      height: 234px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon977.png")
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 0 auto;
+    }
+    .innerCouponDetails_banner_desc {
+      padding-top: 116px;
+      text-align: center;
+      .innerCouponDetails_banner_title1 {
+        font-size: 28px;
+        font-weight: 600;
+        color: #ff3434;
+        line-height: 40px;
+        max-width: 438px;
+        margin: 0 auto;
+      }
+      .innerCouponDetails_banner_title2 {
+        font-size: 48px;
+        font-weight: 600;
+        color: #ff3434;
+        line-height: 48px;
+        max-width: 438px;
+        margin: 0 auto;
+      }
+    }
+  }
+}

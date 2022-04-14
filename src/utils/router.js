@@ -41,6 +41,7 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     wraparound: "/pages/coupon/wraparound/index", //券包
     selectCoupon: "/pages/coupon/selectCoupon/index", //选择支付关联券
     increase: "/pages/coupon/increase/index", //平台券详情
+    innerCouponDetails: "/pages/coupon/innerCouponDetails/index", //平台券详情
     //券包
     bubble: "/pages/perimeter/bubble/index", //跳转风向标
     groupDetails: "/pages/perimeter/kaMerchantDetails/index", //集团详情
@@ -91,7 +92,6 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     commerOrder: "/pages/goods/commerOrder/index", //特惠商品下单
     pay: "/pages/goods/payWeex/index", //支付页
     paySuccess: "/pages/goods/paySuccess/index", //支付成功页
-    recharge: "/pages/perimeter/recharge/index", //话费充值
     prefecture: "/pages/perimeter/prefecture/index", //卡豆专区
     preChildTure: "/pages/perimeter/preChildTure/index", //吃喝玩乐购
     preSelfour: "/pages/perimeter/preSelfour/index", //周边游路口
@@ -104,6 +104,9 @@ export default ({ routerName, type = "navigateTo", args = {} }) => {
     fans: "/pages/kol/fans/index", //粉丝列表
     //kol
     wallet: "/pages/newUser/wallet/index", //我的钱包
+    collage: "/pages/newUser/collage/index", //拼团列表
+    moneyWallet: "/pages/newUser/moneyWallet/index", //拼团列表
+    collageDetails: "/pages/newUser/collageDetails/index", //拼团详情
     merchantHome: "/pages/newUser/merchantDetails/index",
     //newUser
 

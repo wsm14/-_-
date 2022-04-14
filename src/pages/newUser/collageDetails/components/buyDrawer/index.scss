@@ -1,0 +1,44 @@
+.buyDrawer_box {
+  width: 598px;
+  padding: 40px 0;
+  background: #ffffff;
+  border-radius: 40px;
+  .buyDrawer_title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 32px;
+    text-align: center;
+  }
+  .buyDrawer_body {
+    width: 518px; 
+    max-height: 600px;
+    margin: 40px auto 0;
+    padding: 0 40px;
+    .buyDrawer_list_box {
+      height: 64px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+    }
+    .buyDrawer_list_profile {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      border-radius: 50%;
+    }
+    .buyDrawer_list_userName {
+      margin-left: 16px;
+      max-width: 206px;
+    }
+    .buyDrawer_list_right {
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+      margin-left: auto;
+    }
+  }
+  .buyDrawer_list_box:last-child {
+    margin-bottom: 0;
+  }
+}

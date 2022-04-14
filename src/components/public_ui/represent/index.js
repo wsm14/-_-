@@ -8,8 +8,15 @@ import "./index.scss";
 
 export default (props) => {
   const { data, configUserLevelInfo } = props;
-  const { allowExpireRefund, allowRefund, needOrder, activityType, rightFlag } =
-    data;
+  const {
+    allowExpireRefund,
+    allowRefund,
+    needOrder,
+    activityType,
+    rightFlag,
+    paymentModeObject = {},
+  } = data;
+  const { type } = paymentModeObject;
   const {
     payBeanCommission = 50,
 
@@ -50,17 +57,33 @@ export default (props) => {
               <View className="shopDetails_tab_font">过期退</View>
             </>
           )}
-          {rightFlag !== "1" && (
+          {type !== "self" && (
             <>
               <View className="shopDetails_tab_icon"></View>
               <View className="shopDetails_tab_questionRight color2 font24">
-                卡豆抵扣
                 <Text className="color11 font24">
-                  {payBeanCommission + "%"}
+                  卡豆抵扣 {payBeanCommission + "%"}
                 </Text>
               </View>
             </>
           )}
+          <View
+            onClick={() => Router({ routerName: "interests" })}
+            className="shop_question question_icon"
+          ></View>
+        </View>
+      )}
+      {activityType === "commerceGoods" && type !== "self" && (
+        <View className="represent_buy_rules">
+          <View className="represent_buy_rulesName">保障</View>
+          <View className="shopDetails_tab_icon"></View>
+          <View className="shopDetails_tab_questionRight color2 font24">
+            卡豆抵扣
+            <Text className="color11 font24">
+              {" " + payBeanCommission + "%"}
+            </Text>
+          </View>
+
           <View
             onClick={() => Router({ routerName: "interests" })}
             className="shop_question question_icon"

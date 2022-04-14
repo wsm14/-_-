@@ -67,6 +67,8 @@ export default (props) => {
           routerName: weChatUrl,
           args: {
             ...param,
+            payBeanCommission,
+            identification,
           },
         });
       } else if (jumpUrlType === "h5" && jumpUrl) {

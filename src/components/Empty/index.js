@@ -11,7 +11,14 @@ import "./index.scss";
  *
  */
 export default (props) => {
-  const { show = false, type = "home", toast, fn } = props;
+  const {
+    show = false,
+    type = "home",
+    toast,
+    fn,
+    pt = false,
+    pylb = "",
+  } = props;
   const template = {
     home: <View className="empty_img_home  empty_img_box"></View>,
     error: <View className="empty_img_error  empty_img_box"></View>,
@@ -22,6 +29,7 @@ export default (props) => {
     return (
       <View className="empty_box">
         {template}
+        {pt && <View className="empty_info_pt">{pylb}</View>}
         <View className="empty_info_font">{toast}</View>
         {fn && (
           <View onClick={() => fn()} className="empty_info_btn public_center">

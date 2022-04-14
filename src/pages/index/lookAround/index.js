@@ -41,6 +41,8 @@ import SixPalaceLattice from "./components/sudoku";
 import HotMetal from "./components/hotMetal";
 import Rebate from "./components/rebate";
 import FieldResource from "./components/fieldResource";
+import SpaceOccupying from "./components/spaceOccupyingLattice";
+import BeanBalance from "./components/BeanBalance";
 import { fetchBeanAndEarn } from "@/server/index";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
@@ -743,7 +745,6 @@ class Index extends Component {
       selfTour: (
         <GameGoods
           data={wanderAroundModule}
-        
           linkTo={this.saveRouter.bind(this)}
           list={selfTourResourceList}
         ></GameGoods>
@@ -791,11 +792,12 @@ class Index extends Component {
       timeLimitedCoupon: <HotMetal data={wanderAroundModule}></HotMetal>,
       beanDeductionZone: <Rebate data={wanderAroundModule}></Rebate>,
       fieldResource: <FieldResource data={wanderAroundModule}></FieldResource>,
+      beanBalance: <BeanBalance val={topBeanData}></BeanBalance>,
     };
     //根据后端 显示函数 映射对应渲染模板
     return (
       <View className="lookAround_box">
-        <Navition val={topBeanData} city={cityName}></Navition>
+        <Navition data={wanderAroundModule} city={cityName}></Navition>
         <NewUser></NewUser>
         <Skeleton loading={loading}>
           <View className="lookAround_no_style">
@@ -810,17 +812,28 @@ class Index extends Component {
               <React.Fragment>
                 <View className="lookAround_content_margin">
                   {wanderAroundModule.map((item, index) => {
-                    if (templateObj[item["moduleName"]]) {
-                      if (index === wanderAroundModule.length - 2) {
-                        return (
-                          <View style={{ marginBottom: Taro.pxTransform(24) }}>
-                            {templateObj[item["moduleName"]]}
-                          </View>
-                        );
+                    if (item.moduleName === "spaceOccupyingLattice") {
+                      return (
+                        <SpaceOccupying
+                          data={item}
+                          index={index}
+                        ></SpaceOccupying>
+                      );
+                    } else {
+                      if (templateObj[item["moduleName"]]) {
+                        if (index === wanderAroundModule.length - 2) {
+                          return (
+                            <View
+                              style={{ marginBottom: Taro.pxTransform(24) }}
+                            >
+                              {templateObj[item["moduleName"]]}
+                            </View>
+                          );
+                        }
+                        return templateObj[item["moduleName"]];
                       }
-                      return templateObj[item["moduleName"]];
+                      return null;
                     }
-                    return null;
                   })}
                 </View>
               </React.Fragment>

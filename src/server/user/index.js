@@ -309,6 +309,7 @@ export const fakeWechatPayInfo = (data, fn) => {
   );
 };
 //获取微信支付需要的参数接口
+
 //微信支付
 export const handlePayWechat = (data = {}, callback) => {
   const { xcxOpenId } = loginStatus();
@@ -325,3 +326,109 @@ export const handlePayWechat = (data = {}, callback) => {
     });
   });
 };
+
+export const fetchListTogether = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/together/group/listTogetherGroupConfig",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//查询拼团配置
+
+export const fetchStartGroupByStatus = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/start/group/listUserStartGroupByStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户开团列表
+
+export const fetchJoinGroupByStatus = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/join/group/listUserJoinGroupByStatus",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户参团列表
+
+export const fetchStartGroupRebate = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/start/group/userStartGroupRebateStatistic",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户开团列表
+
+export const fetchJoinGroupRebate = (data = {}, fn) => {
+  return httpGet(
+    {
+      url: "/user/join/group/userJoinGroupRebateStatistic",
+      data: data,
+    },
+    (res) => fn && fn(res)
+  );
+};
+//用户参团列表
+
+export const fakeStartGroup = (data, fn) => {
+  return httpPost(
+    {
+      url: "/user/start/group/startGroup",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//开团
+
+export const fetchGroupDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/start/group/groupDetail",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//开团详情
+
+export const fetchMarketingCash = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/userBean/getUserMarketingCash",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//现金 拼团钱包
+export const fetchGiftPackDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/platform/gift/getPlatformGiftPackDetail",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//查询礼包详情

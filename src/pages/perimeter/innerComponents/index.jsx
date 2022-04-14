@@ -45,12 +45,12 @@ class Index extends Component {
         identification,
       },
     });
-  }
+  } 
   linkToCoupon = (item) => {
     const { httpData } = this.state;
     const { identification } = httpData;
     const { platformCouponId, useScenesType, classType } = item;
-    if (classType !== "universal") {
+    if (useScenesType !== "virtual") {
       Router({
         routerName: "increase",
         args: {

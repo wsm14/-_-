@@ -109,14 +109,29 @@ export default () => {
       ),
     },
     ecGoods: {
-      bagColor: "#74CBFF",
       showDom: (
-        <DetailCommerceGoods
-          data={goodsData}
-          list={coommList}
-          setGoodsData={setGoodsData}
-          handleGoBuyGoods={handleGoBuyGoods}
-        />
+        <View
+          className="beanWelfareZone_content"
+          style={{ backgroundColor: "#74CBFF" }}
+        >
+          {/* 头部背景文案 */}
+          <BwzHead data={goodsData}></BwzHead>
+          {/* 中部 商品展示区域 */}
+          <DetailCommerceGoods
+            data={goodsData}
+            list={coommList}
+            setGoodsData={setGoodsData}
+            handleGoBuyGoods={handleGoBuyGoods}
+          />
+          {/* 底部 获取卡豆提示 跳转app 购买说明 哒卡乐slogan */}
+          <BwzRuleFooter></BwzRuleFooter>
+          {/* 卡豆不足提示框 */}
+          <BeanLackModal
+            data={goodsData}
+            visible={beanLack}
+            onClose={() => setBeanLack(false)}
+          ></BeanLackModal>
+        </View>
       ),
     },
     telephoneCharges: {
@@ -130,23 +145,5 @@ export default () => {
     },
   }[mode];
 
-  return (
-    <View
-      className="beanWelfareZone_content"
-      style={{ backgroundColor: propsData.bagColor }}
-    >
-      {/* 头部背景文案 */}
-      <BwzHead data={goodsData}></BwzHead>
-      {/* 中部 商品展示区域 */}
-      {propsData.showDom}
-      {/* 底部 获取卡豆提示 跳转app 购买说明 哒卡乐slogan */}
-      <BwzRuleFooter></BwzRuleFooter>
-      {/* 卡豆不足提示框 */}
-      <BeanLackModal
-        data={goodsData}
-        visible={beanLack}
-        onClose={() => setBeanLack(false)}
-      ></BeanLackModal>
-    </View>
-  );
+  return propsData.showDom;
 };

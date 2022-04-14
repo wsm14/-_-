@@ -68,8 +68,11 @@ export default {
       pages: [
         "rewardDetails/index", //奖励 明细
         "wallet/index", //钱包
+        "moneyWallet/index", //现金钱包
         "beanRule/index", //卡豆权益
         "userConceal/index", //协议规则
+        "collage/index", //拼团
+        "collageDetails/index", //拼团详情
       ],
     },
     {
@@ -84,6 +87,7 @@ export default {
         "shareActive/index", //活动主会场
         "shareUser/index", //活动页助力
         "shareSign/index", //集碎片助力
+        "joinGame/index", //游戏前置页面
         // "ImperVideo/index", // 激励视频
       ],
     },
@@ -148,6 +152,7 @@ export default {
         "couponDetails/index", //券包详情
         "selectCoupon/index", //选择支付券
         "increase/index", //平台券详情
+        "innerCouponDetails/index", //限时神券礼包详情
       ],
     },
     {

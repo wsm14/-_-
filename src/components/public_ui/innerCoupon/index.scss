@@ -1,0 +1,268 @@
+.innerCoupon_box1:last-child {
+  margin-right: 0px;
+}
+.innerCoupon_box2:last-child {
+  margin-right: 0px;
+}
+.innerCoupon_box1 {
+  width: 208px;
+  height: 248px;
+  position: relative;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon974.png")
+    no-repeat;
+  background-size: 100% 100%;
+  flex-shrink: 0;
+  margin-right: 12px;
+  .innerCoupon_title {
+    padding-top: 22px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+    max-width: 188px;
+    margin: 0 auto;
+  }
+  .innerCoupon_price {
+    padding-top: 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: #fb462f;
+    .innerCoupon_price_fh {
+      padding-top: 24px;
+      font-size: 30px;
+    }
+    .innerCoupon_price_jg {
+      font-size: 56px;
+      font-weight: bold;
+    }
+  }
+  .innerCoupon_price_mk {
+    padding-top: 8px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #fdb5ac;
+  }
+  .innerCoupon_desc {
+    font-size: 20px;
+    font-weight: 400;
+    color: #999999;
+    text-align: center;
+    padding-top: 40px;
+    max-width: 188px;
+    margin: 0 auto;
+  }
+}
+.innerCoupon_box2 {
+  width: 318px;
+  height: 248px;
+  position: relative;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon975.png")
+    no-repeat;
+  background-size: 100% 100%;
+  padding-top: 22px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 400;
+  color: #333333;
+  flex-shrink: 0;
+  margin-right: 10px;
+  .innerCoupon_title {
+    padding-top: 22px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #333333;
+    max-width: 288px;
+    margin: 0 auto;
+  }
+  .innerCoupon_price {
+    padding-top: 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: #fb462f;
+    .innerCoupon_price_fh {
+      padding-top: 24px;
+      font-size: 30px;
+    }
+    .innerCoupon_price_jg {
+      font-size: 56px;
+      font-weight: bold;
+    }
+  }
+  .innerCoupon_price_mk {
+    padding-top: 8px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #fdb5ac;
+  }
+  .innerCoupon_desc {
+    font-size: 20px;
+    font-weight: 400;
+    color: #999999;
+    text-align: center;
+    padding-top: 40px;
+    margin: 0 auto;
+  }
+}
+.innerCoupon_box3 {
+  width: 648px;
+  height: 248px;
+  position: relative;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon976.png")
+    no-repeat;
+  background-size: 100% 100%;
+  flex-shrink: 0;
+  line-height: 1;
+  .innerCoupon_increase_odesc {
+    margin: 72px 0 0 40px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+    max-width: 338px;
+    text-align: left;
+  }
+
+  .innerCoupon_title_leftInfo {
+    width: 438px;
+    padding: 40px 0 0 32px;
+    text-align: left;
+  }
+  .innerCoupon_title_font {
+    max-width: 350px;
+    height: 32px;
+    font-size: 32px;
+    color: #333333;
+    font-weight: 600;
+  }
+  .innerCoupon_title_time {
+    margin-top: 24px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+  }
+
+  .innerCoupon_title_right {
+    position: absolute;
+    top: 24px;
+    right: 40px;
+
+    .innerCoupon_title_priceInfo {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      color: #fb462f;
+      .innerCoupon_price_fh {
+        padding-top: 18px;
+        font-size: 32px;
+      }
+      .innerCoupon_price_jg {
+        font-size: 56px;
+        font-weight: bold;
+      }
+    }
+    .innerCoupon_price_mk {
+      text-align: right;
+      padding-top: 8px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #fdb5ac;
+    }
+  }
+  .innerCoupon_tag_icon {
+    height: 48px;
+    background: rgba(239, 71, 111, 0.1);
+    border-radius: 4px;
+    padding: 0 16px;
+    font-size: 28px;
+    color: rgba(239, 71, 111, 1);
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    border-radius: 12px;
+  }
+}
+.innerCoupon_box4:first-child {
+  margin-top: 0px;
+}
+.innerCoupon_box4 {
+  width: 686px;
+  height: 248px;
+  position: relative;
+  background: url("https://wechat-config.dakale.net/miniprogram/image/icon976.png")
+    no-repeat;
+  background-size: 100% 100%;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 16px;
+  .innerCoupon_increase_odesc {
+    margin: 72px 0 0 40px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #999999;
+    max-width: 338px;
+    text-align: left;
+  }
+
+  .innerCoupon_title_leftInfo {
+    width: 438px;
+    padding: 40px 0 0 32px;
+    text-align: left;
+  }
+  .innerCoupon_title_font {
+    max-width: 350px;
+    height: 32px;
+    font-size: 32px;
+    color: #333333;
+    font-weight: 600;
+  }
+  .innerCoupon_title_time {
+    margin-top: 24px;
+    font-size: 28px;
+    font-weight: 400;
+    color: #999999;
+  }
+
+  .innerCoupon_title_right {
+    position: absolute;
+    top: 24px;
+    right: 40px;
+
+    .innerCoupon_title_priceInfo {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      color: #fb462f;
+      .innerCoupon_price_fh {
+        padding-top: 18px;
+        font-size: 32px;
+      }
+      .innerCoupon_price_jg {
+        font-size: 56px;
+        font-weight: bold;
+      }
+    }
+    .innerCoupon_price_mk {
+      text-align: right;
+      padding-top: 8px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #fdb5ac;
+    }
+  }
+  .innerCoupon_tag_icon {
+    height: 48px;
+    background: rgba(239, 71, 111, 0.1);
+    border-radius: 4px;
+    padding: 0 16px;
+    font-size: 28px;
+    color: rgba(239, 71, 111, 1);
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    border-radius: 12px;
+  }
+}

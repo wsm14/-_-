@@ -1,0 +1,57 @@
+.innerDesc_box {
+  padding-top: 48px;
+  .innerDesc_title {
+    font-size: 36px;
+    font-weight: 600;
+    color: #ffffff;
+    text-align: center;
+  }
+  .innerDesc_flex_box {
+    margin: 32px 32px 0;
+  }
+  .innerDesc_flex_content {
+    width: 331px;
+    height: 256px;
+  }
+  .innerDesc_flex_contentBg1 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon979.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .innerDesc_flex_contentBg2 {
+    background: url("https://wechat-config.dakale.net/miniprogram/image/icon980.png")
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .innerDesc_flex_desc {
+    margin: 40px 32px 0;
+    padding: 32px 24px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    .innerDesc_flex_descTitle {
+      font-size: 32px;
+      font-weight: 600;
+      color: #ffffff;
+      text-align: center;
+    }
+    .innerDesc_flex_font {
+      margin-top: 24px;
+      font-size: 26px;
+
+      font-weight: 400;
+      color: #ffffff;
+    }
+  }
+  .innerDesc_flex_logo {
+    height: 296px;
+    padding-top: 40px;
+    .innerDesc_flex_logoImg {
+      width: 372px;
+      height: 56px;
+      background: url("https://wechat-config.dakale.net/miniprogram/image/icon981.png")
+        no-repeat;
+      background-size: 100% 100%;
+      margin: 0 auto;
+    }
+  }
+}
