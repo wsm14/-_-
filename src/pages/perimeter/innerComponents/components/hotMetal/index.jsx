@@ -17,7 +17,7 @@ export default ({ data, reload, onChange }) => {
     zIndex: "10",
   };
   const { contentInfo } = data;
-  const { topImg, startDate, couponList, platformGiftPacks } = contentInfo;
+  const { topImg, startDate, couponList, platformGiftPacks = [] } = contentInfo;
   const createActiveTime = (date) => {
     const limit = dayjs().format("YYYY-MM-DD");
     // 86400000
@@ -130,7 +130,6 @@ export default ({ data, reload, onChange }) => {
           <View className="hotMetal_shop_content">
             <View className="hotMetal_shop_title font_hide">{couponName}</View>
             <View className="hotMetal_tag hotMetal_tag_margin">
-              {" "}
               {renterCouponDesc(val)}
             </View>
           </View>

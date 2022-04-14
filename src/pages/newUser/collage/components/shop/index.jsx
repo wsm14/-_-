@@ -133,9 +133,9 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
         <View className="collage_shop_right font_hide">
           <View className="collage_shop_title font_hide">{goodsName}</View>
           <View className="collage_shop_price">
-            <Text className="color1 font20">拼团价:</Text>
-            <Text className="color3 font28">¥{togetherPrice}</Text>
-            <Text className="color2 font20"> 原价:</Text>
+            <Text className="color1 font22">拼团价:</Text>
+            <Text className="color3 font28 bold">¥{togetherPrice}</Text>
+            <Text className="color2 font22"> 原价:</Text>
             <Text className="color2 font24 text_through">¥{oriPrice}</Text>
           </View>
           <View className="collage_shop_tagsBox">

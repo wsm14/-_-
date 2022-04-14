@@ -7,7 +7,7 @@ import Router from "@/utils/router";
 import "./index.scss";
 export default ({ data }) => {
   console.log(data);
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(1);
   return (
     <View className="hotMetal_lb_swiperBox">
       <Swiper
@@ -24,21 +24,29 @@ export default ({ data }) => {
             paymentModeObject = {},
             buyPrice,
             platformGiftId,
+            giftValue,
           } = item;
           const { type = "defaultMode", bean, cash } = paymentModeObject;
           return (
             <SwiperItem>
               <View className="hotMetal_lb_box">
                 <View className="hotMetal_lb_title">惊喜神券大礼包</View>
-                <View className="hotMetal_lb_desc">{giftName}</View>
+                <View className="hotMetal_lb_desc">
+                  价值{giftValue}元的{giftName}仅需
+                  {type === "defaultMode" ? `${buyPrice}` : `${cash}`}元
+                </View>
                 {platformGiftPackRelateList.length >= 3 ? (
-                  <ScrollView className="hotMetal_lb_content" scrollX>
+                  <View className="hotMetal_lb_content">
                     <View className="hotMetal_lb_content_info">
-                      {platformGiftPackRelateList.map((val) => {
-                        return <Coupon type={1} data={val}></Coupon>;
+                      {platformGiftPackRelateList.map((val, index) => {
+                        if (index < 2) {
+                          return <Coupon type={1} data={val}></Coupon>;
+                        } else {
+                          return null;
+                        }
                       })}
                     </View>
-                  </ScrollView>
+                  </View>
                 ) : (
                   <View className="hotMetal_lb_content public_center">
                     {platformGiftPackRelateList.map((val) => {
@@ -71,15 +79,15 @@ export default ({ data }) => {
         })}
       </Swiper>
       {data.length > 1 && (
-        <View className="show_near">
+        <View className="hotMetal_show_near">
           {data.map((item, index) => {
             return (
               <View
                 key={index}
                 className={classNames(
                   index == current - 1
-                    ? "show_near_linerTrue"
-                    : "show_near_false"
+                    ? "hotMetal_near_linerTrue"
+                    : "hotMetal_near_false"
                 )}
               ></View>
             );

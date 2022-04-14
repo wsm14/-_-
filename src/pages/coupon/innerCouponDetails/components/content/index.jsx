@@ -21,6 +21,7 @@ export default ({ data }) => {
           onClick={() =>
             Router({
               routerName: "wraparound",
+              args: { tabStatus: "platform" },
             })
           }
         >

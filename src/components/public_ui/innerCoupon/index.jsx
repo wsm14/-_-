@@ -23,6 +23,7 @@ export default ({ type = 1, data }) => {
     total,
     useScenesType,
     useTimeRule,
+    otherDesc,
   } = platformCoupon;
   const renter = () => {
     if (classType === "universal" && useScenesType === "goodsBuy") {
@@ -52,7 +53,7 @@ export default ({ type = 1, data }) => {
           <View className="innerCoupon_price_jg">{couponValue}</View>
         </View>
         <View className="innerCoupon_price_mk">满{thresholdPrice}可用</View>
-        <View className="innerCoupon_desc font_hide">{couponDesc}</View>
+        <View className="innerCoupon_desc font_hide">{otherDesc}</View>
       </View>
     ),
     2: (
@@ -63,7 +64,7 @@ export default ({ type = 1, data }) => {
           <View className="innerCoupon_price_jg">{couponValue}</View>
         </View>
         <View className="innerCoupon_price_mk">满{thresholdPrice}可用</View>
-        <View className="innerCoupon_desc font_hide">{couponDesc}</View>
+        <View className="innerCoupon_desc font_hide">{otherDesc}</View>
       </View>
     ),
     3: (
@@ -76,7 +77,7 @@ export default ({ type = 1, data }) => {
           <View className="innerCoupon_title_time">
             {activeDate && endDate
               ? activeDate + "至" + endDate
-              : `领取后${delayDays}天生效 | 有效期：${activeDays}天`}
+              : `领取后 ${activeDays}天可用`}
           </View>
         </View>
         <View className="innerCoupon_title_right  font_hide">
@@ -87,7 +88,7 @@ export default ({ type = 1, data }) => {
           <View className="innerCoupon_price_mk">满{thresholdPrice}可用</View>
         </View>
         <View className="innerCoupon_increase_odesc font_hide">
-          {couponDesc}
+          {otherDesc}
         </View>
         {<View className="innerCoupon_tag_icon public_center">{renter()}</View>}
       </View>
@@ -102,7 +103,7 @@ export default ({ type = 1, data }) => {
           <View className="innerCoupon_title_time">
             {activeDate && endDate
               ? activeDate + "至" + endDate
-              : `领取后${delayDays}天生效 | 有效期：${activeDays}天`}
+              : `领取后 ${activeDays}天可用`}
           </View>
         </View>
         <View className="innerCoupon_title_right  font_hide">
@@ -113,7 +114,7 @@ export default ({ type = 1, data }) => {
           <View className="innerCoupon_price_mk">满{thresholdPrice}可用</View>
         </View>
         <View className="innerCoupon_increase_odesc font_hide">
-          {couponDesc}
+          {otherDesc}
         </View>
         {<View className="innerCoupon_tag_icon public_center">{renter()}</View>}
       </View>

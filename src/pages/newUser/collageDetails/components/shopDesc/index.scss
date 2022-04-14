@@ -22,6 +22,7 @@
     background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
     border-radius: 100px 0px 0px 100px;
     margin-left: 16px;
+    transform: rotateZ(180deg);
   }
   .collageTime_shop_details {
     margin-top: 16px;
@@ -53,6 +54,7 @@
   }
   .collageTime_desc_bg {
     margin: 40px auto 0;
-    background: #ffffff ;
+    background: #ffffff;
+    padding: 42px 24px;
   }
 }

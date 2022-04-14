@@ -42,6 +42,7 @@ import HotMetal from "./components/hotMetal";
 import Rebate from "./components/rebate";
 import FieldResource from "./components/fieldResource";
 import SpaceOccupying from "./components/spaceOccupyingLattice";
+import BeanBalance from "./components/BeanBalance";
 import { fetchBeanAndEarn } from "@/server/index";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
@@ -791,15 +792,12 @@ class Index extends Component {
       timeLimitedCoupon: <HotMetal data={wanderAroundModule}></HotMetal>,
       beanDeductionZone: <Rebate data={wanderAroundModule}></Rebate>,
       fieldResource: <FieldResource data={wanderAroundModule}></FieldResource>,
+      beanBalance: <BeanBalance val={topBeanData}></BeanBalance>,
     };
     //根据后端 显示函数 映射对应渲染模板
     return (
       <View className="lookAround_box">
-        <Navition
-          data={wanderAroundModule}
-          val={topBeanData}
-          city={cityName}
-        ></Navition>
+        <Navition data={wanderAroundModule} city={cityName}></Navition>
         <NewUser></NewUser>
         <Skeleton loading={loading}>
           <View className="lookAround_no_style">
@@ -819,7 +817,6 @@ class Index extends Component {
                         <SpaceOccupying
                           data={item}
                           index={index}
-                          onChange={this.bubbleLink.bind(this)}
                         ></SpaceOccupying>
                       );
                     } else {

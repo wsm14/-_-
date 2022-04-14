@@ -54,27 +54,7 @@
     align-items: center;
     flex-wrap: nowrap;
   }
-  .show_near {
-    position: absolute;
-    height: 6px;
-    left: 0;
-    right: 0;
-    bottom: 24px;
-    display: flex;
-    justify-content: center;
-    .show_near_linerTrue {
-      width: 30px;
-      height: 6px;
-      border-radius: 3px;
-      margin-right: 8px;
-    }
-    .show_near_false {
-      width: 20px;
-      height: 6px;
-      border-radius: 3px;
-      margin-right: 8px;
-    }
-  }
+
   .hotMetal_lb_btn {
     width: 540px;
     height: 96px;
@@ -91,5 +71,30 @@
     font-size: 36px;
     font-weight: 600;
     color: #ffffff;
+  }
+}
+.hotMetal_show_near {
+  position: absolute;
+  height: 6px;
+  left: 0;
+  right: 0;
+  bottom: 48px;
+  display: flex;
+  justify-content: center;
+  z-index: 105;
+  .hotMetal_near_linerTrue {
+    width: 30px;
+    height: 6px;
+    border-radius: 3px;
+    margin-right: 8px;
+    background: #ffffff;
+  }
+  .hotMetal_near_false {
+    width: 20px;
+    height: 6px;
+    border-radius: 3px;
+    margin-right: 8px;
+    background: #ffffff;
+    opacity: 0.3;
   }
 }

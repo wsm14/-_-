@@ -1,0 +1,43 @@
+.lookAround_beanInfo_box {
+  padding: 0 42px;
+  height: 180px;
+  position: relative;
+  z-index: 10;
+  .lookAround_beanInfo_left {
+    padding-top: 22px;
+  }
+  .lookAround_navition_money {
+    width: 184px;
+    height: 180px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon928.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .lookAround_navition_moneyBean {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ff495d;
+    text-align: center;
+    padding-top: 56px;
+  }
+  .lookAround_navition_moneyDesc {
+    padding-top: 8px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ff495d;
+  }
+  .lookAround_navition_beanLink {
+    width: 180px;
+    height: 48px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon926.png)
+      no-repeat;
+    background-size: 100% 100%;
+  }
+  .lookAround_navition_beanNum {
+    padding-top: 24px;
+    font-size: 64px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+}

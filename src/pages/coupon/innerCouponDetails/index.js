@@ -6,7 +6,7 @@ import Top from "./components/top";
 import Content from "./components/content";
 import InnerDesc from "./components/innerDesc";
 import Submit from "./components/submit";
-import { loginStatus } from "@/utils/utils";
+import { setNavTitle } from "@/utils/utils";
 import "./index.scss";
 class Index extends PureComponent {
   constructor() {
@@ -25,6 +25,8 @@ class Index extends PureComponent {
       platformGiftId,
     }).then((val = {}) => {
       const { platformGiftPackInfo = {} } = val;
+      const { giftName } = platformGiftPackInfo;
+      setNavTitle(giftName);
       this.setState({
         platformGiftPackInfo,
       });

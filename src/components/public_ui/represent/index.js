@@ -73,20 +73,17 @@ export default (props) => {
           ></View>
         </View>
       )}
-      {activityType === "commerceGoods" && (
+      {activityType === "commerceGoods" && type !== "self" && (
         <View className="represent_buy_rules">
           <View className="represent_buy_rulesName">保障</View>
-          {type !== "self" && (
-            <>
-              <View className="shopDetails_tab_icon"></View>
-              <View className="shopDetails_tab_questionRight color2 font24">
-                卡豆抵扣
-                <Text className="color11 font24">
-                  {" " + payBeanCommission + "%"}
-                </Text>
-              </View>
-            </>
-          )}
+          <View className="shopDetails_tab_icon"></View>
+          <View className="shopDetails_tab_questionRight color2 font24">
+            卡豆抵扣
+            <Text className="color11 font24">
+              {" " + payBeanCommission + "%"}
+            </Text>
+          </View>
+
           <View
             onClick={() => Router({ routerName: "interests" })}
             className="shop_question question_icon"

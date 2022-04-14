@@ -101,11 +101,20 @@ class Index extends Component {
         </View>
         {visible && (
           <Toast
-            title={"卡豆规则"}
+            title={" 钱包说明"}
             close={() => this.setState({ visible: false })}
           >
             <View className="money_desc_text">
-              卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则卡豆规则
+              <View className="color1 bold">1.哒人收益</View>
+              <View className="color2">
+                解锁哒人之后在平台进行商品分享所赚取的收益为哒人收益；
+              </View>
+              <View style={{ marginTop: "12px" }} className="color1">
+                2.拼团返佣
+              </View>
+              <View className="color2 bold">
+                通过开团且开团成功之后获得的参与红包、开团返佣的收益为拼团返佣。
+              </View>
             </View>
           </Toast>
         )}

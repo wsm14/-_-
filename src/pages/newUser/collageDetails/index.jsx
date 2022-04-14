@@ -179,7 +179,7 @@ class Index extends Component {
           </View>
           <View className="collageDetails_price3">¥{notWinFee}</View>
           <View className="collageDetails_price4">
-            ¥{oriPrice - togetherPrice}
+            ¥{(oriPrice - togetherPrice).toFixed(2)}
           </View>
         </View>
         <ShopDesc data={groupDetail}></ShopDesc>

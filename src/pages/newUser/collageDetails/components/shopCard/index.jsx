@@ -72,7 +72,7 @@ export default ({
             </View>
           </View>
           <View className="clooageTime_shop_price">
-            <View className="font20 color1">拼团价:</View>
+            <View className="font24 color1">拼团价:</View>
             <View className="price_margin4 font40 color3 bold">
               ¥{togetherPrice}
             </View>
@@ -91,7 +91,7 @@ export default ({
         <View className="collageDetail_templateContent_liner"></View>
         <View className="collageDetail_templateContent_people">
           - 还差
-          <Text className="collageDetail_templateContent_peopleCount">
+          <Text className="collageDetail_templateContent_peopleCount color3">
             {10 - joinUserNum}位
           </Text>
           即可成团 -
@@ -192,7 +192,7 @@ export default ({
             onClick={onChange}
           >
             拼团成功，恭喜您拼中
-            {rewardType === "winGoods" ? "拼中商品" : "拼中红包"}
+            {rewardType === "winGoods" ? "商品" : "红包"}
           </View>
         );
       } else {
@@ -237,7 +237,7 @@ export default ({
       ></DrawerList>
       <PayToast
         visible={visiblePay}
-        close={() => this.setState({ visible: false })}
+        close={() => setVisiblePay(false)}
         cancel={() => setVisiblePay(false)}
         canfirm={() => {
           setVisiblePay(false);

@@ -24,7 +24,7 @@ export default ({ data = {}, handleGoBuyGoods }) => {
   return (
     <View className="bwzGoodContent_content telephoneCharges">
       <View className="bwzGoodContent_content_page">
-        <Top data={data}></Top>
+        <Top shareFlag={false} data={data}></Top>
         <Content data={data}></Content>
         <InnerDesc data={data}></InnerDesc>
         <Submit data={data}></Submit>

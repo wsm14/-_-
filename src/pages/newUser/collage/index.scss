@@ -127,6 +127,7 @@ page {
     margin: 0px 32px 24px;
     background: #ffffff;
     position: relative;
+    border-radius: 8px;
     .collage_shop_content {
       display: flex;
       align-items: flex-start;
@@ -183,7 +184,7 @@ page {
   }
   .collage_shop_bottom {
     .collage_shop_stepBox {
-      margin-left: 192px;
+      margin-left: 180px;
       display: flex;
       align-items: center;
       .collage_shop_step {
@@ -205,7 +206,7 @@ page {
         margin-left: 24px;
         font-size: 24px;
         font-weight: 400;
-        color: #333333;
+        color: #999999;
         line-height: 33px;
       }
     }

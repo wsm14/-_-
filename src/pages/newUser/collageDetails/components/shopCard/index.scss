@@ -27,7 +27,7 @@
       .clooageTime_shop_count::after {
         content: "";
         position: absolute;
-        top: -4px;
+        top: -2px;
         left: -4px;
         z-index: 10;
         width: 119px;
@@ -42,7 +42,7 @@
         font-weight: 600;
         color: #333333;
         line-height: 40px;
-        height: 80px;
+        max-height: 80px;
       }
       .clooageTime_shop_count {
         margin: 4px 0 0;
@@ -70,13 +70,13 @@
         left: 0;
       }
       .clooageTime_shop_price {
-        margin-top: 72px;
+        margin-top: 66px;
         display: flex;
         align-items: baseline;
       }
       .clooageTime_shop_throuer {
         margin-left: 16px;
-        font-size: 20px;
+        font-size: 24px;
         font-weight: 400;
         color: #999999;
       }
@@ -93,7 +93,6 @@
     position: relative;
     .collageDetail_templateContent_liner {
       width: 638px;
-      height: 1px;
       border: 1px solid #e6e6e6;
     }
     .collageDetail_templateContent_people {
@@ -132,6 +131,7 @@
     height: 87px;
     position: absolute;
     top: -20px;
+    left: -2px;
     background: url(https://wechat-config.dakale.net/miniprogram/image/icon973.png)
       no-repeat;
     background-size: 100% 100%;
@@ -187,13 +187,13 @@
   }
   @keyframes btnScale {
     0% {
-      transform: scaleX(0.8);
+      transform: scale(0.9);
     }
     50% {
-      transform: scaleX(1);
+      transform: scale(1);
     }
     100% {
-      transform: scaleX(0.8);
+      transform: scale(0.9);
     }
   }
   .collageTime_scale {

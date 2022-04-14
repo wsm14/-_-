@@ -4,14 +4,14 @@ import { ScrollView, View, Button } from "@tarojs/components";
 import Taro, { useDidShow, useShareAppMessage, useRouter } from "@tarojs/taro";
 import { fetchNewShareInfo } from "@/server/common";
 import "./index.scss";
-export default ({ data }) => {
+export default ({ data, shareFlag = true }) => {
   const [shareData, setShareData] = useState({});
   const routeParams = useRouter().params;
   const { platformGiftId } = routeParams;
   useDidShow(() => {
     fetchNewShareInfo({
       shareType: "platformGift",
-      giftId: platformGiftId,
+      shareId: platformGiftId,
     }).then((val) => {
       const { shareInfo = {} } = val;
       setShareData(shareInfo);
@@ -24,13 +24,21 @@ export default ({ data }) => {
       imageUrl: miniProgramImage,
       path: `/${miniProgramUrl}`,
     };
-    if (res.from === "button") {
-      return data;
+    if (shareFlag) {
+      if (res.from === "button") {
+        return data;
+      } else {
+        return data;
+      }
     } else {
-      return data;
+      return {
+        title: contentBody,
+        imageUrl: miniProgramImage,
+      };
     }
   });
-  const { giftName, buyPrice } = data;
+  const { giftValue, buyPrice, giftName, paymentModeObject = {} } = data;
+  const { type = "defaultMode", bean, cash } = paymentModeObject;
   return (
     <View className="innerCouponDetails_top">
       <View className="innerCouponDetails_share">
@@ -53,10 +61,11 @@ export default ({ data }) => {
         <View className="innerCouponDetails_banner_box">
           <View className="innerCouponDetails_banner_desc">
             <View className="innerCouponDetails_banner_title1 font_hide">
-              {giftName}
+              价值{giftValue}元的{giftName}
             </View>
             <View className="innerCouponDetails_banner_title2 font_hide">
-              仅需{buyPrice}元
+              仅需
+              {type === "defaultMode" ? `${buyPrice}` : `${cash}`}元
             </View>
           </View>
         </View>

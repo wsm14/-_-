@@ -17,21 +17,9 @@ export default (props) => {
       })[0] || {}
     );
   }, [data]);
-  console.log(listObj);
   const { height, topBackgroundImg = "" } = listObj;
-  const { bean, todayTotalIncome } = val;
   return (
     <View className="lookAround_navition_box">
-      <View
-        style={{
-          ...backgroundObj(topBackgroundImg),
-        }}
-        className={classNames(
-          height === 500
-            ? "lookAround_navition_bigImage"
-            : "lookAround_navition_image"
-        )}
-      ></View>
       <View
         style={{ top: computedClient().top }}
         className="lookAround_navition_title"
@@ -53,16 +41,17 @@ export default (props) => {
         <View className="lookAround_navition_rightVover"></View>
       </View>
       <View
-        className="lookAround_navition_beanLink"
-        onClick={() => Router({ routerName: "wallet" })}
+        style={{
+          ...backgroundObj(topBackgroundImg),
+          height: Taro.pxTransform(height || 400),
+          position: "absolute",
+        }}
+        className={classNames(
+          height === 500
+            ? "lookAround_navition_bigImage"
+            : "lookAround_navition_image"
+        )}
       ></View>
-      <View className="lookAround_navition_beanNum">{bean}</View>
-      <View className="lookAround_navition_money">
-        <View className="lookAround_navition_moneyBean">
-          {todayTotalIncome}
-        </View>
-        <View className="lookAround_navition_moneyDesc">今日赚豆</View>
-      </View>
     </View>
   );
 };

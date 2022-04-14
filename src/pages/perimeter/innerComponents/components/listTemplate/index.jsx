@@ -3,12 +3,20 @@ import { View, Text } from "@tarojs/components";
 import { backgroundObj } from "@/utils/utils";
 import Taro from "@tarojs/taro";
 import Waterfall from "@/components/waterfall";
+import Banner from "@/components/banner";
 import { templateNewShop } from "@/components/public_ui/newGoodsObj";
+import { fetchBanner } from "@/server/common";
 import "./index.scss";
 export default ({ data, identification, configUserLevelInfo, list }) => {
   const { contentInfo } = data;
   const { topImg, image } = contentInfo;
-
+  const [bannerList, setBannerList] = useState([]);
+  useEffect(() => {
+    fetchBanner({ bannerType: "listTemplates" }).then((res) => {
+      const { bannerList } = res;
+      setBannerList(bannerList);
+    });
+  }, []);
   return (
     <View className="listTemplate_box">
       <View
@@ -16,9 +24,17 @@ export default ({ data, identification, configUserLevelInfo, list }) => {
         style={backgroundObj(topImg)}
       ></View>
       <View className="listTemplate_body">
-        {image && (
-          <View style={backgroundObj(image)} className="brandImg_box"></View>
+        {bannerList.length > 0 && (
+          <View className="brandImg_box">
+            <Banner
+              boxStyle={{ width: "100%", height: "100%" }}
+              imgName="coverImg"
+              data={bannerList}
+              showNear
+            ></Banner>
+          </View>
         )}
+
         <Waterfall
           noMargin={{ margin: 0 }}
           list={list}

@@ -4,12 +4,21 @@ import { backgroundObj, computedPrice } from "@/utils/utils";
 import Taro from "@tarojs/taro";
 import Waterfall from "@/components/waterfall";
 import { templateNewShop } from "@/components/public_ui/newGoodsObj";
+import { fetchBanner } from "@/server/common";
 import classNames from "classnames";
+import Banner from "@/components/banner";
 import Router from "@/utils/router";
 import "./index.scss";
 export default ({ data, identification, configUserLevelInfo, list }) => {
   const { contentInfo } = data;
   const { topImg, image } = contentInfo;
+  const [bannerList, setBannerList] = useState([]);
+  useEffect(() => {
+    fetchBanner({ bannerType: "travelTemplates" }).then((res) => {
+      const { bannerList } = res;
+      setBannerList(bannerList);
+    });
+  }, []);
   const tempalte = (item) => {
     const { payBeanCommission = 50 } = configUserLevelInfo;
     const {
@@ -39,7 +48,11 @@ export default ({ data, identification, configUserLevelInfo, list }) => {
           })
         }
       >
-        <View style={backgroundObj(goodsImg)} className="travel_shopImg"></View>
+        <View
+          style={backgroundObj(goodsImg)}
+          className="travel_shopImg merchant_dakale_logo"
+        ></View>
+
         <View className="travel_desc">
           <View className="travel_title  font_hide">{goodsName}</View>
           <View className="travel_userDetails font_hide"></View>
@@ -84,8 +97,15 @@ export default ({ data, identification, configUserLevelInfo, list }) => {
           setWidth={335}
           style={{ width: Taro.pxTransform(335) }}
         ></Waterfall>
-        {image && (
-          <View style={backgroundObj(image)} className="brandImg_box"></View>
+        {bannerList.length > 0 && (
+          <View style={backgroundObj(image)} className="brandImg_box">
+            <Banner
+              imgName="coverImg"
+              boxStyle={{ width: "100%", height: "100%" }}
+              data={bannerList}
+              showNear
+            ></Banner>
+          </View>
         )}
         <View className="listTemplate_body_content">
           {list.map((item, index) => {
