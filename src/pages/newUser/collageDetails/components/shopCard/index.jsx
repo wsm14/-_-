@@ -195,6 +195,8 @@ export default ({
             {rewardType === "winGoods" ? "商品" : "红包"}
           </View>
         );
+      } else if (status == 1 && userJoinStatus === "0") {
+        return <View className="collageTime_btn public_center">本次拼团活动已结束</View>;
       } else {
         return (
           <View className="collageTime_btn collageTime_scale public_center">

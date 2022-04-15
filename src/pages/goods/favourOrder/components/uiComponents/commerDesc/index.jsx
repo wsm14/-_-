@@ -11,7 +11,7 @@ export default ({ changeLabel }) => {
           1.商品将在用户下单后的7天内发货
         </View>
         <View className="commerOrder_pay_desc">
-          2.若该商品为“拼团”活动商品，则该商品不支持使用卡豆抵扣；可前往“拼赚中心”参与活动并购买商品；
+          2.若该商品为“拼团”活动商品，则该商品不支持使用卡豆抵扣；可前往“拼好货”参与活动并购买商品；
         </View>
         <View className="commerOrder_pay_desc">
           3.拼团商品不支持退款退货，若因商品质量问题，可联系客服进行换货处理，若收货时间超过14天则需要自行支付邮费。

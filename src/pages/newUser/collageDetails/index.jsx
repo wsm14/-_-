@@ -87,10 +87,10 @@ class Index extends Component {
   }
   onShareAppMessage(res) {
     const { shareInfo } = this.state;
-    const { miniProgramImage, miniProgramUrl, contentBody } = shareInfo;
+    const { miniProgramImage, miniProgramUrl, title } = shareInfo;
     if (res.from === "button") {
       return {
-        title: contentBody,
+        title: title,
         imageUrl: miniProgramImage,
         path: miniProgramUrl,
         complete: function () {
@@ -100,7 +100,7 @@ class Index extends Component {
       };
     } else {
       return {
-        title: contentBody,
+        title: title,
         imageUrl: miniProgramImage,
         path: miniProgramUrl,
         complete: function () {
