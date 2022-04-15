@@ -1,7 +1,7 @@
 export default {
   navigationBarBackgroundColor: "#FFFFFF",
   navigationBarTextStyle: "black",
-  navigationBarTitleText: "拼赚中心",
+  navigationBarTitleText: "拼好货",
   backgroundColor: "#ffffff",
   backgroundTextStyle: "light",
   navigationStyle: "default",
