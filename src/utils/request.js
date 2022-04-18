@@ -1,7 +1,7 @@
 /*
  * resultOperate  不同返回码进行不同的函数映射
  * httpCondition 微信http请求配置
- * baseUrl 接口环境配置
+ * APIURL 接口环境配置
  * httpGet get请求 url-请求路径 data-请求数据 fn-请求成功的执行函数
  * httpPost post请求 url-请求路径 data-请求数据 fn-请求成功的执行函数
  * encrypt 对数据进行加密处理
@@ -11,6 +11,8 @@ import Taro from "@tarojs/taro";
 import encrypt from "./keys";
 import { toast } from "@/utils/utils";
 import Router from "@/utils/router";
+let requestUrl = [];
+const baseUrl = APIURL;
 const filterHttpStatus = (value) => {
   if (value.includes("timeout")) {
     return "响应超时";
@@ -77,24 +79,7 @@ const resultOperate = {
     },
   },
 };
-
-let baseUrl = "";
-const env =
-  process.env.NODE_ENV === "development" ? "development" : "production";
-
-switch (env) {
-  case "development":
-    // baseUrl = "http://192.168.0.86:6020";
-    // baseUrl = "https://devgateway.dakale.net";
-    baseUrl = "https://pregateway.dakale.net";
-    // // baseUrl = "https://gateway1.dakale.net";
-    break;
-  case "production":
-    // baseUrl = "https://pregateway.dakale.net";
-    // baseUrl = "https://devgateway.dakale.net";
-    baseUrl = "https://gateway1.dakale.net";
-    break;
-}
+// 是否需要哒卡乐域名api
 const httpCondition = {
   header: {
     apptype: "user",
@@ -106,7 +91,6 @@ const httpCondition = {
   timeout: 60000,
   dataType: "json",
 };
-let requestUrl = [];
 const loadBeadRequest = [
   "/user/userMoment/listMomentDetailByType",
   "/common/dictionary/listMomentBarrage",
@@ -181,7 +165,6 @@ export const httpGet = (obj, fn) => {
     });
   });
 };
-
 export const httpPost = (obj, fn, falg = true) => {
   const { header = {}, data = {} } = obj;
   Taro.showLoading({

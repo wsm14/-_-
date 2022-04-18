@@ -663,8 +663,8 @@ class Index extends React.PureComponent {
               current={current}
               onChange={this.onInterSwper.bind(this)}
               onTransition={this.onTransition.bind(this)}
-              follow={this.followStatus.bind(this)}
-              collection={this.collection.bind(this)}
+                follow={this.followStatus.bind(this)}
+                collection={this.collection.bind(this)}
               stop={this.stopVideoPlayerControl.bind(this)}
               userInfo={configUserLevelInfo}
               shareInfo={this.shareImageInfo.bind(this)}
