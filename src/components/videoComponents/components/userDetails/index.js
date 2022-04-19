@@ -40,7 +40,7 @@ export default ({
     jumpUrl = "",
     ugcRewardAmount = 0,
   } = data;
-
+  const [showFlag, setShowFlag] = useState(false);
   const linkTo = () => {
     if (jumpUrl) {
       Router({
@@ -100,7 +100,7 @@ export default ({
     show: false,
     type: "follow",
   });
-  const [showFlag, setShowFlag] = useState(false);
+
   const fakeBean = () => {
     setShowFlag(() => {
       saveUgcBean();
@@ -219,7 +219,7 @@ export default ({
             <View className="ugc_template_count">{ugcRewardAmount}</View>
           </React.Fragment>
         ) : (
-          <Tarking   name={"videoInval"}>
+          <Tarking name={"videoInval"}>
             <View
               onClick={() => {
                 Router({

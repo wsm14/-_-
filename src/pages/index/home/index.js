@@ -11,7 +11,7 @@ import {
   computedTime,
   fakeStorage,
 } from "@/utils/utils";
-import { ScrollView, View, Ad } from "@tarojs/components";
+import { ScrollView, View } from "@tarojs/components";
 import {
   fakeUserFollow,
   getUserMomentList,

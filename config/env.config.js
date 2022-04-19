@@ -2,9 +2,6 @@ const target = "https://devgateway.dakale.net";
 // const target = "https://gateway1.dakale.net";
 // const target = "http://192.168.0.121:6020";
 
-const fileTarget = "https://wechat-config.dakale.net/h5/dev/community/index.html";
-// const fileTarget = "https://wechat-config.dakale.net/h5/product/community/index.html";
-// const fileTarget = "http://localhost:8089";
 
 export default {
   // 开发环境 npm run dev:weapp
@@ -14,7 +11,7 @@ export default {
     },
     defineConstants: {
       APIURL: JSON.stringify(target),
-      FILEURL: JSON.stringify(fileTarget),
+     
     },
     mini: {
       miniCssExtractPluginOption: {
@@ -30,7 +27,7 @@ export default {
     },
     defineConstants: {
       APIURL: '"https://devgateway.dakale.net"',
-      FILEURL: '"https://wechat-config.dakale.net/h5/dev/community/index.html"',
+   
     },
     mini: {
       optimizeMainPackage: {
@@ -46,8 +43,7 @@ export default {
     },
     defineConstants: {
       APIURL: '"https://gateway1.dakale.net"',
-      FILEURL:
-        '"https://wechat-config.dakale.net/h5/product/community/index.html"',
+   
     },
     mini: {
       optimizeMainPackage: {
