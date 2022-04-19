@@ -432,3 +432,15 @@ export const fetchGiftPackDetail = (data, fn) => {
   );
 };
 //查询礼包详情
+export const fetchTogetherGoodsDetail = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/together/group/togetherGoodsDetail",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//查询礼包详情

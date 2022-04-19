@@ -162,7 +162,8 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
           </View>
           <View
             className="collage_bottom_open"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               // fakeStartGroup({ togetherGroupConfigId });
               linkToDownLoad && linkToDownLoad();
             }}
@@ -231,7 +232,12 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
             },
           });
         } else {
-          return;
+          Router({
+            routerName: "collageDownload",
+            args: {
+              togetherGroupConfigId: togetherGroupConfigId,
+            },
+          });
         }
       }}
     >

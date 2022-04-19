@@ -1,5 +1,5 @@
-// const target = "https://devgateway.dakale.net";
-const target = "https://gateway1.dakale.net";
+const target = "https://devgateway.dakale.net";
+// const target = "https://gateway1.dakale.net";
 // const target = "http://192.168.0.121:6020";
 
 const fileTarget = "https://wechat-config.dakale.net/h5/dev/community/index.html";
