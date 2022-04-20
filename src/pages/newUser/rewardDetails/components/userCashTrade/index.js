@@ -264,7 +264,7 @@ export default function expenses({ list, showStatus }) {
         </View>
       )}
       <View className="rewardDetails_bean_box">
-        <View className="rewardDetails_bean_title">
+        <View className="">
           <Text className="color2 font28">现金支出：</Text>
           <Text className="color1 font32 bold">
             <Text className="font20">¥ </Text>
@@ -280,6 +280,7 @@ export default function expenses({ list, showStatus }) {
               identificationType,
               cashTime = "",
               cashAmount = "",
+              detailType,
             } = item;
             return (
               <View className="rewardDetails_bean_tags">
@@ -302,8 +303,12 @@ export default function expenses({ list, showStatus }) {
                       {cashTime}
                     </View>
                   </View>
-                  <View className="rewardDetails_bean_num font32 color1 bold">
-                    -{cashAmount}
+                  <View
+                    className=" font32 color1 bold"
+                    style={{ marginLeft: "auto" }}
+                  >
+                    {detailType === "add" ? "+" : "-"}
+                    {cashAmount}
                   </View>
                 </View>
               </View>

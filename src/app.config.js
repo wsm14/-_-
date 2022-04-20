@@ -31,7 +31,7 @@ export default {
         pagePath: "pages/index/lookAround/index",
         iconPath: "./assets/image/tab-bar/look_1.png",
         selectedIconPath: "./assets/image/tab-bar/look.png",
-        text: "逛逛",
+        text: "福利",
       },
       {
         pagePath: "pages/index/sign/index",

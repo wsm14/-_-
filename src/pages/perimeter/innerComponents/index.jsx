@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Taro, { getCurrentInstance } from "@tarojs/taro";
+import Taro, { getCurrentInstance, getCurrentPages } from "@tarojs/taro";
 import { Text, View } from "@tarojs/components";
 import { fetchResourceTemplate } from "@/server/common";
 import HotExchange from "./components/exchangeTemplate";
@@ -9,7 +9,7 @@ import Resource from "./components/resource";
 import ListTemplate from "./components/listTemplate";
 import Brand from "./components/Brand";
 import Travel from "./components/travel";
-import { setNavTitle } from "@/utils/utils";
+import { setNavTitle, loginStatus } from "@/utils/utils";
 import Router from "@/utils/router";
 import "./index.scss";
 class Index extends Component {
@@ -29,6 +29,30 @@ class Index extends Component {
         travel: "酷爱旅行",
         brand: "大牌连锁",
       },
+      shareTitle: {
+        hotBlending: "限量抢购，你的卡豆还不来用嘛？",
+        deduction: "卡豆抵扣专区，超高抵扣比例，惊喜等你来！",
+        flashSale: "手慢无，限量低价好货只在哒卡乐",
+        listTemplate: "选择困难看过来，件件都是爆款",
+        travel: "来自4700名旅行爱好者的推荐！",
+        brand: "全国通用，放肆屯，安心买！",
+        coupon: "限时！疯抢大额神券中，数量有限",
+      },
+      image: {
+        deduction:
+          "https://wechat-config.dakale.net/miniprogram/image/icon999.png",
+        flashSale:
+          "https://wechat-config.dakale.net/miniprogram/image/icon998.png",
+        listTemplate:
+          "https://wechat-config.dakale.net/miniprogram/image/icon996.png",
+        travel:
+          "https://wechat-config.dakale.net/miniprogram/image/icon997.png",
+        brand: "https://wechat-config.dakale.net/miniprogram/image/icon995.png",
+        coupon:
+          "https://wechat-config.dakale.net/miniprogram/image/icon1000.png",
+        hotBlending:
+          "https://wechat-config.dakale.net/miniprogram/image/icon1001.png",
+      },
     };
   }
 
@@ -45,7 +69,7 @@ class Index extends Component {
         identification,
       },
     });
-  } 
+  }
   linkToCoupon = (item) => {
     const { httpData } = this.state;
     const { identification } = httpData;
@@ -62,8 +86,45 @@ class Index extends Component {
       });
     }
   };
-  onReady() {
-    // 生命周期函数--监听页面初次渲染完成
+  onShareAppMessage(res) {
+    let pages = getCurrentPages();
+    let currPage = null;
+    if (pages.length) {
+      currPage = pages[pages.length - 1];
+    }
+    const { shareTitle, image, data, httpData } = this.state;
+    const { identification, payBeanCommission, resourceTemplateContentId } =
+      httpData;
+    const { templateType } = data;
+    let userInfo = loginStatus() || {};
+    const { userIdString } = userInfo;
+    if (res.from === "button") {
+      return {
+        title: shareTitle[templateType],
+        imageUrl: image[templateType],
+        path:
+          "/" +
+          currPage.route +
+          `?identification=${identification}&payBeanCommission=${payBeanCommission}&resourceTemplateContentId=${resourceTemplateContentId}&shareUserId=${userIdString}&shareUserType=user`,
+        complete: function () {
+          // 转发结束之后的回调（转发成不成功都会执行）
+          console.log("---转发完成---");
+        },
+      };
+    } else {
+      return {
+        title: shareTitle[templateType],
+        imageUrl: image[templateType],
+        path:
+          "/" +
+          currPage.route +
+          `?identification=${identification}&payBeanCommission=${payBeanCommission}&resourceTemplateContentId=${resourceTemplateContentId}&shareUserId=${userIdString}&shareUserType=user`,
+        complete: function () {
+          // 转发结束之后的回调（转发成不成功都会执行）
+          console.log("---转发完成---");
+        },
+      };
+    }
   }
   fetchResourceTemplate() {
     const { httpData, title } = this.state;
@@ -156,3 +217,5 @@ class Index extends Component {
 }
 
 export default Index;
+
+koMynGqM026Fypm1
