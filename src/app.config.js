@@ -73,6 +73,7 @@ export default {
         "userConceal/index", //协议规则
         "collage/index", //拼团
         "collageDetails/index", //拼团详情
+        "collageDownload/index", //拼团详细信息
       ],
     },
     {

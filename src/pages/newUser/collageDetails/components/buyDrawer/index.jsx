@@ -15,7 +15,11 @@ export default ({ visible, close, list = [] }) => {
           <Empty
             pt={true}
             pylb={"暂无参团记录"}
-            show={list.length === 0}
+            show={
+              list.filter((item) => {
+                return item !== null;
+              }).length === 0
+            }
             type={"shop"}
             toast={"赶紧邀请好友一起拼团吧！"}
           ></Empty>

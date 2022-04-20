@@ -1,3 +1,4 @@
+import define from "./env.config";
 const path = require("path");
 const config = {
   projectName: "dakale-webNew-miniprogram",
@@ -77,11 +78,5 @@ const config = {
 };
 
 module.exports = function (merge) {
-  if (process.env.NODE_ENV === "development") {
-    return merge({}, config, require("./dev"));
-  }
-  if (process.env.NODE_ENV === "pre") {
-    return merge({}, config, require("./pre"));
-  }
-  return merge({}, config, require("./prod"));
+  return merge({}, config, define[process.env.NODE_ENV || "prod"]);
 };
