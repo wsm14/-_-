@@ -1,7 +1,12 @@
 /*券的为你推荐*/
 import React, { useState, useRef, useEffect } from "react";
 import { ScrollView, View, Button } from "@tarojs/components";
-import Taro, { useDidShow, useShareAppMessage, useRouter } from "@tarojs/taro";
+import Taro, {
+  useDidShow,
+  useShareAppMessage,
+  useRouter,
+  getCurrentPages,
+} from "@tarojs/taro";
 import { fetchNewShareInfo } from "@/server/common";
 import "./index.scss";
 export default ({ data, shareFlag = true }) => {
@@ -18,13 +23,13 @@ export default ({ data, shareFlag = true }) => {
     });
   });
   useShareAppMessage((res) => {
-    const { miniProgramUrl, miniProgramImage, contentBody } = shareData;
+    const { miniProgramUrl, miniProgramImage, title } = shareData;
     const data = {
-      title: contentBody,
+      title: title,
       imageUrl: miniProgramImage,
       path: `/${miniProgramUrl}`,
     };
-    if (shareFlag) {
+    if (shareFlag && platformGiftId) {
       if (res.from === "button") {
         return data;
       } else {
@@ -32,7 +37,7 @@ export default ({ data, shareFlag = true }) => {
       }
     } else {
       return {
-        title: contentBody,
+        title: title,
         imageUrl: miniProgramImage,
       };
     }

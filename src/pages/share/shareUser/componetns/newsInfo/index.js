@@ -14,7 +14,7 @@ export default ({ change, data }) => {
       <View className="shareNewsInfo_font_bold  font_hide">
         {prizeName || prizeBean + "卡豆"}机会
       </View>
-      <View className="shareNewsInfo_font_bold font_hide">感觉去拿吧</View>
+      <View className="shareNewsInfo_font_bold font_hide">赶紧去拿吧</View>
       <View
         className="shareNewsInfo_btn public_center"
         onClick={() => change()}
