@@ -147,7 +147,7 @@ export default ({
       }
     }
   };
-  const renderBtn = () => {
+  const RenderBtn = () => {
     if (type === "1") {
       return {
         0: (
@@ -196,7 +196,11 @@ export default ({
           </View>
         );
       } else if (status == 1 && userJoinStatus === "0") {
-        return <View className="collageTime_btn public_center">本次拼团活动已结束</View>;
+        return (
+          <View className="collageTime_btn public_center">
+            本次拼团活动已结束
+          </View>
+        );
       } else {
         return (
           <View className="collageTime_btn collageTime_scale public_center">
@@ -228,7 +232,7 @@ export default ({
             onClick={() => setVisible(true)}
           ></View>
         </View>
-        {renderBtn()}
+        <RenderBtn></RenderBtn>
       </View>
       <DrawerList
         list={templateList}

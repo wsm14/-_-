@@ -217,5 +217,3 @@ class Index extends Component {
 }
 
 export default Index;
-
-koMynGqM026Fypm1
