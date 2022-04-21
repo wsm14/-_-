@@ -25,7 +25,7 @@ const FormItem = Form.Item;
 export default (props) => {
   const getCityName = (code) => {
     const cityIndex = cityJson.findIndex((item) => item.id === code);
-    return cityJson[cityIndex].name;
+    return cityIndex !== -1 ? cityJson[cityIndex]?.name : "";
   };
 
   // 根据城市code获取城市名称
@@ -33,15 +33,19 @@ export default (props) => {
     if (!code) return null;
     const codeStr = `${code}`;
     if (codeStr.length === 2) {
-      return getCityName(codeStr);
+      return getCityName(codeStr) ? getCityName(codeStr) : [];
     } else if (codeStr.length === 4) {
-      return [getCityName(codeStr.slice(0, 2)), getCityName(codeStr)];
+      return getCityName(codeStr)
+        ? [getCityName(codeStr.slice(0, 2)), getCityName(codeStr)]
+        : [];
     } else if (codeStr.length === 6) {
-      return [
-        getCityName(codeStr.slice(0, 2)),
-        getCityName(codeStr.slice(0, 4)),
-        getCityName(codeStr),
-      ];
+      return getCityName(codeStr)
+        ? [
+            getCityName(codeStr.slice(0, 2)),
+            getCityName(codeStr.slice(0, 4)),
+            getCityName(codeStr),
+          ]
+        : [];
     }
   };
   const {
