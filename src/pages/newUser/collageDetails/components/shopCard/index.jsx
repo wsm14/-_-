@@ -22,7 +22,7 @@ export default ({
   onChange,
 }) => {
   const {
-    status,
+    status = 0,
     togetherEarnGoodsObject = {},
     joinUserNum,
     togetherGroupConfigId,

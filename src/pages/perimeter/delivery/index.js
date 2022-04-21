@@ -227,7 +227,6 @@ class Index extends Component {
             <Template
               data={item}
               index={index}
-              updateInfo
               selectIndex={selectIndex}
               changeSelect={this.changeSelect.bind(this)}
               updateInfo={this.updateInfo.bind(this)}

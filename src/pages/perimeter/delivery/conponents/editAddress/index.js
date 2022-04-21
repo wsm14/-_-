@@ -68,11 +68,11 @@ export default (props) => {
 
   const {
     address,
-    addressName,
-    mobile,
-    districtCode,
+    addressName = "",
+    mobile = "",
+    districtCode = "",
     provinceCode,
-    cityCode,
+    cityCode = "",
     cityName,
     districtName,
     provinceName,
@@ -85,7 +85,7 @@ export default (props) => {
       (addressName.length === 0 &&
         mobile.length === 0 &&
         (address.length === 0 || !cityCode)) ||
-      !checkCityName(districtCode).length
+      !districtCode
     ) {
       return toast("请把信息填写完整后提交");
     } else {
