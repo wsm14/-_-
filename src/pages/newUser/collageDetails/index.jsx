@@ -8,6 +8,7 @@ import Content from "./components/shopCard";
 import ShopDesc from "./components/shopDesc";
 import Rule from "./components/payToast";
 import ShopDrawer from "./components/shopDrawer";
+import Router from "@/utils/router";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -21,6 +22,7 @@ class Index extends Component {
       joinGroupUserDetail: {},
       ShopDrawerVisible: false,
       shareInfo: {},
+      followVisible: true,
     };
   }
 
@@ -118,6 +120,7 @@ class Index extends Component {
       joinGroupUserDetail,
       userJoinStatus,
       ShopDrawerVisible,
+      followVisible,
     } = this.state;
     const {
       togetherEarnGoodsObject = {},
@@ -193,6 +196,29 @@ class Index extends Component {
             });
           }}
         ></ShopDrawer>
+        {followVisible && (
+          <View className="collageDetails_follow_box">
+            <View
+              className="collageDetails_follow_btn"
+              onClick={() => {
+                Router({
+                  routerName: "webView",
+                  args: {
+                    link: "https://mp.weixin.qq.com/s/cigoCWs94L4wT_T40fSOkw",
+                  },
+                });
+              }}
+            ></View>
+            <View
+              className="collageDetails_follow_close"
+              onClick={() => {
+                this.setState({
+                  followVisible: false,
+                });
+              }}
+            ></View>
+          </View>
+        )}
       </View>
     );
   }

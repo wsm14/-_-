@@ -74,6 +74,7 @@ export default {
         "collage/index", //拼团
         "collageDetails/index", //拼团详情
         "collageDownload/index", //拼团详细信息
+        "collageList/index", //拼团列表
       ],
     },
     {

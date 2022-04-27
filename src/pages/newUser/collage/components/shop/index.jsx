@@ -118,12 +118,13 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
     goodsDescImg,
   } = togetherEarnGoodsObject;
   const { notWinFee, teamLeaderFee } = togetherRebateParamObject;
+  const { totalUserNum = 10 } = togetherGroupRuleObject;
   useEffect(() => {
     if (status === "0") {
       reloadInfo();
     }
   }, [status]);
-  const template = () => {
+  const Template = () => {
     return (
       <View className="collage_shop_content font_hide">
         <View
@@ -158,17 +159,20 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
         <View className="collage_shop_liner"></View>
         <View className="collage_shop_btnBox public_auto">
           <View className="collage_bottom_left">
-            10人成团 | {startGroupNum}人开团中
+            {totalUserNum}人成团 | {startGroupNum}人开团中
           </View>
           <View
-            className="collage_bottom_open"
+            className="collage_card_newBtn"
             onClick={(e) => {
               e.stopPropagation();
               // fakeStartGroup({ togetherGroupConfigId });
               linkToDownLoad && linkToDownLoad();
             }}
           >
-            开团
+            <View className="collage_card_newBtnfont public_center bold">
+              {totalUserNum}人团
+            </View>
+            <View className="collage_card_newBtnfont public_center">开团</View>
           </View>
         </View>
       </View>
@@ -178,12 +182,12 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
         <View className="collage_shop_stepBox">
           <View className="collage_shop_step">
             <View
-              style={{ width: joinUserNum * 10 + "%" }}
+              style={{ width: Number(joinUserNum / totalUserNum) * 100 + "%" }}
               className="collage_shop_stepContent"
             ></View>
           </View>
           <View className="collage_shop_stepFont">
-            <Text className="color1">{joinUserNum}</Text>/10
+            <Text className="color1">{joinUserNum}</Text>/{totalUserNum}
           </View>
         </View>
         <View className="collage_shop_liner"></View>
@@ -200,12 +204,12 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
         <View className="collage_shop_stepBox">
           <View className="collage_shop_step">
             <View
-              style={{ width: joinUserNum * 10 + "%" }}
+              style={{ width: Number(joinUserNum / totalUserNum) * 100 + "%" }}
               className="collage_shop_stepContent"
             ></View>
           </View>
           <View className="collage_shop_stepFont">
-            <Text className="color1">{joinUserNum}</Text>/10
+            <Text className="color1">{joinUserNum}</Text>/{totalUserNum}
           </View>
         </View>
         <View className="collage_shop_liner"></View>
@@ -242,7 +246,7 @@ export default ({ type = 0, data, linkToDownLoad, updateData }) => {
       }}
     >
       {renderTags()}
-      {template()}
+      {<Template></Template>}
       {bottom}
     </View>
   );

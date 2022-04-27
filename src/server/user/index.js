@@ -443,4 +443,16 @@ export const fetchTogetherGoodsDetail = (data, fn) => {
     }
   );
 };
-//查询礼包详情
+//查询拼团详情
+export const fetchListUserStart = (data, fn) => {
+  return httpGet(
+    {
+      url: "/user/start/group/listUserStartGroupByUserId",
+      data: data,
+    },
+    (res) => {
+      return fn && fn(res);
+    }
+  );
+};
+//拼好货列表

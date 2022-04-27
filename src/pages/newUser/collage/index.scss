@@ -1,6 +1,19 @@
 page {
   width: 100%;
   background: #fff3e6;
+  .collage_card_newBtn {
+    width: 240px;
+    height: 64px;
+    background: url(https://wechat-config.dakale.net/miniprogram/image/icon1004.png)
+      no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+  }
+  .collage_card_newBtnfont {
+    flex: 1;
+    font-size: 28px;
+    color: #ffffff;
+  }
   .collage_card_successBox {
     width: 95px;
     height: 95px;

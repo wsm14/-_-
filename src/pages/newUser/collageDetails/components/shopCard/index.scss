@@ -24,7 +24,7 @@
     .clooageTime_shop_content {
       width: 382px;
       margin-left: 16px;
-      .clooageTime_shop_count::after {
+      .clooageTime_shop_icon1::after {
         content: "";
         position: absolute;
         top: -2px;
@@ -33,6 +33,30 @@
         width: 119px;
         height: 44px;
         background: url(https://wechat-config.dakale.net/miniprogram/image/icon948.png)
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .clooageTime_shop_icon2::after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -4px;
+        z-index: 10;
+        width: 119px;
+        height: 44px;
+        background: url(https://wechat-config.dakale.net/miniprogram/image/icon1005.png)
+          no-repeat;
+        background-size: 100% 100%;
+      }
+      .clooageTime_shop_icon3::after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -4px;
+        z-index: 10;
+        width: 119px;
+        height: 44px;
+        background: url(https://wechat-config.dakale.net/miniprogram/image/icon1006.png)
           no-repeat;
         background-size: 100% 100%;
       }
@@ -106,10 +130,28 @@
 
   .collageTime_userProfile_content {
     position: relative;
-    padding: 29px 0 0 40px;
+    padding: 29px 0 0 24px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+  }
+  .collageTime_userProfile_over {
+    padding: 29px 0 0 24px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .collageTime_userProfile_six {
+    position: relative;
+    width: 420px;
+    margin: 0 auto;
+    padding: 29px 0 0 24px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   .collageTime_userProfile_box {
     width: 64px;
@@ -162,7 +204,7 @@
     );
     border-radius: 40px;
     height: 80px;
-    margin: 40px auto 0;
+    margin: 0px auto 0;
     width: 638px;
     font-size: 32px;
     font-weight: 600;
@@ -179,7 +221,7 @@
     );
     border-radius: 40px;
     height: 80px;
-    margin: 40px auto 0;
+    margin: 0px auto 0;
     width: 638px;
     font-size: 32px;
     font-weight: 600;

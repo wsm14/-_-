@@ -26,8 +26,10 @@ export default ({
     togetherEarnGoodsObject = {},
     joinUserNum,
     togetherGroupConfigId,
+    togetherGroupRuleObject = {},
     groupId,
   } = data;
+  const { totalUserNum = 10 } = togetherGroupRuleObject;
   const { rewardType } = joinGroupUserDetail;
   const [templateList, setlist] = useState([]);
   const [visiblePay, setVisiblePay] = useState(false);
@@ -46,8 +48,18 @@ export default ({
   } = togetherEarnGoodsObject;
   const { profile } = startGroupUser;
   useEffect(() => {
-    setlist([...list].concat(new Array(10 - list.length).fill(null)));
+    setlist([...list].concat(new Array(totalUserNum - list.length).fill(null)));
   }, [list]);
+  const renderStyle = {
+    3: "collageTime_userProfile_over",
+    6: "collageTime_userProfile_six",
+    10: "collageTime_userProfile_content",
+  }[totalUserNum];
+  const renderIcon = {
+    3: "clooageTime_shop_icon3",
+    6: "clooageTime_shop_icon2",
+    10: "clooageTime_shop_icon1",
+  }[totalUserNum];
   const template = () => {
     return (
       <View className="clooageTime_template_box">
@@ -59,16 +71,16 @@ export default ({
           <View className="clooageTime_shop_username font_noHide">
             {goodsName}
           </View>
-          <View className="clooageTime_shop_count public_auto">
+          <View className={`clooageTime_shop_count public_auto ${renderIcon}`}>
             <View className="clooageTime_shop_liner">
               <View
-                style={{ width: `${joinUserNum * 10}%` }}
+                style={{ width: `${(joinUserNum / totalUserNum) * 100}%` }}
                 className="clooageTime_shop_linerColor"
               ></View>
             </View>
             <View className="clooageTime_shop_inCount">
               {joinUserNum}
-              <Text className="color2">/10</Text>
+              <Text className="color2">/{totalUserNum}</Text>
             </View>
           </View>
           <View className="clooageTime_shop_price">
@@ -92,7 +104,7 @@ export default ({
         <View className="collageDetail_templateContent_people">
           - 还差
           <Text className="collageDetail_templateContent_peopleCount color3">
-            {10 - joinUserNum}位
+            {totalUserNum - joinUserNum}位
           </Text>
           即可成团 -
         </View>
@@ -216,7 +228,7 @@ export default ({
       <View className="collageTime_shopCard_box">
         {template()}
         {templateContent}
-        <View className="collageTime_userProfile_content">
+        <View className={renderStyle}>
           <View className="collageTime_userProfile_box">
             <View className="collageTime_userProfile_icon1"></View>
             <View
