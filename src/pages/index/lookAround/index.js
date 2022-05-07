@@ -43,6 +43,7 @@ import Rebate from "./components/rebate";
 import FieldResource from "./components/fieldResource";
 import SpaceOccupying from "./components/spaceOccupyingLattice";
 import BeanBalance from "./components/BeanBalance";
+import UserParticipation from "./components/userParticipation";
 import { fetchBeanAndEarn } from "@/server/index";
 import { inject, observer } from "mobx-react";
 import "./index.scss";
@@ -785,6 +786,15 @@ class Index extends Component {
         ></Sign>
       ),
       //签到
+
+      signInModule: (
+        <UserParticipation
+          link={this.bubbleLink.bind(this)}
+          data={wanderAroundModule}
+        ></UserParticipation>
+      ),
+      //拼好货
+
       limitedTimeHotMixing: (
         <HotExchange data={wanderAroundModule}></HotExchange>
         //现实热销

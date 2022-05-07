@@ -11,7 +11,7 @@ import "./index.scss";
  * mode
  * beanWelfare-卡豆福利券包
  */
-export default ({ data, handleGoBuyGoods }) => {
+export default ({ data = {}, handleGoBuyGoods }) => {
   const {
     giftName = "", // 礼包名
     giftValue = 0, // 价值

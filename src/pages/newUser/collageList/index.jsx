@@ -5,6 +5,7 @@ import Rule from "./../collageDetails/components/payToast";
 import Router from "@/utils/router";
 import { fetchListUserStart } from "@/server/user";
 import { backgroundObj } from "@/utils/utils";
+import Empty from "@/components/Empty";
 import "./index.scss";
 class Index extends Component {
   constructor() {
@@ -61,7 +62,7 @@ class Index extends Component {
       } = data;
       const { totalUserNum } = togetherGroupRuleObject;
       const { goodsImg, goodsName, togetherPrice } = togetherEarnGoodsObject;
-      const { teamLeaderFee } = togetherRebateParamObject;
+      const { teamLeaderFee, notWinFee } = togetherRebateParamObject;
       return (
         <View
           onClick={() =>
@@ -86,7 +87,7 @@ class Index extends Component {
                 ¥{togetherPrice}
               </View>
               <View className="collageList_price_zq public_center">
-                参与返{teamLeaderFee}元
+                参与返{notWinFee}元
               </View>
             </View>
             <View className="collageList_shop_bottom public_auto">
@@ -131,6 +132,16 @@ class Index extends Component {
           style={{ textAlign: "left" }}
         ></Rule>
         <View className="collageList_content">
+          <View style={{ margin: "0 auto" }}>
+            <Empty
+              pt
+              pylb={"当前专区商品已拼完"}
+              show={userStartGroupList.length === 0}
+              type={"shop"}
+              toast={"新品正在紧急上架中，敬请期待…"}
+            ></Empty>
+          </View>
+
           {userStartGroupList.map((item) => {
             return <Template data={item}></Template>;
           })}

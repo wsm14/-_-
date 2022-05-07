@@ -1,0 +1,45 @@
+.userParticipation_link_box {
+  margin: 24px 24px 0;
+  line-height: 1;
+  background: #ffffff;
+  border-radius: 20px;
+  position: relative;
+  .userParticipation_box {
+    padding: 32px;
+    .userParticipation_title {
+      padding-bottom: 8px;
+      display: flex;
+    }
+    .userParticipation_title::before {
+      width: 295px;
+      height: 32px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon1009.png)
+        no-repeat;
+      background-size: 100% 100%;
+      display: block;
+      content: "";
+    }
+    .userParticipation_link {
+      font-size: 28px;
+      font-weight: 400;
+      color: #999999;
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+    }
+    .userParticipation_link::after {
+      width: 28px;
+      height: 28px;
+      background: url(https://wechat-config.dakale.net/miniprogram/image/icon361.png)
+        no-repeat;
+      background-size: 100% 100%;
+      display: block;
+      content: "";
+    }
+    .userParticipation_img {
+      width: 639px;
+      height: 220px;
+      margin: 32px auto 0;
+    }
+  }
+}
